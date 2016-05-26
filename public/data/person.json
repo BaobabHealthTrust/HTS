@@ -1,0 +1,2674 @@
+{
+    "data": {
+        "names": [
+            {
+                "First Name": "James",
+                "Family Name": "Chona",
+                "Middle Name": "N/A",
+                "Maiden Name": null,
+                "UUID": "e3d20523-572a-11e3-95c4-003018acf05d"
+            }
+        ],
+        "addresses": [
+            {
+                "Current District": "Lilongwe City",
+                "Current T/A": "Tsabango",
+                "Current Village": "Kawale",
+                "Closest Landmark": "Other",
+                "Home District": "Lilongwe City",
+                "Home T/A": "Other",
+                "UUID": "e3d31482-572a-11e3-95c4-003018acf05d"
+            }
+        ],
+        "identifiers": {
+            "HTN Clinic Number": {
+                "identifier": "TST-HTN-0102",
+                "UUID": "401afa23-572b-11e3-95c4-003018acf05d"
+            },
+            "National id": {
+                "identifier": "XXYYZZ",
+                "UUID": "e913eb88-e6ef-11e3-87a6-003018acf05d"
+            },
+            "Old Identification Number": {
+                "identifier": "P1000000345678",
+                "UUID": "e9173a09-e6ef-11e3-87a6-003018acf05d"
+            }
+        },
+        "programs": {
+            "HYPERTENSION PROGRAM": {
+                "UUID": "9f93eca4-b48a-11d7-9964-0024217bb78e",
+                "patient_programs": {
+                    "12ffa4e4-572b-11e3-95c4-003018acf05d": {
+                        "date_enrolled": "2013-03-06T22:00:01.000Z",
+                        "date_completed": null,
+                        "visits": {
+                            "2013-11-27": {
+                                "VITALS": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "12e26f5d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "1c077432-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 158,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "12e3b65e-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 52,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "1c080e94-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 20.8,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV STAGING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "12e5b2bc-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "WHO stage": {
+                                            "UUID": "12e86e35-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e228678-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "WHO stage III adult",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f179668-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Who stages criteria present": {
+                                            "UUID": "12e720a0-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfc339c-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Fever, persistent unexplained, intermittent or constant, >1 month",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9ef20150-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2013-03-07": {
+                                "HIV CLINIC REGISTRATION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "12f4c823-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Location of ART initiation": {
+                                            "UUID": "12fb1ca5-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236412-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 1,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ART number at previous location": {
+                                            "UUID": "12f95980-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f8aae-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Unknown",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Confirmatory HIV test location": {
+                                            "UUID": "12fe3643-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23ddde-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 1,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Ever received ART?": {
+                                            "UUID": "12f585bf-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23676e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Has the patient taken ART in the last two months": {
+                                            "UUID": "12f67f97-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2365c0-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Last antiretroviral drugs taken": {
+                                            "UUID": "12f7e6d9-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236692-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "d4T/3TC/NVP",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1751d0-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Ever registered at ART clinic": {
+                                            "UUID": "12f8a5f3-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e241164-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Has transfer letter": {
+                                            "UUID": "12fa5d96-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1a6aa6-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Has the patient taken ART in the last two weeks": {
+                                            "UUID": "12f73414-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1a6c4a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Follow up agreement": {
+                                            "UUID": "12fc8829-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa7c78-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Confirmatory HIV test type": {
+                                            "UUID": "12fd6a99-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23dd0c-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV rapid test",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f19260e-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV RECEPTION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "15aced34-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "15ade33d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "15aeda9c-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "VITALS": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "1bf858db-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "1c0a1eba-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 158,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "1bf963b9-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 52,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "1c0ac26f-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 20.8,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV STAGING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "245ffd7a-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Reason for ART eligibility": {
+                                            "UUID": "2465e61a-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2287e0-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "WHO stage III adult",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f179668-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "WHO stage": {
+                                            "UUID": "246526cc-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e228678-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "WHO stage III adult",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f179668-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Who stages criteria present": {
+                                            "UUID": "246163ba-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfc339c-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Fever, persistent unexplained, intermittent or constant, >1 month",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9ef20150-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "28763e28-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "28788b97-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "TB status": {
+                                            "UUID": "2877cd9f-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "28797dad-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Allergic to sulphur": {
+                                            "UUID": "287a7e19-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e24e63e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "DISPENSING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "32588b84-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "326dd586-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "1A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "325a976f-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 60,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ARV regimens received abstracted construct": {
+                                            "UUID": "326ecac2-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa87ea-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Stavudine Lamivudine and Nevirapine",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "APPOINTMENT": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "33dd55c0-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Appointment date": {
+                                            "UUID": "33de128b-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cbe2e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "2013-04-03T22:00:00.000Z",
+                                                "category": "DATE AND TIME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "TREATMENT": [
+                                    {
+                                        "Drug Orders": [
+                                            {
+                                                "concept": {
+                                                    "UUID": "9de21688-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "d4T/3TC/NVP (30/150/200mg tablet): 1 tab(s) TWICE A DAY (BD) (d4T/3TC/NVP)",
+                                                "start_date": "2013-03-06T22:00:01.000Z",
+                                                "auto_expire_date": "2013-04-05T22:00:01.000Z",
+                                                "frequency": "TWICE A DAY (BD)",
+                                                "units": "tab(s)",
+                                                "quantity": 60,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "2fbb5939-5434-11e3-86a1-003018acf05d"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "2e89e0da-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "2e8b9166-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "1A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Cotrimoxazole prophylaxis treatment started": {
+                                            "UUID": "2e8f1f0d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1fb56a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Isoniazid": {
+                                            "UUID": "2e90225d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9de00780-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Condoms": {
+                                            "UUID": "2e90fe3d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dda2018-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2013-10-31": {
+                                "HIV RECEPTION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "401099e3-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "401189c6-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "401291ce-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "VITALS": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "43904d7c-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "439151f2-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 54.1,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "43925f63-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "158.0",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "439c6ade-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 21.7,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "45f2bc0f-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "TB status": {
+                                            "UUID": "45f50c3c-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "48c725a1-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "48c85063-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "ART ADHERENCE": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "48ca45b6-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount of drug brought to clinic": {
+                                            "UUID": "48d50545-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa68dc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Unknown",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What was the patients adherence for this drug order": {
+                                            "UUID": "48d6006e-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f9328-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "13",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Missed antiretroviral drug construct": {
+                                            "UUID": "48d6ae81-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfbb034-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": -208,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "DISPENSING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "5e6cbe6c-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "5e6e3d3d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 60,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "5e76ed01-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ARV regimens received abstracted construct": {
+                                            "UUID": "5e77f448-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa87ea-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Tenofovir Lamivudine Efavirenz",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "TREATMENT": [
+                                    {
+                                        "Drug Orders": [
+                                            {
+                                                "concept": {
+                                                    "UUID": "9dfe4ae2-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "TDF/3TC/EFV (300/300/600mg tablet): 1 tab(s) IN THE EVENING (QPM) (TDF/3TC/EFV)",
+                                                "start_date": "2013-10-30T22:00:01.000Z",
+                                                "auto_expire_date": "2013-12-27T22:00:01.000Z",
+                                                "frequency": "IN THE EVENING (QPM)",
+                                                "units": "tab(s)",
+                                                "quantity": 60,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "61431986-5434-11e3-86a1-003018acf05d"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "5ab057a1-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "5ab21f9d-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What type of antiretroviral regimen": {
+                                            "UUID": "5ab2e03c-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f2ce4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Tenofovir Lamivudine Efavirenz",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Cotrimoxazole prophylaxis treatment started": {
+                                            "UUID": "5ab5d4c8-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1fb56a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Isoniazid": {
+                                            "UUID": "5abfa272-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9de00780-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Condoms": {
+                                            "UUID": "5ac040da-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dda2018-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "APPOINTMENT": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "60002891-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Appointment date": {
+                                            "UUID": "60015507-572b-11e3-95c4-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cbe2e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "2013-12-25T22:00:00.000Z",
+                                                "category": "DATE AND TIME"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2013-12-24": {
+                                "VITALS": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "e0030166-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "e003b2b2-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 52,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "e0045a43-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "158.0",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "e004e6c2-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 20.8,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "APPOINTMENT": [
+                                    {
+                                        "Appointment date": {
+                                            "UUID": "10a9df60-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cbe2e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "2014-02-19T22:00:00.000Z",
+                                                "category": "DATE AND TIME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "10a914dd-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "DISPENSING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "08f5ffa5-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "08f72efc-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 60,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "0d841cb8-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 60,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "0d87c7a2-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ARV regimens received abstracted construct": {
+                                            "UUID": "0d889d5a-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa87ea-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Tenofovir Lamivudine Efavirenz",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "e4cf8b92-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "TB status": {
+                                            "UUID": "e4d85e68-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "ebeb89a5-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "ebec689f-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV RECEPTION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "cdb7b703-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "cdb857e8-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "NO",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "cdb8e99c-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "ART ADHERENCE": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "ebedc946-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount of drug brought to clinic": {
+                                            "UUID": "ebee5ec6-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa68dc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 6,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What was the patients adherence for this drug order": {
+                                            "UUID": "ebef4efe-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f9328-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "100",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Missed antiretroviral drug construct": {
+                                            "UUID": "ebeff767-6c60-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfbb034-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "TREATMENT": [
+                                    {
+                                        "Drug Orders": [
+                                            {
+                                                "concept": {
+                                                    "UUID": "9dfe4ae2-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "TDF/3TC/EFV (300/300/600mg tablet): 1 tab(s) IN THE EVENING (QPM) (TDF/3TC/EFV)",
+                                                "start_date": "2013-12-24T06:02:47.000Z",
+                                                "auto_expire_date": "2014-02-20T06:02:47.000Z",
+                                                "frequency": "IN THE EVENING (QPM)",
+                                                "units": "tab(s)",
+                                                "quantity": 66,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "8852a623-54d3-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "concept": {
+                                                    "UUID": "9de36812-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "Cotrimoxazole (960mg): 1 tab(s) ONCE A DAY (OD) (CPT)",
+                                                "start_date": "2013-12-24T06:02:47.000Z",
+                                                "auto_expire_date": "2014-02-20T06:02:47.000Z",
+                                                "frequency": "ONCE A DAY (OD)",
+                                                "units": "tab(s)",
+                                                "quantity": 60,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "88539832-54d3-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "03176bfd-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Clinician Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "03189785-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Cotrimoxazole prophylaxis treatment started": {
+                                            "UUID": "031aa422-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1fb56a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Isoniazid": {
+                                            "UUID": "031ea320-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9de00780-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Condoms": {
+                                            "UUID": "031f28fe-6c61-11e3-b92f-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dda2018-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2014-02-20": {
+                                "VITALS": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "7daa4f46-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "7daaf98e-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 53,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "7dabcbf4-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "158.0",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "7dac5820-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 21.2,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV RECEPTION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "7aab69f5-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "7aac15bd-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "NO",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "7aacaca9-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "81244791-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "TB status": {
+                                            "UUID": "8125899a-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "8f83a4ce-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "8f84cdaf-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "ART ADHERENCE": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "8f862760-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount of drug brought to clinic": {
+                                            "UUID": "8f86c88e-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa68dc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What was the patients adherence for this drug order": {
+                                            "UUID": "8f87b0d9-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f9328-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "93",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Missed antiretroviral drug construct": {
+                                            "UUID": "8f884617-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfbb034-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Reason for poor adherence to antiretroviral therapy": {
+                                            "UUID": "8f88ef52-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df17f1a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Other",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1222a0-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "DISPENSING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "a4bd9ffa-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "a4bee9f4-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 90,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "a89d1541-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 90,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "a8a0cf2f-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ARV regimens received abstracted construct": {
+                                            "UUID": "a8a1787f-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa87ea-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Tenofovir Lamivudine Efavirenz",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "APPOINTMENT": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "aa5ab981-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Appointment date": {
+                                            "UUID": "aa5b662d-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cbe2e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "2014-05-14T22:00:00.000Z",
+                                                "category": "DATE AND TIME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "TREATMENT": [
+                                    {
+                                        "Drug Orders": [
+                                            {
+                                                "concept": {
+                                                    "UUID": "9dfe4ae2-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "TDF/3TC/EFV (300/300/600mg tablet): 1 tab(s) IN THE EVENING (QPM) (TDF/3TC/EFV)",
+                                                "start_date": "2014-02-20T05:12:41.000Z",
+                                                "auto_expire_date": "2014-05-17T05:12:41.000Z",
+                                                "frequency": "IN THE EVENING (QPM)",
+                                                "units": "tab(s)",
+                                                "quantity": 94,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "90f4b91c-54dd-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "concept": {
+                                                    "UUID": "9de36812-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "Cotrimoxazole (960mg): 1 tab(s) ONCE A DAY (OD) (CPT)",
+                                                "start_date": "2014-02-20T05:12:41.000Z",
+                                                "auto_expire_date": "2014-05-17T05:12:41.000Z",
+                                                "frequency": "ONCE A DAY (OD)",
+                                                "units": "tab(s)",
+                                                "quantity": 90,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "90f566b5-54dd-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "9f77a206-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "9f799c04-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Cotrimoxazole prophylaxis treatment started": {
+                                            "UUID": "9f7b6cb8-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1fb56a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Isoniazid": {
+                                            "UUID": "9f876423-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9de00780-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Condoms": {
+                                            "UUID": "9f87f816-99ed-11e3-b631-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dda2018-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2014-05-29": {
+                                "HIV RECEPTION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "efcf057f-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "efd034f7-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "NO",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "efd14087-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "VITALS": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "f2b2cbd8-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "f2b3f86a-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 51.7,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "f2b52e97-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "158.0",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "f2b63e63-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 20.7,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "f7c08623-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "TB status": {
+                                            "UUID": "f7cbf5bf-e6ef-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "295936e6-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "295a64a0-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "ART ADHERENCE": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "295bef73-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount of drug brought to clinic": {
+                                            "UUID": "295ca699-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa68dc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 2,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What was the patients adherence for this drug order": {
+                                            "UUID": "295dbc95-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f9328-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "94",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Missed antiretroviral drug construct": {
+                                            "UUID": "295e7a8c-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfbb034-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": -6,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Reason for poor adherence to antiretroviral therapy": {
+                                            "UUID": "295f7269-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df17f1a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Other",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1222a0-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "DISPENSING": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "36466e41-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "36493d3e-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 60,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "3b4f62ef-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 60,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "3b5fb5c7-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ARV regimens received abstracted construct": {
+                                            "UUID": "3b607df9-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa87ea-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Tenofovir Lamivudine Efavirenz",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "APPOINTMENT": [
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "3e581ba4-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Appointment date": {
+                                            "UUID": "3e5982a8-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cbe2e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "2014-07-23T22:00:00.000Z",
+                                                "category": "DATE AND TIME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "TREATMENT": [
+                                    {
+                                        "Drug Orders": [
+                                            {
+                                                "concept": {
+                                                    "UUID": "9dfe4ae2-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "TDF/3TC/EFV (300/300/600mg tablet): 1 tab(s) IN THE EVENING (QPM) (TDF/3TC/EFV)",
+                                                "start_date": "2014-05-29T05:15:06.000Z",
+                                                "auto_expire_date": "2014-07-26T05:15:06.000Z",
+                                                "frequency": "IN THE EVENING (QPM)",
+                                                "units": "tab(s)",
+                                                "quantity": 62,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "9ce7421b-54e8-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "concept": {
+                                                    "UUID": "9de36812-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "Cotrimoxazole (960mg): 1 tab(s) ONCE A DAY (OD) (CPT)",
+                                                "start_date": "2014-05-29T05:15:06.000Z",
+                                                "auto_expire_date": "2014-07-26T05:15:06.000Z",
+                                                "frequency": "ONCE A DAY (OD)",
+                                                "units": "tab(s)",
+                                                "quantity": 60,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "9ce96ad2-54e8-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "Workstation location": {
+                                            "UUID": "3295dfcc-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e236b88-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "HIV Nurse Station",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "3297a4e4-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Cotrimoxazole prophylaxis treatment started": {
+                                            "UUID": "329ae649-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1fb56a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Isoniazid": {
+                                            "UUID": "32ab9660-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9de00780-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Condoms": {
+                                            "UUID": "32ac8cca-e6f0-11e3-87a6-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dda2018-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2014-07-24": {
+                                "HIV RECEPTION": [
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "ae071344-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "NO",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "ae080c7c-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "VITALS": [
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "c5118e75-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 51,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "c51297ae-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "158.0",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "c51385ad-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 20.4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "ART ADHERENCE": [
+                                    {
+                                        "Amount of drug brought to clinic": {
+                                            "UUID": "d5895228-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa68dc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 2,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What was the patients adherence for this drug order": {
+                                            "UUID": "d58ac5da-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f9328-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "107",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Missed antiretroviral drug construct": {
+                                            "UUID": "d5964453-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfbb034-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Reason for poor adherence to antiretroviral therapy": {
+                                            "UUID": "d5970bf0-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df17f1a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Other",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1222a0-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "TB status": {
+                                            "UUID": "c9182d80-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "d5850006-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "d586aa6f-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "DISPENSING": [
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "e5bb4f0a-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 90,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "e5d5559a-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Amount dispensed": {
+                                            "UUID": "ea7c6911-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfcde64-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 90,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "ARV regimens received abstracted construct": {
+                                            "UUID": "ea811dff-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa87ea-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Tenofovir Lamivudine Efavirenz",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "APPOINTMENT": [
+                                    {
+                                        "Appointment date": {
+                                            "UUID": "eca6b69f-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cbe2e-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "2014-10-15T22:00:00.000Z",
+                                                "category": "DATE AND TIME"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "TREATMENT": [
+                                    {
+                                        "Drug Orders": [
+                                            {
+                                                "concept": {
+                                                    "UUID": "9de36812-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "Cotrimoxazole (960mg): 1 tab(s) ONCE A DAY (OD) (CPT)",
+                                                "start_date": "2014-07-24T06:43:53.000Z",
+                                                "auto_expire_date": "2014-10-18T06:43:53.000Z",
+                                                "frequency": "ONCE A DAY (OD)",
+                                                "units": "tab(s)",
+                                                "quantity": 90,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "f486738b-54f0-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "concept": {
+                                                    "UUID": "9dfe4ae2-b48a-11d7-9964-0024217bb78e"
+                                                },
+                                                "instructions": "TDF/3TC/EFV (300/300/600mg tablet): 1 tab(s) IN THE EVENING (QPM) (TDF/3TC/EFV)",
+                                                "start_date": "2014-07-24T06:43:53.000Z",
+                                                "auto_expire_date": "2014-10-18T06:43:53.000Z",
+                                                "frequency": "IN THE EVENING (QPM)",
+                                                "units": "tab(s)",
+                                                "quantity": 92,
+                                                "dose": 1,
+                                                "drug": {
+                                                    "dispensed": true,
+                                                    "obs": {
+                                                        "UUID": "f4838239-54f0-11e3-9dd4-003018acf05d"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "Regimen Category": {
+                                            "UUID": "e10b5953-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2682c8-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "5A",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Cotrimoxazole prophylaxis treatment started": {
+                                            "UUID": "e10eec8e-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1fb56a-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Isoniazid": {
+                                            "UUID": "e11f4212-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9de00780-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "NAME"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Condoms": {
+                                            "UUID": "e120815e-12fd-11e4-8779-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dda2018-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 0,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            "2014-10-16": {
+                                "HIV CLINIC CONSULTATION": [
+                                    {
+                                        "TB status": {
+                                            "UUID": "ef3d3803-5526-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e2225fc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "TB NOT suspected",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9f1a1eec-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Refer to ART clinician": {
+                                            "UUID": "0329e953-5527-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f7d66-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "No",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd8a8-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Prescribe drugs": {
+                                            "UUID": "032b34e1-5527-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e23d820-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "VITALS": [
+                                    {
+                                        "Weight (kg)": {
+                                            "UUID": "ebb727fe-5526-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb208-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 50.4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Height (cm)": {
+                                            "UUID": "ebb86e04-5526-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e0cb3ca-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "158.0",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Body mass index, measured": {
+                                            "UUID": "ebb983de-5526-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5bea4-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 20.2,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "HIV RECEPTION": [
+                                    {
+                                        "Responsible person present": {
+                                            "UUID": "e600d054-5526-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df5a662-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "NO",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Patient present for consultation": {
+                                            "UUID": "e60500b8-5526-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9df1fe72-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "Yes",
+                                                "category": "SPECIFIC NAME",
+                                                "UUID": "9edbd786-b48a-11d7-9964-0024217bb78e"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "ART ADHERENCE": [
+                                    {
+                                        "Amount of drug brought to clinic": {
+                                            "UUID": "032decb0-5527-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfa68dc-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "What was the patients adherence for this drug order": {
+                                            "UUID": "032f76de-5527-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9e1f9328-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": "105",
+                                                "category": "TEXT"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "Missed antiretroviral drug construct": {
+                                            "UUID": "0330b6ab-5527-11e4-8b33-003018acf05d",
+                                            "concept": {
+                                                "UUID": "9dfbb034-b48a-11d7-9964-0024217bb78e"
+                                            },
+                                            "response": {
+                                                "value": 4,
+                                                "category": "NUMERIC"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "gender": "M",
+        "birthdate": "1964-09-06T22:00:00.000Z",
+        "birthdate_estimated": 0,
+        "UUID": "e3d0b561-572a-11e3-95c4-003018acf05d"
+    }
+}

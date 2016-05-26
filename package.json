@@ -1,0 +1,21 @@
+{
+  "name": "websocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "clj-fuzzy": "^0.3.1",
+    "express": "^4.13.3",
+    "jade": ">= 0.0.1",
+    "knex": "^0.11.1",
+    "mysql": "^2.10.2",
+    "node-uuid": "^1.4.7",
+    "portfinder": "^0.4.0",
+    "socket.io": "^1.4.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chimwemwe Kachaje <chimwemwe.kachaje@baobabhealthtrust.org>",
+  "license": "MIT"
+}
