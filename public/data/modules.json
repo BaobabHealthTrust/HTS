@@ -10,6 +10,6 @@
             "HIV Viral Load": "javascript:dashboard.navPanel('/spec/hiv_viral_load.spec')"
         },
         "program" : "HTS PROGRAM",
-        "identifiers" : ["National id", "HTC Identifier"]
+        "identifiers" : ["National id", "HTS Number"]
     }
 }

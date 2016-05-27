@@ -6,8 +6,24 @@ var io = require('socket.io')(server);
 var portfinder = require('portfinder');
 var async = require('async');
 var uuid = require("node-uuid");
+var bodyParser = require('body-parser');
+var Mutex = require('Mutex');
+
+var mutex = new Mutex('htc_lock');
+
+var url = require('url');
 
 app.use(express.static(__dirname + '/public'));
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+// for forms
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 var numClients = 0;
 
@@ -55,6 +71,87 @@ Object.defineProperty(Date.prototype, "format", {
         return result;
     }
 });
+
+function generateId(patientId, username, location, callback) {
+
+    if (mutex.isLocked()) {
+
+        callback("Locked");
+
+    } else {
+
+        mutex.lock();
+
+        var yr = (new Date()).getFullYear();
+
+        var sql = "SELECT property_value FROM global_property WHERE property = 'htc.id.counter." + yr + "'";
+
+        queryRaw(sql, function (res) {
+
+            var nextId = 1;
+
+            if (res[0].length > 0) {
+
+                nextId = parseInt(res[0][0].property_value) + 1;
+
+                sql = "UPDATE global_property SET property_value = '" + nextId + "' WHERE property = 'htc.id.counter." + yr + "'";
+
+                queryRaw(sql, function (res) {
+
+                    var id = nextId + "-" + yr;
+
+                    var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
+                        "creator, date_created, uuid) VALUES ('" + patientId + "', '" + id +
+                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = 'HTS Number'), " +
+                        "(SELECT location_id FROM location WHERE name = '" + location + "'), (SELECT user_id FROM users " +
+                        " WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
+
+                    queryRaw(sql, function (res) {
+
+                        mutex.unlock();
+
+                        var cid = id;
+
+                        callback(cid);
+
+                    });
+
+                });
+
+            } else {
+
+                sql = "INSERT INTO global_property (property, property_value) VALUES ('htc.id.counter." + yr + "', '" +
+                    nextId + "') ON DUPLICATE KEY UPDATE property = 'htc.id.counter." + yr + "'";
+
+                queryRaw(sql, function (res) {
+
+                    var id = nextId + "-" + yr;
+
+                    var sql = "INSERT INTO patient_identifier (patient_id, identifier, identifier_type, location_id, " +
+                        "creator, date_created, uuid) VALUES ('" + patientId + "', '" + id +
+                        "', (SELECT patient_identifier_type_id FROM patient_identifier_type WHERE name = 'HTS Number'), " +
+                        "(SELECT location_id FROM location WHERE name = '" + location + "'), (SELECT user_id FROM users " +
+                        " WHERE username = '" + username + "'), NOW(), '" + uuid.v1() + "')";
+
+                    queryRaw(sql, function (res) {
+
+                        mutex.unlock();
+
+                        var cid = id;
+
+                        callback(cid);
+
+                    });
+
+                });
+
+            }
+
+        });
+
+    }
+
+}
 
 function padZeros(number, positions) {
     var zeros = parseInt(positions) - String(number).length;
@@ -241,15 +338,15 @@ function saveData(data, callback) {
 
                 var cKeys = Object.keys(data.data.obs[group]);
 
-                async.each(cKeys, function(concept, iOCallback){
+                async.each(cKeys, function (concept, iOCallback) {
 
                     var category = "value_text";
 
-                    if(group == "number") {
+                    if (group == "number") {
 
                         category = "value_numeric";
 
-                    } else if(group == "date") {
+                    } else if (group == "date") {
 
                         category = "value_datetime";
 
@@ -679,7 +776,7 @@ function updateUserView(data) {
 
                                         buildObs(encounter, function (data) {
 
-                                            for(var i = 0; i < data.length; i++) {
+                                            for (var i = 0; i < data.length; i++) {
 
                                                 collection[program.name]['patient_programs'][program.mUuid]
                                                     ['visits'][encounterDatetime][encounter.name].push(data[i]);
@@ -1031,16 +1128,292 @@ function queryData(table, fields, condition, callback) {
 
 }
 
-app.get('/:id', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-
 app.get('/data/person.json', function (req, res) {
     res.sendFile(__dirname + '/data/person.json');
 });
 
 app.get('/data/modules.json', function (req, res) {
     res.sendFile(__dirname + '/data/modules.json');
+});
+
+app.get('/district_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT district.name FROM district LEFT OUTER JOIN region ON district.region_id = region.region_id " +
+        "WHERE region.name = '" + query.region + "' AND district.name LIKE '" + (query.district ?
+        query.district : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var district = data[0][i];
+
+            collection.push(district.name);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
+app.get('/ta_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT traditional_authority.name FROM traditional_authority LEFT OUTER JOIN district ON " +
+        "traditional_authority.district_id = district.district_id WHERE district.name = '" + query.district +
+        "' AND traditional_authority.name LIKE '" + (query.ta ? query.ta : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var ta = data[0][i];
+
+            collection.push(ta.name);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
+app.get('/village_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT village.name FROM village LEFT OUTER JOIN traditional_authority ON " +
+        "village.traditional_authority_id = traditional_authority.traditional_authority_id LEFT OUTER JOIN district ON " +
+        "traditional_authority.district_id = district.district_id WHERE district.name = '" + query.district +
+        "' AND traditional_authority.name = '" + query.ta + "' AND village.name LIKE '" +
+        (query.village ? query.village : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var ta = data[0][i];
+
+            collection.push(ta.name);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
+app.get('/fnames_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT DISTINCT given_name AS name FROM person_name WHERE given_name LIKE '" +
+        (query.name ? query.name : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var name = data[0][i];
+
+            collection.push(name.name);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
+app.get('/lnames_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT DISTINCT family_name AS name FROM person_name WHERE family_name LIKE '" +
+        (query.name ? query.name : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var name = data[0][i];
+
+            collection.push(name.name);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
+app.post('/save_patient', function (req, res) {
+
+    console.log(req.body.data);
+
+    var data = req.body.data;
+
+    var npid;
+
+    var person_id;
+
+    var patient_id;
+
+    /*
+
+     address['Current District'] = addresses[i].state_province;
+
+     address['Current T/A'] = addresses[i].township_division;
+
+     address['Current Village'] = addresses[i].city_village;
+
+     address['Closest Landmark'] = addresses[i].address1;
+
+     address['Home District'] = addresses[i].address2;
+
+     address['Home T/A'] = addresses[i].county_district;
+
+     address['Home Village'] = addresses[i].neigborhood_cell;
+
+     */
+
+    /*
+     { 'First Name': 'Evan',
+     'Middle Name': 'Dennis',
+     'Last Name': 'Bhikha',
+     Gender: 'F',
+     'Birthdate Estimated': '0',
+     'Date of birth': '2016-05-27',
+     'Current Region': 'Central Region',
+     'Current District': 'Kasungu',
+     'Current T/A': 'TA Chulu',
+     'Current Village': 'Molozi Duwe',
+     'Region of Origin': 'Southern Region',
+     'Home District': 'Zomba',
+     'Home T/A': 'Mkumbira',
+     'Home Village': 'Chikhasu',
+     'Cellphone Number': 'N/A' }
+     */
+
+    var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
+        data["Gender"] + "', '" + data["Date of birth"] + "', '" + data["Birthdate Estimated"] + "', " +
+        "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW(), '" + uuid.v1() + "')";
+
+    queryRaw(sql, function (person) {
+
+        person_id = person[0].insertId;
+
+        console.log(person[0].insertId);
+
+        var sql = "INSERT INTO person_address (person_id, address1, address2, city_village, state_province, " +
+            " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES ('" +
+            person_id + "', '" +
+            (data['Closest Landmark'] ? data['Closest Landmark'] : "") + "', '" +
+            (data['Home District'] ? data['Home District'] : "") + "', '" +
+            (data['Current Village'] ? data['Current Village'] : "") + "', '" +
+            (data['Current District'] ? data['Current District'] : "") + "', " +
+            "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "')," +
+            " NOW(), '" +
+            (data['Home T/A'] ? data['Home T/A'] : "") + "', '" +
+            (data['Home Village'] ? data['Home Village'] : "") + "', '" +
+            (data['Current T/A'] ? data['Current T/A'] : "") + "', '" +
+            uuid.v1() +
+            "')";
+
+        queryRaw(sql, function (address) {
+
+            var address_id = address[0].insertId;
+
+            console.log(address_id);
+
+            var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES ('" +
+                person_id + "', '" + data["First Name"] + "', '" + (data["Middle Name"] ? data["Middle Name"] : "") + "', '" +
+                data["Last Name"] + "', " + "(SELECT user_id FROM users WHERE username = '" + data["User ID"] +
+                "'), NOW(), '" + uuid.v1() + "')";
+
+            queryRaw(sql, function (name) {
+
+                var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
+                    person_id + "', (SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW())";
+
+                queryRaw(sql, function (patient) {
+
+                    patient_id = patient[0].insertId;
+
+                    console.log(patient_id);
+
+                    generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] : "Unknown"),
+                        function (response) {
+
+                            npid = response;
+
+                            res.send(npid);
+
+                        });
+
+                })
+
+            });
+
+        })
+
+    });
+
+});
+
+app.get('/test_id', function (req, res) {
+
+    generateId(24, "admin", "Unknown", function (response) {
+
+        console.log(response);
+
+        res.send(response);
+
+    });
+
+})
+
+app.get('/:id', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
 
 portfinder.basePort = 3014;
