@@ -1695,7 +1695,7 @@ var dashboard = ({
             var base = (url ? url[1] : "");
 
             var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
-                "src='" + "/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
+                "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
                 "content='text/html;charset=UTF-8'/><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '2010/03/12';tt_cancel_destination = '/';tt_cancel_show = '/';</script></head><body>";
 

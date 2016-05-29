@@ -277,7 +277,7 @@ var protocol = ({
         var order = {};
 
         var script = document.createElement("script");
-        script.setAttribute("src", "/form2js.js");
+        script.setAttribute("src", "/javascripts/form2js.js");
 
         document.head.appendChild(script);
 
