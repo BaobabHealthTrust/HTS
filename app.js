@@ -1459,6 +1459,66 @@ app.post('/updateUser', function (req, res) {
 
 })
 
+app.get('/search_for_patient', function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? ((parseInt(query.page) * pageSize) - 1) : 0);
+
+    var sql = "SELECT person.person_id, family_name, given_name, birthdate, birthdate_estimated, gender, identifier, " +
+        "(SELECT name FROM patient_identifier_type WHERE patient_identifier_type_id = " +
+        "identifier_type) AS idtype FROM person_name LEFT OUTER JOIN person ON person.person_id = " +
+        "person_name.person_id LEFT OUTER JOIN patient_identifier ON patient_identifier.patient_id = person.person_id " +
+        "WHERE patient_identifier.voided = 0 AND person_name.voided = 0 AND person.voided = 0 AND family_name = '" +
+        (query.last_name ? query.last_name : "") + "' AND given_name = '" + (query.first_name ? query.first_name : "") +
+        "' AND gender = '" + (query.gender ? query.gender : "") + "' LIMIT " + lowerLimit + ", " + pageSize;
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var collection = {};
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var person = data[0][i];
+
+            if(!collection[person.person_id]) {
+
+                collection[person.person_id] = {};
+
+            }
+
+            collection[person.person_id]["First Name"] = person.given_name;
+
+            collection[person.person_id]["Last Name"] = person.family_name;
+
+            collection[person.person_id]["Gender"] = person.gender;
+
+            collection[person.person_id]["Estimated"] = person.birthdate_estimated;
+
+            collection[person.person_id]["Date of Birth"] = person.birthdate;
+
+            if(!collection[person.person_id]["Identifiers"]) {
+
+                collection[person.person_id]["Identifiers"] = {};
+
+            }
+
+            collection[person.person_id]["Identifiers"][person.idtype] = person.identifier;
+
+        }
+
+        res.status(200).json(collection);
+
+    })
+
+})
+
 app.get('/test_id', function (req, res) {
 
     generateId(24, "admin", "Unknown", function (response) {
