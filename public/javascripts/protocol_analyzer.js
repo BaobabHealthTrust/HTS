@@ -297,6 +297,7 @@ var protocol = ({
         var form = document.createElement("form");
         form.action = "javascript:submitData()";
         form.id = "data";
+        form.style.display = "none";
 
         div.appendChild(form);
 
@@ -968,7 +969,7 @@ var protocol = ({
                 for (var s = 0; s < jsfiles.length; s++) {
 
                     var link = document.createElement("link");
-                    link.setAttribute("href", "/touchscreentoolkit/lib/stylesheets/" + jsfiles[s] + ".css");
+                    link.setAttribute("href", "/stylesheets/" + jsfiles[s] + ".css");
                     link.setAttribute("type", "text/css");
                     link.setAttribute("rel", "stylesheet");
 
@@ -987,7 +988,8 @@ var protocol = ({
                 for (var s = 0; s < jsfiles.length; s++) {
 
                     var script = document.createElement("script");
-                    script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/" + jsfiles[s] + ".js");
+                    script.setAttribute("src", (jsfiles[s].match(/touchscreentoolkit/i) ?
+                        "/touchscreentoolkit/lib/javascripts/" : "/javascripts/") + jsfiles[s] + ".js");
 
                     document.head.appendChild(script);
 

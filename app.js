@@ -8,6 +8,8 @@ var async = require('async');
 var uuid = require("node-uuid");
 var bodyParser = require('body-parser');
 var Mutex = require('Mutex');
+var md5 = require('md5');
+var randomstring = require("randomstring");
 
 var mutex = new Mutex('htc_lock');
 
@@ -71,6 +73,14 @@ Object.defineProperty(Date.prototype, "format", {
         return result;
     }
 });
+
+function encrypt(password, salt) {
+
+    var encrypted = md5(password + salt);
+
+    return encrypted;
+
+}
 
 function generateId(patientId, username, location, callback) {
 
@@ -1298,42 +1308,6 @@ app.post('/save_patient', function (req, res) {
 
     var patient_id;
 
-    /*
-
-     address['Current District'] = addresses[i].state_province;
-
-     address['Current T/A'] = addresses[i].township_division;
-
-     address['Current Village'] = addresses[i].city_village;
-
-     address['Closest Landmark'] = addresses[i].address1;
-
-     address['Home District'] = addresses[i].address2;
-
-     address['Home T/A'] = addresses[i].county_district;
-
-     address['Home Village'] = addresses[i].neigborhood_cell;
-
-     */
-
-    /*
-     { 'First Name': 'Evan',
-     'Middle Name': 'Dennis',
-     'Last Name': 'Bhikha',
-     Gender: 'F',
-     'Birthdate Estimated': '0',
-     'Date of birth': '2016-05-27',
-     'Current Region': 'Central Region',
-     'Current District': 'Kasungu',
-     'Current T/A': 'TA Chulu',
-     'Current Village': 'Molozi Duwe',
-     'Region of Origin': 'Southern Region',
-     'Home District': 'Zomba',
-     'Home T/A': 'Mkumbira',
-     'Home Village': 'Chikhasu',
-     'Cellphone Number': 'N/A' }
-     */
-
     var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
         data["Gender"] + "', '" + data["Date of birth"] + "', '" + data["Birthdate Estimated"] + "', " +
         "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW(), '" + uuid.v1() + "')";
@@ -1400,6 +1374,91 @@ app.post('/save_patient', function (req, res) {
 
 });
 
+app.post('/updateUser', function (req, res) {
+
+    console.log(req.body);
+
+    /*
+     { Username: 'test',
+     Password: 'test',
+     'Confirm Password': 'test',
+     'Role(s)': [ 'Counselor', 'Admin' ],
+     'First Name': 'test',
+     'Last Name': 'test',
+     'Date of Birth': '1976-08-30',
+     Estimated: '0',
+     Gender: 'Male' }
+     */
+
+    var data = req.body;
+
+    var rString = randomstring.generate(12);
+
+    var salt = rString;
+
+    var password = encrypt(req.body.Password, salt);
+
+    var person_id;
+
+    sql = "SELECT user_id FROM users WHERE username = '" + req.body["Username"] + "'";
+
+    queryRaw(sql, function (verification) {
+
+        if (verification[0].length > 0) {
+
+            res.send("Username already taken!");
+
+        } else {
+
+            var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
+                req.body["Gender"] + "', '" + req.body["Date of Birth"] + "', '" + req.body["Estimated"] + "', " +
+                "(SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) +
+                "'), NOW(), '" + uuid.v1() + "')";
+
+            queryRaw(sql, function (person) {
+
+                person_id = person[0].insertId;
+
+                console.log(person[0].insertId);
+
+
+                var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, uuid) VALUES ('" +
+                    person_id + "', '" + req.body["First Name"] + "', '" + req.body["Last Name"] + "', " +
+                    "(SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] != undefined ? req.body["User ID"] : "admin" ) +
+                    "'), NOW(), '" + uuid.v1() + "')";
+
+                queryRaw(sql, function (name) {
+
+                    sql = "SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "'"
+
+                    queryRaw(sql, function (updater) {
+
+                        console.log(updater[0][0].user_id);
+
+                        var sql = "INSERT INTO users (system_id, username, password, salt, creator, date_created, person_id, uuid) VALUES ('" +
+                            req.body["Username"] + "', '" + req.body["Username"] + "', '" + password + "', '" + salt + "', '" +
+                            updater[0][0].user_id + "', NOW(), '" + person_id + "', '" + uuid.v1() + "')";
+
+                        queryRaw(sql, function (user) {
+
+                            console.log(user);
+
+                            res.send("User added!");
+
+                        });
+
+                    });
+
+                });
+
+            });
+
+        }
+
+    });
+
+})
+
 app.get('/test_id', function (req, res) {
 
     generateId(24, "admin", "Unknown", function (response) {
@@ -1409,6 +1468,16 @@ app.get('/test_id', function (req, res) {
         res.send(response);
 
     });
+
+})
+
+app.get('/roles', function (req, res) {
+
+    var roles = ["Counselor", "Supervisor", "Admin"];
+
+    var result = "<li>" + roles.join("</li><li>") + "</li>";
+
+    res.send(result);
 
 })
 
