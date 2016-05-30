@@ -74,6 +74,48 @@ Object.defineProperty(Date.prototype, "format", {
     }
 });
 
+function getAge(birthdate, estimated) {
+
+    var age;
+
+    if ((new Date(birthdate)) == "Invalid Date") {
+
+        return "???";
+
+    }
+
+    if ((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)) > 1) {
+
+        age = Math.round((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)), 0);
+
+    } else if ((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)) > 1) {
+
+        age = Math.round((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)), 0) + " months";
+
+    } else if ((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)) > 1) {
+
+        age = Math.round((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)), 0) + " weeks";
+
+    } else if ((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)) > 1) {
+
+        age = Math.round((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)), 0) + " days";
+
+    } else if ((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)) > 1) {
+
+        age = Math.round((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)), 0) + " hours";
+
+    } else {
+
+        age = "< 1hr";
+
+    }
+
+    age = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age : age);
+
+    return age;
+
+}
+
 function encrypt(password, salt) {
 
     var encrypted = md5(password + salt);
@@ -1467,11 +1509,12 @@ app.get('/search_for_patient', function(req, res) {
 
     var pageSize = 10;
 
-    var lowerLimit = (query.page ? ((parseInt(query.page) * pageSize) - 1) : 0);
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
     var sql = "SELECT person.person_id, family_name, given_name, birthdate, birthdate_estimated, gender, identifier, " +
         "(SELECT name FROM patient_identifier_type WHERE patient_identifier_type_id = " +
-        "identifier_type) AS idtype FROM person_name LEFT OUTER JOIN person ON person.person_id = " +
+        "identifier_type) AS idtype, (SELECT city_village FROM person_address WHERE person_address.person_id = " +
+        "person.person_id AND voided = 0 LIMIT 1) AS city_village FROM person_name LEFT OUTER JOIN person ON person.person_id = " +
         "person_name.person_id LEFT OUTER JOIN patient_identifier ON patient_identifier.patient_id = person.person_id " +
         "WHERE patient_identifier.voided = 0 AND person_name.voided = 0 AND person.voided = 0 AND family_name = '" +
         (query.last_name ? query.last_name : "") + "' AND given_name = '" + (query.first_name ? query.first_name : "") +
@@ -1483,6 +1526,8 @@ app.get('/search_for_patient', function(req, res) {
 
         var collection = {};
 
+        var keys = [];
+
         for (var i = 0; i < data[0].length; i++) {
 
             var person = data[0][i];
@@ -1490,6 +1535,8 @@ app.get('/search_for_patient', function(req, res) {
             if(!collection[person.person_id]) {
 
                 collection[person.person_id] = {};
+
+                keys.push(person.person_id);
 
             }
 
@@ -1509,11 +1556,47 @@ app.get('/search_for_patient', function(req, res) {
 
             }
 
+            if(!collection[person.person_id]["Addresses"]) {
+
+                collection[person.person_id]["Addresses"] = {};
+
+            }
+
+            collection[person.person_id]["Addresses"]["Current Residence"] = person.city_village;
+
             collection[person.person_id]["Identifiers"][person.idtype] = person.identifier;
 
         }
 
-        res.status(200).json(collection);
+        var results = [];
+
+        for(var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            var entry = {
+                "names": {
+                    "given_name": collection[key]["First Name"],
+                    "family_name": collection[key]["Last Name"]
+                },
+                "gender": collection[key]["Gender"],
+                "national_id": (collection[key]["Identifiers"]["National id"] ?
+                    collection[key]["Identifiers"]["National id"] : ((Object.keys(collection[key]["Identifiers"]).length > 0) ?
+                    collection[key]["Identifiers"][Object.keys(collection[key]["Identifiers"])[0]] : "")),
+                "patient": {
+                    "identifiers": collection[key]["Identifiers"]
+                },
+                "addresses": {
+                    "current_village": collection[key]["Addresses"]["Current Residence"]
+                },
+                "age": getAge(collection[key]["Date of Birth"], collection[key]["Estimated"])
+            }
+
+            results.push(entry);
+
+        }
+
+        res.status(200).json(results);
 
     })
 
