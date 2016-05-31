@@ -2,5 +2,6 @@
     "host": "localhost",
     "user": "root",
     "password": "admin",
-    "database": "htc1_7"
+    "database": "htc1_7",
+    "stockDatabase": "inventory"
 }

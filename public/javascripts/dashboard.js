@@ -1717,30 +1717,6 @@ var dashboard = ({
 
     },
 
-    buildForm: function(path, callback) {
-
-        var content = "";
-
-        var div = document.createElement("div");
-
-        var form = document.createElement("form");
-
-        div.appendChild(form);
-
-        var btn = document.createElement("input");
-        btn.type = "button";
-        btn.value = "Click me";
-
-        btn.setAttribute("onclick", "window.parent.dashboard.submitData({})");
-
-        form.appendChild(btn);
-
-        content = div.outerHTML;
-
-        callback(content);
-
-    },
-
     submitData: function(data) {
 
         if(dashboard.__$("navPanel")) {

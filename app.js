@@ -1180,6 +1180,289 @@ function queryData(table, fields, condition, callback) {
 
 }
 
+function queryRawStock(sql, callback) {
+
+    var config = require(__dirname + "/config/database.json");
+
+    var knex = require('knex')({
+        client: 'mysql',
+        connection: {
+            host: config.host,
+            user: config.user,
+            password: config.password,
+            database: config.stockDatabase
+        },
+        pool: {
+            min: 0,
+            max: 500
+        }
+    });
+
+    knex.raw(sql)
+        .then(function (result) {
+
+            callback(result);
+
+        })
+        .catch(function (err) {
+
+            console.log(err.message);
+
+            callback(err);
+
+        });
+
+}
+
+function transferStock(data, res) {
+
+    if (data.receipt_id) {
+
+        var sql = "UPDATE transfer SET dispatch_id = '" + data.dispatch_id + "', transfer_quantity = '" + data.transfer_quantity +
+            "', transfer_datetime = '" + data.transfer_datetime + "', transfer_who_transfered = '" + data.userId +
+            "transfer_who_received = '" + (data.transfer_who_received ? data.transfer_who_received : "") +
+            "', transfer_who_authorised = '" + (data.transfer_who_authorised ? data.transfer_who_authorised : "") +
+            "', transfer_destination = '" + (data.transfer_destination ? data.transfer_destination : "") + "' WHERE " +
+            "transfer_id = '" + data.transfer_id;
+
+        console.log(sql);
+
+        queryRawStock(sql, function (stock) {
+
+            console.log(stock[0]);
+
+            res.send(stock[0].insertId)
+
+        });
+
+    }
+    else {
+
+        var sql = "INSERT INTO transfer (dispatch_id, transfer_quantity, transfer_datetime, transfer_who_transfered, " +
+            " transfer_who_received, transfer_who_authorised, transfer_destination) VALUES('" +
+            data.dispatch_id + "', '" + data.transfer_quantity + "', '" + data.transfer_datetime + "', '" + data.userId +
+            "', '" + (data.transfer_who_received ? data.transfer_who_received : "") + "', '" +
+            (data.transfer_who_authorised ? data.transfer_who_authorised : "") + "', '" +
+            (data.transfer_destination ? data.transfer_destination : "") + "')";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (stock) {
+
+            console.log(stock[0]);
+
+            res.send(stock[0].insertId)
+
+        });
+
+    }
+
+}
+
+function dispatchStock(data, res) {
+
+    if (data.receipt_id) {
+
+        var sql = "UPDATE dispatch SET stock_id = '" + data.stock_id + "', dispatch_quantity = '" + data.dispatch_quantity +
+            "', dispatch_datetime = '" + data.dispatch_datetime + "', dispatch_who_dispatched = '" + data.userId +
+            "dispatch_who_received = '" + (data.dispatch_who_received ? data.dispatch_who_received : "") +
+            "', dispatch_who_authorised = '" + (data.dispatch_who_authorised ? data.dispatch_who_authorised : "") +
+            "', dispatch_destination = '" + (data.dispatch_destination ? data.dispatch_destination : "") + "' WHERE " +
+            "dispatch_id = '" + data.dispatch_id;
+
+        console.log(sql);
+
+        queryRawStock(sql, function (stock) {
+
+            console.log(stock[0]);
+
+            res.send(stock[0].insertId)
+
+        });
+
+    }
+    else {
+
+        var sql = "INSERT INTO dispatch (stock_id, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, " +
+            " dispatch_who_received, dispatch_who_authorised, dispatch_destination) VALUES('" +
+            data.stock_id + "', '" + data.dispatch_quantity + "', '" + data.dispatch_datetime + "', '" + data.userId +
+            "', '" + (data.dispatch_who_received ? data.dispatch_who_received : "") + "', '" +
+            (data.dispatch_who_authorised ? data.dispatch_who_authorised : "") + "', '" +
+            (data.dispatch_destination ? data.dispatch_destination : "") + "')";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (stock) {
+
+            console.log(stock[0]);
+
+            res.send(stock[0].insertId)
+
+        });
+
+    }
+
+}
+
+function receiveStock(data, res) {
+
+    if (data.receipt_id) {
+
+        var sql = "UPDATE receipt SET stock_id = '" + data.stock_id + "', receipt_quantity = '" + data.receipt_quantity +
+            "', receipt_datetime = '" + data.receipt_datetime + "', receipt_who_received = '" + data.userId + "' WHERE " +
+            "receipt_id = '" + data.receipt_id;
+
+        console.log(sql);
+
+        queryRawStock(sql, function (stock) {
+
+            console.log(stock[0]);
+
+            res.send(stock[0].insertId)
+
+        });
+
+    }
+    else {
+
+        var sql = "INSERT INTO receipt (stock_id, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
+            data.stock_id + "', '" + data.receipt_quantity + "', '" + data.receipt_datetime + "', '" + data.userId + "')";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (stock) {
+
+            console.log(stock[0]);
+
+            res.send(stock[0].insertId)
+
+        });
+
+    }
+
+}
+
+function saveStock(data, res) {
+
+    if (data.stock_id) {
+
+        var sql = "SELECT category_id FROM category WHERE name = '" + data.category + "'";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (category) {
+
+            if (category[0].length <= 0) {
+
+                var sql = "INSERT INTO category (name) VALUES('" + data.category + "')";
+
+                queryRawStock(sql, function (category) {
+
+                    var category_id = category[0].insertId;
+
+                    var sql = "UPDATE stock SET name = '" + data.item_name + "', " +
+                        "description = '" + (data.description ? data.description : "") + "', " +
+                        "reorder_level = '" + data.re_order_level + "', " +
+                        "category_id = '" + category_id + "', " +
+                        "date_created = NOW(), " +
+                        "creator= '" + data.userId + "' WHERE stock_id = '" + data.stock_id + "'";
+
+                    console.log(sql);
+
+                    queryRawStock(sql, function (stock) {
+
+                        console.log(stock[0]);
+
+                        res.send(stock[0])
+
+                    });
+
+                });
+
+            } else {
+
+                var category_id = category[0][0].category_id;
+
+                var sql = "UPDATE stock SET name = '" + data.item_name + "', " +
+                    "description = '" + (data.description ? data.description : "") + "', " +
+                    "reorder_level = '" + data.re_order_level + "', " +
+                    "category_id = '" + category_id + "', " +
+                    "date_created = NOW(), " +
+                    "creator= '" + data.userId + "' WHERE stock_id = '" + data.stock_id + "'";
+
+                console.log(sql);
+
+                queryRawStock(sql, function (stock) {
+
+                    console.log(stock[0]);
+
+                    res.send(stock[0])
+
+                });
+
+            }
+
+        });
+
+    }
+    else {
+
+        var sql = "SELECT category_id FROM category WHERE name = '" + data.category + "'";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (category) {
+
+            if (category[0].length <= 0) {
+
+                var sql = "INSERT INTO category (name) VALUES('" + data.category + "')";
+
+                queryRawStock(sql, function (category) {
+
+                    var category_id = category[0].insertId;
+
+                    var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES('" +
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', '" + data.re_order_level +
+                        "', '" + category_id + "', NOW(), '" + data.userId + "')";
+
+                    console.log(sql);
+
+                    queryRawStock(sql, function (stock) {
+
+                        console.log(stock[0]);
+
+                        res.send(stock[0].insertId)
+
+                    });
+
+                });
+
+            } else {
+
+                var category_id = category[0][0].category_id;
+
+                var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES('" +
+                    data.item_name + "', '" + (data.description ? data.description : "") + "', '" + data.re_order_level +
+                    "', '" + category_id + "', NOW(), '" + data.userId + "')";
+
+                console.log(sql);
+
+                queryRawStock(sql, function (stock) {
+
+                    console.log(stock[0]);
+
+                    res.send(stock[0].insertId)
+
+                });
+
+            }
+
+        });
+
+    }
+
+}
+
 app.get('/data/person.json', function (req, res) {
     res.sendFile(__dirname + '/data/person.json');
 });
@@ -1420,18 +1703,6 @@ app.post('/updateUser', function (req, res) {
 
     console.log(req.body);
 
-    /*
-     { Username: 'test',
-     Password: 'test',
-     'Confirm Password': 'test',
-     'Role(s)': [ 'Counselor', 'Admin' ],
-     'First Name': 'test',
-     'Last Name': 'test',
-     'Date of Birth': '1976-08-30',
-     Estimated: '0',
-     Gender: 'Male' }
-     */
-
     var data = req.body;
 
     var rString = randomstring.generate(12);
@@ -1501,7 +1772,7 @@ app.post('/updateUser', function (req, res) {
 
 })
 
-app.get('/search_for_patient', function(req, res) {
+app.get('/search_for_patient', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -1532,7 +1803,7 @@ app.get('/search_for_patient', function(req, res) {
 
             var person = data[0][i];
 
-            if(!collection[person.person_id]) {
+            if (!collection[person.person_id]) {
 
                 collection[person.person_id] = {};
 
@@ -1550,13 +1821,13 @@ app.get('/search_for_patient', function(req, res) {
 
             collection[person.person_id]["Date of Birth"] = person.birthdate;
 
-            if(!collection[person.person_id]["Identifiers"]) {
+            if (!collection[person.person_id]["Identifiers"]) {
 
                 collection[person.person_id]["Identifiers"] = {};
 
             }
 
-            if(!collection[person.person_id]["Addresses"]) {
+            if (!collection[person.person_id]["Addresses"]) {
 
                 collection[person.person_id]["Addresses"] = {};
 
@@ -1570,7 +1841,7 @@ app.get('/search_for_patient', function(req, res) {
 
         var results = [];
 
-        for(var i = 0; i < keys.length; i++) {
+        for (var i = 0; i < keys.length; i++) {
 
             var key = keys[i];
 
@@ -1621,6 +1892,154 @@ app.get('/roles', function (req, res) {
     var result = "<li>" + roles.join("</li><li>") + "</li>";
 
     res.send(result);
+
+})
+
+app.get('/stock_list', function (req, res) {
+
+    var sql = "SELECT stock.stock_id, name, SUM(receipt_quantity) receipt_quantity, SUM(dispatch_quantity) " +
+        "dispatch_quantity, reorder_level FROM stock LEFT OUTER JOIN receipt ON receipt.stock_id = stock.stock_id LEFT " +
+        "OUTER JOIN dispatch ON dispatch.stock_id = stock.stock_id GROUP BY stock.stock_id";
+
+    queryRawStock(sql, function (data) {
+
+        res.send(data[0]);
+
+    })
+
+})
+
+app.get('/stock_categories', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT name FROM category WHERE name LIKE '" + query.category + "%'";
+
+    queryRawStock(sql, function (data) {
+
+        var collection = [];
+
+        console.log(data[0]);
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            collection.push(data[0][i].name);
+
+        }
+
+        var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+})
+
+app.get('/stock_items', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
+        "category.name = '" + query.category + "' AND stock.name LIKE '" + query.item_name + "%'";
+
+    queryRawStock(sql, function (data) {
+
+        var collection = [];
+
+        console.log(data[0]);
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            collection.push(data[0][i].name);
+
+        }
+
+        var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+})
+
+app.get('/stock_search', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT stock.stock_id, stock.name AS item_name, description, category.name AS category_name, " +
+        "COALESCE(SUM(receipt_quantity),0) receipt_quantity, " +
+        "COALESCE(SUM(dispatch_quantity),0) dispatch_quantity, reorder_level FROM stock LEFT OUTER JOIN category ON " +
+        "category.category_id = stock.category_id LEFT OUTER JOIN receipt ON receipt.stock_id = stock.stock_id LEFT " +
+        "OUTER JOIN dispatch ON dispatch.stock_id = stock.stock_id " + (query.category && query.item_name ?
+        "WHERE category.name = '" + query.category + "' AND stock.name = '" + query.item_name + "'" : "") +
+        " GROUP BY stock.stock_id";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var collection = [];
+
+        console.log(data[0]);
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var entry = {
+                stock_id: data[0][i].stock_id,
+                item_name: data[0][i].item_name,
+                category: data[0][i].category_name,
+                description: data[0][i].description,
+                in_stock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
+                last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
+                avg_dispatch_per_day: 0,
+                re_order_level: data[0][i].reorder_level
+            }
+
+            collection.push(entry);
+
+        }
+
+        // var collection = (categories[query.category] || []);
+
+        res.status(200).json(collection);
+
+    })
+
+})
+
+app.post('/save_item', function (req, res) {
+
+    var data = req.body.data;
+
+    console.log(Object.keys(data));
+
+    switch (data.datatype) {
+
+        case "receive":
+
+            receiveStock(data, res);
+
+            break;
+
+        case "stock":
+
+            saveStock(data, res);
+
+            break;
+
+        case 'dispatch':
+
+            dispatchStock(data, res);
+
+            break;
+
+    }
 
 })
 
