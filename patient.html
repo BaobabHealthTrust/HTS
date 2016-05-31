@@ -1,8 +1,11 @@
 <html>
 <head></head>
 <body>
+<script src="/javascripts/usermanagement.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+
+    user.init("/config/user.settings.json");
 
     var id = window.location.href.match(/\/([^\/]+)$/)[1];
 
@@ -70,7 +73,7 @@
 
 <script>
 
-    dashboard.init("/data/person.json", "/data/modules.json", "http://localhost:3014");
+    dashboard.init("/data/person.json", "/data/patient.modules.json", "http://localhost:3014");
 
 </script>
 

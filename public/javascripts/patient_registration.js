@@ -1,44 +1,48 @@
 "use strict"
 
-Object.defineProperty(Date.prototype, "format", {
-    value: function (format) {
-        var date = this;
+if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
-        var result = "";
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
 
-        if (!format) {
+            var result = "";
 
-            format = ""
+            if (!format) {
 
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + patient.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    patient.padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
         }
+    });
 
-        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-            "October", "November", "December"];
-
-        if (format.match(/YYYY\-mm\-dd/)) {
-
-            result = date.getFullYear() + "-" + patient.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                patient.padZeros(date.getDate(), 2);
-
-        } else if (format.match(/mmm\/d\/YYYY/)) {
-
-            result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
-
-        } else if (format.match(/d\smmmm,\sYYYY/)) {
-
-            result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
-
-        } else {
-
-            result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
-
-        }
-
-        return result;
-    }
-});
+}
 
 var patient = ({
 
@@ -153,7 +157,8 @@ var patient = ({
             if (patient.$("rightpanel").children[i].id == me) {
                 patient.$("rightpanel").children[i].className = "element highlighted";
             } else {
-                patient.$("rightpanel").children[i].className = "element " + (patient.$("rightpanel").children[i].getAttribute("tag") == "odd" ? "odd" : "");
+                patient.$("rightpanel").children[i].className = "element " +
+                    (patient.$("rightpanel").children[i].getAttribute("tag") == "odd" ? "odd" : "");
             }
         }
 
@@ -1203,7 +1208,7 @@ var patient = ({
 
                 patient.settings = JSON.parse(settings);
 
-                patient.buildSearchPage();
+                // patient.buildSearchPage();
 
                 /*} catch (e) {
 

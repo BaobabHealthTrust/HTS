@@ -633,7 +633,13 @@ var landing = ({
         btnFinish.className = "green";
         btnFinish.innerHTML = "Find or Register Patient";
         btnFinish.onmousedown = function () {
-            window.location = '/';
+
+            if(patient != undefined){
+
+                patient.buildSearchPage();
+
+            }
+
         }
 
         td3_2.appendChild(btnFinish);

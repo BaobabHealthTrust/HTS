@@ -5,6 +5,7 @@
     <title></title>
     <script src="/javascripts/usermanagement.js"></script>
     <script src="/javascripts/landing.js"></script>
+    <script src="/javascripts/patient_registration.js"></script>
 </head>
 <body>
 
@@ -66,6 +67,8 @@
     user.init("/config/user.settings.json");
 
     landing.init("/data/person.json", "/data/landing.modules.json", "http://localhost:3014/");
+
+    patient.init("/config/patient.settings.json", user.getCookie("username"));
 
     var tmrInterval = setInterval(function(){
 

@@ -1,44 +1,48 @@
 "use strict"
 
-Object.defineProperty(Date.prototype, "format", {
-    value: function (format) {
-        var date = this;
+if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
-        var result = "";
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
 
-        if (!format) {
+            var result = "";
 
-            format = ""
+            if (!format) {
 
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    dashboard.padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
         }
+    });
 
-        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-            "October", "November", "December"];
-
-        if (format.match(/YYYY\-mm\-dd/)) {
-
-            result = date.getFullYear() + "-" + dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                dashboard.padZeros(date.getDate(), 2);
-
-        } else if (format.match(/mmm\/d\/YYYY/)) {
-
-            result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
-
-        } else if (format.match(/d\smmmm,\sYYYY/)) {
-
-            result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
-
-        } else {
-
-            result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
-
-        }
-
-        return result;
-    }
-});
+}
 
 Object.defineProperty(Array.prototype, "shuffle", {
     value: function () {
@@ -1196,7 +1200,8 @@ var dashboard = ({
 
         }
 
-        if (dashboard.__$("primary_id") && dashboard.__$("primary_id_label") && sourceData["identifiers"].length > 0) {
+        if (sourceData && sourceData["identifiers"] && dashboard.__$("primary_id") && dashboard.__$("primary_id_label") &&
+            sourceData["identifiers"].length > 0) {
 
             dashboard.__$("primary_id_label").innerHTML = sourceData["identifiers"][0];
 
@@ -1205,7 +1210,8 @@ var dashboard = ({
 
         }
 
-        if (dashboard.__$("other_id") && dashboard.__$("other_id_label") && sourceData["identifiers"].length > 1) {
+        if (sourceData && sourceData["identifiers"] && dashboard.__$("other_id") && dashboard.__$("other_id_label") &&
+            sourceData["identifiers"].length > 1) {
 
             dashboard.__$("other_id_label").innerHTML = sourceData["identifiers"][1];
 

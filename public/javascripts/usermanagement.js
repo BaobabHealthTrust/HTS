@@ -325,8 +325,6 @@ var user = ({
 
         this.ajaxRequest(path, function (data) {
 
-            console.log(data);
-
             user.settings = JSON.parse(data);
 
         })
@@ -475,8 +473,6 @@ var user = ({
 
             iframe.onload = function () {
 
-                // user.$("ifrMain").contentWindow.protocol.init(path, undefined, undefined, undefined, undefined);
-
             }
 
         }
@@ -572,8 +568,6 @@ var user = ({
             httpRequest.open("GET", url, true);
             httpRequest.send(null);
         } catch (e) {
-            if (console)
-                console.log(e);
         }
 
     },
@@ -597,13 +591,6 @@ var user = ({
                     user.login();
 
                 }
-
-                // } catch (e) {
-
-                // if (console)
-                //   console.log(e);
-
-                // }
 
             })
 
