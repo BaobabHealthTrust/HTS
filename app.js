@@ -1522,7 +1522,7 @@ app.post('/login', function (req, res) {
 
     var data = req.body;
 
-    var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
+    var sql = "SELECT user_id, username FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
         data.password + "', salt))";
 
     queryRaw(sql, function (user) {
@@ -1542,7 +1542,7 @@ app.post('/login', function (req, res) {
 
                 console.log(result[0]);
 
-                res.status(200).json({token: token});
+                res.status(200).json({token: token, username: user[0][0].username});
 
             })
 

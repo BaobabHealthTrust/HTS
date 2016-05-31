@@ -4,13 +4,74 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="/javascripts/usermanagement.js"></script>
+    <script src="/javascripts/landing.js"></script>
 </head>
 <body>
 
 
 <script>
 
+    function logout() {
+
+        var token = user.getCookie("token");
+
+        user.ajaxRequest(user.settings.logoutPath + token, function(result) {
+
+            user.setCookie("token", "", -100);
+
+            user.setCookie("username", "", -100);
+
+            user.setCookie("location", "", -100);
+
+            window.location = "/";
+
+        })
+
+    }
+
+    function loadInfo() {
+
+        clearInterval(tmrInterval);
+
+        var done1 = false;
+        var done2 = false;
+
+        if(user.$("user")) {
+
+            user.$("user").innerHTML = user.getCookie("username");
+
+            done1 = true;
+
+        }
+
+        if(user.$("location")) {
+
+            user.$("location").innerHTML = user.getCookie("location");
+
+            done2 = true;
+
+        }
+
+        if(!done1 || !done2) {
+
+            tmrInterval = setInterval(function(){
+
+                loadInfo();
+
+            }, 10);
+
+        }
+    }
+
     user.init("/config/user.settings.json");
+
+    landing.init("/data/person.json", "/data/landing.modules.json", "http://localhost:3014/");
+
+    var tmrInterval = setInterval(function(){
+
+        loadInfo();
+
+    }, 10);
 
 </script>
 </body>

@@ -1,44 +1,48 @@
 "use strict"
 
-Object.defineProperty(Date.prototype, "format", {
-    value: function (format) {
-        var date = this;
+if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
-        var result = "";
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
 
-        if (!format) {
+            var result = "";
 
-            format = ""
+            if (!format) {
 
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    user.padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
         }
+    });
 
-        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-            "October", "November", "December"];
-
-        if (format.match(/YYYY\-mm\-dd/)) {
-
-            result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                user.padZeros(date.getDate(), 2);
-
-        } else if (format.match(/mmm\/d\/YYYY/)) {
-
-            result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
-
-        } else if (format.match(/d\smmmm,\sYYYY/)) {
-
-            result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
-
-        } else {
-
-            result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
-
-        }
-
-        return result;
-    }
-});
+}
 
 var user = ({
 
@@ -400,11 +404,13 @@ var user = ({
             "Username": {
                 field_type: "text",
                 allowFreeText: true,
-                id: "data.username"
+                id: "data.username",
+                textCase: "lower"
             },
             "Password": {
                 field_type: "password",
-                id: "data.password"
+                id: "data.password",
+                textCase: "lower"
             },
             "Location": {
                 field_type: "text",
@@ -455,7 +461,7 @@ var user = ({
                 "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><meta http-equiv='content-type' " +
                 "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
-                "'javascript:window.parent.user.unloadChild()'; tt_cancel_show = 'javascript:window.parent.user.unloadChild()';" +
+                "'/'; tt_cancel_show = '/';" +
                 "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
                 "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
 
@@ -491,13 +497,17 @@ var user = ({
 
             var json = JSON.parse(sid);
 
-            console.log(Object.keys(json));
-
             if(Object.keys(json).indexOf("token") >= 0) {
 
                 user.setCookie("token", json["token"], 1);
 
+                user.setCookie("username", json["username"], 1);
+
+                user.setCookie("location", data.data.location, 1);
+
             }
+
+            window.location = "/";
 
         })
 
