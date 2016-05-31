@@ -1,0 +1,6 @@
+{
+    "basePath": "http://localhost:3014",
+    "loginPath": "/login",
+    "logoutPath": "/logout/",
+    "loginStatusCheckPath": "/authentic/"
+}

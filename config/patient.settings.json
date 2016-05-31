@@ -1,0 +1,32 @@
+{
+    "basePath": "http://localhost:3014",
+    "savePath": "http://localhost:3014/save_patient",
+    "searchPath": "http://localhost:3014/search_for_patient",
+    "districtQueryPath": "http://localhost:3014/district_query",
+    "taQueryPath": "http://localhost:3014/ta_query",
+    "villageQueryPath": "http://localhost:3014/village_query",
+    "nationalityQueryPath": "http://localhost:3014/nationality_query",
+    "firstNamesPath": "http://localhost:3014/fnames_query",
+    "lastNamesPath": "http://localhost:3014/lnames_query",
+    "afterCreatePath": "http://localhost:3014",
+    "demographics" : {
+        "First Name": true,
+        "Middle Name": true,
+        "Last Name": true,
+        "Maiden Name": false,
+        "Gender": true,
+        "Date of birth": true,
+        "Home District": true,
+        "Home T/A": true,
+        "Home Village": true,
+        "Current Village": true,
+        "Current T/A": true,
+        "Current District": true,
+        "Closest Landmark": false,
+        "Cellphone Number": true,
+        "Home Phone Number": false,
+        "Office Phone Number": false,
+        "Occupation": false,
+        "Nationality": false
+    }
+}

@@ -1,0 +1,85 @@
+<html>
+<head></head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    var id = window.location.href.match(/\/([^\/]+)$/)[1];
+
+    var socket = io.connect('/');
+    socket.on('stats', function(data) {
+        console.log('Connected clients on ' + data.id + ':', data.numClients);
+    });
+
+    socket.emit("init", {id: id});
+
+    socket.on('newConnection', function(data) {
+
+        var nsp = io('/' + id);
+
+        nsp.on('hi ' + id, function(data){
+            console.log(data);
+        });
+
+        socket.emit('demographics', {id: id});
+
+        nsp.on('demographics', function(data){
+
+            // console.log(data);
+
+            var json = JSON.parse(data);
+
+            if(json.names) {
+
+                dashboard.data.data.names = json.names;
+
+            } else if(json.addresses) {
+
+                dashboard.data.data.addresses = json.addresses;
+
+            } else if(json.gender) {
+
+                dashboard.data.data.gender = json.gender;
+
+            } else if(json.birthdate) {
+
+                dashboard.data.data.birthdate = json.birthdate;
+
+            } else if(json.birthdate_estimated) {
+
+                dashboard.data.data.birthdate_estimated = json.birthdate_estimated;
+
+            } else if(json.identifiers) {
+
+                dashboard.data.data.identifiers = json.identifiers;
+
+            } else if(json.programs) {
+
+                dashboard.data.data.programs = json.programs;
+
+            }
+
+            dashboard.refreshDemographics();
+
+        })
+
+    });
+
+</script>
+<script src="/javascripts/dashboard.js"></script>
+
+<script>
+
+    dashboard.init("/data/person.json", "/data/modules.json", "http://localhost:3014");
+
+</script>
+
+<!--script src="/protocol_analyzer.js"></script>
+
+<script>
+
+    protocol.init("/spec/visit_data.spec");
+
+</script-->
+</body>
+</html>

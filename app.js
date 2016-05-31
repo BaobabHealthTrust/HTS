@@ -1463,6 +1463,95 @@ function saveStock(data, res) {
 
 }
 
+function loggedIn(token, callback) {
+
+    var sql = "SELECT user_property.user_id, username FROM user_property LEFT OUTER JOIN users ON users.user_id = " +
+        "user_property.user_id WHERE property = 'token' AND property_value = '" + token + "'";
+
+    console.log(sql);
+
+    queryRaw(sql, function (user) {
+
+        if(user[0].length > 0) {
+
+            callback(true, user[0][0].user_id, user[0][0].username);
+
+        } else {
+
+            callback(false);
+
+        }
+
+    });
+
+}
+
+app.get('/authentic/:id', function(req, res) {
+
+    loggedIn(req.params.id, function(result, user_id, username){
+
+        res.status(200).json({loggedIn: result, userId: user_id, username: username});
+
+    })
+
+})
+
+app.get('/logout/:id', function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "DELETE FROM user_property WHERE property = 'token' AND property_value = '" + req.params.id + "'";
+
+    console.log(sql);
+
+    queryRaw(sql, function (user) {
+
+        console.log(user[0]);
+
+        res.status(200).json({message: "Logged out"});
+
+    });
+
+})
+
+app.post('/login', function (req, res) {
+
+    console.log(req.body);
+
+    var data = req.body;
+
+    var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
+        data.password + "', salt))";
+
+    queryRaw(sql, function (user) {
+
+        if(user[0].length <= 0) {
+
+            res.status(401).json({message: "Access denied!"});
+
+        } else {
+
+            var token = randomstring.generate(12);
+
+            sql = "INSERT INTO user_property (user_id, property, property_value) VALUES('" + user[0][0].user_id +
+                "', 'token', '" + token + "') ON DUPLICATE KEY UPDATE property_value = '" + token + "'";
+
+            queryRaw(sql, function (result) {
+
+                console.log(result[0]);
+
+                res.status(200).json({token: token});
+
+            })
+
+        }
+
+    });
+
+})
+
 app.get('/data/person.json', function (req, res) {
     res.sendFile(__dirname + '/data/person.json');
 });
@@ -2036,6 +2125,12 @@ app.post('/save_item', function (req, res) {
         case 'dispatch':
 
             dispatchStock(data, res);
+
+            break;
+
+        case "transfer":
+
+            transferStock(data, res);
 
             break;
 
