@@ -2138,7 +2138,11 @@ app.post('/save_item', function (req, res) {
 
 })
 
-app.get('/:id', function (req, res) {
+app.get('/patient/:id', function (req, res) {
+    res.sendFile(__dirname + '/patient.html');
+});
+
+app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 

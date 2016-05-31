@@ -1,9 +1,92 @@
 "use strict"
 
+Object.defineProperty(Date.prototype, "format", {
+    value: function (format) {
+        var date = this;
+
+        var result = "";
+
+        if (!format) {
+
+            format = ""
+
+        }
+
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"];
+
+        if (format.match(/YYYY\-mm\-dd/)) {
+
+            result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                user.padZeros(date.getDate(), 2);
+
+        } else if (format.match(/mmm\/d\/YYYY/)) {
+
+            result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+        } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+            result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+        } else {
+
+            result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+        }
+
+        return result;
+    }
+});
+
 var user = ({
 
     $: function (id) {
         return document.getElementById(id);
+    },
+
+    padZeros: function (number, positions) {
+        var zeros = parseInt(positions) - String(number).length;
+        var padded = "";
+
+        for (var i = 0; i < zeros; i++) {
+            padded += "0";
+        }
+
+        padded += String(number);
+
+        return padded;
+    },
+
+    sheet: function (target) {
+        // Create the <style> tag
+        var style = document.createElement("style");
+
+        style.appendChild(document.createTextNode(""));
+
+        if (target) {
+
+            target.appendChild(style);
+
+        } else {
+            // Add the <style> element to the page
+            document.head.appendChild(style);
+
+        }
+
+        return style.sheet;
+    },
+
+    addCSSRule: function (sheet, selector, rules, index) {
+
+        if ("insertRule" in sheet) {
+            sheet.insertRule(selector + "{" + rules + "}", index);
+        }
+        else if ("addRule" in sheet) {
+            sheet.addRule(selector, rules, index);
+        }
+
     },
 
     setCookie: function (cname, cvalue, exdays) {
@@ -246,7 +329,7 @@ var user = ({
 
     },
 
-    buildFields: function(fields, table) {
+    buildFields: function (fields, table) {
 
         var keys = Object.keys(fields);
 
@@ -272,11 +355,11 @@ var user = ({
             input.name = fields[key].id;
             input.setAttribute("helpText", key);
 
-            if(fields[key].field_type == "hidden") {
+            if (fields[key].field_type == "hidden") {
 
                 input.type = "hidden";
 
-            } else if(fields[key].field_type == "password") {
+            } else if (fields[key].field_type == "password") {
 
                 input.type = "password";
 
@@ -302,7 +385,7 @@ var user = ({
 
     },
 
-    login: function() {
+    login: function () {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -352,6 +435,7 @@ var user = ({
             divPanel.style.backgroundColor = "#fff";
             divPanel.id = "navPanel";
             divPanel.style.zIndex = 800;
+            divPanel.style.overflow = "hidden";
 
             document.body.appendChild(divPanel);
 
@@ -403,9 +487,17 @@ var user = ({
 
         data.data.userId = "admin";
 
-        user.ajaxPostRequest(user.settings.loginPath, data, function (sid) {
+        user.ajaxPostRequest(user.settings.loginPath, data.data, function (sid) {
 
-            console.log(sid)
+            var json = JSON.parse(sid);
+
+            console.log(Object.keys(json));
+
+            if(Object.keys(json).indexOf("token") >= 0) {
+
+                user.setCookie("token", json["token"], 1);
+
+            }
 
         })
 
@@ -486,18 +578,22 @@ var user = ({
 
             this.ajaxRequest(settingsPath, function (settings) {
 
-                try {
+                // try {
 
-                    user.settings = JSON.parse(settings);
+                user.settings = JSON.parse(settings);
 
-                    // user.addUser();
+                if (user.getCookie("token").trim().length <= 0) {
 
-                } catch (e) {
-
-                    if (console)
-                        console.log(e);
+                    user.login();
 
                 }
+
+                // } catch (e) {
+
+                // if (console)
+                //   console.log(e);
+
+                // }
 
             })
 
