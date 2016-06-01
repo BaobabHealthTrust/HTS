@@ -1,5 +1,5 @@
 P.1. Update HIV status [program: HTS PROGRAM, scope: TODAY, includejs: touchScreenToolkit]
-Q.1.1. Client Pregnant? [pos: 0, condition: typeof(gender) != "undefined" && gender=='F', concept: Patient Pregnant]
+Q.1.1. Client Pregnant? [pos: 0, condition: getCookie('gender') == 'F', concept: Patient Pregnant]
 O.1.1.1. Yes
 O.1.1.2. No
 Q.1.2. HTC Access Type [pos: 1]
