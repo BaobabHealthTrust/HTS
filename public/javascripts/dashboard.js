@@ -60,8 +60,36 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var dashboard = ({
 
+    gender: "F",
+
     __$: function (id) {
         return document.getElementById(id);
+    },
+
+    setCookie: function (cname, cvalue, exdays) {
+
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+
+    },
+
+    getCookie: function (cname) {
+
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+
     },
 
     echo: function (msg) {
@@ -1052,6 +1080,12 @@ var dashboard = ({
                 F: "Female"
             }
 
+            dashboard.gender = dashboard.data["data"]["gender"];
+
+            console.log(dashboard.gender);
+
+            dashboard.setCookie("gender", dashboard.gender, 1);
+
             dashboard.__$("gender").innerHTML = (dashboard.data["data"]["gender"] ? gender[dashboard.data["data"]["gender"]] : "&nbsp;");
 
         }
@@ -1699,6 +1733,8 @@ var dashboard = ({
             var url = window.location.href.match(/(.+)\/[^\/]+$/);
 
             var base = (url ? url[1] : "");
+
+            dashboard.setCookie("gender", dashboard.gender, 1);
 
             var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
                 "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
