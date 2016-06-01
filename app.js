@@ -134,7 +134,8 @@ function generateId(patientId, username, location, callback) {
 
         mutex.lock();
 
-        var yr = (new Date()).getFullYear();
+        // Year runs from July 1 to June 30
+        var yr = ((new Date()).getMonth() < 6 ? (new Date()).getFullYear() - 1 : ((new Date()).getFullYear()));
 
         var sql = "SELECT property_value FROM global_property WHERE property = 'htc.id.counter." + yr + "'";
 
@@ -172,8 +173,8 @@ function generateId(patientId, username, location, callback) {
 
             } else {
 
-                sql = "INSERT INTO global_property (property, property_value) VALUES ('htc.id.counter." + yr + "', '" +
-                    nextId + "') ON DUPLICATE KEY UPDATE property = 'htc.id.counter." + yr + "'";
+                sql = "INSERT INTO global_property (property, property_value, uuid) VALUES ('htc.id.counter." + yr + "', '" +
+                    nextId + "', '" + uuid.v1() + "')"; // ON DUPLICATE KEY UPDATE property = 'htc.id.counter." + yr + "'";
 
                 queryRaw(sql, function (res) {
 
