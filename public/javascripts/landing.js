@@ -872,11 +872,39 @@ var landing = ({
 
                 li.onclick = function () {
 
+                    if (landing.$("header")) {
+
+                        landing.$("header").innerHTML = this.innerHTML;
+
+                    }
+
                     if (landing.$("visits")) {
 
                         landing.$("visits").setAttribute("src", this.getAttribute("path"));
 
                     }
+
+                    if (landing.selectedTask) {
+
+                        if (landing.selectedTask) {
+
+                            landing.selectedTask.removeAttribute("selected");
+
+                            landing.selectedTask.style.backgroundColor = "";
+
+                            landing.selectedTask.style.color = "#000";
+
+                        }
+
+                    }
+
+                    this.setAttribute("selected", true);
+
+                    this.style.backgroundColor = "#345db5";
+
+                    this.style.color = "#fff";
+
+                    landing.selectedTask = this;
 
                 }
 
@@ -1294,7 +1322,7 @@ var landing = ({
 
         this['selectedProgram'] = null;
 
-        this['selectedVisit'] = null;
+        this['selectedTask'] = null;
 
         this['step'] = 5;
 
