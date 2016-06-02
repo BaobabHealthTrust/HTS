@@ -1,6 +1,6 @@
 "use strict"
 
-if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
     Object.defineProperty(Date.prototype, "format", {
         value: function (format) {
@@ -60,7 +60,7 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var landing = ({
 
-    __$: function (id) {
+    $: function (id) {
         return document.getElementById(id);
     },
 
@@ -610,11 +610,13 @@ var landing = ({
 
         var td3_1 = document.createElement("td");
         td3_1.style.padding = "10px";
+        td3_1.colSpan = 4;
 
         tr3.appendChild(td3_1);
 
         var btnCancel = document.createElement("button");
         btnCancel.className = "red";
+        btnCancel.style.cssFloat = "left";
         btnCancel.innerHTML = "Logout";
         btnCancel.onmousedown = function () {
             logout();
@@ -624,17 +626,17 @@ var landing = ({
 
         var td3_2 = document.createElement("td");
         td3_2.style.padding = "10px";
-        td3_2.colSpan = 3;
         td3_2.style.textAlign = "right";
 
-        tr3.appendChild(td3_2);
+        // tr3.appendChild(td3_2);
 
         var btnFinish = document.createElement("button");
         btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
         btnFinish.innerHTML = "Find or Register Patient";
         btnFinish.onmousedown = function () {
 
-            if(patient != undefined){
+            if (patient != undefined) {
 
                 patient.buildSearchPage();
 
@@ -642,9 +644,21 @@ var landing = ({
 
         }
 
-        td3_2.appendChild(btnFinish);
+        td3_1.appendChild(btnFinish);
 
-        landing.loadPrograms(landing['modules'], landing.__$("programs"));
+        var btnStart = document.createElement("button");
+        btnStart.className = "blue";
+        btnStart.style.cssFloat = "right";
+        btnStart.innerHTML = "Start Protocol";
+        btnStart.onmousedown = function () {
+
+            landing.navPanel("/spec/consent.spec");
+
+        }
+
+        td3_1.appendChild(btnStart);
+
+        landing.loadPrograms(landing['modules'], landing.$("programs"));
 
     },
 
@@ -705,13 +719,13 @@ var landing = ({
 
                 if (landing.selectedProgram) {
 
-                    if (landing.__$(landing.selectedProgram)) {
+                    if (landing.$(landing.selectedProgram)) {
 
-                        landing.__$(landing.selectedProgram).removeAttribute("selected");
+                        landing.$(landing.selectedProgram).removeAttribute("selected");
 
-                        landing.__$(landing.selectedProgram).style.backgroundColor = "";
+                        landing.$(landing.selectedProgram).style.backgroundColor = "";
 
-                        landing.__$(landing.selectedProgram).getElementsByTagName("table")[0].style.color = "#000";
+                        landing.$(landing.selectedProgram).getElementsByTagName("table")[0].style.color = "#000";
 
                     }
 
@@ -772,9 +786,9 @@ var landing = ({
 
     loadModule: function (module, icon, sourceData) {
 
-        if (landing.__$("modApp")) {
+        if (landing.$("modApp")) {
 
-            landing.__$("modApp").innerHTML = "";
+            landing.$("modApp").innerHTML = "";
 
             var table = document.createElement("table");
             table.cellPadding = 5;
@@ -782,7 +796,7 @@ var landing = ({
             table.border = 0;
             table.style.borderCollapse = "collapse";
 
-            landing.__$("modApp").appendChild(table);
+            landing.$("modApp").appendChild(table);
 
             var tr = document.createElement("tr");
 
@@ -809,9 +823,9 @@ var landing = ({
 
         }
 
-        if (landing.__$("tasks")) {
+        if (landing.$("tasks")) {
 
-            landing.__$("tasks").innerHTML = "";
+            landing.$("tasks").innerHTML = "";
 
 
             var ul = document.createElement("ul");
@@ -820,7 +834,7 @@ var landing = ({
             ul.style.padding = "0px";
             ul.style.margin = "0px";
 
-            landing.__$("tasks").appendChild(ul);
+            landing.$("tasks").appendChild(ul);
 
             var keys = Object.keys(sourceData["tasks"]);
 
@@ -858,9 +872,9 @@ var landing = ({
 
                 li.onclick = function () {
 
-                    if(landing.__$("visits")) {
+                    if (landing.$("visits")) {
 
-                        landing.__$("visits").setAttribute("src", this.getAttribute("path"));
+                        landing.$("visits").setAttribute("src", this.getAttribute("path"));
 
                     }
 
@@ -872,15 +886,15 @@ var landing = ({
 
         }
 
-        if (landing.__$("header")) {
+        if (landing.$("header")) {
 
-            landing.__$("header").innerHTML = module + " Statistics";
+            landing.$("header").innerHTML = module + " Statistics";
 
         }
 
-        if (landing.__$("visits")) {
+        if (landing.$("visits")) {
 
-            var base = user.settings.basePath;
+            var base = landing.settings.basePath;
 
             var html = "<html><head><base href='" + base + "' /> <link rel='stylesheet' type='text/css' " +
                 "href='/touchscreentoolkit/lib/stylesheets/touch-fancy.css' />" +
@@ -889,14 +903,13 @@ var landing = ({
                 "background-color:blue;}.none{background-color:black;}</style>";
 
             html += "<img src='" + icon + "' height='200' style='margin-top: 5%;' /><br/><h1>" + module +
-                " Stastistics</h1>" + (module.trim().toLowerCase() == "hts" ? "<br/><button onclick=" +
-                "'window.parent.landing.navPanel(\"/spec/consent.spec\")'>Start Counseling</button>" : "") + "</body></html>";
+                " Stastistics</h1></body></html>";
 
             var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
 
-            if (landing.__$("visits")) {
+            if (landing.$("visits")) {
 
-                landing.__$("visits").setAttribute("src", page);
+                landing.$("visits").setAttribute("src", page);
 
             }
 
@@ -913,7 +926,7 @@ var landing = ({
             if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
                 httpRequest.status == 304)) {
 
-                if(httpRequest.responseText.trim().length > 0) {
+                if (httpRequest.responseText.trim().length > 0) {
                     var result = JSON.parse(httpRequest.responseText);
 
                     callback(result);
@@ -967,11 +980,11 @@ var landing = ({
 
     },
 
-    navPanel: function (path) {
+    navPanel: function (path, custom) {
 
-        if (user.$("navPanel")) {
+        if (landing.$("navPanel")) {
 
-            document.body.removeChild(user.$("navPanel"));
+            document.body.removeChild(landing.$("navPanel"));
 
         } else {
 
@@ -994,31 +1007,40 @@ var landing = ({
             iframe.style.height = "100%";
             iframe.style.border = "1px solid #000";
 
-            var url = window.location.href.match(/(.+)\/[^\/]+$/);
-
-            // var base = (url ? url[1] : "");
-
-            var base = user.settings.basePath;
-
-            var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
-                "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
-                "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
-                "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
-                "'/'; tt_cancel_show = '/';" +
-                "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
-                "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
-
-            html += "<div id='content'>" + content + "</div></body>";
-
-            var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
-
-            iframe.setAttribute("src", page);
-
             divPanel.appendChild(iframe);
 
-            iframe.onload = function() {
+            if(!custom) {
 
-                landing.__$("ifrMain").contentWindow.protocol.init(path, undefined, undefined, undefined, undefined);
+                var url = window.location.href.match(/(.+)\/[^\/]+$/);
+
+                // var base = (url ? url[1] : "");
+
+                var base = landing.settings.basePath;
+
+                var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
+                    "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
+                    "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+                    "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
+                    "'/'; tt_cancel_show = '/';" +
+                    "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
+                    "if(window.parent) window.parent.landing.submitData(data); }</script></head><body>";
+
+                html += "<div id='content'></div></body>";
+
+                var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+
+                iframe.setAttribute("src", page);
+
+                iframe.onload = function () {
+
+                    if (landing.$("ifrMain").contentWindow.protocol)
+                        landing.$("ifrMain").contentWindow.protocol.init(path, undefined, undefined, undefined, undefined);
+
+                }
+
+            } else {
+
+                iframe.setAttribute("src", path);
 
             }
 
@@ -1028,9 +1050,9 @@ var landing = ({
 
     submitData: function (data) {
 
-        if (stock.$("navPanel")) {
+        if (landing.$("navPanel")) {
 
-            document.body.removeChild(stock.$("navPanel"));
+            document.body.removeChild(landing.$("navPanel"));
 
         }
 
@@ -1044,6 +1066,228 @@ var landing = ({
 
     },
 
+    showMsg: function(msg, topic) {
+
+        if(!topic) {
+
+            topic = "Message";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "#345db5";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset #345db5";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "OK";
+
+        btn.onclick = function() {
+
+            if(landing.$("msg.shield")) {
+
+                document.body.removeChild(landing.$("msg.shield"));
+
+            }
+
+        }
+
+        tdf.appendChild(btn);
+
+    },
+
+    showAlertMsg: function(msg, topic) {
+
+        if(!topic) {
+
+            topic = "Alert";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "tomato";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset tomato";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "OK";
+
+        btn.onclick = function() {
+
+            if(landing.$("msg.shield")) {
+
+                document.body.removeChild(landing.$("msg.shield"));
+
+            }
+
+        }
+
+        tdf.appendChild(btn);
+
+    },
+
     init: function (settingsPath) {
 
         this['icoBarcode'] = "data:image/png;base64,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";
@@ -1054,17 +1298,17 @@ var landing = ({
 
         this['step'] = 5;
 
-        document.body.oncontextmenu = function() {
+        document.body.oncontextmenu = function () {
             return false;
         }
 
-        this.ajaxRequest(settingsPath, function(data) {
+        this.ajaxRequest(settingsPath, function (data) {
 
             landing['settings'] = data;
 
             landing['barcodePath'] = landing.settings.barcodePath;
 
-            landing.ajaxRequest(landing.settings.modulesPath, function(modules) {
+            landing.ajaxRequest(landing.settings.modulesPath, function (modules) {
 
                 landing['modules'] = modules;
 
@@ -1072,26 +1316,26 @@ var landing = ({
 
                 setInterval(function () {
 
-                    if (landing.__$("main")) {
+                    if (landing.$("main")) {
 
-                        landing.__$("main").style.height = (window.innerHeight - 225) + "px";
+                        landing.$("main").style.height = (window.innerHeight - 225) + "px";
 
                     }
 
-                    if (landing.__$("details")) {
-                        landing.__$("details").style.height = (window.innerHeight - 270) + "px";
+                    if (landing.$("details")) {
+                        landing.$("details").style.height = (window.innerHeight - 270) + "px";
                     }
 
-                    if (landing.__$("programs")) {
-                        landing.__$("programs").style.height = (window.innerHeight - 270) + "px";
+                    if (landing.$("programs")) {
+                        landing.$("programs").style.height = (window.innerHeight - 270) + "px";
                     }
 
-                    if (landing.__$("visits")) {
-                        landing.__$("visits").style.height = (window.innerHeight - 270) + "px";
+                    if (landing.$("visits")) {
+                        landing.$("visits").style.height = (window.innerHeight - 270) + "px";
                     }
 
-                    if (landing.__$("tasks")) {
-                        landing.__$("tasks").style.height = (window.innerHeight - 270) + "px";
+                    if (landing.$("tasks")) {
+                        landing.$("tasks").style.height = (window.innerHeight - 270) + "px";
                     }
 
                 }, 10);
@@ -1100,27 +1344,27 @@ var landing = ({
 
         });
 
-        setInterval(function(){
+        setInterval(function () {
 
-            if(landing.__$("barcode")) {
+            if (landing.$("barcode")) {
 
-                if(landing.__$("barcode").value.trim().match(/\$$/)) {
+                if (landing.$("barcode").value.trim().match(/\$$/)) {
 
-                    if(landing['barcodePath']) {
+                    if (landing['barcodePath']) {
 
-                        var barcode = landing.__$("barcode").value.trim().replace(/\$/g, "");
+                        var barcode = landing.$("barcode").value.trim().replace(/\$/g, "");
 
                         window.location = landing['barcodePath'] + barcode;
 
                     } else {
 
-                        landing.__$("barcode").value = "";
+                        landing.$("barcode").value = "";
 
                     }
 
                 }
 
-                landing.__$("barcode").focus();
+                landing.$("barcode").focus();
 
             }
 

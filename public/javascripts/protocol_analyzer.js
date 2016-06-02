@@ -285,11 +285,11 @@ var protocol = ({
         script.setAttribute("type", "text/javascript");
         script.setAttribute("language", "javascript");
         script.innerText = "var gender = '" + String(gender) + "'; tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "'; tt_cancel_show = " +
-            "'javascript:window.parent.dashboard.submitData()'; tt_cancel_destination = " +
-            "'javascript:window.parent.dashboard.submitData()';" +
+            "'/'; tt_cancel_destination = " +
+            "'/';" +
             "function submitData(){" +
             "var data = form2js(document.getElementById('data'), undefined, true); console.log(data);" +
-            "if(window.parent) window.parent.dashboard.submitData(data);" +
+            "if(window.parent) window.parent.submitData(data);" +
             "}";
 
         document.head.appendChild(script);

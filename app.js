@@ -15,6 +15,7 @@ var mutex = new Mutex('htc_lock');
 
 var url = require('url');
 
+app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
 app.use(function (req, res, next) {
@@ -2172,12 +2173,58 @@ app.post('/save_item', function (req, res) {
 
 })
 
+app.post('/update_password', function(req, res) {
+
+    var data = req.body;
+
+    console.log(data);
+
+    var sql = "SELECT user_id, password, salt FROM users WHERE username = '" + data.userId + "'";
+
+    console.log(sql);
+
+    queryRaw(sql, function (user) {
+
+        if(user[0].length > 0) {
+
+            var oldPassword = encrypt(data['currentPassword'], user[0][0].salt);
+
+            if(oldPassword == user[0][0].password) {
+
+                var newPassword = encrypt(data['newPassword'], user[0][0].salt);
+
+                var sql = "UPDATE users SET password = '" + newPassword + "' WHERE username = '" + data.userId + "'";
+
+                console.log(sql);
+
+                queryRaw(sql, function (user) {
+
+                    res.status(200).json({message: "Password updated!"});
+
+                });
+
+            } else {
+
+                res.status(200).json({message: "Wrong password!"});
+
+            }
+
+        } else {
+
+            res.status(200).json({message: "User not found!"});
+
+        }
+
+    });
+
+})
+
 app.get('/:id', function (req, res) {
-    res.sendFile(__dirname + '/patient.html');
+    res.sendFile(__dirname + '/public/views/patient.html');
 });
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/views/index.html');
 });
 
 portfinder.basePort = 3014;

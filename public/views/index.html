@@ -6,6 +6,7 @@
     <script src="/javascripts/usermanagement.js"></script>
     <script src="/javascripts/landing.js"></script>
     <script src="/javascripts/patient_registration.js"></script>
+    <script src="/javascripts/stockmanagement.js"></script>
 </head>
 <body>
 
@@ -68,11 +69,19 @@
         }
     }
 
+    function submitData(data) {
+
+        landing.submitData(data);
+
+    }
+
     user.init("/config/user.settings.json");
 
     landing.init("/config/landing.settings.json");
 
     patient.init("/config/patient.settings.json", user.getCookie("username"));
+
+    stock.init("/config/stock.settings.json", user.getCookie("username"));
 
     var tmrInterval = setInterval(function(){
 

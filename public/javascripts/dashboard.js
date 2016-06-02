@@ -1784,6 +1784,228 @@ var dashboard = ({
 
     },
 
+    showMsg: function(msg, topic) {
+
+        if(!topic) {
+
+            topic = "Message";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "#345db5";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset #345db5";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "OK";
+
+        btn.onclick = function() {
+
+            if(dashboard.$("msg.shield")) {
+
+                document.body.removeChild(dashboard.$("msg.shield"));
+
+            }
+
+        }
+
+        tdf.appendChild(btn);
+
+    },
+
+    showAlertMsg: function(msg, topic) {
+
+        if(!topic) {
+
+            topic = "Alert";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "tomato";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset tomato";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "OK";
+
+        btn.onclick = function() {
+
+            if(dashboard.$("msg.shield")) {
+
+                document.body.removeChild(dashboard.$("msg.shield"));
+
+            }
+
+        }
+
+        tdf.appendChild(btn);
+
+    },
+
     init: function (dataPath, modulesPath, rootPath) {
 
         this['selectedProgram'] = null;

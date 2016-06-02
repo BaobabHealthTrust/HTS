@@ -3,5 +3,5 @@
     "user": "root",
     "password": "admin",
     "database": "htc1_7",
-    "stockDatabase": "inventory"
+    "stockDatabase": "htc_inventory"
 }
