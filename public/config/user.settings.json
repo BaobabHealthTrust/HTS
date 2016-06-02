@@ -1,6 +1,8 @@
 {
     "basePath": "http://localhost:3014",
     "loginPath": "/login",
+"passwordUpdatePath": "/login",
     "logoutPath": "/logout/",
-    "loginStatusCheckPath": "/authentic/"
+    "loginStatusCheckPath": "/authentic/",
+    "hts.provider.id": true
 }

@@ -24,6 +24,10 @@
 
             user.setCookie("location", "", -100);
 
+            user.setCookie("attrs", "", -100);
+
+            user.setCookie("gender", "", -100);
+
             window.location = "/";
 
         })
@@ -66,7 +70,7 @@
 
     user.init("/config/user.settings.json");
 
-    landing.init("/data/person.json", "/data/landing.modules.json", "http://localhost:3014/");
+    landing.init("/config/landing.settings.json");
 
     patient.init("/config/patient.settings.json", user.getCookie("username"));
 

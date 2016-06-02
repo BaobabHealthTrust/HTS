@@ -1,0 +1,6 @@
+{
+    "basePath": "http://localhost:3014",
+    "modulesPath": "/data/landing.modules.json",
+    "barcodePath": "http://localhost:3014/patient/",
+    "savePath": "http://localhost:3014/save_other"
+}

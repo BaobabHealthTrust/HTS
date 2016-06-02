@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.49, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: inventory
+-- Host: localhost    Database: htc_inventory
 -- ------------------------------------------------------
 -- Server version	5.5.49-0ubuntu0.14.04.1
 
@@ -268,6 +268,35 @@ LOCK TABLES `stock_attribute_type` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `stock_batch`
+--
+
+DROP TABLE IF EXISTS `stock_batch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stock_batch` (
+  `stock_batch_id` int(11) NOT NULL AUTO_INCREMENT,
+  `stock_id` int(11) DEFAULT NULL,
+  `batch_number` varchar(45) DEFAULT NULL,
+  `expiry_date` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`stock_batch_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_batch`
+--
+
+LOCK TABLES `stock_batch` WRITE;
+/*!40000 ALTER TABLE `stock_batch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stock_batch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `transfer`
 --
 
@@ -311,4 +340,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-31 14:40:54
+-- Dump completed on 2016-06-02 11:54:03

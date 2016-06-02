@@ -186,6 +186,15 @@ var user = ({
             }
         }
 
+        if(user.settings['hts.provider.id']) {
+
+            fields['HTS Provider ID'] = {
+                field_type: "text",
+                optional: true
+            }
+
+        }
+
         var keys = Object.keys(fields);
 
         for (var i = 0; i < keys.length; i++) {
@@ -365,6 +374,8 @@ var user = ({
 
                 input.type = "password";
 
+                fields[key].field_type = "text";
+
             } else {
 
                 input.type = "text";
@@ -413,6 +424,48 @@ var user = ({
             "Location": {
                 field_type: "text",
                 id: "data.location"
+            }
+        }
+
+        user.buildFields(fields, table);
+
+        user.navPanel(form.outerHTML);
+
+    },
+
+    changePassword: function () {
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "change.password"
+            },
+            "Current Password": {
+                field_type: "password",
+                id: "data.current.password",
+                textCase: "lower"
+            },
+            "Password": {
+                field_type: "password",
+                id: "data.new.password",
+                textCase: "lower",
+                tt_onUnLoad: "__$('data.confirm.password').setAttribute('validationRule', __$('touchscreenInput' + tstCurrentPage).value)"
+            },
+            "Confirm Password": {
+                field_type: "password",
+                id: "data.confirm.password",
+                textCase: "lower",
+                validationMessage: "Password Mismatch!"
             }
         }
 
@@ -481,31 +534,192 @@ var user = ({
 
     submitData: function (data) {
 
-        if (user.$("navPanel")) {
+        data.data.userId = "admin";
 
-            document.body.removeChild(user.$("navPanel"));
+        if(data.data.datatype == "change.password") {
+
+            user.ajaxPostRequest(user.settings.passwordUpdatePath, data.data, function (sid) {
+
+                var json = JSON.parse(sid);
+
+                if (user.$("navPanel")) {
+
+                    document.body.removeChild(user.$("navPanel"));
+
+                }
+
+                if (Object.keys(json).indexOf("token") >= 0) {
+
+                    user.setCookie("token", json["token"], 1);
+
+                    user.setCookie("username", json["username"], 1);
+
+                    user.setCookie("location", data.data.location, 1);
+
+                    user.setCookie("attrs", JSON.stringify(json['attributes']));
+
+                    window.location = "/";
+
+                } else {
+
+                    if (user.getCookie("token").trim().length <= 0) {
+
+                        user.login();
+
+                    }
+
+                }
+
+            })
+
+        } else {
+
+            user.ajaxPostRequest(user.settings.loginPath, data.data, function (sid) {
+
+                var json = JSON.parse(sid);
+
+                if (user.$("navPanel")) {
+
+                    document.body.removeChild(user.$("navPanel"));
+
+                }
+
+                if (Object.keys(json).indexOf("token") >= 0) {
+
+                    user.setCookie("token", json["token"], 1);
+
+                    user.setCookie("username", json["username"], 1);
+
+                    user.setCookie("location", data.data.location, 1);
+
+                    user.setCookie("attrs", JSON.stringify(json['attributes']));
+
+                    window.location = "/";
+
+                } else {
+
+                    if (user.getCookie("token").trim().length <= 0) {
+
+                        user.login();
+
+                    }
+
+                }
+
+            })
 
         }
 
-        data.data.userId = "admin";
+    },
 
-        user.ajaxPostRequest(user.settings.loginPath, data.data, function (sid) {
+    showMsg: function(msg, topic) {
 
-            var json = JSON.parse(sid);
+        if(!topic) {
 
-            if(Object.keys(json).indexOf("token") >= 0) {
+            topic = "Message";
 
-                user.setCookie("token", json["token"], 1);
+        }
 
-                user.setCookie("username", json["username"], 1);
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
 
-                user.setCookie("location", data.data.location, 1);
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "#345db5";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset #345db5";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "OK";
+
+        btn.onclick = function() {
+
+            if(user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
 
             }
 
-            window.location = "/";
+        }
 
-        })
+        tdf.appendChild(btn);
 
     },
 

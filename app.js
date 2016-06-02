@@ -1473,7 +1473,7 @@ function loggedIn(token, callback) {
 
     queryRaw(sql, function (user) {
 
-        if(user[0].length > 0) {
+        if (user[0].length > 0) {
 
             callback(true, user[0][0].user_id, user[0][0].username);
 
@@ -1487,9 +1487,9 @@ function loggedIn(token, callback) {
 
 }
 
-app.get('/authentic/:id', function(req, res) {
+app.get('/authentic/:id', function (req, res) {
 
-    loggedIn(req.params.id, function(result, user_id, username){
+    loggedIn(req.params.id, function (result, user_id, username) {
 
         res.status(200).json({loggedIn: result, userId: user_id, username: username});
 
@@ -1497,7 +1497,7 @@ app.get('/authentic/:id', function(req, res) {
 
 })
 
-app.get('/logout/:id', function(req, res) {
+app.get('/logout/:id', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -1528,9 +1528,9 @@ app.post('/login', function (req, res) {
 
     queryRaw(sql, function (user) {
 
-        if(user[0].length <= 0) {
+        if (user[0].length <= 0) {
 
-            res.status(401).json({message: "Access denied!"});
+            res.status(200).json({message: "Access denied!"});
 
         } else {
 
@@ -1541,11 +1541,44 @@ app.post('/login', function (req, res) {
 
             queryRaw(sql, function (result) {
 
-                console.log(result[0]);
+                sql = "SELECT role FROM user_role WHERE user_id = '" + user[0][0].user_id + "'";
 
-                res.status(200).json({token: token, username: user[0][0].username});
+                queryRaw(sql, function (roles) {
 
-            })
+                    console.log(roles[0]);
+
+                    var collection = [];
+
+                    for(var i = 0; i < roles[0].length; i++) {
+
+                        collection.push(roles[0][i].role);
+
+                    }
+
+                    sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
+                        "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id "+
+                        " WHERE person_id = '" + user[0][0].user_id + "'";
+
+                    queryRaw(sql, function (attrs) {
+
+                        console.log(attrs[0]);
+
+                        var attributes = {};
+
+                        for (var i = 0; i < attrs[0].length; i++) {
+
+                            attributes[attrs[0][i].attribute] = attrs[0][i].value;
+
+                        }
+
+                        res.status(200).json({token: token, username: user[0][0].username, roles: collection,
+                            attributes: attributes});
+
+                    });
+
+                });
+
+            });
 
         }
 
