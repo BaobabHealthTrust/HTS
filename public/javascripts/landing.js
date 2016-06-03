@@ -619,7 +619,8 @@ var landing = ({
         btnCancel.style.cssFloat = "left";
         btnCancel.innerHTML = "Logout";
         btnCancel.onmousedown = function () {
-            logout();
+            if (user != undefined)
+                user.logout();
         }
 
         td3_1.appendChild(btnCancel);
@@ -1038,7 +1039,7 @@ var landing = ({
 
             divPanel.appendChild(iframe);
 
-            if(!custom) {
+            if (!custom) {
 
                 var url = window.location.href.match(/(.+)\/[^\/]+$/);
 
@@ -1095,9 +1096,9 @@ var landing = ({
 
     },
 
-    showMsg: function(msg, topic) {
+    showMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Message";
 
@@ -1192,9 +1193,9 @@ var landing = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(landing.$("msg.shield")) {
+            if (landing.$("msg.shield")) {
 
                 document.body.removeChild(landing.$("msg.shield"));
 
@@ -1206,9 +1207,9 @@ var landing = ({
 
     },
 
-    showAlertMsg: function(msg, topic) {
+    showAlertMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Alert";
 
@@ -1303,9 +1304,9 @@ var landing = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(landing.$("msg.shield")) {
+            if (landing.$("msg.shield")) {
 
                 document.body.removeChild(landing.$("msg.shield"));
 

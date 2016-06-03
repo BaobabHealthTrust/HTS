@@ -1,6 +1,6 @@
 "use strict"
 
-if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
     Object.defineProperty(Date.prototype, "format", {
         value: function (format) {
@@ -45,6 +45,14 @@ if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 }
 
 var user = ({
+
+    gender: null,
+
+    username: null,
+
+    name: null,
+
+    roles: [],
 
     $: function (id) {
         return document.getElementById(id);
@@ -186,7 +194,7 @@ var user = ({
             }
         }
 
-        if(user.settings['hts.provider.id']) {
+        if (user.settings['hts.provider.id']) {
 
             fields['HTS Provider ID'] = {
                 field_type: "text",
@@ -534,9 +542,9 @@ var user = ({
 
     submitData: function (data) {
 
-        data.data.userId = "admin";
+        data.data.userId = user.getCookie("username");
 
-        if(data.data.datatype == "changePassword") {
+        if (data.data.datatype == "changePassword") {
 
             user.ajaxPostRequest(user.settings.passwordUpdatePath, data.data, function (sid) {
 
@@ -570,9 +578,17 @@ var user = ({
 
                     user.setCookie("username", json["username"], 1);
 
+                    user.setCookie("gender", json["gender"], 1);
+
+                    user.setCookie("given_name", json["given_name"], 1);
+
+                    user.setCookie("family_name", json["family_name"], 1);
+
                     user.setCookie("location", data.data.location, 1);
 
-                    user.setCookie("attrs", JSON.stringify(json['attributes']));
+                    user.setCookie("attrs", JSON.stringify(json['attributes']), 1);
+
+                    user.setCookie("roles", JSON.stringify(json['roles']), 1);
 
                     window.location = "/";
 
@@ -594,9 +610,9 @@ var user = ({
 
     },
 
-    showMsg: function(msg, topic) {
+    showMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Message";
 
@@ -691,9 +707,9 @@ var user = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(user.$("msg.shield")) {
+            if (user.$("msg.shield")) {
 
                 document.body.removeChild(user.$("msg.shield"));
 
@@ -705,9 +721,9 @@ var user = ({
 
     },
 
-    showAlertMsg: function(msg, topic) {
+    showAlertMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Alert";
 
@@ -802,9 +818,9 @@ var user = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(user.$("msg.shield")) {
+            if (user.$("msg.shield")) {
 
                 document.body.removeChild(user.$("msg.shield"));
 
@@ -813,6 +829,36 @@ var user = ({
         }
 
         tdf.appendChild(btn);
+
+    },
+
+    logout: function () {
+
+        var token = user.getCookie("token");
+
+        user.ajaxRequest(user.settings.logoutPath + token, function (result) {
+
+            user.setCookie("token", "", -100);
+
+            user.setCookie("username", "", -100);
+
+            user.setCookie("given_name", "", -100);
+
+            user.setCookie("gender", "", -100);
+
+            user.setCookie("family_name", "", -100);
+
+            user.setCookie("location", "", -100);
+
+            user.setCookie("attrs", "", -100);
+
+            user.setCookie("roles", "", -100);
+
+            user.setCookie("gender", "", -100);
+
+            window.location = "/";
+
+        })
 
     },
 
@@ -876,6 +922,290 @@ var user = ({
             httpRequest.send(null);
         } catch (e) {
         }
+
+    },
+
+    showUser: function (target) {
+
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "User Demographics";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.style.height = "calc(100% - 200px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "5px";
+        div0_1_0_0.style.textAlign = "center";
+
+        td0_1_0.appendChild(div0_1_0_0);
+
+        var table0_1_0_0_0 = document.createElement("table");
+        table0_1_0_0_0.width = "100%";
+
+        div0_1_0_0.appendChild(table0_1_0_0_0);
+
+        var tr0_1_0_0_0_0 = document.createElement("tr");
+
+        table0_1_0_0_0.appendChild(tr0_1_0_0_0_0);
+
+        var td0_1_0_0_0_0_0 = document.createElement("td");
+        td0_1_0_0_0_0_0.rowSpan = 4;
+        td0_1_0_0_0_0_0.style.verticalAlign = "top";
+        td0_1_0_0_0_0_0.style.paddingTop = "20px";
+
+        tr0_1_0_0_0_0.appendChild(td0_1_0_0_0_0_0);
+
+        var td0_1_0_0_0_0_1 = document.createElement("td");
+        td0_1_0_0_0_0_1.innerHTML = "&nbsp;";
+
+        tr0_1_0_0_0_0.appendChild(td0_1_0_0_0_0_1);
+
+        var table0_1_0_0_0_0_0_0 = document.createElement("table");
+        table0_1_0_0_0_0_0_0.width = "100%";
+        table0_1_0_0_0_0_0_0.cellPadding = 5;
+        table0_1_0_0_0_0_0_0.cellSpacing = 0;
+
+        td0_1_0_0_0_0_0.appendChild(table0_1_0_0_0_0_0_0);
+
+        var tr0_1_0_0_0_0_0_0_0 = document.createElement("tr");
+
+        table0_1_0_0_0_0_0_0.appendChild(tr0_1_0_0_0_0_0_0_0);
+
+        var td0_1_0_0_0_0_0_0_0_0 = document.createElement("td");
+        td0_1_0_0_0_0_0_0_0_0.align = "center";
+        td0_1_0_0_0_0_0_0_0_0.style.borderBottom = "1px dotted #ccc";
+
+        tr0_1_0_0_0_0_0_0_0.appendChild(td0_1_0_0_0_0_0_0_0_0);
+
+        var div0_1_0_0_0_0_0_0_0_0_0 = document.createElement("div");
+        div0_1_0_0_0_0_0_0_0_0_0.style.borderRadius = "20px";
+        div0_1_0_0_0_0_0_0_0_0_0.style.padding = "5px";
+        div0_1_0_0_0_0_0_0_0_0_0.style.border = "solid 1px #6281A7";
+        div0_1_0_0_0_0_0_0_0_0_0.style.width = "30px";
+        div0_1_0_0_0_0_0_0_0_0_0.style.height = "30px";
+        div0_1_0_0_0_0_0_0_0_0_0.style.textAlign = "center";
+        div0_1_0_0_0_0_0_0_0_0_0.style.verticalAlign = "middle";
+
+        td0_1_0_0_0_0_0_0_0_0.appendChild(div0_1_0_0_0_0_0_0_0_0_0);
+
+        if (user.getCookie("gender").trim().length > 0) {
+
+            var img = document.createElement("img");
+            img.style.margin = "2px";
+
+            img.setAttribute("alt", (user.getCookie("gender").match(/m/i) ? "M" : "F"));
+
+            img.setAttribute("src", "/touchscreentoolkit/lib/images/" + (user.getCookie("gender").match(/m/i) ? "male" : "female") +
+                ".gif");
+
+            div0_1_0_0_0_0_0_0_0_0_0.appendChild(img);
+
+        }
+
+        var td0_1_0_0_0_0_0_0_0_1 = document.createElement("td");
+        td0_1_0_0_0_0_0_0_0_1.align = "left";
+        td0_1_0_0_0_0_0_0_0_1.style.fontSize = "32px";
+        td0_1_0_0_0_0_0_0_0_1.style.borderBottom = "1px dotted #ccc";
+        td0_1_0_0_0_0_0_0_0_1.style.verticalAlign = "middle";
+        td0_1_0_0_0_0_0_0_0_1.style.borderLeft = "1px dotted #ccc";
+        td0_1_0_0_0_0_0_0_0_1.style.paddingLeft = "15px";
+        td0_1_0_0_0_0_0_0_0_1.innerHTML =
+            (user.getCookie("given_name").trim().length > 0 ? user.getCookie("given_name") : "") + " " +
+                (user.getCookie("family_name").trim().length > 0 ? user.getCookie("family_name") : "") + " (" +
+                user.getCookie("username") + ")";
+
+        tr0_1_0_0_0_0_0_0_0.appendChild(td0_1_0_0_0_0_0_0_0_1);
+
+        var tr0_1_0_0_0_0_0_0_1 = document.createElement("tr");
+
+        table0_1_0_0_0_0_0_0.appendChild(tr0_1_0_0_0_0_0_0_1);
+
+        var td0_1_0_0_0_0_0_0_1_0 = document.createElement("td");
+        td0_1_0_0_0_0_0_0_1_0.style.fontSize = "28px";
+        td0_1_0_0_0_0_0_0_1_0.style.paddingTop = "30px";
+        td0_1_0_0_0_0_0_0_1_0.style.verticalAlign = "top";
+        td0_1_0_0_0_0_0_0_1_0.innerHTML = "Roles:";
+
+        tr0_1_0_0_0_0_0_0_1.appendChild(td0_1_0_0_0_0_0_0_1_0);
+
+        var td0_1_0_0_0_0_0_0_1_1 = document.createElement("td");
+        td0_1_0_0_0_0_0_0_1_1.style.fontSize = "20px";
+        td0_1_0_0_0_0_0_0_1_1.style.borderLeft = "1px dotted #ccc";
+        td0_1_0_0_0_0_0_0_1_1.style.verticalAlign = "top";
+        td0_1_0_0_0_0_0_0_1_1.style.textAlign = "left";
+        td0_1_0_0_0_0_0_0_1_1.style.left = "1px dotted #ccc";
+
+        tr0_1_0_0_0_0_0_0_1.appendChild(td0_1_0_0_0_0_0_0_1_1);
+
+        var div0_1_0_0_0_0_0_0_1_1_0 = document.createElement("div");
+        div0_1_0_0_0_0_0_0_1_1_0.style.width = "470px";
+        div0_1_0_0_0_0_0_0_1_1_0.style.overflow = "auto";
+
+        td0_1_0_0_0_0_0_0_1_1.appendChild(div0_1_0_0_0_0_0_0_1_1_0);
+
+        var ul = document.createElement("ul");
+        ul.id = "user.ul";
+
+        div0_1_0_0_0_0_0_0_1_1_0.appendChild(ul);
+
+        var roles = (user.getCookie("roles").trim().length > 0 ? JSON.parse(user.getCookie("roles")) : []);
+
+        for(var i = 0; i < roles.length; i++) {
+
+            var li = document.createElement("li");
+            li.innerHTML = roles[i];
+            li.style.fontSize = "26px";
+
+            ul.appendChild(li);
+
+        }
+
+        var td0_1_0_0_0_0_1 = document.createElement("td");
+        td0_1_0_0_0_0_1.align = "right";
+        td0_1_0_0_0_0_1.style.verticalAlign = "top";
+
+        tr0_1_0_0_0_0.appendChild(td0_1_0_0_0_0_1);
+
+        var table0_1_0_0_0_0_1_0 = document.createElement("table");
+
+        td0_1_0_0_0_0_1.appendChild(table0_1_0_0_0_0_1_0);
+
+        var tr0_1_0_0_0_0_1_0_0 = document.createElement("tr");
+
+        table0_1_0_0_0_0_1_0.appendChild(tr0_1_0_0_0_0_1_0_0);
+
+        var td0_1_0_0_0_0_1_0_0_0 = document.createElement("td");
+
+        tr0_1_0_0_0_0_1_0_0.appendChild(td0_1_0_0_0_0_1_0_0_0);
+
+        var btnEdit = document.createElement("button");
+        btnEdit.className = "blue";
+        btnEdit.style.margin = "8px";
+        btnEdit.style.width = "250px";
+        btnEdit.style.cssFloat = "right";
+        btnEdit.innerHTML = "Edit Demographics";
+
+        btnEdit.onclick = function () {
+
+            user.showMsg("Edit");
+
+        }
+
+        td0_1_0_0_0_0_1_0_0_0.appendChild(btnEdit);
+
+        var tr0_1_0_0_0_0_1_0_1 = document.createElement("tr");
+
+        table0_1_0_0_0_0_1_0.appendChild(tr0_1_0_0_0_0_1_0_1);
+
+        var td0_1_0_0_0_0_1_0_1_0 = document.createElement("td");
+
+        tr0_1_0_0_0_0_1_0_1.appendChild(td0_1_0_0_0_0_1_0_1_0);
+
+        var btnChangePassword = document.createElement("button");
+        btnChangePassword.className = "blue";
+        btnChangePassword.style.margin = "8px";
+        btnChangePassword.style.width = "250px";
+        btnChangePassword.style.cssFloat = "right";
+        btnChangePassword.innerHTML = "Change Password";
+
+        btnChangePassword.onclick = function () {
+
+            window.parent.user.changePassword();
+
+        }
+
+        td0_1_0_0_0_0_1_0_1_0.appendChild(btnChangePassword);
+
+        var tr0_1_0_0_0_0_1_0_2 = document.createElement("tr");
+
+        table0_1_0_0_0_0_1_0.appendChild(tr0_1_0_0_0_0_1_0_2);
+
+        var td0_1_0_0_0_0_1_0_2_0 = document.createElement("td");
+
+        tr0_1_0_0_0_0_1_0_2.appendChild(td0_1_0_0_0_0_1_0_2_0);
+
+        var btnChangePassword = document.createElement("button");
+        btnChangePassword.className = "blue";
+        btnChangePassword.style.margin = "8px";
+        btnChangePassword.style.width = "250px";
+        btnChangePassword.style.cssFloat = "right";
+        btnChangePassword.innerHTML = "Manage Users";
+
+        btnChangePassword.onclick = function () {
+
+            user.showMsg("Manage Users");
+
+        }
+
+        td0_1_0_0_0_0_1_0_2_0.appendChild(btnChangePassword);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "120px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.location = "/";
+
+        }
+
+        nav.appendChild(btnFinish);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
 
     },
 

@@ -1542,13 +1542,22 @@ app.post('/login', function (req, res) {
 
             queryRaw(sql, function (result) {
 
-                sql = "SELECT role FROM user_role WHERE user_id = '" + user[0][0].user_id + "'";
+                sql = "SELECT role, gender, given_name, family_name FROM user_role LEFT OUTER JOIN users ON " +
+                    "users.user_id = user_role.user_id LEFT OUTER JOIN person ON person.person_id = users.person_id " +
+                    "LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE users.user_id = '" +
+                    user[0][0].user_id + "'";
 
                 queryRaw(sql, function (roles) {
 
                     console.log(roles[0]);
 
                     var collection = [];
+
+                    var gender = roles[0][0].gender;
+
+                    var given_name = roles[0][0].given_name;
+
+                    var family_name = roles[0][0].family_name;
 
                     for (var i = 0; i < roles[0].length; i++) {
 
@@ -1573,7 +1582,7 @@ app.post('/login', function (req, res) {
                         }
 
                         res.status(200).json({token: token, username: user[0][0].username, roles: collection,
-                            attributes: attributes});
+                            attributes: attributes, gender: gender, given_name: given_name, family_name: family_name});
 
                     });
 
@@ -1919,7 +1928,7 @@ app.get('/list_usernames', function (req, res) {
 
             var user = data[0][i];
 
-                keys.push(user.username);
+            keys.push(user.username);
 
         }
 
@@ -1987,7 +1996,7 @@ app.get('/search_by_username', function (req, res) {
 
         var results = [];
 
-        for(var i = 0; i < keys.length; i++)  {
+        for (var i = 0; i < keys.length; i++) {
 
             results.push(collection[keys[i]]);
 
@@ -2107,6 +2116,31 @@ app.get('/test_id', function (req, res) {
         console.log(response);
 
         res.send(response);
+
+    });
+
+})
+
+app.get('/roles/:id', function (req, res) {
+
+    var sql = "SELECT role FROM users LEFT OUTER JOIN user_role ON user_role.user_id = users.user_id WHERE username = '" +
+        req.params.id + "'";
+
+    var roles = [];
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        for(var i = 0; i < data[0].length; i++) {
+
+            roles.push(data[0][i].role);
+
+        }
+
+        console.log(roles);
+
+        res.status(200).json(roles);
 
     });
 

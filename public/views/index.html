@@ -13,28 +13,6 @@
 
 <script>
 
-    function logout() {
-
-        var token = user.getCookie("token");
-
-        user.ajaxRequest(user.settings.logoutPath + token, function(result) {
-
-            user.setCookie("token", "", -100);
-
-            user.setCookie("username", "", -100);
-
-            user.setCookie("location", "", -100);
-
-            user.setCookie("attrs", "", -100);
-
-            user.setCookie("gender", "", -100);
-
-            window.location = "/";
-
-        })
-
-    }
-
     function loadInfo() {
 
         clearInterval(tmrInterval);
