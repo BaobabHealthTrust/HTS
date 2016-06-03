@@ -926,7 +926,8 @@ var landing = ({
 
             var html = "<html><head><base href='" + base + "' /> <link rel='stylesheet' type='text/css' " +
                 "href='/touchscreentoolkit/lib/stylesheets/touch-fancy.css' />" +
-                "</head><body><style>body{text-align:center;color:#3c60b1;margin:10px;font:18px'LucidaGrande',Helvetica," +
+                "</head><body oncontextmenu='return false;'><style>body{text-align:center;color:#3c60b1;margin:10px;" +
+                "font:18px'LucidaGrande',Helvetica," +
                 "Arial,sans-serif;-moz-user-select:none;overflow:auto;}.news{background-color:red;}.sports{" +
                 "background-color:blue;}.none{background-color:black;}</style>";
 
@@ -1053,7 +1054,7 @@ var landing = ({
                     "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
                     "if(window.parent) window.parent.landing.submitData(data); }</script></head><body>";
 
-                html += "<div id='content'></div></body>";
+                html += "<div id='content'></div><script>document.body.oncontextmenu = function () { return false; }</script></body>";
 
                 var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
 
@@ -1122,7 +1123,7 @@ var landing = ({
         div.style.position = "absolute";
         div.style.width = width + "px";
         div.style.height = height + "px";
-        div.style.backgroundColor = "#eee";
+        div.style.backgroundColor = "rgba(254,254,254,1)";
         div.style.borderRadius = "5px";
         div.style.left = "calc(50% - " + (width / 2) + "px)";
         div.style.top = "calc(50% - " + (height * 0.7) + "px)";
@@ -1233,7 +1234,7 @@ var landing = ({
         div.style.position = "absolute";
         div.style.width = width + "px";
         div.style.height = height + "px";
-        div.style.backgroundColor = "#eee";
+        div.style.backgroundColor = "rgba(254,254,254,1)";
         div.style.borderRadius = "5px";
         div.style.left = "calc(50% - " + (width / 2) + "px)";
         div.style.top = "calc(50% - " + (height * 0.7) + "px)";
@@ -1259,10 +1260,10 @@ var landing = ({
         th.style.borderTopRightRadius = "5px";
         th.style.borderTopLeftRadius = "5px";
         th.style.fontSize = "20px";
-        th.style.backgroundColor = "tomato";
+        th.style.backgroundColor = "red";
         th.style.color = "#fff";
         th.innerHTML = topic;
-        th.style.border = "2px outset tomato";
+        th.style.border = "2px outset red";
 
         trh.appendChild(th);
 

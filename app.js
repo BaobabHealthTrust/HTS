@@ -1550,14 +1550,14 @@ app.post('/login', function (req, res) {
 
                     var collection = [];
 
-                    for(var i = 0; i < roles[0].length; i++) {
+                    for (var i = 0; i < roles[0].length; i++) {
 
                         collection.push(roles[0][i].role);
 
                     }
 
                     sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
-                        "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id "+
+                        "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id " +
                         " WHERE person_id = '" + user[0][0].user_id + "'";
 
                     queryRaw(sql, function (attrs) {
@@ -1896,6 +1896,109 @@ app.post('/updateUser', function (req, res) {
 
 })
 
+app.get('/list_usernames', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+    var sql = "SELECT username FROM users WHERE username LIKE '" +
+        query.username + "%' AND retired = 0 AND COALESCE(person_id,'') != ''";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var keys = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var user = data[0][i];
+
+                keys.push(user.username);
+
+        }
+
+        res.send("<li>" + keys.join("</li><li>") + "</li>");
+
+    });
+
+})
+
+app.get('/search_by_username', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+    var sql = "SELECT users.user_id, username, role, gender, birthdate, given_name, family_name FROM users LEFT OUTER " +
+        "JOIN user_role ON user_role.user_id = users.user_id LEFT OUTER JOIN person ON person.person_id = " +
+        "users.person_id LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE username LIKE '" +
+        query.username + "%' AND COALESCE(family_name,'') != ''";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var collection = {};
+
+        var keys = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var user = data[0][i];
+
+            if (!collection[user.username]) {
+
+                collection[user.username] = {};
+
+                keys.push(user.username);
+
+            }
+
+            if (!collection[user.username]['roles']) {
+
+                collection[user.username]['roles'] = [];
+
+            }
+
+            collection[user.username]['username'] = user.username;
+
+            if (user.role)
+                collection[user.username]['roles'].push(user.role);
+
+            collection[user.username]['gender'] = user.gender;
+
+            collection[user.username]['birthdate'] = user.birthdate;
+
+            collection[user.username]['first_name'] = user.given_name;
+
+            collection[user.username]['family_name'] = user.family_name;
+
+        }
+
+        var results = [];
+
+        for(var i = 0; i < keys.length; i++)  {
+
+            results.push(collection[keys[i]]);
+
+        }
+
+        res.status(200).json(results);
+
+    });
+
+})
+
 app.get('/search_for_patient', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -2173,7 +2276,7 @@ app.post('/save_item', function (req, res) {
 
 })
 
-app.post('/update_password', function(req, res) {
+app.post('/update_password', function (req, res) {
 
     var data = req.body;
 
@@ -2185,11 +2288,11 @@ app.post('/update_password', function(req, res) {
 
     queryRaw(sql, function (user) {
 
-        if(user[0].length > 0) {
+        if (user[0].length > 0) {
 
             var oldPassword = encrypt(data['currentPassword'], user[0][0].salt);
 
-            if(oldPassword == user[0][0].password) {
+            if (oldPassword == user[0][0].password) {
 
                 var newPassword = encrypt(data['newPassword'], user[0][0].salt);
 

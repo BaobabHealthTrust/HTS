@@ -1401,10 +1401,10 @@ var stock = ({
         th.style.borderTopRightRadius = "5px";
         th.style.borderTopLeftRadius = "5px";
         th.style.fontSize = "20px";
-        th.style.backgroundColor = "tomato";
+        th.style.backgroundColor = "red";
         th.style.color = "#fff";
         th.innerHTML = topic;
-        th.style.border = "2px outset tomato";
+        th.style.border = "2px outset red";
 
         trh.appendChild(th);
 

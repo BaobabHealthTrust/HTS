@@ -4,5 +4,6 @@
     "passwordUpdatePath": "/update_password",
     "logoutPath": "/logout/",
     "loginStatusCheckPath": "/authentic/",
-    "hts.provider.id": true
+    "hts.provider.id": true,
+    "searchPath": "/search_by_username"
 }
