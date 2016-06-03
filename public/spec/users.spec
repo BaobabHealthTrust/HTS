@@ -1,0 +1,3 @@
+P.1. Users [program: HTS PROGRAM, scope: TODAY, includejs: touchScreenToolkit]
+Q.1.1. Search by Username or Click Next to View All Users [pos: 0, optional: true, id: username, ajaxURL: /list_usernames?username=]
+Q.1.2. Select Existing or Create New Users [pos: 1, tt_pageStyleClass: NoControls, tt_onLoad: if(__$('keyboard')){__$("keyboard").style.display = "none"}; if(__$('nextButton')){__$("nextButton").style.display = "none"};window.parent.user.loadUsers();]
