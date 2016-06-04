@@ -7,6 +7,12 @@
     "hts.provider.id": true,
     "searchPath": "/search_by_username",
     "rolesPath": "/roles/",
-    "userPath": "/users_listing",
-    "userAddPath": "/updateUser"
+    "usersListingPath": "/users_listing",
+    "userAddPath": "/updateUser",
+    "firstNamesPath": "/fnames_query",
+    "lastNamesPath": "/lnames_query",
+    "usernamesListingPath": "/list_usernames?username=",
+    "rolesPath": "/roles",
+    "userBlockPath": "/block_user/",
+    "userActivatePath": "/activate_user/"
 }

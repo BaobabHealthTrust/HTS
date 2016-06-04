@@ -54,6 +54,8 @@ var user = ({
 
     roles: [],
 
+    users: {},
+
     $: function (id) {
         return document.getElementById(id);
     },
@@ -162,14 +164,15 @@ var user = ({
                 textCase: "lower",
                 id: "data.username",
                 allowFreeText: true,
-                ajaxURL: "/list_usernames?username="
+                ajaxURL: user.settings.usernamesListingPath
             },
             "Password": {
                 field_type: "text",
                 type: "password",
                 id: "data.password",
                 textCase: "lower",
-                tt_onUnLoad: "__$('data.confirm_password').setAttribute('validationRule', __$('touchscreenInput' + tstCurrentPage).value)"
+                tt_onUnLoad: "__$('data.confirm_password').setAttribute('validationRule', __$('touchscreenInput' + " +
+                    "tstCurrentPage).value)"
             },
             "Confirm Password": {
                 field_type: "text",
@@ -183,35 +186,25 @@ var user = ({
                 field_type: "select",
                 id: "data.roles",
                 multiple: "multiple",
-                ajaxURL: "/roles"
+                ajaxURL: user.settings.rolesPath
             },
             "First Name": {
                 field_type: "text",
                 id: "data.first_name",
                 allowFreeText: true,
-                ajaxURL: "/fnames_query"
+                ajaxURL: user.settings.firstNamesPath
             },
             "Last Name": {
                 field_type: "text",
                 id: "data.last_name",
                 allowFreeText: true,
-                ajaxURL: "/lnames_query"
+                ajaxURL: user.settings.lastNamesPath
             },
             "Gender": {
                 field_type: "select",
                 options: ["", "Male", "Female"],
                 id: "data.gender"
             }
-            /*"Date of Birth": {
-                field_type: "birthdate",
-                estimate_field: "data.estimated",
-                optional: true,
-                id: "data.date_of_birth"
-            },
-            "Estimated": {
-                type: "hidden",
-                id: "data.estimated"
-            },*/
         }
 
         if (user.settings['hts.provider.id']) {
@@ -227,145 +220,6 @@ var user = ({
         user.buildFields(fields, table);
 
         user.navPanel(form.outerHTML);
-
-        /* var keys = Object.keys(fields);
-
-         for (var i = 0; i < keys.length; i++) {
-
-         var tr = document.createElement("tr");
-
-         table.appendChild(tr);
-
-         var key = keys[i];
-
-         for (var j = 0; j < 2; j++) {
-
-         var td = document.createElement("td");
-
-         tr.appendChild(td);
-
-         if (j == 0) {
-
-         td.innerHTML = key;
-
-         } else {
-
-         var fieldType = fields[key].field_type;
-
-         var id = key.trim().toLowerCase().replace(/\s/, "_").replace(/\(/, "_").replace(/\)/, "_");
-
-         switch (fieldType) {
-
-         case "select":
-
-         var select = document.createElement("select");
-         select.id = id;
-         select.name = key;
-         select.setAttribute("helpText", key);
-
-         td.appendChild(select);
-
-         if (fields[key].options) {
-
-         for (var o = 0; o < fields[key].options.length; o++) {
-
-         var opt = document.createElement("option");
-         opt.innerHTML = fields[key].options[o];
-
-         select.appendChild(opt);
-
-         }
-
-         }
-
-         var exceptions = ["options", "helpText"]
-
-         var attrs = Object.keys(fields[key]);
-
-         for (var a = 0; a < exceptions.length; a++) {
-
-         if (attrs.indexOf(exceptions[a]) >= 0) {
-
-         attrs.splice(attrs.indexOf(exceptions[a]));
-
-         }
-
-         }
-
-         if (attrs.length > 0) {
-
-         for (var a = 0; a < attrs.length; a++) {
-
-         var attr = attrs[a];
-
-         select.setAttribute(attr, fields[key][attr]);
-
-         }
-
-         }
-
-         break;
-
-         default:
-
-         var input = document.createElement("input");
-         input.id = id;
-         input.name = key;
-         input.setAttribute("helpText", key);
-
-         td.appendChild(input);
-
-         var exceptions = ["helpText"]
-
-         var attrs = Object.keys(fields[key]);
-
-         for (var a = 0; a < exceptions.length; a++) {
-
-         if (attrs.indexOf(exceptions[a]) >= 0) {
-
-         attrs.splice(attrs.indexOf(exceptions[a]));
-
-         }
-
-         }
-
-         if (attrs.length > 0) {
-
-         for (var a = 0; a < attrs.length; a++) {
-
-         var attr = attrs[a];
-
-         input.setAttribute(attr, fields[key][attr]);
-
-         }
-
-         }
-
-         break;
-
-         }
-
-         }
-
-         }
-
-         }
-
-         var base = document.createElement("base");
-         base.href = user.settings.basePath;
-
-         document.head.appendChild(base);
-
-         var script = document.createElement("script");
-         script.innerText = "tt_cancel_destination = 'javascript:window.parent.user.showUsers(window.parent.document.body)'; " +
-         "tt_cancel_show = 'javascript:window.parent.user.showUsers(window.parent.document.body)';";
-
-         document.head.appendChild(script);
-
-         var script = document.createElement("script");
-         script.setAttribute("src", user.settings.basePath + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
-
-         document.head.appendChild(script);*/
 
     },
 
@@ -706,7 +560,7 @@ var user = ({
 
                         user.login();
 
-                        user.showMsg("Wrong username/password!", "Access Denied!");
+                        user.showAlertMsg("Wrong username/password!", "Access Denied!");
 
                     }
 
@@ -889,10 +743,10 @@ var user = ({
         th.style.borderTopRightRadius = "5px";
         th.style.borderTopLeftRadius = "5px";
         th.style.fontSize = "20px";
-        th.style.backgroundColor = "tomato";
+        th.style.backgroundColor = "red";
         th.style.color = "#fff";
         th.innerHTML = topic;
-        th.style.border = "2px outset tomato";
+        th.style.border = "2px outset red";
 
         trh.appendChild(th);
 
@@ -949,6 +803,141 @@ var user = ({
         }
 
         tdf.appendChild(btn);
+
+    },
+
+    showConfirmMsg: function (msg, topic, nextURL) {
+
+        if (!topic) {
+
+            topic = "Confirm";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "red";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset red";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btnCancel = document.createElement("button");
+        btnCancel.className = "blue";
+        btnCancel.innerHTML = "Cancel";
+        btnCancel.style.minWidth = "100px";
+
+        btnCancel.onclick = function () {
+
+            if (user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
+
+            }
+
+        }
+
+        tdf.appendChild(btnCancel);
+
+        var btnOK = document.createElement("button");
+        btnOK.className = "red";
+        btnOK.innerHTML = "OK";
+        btnOK.style.minWidth = "100px";
+
+        if (nextURL)
+            btnOK.setAttribute("nextURL", nextURL);
+
+        btnOK.onclick = function () {
+
+            if (user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
+
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
+
+            }
+
+        }
+
+        tdf.appendChild(btnOK);
 
     },
 
@@ -1373,10 +1362,11 @@ var user = ({
         tr0_1.appendChild(td0_1_0);
 
         var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "user.content";
         div0_1_0_0.style.height = "calc(100% - 175px)";
         div0_1_0_0.style.backgroundColor = "#fff";
         div0_1_0_0.style.overflow = "auto";
-        div0_1_0_0.style.padding = "5px";
+        div0_1_0_0.style.padding = "1px";
         div0_1_0_0.style.textAlign = "center";
         div0_1_0_0.innerHTML = "&nbsp;";
 
@@ -1426,6 +1416,237 @@ var user = ({
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
 
         document.head.appendChild(script);
+
+        user.loadUsers(user.settings.usersListingPath, div0_1_0_0);
+
+    },
+
+    loadUsers: function (path, target) {
+
+        if (!path || !target)
+            return;
+
+        user.ajaxRequest(path, function (data) {
+
+            user.users = JSON.parse(data);
+
+            user.buildUsersView(target);
+
+        })
+
+    },
+
+    buildUsersView: function (target) {
+
+        if (!target)
+            return;
+
+        if (!user.users)
+            return;
+
+        target.innerHTML = "";
+
+        var table = document.createElement("table");
+        table.style.borderCollapse = "collapse";
+        table.border = 1;
+        table.style.borderColor = "#eee";
+        table.width = "100%";
+        table.cellPadding = "8";
+
+        target.appendChild(table);
+
+        var tr = document.createElement("tr");
+        tr.style.backgroundColor = "#999";
+        tr.style.color = "#eee";
+
+        table.appendChild(tr);
+
+        var fields = ["", "Name", "Username", "Gender", "Role(s)", "Other Attributes", "Edit", "Block", "Activate"];
+        var colSizes = ["30px", "200px", "100px", "80px", undefined, "220px", "60px", "60px", "60px"];
+
+        var usernames = Object.keys(user.users);
+
+        for (var i = 0; i < fields.length; i++) {
+
+            var th = document.createElement("th");
+
+            if (colSizes[i])
+                th.style.width = colSizes[i];
+
+            th.innerHTML = fields[i];
+
+            tr.appendChild(th);
+
+        }
+
+        for (var i = 0; i < usernames.length; i++) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var pos = i + 1;
+
+            var attrs = "";
+
+            var keys = Object.keys(user.users[usernames[i]].attributes);
+
+            for (var j = 0; j < keys.length; j++) {
+
+                attrs += "<b>" + keys[j] + "</b>" + ": " + (user.users[usernames[i]].attributes[keys[j]] ?
+                    user.users[usernames[i]].attributes[keys[j]] : "") + "<br/>";
+
+            }
+
+            var values = [pos, user.users[usernames[i]].given_name + " " + user.users[usernames[i]].family_name,
+                usernames[i], user.users[usernames[i]].gender, user.users[usernames[i]].roles.join("<br/>"), attrs,
+                "", "", ""];
+
+            for (var j = 0; j < values.length; j++) {
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+
+                if (j == 0 || j == 3) {
+
+                    td.align = "center";
+
+                } else {
+
+                    td.align = "left";
+
+                }
+
+                td.innerHTML = values[j];
+                td.style.borderColor = "#eee";
+
+                tr.appendChild(td);
+
+                switch (j) {
+
+                    case 6:
+
+                        td.style.padding = "2px";
+
+                        var btn = document.createElement("button");
+                        btn.innerHTML = "Edit";
+                        btn.className = "blue";
+                        btn.style.minHeight = "40px";
+                        btn.style.minWidth = "120px";
+                        btn.style.fontWeight = "normal";
+                        btn.setAttribute("username", usernames[i]);
+
+                        btn.onclick = function () {
+
+                            if (this.className.match(/gray/i))
+                                return;
+
+                            user.showMsg("TODO: Yet to add user edit");
+
+                        }
+
+                        td.appendChild(btn);
+
+                        break;
+
+                    case 7:
+
+                        if (user.getCookie("username") != usernames[i]) {
+
+                            td.style.padding = "2px";
+
+                            var btn = document.createElement("button");
+                            btn.innerHTML = "Block";
+                            btn.className = (user.users[usernames[i]].active ? "red" : "gray");
+                            btn.style.minHeight = "40px";
+                            btn.style.minWidth = "120px";
+                            btn.style.fontWeight = "normal";
+                            btn.setAttribute("username", usernames[i]);
+
+                            btn.onclick = function () {
+
+                                if (this.className.match(/gray/i))
+                                    return;
+
+                                user.processingData = {
+                                    username: this.getAttribute("username"),
+                                    userId: user.getCookie("username")
+                                };
+
+                                user.showConfirmMsg("Do you really want to block this user?", "Confirm User Block",
+                                        "javascript:user.processMessage('" + user.settings.userBlockPath + "')");
+
+                            }
+
+                            td.appendChild(btn);
+
+                        }
+
+                        break;
+
+                    case 8:
+
+                        if (user.getCookie("username") != usernames[i]) {
+
+                            td.style.padding = "2px";
+
+                            var btn = document.createElement("button");
+                            btn.innerHTML = "Activate";
+                            btn.className = (user.users[usernames[i]].active ? "gray" : "green");
+                            btn.style.minHeight = "40px";
+                            btn.style.minWidth = "120px";
+                            btn.style.fontWeight = "normal";
+                            btn.setAttribute("username", usernames[i]);
+
+                            btn.onclick = function () {
+
+                                if (this.className.match(/gray/i))
+                                    return;
+
+                                user.processingData = {
+                                    username: this.getAttribute("username"),
+                                    userId: user.getCookie("username")
+                                };
+
+                                user.showConfirmMsg("Do you really want to activate this user?", "Confirm User Activation",
+                                        "javascript:user.processMessage('" + user.settings.userActivatePath + "')");
+
+                            }
+
+                            td.appendChild(btn);
+
+                        }
+
+                        break;
+
+                }
+
+            }
+
+        }
+
+    },
+
+    processingData: {},
+
+    processMessage: function (path, data) {
+
+        if (!data)
+            data = user.processingData;
+
+        user.ajaxPostRequest(path, data, function (response) {
+
+            var json = JSON.parse(response);
+
+            user.showMsg(json.message);
+
+            if(user.$("user.content")) {
+
+                user.loadUsers(user.settings.usersListingPath, user.$("user.content"));
+
+            }
+
+        })
 
     },
 

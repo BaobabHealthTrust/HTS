@@ -1525,7 +1525,9 @@ app.post('/login', function (req, res) {
     var data = req.body;
 
     var sql = "SELECT user_id, username FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
-        data.password + "', salt))";
+        data.password + "', salt)) AND retired = 0";
+
+    console.log(sql);
 
     queryRaw(sql, function (user) {
 
@@ -1540,12 +1542,16 @@ app.post('/login', function (req, res) {
             sql = "INSERT INTO user_property (user_id, property, property_value) VALUES('" + user[0][0].user_id +
                 "', 'token', '" + token + "') ON DUPLICATE KEY UPDATE property_value = '" + token + "'";
 
+            console.log(sql);
+
             queryRaw(sql, function (result) {
 
                 sql = "SELECT role, gender, given_name, family_name FROM user_role LEFT OUTER JOIN users ON " +
                     "users.user_id = user_role.user_id LEFT OUTER JOIN person ON person.person_id = users.person_id " +
                     "LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE users.user_id = '" +
                     user[0][0].user_id + "'";
+
+                console.log(sql);
 
                 queryRaw(sql, function (roles) {
 
@@ -1568,6 +1574,8 @@ app.post('/login', function (req, res) {
                     sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
                         "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id " +
                         " WHERE person_id = '" + user[0][0].user_id + "'";
+
+                    console.log(sql);
 
                     queryRaw(sql, function (attrs) {
 
@@ -2153,6 +2161,96 @@ app.get('/test_id', function (req, res) {
 
 })
 
+app.post('/activate_user', function(req, res) {
+
+    var data = req.body;
+
+    console.log(data);
+
+    var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+
+    console.log(sql);
+
+    queryRaw(sql, function (user) {
+
+        if (user[0].length > 0) {
+
+            var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
+
+            console.log(sql);
+
+            queryRaw(sql, function (updater) {
+
+                console.log(updater[0][0].user_id);
+
+                var sql = "UPDATE users SET retired = 0, retired_by = NULL, date_retired = NULL, retire_reason = NULL " +
+                    " WHERE user_id = '" + user[0][0].user_id + "'";
+
+                console.log(sql);
+
+                queryRaw(sql, function (user) {
+
+                    res.status(200).json({message: "User activated!"});
+
+                });
+
+            });
+
+        } else {
+
+            res.status(200).json({message: "User not found!"});
+
+        }
+
+    });
+
+})
+
+app.post('/block_user', function (req, res) {
+
+    var data = req.body;
+
+    console.log(data);
+
+    var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+
+    console.log(sql);
+
+    queryRaw(sql, function (user) {
+
+        if (user[0].length > 0) {
+
+            var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
+
+            console.log(sql);
+
+            queryRaw(sql, function (updater) {
+
+                console.log(updater[0][0].user_id);
+
+                var sql = "UPDATE users SET retired = 1, retired_by = '" + updater[0][0].user_id +
+                    "', date_retired = NOW(), retire_reason ='Blocked user.' WHERE user_id = '" + user[0][0].user_id + "'";
+
+                console.log(sql);
+
+                queryRaw(sql, function (user) {
+
+                    res.status(200).json({message: "User blocked!"});
+
+                });
+
+            });
+
+        } else {
+
+            res.status(200).json({message: "User not found!"});
+
+        }
+
+    });
+
+})
+
 app.get('/users_listing', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -2163,10 +2261,10 @@ app.get('/users_listing', function (req, res) {
 
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
-    var sql = "SELECT users.user_id, person.person_id, username, role, gender, given_name, family_name FROM users LEFT OUTER JOIN user_role ON " +
-        "users.user_id = user_role.user_id LEFT OUTER JOIN person ON person.person_id = users.person_id " +
-        "LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE COALESCE(password,'') != '' " +
-        " LIMIT " + lowerLimit + ", " + pageSize;
+    var sql = "SELECT users.user_id, users.retired, person.person_id, username, role, gender, given_name, family_name " +
+        "FROM users LEFT OUTER JOIN user_role ON users.user_id = user_role.user_id LEFT OUTER JOIN person ON " +
+        "person.person_id = users.person_id LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id " +
+        "WHERE COALESCE(password,'') != '' LIMIT " + lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
@@ -2186,6 +2284,8 @@ app.get('/users_listing', function (req, res) {
             collection[user.username].given_name = user.given_name;
 
             collection[user.username].family_name = user.family_name;
+
+            collection[user.username].active = (user.retired == "0" ? true : false);
 
             if (!collection[user.username].roles)
                 collection[user.username].roles = [];
