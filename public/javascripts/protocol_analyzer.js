@@ -289,7 +289,7 @@ var protocol = ({
             "'/';" +
             "function submitData(){" +
             "var data = form2js(document.getElementById('data'), undefined, true); console.log(data);" +
-            "if(window.parent) window.parent.submitData(data);" +
+            "if(window.parent) window.parent.dashboard.submitData(data);" +
             "}";
 
         document.head.appendChild(script);
