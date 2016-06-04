@@ -246,7 +246,7 @@ var stock = ({
                         input.value = "";
                         input.setAttribute("helpText", "Select or Create New Stock Item");
                         input.setAttribute("tt_onLoad", "stock.loadItems(); stock.hideKeyboard(); stock.$('nextButton').onmousedown = " +
-                            "function(){};");
+                            "function(){window.parent.stock.listItems(window.parent.document.body)};");
                         input.setAttribute("tt_pageStyleClass", "NoControls");
                         input.setAttribute("tt_onUnLoad", "stock.$('nextButton').className = 'green navButton'; stock.$('nextButton').onmousedown " +
                             "= function(){gotoNextPage()}; if(stock.$('extras')) stock.$('buttons').removeChild(stock.$('extras'));");
@@ -504,7 +504,7 @@ var stock = ({
         var cell4_1 = document.createElement("th");
         cell4_1.style.textAlign = "right";
         cell4_1.style.color = "#000";
-        cell4_1.innerHTML = "Last Order Size:";
+        cell4_1.innerHTML = "Last Batch Size:";
         cell4_1.style.borderRight = "1px dotted #000";
 
         tr4.appendChild(cell4_1);
@@ -571,7 +571,7 @@ var stock = ({
 
         btnReceive.onmousedown = function () {
 
-            stock.receiveItem(this.getAttribute("tag"));
+            stock.receiveItem(stock.stocks[parseInt(this.getAttribute("tag"))].stock_id);
 
         }
 
@@ -585,7 +585,7 @@ var stock = ({
 
         btnDispatch.onmousedown = function () {
 
-            stock.dispatchItem(this.getAttribute("tag"));
+            stock.dispatchItem(stock.stocks[parseInt(this.getAttribute("tag"))].stock_id);
 
         }
 
@@ -777,9 +777,283 @@ var stock = ({
 
     },
 
-    listItems: function () {
+    listItems: function (target) {
 
-        console.log("in");
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "Inventory Management";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "stock.content";
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "1px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
+
+        div0.appendChild(div0_1_0_0);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.location = "/";
+
+        }
+
+        nav.appendChild(btnFinish);
+
+        var btnSearch = document.createElement("button");
+        btnSearch.className = "blue";
+        btnSearch.style.cssFloat = "right";
+        btnSearch.style.marginTop = "15px";
+        btnSearch.innerHTML = "Search for Inventory";
+
+        btnSearch.onclick = function () {
+
+            window.parent.stock.searchForStock();
+
+        }
+
+        nav.appendChild(btnSearch);
+
+        var btnAdd = document.createElement("button");
+        btnAdd.className = "blue";
+        btnAdd.style.cssFloat = "right";
+        btnAdd.style.margin = "15px";
+        btnAdd.innerHTML = "Add Item";
+
+        btnAdd.onclick = function () {
+
+            window.parent.stock.addItem();
+
+        }
+
+        nav.appendChild(btnAdd);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+        stock.loadListItems(stock.settings.listPath, div0_1_0_0);
+
+    },
+
+    itemsList: [],
+
+    loadListItems: function (path, target) {
+
+        if (!path || !target)
+            return;
+
+        stock.ajaxRequest(path, function (data) {
+
+            stock.itemsList = JSON.parse(data);
+
+            stock.buildUsersView(target);
+
+        })
+
+    },
+
+    buildUsersView: function (target) {
+
+        if (!target)
+            return;
+
+        if (!stock.itemsList)
+            return;
+
+        target.innerHTML = "";
+
+        var table = document.createElement("table");
+        table.style.borderCollapse = "collapse";
+        table.border = 1;
+        table.style.borderColor = "#eee";
+        table.width = "100%";
+        table.cellPadding = "8";
+
+        target.appendChild(table);
+
+        var tr = document.createElement("tr");
+        tr.style.backgroundColor = "#999";
+        tr.style.color = "#eee";
+
+        table.appendChild(tr);
+
+        var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Dispatch/Day",
+            "Receive", "Dispatch"];
+        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px"];
+
+        for (var i = 0; i < fields.length; i++) {
+
+            var th = document.createElement("th");
+
+            if (colSizes[i])
+                th.style.width = colSizes[i];
+
+            th.innerHTML = fields[i];
+
+            tr.appendChild(th);
+
+        }
+
+        for (var i = 0; i < stock.itemsList.length; i++) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var keys = Object.keys(stock.itemsList[i]);
+
+            for (var j = 0; j < 9; j++) {
+
+                var td = document.createElement("td");
+                td.style.verticalAlign = "top";
+
+                if ([0, 4, 5, 6].indexOf(j) >= 0) {
+
+                    td.align = "center";
+
+                } else {
+
+                    td.align = "left";
+
+                }
+
+                if (j > 6) {
+
+                    td.innerHTML = "";
+
+                    if (j == 7) {
+
+                        td.style.padding = "2px";
+
+                        var btnReceive = document.createElement("button");
+                        btnReceive.className = "blue";
+                        btnReceive.style.minWidth = "100px";
+                        btnReceive.style.minHeight = "30px";
+                        btnReceive.style.fontWeight = "normal";
+                        btnReceive.innerHTML = "Receive";
+                        btnReceive.setAttribute("stock_id", stock.itemsList[i].stock_id);
+
+                        btnReceive.onclick = function () {
+
+                            window.parent.stock.receiveItem(this.getAttribute("stock_id"));
+
+                        }
+
+                        td.appendChild(btnReceive);
+
+                    } else if (j == 8) {
+
+                        td.style.padding = "2px";
+
+                        var btnDispatch = document.createElement("button");
+                        btnDispatch.className = "blue";
+                        btnDispatch.style.minWidth = "100px";
+                        btnDispatch.style.minHeight = "30px";
+                        btnDispatch.style.fontWeight = "normal";
+                        btnDispatch.innerHTML = "Dispatch";
+                        btnDispatch.setAttribute("stock_id", stock.itemsList[i].stock_id);
+
+                        btnDispatch.onclick = function () {
+
+                            window.parent.stock.dispatchItem(this.getAttribute("stock_id"));
+
+                        }
+
+                        td.appendChild(btnDispatch);
+
+                    }
+
+                } else if (j == 0) {
+
+                    td.innerHTML = (i + 1);
+
+                } else if (j == 4) {
+
+                    td.style.fontWeight = "bold";
+
+                    if (parseInt(stock.itemsList[i][keys[j]]) > parseInt(stock.itemsList[i][keys[j + 1]])) {
+
+                        td.style.color = "green";
+
+                    } else {
+
+                        td.style.color = "red";
+
+                    }
+
+                    td.innerHTML = stock.itemsList[i][keys[j]];
+
+                } else {
+
+                    td.innerHTML = stock.itemsList[i][keys[j]];
+
+                }
+
+                td.style.borderColor = "#eee";
+
+                tr.appendChild(td);
+
+            }
+
+        }
 
     },
 
@@ -888,7 +1162,7 @@ var stock = ({
 
     },
 
-    receiveItem: function (pos) {
+    receiveItem: function (stock_id) {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -908,7 +1182,18 @@ var stock = ({
             "Stock ID": {
                 field_type: "hidden",
                 id: "data.stock_id",
-                value: stock.stocks[pos].stock_id
+                value: stock_id
+            },
+            "Batch Number": {
+                field_type: "text",
+                id: "data.batch_number",
+                optional: true
+            },
+            "Expiry Date": {
+                field_type: "date",
+                id: "data.expiry_date",
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
+                optional: true
             },
             "Received Quantity": {
                 field_type: "number",
@@ -927,7 +1212,7 @@ var stock = ({
 
     },
 
-    buildFields: function(fields, table) {
+    buildFields: function (fields, table) {
 
         var keys = Object.keys(fields);
 
@@ -953,7 +1238,7 @@ var stock = ({
             input.name = fields[key].id;
             input.setAttribute("helpText", key);
 
-            if(fields[key].field_type == "hidden") {
+            if (fields[key].field_type == "hidden") {
 
                 input.type = "hidden";
 
@@ -979,7 +1264,7 @@ var stock = ({
 
     },
 
-    dispatchItem: function (pos) {
+    dispatchItem: function (stock_id) {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -999,7 +1284,7 @@ var stock = ({
             "Stock ID": {
                 field_type: "hidden",
                 id: "data.stock_id",
-                value: stock.stocks[pos].stock_id
+                value: stock_id
             },
             "Quantity to Dispatch": {
                 field_type: "number",
@@ -1109,7 +1394,12 @@ var stock = ({
 
         stock.ajaxPostRequest(stock.settings.itemSavePath, data, function (sid) {
 
-            console.log(sid)
+            var json = JSON.parse(sid);
+
+            if (stock.$("stock.content"))
+                stock.loadListItems(stock.settings.listPath, stock.$("stock.content"));
+
+            stock.showMsg(json.message);
 
         })
 
@@ -1236,9 +1526,9 @@ var stock = ({
 
     },
 
-    showMsg: function(msg, topic) {
+    showMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Message";
 
@@ -1333,9 +1623,9 @@ var stock = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(stock.$("msg.shield")) {
+            if (stock.$("msg.shield")) {
 
                 document.body.removeChild(stock.$("msg.shield"));
 
@@ -1347,9 +1637,9 @@ var stock = ({
 
     },
 
-    showAlertMsg: function(msg, topic) {
+    showAlertMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Alert";
 
@@ -1444,9 +1734,9 @@ var stock = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(stock.$("msg.shield")) {
+            if (stock.$("msg.shield")) {
 
                 document.body.removeChild(stock.$("msg.shield"));
 

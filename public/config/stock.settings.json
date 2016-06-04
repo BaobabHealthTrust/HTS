@@ -4,5 +4,6 @@
     "itemSavePath": "http://localhost:3014/save_item",
     "categorySearchPath": "http://localhost:3014/stock_categories",
     "stockItemsSearchPath": "http://localhost:3014/stock_items",
-    "searchPath": "http://localhost:3014/stock_search"
+    "searchPath": "http://localhost:3014/stock_search",
+    "itemsListPath": "/items_list"
 }

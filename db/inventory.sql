@@ -113,6 +113,8 @@ DROP TABLE IF EXISTS `receipt`;
 CREATE TABLE `receipt` (
   `receipt_id` int(11) NOT NULL AUTO_INCREMENT,
   `stock_id` int(11) DEFAULT NULL,
+  `batch_number` varchar(255) DEFAULT NULL,
+  `expiry_date` datetime DEFAULT NULL,
   `receipt_quantity` int(11) DEFAULT NULL,
   `receipt_datetime` datetime DEFAULT NULL,
   `receipt_who_received` varchar(45) DEFAULT NULL,
@@ -144,7 +146,8 @@ DROP TABLE IF EXISTS `report`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `report` (
   `stock_id` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
+  `category_name` varchar(255) DEFAULT NULL,
   `reorder_level` int(11) DEFAULT NULL,
   `dispatch_id` int(11) NOT NULL DEFAULT '0',
   `dispatch_quantity` int(11) DEFAULT NULL,
@@ -162,6 +165,8 @@ CREATE TABLE `report` (
   `transfer_destination` varchar(255) DEFAULT NULL,
   `transfer_datetime` datetime DEFAULT NULL,
   `receipt_id` int(11) NOT NULL DEFAULT '0',
+  `batch_number` varchar(255) DEFAULT NULL,
+  `expiry_date` datetime DEFAULT NULL,
   `receipt_quantity` int(11) DEFAULT NULL,
   `receipt_datetime` datetime DEFAULT NULL,
   `receipt_who_received` varchar(255) DEFAULT NULL,
@@ -169,7 +174,7 @@ CREATE TABLE `report` (
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
   `voided_by` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`receipt_id`,`transfer_id`,`dispatch_id`)
+  PRIMARY KEY (`receipt_id`,`transfer_id`,`dispatch_id`,`stock_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -194,6 +199,7 @@ CREATE TABLE `stock` (
   `name` varchar(255) NOT NULL,
   `description` text,
   `reorder_level` int(11) DEFAULT NULL,
+  `last_order_size` int(11) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,

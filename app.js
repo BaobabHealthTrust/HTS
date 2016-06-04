@@ -1233,7 +1233,7 @@ function transferStock(data, res) {
 
             console.log(stock[0]);
 
-            res.send(stock[0].insertId)
+            res.status(200).json({message: "Record updated!"});
 
         });
 
@@ -1253,7 +1253,7 @@ function transferStock(data, res) {
 
             console.log(stock[0]);
 
-            res.send(stock[0].insertId)
+            res.status(200).json({message: "Record saved!"});
 
         });
 
@@ -1278,7 +1278,7 @@ function dispatchStock(data, res) {
 
             console.log(stock[0]);
 
-            res.send(stock[0].insertId)
+            res.status(200).json({message: "Record updated!"});
 
         });
 
@@ -1298,7 +1298,7 @@ function dispatchStock(data, res) {
 
             console.log(stock[0]);
 
-            res.send(stock[0].insertId)
+            res.status(200).json({message: "Record saved!"});
 
         });
 
@@ -1310,7 +1310,8 @@ function receiveStock(data, res) {
 
     if (data.receipt_id) {
 
-        var sql = "UPDATE receipt SET stock_id = '" + data.stock_id + "', receipt_quantity = '" + data.receipt_quantity +
+        var sql = "UPDATE receipt SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
+            "', expiry_date = '" + data.expiry_date + "', receipt_quantity = '" + data.receipt_quantity +
             "', receipt_datetime = '" + data.receipt_datetime + "', receipt_who_received = '" + data.userId + "' WHERE " +
             "receipt_id = '" + data.receipt_id;
 
@@ -1320,15 +1321,16 @@ function receiveStock(data, res) {
 
             console.log(stock[0]);
 
-            res.send(stock[0].insertId)
+            res.status(200).json({message: "Record updated!"});
 
         });
 
     }
     else {
 
-        var sql = "INSERT INTO receipt (stock_id, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
-            data.stock_id + "', '" + data.receipt_quantity + "', '" + data.receipt_datetime + "', '" + data.userId + "')";
+        var sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
+            data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.receipt_quantity +
+            "', '" + data.receipt_datetime + "', '" + data.userId + "')";
 
         console.log(sql);
 
@@ -1336,7 +1338,7 @@ function receiveStock(data, res) {
 
             console.log(stock[0]);
 
-            res.send(stock[0].insertId)
+            res.status(200).json({message: "Record saved!"});
 
         });
 
@@ -1373,9 +1375,25 @@ function saveStock(data, res) {
 
                     queryRawStock(sql, function (stock) {
 
-                        console.log(stock[0]);
+                        if (data.batch_number && data.expiry_date) {
 
-                        res.send(stock[0])
+                            sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
+                                "VALUES ('" + stock[0].insertId + "', '" + data.batch_number + "', '" + data.expiry_date +
+                                "', NOW(), '" + data.userId + "')";
+
+                            console.log(sql);
+
+                            queryRawStock(sql, function (batch) {
+
+                                res.status(200).json({message: "Item saved!"});
+
+                            });
+
+                        } else {
+
+                            res.status(200).json({message: "Item saved!"});
+
+                        }
 
                     });
 
@@ -1398,7 +1416,7 @@ function saveStock(data, res) {
 
                     console.log(stock[0]);
 
-                    res.send(stock[0])
+                    res.status(200).json({message: "Item updated!"});
 
                 });
 
@@ -1431,9 +1449,25 @@ function saveStock(data, res) {
 
                     queryRawStock(sql, function (stock) {
 
-                        console.log(stock[0]);
+                        if (data.batch_number && data.expiry_date) {
 
-                        res.send(stock[0].insertId)
+                            sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
+                                "VALUES ('" + stock[0].insertId + "', '" + data.batch_number + "', '" + data.expiry_date +
+                                "', NOW(), '" + data.userId + "')";
+
+                            console.log(sql);
+
+                            queryRawStock(sql, function (batch) {
+
+                                res.status(200).json({message: "Item saved!"});
+
+                            });
+
+                        } else {
+
+                            res.status(200).json({message: "Item saved!"});
+
+                        }
 
                     });
 
@@ -1451,15 +1485,83 @@ function saveStock(data, res) {
 
                 queryRawStock(sql, function (stock) {
 
-                    console.log(stock[0]);
+                    if (data.batch_number && data.expiry_date) {
 
-                    res.send(stock[0].insertId)
+                        sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
+                            "VALUES ('" + stock[0].insertId + "', '" + data.batch_number + "', '" + data.expiry_date +
+                            "', NOW(), '" + data.userId + "')";
+
+                        console.log(sql);
+
+                        queryRawStock(sql, function (batch) {
+
+                            res.status(200).json({message: "Item saved!"});
+
+                        });
+
+                    } else {
+
+                        res.status(200).json({message: "Item saved!"});
+
+                    }
 
                 });
 
             }
 
         });
+
+    }
+
+}
+
+function saveBatch(data, res) {
+
+    if (data.stock_id) {
+
+        if(data.stock_batch_id) {
+
+            if(data.batch_number || data.expiry_date) {
+
+                var sql = "UPDATE stock_batch SET " + (data.batch_number ? "batch_number = '" + data.batch_number +
+                    "' " : "") + (data.batch_number && data.expiry_date ? "," : "") + (data.expiry_date ?
+                    " expiry_date = '" + data.expiry_date + "'" : "") + ", date_created, creator) " +
+                    "VALUES ('" + data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date +
+                    "', NOW(), '" + data.userId + "')";
+
+                console.log(sql);
+
+                queryRawStock(sql, function (batch) {
+
+                    res.status(200).json({message: "Item saved!"});
+
+                });
+
+            } else {
+
+                res.status(200).json({message: "Nothing done!"});
+
+            }
+
+        } else {
+
+            var sql = "INSERT INTO stock_batch (stock_id, batch_number, expiry_date, date_created, creator) " +
+                "VALUES ('" + data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date +
+                "', NOW(), '" + data.userId + "')";
+
+            console.log(sql);
+
+            queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Item saved!"});
+
+            });
+
+        }
+
+    } else {
+
+        res.status(200).json({message: "Missing stock association!"});
 
     }
 
@@ -2161,7 +2263,7 @@ app.get('/test_id', function (req, res) {
 
 })
 
-app.post('/activate_user', function(req, res) {
+app.post('/activate_user', function (req, res) {
 
     var data = req.body;
 
@@ -2377,13 +2479,47 @@ app.get('/roles', function (req, res) {
 
 app.get('/stock_list', function (req, res) {
 
-    var sql = "SELECT stock.stock_id, name, SUM(receipt_quantity) receipt_quantity, SUM(dispatch_quantity) " +
-        "dispatch_quantity, reorder_level FROM stock LEFT OUTER JOIN receipt ON receipt.stock_id = stock.stock_id LEFT " +
-        "OUTER JOIN dispatch ON dispatch.stock_id = stock.stock_id GROUP BY stock.stock_id";
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+    var sql = "SELECT report.stock_id, item_name AS name, description, category_name, SUM(COALESCE(receipt_quantity,0)) " +
+        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
+        "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
+        "JOIN stock ON stock.stock_id = report.stock_id GROUP BY stock.stock_id LIMIT " + lowerLimit + ", " + pageSize;
+
+    console.log(sql);
 
     queryRawStock(sql, function (data) {
 
-        res.send(data[0]);
+        var collection = [];
+
+        for(var i = 0; i < data[0].length; i++) {
+
+            var entry = {
+                stock_id: data[0][i].stock_id,
+                name: data[0][i].name,
+                description: data[0][i].description,
+                category: data[0][i].category_name,
+                inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
+                reorder_level: data[0][i].reorder_level,
+                avg: (data[0][i].duration > 0 ?
+                    (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
+                receipt_quantity: data[0][i].receipt_quantity,
+                dispatch_quantity: data[0][i].dispatch_quantity,
+                last_order_size: data[0][i].last_order_size
+            };
+
+            collection.push(entry);
+
+        }
+
+        res.status(200).json(collection);
 
     })
 
@@ -2446,18 +2582,44 @@ app.get('/stock_items', function (req, res) {
 
 })
 
+app.get('/items_list', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.name LIKE '" + query.item_name + "%'";
+
+    queryRawStock(sql, function (data) {
+
+        console.log(data[0]);
+
+        var result = "";
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            result += "<li tstValue='" + data[0][i].stock_id + "'>" + data[0][i].name + "</li>";
+
+        }
+
+        res.send(result);
+
+    })
+
+})
+
 app.get('/stock_search', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
     var query = url_parts.query;
 
-    var sql = "SELECT stock.stock_id, stock.name AS item_name, description, category.name AS category_name, " +
-        "COALESCE(SUM(receipt_quantity),0) receipt_quantity, " +
-        "COALESCE(SUM(dispatch_quantity),0) dispatch_quantity, reorder_level FROM stock LEFT OUTER JOIN category ON " +
-        "category.category_id = stock.category_id LEFT OUTER JOIN receipt ON receipt.stock_id = stock.stock_id LEFT " +
-        "OUTER JOIN dispatch ON dispatch.stock_id = stock.stock_id " + (query.category && query.item_name ?
-        "WHERE category.name = '" + query.category + "' AND stock.name = '" + query.item_name + "'" : "") +
+    var sql = "SELECT report.stock_id, item_name AS name, description, category_name, SUM(COALESCE(receipt_quantity,0)) " +
+        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
+        "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
+        "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
+        "WHERE category_name = '" + query.category + "' AND name = '" + query.item_name + "'" : "") +
         " GROUP BY stock.stock_id";
 
     console.log(sql);
@@ -2472,13 +2634,15 @@ app.get('/stock_search', function (req, res) {
 
             var entry = {
                 stock_id: data[0][i].stock_id,
-                item_name: data[0][i].item_name,
+                item_name: data[0][i].name,
                 category: data[0][i].category_name,
                 description: data[0][i].description,
                 in_stock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
                 last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
-                avg_dispatch_per_day: 0,
-                re_order_level: data[0][i].reorder_level
+                avg_dispatch_per_day: (data[0][i].duration > 0 ?
+                    (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
+                re_order_level: data[0][i].reorder_level,
+                last_order_size: data[0][i].last_order_size
             }
 
             collection.push(entry);
@@ -2522,6 +2686,12 @@ app.post('/save_item', function (req, res) {
         case "transfer":
 
             transferStock(data, res);
+
+            break;
+
+        case "batch":
+
+            saveBatch(data, res);
 
             break;
 
