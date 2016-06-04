@@ -6,5 +6,7 @@
     "loginStatusCheckPath": "/authentic/",
     "hts.provider.id": true,
     "searchPath": "/search_by_username",
-    "rolesPath": "/roles/"
+    "rolesPath": "/roles/",
+    "userPath": "/users_listing",
+    "userAddPath": "/updateUser"
 }

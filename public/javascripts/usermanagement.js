@@ -127,24 +127,22 @@ var user = ({
 
     },
 
-    addUser: function () {
+    addUser: function (target) {
+
+        if (!target)
+            return;
+
+        target.innerHTML = "";
 
         var div = document.createElement("div");
-        div.id = "user.div.main";
+        div.id = "content";
 
-        if (this.target) {
-
-            this.target.appendChild(div);
-
-        } else {
-
-            document.body.appendChild(div);
-
-        }
+        target.appendChild(div);
 
         var form = document.createElement("form");
-        form.action = (this.action ? this.action : "");
-        form.method = "POST";
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
 
         div.appendChild(form);
 
@@ -153,188 +151,221 @@ var user = ({
         form.appendChild(table);
 
         var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                type: "hidden",
+                id: "data.datatype",
+                value: "addUser"
+            },
             "Username": {
-                field_type: "text"
+                field_type: "text",
+                textCase: "lower",
+                id: "data.username",
+                allowFreeText: true,
+                ajaxURL: "/list_usernames?username="
             },
             "Password": {
-                field_type: "password",
+                field_type: "text",
                 type: "password",
-                id: "password",
-                tt_onUnLoad: "__$('confirm_password').setAttribute('validationRule', __$('touchscreenInput' + tstCurrentPage).value)"
+                id: "data.password",
+                textCase: "lower",
+                tt_onUnLoad: "__$('data.confirm_password').setAttribute('validationRule', __$('touchscreenInput' + tstCurrentPage).value)"
             },
             "Confirm Password": {
-                field_type: "password",
+                field_type: "text",
                 type: "password",
-                id: "confirm_password",
+                id: "data.confirm_password",
                 validationRule: "",
+                textCase: "lower",
                 validationMessage: "Password Mismatch!"
             },
             "Role(s)": {
                 field_type: "select",
+                id: "data.roles",
                 multiple: "multiple",
                 ajaxURL: "/roles"
             },
             "First Name": {
-                field_type: "text"
+                field_type: "text",
+                id: "data.first_name",
+                allowFreeText: true,
+                ajaxURL: "/fnames_query"
             },
             "Last Name": {
-                field_type: "text"
-            },
-            "Date of Birth": {
-                field_type: "birthdate",
-                estimate_field: "estimated"
-            },
-            "Estimated": {
-                type: "hidden",
-                id: "estimated"
+                field_type: "text",
+                id: "data.last_name",
+                allowFreeText: true,
+                ajaxURL: "/lnames_query"
             },
             "Gender": {
                 field_type: "select",
-                options: ["", "Male", "Female"]
+                options: ["", "Male", "Female"],
+                id: "data.gender"
             }
+            /*"Date of Birth": {
+                field_type: "birthdate",
+                estimate_field: "data.estimated",
+                optional: true,
+                id: "data.date_of_birth"
+            },
+            "Estimated": {
+                type: "hidden",
+                id: "data.estimated"
+            },*/
         }
 
         if (user.settings['hts.provider.id']) {
 
             fields['HTS Provider ID'] = {
                 field_type: "text",
-                optional: true
+                optional: true,
+                id: "data.hts_provider_id"
             }
 
         }
 
-        var keys = Object.keys(fields);
+        user.buildFields(fields, table);
 
-        for (var i = 0; i < keys.length; i++) {
+        user.navPanel(form.outerHTML);
 
-            var tr = document.createElement("tr");
+        /* var keys = Object.keys(fields);
 
-            table.appendChild(tr);
+         for (var i = 0; i < keys.length; i++) {
 
-            var key = keys[i];
+         var tr = document.createElement("tr");
 
-            for (var j = 0; j < 2; j++) {
+         table.appendChild(tr);
 
-                var td = document.createElement("td");
+         var key = keys[i];
 
-                tr.appendChild(td);
+         for (var j = 0; j < 2; j++) {
 
-                if (j == 0) {
+         var td = document.createElement("td");
 
-                    td.innerHTML = key;
+         tr.appendChild(td);
 
-                } else {
+         if (j == 0) {
 
-                    var fieldType = fields[key].field_type;
+         td.innerHTML = key;
 
-                    var id = key.trim().toLowerCase().replace(/\s/, "_").replace(/\(/, "_").replace(/\)/, "_");
+         } else {
 
-                    switch (fieldType) {
+         var fieldType = fields[key].field_type;
 
-                        case "select":
+         var id = key.trim().toLowerCase().replace(/\s/, "_").replace(/\(/, "_").replace(/\)/, "_");
 
-                            var select = document.createElement("select");
-                            select.id = id;
-                            select.name = key;
-                            select.setAttribute("helpText", key);
+         switch (fieldType) {
 
-                            td.appendChild(select);
+         case "select":
 
-                            if (fields[key].options) {
+         var select = document.createElement("select");
+         select.id = id;
+         select.name = key;
+         select.setAttribute("helpText", key);
 
-                                for (var o = 0; o < fields[key].options.length; o++) {
+         td.appendChild(select);
 
-                                    var opt = document.createElement("option");
-                                    opt.innerHTML = fields[key].options[o];
+         if (fields[key].options) {
 
-                                    select.appendChild(opt);
+         for (var o = 0; o < fields[key].options.length; o++) {
 
-                                }
+         var opt = document.createElement("option");
+         opt.innerHTML = fields[key].options[o];
 
-                            }
+         select.appendChild(opt);
 
-                            var exceptions = ["options", "helpText"]
+         }
 
-                            var attrs = Object.keys(fields[key]);
+         }
 
-                            for (var a = 0; a < exceptions.length; a++) {
+         var exceptions = ["options", "helpText"]
 
-                                if (attrs.indexOf(exceptions[a]) >= 0) {
+         var attrs = Object.keys(fields[key]);
 
-                                    attrs.splice(attrs.indexOf(exceptions[a]));
+         for (var a = 0; a < exceptions.length; a++) {
 
-                                }
+         if (attrs.indexOf(exceptions[a]) >= 0) {
 
-                            }
+         attrs.splice(attrs.indexOf(exceptions[a]));
 
-                            if (attrs.length > 0) {
+         }
 
-                                for (var a = 0; a < attrs.length; a++) {
+         }
 
-                                    var attr = attrs[a];
+         if (attrs.length > 0) {
 
-                                    select.setAttribute(attr, fields[key][attr]);
+         for (var a = 0; a < attrs.length; a++) {
 
-                                }
+         var attr = attrs[a];
 
-                            }
+         select.setAttribute(attr, fields[key][attr]);
 
-                            break;
+         }
 
-                        default:
+         }
 
-                            var input = document.createElement("input");
-                            input.id = id;
-                            input.name = key;
-                            input.setAttribute("helpText", key);
+         break;
 
-                            td.appendChild(input);
+         default:
 
-                            var exceptions = ["helpText"]
+         var input = document.createElement("input");
+         input.id = id;
+         input.name = key;
+         input.setAttribute("helpText", key);
 
-                            var attrs = Object.keys(fields[key]);
+         td.appendChild(input);
 
-                            for (var a = 0; a < exceptions.length; a++) {
+         var exceptions = ["helpText"]
 
-                                if (attrs.indexOf(exceptions[a]) >= 0) {
+         var attrs = Object.keys(fields[key]);
 
-                                    attrs.splice(attrs.indexOf(exceptions[a]));
+         for (var a = 0; a < exceptions.length; a++) {
 
-                                }
+         if (attrs.indexOf(exceptions[a]) >= 0) {
 
-                            }
+         attrs.splice(attrs.indexOf(exceptions[a]));
 
-                            if (attrs.length > 0) {
+         }
 
-                                for (var a = 0; a < attrs.length; a++) {
+         }
 
-                                    var attr = attrs[a];
+         if (attrs.length > 0) {
 
-                                    input.setAttribute(attr, fields[key][attr]);
+         for (var a = 0; a < attrs.length; a++) {
 
-                                }
+         var attr = attrs[a];
 
-                            }
+         input.setAttribute(attr, fields[key][attr]);
 
-                            break;
+         }
 
-                    }
+         }
 
-                }
+         break;
 
-            }
+         }
 
-        }
+         }
 
-        var base = document.createElement("base");
-        base.href = user.settings.basePath;
+         }
 
-        document.head.appendChild(base);
+         }
 
-        var script = document.createElement("script");
-        script.setAttribute("src", user.settings.basePath + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+         var base = document.createElement("base");
+         base.href = user.settings.basePath;
 
-        document.head.appendChild(script);
+         document.head.appendChild(base);
+
+         var script = document.createElement("script");
+         script.innerText = "tt_cancel_destination = 'javascript:window.parent.user.showUsers(window.parent.document.body)'; " +
+         "tt_cancel_show = 'javascript:window.parent.user.showUsers(window.parent.document.body)';";
+
+         document.head.appendChild(script);
+
+         var script = document.createElement("script");
+         script.setAttribute("src", user.settings.basePath + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+         document.head.appendChild(script);*/
 
     },
 
@@ -369,36 +400,94 @@ var user = ({
 
             tr.appendChild(td2);
 
-            var input = document.createElement("input");
-            input.id = fields[key].id;
-            input.name = fields[key].id;
-            input.setAttribute("helpText", key);
+            var fieldType = fields[key].field_type;
 
-            if (fields[key].field_type == "hidden") {
+            switch (fieldType) {
 
-                input.type = "hidden";
+                case "select":
 
-            } else if (fields[key].field_type == "password") {
+                    var select = document.createElement("select");
+                    select.id = fields[key].id;
+                    select.name = fields[key].id;
+                    select.setAttribute("helpText", key);
 
-                input.type = "password";
+                    td2.appendChild(select);
 
-                fields[key].field_type = "text";
+                    if (fields[key].options) {
 
-            } else {
+                        for (var o = 0; o < fields[key].options.length; o++) {
 
-                input.type = "text";
+                            var opt = document.createElement("option");
+                            opt.innerHTML = fields[key].options[o];
 
-            }
+                            select.appendChild(opt);
 
-            td2.appendChild(input);
+                        }
 
-            var elements = Object.keys(fields[key]);
+                    }
 
-            elements.splice(elements.indexOf("id"), 1);
+                    var exceptions = ["options", "helpText"]
 
-            for (var j = 0; j < elements.length; j++) {
+                    var attrs = Object.keys(fields[key]);
 
-                input.setAttribute(elements[j], fields[key][elements[j]]);
+                    for (var a = 0; a < exceptions.length; a++) {
+
+                        if (attrs.indexOf(exceptions[a]) >= 0) {
+
+                            attrs.splice(attrs.indexOf(exceptions[a]));
+
+                        }
+
+                    }
+
+                    if (attrs.length > 0) {
+
+                        for (var a = 0; a < attrs.length; a++) {
+
+                            var attr = attrs[a];
+
+                            select.setAttribute(attr, fields[key][attr]);
+
+                        }
+
+                    }
+
+                    break;
+
+                default:
+
+                    var input = document.createElement("input");
+                    input.id = fields[key].id;
+                    input.name = fields[key].id;
+                    input.setAttribute("helpText", key);
+
+                    if (fields[key].field_type == "hidden") {
+
+                        input.type = "hidden";
+
+                    } else if (fields[key].field_type == "password") {
+
+                        input.type = "password";
+
+                        fields[key].field_type = "text";
+
+                    } else {
+
+                        input.type = "text";
+
+                    }
+
+                    td2.appendChild(input);
+
+                    var elements = Object.keys(fields[key]);
+
+                    elements.splice(elements.indexOf("id"), 1);
+
+                    for (var j = 0; j < elements.length; j++) {
+
+                        input.setAttribute(elements[j], fields[key][elements[j]]);
+
+                    }
 
             }
 
@@ -560,6 +649,24 @@ var user = ({
 
             })
 
+        } else if (data.data.datatype == "addUser") {
+
+            user.ajaxPostRequest(user.settings.userAddPath, data.data, function (sid) {
+
+                var json = JSON.parse(sid);
+
+                if (user.$("navPanel")) {
+
+                    document.body.removeChild(user.$("navPanel"));
+
+                }
+
+                // window.location = "/";
+
+                user.showMsg(json.message, "Status", "/");
+
+            })
+
         } else {
 
             user.ajaxPostRequest(user.settings.loginPath, data.data, function (sid) {
@@ -572,23 +679,24 @@ var user = ({
 
                 }
 
+                // Sessions expire after 8 hrs if user does not logout
                 if (Object.keys(json).indexOf("token") >= 0) {
 
-                    user.setCookie("token", json["token"], 1);
+                    user.setCookie("token", json["token"], 0.333333333);
 
-                    user.setCookie("username", json["username"], 1);
+                    user.setCookie("username", json["username"], 0.333333333);
 
-                    user.setCookie("gender", json["gender"], 1);
+                    user.setCookie("gender", json["gender"], 0.333333333);
 
-                    user.setCookie("given_name", json["given_name"], 1);
+                    user.setCookie("given_name", json["given_name"], 0.333333333);
 
-                    user.setCookie("family_name", json["family_name"], 1);
+                    user.setCookie("family_name", json["family_name"], 0.333333333);
 
-                    user.setCookie("location", data.data.location, 1);
+                    user.setCookie("location", data.data.location, 0.333333333);
 
-                    user.setCookie("attrs", JSON.stringify(json['attributes']), 1);
+                    user.setCookie("attrs", JSON.stringify(json['attributes']), 0.333333333);
 
-                    user.setCookie("roles", JSON.stringify(json['roles']), 1);
+                    user.setCookie("roles", JSON.stringify(json['roles']), 0.333333333);
 
                     window.location = "/";
 
@@ -610,7 +718,7 @@ var user = ({
 
     },
 
-    showMsg: function (msg, topic) {
+    showMsg: function (msg, topic, nextURL) {
 
         if (!topic) {
 
@@ -707,11 +815,17 @@ var user = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
+        if (nextURL)
+            btn.setAttribute("nextURL", nextURL);
+
         btn.onclick = function () {
 
             if (user.$("msg.shield")) {
 
                 document.body.removeChild(user.$("msg.shield"));
+
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
 
             }
 
@@ -721,7 +835,7 @@ var user = ({
 
     },
 
-    showAlertMsg: function (msg, topic) {
+    showAlertMsg: function (msg, topic, nextURL) {
 
         if (!topic) {
 
@@ -818,11 +932,17 @@ var user = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
+        if (nextURL)
+            btn.setAttribute("nextURL", nextURL);
+
         btn.onclick = function () {
 
             if (user.$("msg.shield")) {
 
                 document.body.removeChild(user.$("msg.shield"));
+
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
 
             }
 
@@ -1049,8 +1169,8 @@ var user = ({
         td0_1_0_0_0_0_0_0_0_1.style.paddingLeft = "15px";
         td0_1_0_0_0_0_0_0_0_1.innerHTML =
             (user.getCookie("given_name").trim().length > 0 ? user.getCookie("given_name") : "") + " " +
-                (user.getCookie("family_name").trim().length > 0 ? user.getCookie("family_name") : "") + " (" +
-                user.getCookie("username") + ")";
+            (user.getCookie("family_name").trim().length > 0 ? user.getCookie("family_name") : "") + " (" +
+            user.getCookie("username") + ")";
 
         tr0_1_0_0_0_0_0_0_0.appendChild(td0_1_0_0_0_0_0_0_0_1);
 
@@ -1088,7 +1208,7 @@ var user = ({
 
         var roles = (user.getCookie("roles").trim().length > 0 ? JSON.parse(user.getCookie("roles")) : []);
 
-        for(var i = 0; i < roles.length; i++) {
+        for (var i = 0; i < roles.length; i++) {
 
             var li = document.createElement("li");
             li.innerHTML = roles[i];
@@ -1162,20 +1282,20 @@ var user = ({
 
         tr0_1_0_0_0_0_1_0_2.appendChild(td0_1_0_0_0_0_1_0_2_0);
 
-        var btnChangePassword = document.createElement("button");
-        btnChangePassword.className = "blue";
-        btnChangePassword.style.margin = "8px";
-        btnChangePassword.style.width = "250px";
-        btnChangePassword.style.cssFloat = "right";
-        btnChangePassword.innerHTML = "Manage Users";
+        var btnManageUsers = document.createElement("button");
+        btnManageUsers.className = "blue";
+        btnManageUsers.style.margin = "8px";
+        btnManageUsers.style.width = "250px";
+        btnManageUsers.style.cssFloat = "right";
+        btnManageUsers.innerHTML = "Manage Users";
 
-        btnChangePassword.onclick = function () {
+        btnManageUsers.onclick = function () {
 
-            user.showMsg("Manage Users");
+            window.parent.user.showUsers(window.parent.document.body);
 
         }
 
-        td0_1_0_0_0_0_1_0_2_0.appendChild(btnChangePassword);
+        td0_1_0_0_0_0_1_0_2_0.appendChild(btnManageUsers);
 
         var nav = document.createElement("div");
         nav.style.backgroundColor = "#333";
@@ -1191,7 +1311,7 @@ var user = ({
         btnFinish.className = "green";
         btnFinish.style.cssFloat = "right";
         btnFinish.style.margin = "15px";
-        btnFinish.style.width = "120px";
+        btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
         btnFinish.onclick = function () {
@@ -1201,6 +1321,106 @@ var user = ({
         }
 
         nav.appendChild(btnFinish);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+    },
+
+    showUsers: function (target) {
+
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "User Management";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "5px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
+
+        div0.appendChild(div0_1_0_0);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.location = "/";
+
+        }
+
+        nav.appendChild(btnFinish);
+
+        var btnNewUSer = document.createElement("button");
+        btnNewUSer.className = "blue";
+        btnNewUSer.style.cssFloat = "right";
+        btnNewUSer.style.margin = "15px";
+        btnNewUSer.style.width = "150px";
+        btnNewUSer.innerHTML = "Add User";
+
+        btnNewUSer.onclick = function () {
+
+            window.parent.user.addUser(window.parent.document.body);
+
+        }
+
+        nav.appendChild(btnNewUSer);
 
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");

@@ -1842,24 +1842,24 @@ app.post('/updateUser', function (req, res) {
 
     var salt = rString;
 
-    var password = encrypt(req.body.Password, salt);
+    var password = encrypt(req.body.password, salt);
 
     var person_id;
 
-    sql = "SELECT user_id FROM users WHERE username = '" + req.body["Username"] + "'";
+    sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
 
     queryRaw(sql, function (verification) {
 
         if (verification[0].length > 0) {
 
-            res.send("Username already taken!");
+            res.status(200).json({message: "Username already taken!"});
 
         } else {
 
-            var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
-                req.body["Gender"] + "', '" + req.body["Date of Birth"] + "', '" + req.body["Estimated"] + "', " +
-                "(SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) +
-                "'), NOW(), '" + uuid.v1() + "')";
+            var sql = "INSERT INTO person (gender, " + (data.date_of_birth ? "birthdate, birthdate_estimated, " : "") +
+                "creator, date_created, uuid) VALUES ('" + String(data.gender).substring(0, 1) + "', " + (data.date_of_birth ? "'" +
+                data.date_of_birth + "', '" + data.estimated + "', " : "") + " (SELECT user_id FROM users WHERE " +
+                "username = '" + (data.userId ? data.userId : "admin" ) + "'), NOW(), '" + uuid.v1() + "')";
 
             queryRaw(sql, function (person) {
 
@@ -1869,27 +1869,59 @@ app.post('/updateUser', function (req, res) {
 
 
                 var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, uuid) VALUES ('" +
-                    person_id + "', '" + req.body["First Name"] + "', '" + req.body["Last Name"] + "', " +
-                    "(SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] != undefined ? req.body["User ID"] : "admin" ) +
+                    person_id + "', '" + data.first_name + "', '" + data.last_name + "', " + "(SELECT user_id FROM " +
+                    "users WHERE username = '" + (data.userId != undefined ? data.userId : "admin" ) +
                     "'), NOW(), '" + uuid.v1() + "')";
 
                 queryRaw(sql, function (name) {
 
-                    sql = "SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "'"
+                    sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
+                        "date_created, uuid) VALUES ('" + person_id + "', '" + data.hts_provider_id + "', " +
+                        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'HTC Provider ID'), " +
+                        "(SELECT user_id FROM users WHERE username = '" + (data.userId ? data.userId : "admin" ) +
+                        "'), NOW(), '" + uuid.v1() + "')";
 
-                    queryRaw(sql, function (updater) {
+                    queryRaw(sql, function (attr) {
 
-                        console.log(updater[0][0].user_id);
+                        console.log(attr[0]);
 
-                        var sql = "INSERT INTO users (system_id, username, password, salt, creator, date_created, person_id, uuid) VALUES ('" +
-                            req.body["Username"] + "', '" + req.body["Username"] + "', '" + password + "', '" + salt + "', '" +
-                            updater[0][0].user_id + "', NOW(), '" + person_id + "', '" + uuid.v1() + "')";
+                        sql = "SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "'"
 
-                        queryRaw(sql, function (user) {
+                        queryRaw(sql, function (updater) {
 
-                            console.log(user);
+                            console.log(updater[0][0].user_id);
 
-                            res.send("User added!");
+                            var sql = "INSERT INTO users (system_id, username, password, salt, creator, date_created, " +
+                                "person_id, uuid) VALUES ('" + data.username + "', '" + data.username + "', '" +
+                                password + "', '" + salt + "', '" + updater[0][0].user_id + "', NOW(), '" + person_id +
+                                "', '" + uuid.v1() + "')";
+
+                            queryRaw(sql, function (user) {
+
+                                console.log(user[0].insertId);
+
+                                var values = "";
+
+                                for (var i = 0; i < data.roles.length; i++) {
+
+                                    values += (values.trim().length > 0 ? ", " : "") + "('" + user[0].insertId + "', '" +
+                                        data.roles[i] + "')";
+
+                                }
+
+                                sql = "INSERT INTO user_role (user_id, role) VALUES " + values;
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (role) {
+
+                                    console.log(role[0]);
+
+                                    res.status(200).json({message: "User added!"});
+
+                                });
+
+                            });
 
                         });
 
@@ -2121,6 +2153,79 @@ app.get('/test_id', function (req, res) {
 
 })
 
+app.get('/users_listing', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+    var sql = "SELECT users.user_id, person.person_id, username, role, gender, given_name, family_name FROM users LEFT OUTER JOIN user_role ON " +
+        "users.user_id = user_role.user_id LEFT OUTER JOIN person ON person.person_id = users.person_id " +
+        "LEFT OUTER JOIN person_name ON person_name.person_id = person.person_id WHERE COALESCE(password,'') != '' " +
+        " LIMIT " + lowerLimit + ", " + pageSize;
+
+    console.log(sql);
+
+    queryRaw(sql, function (users) {
+
+        console.log(users[0]);
+
+        var collection = {};
+
+        async.each(users[0], function (user, callback) {
+
+            if (!collection[user.username])
+                collection[user.username] = {};
+
+            collection[user.username].gender = user.gender;
+
+            collection[user.username].given_name = user.given_name;
+
+            collection[user.username].family_name = user.family_name;
+
+            if (!collection[user.username].roles)
+                collection[user.username].roles = [];
+
+            if (user.role)
+                collection[user.username].roles.push(user.role);
+
+            sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
+                "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id " +
+                " WHERE person_id = '" + user.person_id + "'";
+
+            console.log(sql);
+
+            queryRaw(sql, function (attrs) {
+
+                console.log(attrs[0]);
+
+                if (!collection[user.username].attributes)
+                    collection[user.username].attributes = {};
+
+                for (var i = 0; i < attrs[0].length; i++) {
+
+                    collection[user.username].attributes[attrs[0][i].attribute] = attrs[0][i].value;
+
+                }
+
+                callback();
+
+            });
+
+        }, function () {
+
+            res.status(200).json(collection);
+
+        })
+
+    });
+
+})
+
 app.get('/roles/:id', function (req, res) {
 
     var sql = "SELECT role FROM users LEFT OUTER JOIN user_role ON user_role.user_id = users.user_id WHERE username = '" +
@@ -2132,7 +2237,7 @@ app.get('/roles/:id', function (req, res) {
 
     queryRaw(sql, function (data) {
 
-        for(var i = 0; i < data[0].length; i++) {
+        for (var i = 0; i < data[0].length; i++) {
 
             roles.push(data[0][i].role);
 
@@ -2148,11 +2253,25 @@ app.get('/roles/:id', function (req, res) {
 
 app.get('/roles', function (req, res) {
 
-    var roles = ["Counselor", "Supervisor", "Admin"];
+    var sql = "SELECT role FROM role WHERE description LIKE 'HTS%'";
 
-    var result = "<li>" + roles.join("</li><li>") + "</li>";
+    var roles = [];
 
-    res.send(result);
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            roles.push(data[0][i].role);
+
+        }
+
+        var result = "<li>" + roles.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    });
 
 })
 
