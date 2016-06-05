@@ -48,6 +48,7 @@ DROP TABLE IF EXISTS `dispatch`;
 CREATE TABLE `dispatch` (
   `dispatch_id` int(11) NOT NULL AUTO_INCREMENT,
   `stock_id` int(11) DEFAULT NULL,
+  `batch_number` varchar(255) DEFAULT NULL,
   `dispatch_quantity` int(11) DEFAULT NULL,
   `dispatch_datetime` datetime DEFAULT NULL,
   `dispatch_who_dispatched` varchar(45) DEFAULT NULL,
@@ -170,6 +171,10 @@ CREATE TABLE `report` (
   `receipt_quantity` int(11) DEFAULT NULL,
   `receipt_datetime` datetime DEFAULT NULL,
   `receipt_who_received` varchar(255) DEFAULT NULL,
+  `consumption_id` int(11) NOT NULL DEFAULT '0',
+  `consumption_type` varchar(64) DEFAULT NULL,
+  `who_consumed` varchar(255) DEFAULT NULL, 
+  `date_consumed` datetime DEFAULT NULL, 
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
@@ -271,6 +276,52 @@ CREATE TABLE `stock_attribute_type` (
 LOCK TABLES `stock_attribute_type` WRITE;
 /*!40000 ALTER TABLE `stock_attribute_type` DISABLE KEYS */;
 /*!40000 ALTER TABLE `stock_attribute_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `consumption`
+--
+
+DROP TABLE IF EXISTS `consumption`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `consumption` (
+  `consumption_id` INT NOT NULL AUTO_INCREMENT,
+  `consumption_type_id` INT NOT NULL,
+  `dispatch_id` INT NOT NULL,
+  `who_consumed` VARCHAR(255) NULL,
+  `date_consumed` datetime DEFAULT NULL, 
+  `reason_for_consumption` VARCHAR(255) NULL,
+  `voided` TINYINT NULL,
+  `voided_by` VARCHAR(45) NULL,
+  `void_reason` VARCHAR(255) NULL,
+  `date_voided` DATETIME NULL,
+  PRIMARY KEY (`consumption_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `consumption_type`
+--
+
+DROP TABLE IF EXISTS `consumption_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `consumption_type` (
+  `consumption_type_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`consumption_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `region`
+--
+
+LOCK TABLES `consumption_type` WRITE;
+/*!40000 ALTER TABLE `consumption_type` DISABLE KEYS */;
+INSERT INTO `consumption_type` VALUES (1,'Normal use'),(2,'Damaged');
+/*!40000 ALTER TABLE `consumption_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

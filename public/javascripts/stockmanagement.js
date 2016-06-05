@@ -58,6 +58,16 @@ var stock = ({
 
     },
 
+    $$: function (id) {
+
+        if(this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow.document.getElementById(id);
+
+        }
+
+    },
+
     padZeros: function (number, positions) {
         var zeros = parseInt(positions) - String(number).length;
         var padded = "";
@@ -990,10 +1000,12 @@ var stock = ({
                         btnReceive.style.fontWeight = "normal";
                         btnReceive.innerHTML = "Receive";
                         btnReceive.setAttribute("stock_id", stock.itemsList[i].stock_id);
+                        btnReceive.setAttribute("pos", i);
 
                         btnReceive.onclick = function () {
 
-                            window.parent.stock.receiveItem(this.getAttribute("stock_id"));
+                            window.parent.stock.receiveItem(this.getAttribute("stock_id"),
+                                stock.itemsList[this.getAttribute("pos")].name);
 
                         }
 
@@ -1004,16 +1016,21 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnDispatch = document.createElement("button");
-                        btnDispatch.className = "blue";
+                        btnDispatch.className = (stock.itemsList[i].inStock > 0 ? "blue" : "gray");
                         btnDispatch.style.minWidth = "100px";
                         btnDispatch.style.minHeight = "30px";
                         btnDispatch.style.fontWeight = "normal";
                         btnDispatch.innerHTML = "Dispatch";
                         btnDispatch.setAttribute("stock_id", stock.itemsList[i].stock_id);
+                        btnDispatch.setAttribute("pos", i);
 
                         btnDispatch.onclick = function () {
 
-                            window.parent.stock.dispatchItem(this.getAttribute("stock_id"));
+                            if (this.className.match(/gray/))
+                                return;
+
+                            window.parent.stock.dispatchItem(this.getAttribute("stock_id"),
+                                stock.itemsList[this.getAttribute("pos")].name);
 
                         }
 
@@ -1162,7 +1179,7 @@ var stock = ({
 
     },
 
-    receiveItem: function (stock_id) {
+    receiveItem: function (stock_id, label) {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -1172,6 +1189,14 @@ var stock = ({
         var table = document.createElement("table");
 
         form.appendChild(table);
+
+        var batchLabel = (label ? label + ": " : "") + "Batch Number";
+
+        var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+
+        var receivedLabel = (label ? label + ": " : "") + "Received Quantity";
+
+        var dateLabel = (label ? label + ": " : "") + "Date Received";
 
         var fields = {
             "Datatype": {
@@ -1183,28 +1208,32 @@ var stock = ({
                 field_type: "hidden",
                 id: "data.stock_id",
                 value: stock_id
-            },
-            "Batch Number": {
-                field_type: "text",
-                id: "data.batch_number",
-                optional: true
-            },
-            "Expiry Date": {
-                field_type: "date",
-                id: "data.expiry_date",
-                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
-                optional: true
-            },
-            "Received Quantity": {
-                field_type: "number",
-                tt_pageStyleClass: "NumbersOnly",
-                id: "data.receipt_quantity"
-            },
-            "Date Received": {
-                field_type: "date",
-                id: "data.receipt_datetime"
             }
-        }
+        };
+
+        fields[batchLabel] = {
+            field_type: "text",
+            id: "data.batch_number",
+            optional: true
+        };
+
+        fields[expiryLabel] = {
+            field_type: "date",
+            id: "data.expiry_date",
+            maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
+            optional: true
+        };
+
+        fields[receivedLabel] = {
+            field_type: "number",
+            tt_pageStyleClass: "NumbersOnly",
+            id: "data.receipt_quantity"
+        };
+
+        fields[dateLabel] = {
+            field_type: "date",
+            id: "data.receipt_datetime"
+        };
 
         stock.buildFields(fields, table);
 
@@ -1264,7 +1293,7 @@ var stock = ({
 
     },
 
-    dispatchItem: function (stock_id) {
+    dispatchItem: function (stock_id, label) {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -1274,6 +1303,20 @@ var stock = ({
         var table = document.createElement("table");
 
         form.appendChild(table);
+
+        var batchLabel = (label ? label + ": " : "") + "Batch Number";
+
+        var quantityLabel = (label ? label + ": " : "") + "Quantity to Dispatch";
+
+        var dateLabel = (label ? label + ": " : "") + "Date of Dispatch";
+
+        var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+
+        var receiverLabel = (label ? label + ": " : "") + "Who Received";
+
+        var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+
+        var locationLabel = (label ? label + ": " : "") + "Dispatch Location";
 
         var fields = {
             "Datatype": {
@@ -1285,37 +1328,53 @@ var stock = ({
                 field_type: "hidden",
                 id: "data.stock_id",
                 value: stock_id
-            },
-            "Quantity to Dispatch": {
-                field_type: "number",
-                tt_pageStyleClass: "NumbersOnly",
-                id: "data.dispatch_quantity"
-            },
-            "Date of Dispatch": {
-                field_type: "date",
-                id: "data.dispatch_datetime"
-            },
-            "Who Released Item": {
-                field_type: "text",
-                id: "data.dispatch_who_dispatched",
-                allowFreeText: true
-            },
-            "Who Received": {
-                field_type: "text",
-                id: "data.dispatch_who_received",
-                allowFreeText: true
-            },
-            "Who Authorised Release": {
-                field_type: "text",
-                id: "data.dispatch_who_authorised",
-                allowFreeText: true
-            },
-            "Dispatch Location": {
-                field_type: "text",
-                id: "data.dispatch_location",
-                allowFreeText: true
             }
-        }
+        };
+
+        fields[batchLabel] = {
+            field_type: "text",
+            id: "data.batch_number",
+            ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+            tt_onUnload: "if(__$('data.dispatch_quantity')){console.log(__$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)); var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)[1]; " +
+                "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+        };
+
+        fields[quantityLabel] = {
+            field_type: "number",
+            tt_pageStyleClass: "NumbersOnly",
+            id: "data.dispatch_quantity"
+        };
+
+        fields[dateLabel] = {
+            field_type: "date",
+            id: "data.dispatch_datetime"
+        };
+
+        fields[dispatcherLabel] = {
+            field_type: "text",
+            id: "data.dispatch_who_dispatched",
+            allowFreeText: true
+        };
+
+        fields[receiverLabel] = {
+            field_type: "text",
+            id: "data.dispatch_who_received",
+            allowFreeText: true
+        };
+
+        fields[authorityLabel] = {
+            field_type: "text",
+            id: "data.dispatch_who_authorised",
+            allowFreeText: true
+        };
+
+        fields[locationLabel] = {
+            field_type: "text",
+            id: "data.dispatch_location",
+            allowFreeText: true
+        };
 
         stock.buildFields(fields, table);
 

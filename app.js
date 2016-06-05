@@ -1265,12 +1265,12 @@ function dispatchStock(data, res) {
 
     if (data.receipt_id) {
 
-        var sql = "UPDATE dispatch SET stock_id = '" + data.stock_id + "', dispatch_quantity = '" + data.dispatch_quantity +
-            "', dispatch_datetime = '" + data.dispatch_datetime + "', dispatch_who_dispatched = '" + data.userId +
-            "dispatch_who_received = '" + (data.dispatch_who_received ? data.dispatch_who_received : "") +
-            "', dispatch_who_authorised = '" + (data.dispatch_who_authorised ? data.dispatch_who_authorised : "") +
-            "', dispatch_destination = '" + (data.dispatch_destination ? data.dispatch_destination : "") + "' WHERE " +
-            "dispatch_id = '" + data.dispatch_id;
+        var sql = "UPDATE dispatch SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
+            "', dispatch_quantity = '" + data.dispatch_quantity + "', dispatch_datetime = '" + data.dispatch_datetime +
+            "', dispatch_who_dispatched = '" + data.userId + "dispatch_who_received = '" + (data.dispatch_who_received ?
+            data.dispatch_who_received : "") + "', dispatch_who_authorised = '" + (data.dispatch_who_authorised ?
+            data.dispatch_who_authorised : "") + "', dispatch_destination = '" + (data.dispatch_destination ?
+            data.dispatch_destination : "") + "' WHERE " + "dispatch_id = '" + data.dispatch_id;
 
         console.log(sql);
 
@@ -1285,12 +1285,12 @@ function dispatchStock(data, res) {
     }
     else {
 
-        var sql = "INSERT INTO dispatch (stock_id, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, " +
+        var sql = "INSERT INTO dispatch (stock_id, batch_number, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, " +
             " dispatch_who_received, dispatch_who_authorised, dispatch_destination) VALUES('" +
-            data.stock_id + "', '" + data.dispatch_quantity + "', '" + data.dispatch_datetime + "', '" + data.userId +
-            "', '" + (data.dispatch_who_received ? data.dispatch_who_received : "") + "', '" +
-            (data.dispatch_who_authorised ? data.dispatch_who_authorised : "") + "', '" +
-            (data.dispatch_destination ? data.dispatch_destination : "") + "')";
+            data.stock_id + "', '" + data.batch_number + "', '" + data.dispatch_quantity + "', '" +
+            data.dispatch_datetime + "', '" + data.userId + "', '" + (data.dispatch_who_received ?
+            data.dispatch_who_received : "") + "', '" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
+            "") + "', '" + (data.dispatch_destination ? data.dispatch_destination : "") + "')";
 
         console.log(sql);
 
@@ -1510,6 +1510,59 @@ function saveStock(data, res) {
             }
 
         });
+
+    }
+
+}
+
+function saveConsumption(data, res) {
+
+    if (data.dispatch_id) {
+
+        if(data.consumption_id) {
+
+            if(data.consumption_type && data.dispatch_id) {
+
+                var sql = "UPDATE consumption SET consumption_type_id = (SELECT consumption_type_id FROM consumption_type " +
+                    "WHERE name = '" + data.consumption_type + "'), dispatch_id = '" + data.dispatch_id + "', " +
+                    "who_consumed = '" + data.who_consumed + "', date_consumed = '" + data.date_consumed + "', " +
+                    "reason_for_consumption = '" + data.reason_for_consumption + "' WHERE consumption_id = '" +
+                    data.consumption_id + "'";
+
+                console.log(sql);
+
+                queryRawStock(sql, function (batch) {
+
+                    res.status(200).json({message: "Item saved!"});
+
+                });
+
+            } else {
+
+                res.status(200).json({message: "Nothing done!"});
+
+            }
+
+        } else {
+
+            var sql = "INSERT INTO consumption (consumption_type_id, dispatch_id, who_consumed, date_consumed, " +
+                "reason_for_consumption) VALUES ((SELECT consumption_type_id FROM consumption_type WHERE name = '" +
+                data.consumption_type + "'), '" + + data.dispatch_id + "', '" + data.who_consumed +
+                "', '" + data.date_consumed + "', '" + data.reason_for_consumption + "')";
+
+            console.log(sql);
+
+            queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Item saved!"});
+
+            });
+
+        }
+
+    } else {
+
+        res.status(200).json({message: "Missing dispatch association!"});
 
     }
 
@@ -2491,7 +2544,8 @@ app.get('/stock_list', function (req, res) {
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
-        "JOIN stock ON stock.stock_id = report.stock_id GROUP BY stock.stock_id LIMIT " + lowerLimit + ", " + pageSize;
+        "JOIN stock ON stock.stock_id = report.stock_id WHERE COALESCE(report.voided,0) = 0 GROUP BY stock.stock_id " +
+        "LIMIT " + lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
@@ -2520,6 +2574,38 @@ app.get('/stock_list', function (req, res) {
         }
 
         res.status(200).json(collection);
+
+    })
+
+})
+
+app.get('/available_batches', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT batch_number, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
+        "AS available FROM htc_inventory.report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+        query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
+        "HAVING available > 0";
+
+    queryRawStock(sql, function (data) {
+
+        var collection = [];
+
+        console.log(data[0]);
+
+        var result = "";
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available + "'>" +
+                data[0][i].batch_number + " (" + data[0][i].available + ")" + "</li>";
+
+        }
+
+        res.send(result);
 
     })
 
@@ -2619,7 +2705,7 @@ app.get('/stock_search', function (req, res) {
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
         "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
-        "WHERE category_name = '" + query.category + "' AND name = '" + query.item_name + "'" : "") +
+        "WHERE category_name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND name = '" + query.item_name + "'" : "") +
         " GROUP BY stock.stock_id";
 
     console.log(sql);
@@ -2692,6 +2778,12 @@ app.post('/save_item', function (req, res) {
         case "batch":
 
             saveBatch(data, res);
+
+            break;
+
+        case "consumption":
+
+            saveConsumption(data, res);
 
             break;
 

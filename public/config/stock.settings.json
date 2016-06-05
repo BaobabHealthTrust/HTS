@@ -5,5 +5,6 @@
     "categorySearchPath": "http://localhost:3014/stock_categories",
     "stockItemsSearchPath": "http://localhost:3014/stock_items",
     "searchPath": "http://localhost:3014/stock_search",
-    "itemsListPath": "/items_list"
+    "itemsListPath": "/items_list",
+    "availableBatchesPath": "/available_batches?item_name="
 }

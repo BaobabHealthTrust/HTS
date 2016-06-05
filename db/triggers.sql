@@ -16,12 +16,16 @@ DROP TRIGGER IF EXISTS new_stock$$
 
 DROP TRIGGER IF EXISTS stock_update$$
 
+DROP TRIGGER IF EXISTS new_consumption$$
+
+DROP TRIGGER IF EXISTS consumption_update$$
+
 CREATE TRIGGER new_receipt 
 AFTER INSERT ON `receipt` FOR EACH ROW
 BEGIN
 
-	INSERT INTO report (stock_id, receipt_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received)
-	VALUES (NEW.stock_id, NEW.receipt_id, NEW.batch_number, NEW.expiry_date, NEW.receipt_quantity, NEW.receipt_datetime, NEW.receipt_who_received);
+	INSERT INTO report (stock_id, item_name, receipt_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received)
+	VALUES (NEW.stock_id, (SELECT name FROM stock WHERE stock_id = NEW.stock_id), NEW.receipt_id, NEW.batch_number, NEW.expiry_date, NEW.receipt_quantity, NEW.receipt_datetime, NEW.receipt_who_received);
 
 	UPDATE stock SET last_order_size = NEW.receipt_quantity WHERE stock_id = NEW.stock_id;
 
@@ -41,8 +45,8 @@ CREATE TRIGGER new_dispatch
 AFTER INSERT ON `dispatch` FOR EACH ROW
 BEGIN
 
-	INSERT INTO report (stock_id, dispatch_id, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination)
-	VALUES (NEW.stock_id, NEW.dispatch_id, NEW.dispatch_quantity, NEW.dispatch_datetime, NEW.dispatch_who_dispatched, NEW.dispatch_who_received, NEW.dispatch_who_authorised, NEW.dispatch_destination);
+	INSERT INTO report (stock_id, item_name, batch_number, dispatch_id, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination)
+	VALUES (NEW.stock_id, (SELECT name FROM stock WHERE stock_id = NEW.stock_id), NEW.batch_number, NEW.dispatch_id, NEW.dispatch_quantity, NEW.dispatch_datetime, NEW.dispatch_who_dispatched, NEW.dispatch_who_received, NEW.dispatch_who_authorised, NEW.dispatch_destination);
 
 END$$
 
@@ -50,7 +54,7 @@ CREATE TRIGGER dispatch_update
 AFTER UPDATE ON `dispatch` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET dispatch_quantity = NEW.dispatch_quantity, dispatch_datetime = NEW.dispatch_datetime, dispatch_who_dispatched = NEW.dispatch_who_dispatched, dispatch_who_received = NEW.dispatch_who_received, dispatch_who_authorised = NEW.dispatch_who_authorised, dispatch_destination = NEW.dispatch_destination, voided = NEW.voided, date_voided = NEW.date_voided WHERE dispatch_id = NEW.dispatch_id;
+	UPDATE report SET batch_number = NEW.batch_number, dispatch_quantity = NEW.dispatch_quantity, dispatch_datetime = NEW.dispatch_datetime, dispatch_who_dispatched = NEW.dispatch_who_dispatched, dispatch_who_received = NEW.dispatch_who_received, dispatch_who_authorised = NEW.dispatch_who_authorised, dispatch_destination = NEW.dispatch_destination, voided = NEW.voided, date_voided = NEW.date_voided WHERE dispatch_id = NEW.dispatch_id;
 
 END$$
 
@@ -88,6 +92,24 @@ BEGIN
 	UPDATE report SET item_name = NEW.name, reorder_level = NEW.reorder_level, 
 		category_name = (SELECT name FROM category 
 		WHERE category_id = NEW.category_id) WHERE stock_id = NEW.stock_id;
+
+END$$
+
+CREATE TRIGGER new_consumption 
+AFTER INSERT ON `consumption` FOR EACH ROW
+BEGIN
+
+	UPDATE report SET consumption_id = NEW.consumption_id, consumption_type = (SELECT name FROM consumption_type WHERE consumption_type_id = NEW.consumption_type_id), who_consumed = NEW.who_consumed, 
+		date_consumed = NEW.date_consumed WHERE dispatch_id = NEW.dispatch_id;
+
+END$$
+
+CREATE TRIGGER consumption_update
+AFTER UPDATE ON `consumption` FOR EACH ROW
+BEGIN
+
+	UPDATE report SET dispatch_id = NEW.dispatch_id, consumption_type = (SELECT name FROM consumption_type WHERE consumption_type_id = NEW.consumption_type_id), who_consumed = NEW.who_consumed, 
+		date_consumed = NEW.date_consumed WHERE consumption_id = NEW.consumption_id;
 
 END$$
 
