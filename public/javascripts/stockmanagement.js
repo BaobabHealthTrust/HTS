@@ -111,6 +111,32 @@ var stock = ({
 
     },
 
+    setCookie: function (cname, cvalue, exdays) {
+
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+
+    },
+
+    getCookie: function (cname) {
+
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+
+    },
+
     searchForStock: function () {
 
         if (typeof(tstCurrentDate) === "undefined") {
@@ -946,8 +972,8 @@ var stock = ({
         table.appendChild(tr);
 
         var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Dispatch/Day",
-            "Receive", "Dispatch"];
-        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px"];
+            "Receive", "Dispatch", "Use Stock"];
+        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px"];
 
         for (var i = 0; i < fields.length; i++) {
 
@@ -970,7 +996,7 @@ var stock = ({
 
             var keys = Object.keys(stock.itemsList[i]);
 
-            for (var j = 0; j < 9; j++) {
+            for (var j = 0; j < fields.length; j++) {
 
                 var td = document.createElement("td");
                 td.style.verticalAlign = "top";
@@ -1035,6 +1061,31 @@ var stock = ({
                         }
 
                         td.appendChild(btnDispatch);
+
+                    } else if (j == 9) {
+
+                        td.style.padding = "2px";
+
+                        var btnConsume = document.createElement("button");
+                        btnConsume.className = (stock.itemsList[i].inStock > 0 ? "blue" : "gray");
+                        btnConsume.style.minWidth = "100px";
+                        btnConsume.style.minHeight = "30px";
+                        btnConsume.style.fontWeight = "normal";
+                        btnConsume.innerHTML = "Use";
+                        btnConsume.setAttribute("stock_id", stock.itemsList[i].stock_id);
+                        btnConsume.setAttribute("pos", i);
+
+                        btnConsume.onclick = function () {
+
+                            if (this.className.match(/gray/))
+                                return;
+
+                            window.parent.stock.consumeItem(stock.itemsList[this.getAttribute("pos")].name);
+
+                        }
+
+
+                        td.appendChild(btnConsume);
 
                     }
 
@@ -1293,6 +1344,95 @@ var stock = ({
 
     },
 
+    consumeItem: function (label) {
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var batchLabel = (label ? label + ": " : "") + "Batch Number";
+
+        var quantityLabel = (label ? label + ": " : "") + "Quantity to Consume";
+
+        var dateLabel = (label ? label + ": " : "") + "Date of Consumption";
+
+        var typeLabel = (label ? label + ": " : "") + "Consumption Type";
+
+        var receiverLabel = (label ? label + ": " : "") + "Who Consumed";
+
+        var reasonLabel = (label ? label + ": " : "") + "Reason for Consumption";
+
+        var locationLabel = (label ? label + ": " : "") + "Consumption Location";
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "consumption"
+            },
+            "Dispatch ID": {
+                field_type: "hidden",
+                id: "data.dispatch_id",
+                value: ""
+            }
+        };
+
+        fields[batchLabel] = {
+            field_type: "text",
+            id: "data.batch_number",
+            ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
+                stock.getCookie("username") + "&batch=",
+            tt_onUnload: "if(__$('data.consumption_quantity')){var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)[1]; " +
+                "__$('data.consumption_quantity').setAttribute('absoluteMax', limit)}"
+        };
+
+        fields[quantityLabel] = {
+            field_type: "number",
+            tt_pageStyleClass: "NumbersOnly",
+            id: "data.consumption_quantity"
+        };
+
+        fields[dateLabel] = {
+            field_type: "date",
+            id: "data.date_consumed"
+        };
+
+        fields[typeLabel] = {
+            field_type: "text",
+            id: "data.consumption_type",
+            ajaxURL: stock.settings.consumptionTypesPath
+        };
+
+        fields[receiverLabel] = {
+            field_type: "text",
+            id: "data.who_consumed",
+            allowFreeText: true
+        };
+
+        fields[reasonLabel] = {
+            field_type: "text",
+            id: "data.reason_for_consumption",
+            allowFreeText: true
+        };
+
+        fields[locationLabel] = {
+            field_type: "text",
+            id: "data.location",
+            allowFreeText: true
+        };
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    },
+
     dispatchItem: function (stock_id, label) {
 
         var form = document.createElement("form");
@@ -1335,8 +1475,7 @@ var stock = ({
             field_type: "text",
             id: "data.batch_number",
             ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
-            tt_onUnload: "if(__$('data.dispatch_quantity')){console.log(__$('touchscreenInput' + " +
-                "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)); var limit = __$('touchscreenInput' + " +
+            tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                 "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)[1]; " +
                 "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
         };

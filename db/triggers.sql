@@ -99,8 +99,21 @@ CREATE TRIGGER new_consumption
 AFTER INSERT ON `consumption` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET consumption_id = NEW.consumption_id, consumption_type = (SELECT name FROM consumption_type WHERE consumption_type_id = NEW.consumption_type_id), who_consumed = NEW.who_consumed, 
-		date_consumed = NEW.date_consumed WHERE dispatch_id = NEW.dispatch_id;
+	INSERT report (stock_id, item_name, batch_number, consumption_id, consumption_type, who_consumed, 
+			consumption_location, consumption_quantity, date_consumed, dispatch_id)
+	VALUES(
+			(SELECT stock_id FROM dispatch WHERE dispatch_id = NEW.dispatch_id),
+			(SELECT name FROM stock LEFT OUTER JOIN dispatch ON dispatch.stock_id = 
+						stock.stock_id WHERE dispatch_id = NEW.dispatch_id),
+			(SELECT batch_number FROM dispatch WHERE dispatch_id = NEW.dispatch_id),
+			NEW.consumption_id,
+			(SELECT name FROM consumption_type WHERE consumption_type_id = NEW.consumption_type_id),
+			NEW.who_consumed,
+			NEW.location,
+			NEW.consumption_quantity,
+			NEW.date_consumed,
+			NEW.dispatch_id
+	);
 
 END$$
 
@@ -108,7 +121,11 @@ CREATE TRIGGER consumption_update
 AFTER UPDATE ON `consumption` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET dispatch_id = NEW.dispatch_id, consumption_type = (SELECT name FROM consumption_type WHERE consumption_type_id = NEW.consumption_type_id), who_consumed = NEW.who_consumed, 
+	UPDATE report SET batch_number = (SELECT batch_number FROM dispatch WHERE 
+		dispatch_id = NEW.dispatch_id), dispatch_id = NEW.dispatch_id, 
+		consumption_type = (SELECT name FROM consumption_type WHERE 
+		consumption_type_id = NEW.consumption_type_id), who_consumed = NEW.who_consumed, 
+		consumption_location = NEW.location, consumption_quantity = NEW.consumption_quantity,
 		date_consumed = NEW.date_consumed WHERE consumption_id = NEW.consumption_id;
 
 END$$
