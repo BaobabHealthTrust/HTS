@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-var seed = require("./concepts/seed.json");
+var seed = require("./seed.json");
 
 var async = require('async');
 
 var uuid = require("node-uuid");
 
-var connection = require("./concepts/database.json");
+var connection = require("./database.json");
 
-var existingConcepts = require("./concepts/concepts.json");
+var existingConcepts = require("./concepts.json");
 
-var existingEncounterTypes = require("./concepts/encounter_types.json");
+var existingEncounterTypes = require("./encounter_types.json");
 
-var existingPatientIdentifierTypes = require("./concepts/patient_identifier_types.json");
+var existingPatientIdentifierTypes = require("./patient_identifier_types.json");
 
-var existingPersonAttributeTypes = require("./concepts/person_attribute_types.json");
+var existingPersonAttributeTypes = require("./person_attribute_types.json");
 
 var fs = require("fs");
 
@@ -589,6 +589,53 @@ async.each(commands, function (cmd, callback) {
                 callback();
 
             })
+
+        },
+
+        function(iCallback) {
+
+            var commands = [
+                {
+                    message: "Loading 'HTS Roles' seed data...",
+                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                        " " + connection.database + " < htc.roles.sql"
+                },
+                {
+                    message: "Loading 'HTS Locations' seed data...",
+                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                        " " + connection.database + " < locations.sql"
+                }
+            ];
+
+            async.each(commands, function (cmd, callback) {
+
+                console.log(cmd.message);
+
+                runCmd(cmd.cmd, function (error, stdout, stderr) {
+
+                    if (error) {
+
+                        console.log(error);
+
+                    } else if (stderr) {
+
+                        console.log(stderr);
+
+                    } else if (stdout) {
+
+                        console.log(stdout);
+
+                    }
+
+                    callback();
+
+                });
+
+            }, function() {
+
+                iCallback();
+
+            });
 
         }
 
