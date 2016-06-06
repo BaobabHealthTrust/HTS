@@ -1001,7 +1001,8 @@ var dashboard = ({
 
         if (dashboard.__$("age")) {
 
-            var age = Math.round((((new Date()) - (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0);
+            var age = (dashboard.data["data"]["birthdate"].trim().length > 0 ? Math.round((((new Date()) -
+                (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0) : "");
 
             dashboard.__$("age").innerHTML = (dashboard.data["data"]["birthdate_estimated"] == 1 ? "~ " : "") + age;
 
@@ -1092,7 +1093,8 @@ var dashboard = ({
 
         if (dashboard.__$("age")) {
 
-            var age = Math.round((((new Date()) - (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0);
+            var age = (dashboard.data["data"]["birthdate"].trim().length > 0 ? Math.round((((new Date()) -
+                (new Date(dashboard.data["data"]["birthdate"]))) / (365 * 24 * 60 * 60 * 1000)), 0) : "");
 
             dashboard.__$("age").innerHTML = (dashboard.data["data"]["birthdate_estimated"] == 1 ? "~ " : "") + age;
 

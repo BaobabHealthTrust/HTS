@@ -100,6 +100,32 @@ var landing = ({
 
     },
 
+    setCookie: function (cname, cvalue, exdays) {
+
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+
+    },
+
+    getCookie: function (cname) {
+
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+
+    },
+
     padZeros: function (number, positions) {
         var zeros = parseInt(positions) - String(number).length;
         var padded = "";
@@ -651,15 +677,46 @@ var landing = ({
         btnStart.className = "blue";
         btnStart.style.cssFloat = "right";
         btnStart.innerHTML = "Start Protocol";
-        btnStart.onmousedown = function () {
+        btnStart.id = "landing.btnStart";
+        btnStart.style.minWidth = "180px";
 
-            landing.navPanel("/spec/consent.spec");
+        btnStart.onclick = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            landing.startProtocol();
 
         }
 
         td3_1.appendChild(btnStart);
 
         landing.loadPrograms(landing['modules'], landing.$("programs"));
+
+    },
+
+    startProtocol: function () {
+
+        if (landing.$("landing.btnStart")) {
+
+            landing.$("landing.btnStart").className = "gray";
+
+            landing.$("landing.btnStart").innerHTML = "Initializing...";
+
+        }
+
+        var data = {
+            data: {
+                userId: landing.getCookie("username")
+            }
+        };
+
+        landing.ajaxPostRequest(landing.settings.dummyPatientCreatePath, data, function (barcode) {
+
+            if(landing.$("barcode"))
+            landing.$("barcode").value = barcode + "$";
+
+        })
 
     },
 

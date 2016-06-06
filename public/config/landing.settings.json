@@ -2,5 +2,6 @@
     "basePath": "http://localhost:3014",
     "modulesPath": "/config/landing.modules.json",
     "barcodePath": "http://localhost:3014/patient/",
-    "savePath": "http://localhost:3014/save_other"
+    "savePath": "http://localhost:3014/save_other",
+    "dummyPatientCreatePath": "/save_dummy_patient"
 }

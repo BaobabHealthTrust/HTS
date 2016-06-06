@@ -1919,6 +1919,57 @@ app.get('/lnames_query', function (req, res) {
 
 });
 
+app.post('/save_dummy_patient', function (req, res) {
+
+    console.log(req.body.data);
+
+    var data = req.body.data;
+
+    var npid;
+
+    var person_id;
+
+    var patient_id;
+
+    var sql = "INSERT INTO person (creator, date_created, uuid) VALUES ((SELECT user_id FROM users WHERE username = '" +
+        data.userId + "'), NOW(), '" + uuid.v1() + "')";
+
+    queryRaw(sql, function (person) {
+
+        person_id = person[0].insertId;
+
+        var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
+            "uuid) VALUES ('" + person_id + "', '-', '-', " + "(SELECT user_id FROM users WHERE " +
+            "username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+
+        queryRaw(sql, function (name) {
+
+            var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
+                person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
+
+            queryRaw(sql, function (patient) {
+
+                patient_id = patient[0].insertId;
+
+                console.log(patient_id);
+
+                generateId(patient_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
+                    function (response) {
+
+                        npid = response;
+
+                        res.send(npid);
+
+                    });
+
+            });
+
+        });
+
+    });
+
+});
+
 app.post('/save_patient', function (req, res) {
 
     console.log(req.body.data);
@@ -2995,7 +3046,7 @@ app.post('/update_password', function (req, res) {
 
 })
 
-app.get('/:id', function (req, res) {
+app.get('/patient/:id', function (req, res) {
     res.sendFile(__dirname + '/public/views/patient.html');
 });
 

@@ -332,6 +332,8 @@ var patient = ({
         cell2_2.style.fontStyle = "italic";
         cell2_2.innerHTML = (patient.patients[pos]["birthdate_estimated"] ? "~" : "") + patient.patients[pos]["age"];
 
+        console.log(patient.patients[pos]["age"]);
+
         tr2.appendChild(cell2_2);
 
         var tr3 = document.createElement("tr");
