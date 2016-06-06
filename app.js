@@ -1681,7 +1681,7 @@ app.post('/login', function (req, res) {
 
     var data = req.body;
 
-    var sql = "SELECT user_id, username FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
+    var sql = "SELECT user_id, username, person_id FROM users WHERE username = '" + data.username + "' AND password = MD5(CONCAT('" +
         data.password + "', salt)) AND retired = 0";
 
     console.log(sql);
@@ -1730,7 +1730,7 @@ app.post('/login', function (req, res) {
 
                     sql = "SELECT value, name AS attribute FROM person_attribute LEFT OUTER JOIN person_attribute_type " +
                         "ON person_attribute.person_attribute_type_id = person_attribute_type.person_attribute_type_id " +
-                        " WHERE person_id = '" + user[0][0].user_id + "'";
+                        " WHERE person_id = '" + user[0][0].person_id + "'";
 
                     console.log(sql);
 
