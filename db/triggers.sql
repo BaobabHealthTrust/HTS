@@ -72,7 +72,7 @@ CREATE TRIGGER dispatch_update
 AFTER UPDATE ON `dispatch` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET batch_number = NEW.batch_number, dispatch_quantity = NEW.dispatch_quantity, dispatch_datetime = NEW.dispatch_datetime, dispatch_who_dispatched = NEW.dispatch_who_dispatched, dispatch_who_received = NEW.dispatch_who_received, dispatch_who_authorised = NEW.dispatch_who_authorised, dispatch_destination = NEW.dispatch_destination, voided = NEW.voided, date_voided = NEW.date_voided WHERE dispatch_id = NEW.dispatch_id;
+	UPDATE report SET batch_number = NEW.batch_number, dispatch_quantity = NEW.dispatch_quantity, dispatch_datetime = NEW.dispatch_datetime, dispatch_who_dispatched = NEW.dispatch_who_dispatched, dispatch_who_received = NEW.dispatch_who_received, dispatch_who_authorised = NEW.dispatch_who_authorised, dispatch_destination = NEW.dispatch_destination, voided = NEW.voided, date_voided = NEW.date_voided WHERE dispatch_id = NEW.dispatch_id AND COALESCE(consumption_id, '') = '';
 
 END$$
 
@@ -81,6 +81,8 @@ BEFORE DELETE ON `dispatch` FOR EACH ROW
 BEGIN
 
 	DELETE FROM report WHERE dispatch_id = OLD.dispatch_id;
+
+	DELETE FROM consumption WHERE dispatch_id = OLD.dispatch_id;
 
 END$$
 
