@@ -9,5 +9,7 @@
     "availableBatchesPath": "/available_batches?item_name=",
     "availableUserBatchesPath": "/available_batches_to_user?item_name=",
     "consumptionTypesPath": "/consumption_types",
-    "availableBatchesToUserSummaryPath": "/available_batches_to_user_summary?item_name="
+    "availableBatchesToUserSummaryPath": "/available_batches_to_user_summary?item_name=",
+    "userListingPath": "/list_users?name=",
+    "locationsListPath": "/list_locations?name="
 }

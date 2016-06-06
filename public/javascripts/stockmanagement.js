@@ -1425,7 +1425,8 @@ var stock = ({
         fields[receiverLabel] = {
             field_type: "text",
             id: "data.who_consumed",
-            allowFreeText: true
+            allowFreeText: true,
+            ajaxURL: stock.settings.userListingPath
         };
 
         fields[reasonLabel] = {
@@ -1437,7 +1438,8 @@ var stock = ({
         fields[locationLabel] = {
             field_type: "text",
             id: "data.location",
-            allowFreeText: true
+            allowFreeText: true,
+            ajaxURL: stock.settings.locationsListPath
         };
 
         stock.buildFields(fields, table);
@@ -1507,25 +1509,27 @@ var stock = ({
         fields[dispatcherLabel] = {
             field_type: "text",
             id: "data.dispatch_who_dispatched",
-            allowFreeText: true
+            ajaxURL: stock.settings.userListingPath
         };
 
         fields[receiverLabel] = {
             field_type: "text",
             id: "data.dispatch_who_received",
-            allowFreeText: true
+            ajaxURL: stock.settings.userListingPath
         };
 
         fields[authorityLabel] = {
             field_type: "text",
             id: "data.dispatch_who_authorised",
-            allowFreeText: true
+            allowFreeText: true,
+            ajaxURL: stock.settings.userListingPath
         };
 
         fields[locationLabel] = {
             field_type: "text",
             id: "data.dispatch_location",
-            allowFreeText: true
+            allowFreeText: true,
+            ajaxURL: stock.settings.locationsListPath
         };
 
         stock.buildFields(fields, table);
@@ -1568,22 +1572,24 @@ var stock = ({
             "Who Released Item": {
                 field_type: "text",
                 id: "data.transfer_who_transfered",
-                allowFreeText: true
+                ajaxURL: stock.settings.userListingPath
             },
             "Who Received": {
                 field_type: "text",
                 id: "data.transfer_who_received",
-                allowFreeText: true
+                allowFreeText: true,
+                ajaxURL: stock.settings.userListingPath
             },
             "Who Authorised Release": {
                 field_type: "text",
                 id: "data.transfer_who_authorised",
-                allowFreeText: true
+                ajaxURL: stock.settings.userListingPath
             },
             "Transfer Location": {
                 field_type: "text",
                 id: "data.transfer_location",
-                allowFreeText: true
+                allowFreeText: true,
+                ajaxURL: stock.settings.locationsListPath
             }
         }
 
@@ -1601,7 +1607,7 @@ var stock = ({
 
         }
 
-        data.data.userId = "admin";
+        data.data.userId = stock.getCookie("username");
 
         stock.ajaxPostRequest(stock.settings.itemSavePath, data, function (sid) {
 

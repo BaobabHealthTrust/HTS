@@ -2102,6 +2102,76 @@ app.post('/updateUser', function (req, res) {
 
 })
 
+app.get('/list_locations', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+    var sql = "SELECT location.name FROM location_tag LEFT OUTER JOIN location_tag_map ON location_tag.location_tag_id = " +
+        "location_tag_map.location_tag_id LEFT OUTER JOIN location ON location.location_id = location_tag_map.location_id " +
+        " WHERE location.name LIKE '" + query.name + "%' AND location.retired = 0 AND location_tag.retired = 0 AND " +
+        "location_tag.name = 'HTS'";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var result = "";
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var loc = data[0][i];
+
+            result += "<li>" + loc.name + "</li>";
+
+        }
+
+        res.send(result);
+
+    });
+
+})
+
+app.get('/list_users', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+    var sql = "SELECT username, given_name, family_name FROM users LEFT OUTER JOIN person_name ON users.person_id = " +
+        "person_name.person_id WHERE CONCAT(given_name, ' ', family_name) LIKE '" + query.name + "%' AND retired = 0 " +
+        "AND COALESCE(users.person_id,'') != ''";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var result = "";
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var user = data[0][i];
+
+            result += "<li tstValue='" + user.username + "'>" + user.given_name + " " + user.family_name +
+                " (" + user.username + ")" + "</li>";
+
+        }
+
+        res.send(result);
+
+    });
+
+})
+
 app.get('/list_usernames', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -2548,7 +2618,8 @@ app.get('/stock_list', function (req, res) {
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
-        "JOIN stock ON stock.stock_id = report.stock_id WHERE COALESCE(report.voided,0) = 0 GROUP BY stock.stock_id LIMIT " + lowerLimit + ", " + pageSize;
+        "JOIN stock ON stock.stock_id = report.stock_id WHERE COALESCE(report.voided,0) = 0 GROUP BY stock.stock_id LIMIT " +
+        lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
@@ -2623,7 +2694,7 @@ app.get('/available_batches_to_user_summary', function (req, res) {
     queryRawStock(sql, function (data) {
 
         var result = {
-            inStock: (data[0] ? data[0][0].available : 0)
+            inStock: (data[0] && data[0][0].available ? data[0][0].available : 0)
         };
 
         res.status(200).json(result);
@@ -2792,7 +2863,8 @@ app.get('/stock_search', function (req, res) {
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
         "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
         "WHERE category_name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND name = '" +
-        query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id";
+        query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id  HAVING " +
+        "dispatch_quantity != 0 AND receipt_quantity != 0";
 
     console.log(sql);
 

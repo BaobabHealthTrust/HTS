@@ -14,5 +14,6 @@
     "usernamesListingPath": "/list_usernames?username=",
     "rolesPath": "/roles",
     "userBlockPath": "/block_user/",
-    "userActivatePath": "/activate_user/"
+    "userActivatePath": "/activate_user/",
+    "locationsListPath": "/list_locations?name="
 }

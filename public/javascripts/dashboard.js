@@ -1776,6 +1776,8 @@ var dashboard = ({
             // TODO: Add logic for actual logged in user id
             data.data.user_id = 1;
 
+            data.data.userId = dashboard.getCookie("username");
+
             console.log(data);
 
             socket.emit('update', data);

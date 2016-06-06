@@ -374,7 +374,9 @@ var user = ({
             },
             "Location": {
                 field_type: "text",
-                id: "data.location"
+                id: "data.location",
+                ajaxURL: user.settings.locationsListPath,
+                allowFreeText: true
             }
         }
 
