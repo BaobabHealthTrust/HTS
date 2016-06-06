@@ -25,6 +25,10 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -55,6 +59,10 @@ CREATE TABLE `dispatch` (
   `dispatch_who_received` varchar(45) DEFAULT NULL,
   `dispatch_who_authorised` varchar(45) DEFAULT NULL,
   `dispatch_destination` varchar(255) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
@@ -86,6 +94,10 @@ CREATE TABLE `employee` (
   `system_id` varchar(45) NOT NULL,
   `first_name` varchar(64) DEFAULT NULL,
   `last_name` varchar(64) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
@@ -100,7 +112,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES ('admin','System','Admin',NULL,NULL,NULL,NULL);
+INSERT INTO `employee` VALUES ('admin','System','Admin', NOW(), NULL, NULL, NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +131,10 @@ CREATE TABLE `receipt` (
   `receipt_quantity` int(11) DEFAULT NULL,
   `receipt_datetime` datetime DEFAULT NULL,
   `receipt_who_received` varchar(45) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
@@ -180,8 +196,7 @@ CREATE TABLE `report` (
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
-  `voided_by` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`receipt_id`,`transfer_id`,`dispatch_id`,`stock_id`)
+  `voided_by` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -214,6 +229,8 @@ CREATE TABLE `stock` (
   `category_id` int(11) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`stock_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -239,6 +256,10 @@ CREATE TABLE `stock_attribute` (
   `stock_id` int(11) DEFAULT NULL,
   `stock_attribute_type_id` int(11) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
@@ -267,6 +288,10 @@ CREATE TABLE `stock_attribute_type` (
   `stock_attribute_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`stock_attribute_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -296,6 +321,10 @@ CREATE TABLE `consumption` (
   `date_consumed` datetime DEFAULT NULL, 
   `reason_for_consumption` VARCHAR(255) NULL, 
   `location` VARCHAR(255) NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   `voided` TINYINT NULL,
   `voided_by` VARCHAR(45) NULL,
   `void_reason` VARCHAR(255) NULL,
@@ -314,6 +343,10 @@ DROP TABLE IF EXISTS `consumption_type`;
 CREATE TABLE `consumption_type` (
   `consumption_type_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`consumption_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -324,7 +357,7 @@ CREATE TABLE `consumption_type` (
 
 LOCK TABLES `consumption_type` WRITE;
 /*!40000 ALTER TABLE `consumption_type` DISABLE KEYS */;
-INSERT INTO `consumption_type` VALUES (1,'Normal use'),(2,'Damaged');
+INSERT INTO `consumption_type` VALUES (1,'Normal use', NOW(), 'admin', NULL, NULL),(2,'Damaged', NOW(), 'admin', NULL, NULL);
 /*!40000 ALTER TABLE `consumption_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,6 +406,10 @@ CREATE TABLE `transfer` (
   `transfer_who_authorised` varchar(45) DEFAULT NULL COMMENT '\n',
   `transfer_destination` varchar(255) DEFAULT NULL,
   `transfer_datetime` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  `creator` varchar(45) DEFAULT NULL,
+  `date_changed` datetime DEFAULT NULL,
+  `changed_by` varchar(45) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,

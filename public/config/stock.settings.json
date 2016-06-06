@@ -8,5 +8,6 @@
     "itemsListPath": "/items_list",
     "availableBatchesPath": "/available_batches?item_name=",
     "availableUserBatchesPath": "/available_batches_to_user?item_name=",
-    "consumptionTypesPath": "/consumption_types"
+    "consumptionTypesPath": "/consumption_types",
+    "availableBatchesToUserSummaryPath": "/available_batches_to_user_summary?item_name="
 }

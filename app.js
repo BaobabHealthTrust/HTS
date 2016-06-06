@@ -1519,16 +1519,16 @@ function saveConsumption(data, res) {
 
     if (data.dispatch_id) {
 
-        if(data.consumption_id) {
+        if (data.consumption_id) {
 
-            if(data.consumption_type && data.dispatch_id) {
+            if (data.consumption_type && data.dispatch_id) {
 
                 var sql = "UPDATE consumption SET consumption_type_id = (SELECT consumption_type_id FROM consumption_type " +
                     "WHERE name = '" + data.consumption_type + "'), dispatch_id = '" + data.dispatch_id + "', " +
                     "consumption_quantity = '" + data.consumption_quantity + "', who_consumed = '" + data.who_consumed +
                     "', date_consumed = '" + data.date_consumed + "', " + "reason_for_consumption = '" +
-                    data.reason_for_consumption + "', location = '" + data.location + "' WHERE consumption_id = '" +
-                    data.consumption_id + "'";
+                    data.reason_for_consumption + "', location = '" + data.location + "', date_changed = NOW(), " +
+                    "changed_by ='" + data.userId + "' WHERE consumption_id = '" + data.consumption_id + "'";
 
                 console.log(sql);
 
@@ -1547,10 +1547,10 @@ function saveConsumption(data, res) {
         } else {
 
             var sql = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
-                "date_consumed, reason_for_consumption, location) VALUES ((SELECT consumption_type_id FROM " +
-                "consumption_type WHERE name = '" + data.consumption_type + "'), '" + + data.dispatch_id + "', '" +
+                "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                "consumption_type WHERE name = '" + data.consumption_type + "'), '" + +data.dispatch_id + "', '" +
                 data.consumption_quantity + "', '" + data.who_consumed + "', '" + data.date_consumed + "', '" +
-                data.reason_for_consumption + "', '" + data.location + "')";
+                data.reason_for_consumption + "', '" + data.location + "', NOW(), '" + data.userId + "')";
 
             console.log(sql);
 
@@ -1574,9 +1574,9 @@ function saveBatch(data, res) {
 
     if (data.stock_id) {
 
-        if(data.stock_batch_id) {
+        if (data.stock_batch_id) {
 
-            if(data.batch_number || data.expiry_date) {
+            if (data.batch_number || data.expiry_date) {
 
                 var sql = "UPDATE stock_batch SET " + (data.batch_number ? "batch_number = '" + data.batch_number +
                     "' " : "") + (data.batch_number && data.expiry_date ? "," : "") + (data.expiry_date ?
@@ -2542,12 +2542,13 @@ app.get('/stock_list', function (req, res) {
 
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
+    //  AND " + "COALESCE(batch_number,'') != ''
+
     var sql = "SELECT report.stock_id, item_name AS name, description, category_name, SUM(COALESCE(receipt_quantity,0)) " +
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
-        "JOIN stock ON stock.stock_id = report.stock_id WHERE COALESCE(report.voided,0) = 0 AND " +
-        "COALESCE(batch_number,'') != '' GROUP BY stock.stock_id LIMIT " + lowerLimit + ", " + pageSize;
+        "JOIN stock ON stock.stock_id = report.stock_id WHERE COALESCE(report.voided,0) = 0 GROUP BY stock.stock_id LIMIT " + lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
@@ -2555,7 +2556,10 @@ app.get('/stock_list', function (req, res) {
 
         var collection = [];
 
-        for(var i = 0; i < data[0].length; i++) {
+        for (var i = 0; i < data[0].length; i++) {
+
+            if (!data[0][i].name)
+                continue;
 
             var entry = {
                 stock_id: data[0][i].stock_id,
@@ -2581,7 +2585,7 @@ app.get('/stock_list', function (req, res) {
 
 })
 
-app.get('/consumption_types', function(req, res) {
+app.get('/consumption_types', function (req, res) {
 
     var sql = "SELECT name FROM consumption_type";
 
@@ -2591,7 +2595,7 @@ app.get('/consumption_types', function(req, res) {
 
         console.log(data[0]);
 
-        for(var i = 0; i < data[0].length; i++) {
+        for (var i = 0; i < data[0].length; i++) {
 
             collection.push(data[0][i].name);
 
@@ -2603,6 +2607,31 @@ app.get('/consumption_types', function(req, res) {
 
 })
 
+app.get('/available_batches_to_user_summary', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+        "AS available FROM htc_inventory.report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+        query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId + "' GROUP BY batch_number " +
+        "HAVING available > 0";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = {
+            inStock: (data[0] ? data[0][0].available : 0)
+        };
+
+        res.status(200).json(result);
+
+    })
+
+})
+
 app.get('/available_batches_to_user', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -2611,7 +2640,7 @@ app.get('/available_batches_to_user', function (req, res) {
 
     var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
         "AS available FROM htc_inventory.report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
-        query.item_name + "' AND COALESCE(dispatch_who_received,'" + query.userId + "') = '" + query.userId +
+        query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
         "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
         "HAVING available > 0";
 
@@ -2763,7 +2792,7 @@ app.get('/stock_search', function (req, res) {
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
         "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
         "WHERE category_name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND name = '" +
-            query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id";
+        query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id";
 
     console.log(sql);
 

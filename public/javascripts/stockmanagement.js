@@ -1067,7 +1067,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnConsume = document.createElement("button");
-                        btnConsume.className = (stock.itemsList[i].inStock > 0 ? "blue" : "gray");
+                        // btnConsume.className = (stock.itemsList[i].inStock > 0 ? "blue" : "gray");
                         btnConsume.style.minWidth = "100px";
                         btnConsume.style.minHeight = "30px";
                         btnConsume.style.fontWeight = "normal";
@@ -1086,6 +1086,19 @@ var stock = ({
 
 
                         td.appendChild(btnConsume);
+
+                        stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.itemsList[i].name +
+                            "&userId=" + stock.getCookie("username"), function(data, optionalControl) {
+
+                            var json = JSON.parse(data);
+
+                            if(optionalControl) {
+
+                                optionalControl.className = (json.inStock && parseInt(json.inStock) > 0 ? "blue" : "gray");
+
+                            }
+
+                        }, btnConsume);
 
                     }
 
@@ -1661,7 +1674,7 @@ var stock = ({
 
     },
 
-    ajaxRequest: function (url, callback) {
+    ajaxRequest: function (url, callback, optionalControl) {
 
         var httpRequest = new XMLHttpRequest();
 
@@ -1673,7 +1686,7 @@ var stock = ({
                 if (httpRequest.responseText.trim().length > 0) {
                     var result = httpRequest.responseText;
 
-                    callback(result);
+                    callback(result, optionalControl);
 
                 } else {
 

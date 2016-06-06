@@ -20,6 +20,16 @@ DROP TRIGGER IF EXISTS new_consumption$$
 
 DROP TRIGGER IF EXISTS consumption_update$$
 
+DROP TRIGGER IF EXISTS consumption_delete$$
+
+DROP TRIGGER IF EXISTS receipt_delete$$
+
+DROP TRIGGER IF EXISTS dispatch_delete$$
+
+DROP TRIGGER IF EXISTS transfer_delete$$
+
+DROP TRIGGER IF EXISTS stock_delete$$
+
 CREATE TRIGGER new_receipt 
 AFTER INSERT ON `receipt` FOR EACH ROW
 BEGIN
@@ -41,6 +51,14 @@ BEGIN
 
 END$$
 
+CREATE TRIGGER receipt_delete
+BEFORE DELETE ON `receipt` FOR EACH ROW
+BEGIN
+
+	DELETE FROM report WHERE receipt_id = OLD.receipt_id;
+
+END$$
+
 CREATE TRIGGER new_dispatch 
 AFTER INSERT ON `dispatch` FOR EACH ROW
 BEGIN
@@ -58,6 +76,14 @@ BEGIN
 
 END$$
 
+CREATE TRIGGER dispatch_delete
+BEFORE DELETE ON `dispatch` FOR EACH ROW
+BEGIN
+
+	DELETE FROM report WHERE dispatch_id = OLD.dispatch_id;
+
+END$$
+
 CREATE TRIGGER new_transfer 
 AFTER INSERT ON `transfer` FOR EACH ROW
 BEGIN
@@ -72,6 +98,14 @@ AFTER UPDATE ON `transfer` FOR EACH ROW
 BEGIN
 
 	UPDATE report SET stock_id = (SELECT stock.stock_id FROM stock LEFT OUTER JOIN dispatch ON stock.stock_id = dispatch.stock_id WHERE dispatch_id = NEW.dispatch_id LIMIT 1), transfer_dispatch_id = NEW.dispatch_id, transfer_quantity = NEW.transfer_quantity, transfer_who_transfered = NEW.transfer_who_transfered, transfer_who_received = NEW.transfer_who_received, transfer_who_authorised = NEW.transfer_who_authorised, transfer_destination = NEW.transfer_destination, transfer_datetime = NEW.transfer_datetime, voided = NEW.voided, date_voided = NEW.date_voided WHERE transfer_id = NEW.transfer_id;
+
+END$$
+
+CREATE TRIGGER transfer_delete
+BEFORE DELETE ON `transfer` FOR EACH ROW
+BEGIN
+
+	DELETE FROM report WHERE transfer_id = OLD.transfer_id;
 
 END$$
 
@@ -95,16 +129,26 @@ BEGIN
 
 END$$
 
+CREATE TRIGGER stock_delete
+BEFORE DELETE ON `stock` FOR EACH ROW
+BEGIN
+
+	DELETE FROM report WHERE stock_id = OLD.stock_id;
+
+END$$
+
 CREATE TRIGGER new_consumption 
 AFTER INSERT ON `consumption` FOR EACH ROW
 BEGIN
 
-	INSERT report (stock_id, item_name, batch_number, consumption_id, consumption_type, who_consumed, 
+	INSERT report (stock_id, item_name, dispatch_who_received, batch_number, 
+			consumption_id, consumption_type, who_consumed, 
 			consumption_location, consumption_quantity, date_consumed, dispatch_id)
 	VALUES(
 			(SELECT stock_id FROM dispatch WHERE dispatch_id = NEW.dispatch_id),
 			(SELECT name FROM stock LEFT OUTER JOIN dispatch ON dispatch.stock_id = 
 						stock.stock_id WHERE dispatch_id = NEW.dispatch_id),
+			NEW.creator,
 			(SELECT batch_number FROM dispatch WHERE dispatch_id = NEW.dispatch_id),
 			NEW.consumption_id,
 			(SELECT name FROM consumption_type WHERE consumption_type_id = NEW.consumption_type_id),
@@ -121,12 +165,20 @@ CREATE TRIGGER consumption_update
 AFTER UPDATE ON `consumption` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET batch_number = (SELECT batch_number FROM dispatch WHERE 
-		dispatch_id = NEW.dispatch_id), dispatch_id = NEW.dispatch_id, 
-		consumption_type = (SELECT name FROM consumption_type WHERE 
+	UPDATE report SET dispatch_who_received = NEW.creator, batch_number = (SELECT 
+		batch_number FROM dispatch WHERE dispatch_id = NEW.dispatch_id), 
+		dispatch_id = NEW.dispatch_id, consumption_type = (SELECT name FROM consumption_type WHERE 
 		consumption_type_id = NEW.consumption_type_id), who_consumed = NEW.who_consumed, 
 		consumption_location = NEW.location, consumption_quantity = NEW.consumption_quantity,
 		date_consumed = NEW.date_consumed WHERE consumption_id = NEW.consumption_id;
+
+END$$
+
+CREATE TRIGGER consumption_delete
+BEFORE DELETE ON `consumption` FOR EACH ROW
+BEGIN
+
+	DELETE FROM report WHERE consumption_id = OLD.consumption_id;
 
 END$$
 
