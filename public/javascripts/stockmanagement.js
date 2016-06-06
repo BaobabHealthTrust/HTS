@@ -1527,7 +1527,7 @@ var stock = ({
 
         fields[locationLabel] = {
             field_type: "text",
-            id: "data.dispatch_location",
+            id: "data.dispatch_destination",
             allowFreeText: true,
             ajaxURL: stock.settings.locationsListPath
         };
