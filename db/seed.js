@@ -84,7 +84,7 @@ function loadSeedData(eCallback) {
 
     async.series([
 
-        function(iCallback) {
+        function (iCallback) {
 
             if (seed.encounter_types.length > 0) {
 
@@ -138,7 +138,7 @@ function loadSeedData(eCallback) {
 
                         });
 
-                }, function() {
+                }, function () {
 
                     console.log("Encounter types loaded!");
 
@@ -154,7 +154,7 @@ function loadSeedData(eCallback) {
 
         },
 
-        function(iCallback) {
+        function (iCallback) {
 
             if (seed.patient_identifier_types.length > 0) {
 
@@ -207,7 +207,7 @@ function loadSeedData(eCallback) {
 
                         });
 
-                }, function() {
+                }, function () {
 
                     console.log("patient_identifier_types loaded!");
 
@@ -223,7 +223,7 @@ function loadSeedData(eCallback) {
 
         },
 
-        function(iCallback) {
+        function (iCallback) {
 
             if (seed.person_attribute_types.length > 0) {
 
@@ -276,7 +276,7 @@ function loadSeedData(eCallback) {
 
                         });
 
-                }, function() {
+                }, function () {
 
                     console.log("person_attribute_types loaded!");
 
@@ -292,7 +292,7 @@ function loadSeedData(eCallback) {
 
         },
 
-        function(iCallback) {
+        function (iCallback) {
 
             if (seed.programs.length > 0) {
 
@@ -385,7 +385,7 @@ function loadSeedData(eCallback) {
 
                         });
 
-                }, function() {
+                }, function () {
 
                     console.log("program loaded!");
 
@@ -401,7 +401,7 @@ function loadSeedData(eCallback) {
 
         },
 
-        function(iCallback) {
+        function (iCallback) {
 
             if (seed.concepts.length > 0) {
 
@@ -466,7 +466,7 @@ function loadSeedData(eCallback) {
 
                         });
 
-                }, function() {
+                }, function () {
 
                     console.log("concepts loaded!");
 
@@ -482,7 +482,7 @@ function loadSeedData(eCallback) {
 
         }
 
-    ], function() {
+    ], function () {
 
         eCallback();
 
@@ -505,23 +505,30 @@ var commands = [
         message: "Loading '" + connection.database + "' Metadata...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " " + connection.database + " < openmrs_1_7_2_concept_server_full_db.sql"
-    },
-    {
+    }
+];
+
+if (process.argv.indexOf("-o") < 0) {
+
+    commands.push({
         message: "Dropping '" + connection.inventory_database + "' database...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " -e 'DROP SCHEMA IF EXISTS " + connection.inventory_database + "'"
-    },
-    {
+    });
+
+    commands.push({
         message: "Creating '" + connection.inventory_database + "' database...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " -e 'CREATE SCHEMA " + connection.inventory_database + "'"
-    },
-    {
+    });
+
+    commands.push({
         message: "Loading '" + connection.inventory_database + "' Metadata...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
             " " + connection.inventory_database + " < inventory.sql"
-    }
-];
+    });
+
+}
 
 async.each(commands, function (cmd, callback) {
 
@@ -551,11 +558,11 @@ async.each(commands, function (cmd, callback) {
 
     async.series([
 
-        function(callback) {
+        function (callback) {
 
             console.log("Loading seed data...");
 
-            loadSeedData(function() {
+            loadSeedData(function () {
 
                 callback();
 
@@ -563,36 +570,44 @@ async.each(commands, function (cmd, callback) {
 
         },
 
-        function(callback) {
+        function (callback) {
 
-            console.log("Loading '" + connection.inventory_database + "' Triggers...");
+            if (process.argv.indexOf("-o") < 0) {
+                
+                console.log("Loading '" + connection.inventory_database + "' Triggers...");
 
-            var cmd = "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-            " " + connection.inventory_database + " < triggers.sql";
+                var cmd = "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                    " " + connection.inventory_database + " < triggers.sql";
 
-            runCmd(cmd, function(error, stdout, stderr) {
+                runCmd(cmd, function (error, stdout, stderr) {
 
-                if (error) {
+                    if (error) {
 
-                    console.log(error);
+                        console.log(error);
 
-                } else if (stderr) {
+                    } else if (stderr) {
 
-                    console.log(stderr);
+                        console.log(stderr);
 
-                } else if (stdout) {
+                    } else if (stdout) {
 
-                    console.log(stdout);
+                        console.log(stdout);
 
-                }
+                    }
+
+                    callback();
+
+                })
+
+            } else {
 
                 callback();
 
-            })
+            }
 
         },
 
-        function(iCallback) {
+        function (iCallback) {
 
             var commands = [
                 {
@@ -604,6 +619,15 @@ async.each(commands, function (cmd, callback) {
                     message: "Loading 'HTS Locations' seed data...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " < locations.sql"
+                },
+                {
+                    message: "Initializing user admin...",
+                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                        " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
+                        "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
+                        "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
+                        "person_attribute_type WHERE name = \"HTC Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
+                        "NOW(), \"" + uuid.v1() + "\")'"
                 }
             ];
 
@@ -631,7 +655,7 @@ async.each(commands, function (cmd, callback) {
 
                 });
 
-            }, function() {
+            }, function () {
 
                 iCallback();
 
@@ -639,7 +663,7 @@ async.each(commands, function (cmd, callback) {
 
         }
 
-    ], function() {
+    ], function () {
 
         console.log("Done!");
 

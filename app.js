@@ -1868,7 +1868,7 @@ app.get('/fnames_query', function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT DISTINCT given_name AS name FROM person_name WHERE given_name LIKE '" +
-        (query.name ? query.name : "") + "%'";
+        (query.name ? query.name : "") + "%' AND given_name != '-'";
 
     queryRaw(sql, function (data) {
 
@@ -1897,7 +1897,7 @@ app.get('/lnames_query', function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT DISTINCT family_name AS name FROM person_name WHERE family_name LIKE '" +
-        (query.name ? query.name : "") + "%'";
+        (query.name ? query.name : "") + "%' AND family_name != '-'";
 
     queryRaw(sql, function (data) {
 
