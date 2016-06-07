@@ -1,13 +1,13 @@
 {
     "encounter_types": [
-        ["HTS PATIENT REGISTRATION", "Client registration encounter in HTS program"],
+        ["HTS CLIENT REGISTRATION", "Client registration encounter in HTS program"],
         ["HTS VISIT", "Client HTS clinic visit encounter"],
         ["HIV TESTING", "HIV Testing encounter"],
         ["PARTNER STATUS", "HTS Client partner status"],
         ["CLIENT RISK ASSESSMENT", "HTS Client risk assessment encounter"],
         ["ITEMS GIVEN", "HTS Client items given encounter"],
         ["APPOINTMENT", "Appointment encounter"],
-        ["CLINICAL COMMENTS", "Clinical comments encounter"]
+        ["COMMENTS", "Clinical comments encounter"]
     ],
     "patient_identifier_types": [
     		["HTS Number", "HTS client clinic number"]

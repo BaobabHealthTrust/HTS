@@ -66,6 +66,32 @@ var dashboard = ({
         return document.getElementById(id);
     },
 
+    $: function (id) {
+
+        return document.getElementById(id);
+
+    },
+
+    $$: function (id) {
+
+        if(this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow.document.getElementById(id);
+
+        }
+
+    },
+
+    __: function (id) {
+
+        if(this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow;
+
+        }
+
+    },
+
     setCookie: function (cname, cvalue, exdays) {
 
         var d = new Date();

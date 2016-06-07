@@ -573,7 +573,7 @@ async.each(commands, function (cmd, callback) {
         function (callback) {
 
             if (process.argv.indexOf("-o") < 0) {
-                
+
                 console.log("Loading '" + connection.inventory_database + "' Triggers...");
 
                 var cmd = "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +

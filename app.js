@@ -414,7 +414,90 @@ function saveData(data, callback) {
 
                     queryRaw(sql, function (res) {
 
-                        iOCallback();
+                        // console.log(concept.trim().toLowerCase());
+
+                        if(concept.trim().toLowerCase() == "age") {
+
+                            var age = String(data.data.obs[group][concept]).match(/^(\d+)([Y|M|W|D|H])/);
+
+                            if(age) {
+
+                                var number = parseInt(age[1]);
+
+                                var type = age[2];
+
+                                var dob;
+
+                                switch(type) {
+
+                                    case "Y":
+
+                                        dob = (new Date((new Date()).setFullYear((new Date()).getFullYear() -
+                                            number))).format("YYYY-mm-dd");
+
+                                        break;
+
+                                    case "M":
+
+                                        dob = (new Date((new Date()).setMonth((new Date()).getMonth() -
+                                            number))).format("YYYY-mm-dd");
+
+                                        break;
+
+                                    case "W":
+
+                                        dob = (new Date((new Date()).setDate((new Date()).getDate() -
+                                            (number * 7)))).format("YYYY-mm-dd");
+
+                                        break;
+
+                                    case "D":
+
+                                        dob = (new Date((new Date()).setDate((new Date()).getDate() - number))).format("YYYY-mm-dd");
+
+                                        break;
+
+                                    default:
+
+                                        dob = (new Date((new Date()).setHours((new Date()).getHours() - number))).format("YYYY-mm-dd");
+
+                                        break;
+
+                                }
+
+                                var sql = "UPDATE person SET birthdate = '" + dob + "', birthdate_estimated = 1 WHERE " +
+                                    "person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (res) {
+
+                                    iOCallback();
+
+                                });
+
+                            } else {
+
+                                iOCallback();
+
+                            }
+
+                        } else if(concept.trim().toLowerCase() == "sex/pregnancy") {
+
+                            var gender = String(data.data.obs[group][concept]).trim().substring(0, 1).toUpperCase();
+
+
+                            var sql = "UPDATE person SET gender = '" + gender + "' WHERE person_id = '" + patient_id + "'";
+
+                            queryRaw(sql, function (res) {
+
+                                iOCallback();
+
+                            });
+
+                        } else {
+
+                            iOCallback();
+
+                        }
 
                     });
 
