@@ -4,6 +4,23 @@
 
 "use strict"
 
+function getCookie(cname) {
+
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+
+}
+
 function getAge(birthdate, estimated) {
 
     var age;
@@ -140,8 +157,6 @@ function calculateAge() {
 
 function updatePregnancy() {
 
-    console.log(__$("sex_or_pregnancy") && __$("gender") && __$("pregnant"));
-
     if(__$("sex_or_pregnancy") && __$("gender") && __$("pregnant")) {
 
         var gender = __$("gender").value.trim();
@@ -165,8 +180,6 @@ function updatePregnancy() {
         }
 
         __$("sex_or_pregnancy").value = status;
-
-        console.log(__$("sex_or_pregnancy").value.trim());
 
     }
 
@@ -295,9 +308,6 @@ function updatePregnancy() {
         tr.appendChild(th);
 
         verticalText("25+<i style='color: #eee'>_</i>years", th);
-
-
-        console.log(__$("sex_or_pregnancy").value.trim());
 
         var tr = document.createElement("tr");
 
@@ -819,7 +829,35 @@ function setAjaxUrl(pos) {
 
             break;
 
+        case 3:
+
+            if(__$("item_name")) {
+
+                __$('item_name').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                    tstCurrentPage).value.trim() + '&item_name=');
+
+            }
+
+            break;
+
+        case 4:
+
+            if(__$("lot_number1")) {
+
+                __$('lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
+
+            }
+
+            break;
+
     }
+
+
+}
+
+function showHIVTestingSummary() {
+
 
 
 }

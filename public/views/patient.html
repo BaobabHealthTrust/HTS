@@ -28,7 +28,7 @@
 
         nsp.on('demographics', function(data){
 
-            console.log(data);
+            // console.log(data);
 
             var json = JSON.parse(data);
 
@@ -59,6 +59,24 @@
             } else if(json.programs) {
 
                 dashboard.data.data.programs = json.programs;
+
+            }
+
+            var lastHIVTest = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM",
+                    (new Date()).format("YYYY-mm-dd"), "HTS VISIT", "Last HIV test"));
+
+            if(lastHIVTest) {
+
+                dashboard.setCookie("LastHIVTest", lastHIVTest, 0.3333);
+
+            }
+
+            var ageGroup = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+                    "HTS CLIENT REGISTRATION", "Age Group"));
+
+            if(ageGroup) {
+
+                dashboard.setCookie("AgeGroup", ageGroup, 0.3333);
 
             }
 

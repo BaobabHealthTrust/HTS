@@ -511,6 +511,8 @@ var protocol = ({
 
     reGroup: function (data) {
 
+        const DELIMITER = ",";
+
         this.questions = {};
 
         var result = {};
@@ -547,7 +549,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]]["attributes"] = {}
 
@@ -581,7 +583,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]]["attributes"] = {};
 
@@ -616,7 +618,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]]["attributes"] = {};
 
@@ -651,7 +653,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]]["attributes"] = {};
 
@@ -686,7 +688,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]]["attributes"] = {};
 
@@ -722,7 +724,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]]["attributes"] = {};
 
@@ -758,7 +760,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]]["attributes"] = {};
 
@@ -794,7 +796,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]][mline[15]]["attributes"] = {};
 
@@ -830,7 +832,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]][mline[15]][mline[17]]["attributes"] = {};
 
@@ -866,7 +868,7 @@ var protocol = ({
 
                                     if (mline[22]) {
 
-                                        var terms = mline[22].split(",");
+                                        var terms = mline[22].split(DELIMITER);
 
                                         result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]][mline[15]][mline[17]][mline[19]]["attributes"] = {};
 

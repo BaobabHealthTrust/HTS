@@ -606,15 +606,35 @@ function saveData(data, callback) {
 
                             queryRaw(sql, function (attr) {
 
-                                var sql = "UPDATE person_attribute SET value = '" + phoneNumber +
-                                    "' WHERE person_id = '" + patient_id + "' AND person_attribute_id = '" +
-                                    attr[0][0].person_attribute_id + "'";
+                                if(attr[0].length <= 0) {
 
-                                queryRaw(sql, function (res) {
+                                    // TODO: Need to find a way to push a proper user who creates here
+                                    var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
+                                        "creator, date_created, uuid) VALUES ('" + patient_id + "', '" + phoneNumber +
+                                        "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                                        "'Cell Phone Number' LIMIT 1), (SELECT user_id FROM users LIMIT 1), NOW(), '" +
+                                        uuid.v1() + "')";
 
-                                    iOCallback();
+                                    queryRaw(sql, function (res) {
 
-                                });
+                                        iOCallback();
+
+                                    });
+
+                                } else {
+
+                                    var sql = "UPDATE person_attribute SET value = '" + phoneNumber +
+                                        "' WHERE person_id = '" + patient_id + "' AND person_attribute_id = '" +
+                                        attr[0][0].person_attribute_id + "'";
+
+                                    queryRaw(sql, function (res) {
+
+                                        iOCallback();
+
+                                    });
+
+                                }
+
                             });
 
                         } else {
@@ -1722,7 +1742,7 @@ function saveStock(data, res) {
 
 }
 
-function saveConsumption(data, res) {
+function saveConsumption(data, res, callback) {
 
     if (data.dispatch_id) {
 
@@ -1741,13 +1761,29 @@ function saveConsumption(data, res) {
 
                 queryRawStock(sql, function (batch) {
 
-                    res.status(200).json({message: "Item saved!"});
+                    if(callback) {
+
+                        callback();
+
+                    } else {
+
+                        res.status(200).json({message: "Item saved!"});
+
+                    }
 
                 });
 
             } else {
 
-                res.status(200).json({message: "Nothing done!"});
+                if(callback) {
+
+                    callback();
+
+                } else {
+
+                    res.status(200).json({message: "Nothing done!"});
+
+                }
 
             }
 
@@ -1763,7 +1799,15 @@ function saveConsumption(data, res) {
 
             queryRawStock(sql, function (batch) {
 
-                res.status(200).json({message: "Item saved!"});
+                if(callback) {
+
+                    callback();
+
+                } else {
+
+                    res.status(200).json({message: "Item saved!"});
+
+                }
 
             });
 
@@ -2950,7 +2994,7 @@ app.get('/available_batches_to_user_summary', function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM htc_inventory.report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
         query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId + "' GROUP BY batch_number " +
         "HAVING available > 0";
 
@@ -2974,10 +3018,11 @@ app.get('/available_batches_to_user', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-        "AS available FROM htc_inventory.report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+    var sql = "SELECT report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
+        "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
+        " = receipt.batch_number WHERE COALESCE(report.batch_number,'') != '' AND item_name = '" +
         query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
-        "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
+        "' AND report.batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY report.batch_number " +
         "HAVING available > 0";
 
     console.log(sql);
@@ -2988,9 +3033,13 @@ app.get('/available_batches_to_user', function (req, res) {
 
         for (var i = 0; i < data[0].length; i++) {
 
+            var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')) {" +
+                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')).value = '" +
+                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "';}";
+
             result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
                 "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
-                "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'}\" >" +
+                "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd +  " \" >" +
                 data[0][i].batch_number + " (" + data[0][i].available + ")" + "</li>";
 
         }
@@ -3008,7 +3057,7 @@ app.get('/available_batches', function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT batch_number, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
-        "AS available FROM htc_inventory.report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
         query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
         "HAVING available > 0";
 

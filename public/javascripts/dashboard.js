@@ -92,6 +92,59 @@ var dashboard = ({
 
     },
 
+    /*
+    *   Method to get the value assigned to a specific concept for a given encounter on a given visit for a
+    *   specific program
+    *
+    * */
+    queryActiveObs: function(program, visit, encounter, concept) {
+
+        if(this.data && this.data.data && this.data.data.programs && Object.keys(this.data.data.programs).length > 0) {
+
+            var patientPrograms = this.data.data.programs[program].patient_programs;
+
+            var result = null;
+
+            var pKeys = Object.keys(patientPrograms);
+
+            for(var i = 0; i < pKeys.length; i++) {
+
+                var key = pKeys[i];
+
+                if(!patientPrograms[key].date_completed) {
+
+                    if(patientPrograms[key].visits && patientPrograms[key].visits[visit]) {
+
+                        if(patientPrograms[key].visits[visit][encounter]) {
+
+                            for(var j = 0; j < patientPrograms[key].visits[visit][encounter].length; j++) {
+
+                                if (patientPrograms[key].visits[visit][encounter][j][concept]) {
+
+                                    result = patientPrograms[key].visits[visit][encounter][j][concept].response.value;
+
+                                    return result;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        } else {
+
+            return null;
+
+        }
+
+    },
+
     setCookie: function (cname, cvalue, exdays) {
 
         var d = new Date();
@@ -1174,8 +1227,6 @@ var dashboard = ({
 
             dashboard.gender = dashboard.data["data"]["gender"];
 
-            console.log(dashboard.gender);
-
             dashboard.setCookie("gender", dashboard.gender, 1);
 
             dashboard.__$("gender").innerHTML = (dashboard.data["data"]["gender"] ? gender[dashboard.data["data"]["gender"]] : "&nbsp;");
@@ -1876,8 +1927,6 @@ var dashboard = ({
             data.data.user_id = 1;
 
             data.data.userId = dashboard.getCookie("username");
-
-            console.log(data);
 
             socket.emit('update', data);
 
