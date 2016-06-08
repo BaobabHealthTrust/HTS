@@ -4,9 +4,9 @@
         "tasks": {
             "Patient Registration": "javascript:dashboard.navPanel('/spec/patient_registration.spec')",
             "HTS Visit": "javascript:dashboard.navPanel('/spec/hts_visit.spec')",
+            "Contact Details": "javascript:dashboard.navPanel('/spec/contact_details.spec')",
             "HIV Testing": "javascript:dashboard.navPanel('/spec/hiv_testing.spec')",
             "Partner Status": "javascript:dashboard.navPanel('/spec/partner_status.spec')",
-            "Contact Details": "javascript:dashboard.navPanel('/spec/contact_details.spec')",
             "Client Risk Assessment": "javascript:dashboard.navPanel('/spec/client_risk_assessment.spec')",
             "Items Given": "javascript:dashboard.navPanel('/spec/items_given.spec')",
             "Appointment": "javascript:dashboard.navPanel('/spec/appointment.spec')",

@@ -676,7 +676,7 @@ var landing = ({
         var btnStart = document.createElement("button");
         btnStart.className = "blue";
         btnStart.style.cssFloat = "right";
-        btnStart.innerHTML = "Start Protocol";
+        btnStart.innerHTML = "Start Session";
         btnStart.id = "landing.btnStart";
         btnStart.style.minWidth = "180px";
 

@@ -1,4 +1,4 @@
-P.1. HTS CLIENT REGISTRATION [program: HTS PROGRAM, scope: TODAY, includejs: touchScreenToolkit;pat_reg]
+P.1. HTS CLIENT REGISTRATION [program: HTS PROGRAM, scope: TODAY, includejs: touchScreenToolkit;hts]
 Q.1.1. Sex/Pregnancy [pos: 0, id: sex_or_pregnancy, condition: false]
 O.1.1.1. M
 O.1.1.2. FNP

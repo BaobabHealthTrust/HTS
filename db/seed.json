@@ -41,6 +41,7 @@
     		"Last Inconclusive",
     		"Time Since Last Test",
     		"Partner Present at this Session?",
+            "Client Details Can Be Captured?",
     		"HIV Rapid Test Outcomes",
     		"First Pass",
     		"Immediate Repeat",
@@ -82,6 +83,13 @@
     		"Condoms",
     		"Male Condoms",
     		"Female Condoms",
-    		"Comments"    		
+    		"Comments",
+            "First Name",
+            "Family Name",
+            "Client Phone Number",
+            "Current District",
+            "Current T/A",
+            "Current Village",
+            "Closest Landmark"
     ]
 }
