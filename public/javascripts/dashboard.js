@@ -1,6 +1,6 @@
 "use strict"
 
-if(Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
     Object.defineProperty(Date.prototype, "format", {
         value: function (format) {
@@ -74,7 +74,7 @@ var dashboard = ({
 
     $$: function (id) {
 
-        if(this.$("ifrMain")) {
+        if (this.$("ifrMain")) {
 
             return this.$("ifrMain").contentWindow.document.getElementById(id);
 
@@ -84,7 +84,7 @@ var dashboard = ({
 
     __: function (id) {
 
-        if(this.$("ifrMain")) {
+        if (this.$("ifrMain")) {
 
             return this.$("ifrMain").contentWindow;
 
@@ -165,6 +165,60 @@ var dashboard = ({
         padded += String(number);
 
         return padded;
+    },
+
+    getAge: function (birthdate, estimated) {
+
+        var age;
+
+        if ((new Date(birthdate)) === "Invalid Date") {
+
+            return ["???", undefined, undefined];
+
+        }
+
+        if ((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)) > 1) {
+
+            var num = Math.round((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)), 0);
+
+            age = [num, num + "Y", "Y"];
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)) > 1) {
+
+            var num = Math.round((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)), 0);
+
+            age = [num, num + "M", "M"];
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)) > 1) {
+
+            var num = Math.round((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)), 0);
+
+            age = [num, num + "W", "W"];
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)) > 1) {
+
+            var num = Math.round((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)), 0);
+
+            age = [num, num + "D", "D"];
+
+        } else if ((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)) > 1) {
+
+            var num = Math.round((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)), 0);
+
+            age = [num, num + "H", "H"];
+
+        } else {
+
+            var num = "< 1H";
+
+            age = [num, num, num];
+
+        }
+
+        age[0] = (estimated != undefined && parseInt(estimated) == 1 ? "~" + age[0] : age[0]);
+
+        return age;
+
     },
 
     buildPage: function () {
@@ -698,6 +752,17 @@ var dashboard = ({
         div4.className = "headTab";
         div4.id = "modApp";
         div4.style.textAlign = "center";
+        div4.style.cursor = "pointer";
+
+        div4.onclick = function () {
+
+            if (dashboard.$("navPanel")) {
+
+                document.body.removeChild(dashboard.$("navPanel"));
+
+            }
+
+        }
 
         td1_4.appendChild(div4);
 
@@ -1734,7 +1799,7 @@ var dashboard = ({
 
     navPanel: function (path) {
 
-        if(dashboard.__$("navPanel")) {
+        if (dashboard.__$("navPanel")) {
 
             document.body.removeChild(dashboard.__$("navPanel"));
 
@@ -1779,9 +1844,9 @@ var dashboard = ({
 
             divPanel.appendChild(iframe);
 
-            iframe.onload = function() {
+            iframe.onload = function () {
 
-                if(dashboard.__$("ifrMain") && dashboard.__$("ifrMain").contentWindow.protocol) {
+                if (dashboard.__$("ifrMain") && dashboard.__$("ifrMain").contentWindow.protocol) {
 
                     dashboard.__$("ifrMain").contentWindow.protocol.init(path, undefined, undefined, undefined, undefined);
 
@@ -1793,15 +1858,15 @@ var dashboard = ({
 
     },
 
-    submitData: function(data) {
+    submitData: function (data) {
 
-        if(dashboard.__$("navPanel")) {
+        if (dashboard.__$("navPanel")) {
 
             document.body.removeChild(dashboard.__$("navPanel"));
 
         }
 
-        if(socket && data) {
+        if (socket && data) {
 
             var patient_id = window.location.href.match(/\/([^\/]+)$/)[1];
 
@@ -1820,9 +1885,9 @@ var dashboard = ({
 
     },
 
-    showMsg: function(msg, topic) {
+    showMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Message";
 
@@ -1917,9 +1982,9 @@ var dashboard = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(dashboard.$("msg.shield")) {
+            if (dashboard.$("msg.shield")) {
 
                 document.body.removeChild(dashboard.$("msg.shield"));
 
@@ -1931,9 +1996,9 @@ var dashboard = ({
 
     },
 
-    showAlertMsg: function(msg, topic) {
+    showAlertMsg: function (msg, topic) {
 
-        if(!topic) {
+        if (!topic) {
 
             topic = "Alert";
 
@@ -2028,9 +2093,9 @@ var dashboard = ({
         btn.className = "blue";
         btn.innerHTML = "OK";
 
-        btn.onclick = function() {
+        btn.onclick = function () {
 
-            if(dashboard.$("msg.shield")) {
+            if (dashboard.$("msg.shield")) {
 
                 document.body.removeChild(dashboard.$("msg.shield"));
 
@@ -2090,7 +2155,7 @@ var dashboard = ({
                         dashboard.__$("tasks").style.height = (window.innerHeight - 270) + "px";
                     }
 
-                    if(dashboard.__$("navPanel")) {
+                    if (dashboard.__$("navPanel")) {
 
                         dashboard.__$("navPanel").style.height = (window.innerHeight - 130) + "px";
 

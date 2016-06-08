@@ -515,7 +515,7 @@ var protocol = ({
 
         var result = {};
 
-        var lines = data.split("\n");
+        var lines = (data ? data.split("\n") : []);
 
         for (var i = 0; i < lines.length; i++) {
 

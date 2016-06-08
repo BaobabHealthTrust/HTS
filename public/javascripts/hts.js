@@ -46,7 +46,7 @@ function getAge(birthdate, estimated) {
 
     } else {
 
-        var num = "< 1H";
+        var num = "";
 
         age = [num, num, num];
 
@@ -433,7 +433,8 @@ function addDiv(text, checkText, parent, bold) {
     div.style.borderRadius = "30px";
     div.style.width = "40px";
     div.style.height = "30px";
-    div.style.border = (text.trim().toLowerCase() == checkText.trim().toLowerCase() ? "2px solid red" : "none");
+    div.style.border = (text.trim().length > 0 && text.trim().toLowerCase() == checkText.trim().toLowerCase() ?
+        "2px solid red" : "none");
     div.style.textAlign = "center";
     div.style.verticalAlign = "middle";
     div.innerHTML = text;
