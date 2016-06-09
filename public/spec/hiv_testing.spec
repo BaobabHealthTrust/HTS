@@ -14,18 +14,38 @@ Q.1.9. Client Agrees To Be Tested? [pos:: 8$$ id:: consent]
 O.1.9.1. No
 O.1.9.2. Yes
 
-Q.1.10. First Pass Test 1 Kit Category [pos:: 9$$ tt_onUnload:: setAjaxUrl(3)$$ ajaxURL:: /stock_categories?category=$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
-Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: item_name1$$ tt_onUnload:: setAjaxUrl(4)$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
-Q.1.12. First Pass Test Kit 1 Lot Number [pos:: 11$$ id:: lot_number1$$ expiry:: fp_lot_1_expiry$$ dispatch:: fp_lot_1_dispatch_id$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
-Q.1.13. First Pass Test 1 Result [pos:: 12$$ id:: test1_result$$ tt_onLoad:: saveConsumption(__$("fp_lot_1_dispatch_id").value)$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
+Q.1.10. First Pass Test 1 Kit Category [pos:: 9$$ tt_onUnload:: setAjaxUrl(3)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(0)]
+Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: fp_item_name1$$ tt_onUnload:: setAjaxUrl(4)$$ condition:: evalCondition(0)]
+Q.1.12. First Pass Test Kit 1 Lot Number [pos:: 11$$ id:: fp_lot_number1$$ expiry:: fp_lot_1_expiry$$ dispatch:: fp_lot_1_dispatch_id$$ condition:: evalCondition(0)]
+Q.1.13. First Pass Test 1 Result [pos:: 12$$ id:: fp_test1_result$$ tt_onLoad:: saveConsumption(__$("fp_lot_1_dispatch_id").value)$$ condition:: evalCondition(1)]
 O.1.13.1. -
 O.1.13.2. +
 
-Q.1.14. First Pass Test 2 Kit Category [pos:: 13$$ tt_onUnload:: setAjaxUrl(5)$$ ajaxURL:: /stock_categories?category=$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
-Q.1.15. First Pass Test Kit 2 Name [pos:: 14$$ id:: item_name$$ tt_onUnload:: setAjaxUrl(6)$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
-Q.1.16. First Pass Test Kit 2 Lot Number [pos:: 15$$ id:: lot_number2$$ expiry:: fp_lot_2_expiry$$ dispatch:: fp_lot_2_dispatch_id$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
-Q.1.17. First Pass Test 2 Result [pos:: 16$$ condition:: __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" || decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")]
+Q.1.14. First Pass Test 2 Kit Category [pos:: 13$$ tt_onUnload:: setAjaxUrl(5)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(2)]
+Q.1.15. First Pass Test Kit 2 Name [pos:: 14$$ id:: fp_item_name2$$ tt_onUnload:: setAjaxUrl(6)$$ condition:: evalCondition(2)]
+Q.1.16. First Pass Test Kit 2 Lot Number [pos:: 15$$ id:: fp_lot_number2$$ expiry:: fp_lot_2_expiry$$ dispatch:: fp_lot_2_dispatch_id$$ condition:: evalCondition(2)]
+Q.1.17. First Pass Test 2 Result [pos:: 16$$ id:: fp_test2_result$$ condition:: evalCondition(3)$$ tt_onLoad:: saveConsumption(__$("fp_lot_2_dispatch_id").value)]
 O.1.17.1. -
 O.1.17.2. +
 
-Q.1.18. Client Registration Summary [pos:: 17$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.18. First Pass Test 1 & 2 Parallel Tests [pos:: 17$$ id:: fp_parallel$$ tt_onLoad:: loadFirstPassParallelTests()$$ condition:: evalCondition(5)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true]
+
+Q.1.19. Immediate Repeat Tester ID Number [pos:: 18$$ id:: fp_parallel$$ condition:: evalCondition(4)]
+
+Q.1.20. Immediate Repeat Test 1 Kit Category [pos:: 19$$ tt_onUnload:: setAjaxUrl(7)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(4)]
+Q.1.21. Immediate Repeat Test Kit 1 Name [pos:: 20$$ id:: im_item_name1$$ tt_onUnload:: setAjaxUrl(8)$$ condition:: evalCondition(4)]
+Q.1.22. Immediate Repeat Test Kit 1 Lot Number [pos:: 21$$ id:: im_lot_number1$$ expiry:: im_lot_1_expiry$$ dispatch:: im_lot_1_dispatch_id$$ condition:: evalCondition(4)]
+Q.1.23. Immediate Repeat Test 1 Result [pos:: 22$$ id:: im_test1_result$$ tt_onLoad:: saveConsumption(__$("im_lot_1_dispatch_id").value)$$ condition:: false]
+O.1.23.1. -
+O.1.23.2. +
+
+Q.1.24. Immediate Repeat Test 1 Kit Category [pos:: 23$$ tt_onUnload:: setAjaxUrl(9)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(4)]
+Q.1.25. Immediate Repeat Test Kit 1 Name [pos:: 24$$ id:: im_item_name2$$ tt_onUnload:: setAjaxUrl(10)$$ condition:: evalCondition(4)]
+Q.1.26. Immediate Repeat Test Kit 1 Lot Number [pos:: 25$$ id:: im_lot_number2$$ expiry:: im_lot_2_expiry$$ dispatch:: im_lot_2_dispatch_id$$ condition:: evalCondition(4)]
+Q.1.27. Immediate Repeat Test 1 Result [pos:: 26$$ id:: im_test2_result$$ tt_onLoad:: saveConsumption(__$("im_lot_2_dispatch_id").value)$$ condition:: false]
+O.1.27.1. -
+O.1.27.2. +
+
+Q.1.28. Immediate Repeat Test 1 & 2 Parallel Tests [pos:: 27$$ id:: fp_parallel$$ tt_onLoad:: loadFirstPassParallelTests()$$ condition:: evalCondition(4)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true]
+
+Q.1.29. Client Registration Summary [pos:: 28$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]

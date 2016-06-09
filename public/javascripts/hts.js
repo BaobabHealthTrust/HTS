@@ -828,9 +828,9 @@ function setAjaxUrl(pos) {
 
         case 3:
 
-            if (__$("item_name1")) {
+            if (__$("fp_item_name1")) {
 
-                __$('item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('fp_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + '&item_name=');
 
             }
@@ -839,9 +839,9 @@ function setAjaxUrl(pos) {
 
         case 4:
 
-            if (__$("lot_number1")) {
+            if (__$("fp_lot_number1")) {
 
-                __$('lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -850,9 +850,9 @@ function setAjaxUrl(pos) {
 
         case 5:
 
-            if (__$("item_name2")) {
+            if (__$("fp_item_name2")) {
 
-                __$('item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('fp_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + '&item_name=');
 
             }
@@ -861,9 +861,53 @@ function setAjaxUrl(pos) {
 
         case 6:
 
-            if (__$("lot_number2")) {
+            if (__$("fp_lot_number2")) {
 
-                __$('lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
+
+            }
+
+            break;
+
+        case 7:
+
+            if (__$("im_item_name1")) {
+
+                __$('im_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                    tstCurrentPage).value.trim() + '&item_name=');
+
+            }
+
+            break;
+
+        case 8:
+
+            if (__$("im_lot_number1")) {
+
+                __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
+
+            }
+
+            break;
+
+        case 9:
+
+            if (__$("im_item_name2")) {
+
+                __$('im_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                    tstCurrentPage).value.trim() + '&item_name=');
+
+            }
+
+            break;
+
+        case 10:
+
+            if (__$("im_lot_number2")) {
+
+                __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -944,5 +988,108 @@ function ajaxPostRequest(url, data, callback) {
         httpRequest.send(JSON.stringify(data));
     } catch (e) {
     }
+
+}
+
+function loadFirstPassParallelTests() {
+
+
+
+}
+
+function evalCondition(pos) {
+
+    var result = false;
+
+    switch (pos) {
+
+        case 0:
+
+            if(__$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")  ||
+                (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
+                    decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive") )) {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 1:
+
+            if(__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")) {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 2:
+
+            if(__$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
+                __$("fp_test1_result").value == "+")  || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive") )) {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 3:
+
+            if(__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") && __$("fp_test1_result").value == "+") {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 4:
+
+            if(__$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
+                __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
+                __$("fp_test2_result").value) || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive") )) {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 5:
+
+            if(__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive")) {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 6:
+
+            if(__$("consent").value == "Yes" && ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
+                __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
+                __$("fp_test2_result").value)) {
+
+                result = true;
+
+            }
+
+            break;
+    }
+
+    return result;
 
 }
