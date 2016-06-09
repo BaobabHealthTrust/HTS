@@ -265,7 +265,7 @@ io.on('connection', function (socket) {
 
         socket.on('update', function (data) {
 
-            console.log(data);
+            console.log(JSON.stringify(data));
 
             saveData(data, function () {
 
@@ -320,8 +320,8 @@ function saveData(data, callback) {
         function (icallback) {
 
             var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
-                "patient_program.program_id WHERE patient_id = '" + patient_id +
-                "' AND voided = 0 AND program.name = '" + data.data.program + "'";
+                "patient_program.program_id WHERE patient_id = '" + patient_id + "' AND voided = 0 AND program.name = '" +
+                data.data.program + "'";
 
             queryRaw(sql, function (res) {
 
@@ -340,7 +340,9 @@ function saveData(data, callback) {
 
                 var sql = "INSERT INTO patient_program (patient_id, program_id, date_enrolled, creator, date_created, " +
                     "uuid, location_id) VALUES ('" + patient_id + "', (SELECT program_id FROM program WHERE name = '" +
-                    data.data.program + "'), NOW(), '" + data.data.user_id + "', NOW(), '" + uuid.v1() + "', '" + 1 + "')";
+                    data.data.program + "'), NOW(), (SELECT user_id FROM users WHERE username = '" + data.data.userId +
+                    "'), NOW(), '" + uuid.v1() + "', (SELECT location_id FROM location WHERE name = '" +
+                    (data.data.location ? data.data.location : "Unknown") + "'))";
 
                 queryRaw(sql, function (res) {
 
@@ -371,8 +373,10 @@ function saveData(data, callback) {
 
             var sql = "INSERT INTO encounter (encounter_type, patient_id, provider_id, location_id, encounter_datetime, " +
                 "creator, date_created, uuid, patient_program_id) VALUES ((SELECT encounter_type_id FROM encounter_type " +
-                " WHERE name = '" + data.data.encounter_type + "'), '" + patient_id + "', '" + data.data.user_id +
-                "', '" + 1 + "', NOW(), '" + data.data.user_id + "', NOW(), '" + uuid.v1() + "', '" + patient_program_id + "')";
+                " WHERE name = '" + data.data.encounter_type + "'), '" + patient_id + "', (SELECT user_id FROM users " +
+                "WHERE username = '" + data.data.userId + "'), (SELECT location_id FROM location WHERE name = '" +
+                (data.data.location ? data.data.location : "Unknown") + "'), NOW(), (SELECT user_id FROM users WHERE " +
+                "username = '" + data.data.userId + "'), NOW(), '" + uuid.v1() + "', '" + patient_program_id + "')";
 
             queryRaw(sql, function (res) {
 
@@ -409,8 +413,10 @@ function saveData(data, callback) {
                     var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
                         category + "," +
                         " creator, date_created, uuid) VALUES ('" + patient_id + "', (SELECT concept_id FROM concept_name " +
-                        "WHERE name = '" + concept + "' AND voided = 0 LIMIT 1), '" + encounter_id + "', NOW(), '" + 1 + "', '" +
-                        data.data.obs[group][concept] + "', '" + data.data.user_id + "', NOW(), '" + uuid.v1() + "')";
+                        "WHERE name = '" + concept + "' AND voided = 0 LIMIT 1), '" + encounter_id + "', NOW(), " +
+                        "(SELECT location_id FROM location WHERE name = '" + (data.data.location ? data.data.location :
+                        "Unknown") + "'), '" + data.data.obs[group][concept] + "', (SELECT user_id FROM users WHERE username = '" +
+                        data.data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                     queryRaw(sql, function (res) {
 
@@ -598,6 +604,62 @@ function saveData(data, callback) {
 
                             });
 
+                        } else if (concept.trim().toLowerCase().match(/dispatch\sid/i)) {
+
+                            var root = concept.trim().toLowerCase();
+                            var consumption_type = "Normal use";
+                            var dispatch_id = "";
+                            var consumption_quantity = 1;
+                            var who_consumed = data.data.patient_id;
+                            var date_consumed = data.data.today;
+                            var reason_for_consumption = "Normal use";
+                            var location = data.data.location;
+                            var userId = data.data.userId;
+
+                            switch (root) {
+
+                                case "first pass test kit 1 dispatch id":
+
+                                    dispatch_id = data.data.obs["text"]["First Pass Test Kit 1 Dispatch ID"];
+
+                                    break;
+
+                                case "first pass test kit 2 dispatch id":
+
+                                    dispatch_id = data.data.obs["text"]["First Pass Test Kit 2 Dispatch ID"];
+
+                                    break;
+
+                                case "immediate repeat test kit 1 dispatch id":
+
+                                    dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 1 Dispatch ID"];
+k;
+
+                                case "immediate repeat test kit 2 dispatch id":
+
+                                    dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 2 Dispatch ID"];
+
+                                    break;
+
+                            }
+
+                            var iData = {
+                                consumption_type: consumption_type,
+                                dispatch_id: dispatch_id,
+                                consumption_quantity: consumption_quantity,
+                                who_consumed: who_consumed,
+                                date_consumed: date_consumed,
+                                reason_for_consumption: reason_for_consumption,
+                                location: location,
+                                userId: userId
+                            }
+
+                            saveConsumption(iData, undefined, function() {
+
+                                iOCallback();
+
+                            })
+
                         } else if (concept.trim().toLowerCase() == "client phone number") {
 
                             var phoneNumber = String(data.data.obs[group][concept]).trim();
@@ -606,7 +668,7 @@ function saveData(data, callback) {
 
                             queryRaw(sql, function (attr) {
 
-                                if(attr[0].length <= 0) {
+                                if (attr[0].length <= 0) {
 
                                     // TODO: Need to find a way to push a proper user who creates here
                                     var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
@@ -1761,7 +1823,7 @@ function saveConsumption(data, res, callback) {
 
                 queryRawStock(sql, function (batch) {
 
-                    if(callback) {
+                    if (callback) {
 
                         callback();
 
@@ -1775,7 +1837,7 @@ function saveConsumption(data, res, callback) {
 
             } else {
 
-                if(callback) {
+                if (callback) {
 
                     callback();
 
@@ -1799,7 +1861,7 @@ function saveConsumption(data, res, callback) {
 
             queryRawStock(sql, function (batch) {
 
-                if(callback) {
+                if (callback) {
 
                     callback();
 
@@ -3035,11 +3097,15 @@ app.get('/available_batches_to_user', function (req, res) {
 
             var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')) {" +
                 "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')).value = '" +
-                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "';}";
+                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "';} ";
+
+            var dispatchCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')) {" +
+                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')).value = '" +
+                (data[0][i].dispatch_id ? data[0][i].dispatch_id : "") + "';} ";
 
             result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
                 "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
-                "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd +  " \" >" +
+                "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
                 data[0][i].batch_number + " (" + data[0][i].available + ")" + "</li>";
 
         }

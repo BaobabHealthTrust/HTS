@@ -1216,6 +1216,12 @@ var dashboard = ({
             dashboard.__$("primary_id").innerHTML = (dashboard.data["data"]["identifiers"]['National id'] ?
                 dashboard.data["data"]["identifiers"]['National id']["identifier"] : "&nbsp;");
 
+            if(dashboard.data["data"]["identifiers"]['National id']) {
+
+                dashboard.setCookie("client_identifier", dashboard.data["data"]["identifiers"]['National id'], 0.3333);
+
+            }
+
         }
 
         if (dashboard.__$("gender")) {
@@ -1386,6 +1392,11 @@ var dashboard = ({
             dashboard.__$("primary_id").innerHTML = (dashboard.data["data"]["identifiers"][sourceData["identifiers"][0]] ?
                 dashboard.data["data"]["identifiers"][sourceData["identifiers"][0]]["identifier"] : "&nbsp;");
 
+            if(dashboard.data["data"]["identifiers"]['National id']) {
+
+                dashboard.setCookie("client_identifier", dashboard.data["data"]["identifiers"]['National id'], 0.3333);
+
+            }
         }
 
         if (sourceData && sourceData["identifiers"] && dashboard.__$("other_id") && dashboard.__$("other_id_label") &&
@@ -1395,6 +1406,14 @@ var dashboard = ({
 
             dashboard.__$("other_id").innerHTML = (dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]] ?
                 dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]]["identifier"] : "&nbsp;");
+
+            if(!dashboard.data["data"]["identifiers"]['National id'] &&
+                dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]]) {
+
+                dashboard.setCookie("client_identifier",
+                    dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]]["identifier"], 0.3333);
+
+            }
 
         }
 
@@ -1923,10 +1942,11 @@ var dashboard = ({
 
             data.data.patient_id = patient_id.trim();
 
-            // TODO: Add logic for actual logged in user id
-            data.data.user_id = 1;
-
             data.data.userId = dashboard.getCookie("username");
+
+            data.data.location = dashboard.getCookie("location");
+
+            data.data.today = (new Date()).format("YYYY-mm-dd");
 
             socket.emit('update', data);
 
