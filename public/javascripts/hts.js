@@ -77,11 +77,11 @@ function getAge(birthdate, estimated) {
 
 function calculateAge() {
 
-    if(__$("birthdate")) {
+    if (__$("birthdate")) {
 
         var age = getAge(__$("birthdate").value.trim());
 
-        if(__$("age")) {
+        if (__$("age")) {
 
             __$("age").value = age[1];
 
@@ -89,11 +89,11 @@ function calculateAge() {
 
         var ageGroup = "";
 
-        switch(age[2]) {
+        switch (age[2]) {
 
             case "Y":
 
-                if(age[0] <= 14) {
+                if (age[0] <= 14) {
 
                     ageGroup = "1-14 years";
 
@@ -114,7 +114,7 @@ function calculateAge() {
             case "D":
             default:
 
-                if(age[0] > 11) {
+                if (age[0] > 11) {
 
                     ageGroup = "1-14 years";
 
@@ -128,22 +128,22 @@ function calculateAge() {
 
         }
 
-        if(__$("age_group")) {
+        if (__$("age_group")) {
 
             __$("age_group").value = ageGroup;
 
         }
 
-        if(age[2] == "Y" && age[0] >= 10 && age[0] <= 45) {
+        if (age[2] == "Y" && age[0] >= 10 && age[0] <= 45) {
 
-            if(__$("pregnant")) {
+            if (__$("pregnant")) {
 
                 __$("pregnant").setAttribute("condition",
                     "__$('gender').value.trim().toLowerCase() == 'female'");
 
             }
 
-        } else if(__$("pregnant")) {
+        } else if (__$("pregnant")) {
 
             __$("pregnant").setAttribute("condition", "false");
 
@@ -157,7 +157,7 @@ function calculateAge() {
 
 function updatePregnancy() {
 
-    if(__$("sex_or_pregnancy") && __$("gender") && __$("pregnant")) {
+    if (__$("sex_or_pregnancy") && __$("gender") && __$("pregnant")) {
 
         var gender = __$("gender").value.trim();
 
@@ -165,11 +165,11 @@ function updatePregnancy() {
 
         var status = "";
 
-        if(gender.trim().toLowerCase() == "female" && pregnant.trim().toLowerCase() == "yes") {
+        if (gender.trim().toLowerCase() == "female" && pregnant.trim().toLowerCase() == "yes") {
 
             status = "FP";
 
-        } else if(gender.trim().toLowerCase() == "female") {
+        } else if (gender.trim().toLowerCase() == "female") {
 
             status = "FNP";
 
@@ -183,7 +183,7 @@ function updatePregnancy() {
 
     }
 
-    if(__$("inputFrame" + tstCurrentPage)) {
+    if (__$("inputFrame" + tstCurrentPage)) {
 
         // __$("inputFrame" + tstCurrentPage).innerHTML = "";
 
@@ -277,7 +277,6 @@ function updatePregnancy() {
         tr.appendChild(th);
 
         verticalText("Female<i style='color: #eee'>_</i>Pregnant", th);
-
 
 
         var th = document.createElement("td");
@@ -456,8 +455,8 @@ function addDiv(text, checkText, parent, bold) {
 
 function verticalText(text, parent) {
 
-    if(!parent)
-    return;
+    if (!parent)
+        return;
 
     var div = document.createElement("div");
     div.style.height = "120px";
@@ -479,11 +478,11 @@ function verticalText(text, parent) {
 
 function updateTimeSinceLastTest() {
 
-    if(__$("time_since_last_test") && __$("time_since_last_test_date")) {
+    if (__$("time_since_last_test") && __$("time_since_last_test_date")) {
 
         var age = getAge(__$("time_since_last_test_date").value.trim());
 
-        if(__$("time_since_last_test")) {
+        if (__$("time_since_last_test")) {
 
             __$("time_since_last_test").value = age[1];
 
@@ -495,7 +494,7 @@ function updateTimeSinceLastTest() {
 
 function showHTSVisitSummary() {
 
-    if(__$("inputFrame" + tstCurrentPage)) {
+    if (__$("inputFrame" + tstCurrentPage)) {
 
         __$("inputFrame" + tstCurrentPage).style.overflow = "auto";
 
@@ -604,7 +603,6 @@ function showHTSVisitSummary() {
         verticalText("Other<i style='color: #eee'>_</i>(VCT, etc.)<i style='color: #eee'>________________________</i>", th);
 
 
-
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
 
@@ -675,8 +673,8 @@ function showHTSVisitSummary() {
 
         var HATMapping = {
             "Routine HTC within Health Service": "PITC",
-            "Comes with HTC Family Reference Slip":"FRS",
-            "Other (VCT, etc.)":"Oth"
+            "Comes with HTC Family Reference Slip": "FRS",
+            "Other (VCT, etc.)": "Oth"
         };
 
         var th = document.createElement("td");
@@ -705,11 +703,11 @@ function showHTSVisitSummary() {
         addDiv("Oth", HATMapping[__$("htc_acc_type").value.trim()], th);
 
         var LHTMapping = {
-            "Never Tested":"LNev",
-            "Last Negative":"L-",
-            "Last Positive":"L+",
-            "Last Exposed Infant":"LEx",
-            "Last Inconclusive":"LIn"
+            "Never Tested": "LNev",
+            "Last Negative": "L-",
+            "Last Positive": "L+",
+            "Last Exposed Infant": "LEx",
+            "Last Inconclusive": "LIn"
         };
 
         var th = document.createElement("td");
@@ -771,7 +769,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("N", __$("partner_present").value.trim().substring(0,1).toUpperCase(), th);
+        addDiv("N", __$("partner_present").value.trim().substring(0, 1).toUpperCase(), th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -780,7 +778,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("Y", __$("partner_present").value.trim().substring(0,1).toUpperCase(), th);
+        addDiv("Y", __$("partner_present").value.trim().substring(0, 1).toUpperCase(), th);
 
     }
 
@@ -789,16 +787,15 @@ function showHTSVisitSummary() {
 function showDetailsSummary() {
 
 
-
 }
 
 function setAjaxUrl(pos) {
 
-    switch(pos) {
+    switch (pos) {
 
         case 0:
 
-            if(__$("district")){
+            if (__$("district")) {
 
                 __$("district").setAttribute("ajaxURL", "/district_query?region=" + __$("touchscreenInput" +
                     tstCurrentPage).value.trim() + "&district=");
@@ -809,7 +806,7 @@ function setAjaxUrl(pos) {
 
         case 1:
 
-            if(__$('ta')){
+            if (__$('ta')) {
 
                 __$('ta').setAttribute('ajaxURL', '/ta_query?district=' + __$('touchscreenInput' +
                     tstCurrentPage).value + '&ta=');
@@ -820,7 +817,7 @@ function setAjaxUrl(pos) {
 
         case 2:
 
-            if(__$('village')){
+            if (__$('village')) {
 
                 __$('village').setAttribute('ajaxURL', '/village_query?district=' + __$('district').value.trim() +
                     '&ta=' + __$('touchscreenInput' + tstCurrentPage).value + '&village=');
@@ -831,9 +828,9 @@ function setAjaxUrl(pos) {
 
         case 3:
 
-            if(__$("item_name")) {
+            if (__$("item_name1")) {
 
-                __$('item_name').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + '&item_name=');
 
             }
@@ -842,9 +839,31 @@ function setAjaxUrl(pos) {
 
         case 4:
 
-            if(__$("lot_number1")) {
+            if (__$("lot_number1")) {
 
                 __$('lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
+
+            }
+
+            break;
+
+        case 5:
+
+            if (__$("item_name2")) {
+
+                __$('item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                    tstCurrentPage).value.trim() + '&item_name=');
+
+            }
+
+            break;
+
+        case 6:
+
+            if (__$("lot_number2")) {
+
+                __$('lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -859,5 +878,71 @@ function setAjaxUrl(pos) {
 function showHIVTestingSummary() {
 
 
+}
+
+function saveConsumption(dispatch_id) {
+
+    var patient_id = getCookie("client_identifier");
+
+    var consumption_type = "Normal use";
+    var consumption_quantity = 1;
+    var who_consumed = patient_id;
+    var date_consumed = (getCookie("today").trim().length > 0 ? getCookie("today") :
+        (new Date()).format("YYYY-mm-dd HH:MM:SS"));
+    var reason_for_consumption = "Normal use";
+    var location = getCookie("location");
+    var userId = getCookie("username");
+
+    var data = {
+        data: {
+            consumption_type: consumption_type,
+            dispatch_id: dispatch_id,
+            consumption_quantity: consumption_quantity,
+            who_consumed: who_consumed,
+            date_consumed: date_consumed,
+            reason_for_consumption: reason_for_consumption,
+            location: location,
+            userId: userId,
+            datatype: "consumption"
+        }
+    }
+
+    ajaxPostRequest("/save_item", data, function (result) {
+
+        console.log(result);
+
+    })
+
+}
+
+function ajaxPostRequest(url, data, callback) {
+
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function () {
+
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+            httpRequest.status == 304)) {
+
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = httpRequest.responseText;
+
+                callback(result);
+
+            } else {
+
+                callback(undefined);
+
+            }
+
+        }
+
+    };
+    try {
+        httpRequest.open("POST", url, true);
+        httpRequest.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+        httpRequest.send(JSON.stringify(data));
+    } catch (e) {
+    }
 
 }

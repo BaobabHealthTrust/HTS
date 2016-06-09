@@ -19,7 +19,13 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
             var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
                 "October", "November", "December"];
 
-            if (format.match(/YYYY\-mm\-dd/)) {
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + stock;padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    stock.padZeros(date.getDate(), 2) + " " + stock.padZeros(date.getHours(), 2) + ":" +
+                    stock.padZeros(date.getMinutes(), 2) + ":" + stock.padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
 
                 result = date.getFullYear() + "-" + stock.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
                     stock.padZeros(date.getDate(), 2);

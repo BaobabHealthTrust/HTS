@@ -511,7 +511,7 @@ var protocol = ({
 
     reGroup: function (data) {
 
-        const DELIMITER = ",";
+        const DELIMITER = "$$";
 
         this.questions = {};
 
@@ -555,7 +555,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -589,7 +589,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -624,7 +624,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -659,7 +659,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -694,7 +694,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -730,7 +730,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -766,7 +766,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -802,7 +802,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]][mline[15]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -838,7 +838,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]][mline[15]][mline[17]]["attributes"][parts[0].trim()] = parts[1].trim();
 
@@ -874,7 +874,7 @@ var protocol = ({
 
                                         for (var t = 0; t < terms.length; t++) {
 
-                                            var parts = terms[t].split(":");
+                                            var parts = terms[t].split("::");
 
                                             result[mline[1]][mline[3]][mline[5]][mline[7]][mline[9]][mline[11]][mline[13]][mline[15]][mline[17]][mline[19]]["attributes"][parts[0].trim()] = parts[1].trim();
 

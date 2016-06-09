@@ -604,7 +604,7 @@ function saveData(data, callback) {
 
                             });
 
-                        } else if (concept.trim().toLowerCase().match(/dispatch\sid/i)) {
+                        } else if (concept.trim().toLowerCase().match(/dispatch\sid/i) && false) {  // TODO: Temporary Lock. May Have to remove the block later
 
                             var root = concept.trim().toLowerCase();
                             var consumption_type = "Normal use";
