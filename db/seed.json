@@ -108,6 +108,12 @@
         "Immediate Repeat Test 1 Result",
         "Immediate Repeat Test Kit 2 Name",
         "Immediate Repeat Test Kit 2 Lot Number",
-        "Immediate Repeat Test 2 Result"
+        "Immediate Repeat Test 2 Result",
+        "First Pass Test Kit 1 Testing Duration (Minutes)",
+        "First Pass Test Kit 2 Testing Duration (Minutes)",
+        "Immediate Repeat Test Kit 1 Testing Duration (Minutes)",
+        "Immediate Repeat Test Kit 2 Testing Duration (Minutes)",
+        "Immediate Repeat Tester ID Number",
+        "Immediate Repeat Tester"
     ]
 }
