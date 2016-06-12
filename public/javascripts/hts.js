@@ -935,11 +935,6 @@ function setAjaxUrl(pos) {
 
 }
 
-function showHIVTestingSummary() {
-
-
-}
-
 function saveConsumption(dispatch_id) {
 
     var patient_id = getCookie("client_identifier");
@@ -1890,22 +1885,6 @@ function activateNavBtn() {
 function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result, imTest1Result, imTest2Result,
                       outcomeControl, resultGivenControl) {
 
-    console.log(lastHIVTestResult);
-
-    console.log(ageGroup);
-
-    console.log(fpTest1Result);
-
-    console.log(fpTest2Result);
-
-    console.log(imTest1Result);
-
-    console.log(imTest2Result);
-
-    console.log(outcomeControl);
-
-    console.log(resultGivenControl);
-
     if (!lastHIVTestResult || !ageGroup || !fpTest1Result || !outcomeControl || !resultGivenControl)
         return;
 
@@ -1924,16 +1903,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "New Negative";
 
-                console.log("inside " + 0);
-
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
 
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
-
-                console.log("inside " + 1);
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "-") {
@@ -1942,8 +1917,6 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "New Negative";
 
-                console.log("inside " + 2);
-
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "+" &&
                 imTest2Result.trim() == "+") {
 
@@ -1951,16 +1924,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                console.log("inside " + 3);
-
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "New Inconclusive";
-
-                console.log("inside " + 4);
 
             }
 
@@ -1975,16 +1944,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "Inconclusive";
 
-                console.log("inside " + 5);
-
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
 
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = "Confirmed Positive";
-
-                console.log("inside " + 6);
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
@@ -1994,16 +1959,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "Inconclusive";
 
-                console.log("inside " + 7);
-
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim() == "+" && imTest2Result.trim() == "+") {
 
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = "Confirmed Positive";
-
-                console.log("inside " + 8);
 
             }
 
@@ -2017,16 +1978,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "New Negative";
 
-                console.log("inside " + 9);
-
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
 
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = "Confirmed Positive";
-
-                console.log("inside " + 10);
 
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim().length <= 0 && imTest2Result.trim().length <= 0) {
@@ -2035,20 +1992,629 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "Inconclusive";
 
-                console.log("inside " + 11);
-
             }
 
             break;
 
     }
 
-    console.log("outcome: " + outcome);
-
-    console.log("result: " + result);
-
     outcomeControl.value = outcome;
 
     resultGivenControl.value = result;
+
+}
+
+function showHIVTestingSummary() {
+
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).style.overflow = "auto";
+
+        var table = document.createElement("table");
+        table.style.borderCollapse = "collapse";
+        table.style.margin = "auto";
+        table.style.marginTop = "20px";
+        table.style.color = "#333";
+        table.cellPadding = "10px";
+        table.border = 0;
+
+        __$("inputFrame" + tstCurrentPage).appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 7;
+
+        tr.appendChild(td);
+
+        var th = document.createElement("th");
+        th.innerHTML = "HIV Rapid Test Outcomes";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.colSpan = 8;
+        th.style.padding = "10px";
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Outcome Summary";
+        th.style.padding = "10px";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.colSpan = 5;
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Result Given to Client";
+        th.style.borderTop = "3px solid #333";
+        th.style.padding = "10px";
+        th.colSpan = 6;
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderLeft = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 7;
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.colSpan = 8;
+        td.rowSpan = 4;
+        td.style.padding = "0px";
+
+        tr.appendChild(td);
+
+        var tableKit = document.createElement("table");
+        tableKit.width = "100%";
+        tableKit.style.borderCollapse = "collapse";
+        tableKit.style.fontSize = "12px";
+        tableKit.cellPadding = "10";
+
+        td.appendChild(tableKit);
+
+        var trKit = document.createElement("tr");
+
+        tableKit.appendChild(trKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.innerHTML = "&nbsp;";
+        tdKit.style.width = "40px";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.borderBottom = "1px solid #333";
+        tdKit.innerHTML = "Test 1";
+        tdKit.align = "center";
+        tdKit.style.fontStyle = "italic";
+        tdKit.style.fontSize = "12px";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.borderBottom = "1px solid #333";
+        tdKit.style.borderRight = "1px solid #333";
+        tdKit.innerHTML = "Test 2";
+        tdKit.align = "center";
+        tdKit.style.fontStyle = "italic";
+        tdKit.style.fontSize = "12px";
+        tdKit.style.borderRight = "none";
+
+        trKit.appendChild(tdKit);
+
+        var trKit = document.createElement("tr");
+
+        tableKit.appendChild(trKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.innerHTML = "Kit";
+        tdKit.style.fontSize = "12px";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.border = "1px solid #333";
+        tdKit.innerHTML = (__$("fp_item_name1") ? __$("fp_item_name1").value.trim() : "");
+        tdKit.style.fontWeight = "bold";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.border = "1px solid #333";
+        tdKit.innerHTML = (__$("fp_item_name2") ? __$("fp_item_name2").value.trim() : "");
+        tdKit.style.fontWeight = "bold";
+        tdKit.style.borderRight = "none";
+
+        trKit.appendChild(tdKit);
+
+        var trKit = document.createElement("tr");
+
+        tableKit.appendChild(trKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.innerHTML = "Lot";
+        tdKit.style.fontSize = "12px";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.border = "1px solid #333";
+        tdKit.innerHTML = (__$("fp_lot_number1") ? __$("fp_lot_number1").value.trim() : "");
+        tdKit.style.fontWeight = "bold";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.border = "1px solid #333";
+        tdKit.innerHTML = (__$("fp_lot_number2") ? __$("fp_lot_number2").value.trim() : "");
+        tdKit.style.fontWeight = "bold";
+        tdKit.style.borderRight = "none";
+
+        trKit.appendChild(tdKit);
+
+        var trKit = document.createElement("tr");
+
+        tableKit.appendChild(trKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.innerHTML = "Expiry";
+        tdKit.style.fontSize = "12px";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.border = "1px solid #333";
+        tdKit.innerHTML = (__$("fp_lot_1_expiry") ? __$("fp_lot_1_expiry").value.trim() : "");
+        tdKit.style.fontWeight = "bold";
+
+        trKit.appendChild(tdKit);
+
+        var tdKit = document.createElement("td");
+        tdKit.style.border = "1px solid #333";
+        tdKit.innerHTML = (__$("fp_lot_2_expiry") ? __$("fp_lot_2_expiry").value.trim() : "");
+        tdKit.style.fontWeight = "bold";
+        tdKit.style.borderRight = "none";
+
+        trKit.appendChild(tdKit);
+
+        var td = document.createElement("td");
+        td.colSpan = 2;
+        td.align = "center";
+        td.style.padding = "2px";
+        td.style.borderLeft = "1px solid #333";
+        td.rowSpan = 2;
+        td.innerHTML = "Only Test 1<br/>Used";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.colSpan = 3;
+        td.align = "center";
+        td.style.padding = "2px";
+        td.rowSpan = 2;
+        td.innerHTML = "Test 1 & Test 2<br/>Used ± Repeat";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderLeft = "1px solid #333";
+        td.colSpan = 4;
+        td.rowSpan = 2;
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px dotted #333";
+        td.style.fontSize = "11px";
+        td.style.verticalAlign = "top";
+        td.style.padding = "2px";
+        td.align = "center";
+        td.colSpan = 2;
+        td.rowSpan = 2;
+        td.innerHTML = "Confirmatory<br/>Results for<br/>Clients Last +";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderLeft = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Single<i style='color: #eee'>_</i>Neg", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Single<i style='color: #eee'>_</i>Pos", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Test<i style='color: #eee'>_</i>1&2<i style='color: #eee'>_</i>Neg", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Test<i style='color: #eee'>_</i>1&2<i style='color: #eee'>_</i>Pos", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Test<i style='color: #eee'>_</i>1&2<i style='color: #eee'>_</i>disc.", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderLeft = "1px solid #333";
+
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("New<i style='color: #eee'>_</i>Negative", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("New<i style='color: #eee'>_</i>Positive", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("New<i style='color: #eee'>_</i>Exp.<i style='color: #eee'>_</i>Infant", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("New<i style='color: #eee'>_</i>Inconclusive", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Conf.<i style='color: #eee'>_</i>Positive", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        verticalText("Inconclusive", td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.colSpan = 4;
+        td.align = "center";
+        td.innerHTML = "First Pass"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.colSpan = 4;
+        td.align = "center";
+        td.innerHTML = "Immediate Repeat"
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+        tr.style.fontWeight = "bold";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 1"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 2"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 1"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 2"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 1"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 2"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 1"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 2"
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("-", __$("fp_test1_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("+", __$("fp_test1_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("-", __$("fp_test2_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("+", __$("fp_test2_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("-", __$("im_test1_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("+", __$("im_test1_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("-", __$("im_test2_result").value.trim(), td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("+", __$("im_test2_result").value.trim(), td);
+
+        var outcomes = {
+            "Single Negative": "-",
+            "Single Positive": "+",
+            "Test 1 & Test 2 Negative": "--",
+            "Test 1 & Test 2 Positive": "++",
+            "Test 1 & Test 2 Discordant": "Disc",
+            "":""
+        };
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("-", outcomes[__$("outcome_summary").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("+", outcomes[__$("outcome_summary").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("--", outcomes[__$("outcome_summary").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("++", outcomes[__$("outcome_summary").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Disc", outcomes[__$("outcome_summary").value.trim()], td);
+
+        var results = {
+            "New Negative": "N-",
+            "New Positive": "N+",
+            "New Exposed Infant": "N<span style='font-size: 10px'>Ex</span>",
+            "New Inconclusive":"N<span style='font-size: 10px'>In</span>",
+            "Confirmed Positive":"C+",
+            "Inconclusive":"C<span style='font-size: 10px'>In</span>",
+            "":""
+        };
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("N-", results[__$("result_given_to_client").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("N+", results[__$("result_given_to_client").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("N<span style='font-size: 10px'>Ex</span>", results[__$("result_given_to_client").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("N<span style='font-size: 10px'>In</span>", results[__$("result_given_to_client").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("C+", results[__$("result_given_to_client").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("C<span style='font-size: 10px'>In</span>", results[__$("result_given_to_client").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+    }
 
 }
