@@ -1296,6 +1296,12 @@ var dashboard = ({
 
         }
 
+        if(dashboard.activeTab) {
+
+            dashboard.activeTab.click();
+
+        }
+
     },
 
     loadModule: function (module, icon, sourceData) {
@@ -1733,10 +1739,13 @@ var dashboard = ({
         th.style.color = color[2];
         th.style.cursor = "pointer";
         th.setAttribute("target", "enc." + encounter);
+        th.setAttribute("iTarget", "container." + encounter);
 
         th.onclick = function () {
 
-            dashboard.showMeOnly(dashboard.$(this.getAttribute("target")));
+            dashboard.activeTab = this;
+
+            dashboard.showMeOnly(dashboard.$(this.getAttribute("target")), dashboard.$(this.getAttribute("iTarget")));
 
         }
 
@@ -1750,7 +1759,14 @@ var dashboard = ({
 
         tr2.appendChild(td);
 
-        dashboard.loadDetails(td, sourceData);
+        var container = document.createElement("div");
+        container.id = "container." + encounter;
+        container.style.height = "170px";
+        container.style.overflow = "hidden";
+
+        td.appendChild(container);
+
+        dashboard.loadDetails(container, sourceData);
 
     },
 
@@ -1808,9 +1824,7 @@ var dashboard = ({
 
                     td.style.cursor = "pointer";
 
-                    tr.onclick = function() {
-
-                        console.log(this.offsetParent);
+                    td.onclick = function() {
 
                         dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
                                 "javascript:dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
@@ -1987,7 +2001,7 @@ var dashboard = ({
 
     },
 
-    showMeOnly: function (target) {
+    showMeOnly: function (target, iTarget) {
 
         if(target.style.height == "200px") {
 
@@ -1995,11 +2009,11 @@ var dashboard = ({
 
             target.style.height = "95%";
 
-            target.style.overflow = "auto";
-
             dashboard.$("details").scrollTop = target.offsetTop;
 
-            console.log(target.offsetTop);
+            iTarget.style.height = (target.offsetHeight - 40) + "px";
+
+            iTarget.style.overflow = "auto";
 
         } else {
 
@@ -2008,6 +2022,10 @@ var dashboard = ({
             target.style.height = "200px";
 
             target.style.overflow = "hidden";
+
+            iTarget.style.height = "170px";
+
+            iTarget.style.overflow = "hidden";
 
         }
 
@@ -2077,7 +2095,7 @@ var dashboard = ({
             dashboard.setCookie("gender", dashboard.gender, 1);
 
             var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
-                "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http-equiv='content-type' " +
+                "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http\-equiv='content-type' " +
                 "content='text/html;charset=UTF-8'/><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "\"javascript:window.parent.document.body.removeChild('navPanel')\";tt_cancel_show = " +
