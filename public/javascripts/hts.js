@@ -798,11 +798,6 @@ function showHTSVisitSummary() {
 
 }
 
-function showDetailsSummary() {
-
-
-}
-
 function setAjaxUrl(pos) {
 
     switch (pos) {
@@ -1882,8 +1877,7 @@ function activateNavBtn() {
 
 }
 
-function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result, imTest1Result, imTest2Result,
-                      outcomeControl, resultGivenControl) {
+function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result, imTest1Result, imTest2Result, outcomeControl, resultGivenControl) {
 
     if (!lastHIVTestResult || !ageGroup || !fpTest1Result || !outcomeControl || !resultGivenControl)
         return;
@@ -2505,7 +2499,7 @@ function showHIVTestingSummary() {
             "Test 1 & Test 2 Negative": "--",
             "Test 1 & Test 2 Positive": "++",
             "Test 1 & Test 2 Discordant": "Disc",
-            "":""
+            "": ""
         };
 
         var td = document.createElement("td");
@@ -2553,10 +2547,10 @@ function showHIVTestingSummary() {
             "New Negative": "N-",
             "New Positive": "N+",
             "New Exposed Infant": "N<span style='font-size: 10px'>Ex</span>",
-            "New Inconclusive":"N<span style='font-size: 10px'>In</span>",
-            "Confirmed Positive":"C+",
-            "Inconclusive":"C<span style='font-size: 10px'>In</span>",
-            "":""
+            "New Inconclusive": "N<span style='font-size: 10px'>In</span>",
+            "Confirmed Positive": "C+",
+            "Inconclusive": "C<span style='font-size: 10px'>In</span>",
+            "": ""
         };
 
         var td = document.createElement("td");
@@ -2612,6 +2606,125 @@ function showHIVTestingSummary() {
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
         td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+    }
+
+}
+
+function showDetailsSummary() {
+
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).style.overflow = "auto";
+
+        var table = document.createElement("table");
+        table.style.borderCollapse = "collapse";
+        table.style.margin = "auto";
+        table.style.marginTop = "20px";
+        table.style.color = "#333";
+        table.cellPadding = "10px";
+        table.border = 0;
+
+        __$("inputFrame" + tstCurrentPage).appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 2;
+
+        tr.appendChild(td);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Client Name";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.padding = "10px";
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Phone/Physical Address";
+        th.style.padding = "10px";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 2;
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var th = document.createElement("th");
+        th.innerHTML = "<i>Fill name and contact details<br/><u>only</u> if client gives consent to be contacted</i>";
+        th.style.padding = "10px";
+        th.style.borderBottom = "1px solid #333";
+        th.style.fontWeight = "normal";
+        th.style.fontSize = "11px";
+        th.style.verticalAlign = "bottom";
+        th.style.borderRight = "1px solid #333";
+        th.colSpan = 2;
+
+        tr.appendChild(th);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "(no consent)" : __$("1.2").value.trim() +
+            " " + __$("1.3").value.trim());
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "" : (__$("1.4").value.trim() ==
+            "Phone Number" ? __$("phone_number").value.trim() : __$("village").value.trim() + ", " +
+            __$("closest_landmark").value.trim()));
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
 
         tr.appendChild(td);
 

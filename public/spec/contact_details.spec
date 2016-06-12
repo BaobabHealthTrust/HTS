@@ -4,9 +4,9 @@ O.1.1.1. Yes
 O.1.1.2. No
 Q.1.2. First Name [pos:: 1$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /fnames_query?name=]
 Q.1.3. Family Name [pos:: 2$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /lnames_query?name=]
-Q.1.4. Contact Detail Type [pos:: 3$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes';]
+Q.1.4. Contact Detail Type [pos:: 3 $$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes';]
 O.1.4.1. Phone Number
-Q.1.4.1.1. Client Phone Number [pos:: 4]
+Q.1.4.1.1. Client Phone Number [pos:: 4$$ id:: phone_number]
 O.1.4.2. Current Residence
 Q.1.4.2.1. Current Region [pos:: 5$$ tt_onUnload:: setAjaxUrl(0)$$ tt_requireNextClick:: false]
 O.1.4.2.1.1. Central Region
