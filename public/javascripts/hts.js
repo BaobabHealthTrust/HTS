@@ -788,6 +788,12 @@ function showHTSVisitSummary() {
 
         addDiv("Y", __$("partner_present").value.trim().substring(0, 1).toUpperCase(), th);
 
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.innerHTML = "&nbsp;";
+
+        tr.appendChild(th);
+
     }
 
 }

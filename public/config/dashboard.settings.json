@@ -1,0 +1,4 @@
+{
+    "basePath": "http://localhost:3014",
+    "conceptVoidPath": "/concept_void?uuid="
+}

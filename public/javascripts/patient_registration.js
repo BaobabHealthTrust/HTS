@@ -260,7 +260,7 @@ var patient = ({
 
                         patient.$('nextButton').onmousedown = function () {
 
-                            window.location = patient.settings.basePath + "/" + patient.$("selected_patient").value.trim();
+                            window.location = patient.settings.basePath + "/patient/" + patient.$("selected_patient").value.trim();
 
                         }
                     }

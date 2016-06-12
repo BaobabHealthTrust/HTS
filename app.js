@@ -282,6 +282,20 @@ io.on('connection', function (socket) {
 
         })
 
+        socket.on('void', function (data) {
+
+            console.log(JSON.stringify(data));
+
+            voidConcept(data, function () {
+
+                isDirty[data.patient_id] = true;
+
+                updateUserView({id: data.patient_id});
+
+            });
+
+        })
+
         nsp[custom.id].emit('hi ' + custom.id, 'New connection in ' + custom.id + '!');
 
         socket.emit('newConnection', {id: custom.id});
@@ -289,6 +303,23 @@ io.on('connection', function (socket) {
     });
 
 });
+
+function voidConcept(data, callback) {
+
+    console.log(Object.keys(data));
+
+    var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
+        "'), date_voided = NOW(), void_reason = 'Patient dashboard data void.' WHERE uuid = '" + data.uuid + "'";
+
+    queryRaw(sql, function (obs) {
+
+        console.log(obs);
+
+        callback();
+
+    });
+
+}
 
 function saveData(data, callback) {
 
@@ -1216,7 +1247,7 @@ function buildObs(encounter, oCallback) {
         " WHEN COALESCE(value_numeric,'') != '' THEN 'NUMERIC' " +
         " ELSE 'TEXT' END AS category " +
         " FROM obs o LEFT OUTER JOIN concept c ON c.concept_id = o.concept_id " +
-        " WHERE o.encounter_id = " + encounter.encounter_id;
+        " WHERE o.encounter_id = " + encounter.encounter_id + " AND o.voided = 0";
 
     // console.log(sql);
 
