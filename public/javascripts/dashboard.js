@@ -1824,6 +1824,14 @@ var dashboard = ({
 
                     td.style.cursor = "pointer";
 
+                    td.className = "closeButton";
+
+                    td.style.visibility = "hidden";
+
+                    td.style.padding = "5px";
+
+                    td.style.paddingRight = "10px";
+
                     td.onclick = function() {
 
                         dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
@@ -2015,6 +2023,14 @@ var dashboard = ({
 
             iTarget.style.overflow = "auto";
 
+            var images = iTarget.getElementsByClassName("closeButton");
+
+            for(var i = 0; i < images.length; i++) {
+
+                images[i].style.visibility = "visible";
+
+            }
+
         } else {
 
             target.style.width = "46%";
@@ -2026,6 +2042,14 @@ var dashboard = ({
             iTarget.style.height = "170px";
 
             iTarget.style.overflow = "hidden";
+
+            var images = iTarget.getElementsByClassName("closeButton");
+
+            for(var i = 0; i < images.length; i++) {
+
+                images[i].style.visibility = "hidden";
+
+            }
 
         }
 
