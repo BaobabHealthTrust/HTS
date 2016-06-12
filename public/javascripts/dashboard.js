@@ -1820,7 +1820,7 @@ var dashboard = ({
 
                     td.appendChild(img);
 
-                    tr.setAttribute("uuid", sourceData[i][keys[0]]["UUID"]);
+                    td.setAttribute("uuid", sourceData[i][keys[0]]["UUID"]);
 
                     td.style.cursor = "pointer";
 
