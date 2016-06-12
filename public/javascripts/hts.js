@@ -1080,6 +1080,28 @@ function evalCondition(pos) {
 
             break;
 
+        case 6:
+
+            if((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+                "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "M")) {
+
+                result = true;
+
+            }
+
+            break;
+
+        case 7:
+
+            if(["FP", "FNP"].indexOf((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM",
+                (new Date()).format("YYYY-mm-dd"), "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim())) >= 0) {
+
+                result = true;
+
+            }
+
+            break;
+
     }
 
     return result;
@@ -1144,7 +1166,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     td.align = "center";
     td.verticalAlign = "middle";
     td.style.border = "1px solid #3c60b1";
-    td.style.borderRadius = "10px";
+    td.style.borderRadius = "g10px";
     td.style.padding = "25px";
     td.colSpan = 3;
     td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
@@ -2727,6 +2749,163 @@ function showDetailsSummary() {
         td.style.height = "50px";
 
         tr.appendChild(td);
+
+    }
+
+}
+
+function evaluateReferral(){
+
+    var riskCategory;
+
+    var testResult;
+
+    var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "FP");
+
+    if(__$("risk_category")) {
+
+        riskCategory = __$("risk_category").value.trim();
+
+    }
+
+    testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "HIV TESTING", "Result Given to Client")).trim();
+
+    console.log(riskCategory);
+
+    console.log(testResult);
+
+    if(riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
+        "new negative") {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "No Re-Test Needed";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").setAttribute("condition", false);
+
+        }
+
+        window.parent.dashboard.showMsg("No Re-Test Needed!");
+
+    } else if(testResult.trim().toLowerCase() == "confirmed positive") {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "No Re-Test Needed";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").setAttribute("condition", false);
+
+        }
+
+        window.parent.dashboard.showMsg("No Re-Test Needed!");
+
+    } else if(riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
+        (testResult.trim().toLowerCase() == "new inconclusive") || (testResult.trim().toLowerCase() == "new negative")) {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 4))))).format("YYYY-mm-dd"))
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks!");
+
+    } else if(riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
+        (testResult.trim().toLowerCase() == "new negative")) {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 12 months!");
+
+    } else if(pregnant && testResult.trim().toLowerCase() == "new negative") {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy!");
+
+    } else if(testResult.trim().toLowerCase() == "new exposed infant") {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test when child at 12-24 months!");
+
+    } else if(testResult.trim().toLowerCase() == "new positive") {
+
+        if(__$("referral")) {
+
+            __$("referral").value = "Confirmatory Test at HIV Clinic";
+
+        }
+
+        if(__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Confirmatory Testing at the HIV Clinic " +
+            "<u>as soon as possible</u>!");
 
     }
 
