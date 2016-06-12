@@ -1290,6 +1290,12 @@ var dashboard = ({
 
         }
 
+        if(dashboard.selectedVisit) {
+
+            dashboard.$(dashboard.selectedVisit).click();
+
+        }
+
     },
 
     loadModule: function (module, icon, sourceData) {
