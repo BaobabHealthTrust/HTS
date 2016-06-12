@@ -1881,4 +1881,174 @@ function activateNavBtn() {
 
     }
 
+    decodeResult(decodeURIComponent(getCookie("LastHIVTest")), decodeURIComponent(getCookie("AgeGroup")),
+        __$("fp_test1_result").value.trim(), __$("fp_test2_result").value.trim(), __$("im_test1_result").value.trim(),
+        __$("im_test2_result").value.trim(), __$("outcome_summary"), __$("result_given_to_client"));
+
+}
+
+function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result, imTest1Result, imTest2Result,
+                      outcomeControl, resultGivenControl) {
+
+    console.log(lastHIVTestResult);
+
+    console.log(ageGroup);
+
+    console.log(fpTest1Result);
+
+    console.log(fpTest2Result);
+
+    console.log(imTest1Result);
+
+    console.log(imTest2Result);
+
+    console.log(outcomeControl);
+
+    console.log(resultGivenControl);
+
+    if (!lastHIVTestResult || !ageGroup || !fpTest1Result || !outcomeControl || !resultGivenControl)
+        return;
+
+    var outcome = "";
+    var result = "";
+
+    switch (lastHIVTestResult.trim().toLowerCase()) {
+
+        case "never tested":
+        case "last negative":
+
+            if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Single Negative";
+
+                result = "New Negative";
+
+                console.log("inside " + 0);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
+
+                console.log("inside " + 1);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "-") {
+
+                outcome = "Test 1 & Test 2 Negative";
+
+                result = "New Negative";
+
+                console.log("inside " + 2);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "+" &&
+                imTest2Result.trim() == "+") {
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
+
+                console.log("inside " + 3);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "New Inconclusive";
+
+                console.log("inside " + 4);
+
+            }
+
+            break;
+        case "last positive":
+        case "last exposed infant":
+
+            if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Test 1 & Test 2 Negative";
+
+                result = "Inconclusive";
+
+                console.log("inside " + 5);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "Confirmed Positive";
+
+                console.log("inside " + 6);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
+                (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "Inconclusive";
+
+                console.log("inside " + 7);
+
+            } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
+                fpTest2Result.trim() == "+")) && imTest1Result.trim() == "+" && imTest2Result.trim() == "+") {
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "Confirmed Positive";
+
+                console.log("inside " + 8);
+
+            }
+
+            break;
+        case "last inconclusive":
+
+            if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Test 1 & Test 2 Negative";
+
+                result = "New Negative";
+
+                console.log("inside " + 9);
+
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "Confirmed Positive";
+
+                console.log("inside " + 10);
+
+            } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
+                fpTest2Result.trim() == "+")) && imTest1Result.trim().length <= 0 && imTest2Result.trim().length <= 0) {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "Inconclusive";
+
+                console.log("inside " + 11);
+
+            }
+
+            break;
+
+    }
+
+    console.log("outcome: " + outcome);
+
+    console.log("result: " + result);
+
+    outcomeControl.value = outcome;
+
+    resultGivenControl.value = result;
+
 }

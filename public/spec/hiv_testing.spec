@@ -53,4 +53,8 @@ Q.1.30. First Pass Test Kit 2 Testing Duration (Minutes) [pos:: 29$$ id:: fp_tes
 Q.1.31. Immediate Repeat Test Kit 1 Testing Duration (Minutes) [pos:: 30$$ id:: im_test1_duration$$ condition:: false]
 Q.1.32. Immediate Repeat Test Kit 2 Testing Duration (Minutes) [pos:: 31$$ id:: im_test2_duration$$ condition:: false]
 
-Q.1.33. Client Registration Summary [pos:: 32$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.33. Outcome Summary [pos:: 32$$ id:: outcome_summary$$ condition:: false]
+
+Q.1.34. Result Given To Client [pos:: 33$$ id:: result_given_to_client$$ condition:: false]
+
+Q.1.35. Client Registration Summary [pos:: 34$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
