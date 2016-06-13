@@ -664,7 +664,7 @@ function saveData(data, callback) {
                                 case "immediate repeat test kit 1 dispatch id":
 
                                     dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 1 Dispatch ID"];
-k;
+                                    k;
 
                                 case "immediate repeat test kit 2 dispatch id":
 
@@ -685,7 +685,7 @@ k;
                                 userId: userId
                             }
 
-                            saveConsumption(iData, undefined, function() {
+                            saveConsumption(iData, undefined, function () {
 
                                 iOCallback();
 

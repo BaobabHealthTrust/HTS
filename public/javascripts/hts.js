@@ -2775,10 +2775,6 @@ function evaluateReferral() {
     testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "HIV TESTING", "Result Given to Client")).trim();
 
-    console.log(riskCategory);
-
-    console.log(testResult);
-
     if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
         "new negative") {
 
@@ -2825,8 +2821,14 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
                 (7 * 4))))).format("YYYY-mm-dd"))
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 4 * 2))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 4))))).format("YYYY-mm-dd");
 
         }
 
@@ -2845,8 +2847,14 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52 * 2))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");
 
         }
 
@@ -2864,8 +2872,11 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
-                (7 * 52))))).format("YYYY-mm-dd"))
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 45))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 45))))).format("YYYY-mm-dd");
 
         }
 
@@ -2883,8 +2894,14 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52 * 2))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");
 
         }
 
@@ -2902,8 +2919,11 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("startweekdate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");
 
         }
 
