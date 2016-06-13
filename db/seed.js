@@ -628,6 +628,11 @@ async.each(commands, function (cmd, callback) {
                         "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
                         "person_attribute_type WHERE name = \"HTC Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
                         "NOW(), \"" + uuid.v1() + "\")'"
+                },
+                {
+                    message: "Creating 'HTS Reporting Table' ...",
+                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                        " " + connection.database + " < htc_triggers.sql"
                 }
             ];
 
