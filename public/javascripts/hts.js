@@ -445,6 +445,9 @@ function updatePregnancy() {
 
 function addDiv(text, checkText, parent, bold) {
 
+    if (!text || !checkText || !parent)
+        return;
+
     var div = document.createElement("div");
     div.style.paddingTop = "10px";
     div.style.borderRadius = "30px";
@@ -1082,7 +1085,7 @@ function evalCondition(pos) {
 
         case 6:
 
-            if((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+            if ((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
                 "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "M")) {
 
                 result = true;
@@ -1093,7 +1096,7 @@ function evalCondition(pos) {
 
         case 7:
 
-            if(["FP", "FNP"].indexOf((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM",
+            if (["FP", "FNP"].indexOf((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM",
                 (new Date()).format("YYYY-mm-dd"), "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim())) >= 0) {
 
                 result = true;
@@ -2754,7 +2757,7 @@ function showDetailsSummary() {
 
 }
 
-function evaluateReferral(){
+function evaluateReferral() {
 
     var riskCategory;
 
@@ -2763,7 +2766,7 @@ function evaluateReferral(){
     var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "FP");
 
-    if(__$("risk_category")) {
+    if (__$("risk_category")) {
 
         riskCategory = __$("risk_category").value.trim();
 
@@ -2776,16 +2779,16 @@ function evaluateReferral(){
 
     console.log(testResult);
 
-    if(riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
+    if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
         "new negative") {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "No Re-Test Needed";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").setAttribute("condition", false);
 
@@ -2793,15 +2796,15 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("No Re-Test Needed!");
 
-    } else if(testResult.trim().toLowerCase() == "confirmed positive") {
+    } else if (testResult.trim().toLowerCase() == "confirmed positive") {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "No Re-Test Needed";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").setAttribute("condition", false);
 
@@ -2809,16 +2812,16 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("No Re-Test Needed!");
 
-    } else if(riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
+    } else if (riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
         (testResult.trim().toLowerCase() == "new inconclusive") || (testResult.trim().toLowerCase() == "new negative")) {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "Re-Test";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").removeAttribute("condition");
 
@@ -2829,16 +2832,16 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks!");
 
-    } else if(riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
+    } else if (riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
         (testResult.trim().toLowerCase() == "new negative")) {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "Re-Test";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").removeAttribute("condition");
 
@@ -2849,15 +2852,15 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("Book appointment for Re-Test after 12 months!");
 
-    } else if(pregnant && testResult.trim().toLowerCase() == "new negative") {
+    } else if (pregnant && testResult.trim().toLowerCase() == "new negative") {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "Re-Test";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").removeAttribute("condition");
 
@@ -2868,15 +2871,15 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy!");
 
-    } else if(testResult.trim().toLowerCase() == "new exposed infant") {
+    } else if (testResult.trim().toLowerCase() == "new exposed infant") {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "Re-Test";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").removeAttribute("condition");
 
@@ -2887,15 +2890,15 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("Book appointment for Re-Test when child at 12-24 months!");
 
-    } else if(testResult.trim().toLowerCase() == "new positive") {
+    } else if (testResult.trim().toLowerCase() == "new positive") {
 
-        if(__$("referral")) {
+        if (__$("referral")) {
 
             __$("referral").value = "Confirmatory Test at HIV Clinic";
 
         }
 
-        if(__$("appointment")) {
+        if (__$("appointment")) {
 
             __$("appointment").removeAttribute("condition");
 
@@ -2906,6 +2909,379 @@ function evaluateReferral(){
 
         window.parent.dashboard.showMsg("Book appointment for Confirmatory Testing at the HIV Clinic " +
             "<u>as soon as possible</u>!");
+
+    }
+
+}
+
+function showAssessmentSummary() {
+
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).style.overflow = "auto";
+
+        var table = document.createElement("table");
+        table.style.borderCollapse = "collapse";
+        table.style.margin = "auto";
+        table.style.marginTop = "20px";
+        table.style.color = "#333";
+        table.cellPadding = "10px";
+        table.border = 0;
+
+        __$("inputFrame" + tstCurrentPage).appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Client Risk Category";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.padding = "10px";
+        th.style.verticalAlign = "top";
+        th.colSpan = 4;
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Referral for Re-Testing";
+        th.style.padding = "10px";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+        th.colSpan = 4;
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Number of Items<br />Given";
+        th.style.padding = "10px";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+        th.colSpan = 3;
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Comments";
+        th.style.padding = "10px";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        th.style.borderLeft = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("Low<i style='color: #eee'>_</i>Risk", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("On-going<i style='color: #eee'>_</i>Risk", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("High<i style='color: #eee'>_</i>Risk<i style='color: #eee'>_</i>Event<i style='color: #eee'>_</i>" +
+            "in<br/>last<i style='color: #eee'>_</i>3<i style='color: #eee'>_</i>months", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("Risk<i style='color: #eee'>_</i>assessment<br/>Not<i style='color: #eee'>_</i>Done", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("No<i style='color: #eee'>_</i>Re-Test<i style='color: #eee'>_</i>needed", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("Re-Test", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("Confirmatory<i style='color: #eee'>_</i>Test<br/>at<i style='color: #eee'>_</i>HIV" +
+            "<i style='color: #eee'>_</i>Clinic", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.rowSpan = 3;
+        td.style.verticalAlign = "bottom";
+        td.innerHTML = "Appointment<br/>Date Given";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.verticalAlign = "top";
+        td.align = "center";
+        td.innerHTML = "<b>HTC<br/>Family<br/>Slips</b>";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.verticalAlign = "top";
+        td.colSpan = 2;
+        td.align = "center";
+        td.innerHTML = "<b>Condoms</b>";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.verticalAlign = "bottom";
+        td.innerHTML = "<i>Specimen ID for DBS<br />samples sent to lab.</i>";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.verticalAlign = "bottom";
+        td.align = "center";
+        td.rowSpan = 2;
+        td.innerHTML = "<i>1 Slip for each<br/>partner+ each<br/>U5 child with<br/>unk. status</i>";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 2;
+
+        tr.appendChild(td);
+
+        verticalText("Male", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.rowSpan = 2;
+
+        tr.appendChild(td);
+
+        verticalText("Female", td);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.verticalAlign = "top";
+        td.rowSpan = 2;
+        td.innerHTML = "<i>Follow-up outcome for<br/>clients referred, etc.</i>";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+        var risksMapping = {
+            "Low Risk": "Low",
+            "On-going Risk": "Ong",
+            "High Risk Event in Last 3 months": "Hi",
+            "Risk assessment Not Done": "ND",
+            "": ""
+        };
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Low", risksMapping[__$("risk_category").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Ong", risksMapping[__$("risk_category").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Hi", risksMapping[__$("risk_category").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("ND", risksMapping[__$("risk_category").value.trim()], td);
+
+        var referralMapping = {
+            "No Re-Test Needed": "NoT",
+            "Re-Test": "RoT",
+            "Confirmatory Test at HIV Clinic": "CT",
+            "": ""
+        };
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("NoT", referralMapping[__$("referral").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("RoT", referralMapping[__$("referral").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("CT", referralMapping[__$("referral").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        td.innerHTML = (__$("appointment").value.trim().length > 0 ? __$("appointment").value.trim() : "");
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.align = "center";
+
+        td.innerHTML = (__$("1.4").value.trim().length > 0 ? __$("1.4").value.trim() : 0);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.align = "center";
+
+        td.innerHTML = (__$("1.5").value.trim().length > 0 ? __$("1.5").value.trim() : 0);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.align = "center";
+
+        td.innerHTML = (__$("1.6").value.trim().length > 0 ? __$("1.6").value.trim() : 0);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        td.innerHTML = (__$("1.7").value.trim().length > 0 ? __$("1.7").value.trim() : "");
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
 
     }
 

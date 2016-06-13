@@ -17,4 +17,4 @@ Q.1.6. Female Condoms [pos:: 5$$ condition:: evalCondition(7)$$ field_type:: num
 
 Q.1.7. Comments [pos:: 6$$ optional:: true$$ field_type:: textarea]
 
-Q.1.8. Summary [pos:: 7$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.8. Summary [pos:: 7$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard$$ tt_onLoad:: showAssessmentSummary()]
