@@ -445,7 +445,7 @@ function updatePregnancy() {
 
 function addDiv(text, checkText, parent, bold) {
 
-    if (!text || !checkText || !parent)
+    if (!text || !parent)
         return;
 
     var div = document.createElement("div");
@@ -961,8 +961,6 @@ function saveConsumption(dispatch_id) {
     }
 
     ajaxPostRequest("/save_item", data, function (result) {
-
-        console.log(result);
 
     })
 
