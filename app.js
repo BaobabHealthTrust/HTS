@@ -308,14 +308,49 @@ function voidConcept(data, callback) {
 
     console.log(Object.keys(data));
 
-    var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
-        "'), date_voided = NOW(), void_reason = 'Patient dashboard data void.' WHERE uuid = '" + data.uuid + "'";
+    var sql = "SELECT encounter_id FROM obs WHERE voided = 0 AND uuid = '" + data.uuid + "'";
 
-    queryRaw(sql, function (obs) {
+    queryRaw(sql, function (encounter) {
 
-        console.log(obs);
+        var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
+            "'), date_voided = NOW(), void_reason = 'Patient dashboard data void.' WHERE uuid = '" + data.uuid + "'";
 
-        callback();
+        queryRaw(sql, function (obs) {
+
+            console.log(obs);
+
+            var sql = "SELECT COUNT(obs_id) AS total FROM obs WHERE voided = 0 AND encounter_id = '" +
+                encounter[0][0].encounter_id + "'";
+
+            console.log(sql);
+
+            queryRaw(sql, function (total) {
+
+                console.log(total);
+
+                if (total[0][0].total <= 0) {
+
+                    var sql = "UPDATE encounter SET voided = 1, void_reason = 'No more existing active obs', " +
+                        "voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
+                        "'), date_voided = NOW() WHERE encounter_id = '" + encounter[0][0].encounter_id + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (encounter) {
+
+                        callback();
+
+                    });
+
+                } else {
+
+                    callback();
+
+                }
+
+            })
+
+        });
 
     });
 
@@ -1085,11 +1120,11 @@ function updateUserView(data) {
                         async.each(programs, function (program, iCallback) {
 
                             queryJoinData('encounter', 'encounter_type', 'encounter.encounter_type',
-                                'encounter_type.encounter_type_id', ['encounter_id', 'encounter_datetime', 'name',
+                                'encounter_type.encounter_type_id', ['encounter_id', 'encounter_datetime', 'name', 'voided',
                                     'encounter.uuid'],
                                 {patient_program_id: program.patient_program_id, voided: 0}, function (encounters) {
 
-                                    // console.log(encounters);
+                                    console.log(encounters);
 
                                     if (!collection[program.name]) {
 
@@ -3406,7 +3441,7 @@ app.post('/update_password', function (req, res) {
 
 })
 
-app.get('/report_q_sex_pregnancy_m', function(req, res) {
+app.get('/report_q_sex_pregnancy_m', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3426,7 +3461,7 @@ app.get('/report_q_sex_pregnancy_m', function(req, res) {
 
 })
 
-app.get('/report_q_sex_pregnancy_fnp', function(req, res) {
+app.get('/report_q_sex_pregnancy_fnp', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3446,7 +3481,7 @@ app.get('/report_q_sex_pregnancy_fnp', function(req, res) {
 
 })
 
-app.get('/report_q_sex_pregnancy_fp', function(req, res) {
+app.get('/report_q_sex_pregnancy_fp', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3466,7 +3501,7 @@ app.get('/report_q_sex_pregnancy_fp', function(req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lnev', function(req, res) {
+app.get('/report_q_last_hiv_test_lnev', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3486,7 +3521,7 @@ app.get('/report_q_last_hiv_test_lnev', function(req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_ln', function(req, res) {
+app.get('/report_q_last_hiv_test_ln', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3506,7 +3541,7 @@ app.get('/report_q_last_hiv_test_ln', function(req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lp', function(req, res) {
+app.get('/report_q_last_hiv_test_lp', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3526,7 +3561,7 @@ app.get('/report_q_last_hiv_test_lp', function(req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lex', function(req, res) {
+app.get('/report_q_last_hiv_test_lex', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3546,7 +3581,7 @@ app.get('/report_q_last_hiv_test_lex', function(req, res) {
 
 })
 
-app.get('/report_q_last_hiv_test_lin', function(req, res) {
+app.get('/report_q_last_hiv_test_lin', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3566,7 +3601,7 @@ app.get('/report_q_last_hiv_test_lin', function(req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_n', function(req, res) {
+app.get('/report_q_outcome_summary_n', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3586,7 +3621,7 @@ app.get('/report_q_outcome_summary_n', function(req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_p', function(req, res) {
+app.get('/report_q_outcome_summary_p', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3606,7 +3641,7 @@ app.get('/report_q_outcome_summary_p', function(req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_t12n', function(req, res) {
+app.get('/report_q_outcome_summary_t12n', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3626,7 +3661,7 @@ app.get('/report_q_outcome_summary_t12n', function(req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_t12p', function(req, res) {
+app.get('/report_q_outcome_summary_t12p', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3646,7 +3681,7 @@ app.get('/report_q_outcome_summary_t12p', function(req, res) {
 
 })
 
-app.get('/report_q_outcome_summary_t12d', function(req, res) {
+app.get('/report_q_outcome_summary_t12d', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3666,7 +3701,7 @@ app.get('/report_q_outcome_summary_t12d', function(req, res) {
 
 })
 
-app.get('/report_q_age_group_0_11m', function(req, res) {
+app.get('/report_q_age_group_0_11m', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3686,7 +3721,7 @@ app.get('/report_q_age_group_0_11m', function(req, res) {
 
 })
 
-app.get('/report_q_age_group_1_14y', function(req, res) {
+app.get('/report_q_age_group_1_14y', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3706,7 +3741,7 @@ app.get('/report_q_age_group_1_14y', function(req, res) {
 
 })
 
-app.get('/report_q_age_group_15_24y', function(req, res) {
+app.get('/report_q_age_group_15_24y', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3726,7 +3761,7 @@ app.get('/report_q_age_group_15_24y', function(req, res) {
 
 })
 
-app.get('/report_q_age_group_25p', function(req, res) {
+app.get('/report_q_age_group_25p', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3746,7 +3781,7 @@ app.get('/report_q_age_group_25p', function(req, res) {
 
 })
 
-app.get('/report_q_partner_present_yes', function(req, res) {
+app.get('/report_q_partner_present_yes', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3766,7 +3801,7 @@ app.get('/report_q_partner_present_yes', function(req, res) {
 
 })
 
-app.get('/report_q_partner_present_no', function(req, res) {
+app.get('/report_q_partner_present_no', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3786,7 +3821,7 @@ app.get('/report_q_partner_present_no', function(req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_nn', function(req, res) {
+app.get('/report_q_result_given_to_client_nn', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3806,7 +3841,7 @@ app.get('/report_q_result_given_to_client_nn', function(req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_np', function(req, res) {
+app.get('/report_q_result_given_to_client_np', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3826,7 +3861,7 @@ app.get('/report_q_result_given_to_client_np', function(req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_nex', function(req, res) {
+app.get('/report_q_result_given_to_client_nex', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3846,7 +3881,7 @@ app.get('/report_q_result_given_to_client_nex', function(req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_ni', function(req, res) {
+app.get('/report_q_result_given_to_client_ni', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3866,7 +3901,7 @@ app.get('/report_q_result_given_to_client_ni', function(req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_cp', function(req, res) {
+app.get('/report_q_result_given_to_client_cp', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3886,7 +3921,7 @@ app.get('/report_q_result_given_to_client_cp', function(req, res) {
 
 })
 
-app.get('/report_q_result_given_to_client_in', function(req, res) {
+app.get('/report_q_result_given_to_client_in', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3906,7 +3941,7 @@ app.get('/report_q_result_given_to_client_in', function(req, res) {
 
 })
 
-app.get('/report_q_partner_htc_slips_given_slips', function(req, res) {
+app.get('/report_q_partner_htc_slips_given_slips', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3926,7 +3961,7 @@ app.get('/report_q_partner_htc_slips_given_slips', function(req, res) {
 
 })
 
-app.get('/report_q_htc_access_type_pitc', function(req, res) {
+app.get('/report_q_htc_access_type_pitc', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3946,7 +3981,7 @@ app.get('/report_q_htc_access_type_pitc', function(req, res) {
 
 })
 
-app.get('/report_q_htc_access_type_frs', function(req, res) {
+app.get('/report_q_htc_access_type_frs', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -3966,7 +4001,7 @@ app.get('/report_q_htc_access_type_frs', function(req, res) {
 
 })
 
-app.get('/report_q_htc_access_type_vct', function(req, res) {
+app.get('/report_q_htc_access_type_vct', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
