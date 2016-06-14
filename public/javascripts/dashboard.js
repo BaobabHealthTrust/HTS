@@ -66,7 +66,7 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var dashboard = ({
 
-    gender: "F",
+    gender: null,
 
     __$: function (id) {
         return document.getElementById(id);
@@ -99,13 +99,13 @@ var dashboard = ({
     },
 
     /*
-    *   Method to get the value assigned to a specific concept for a given encounter on a given visit for a
-    *   specific program
-    *
-    * */
-    queryActiveObs: function(program, visit, encounter, concept) {
+     *   Method to get the value assigned to a specific concept for a given encounter on a given visit for a
+     *   specific program
+     *
+     * */
+    queryActiveObs: function (program, visit, encounter, concept) {
 
-        if(this.data && this.data.data && this.data.data.programs && Object.keys(this.data.data.programs).length > 0) {
+        if (this.data && this.data.data && this.data.data.programs && Object.keys(this.data.data.programs).length > 0) {
 
             var patientPrograms = this.data.data.programs[program].patient_programs;
 
@@ -113,17 +113,17 @@ var dashboard = ({
 
             var pKeys = Object.keys(patientPrograms);
 
-            for(var i = 0; i < pKeys.length; i++) {
+            for (var i = 0; i < pKeys.length; i++) {
 
                 var key = pKeys[i];
 
-                if(!patientPrograms[key].date_completed) {
+                if (!patientPrograms[key].date_completed) {
 
-                    if(patientPrograms[key].visits && patientPrograms[key].visits[visit]) {
+                    if (patientPrograms[key].visits && patientPrograms[key].visits[visit]) {
 
-                        if(patientPrograms[key].visits[visit][encounter]) {
+                        if (patientPrograms[key].visits[visit][encounter]) {
 
-                            for(var j = 0; j < patientPrograms[key].visits[visit][encounter].length; j++) {
+                            for (var j = 0; j < patientPrograms[key].visits[visit][encounter].length; j++) {
 
                                 if (patientPrograms[key].visits[visit][encounter][j][concept]) {
 
@@ -148,6 +148,44 @@ var dashboard = ({
             return null;
 
         }
+
+    },
+
+    queryExistingEncounters: function (program, visit, encounter) {
+
+        if (this.data && this.data.data && this.data.data.programs && Object.keys(this.data.data.programs).length > 0) {
+
+            var patientPrograms = this.data.data.programs[program].patient_programs;
+
+            var result = false;
+
+            var pKeys = Object.keys(patientPrograms);
+
+            for (var i = 0; i < pKeys.length; i++) {
+
+                var key = pKeys[i];
+
+                if (!patientPrograms[key].date_completed) {
+
+                    if (patientPrograms[key].visits && patientPrograms[key].visits[visit]) {
+
+                        if (patientPrograms[key].visits[visit][encounter]) {
+
+                            result = true;
+
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return result;
 
     },
 
@@ -433,6 +471,9 @@ var dashboard = ({
         this.addCSSRule(style, ".gray:hover", "background-image: -o-linear-gradient(top, #333, #ccc)");
         this.addCSSRule(style, ".gray:hover", "background-image: linear-gradient(to bottom, #333, #ccc)");
         this.addCSSRule(style, ".gray:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#333, endColorstr=#ccc)");
+
+        this.addCSSRule(style, ".disabled", "background-color: #ccc");
+        this.addCSSRule(style, ".disabled", "color: #999");
 
         var table = document.createElement("table");
         table.width = "100%";
@@ -1222,7 +1263,7 @@ var dashboard = ({
             dashboard.__$("primary_id").innerHTML = (dashboard.data["data"]["identifiers"]['National id'] ?
                 dashboard.data["data"]["identifiers"]['National id']["identifier"] : "&nbsp;");
 
-            if(dashboard.data["data"]["identifiers"]['National id']) {
+            if (dashboard.data["data"]["identifiers"]['National id']) {
 
                 dashboard.setCookie("client_identifier", dashboard.data["data"]["identifiers"]['National id'], 0.3333);
 
@@ -1290,15 +1331,96 @@ var dashboard = ({
 
         }
 
-        if(dashboard.selectedVisit) {
+        if (dashboard.selectedVisit) {
 
             dashboard.$(dashboard.selectedVisit).click();
 
         }
 
-        if(dashboard.activeTab) {
+        if (dashboard.activeTab) {
 
             dashboard.activeTab.click();
+
+        }
+
+        dashboard.checkActiveTabs();
+
+    },
+
+    checkActiveTabs: function () {
+
+        if (dashboard.selectedProgram != null) {
+
+            var tabs = dashboard.modules[dashboard.selectedProgram].tabs;
+
+            if (tabs) {
+
+                var keys = Object.keys(tabs);
+
+                for (var i = 0; i < keys.length; i++) {
+
+                    var key = keys[i];
+
+                    if (tabs[key].concept) {
+
+                        // program, visit, encounter, concept
+                        var exists = dashboard.queryActiveObs(
+                            dashboard.modules[dashboard.selectedProgram].program,
+                            (new Date()).format("YYYY-mm-dd"),
+                            tabs[key].encounter,
+                            tabs[key].concept
+                        )
+
+                        if (exists != null) {
+
+                            if (dashboard.$(key)) {
+
+                                dashboard.$(key).className = "disabled";
+
+                            }
+
+                        } else {
+
+                            if (dashboard.$(key)) {
+
+                                dashboard.$(key).removeAttribute("class");
+
+                            }
+
+                        }
+
+                    } else if (tabs[key].encounter) {
+
+                        // program, visit, encounter
+                        var exists = dashboard.queryExistingEncounters(
+                            dashboard.modules[dashboard.selectedProgram].program,
+                            (new Date()).format("YYYY-mm-dd"),
+                            tabs[key].encounter
+                        )
+
+                        if (exists) {
+
+                            if (dashboard.$(key)) {
+
+                                dashboard.$(key).className = "disabled";
+
+                            }
+
+                        } else {
+
+                            if (dashboard.$(key)) {
+
+                                dashboard.$(key).removeAttribute("class");
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
 
         }
 
@@ -1362,6 +1484,7 @@ var dashboard = ({
 
                 var li = document.createElement("li");
                 li.innerHTML = keys[i];
+                li.id = keys[i];
                 li.style.padding = "10px";
                 li.style.paddingTop = "15px";
                 li.style.paddingBottom = "15px";
@@ -1392,6 +1515,9 @@ var dashboard = ({
 
                 li.onclick = function () {
 
+                    if (this.className && this.className.match(/disabled/))
+                        return;
+
                     window.location = this.getAttribute("path");
 
                 }
@@ -1410,7 +1536,7 @@ var dashboard = ({
             dashboard.__$("primary_id").innerHTML = (dashboard.data["data"]["identifiers"][sourceData["identifiers"][0]] ?
                 dashboard.data["data"]["identifiers"][sourceData["identifiers"][0]]["identifier"] : "&nbsp;");
 
-            if(dashboard.data["data"]["identifiers"]['National id']) {
+            if (dashboard.data["data"]["identifiers"]['National id']) {
 
                 dashboard.setCookie("client_identifier", dashboard.data["data"]["identifiers"]['National id'], 0.3333);
 
@@ -1425,7 +1551,7 @@ var dashboard = ({
             dashboard.__$("other_id").innerHTML = (dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]] ?
                 dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]]["identifier"] : "&nbsp;");
 
-            if(!dashboard.data["data"]["identifiers"]['National id'] &&
+            if (!dashboard.data["data"]["identifiers"]['National id'] &&
                 dashboard.data["data"]["identifiers"][sourceData["identifiers"][1]]) {
 
                 dashboard.setCookie("client_identifier",
@@ -1605,6 +1731,8 @@ var dashboard = ({
             }
 
         }
+
+        dashboard.checkActiveTabs();
 
     },
 
@@ -1811,7 +1939,7 @@ var dashboard = ({
 
                     td.style.textAlign = "center";
 
-                } else if(j == 3) {
+                } else if (j == 3) {
 
                     var img = document.createElement("img");
                     img.setAttribute("src", dashboard.icoClose);
@@ -1832,7 +1960,7 @@ var dashboard = ({
 
                     td.style.paddingRight = "10px";
 
-                    td.onclick = function() {
+                    td.onclick = function () {
 
                         dashboard.showConfirmMsg("Do you really want to delete this entry?", "Confirm",
                                 "javascript:dashboard.voidConcept('" + this.getAttribute("uuid") + "')");
@@ -2011,7 +2139,7 @@ var dashboard = ({
 
     showMeOnly: function (target, iTarget) {
 
-        if(target.style.height == "200px") {
+        if (target.style.height == "200px") {
 
             target.style.width = "95%";
 
@@ -2025,7 +2153,7 @@ var dashboard = ({
 
             var images = iTarget.getElementsByClassName("closeButton");
 
-            for(var i = 0; i < images.length; i++) {
+            for (var i = 0; i < images.length; i++) {
 
                 images[i].style.visibility = "visible";
 
@@ -2045,7 +2173,7 @@ var dashboard = ({
 
             var images = iTarget.getElementsByClassName("closeButton");
 
-            for(var i = 0; i < images.length; i++) {
+            for (var i = 0; i < images.length; i++) {
 
                 images[i].style.visibility = "hidden";
 
@@ -2173,9 +2301,9 @@ var dashboard = ({
 
     },
 
-    voidConcept: function(uuid) {
+    voidConcept: function (uuid) {
 
-        if(socket && uuid) {
+        if (socket && uuid) {
             var patient_id = window.location.href.match(/\/([^\/]+)$/)[1];
 
             var data = {
