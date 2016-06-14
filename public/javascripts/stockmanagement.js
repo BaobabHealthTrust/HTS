@@ -811,9 +811,9 @@ var stock = ({
 
     unloadChild: function () {
 
-        if (stock.$("navPanel")) {
+        if (stock.$("stock.navPanel")) {
 
-            document.body.removeChild(stock.$("navPanel"));
+            document.body.removeChild(stock.$("stock.navPanel"));
 
         }
 
@@ -1607,9 +1607,9 @@ var stock = ({
 
     submitData: function (data) {
 
-        if (stock.$("navPanel")) {
+        if (stock.$("stock.navPanel")) {
 
-            document.body.removeChild(stock.$("navPanel"));
+            document.body.removeChild(stock.$("stock.navPanel"));
 
         }
 
@@ -1630,9 +1630,9 @@ var stock = ({
 
     navPanel: function (content) {
 
-        if (stock.$("navPanel")) {
+        if (stock.$("stock.navPanel")) {
 
-            document.body.removeChild(stock.$("navPanel"));
+            document.body.removeChild(stock.$("stock.navPanel"));
 
         } else {
 
@@ -1643,7 +1643,7 @@ var stock = ({
             divPanel.style.width = "100%";
             divPanel.style.height = "100%";
             divPanel.style.backgroundColor = "#fff";
-            divPanel.id = "navPanel";
+            divPanel.id = "stock.navPanel";
             divPanel.style.zIndex = 800;
 
             document.body.appendChild(divPanel);

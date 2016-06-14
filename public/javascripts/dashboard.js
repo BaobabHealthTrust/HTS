@@ -856,9 +856,9 @@ var dashboard = ({
 
         div4.onclick = function () {
 
-            if (dashboard.$("navPanel")) {
+            if (dashboard.$("dashboard.navPanel")) {
 
-                document.body.removeChild(dashboard.$("navPanel"));
+                document.body.removeChild(dashboard.$("dashboard.navPanel"));
 
             }
 
@@ -2216,9 +2216,9 @@ var dashboard = ({
 
     navPanel: function (path) {
 
-        if (dashboard.__$("navPanel")) {
+        if (dashboard.__$("dashboard.navPanel")) {
 
-            document.body.removeChild(dashboard.__$("navPanel"));
+            document.body.removeChild(dashboard.__$("dashboard.navPanel"));
 
         } else {
 
@@ -2230,7 +2230,7 @@ var dashboard = ({
             divPanel.style.height = (window.innerHeight - 130) + "px";
             divPanel.style.backgroundColor = "#fff";
             divPanel.style.borderTop = "1px solid #000";
-            divPanel.id = "navPanel";
+            divPanel.id = "dashboard.navPanel";
 
             document.body.appendChild(divPanel);
 
@@ -2277,9 +2277,9 @@ var dashboard = ({
 
     submitData: function (data) {
 
-        if (dashboard.__$("navPanel")) {
+        if (dashboard.__$("dashboard.navPanel")) {
 
-            document.body.removeChild(dashboard.__$("navPanel"));
+            document.body.removeChild(dashboard.__$("dashboard.navPanel"));
 
         }
 
@@ -2592,9 +2592,9 @@ var dashboard = ({
                             dashboard.__$("tasks").style.height = (window.innerHeight - 270) + "px";
                         }
 
-                        if (dashboard.__$("navPanel")) {
+                        if (dashboard.__$("dashboard.navPanel")) {
 
-                            dashboard.__$("navPanel").style.height = (window.innerHeight - 130) + "px";
+                            dashboard.__$("dashboard.navPanel").style.height = (window.innerHeight - 130) + "px";
 
                         }
 

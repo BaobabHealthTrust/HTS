@@ -1075,9 +1075,9 @@ var landing = ({
 
     navPanel: function (path, custom) {
 
-        if (landing.$("navPanel")) {
+        if (landing.$("landing.navPanel")) {
 
-            document.body.removeChild(landing.$("navPanel"));
+            document.body.removeChild(landing.$("landing.navPanel"));
 
         } else {
 
@@ -1088,7 +1088,7 @@ var landing = ({
             divPanel.style.width = "100%";
             divPanel.style.height = "100%";
             divPanel.style.backgroundColor = "#fff";
-            divPanel.id = "navPanel";
+            divPanel.id = "landing.navPanel";
             divPanel.style.zIndex = 800;
             divPanel.style.overflow = "hidden";
 
@@ -1143,9 +1143,9 @@ var landing = ({
 
     submitData: function (data) {
 
-        if (landing.$("navPanel")) {
+        if (landing.$("landing.navPanel")) {
 
-            document.body.removeChild(landing.$("navPanel"));
+            document.body.removeChild(landing.$("landing.navPanel"));
 
         }
 
