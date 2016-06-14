@@ -436,9 +436,9 @@ var user = ({
 
     navPanel: function (content) {
 
-        if (user.$("navPanel")) {
+        if (user.$("user.navPanel")) {
 
-            document.body.removeChild(user.$("navPanel"));
+            document.body.removeChild(user.$("user.navPanel"));
 
         } else {
 
@@ -449,7 +449,7 @@ var user = ({
             divPanel.style.width = "100%";
             divPanel.style.height = "100%";
             divPanel.style.backgroundColor = "#fff";
-            divPanel.id = "navPanel";
+            divPanel.id = "user.navPanel";
             divPanel.style.zIndex = 800;
             divPanel.style.overflow = "hidden";
 
@@ -501,9 +501,9 @@ var user = ({
 
                 var json = JSON.parse(sid);
 
-                if (user.$("navPanel")) {
+                if (user.$("user.navPanel")) {
 
-                    document.body.removeChild(user.$("navPanel"));
+                    document.body.removeChild(user.$("user.navPanel"));
 
                 }
 
@@ -517,9 +517,9 @@ var user = ({
 
                 var json = JSON.parse(sid);
 
-                if (user.$("navPanel")) {
+                if (user.$("user.navPanel")) {
 
-                    document.body.removeChild(user.$("navPanel"));
+                    document.body.removeChild(user.$("user.navPanel"));
 
                 }
 
@@ -535,9 +535,9 @@ var user = ({
 
                 var json = JSON.parse(sid);
 
-                if (user.$("navPanel")) {
+                if (user.$("user.navPanel")) {
 
-                    document.body.removeChild(user.$("navPanel"));
+                    document.body.removeChild(user.$("user.navPanel"));
 
                 }
 
