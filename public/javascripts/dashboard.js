@@ -68,6 +68,10 @@ var dashboard = ({
 
     gender: null,
 
+    workflow: [],
+
+    standardWorkflow: [],
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -1038,7 +1042,7 @@ var dashboard = ({
 
         td3_2.appendChild(btnFinish);
 
-        dashboard.loadPrograms(dashboard['modules'], dashboard.__$("programs"));
+        dashboard.loadPrograms(dashboard.modules, dashboard.__$("programs"));
 
     },
 
@@ -1118,6 +1122,8 @@ var dashboard = ({
                 this.getElementsByTagName("table")[0].style.color = "#fff";
 
                 dashboard.selectedProgram = this.id;
+
+                dashboard.standardWorkflow = dashboard.modules[dashboard.selectedProgram].workflow;
 
                 dashboard.loadModule(this.getAttribute("label"), this.getAttribute("icon"), sourceData[this.getAttribute("label")]);
 
@@ -1351,6 +1357,14 @@ var dashboard = ({
 
         if (dashboard.selectedProgram != null) {
 
+            dashboard.workflow = [];
+
+            for(var  i = 0; i < dashboard.standardWorkflow.length; i++) {
+
+                dashboard.workflow.push(dashboard.standardWorkflow[i]);
+
+            }
+
             var tabs = dashboard.modules[dashboard.selectedProgram].tabs;
 
             if (tabs) {
@@ -1376,6 +1390,8 @@ var dashboard = ({
                             if (dashboard.$(key)) {
 
                                 dashboard.$(key).className = "disabled";
+
+                                dashboard.workflow.splice(dashboard.workflow.indexOf(key), 1);
 
                             }
 
@@ -1403,6 +1419,8 @@ var dashboard = ({
                             if (dashboard.$(key)) {
 
                                 dashboard.$(key).className = "disabled";
+
+                                dashboard.workflow.splice(dashboard.workflow.indexOf(key), 1);
 
                             }
 
@@ -2139,6 +2157,9 @@ var dashboard = ({
 
     showMeOnly: function (target, iTarget) {
 
+        if (!target)
+            return;
+
         if (target.style.height == "200px") {
 
             target.style.width = "95%";
@@ -2250,8 +2271,8 @@ var dashboard = ({
                 "src='" + "/javascripts/protocol_analyzer.js' defer></script><meta http\-equiv='content-type' " +
                 "content='text/html;charset=UTF-8'/><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
-                "\"javascript:window.parent.document.body.removeChild('navPanel')\";tt_cancel_show = " +
-                "\"javascript:window.parent.document.body.removeChild('navPanel')\";</script></head><body>";
+                "\"javascript:window.parent.document.body.removeChild('dashboard.navPanel')\";tt_cancel_show = " +
+                "\"javascript:window.parent.document.body.removeChild('dashboard.navPanel')\";</script></head><body>";
 
             html += "<div id='content'></div></body>";
 
@@ -2564,7 +2585,7 @@ var dashboard = ({
 
                 dashboard.ajaxRequest(modulesPath, function (modules) {
 
-                    dashboard['modules'] = modules;
+                    dashboard.modules = modules;
 
                     dashboard.buildPage();
 
