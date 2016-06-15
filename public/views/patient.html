@@ -32,6 +32,8 @@
 
             var json = JSON.parse(data);
 
+            var done = false;
+
             if(json.names) {
 
                 dashboard.data.data.names = json.names;
@@ -60,6 +62,14 @@
 
                 dashboard.data.data.programs = json.programs;
 
+            } else if(json.relationships) {
+
+                dashboard.data.data.relationships = json.relationships;
+
+            } else if(json.done) {
+
+                done = true;
+
             }
 
             var lastHIVTest = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM",
@@ -80,7 +90,7 @@
 
             }
 
-            dashboard.refreshDemographics();
+            dashboard.refreshDemographics(done);
 
         })
 
