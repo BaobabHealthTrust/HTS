@@ -1151,6 +1151,8 @@ var landing = ({
 
         data.data.userId = "admin";
 
+        data.data.token = landing.getCookie("token");
+
         landing.ajaxPostRequest(landing.settings.itemSavePath, data, function (sid) {
 
             console.log(sid)

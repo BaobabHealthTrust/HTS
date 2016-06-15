@@ -3170,6 +3170,8 @@ var dashboard = ({
 
             data.data.today = (new Date()).format("YYYY-mm-dd");
 
+            data.data.token = dashboard.getCookie("token");
+
             if (data.data.datatype == "relationship") {
 
                 console.log("in relationship");

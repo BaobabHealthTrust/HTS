@@ -1674,6 +1674,22 @@ var user = ({
 
                     user.login();
 
+                } else {
+
+                    user.ajaxRequest(user.settings.loginStatusCheckPath + user.getCookie("token"), function(data){
+
+                        var json = JSON.parse(data);
+
+                        console.log(json);
+
+                        if(!json.loggedIn) {
+
+                            user.login();
+
+                        }
+
+                    })
+
                 }
 
             })

@@ -1615,6 +1615,8 @@ var stock = ({
 
         data.data.userId = stock.getCookie("username");
 
+        data.data.token = stock.getCookie("token");
+
         stock.ajaxPostRequest(stock.settings.itemSavePath, data, function (sid) {
 
             var json = JSON.parse(sid);

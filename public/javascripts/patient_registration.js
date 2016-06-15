@@ -128,6 +128,8 @@ var patient = ({
 
         var data = form2js(document.getElementById('patient.form.main'), undefined, true);
 
+        data.data.token = patient.getCookie("token");
+
         patient.ajaxPostRequest(url, data, function (npid) {
 
             if (patient.settings.basePath != undefined) {
