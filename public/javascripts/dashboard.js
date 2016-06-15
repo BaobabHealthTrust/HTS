@@ -72,6 +72,8 @@ var dashboard = ({
 
     standardWorkflow: [],
 
+    ignoreAutoContinue: false,
+
     __$: function (id) {
         return document.getElementById(id);
     },
@@ -1030,8 +1032,29 @@ var dashboard = ({
         td3_2.style.padding = "10px";
         td3_2.colSpan = 3;
         td3_2.style.textAlign = "right";
+        td3_2.id = "navBtns";
 
         tr3.appendChild(td3_2);
+
+        var btnContinue = document.createElement("button");
+        btnContinue.className = "gray";
+        btnContinue.innerHTML = "Continue";
+        btnContinue.id = "btnContinue";
+
+        btnContinue.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            if (dashboard.workflow.length > 0) {
+
+                dashboard.$(dashboard.workflow[0]).click();
+
+            }
+
+        }
+
+        td3_2.appendChild(btnContinue);
 
         var btnFinish = document.createElement("button");
         btnFinish.className = "green";
@@ -1359,7 +1382,7 @@ var dashboard = ({
 
             dashboard.workflow = [];
 
-            for(var  i = 0; i < dashboard.standardWorkflow.length; i++) {
+            for (var i = 0; i < dashboard.standardWorkflow.length; i++) {
 
                 dashboard.workflow.push(dashboard.standardWorkflow[i]);
 
@@ -1440,11 +1463,39 @@ var dashboard = ({
 
             }
 
+            if (dashboard.workflow.length > 0) {
+
+                if (dashboard.$("btnContinue")) {
+
+                    dashboard.$("btnContinue").className = "blue";
+
+                } else {
+
+                    dashboard.$("btnContinue").className = "gray";
+
+                }
+
+                if (!dashboard.ignoreAutoContinue) {
+
+                    dashboard.ignoreAutoContinue = false;
+
+                    dashboard.$(dashboard.workflow[0]).click();
+
+                } else {
+
+                    dashboard.ignoreAutoContinue = false;
+
+                }
+
+            }
+
         }
 
     },
 
     loadModule: function (module, icon, sourceData) {
+
+        dashboard.ignoreAutoContinue = true;
 
         if (dashboard.__$("modApp")) {
 
@@ -1837,7 +1888,11 @@ var dashboard = ({
 
         colors = colors.shuffle();
 
-        var keys = Object.keys(sourceData["data"]["programs"][program]["patient_programs"][patientProgram]["visits"][visit]);
+        var keys = Object.keys((sourceData["data"]["programs"][program] && sourceData["data"]["programs"][program]["patient_programs"] &&
+            sourceData["data"]["programs"][program]["patient_programs"][patientProgram] &&
+            sourceData["data"]["programs"][program]["patient_programs"][patientProgram]["visits"] &&
+            sourceData["data"]["programs"][program]["patient_programs"][patientProgram]["visits"][visit] ?
+            sourceData["data"]["programs"][program]["patient_programs"][patientProgram]["visits"][visit] : {}));
 
         if (dashboard.__$("details")) {
 
@@ -2332,6 +2387,8 @@ var dashboard = ({
                 username: dashboard.getCookie("username"),
                 patient_id: patient_id.trim()
             }
+
+            dashboard.ignoreAutoContinue = true;
 
             socket.emit('void', data);
 
