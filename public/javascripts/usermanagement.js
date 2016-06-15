@@ -440,52 +440,50 @@ var user = ({
 
             document.body.removeChild(user.$("user.navPanel"));
 
-        } else {
+        }
 
-            var divPanel = document.createElement("div");
-            divPanel.style.position = "absolute";
-            divPanel.style.left = "0px";
-            divPanel.style.top = "0px";
-            divPanel.style.width = "100%";
-            divPanel.style.height = "100%";
-            divPanel.style.backgroundColor = "#fff";
-            divPanel.id = "user.navPanel";
-            divPanel.style.zIndex = 800;
-            divPanel.style.overflow = "hidden";
+        var divPanel = document.createElement("div");
+        divPanel.style.position = "absolute";
+        divPanel.style.left = "0px";
+        divPanel.style.top = "0px";
+        divPanel.style.width = "100%";
+        divPanel.style.height = "100%";
+        divPanel.style.backgroundColor = "#fff";
+        divPanel.id = "user.navPanel";
+        divPanel.style.zIndex = 800;
+        divPanel.style.overflow = "hidden";
 
-            document.body.appendChild(divPanel);
+        document.body.appendChild(divPanel);
 
-            var iframe = document.createElement("iframe");
-            iframe.id = "ifrMain";
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "1px solid #000";
+        var iframe = document.createElement("iframe");
+        iframe.id = "ifrMain";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "1px solid #000";
 
-            var url = window.location.href.match(/(.+)\/[^\/]+$/);
+        var url = window.location.href.match(/(.+)\/[^\/]+$/);
 
-            // var base = (url ? url[1] : "");
+        // var base = (url ? url[1] : "");
 
-            var base = user.settings.basePath;
+        var base = user.settings.basePath;
 
-            var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
-                "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><meta http-equiv='content-type' " +
-                "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
-                "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
-                "'/'; tt_cancel_show = '/';" +
-                "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
-                "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
+        var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
+            "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><meta http-equiv='content-type' " +
+            "content='text/html;charset=UTF-8'/><script src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+            "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
+            "'/'; tt_cancel_show = '/';" +
+            "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
+            "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
 
-            html += "<div id='content'>" + content + "</div></body>";
+        html += "<div id='content'>" + content + "</div></body>";
 
-            var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+        var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
 
-            iframe.setAttribute("src", page);
+        iframe.setAttribute("src", page);
 
-            divPanel.appendChild(iframe);
+        divPanel.appendChild(iframe);
 
-            iframe.onload = function () {
-
-            }
+        iframe.onload = function () {
 
         }
 
@@ -537,7 +535,7 @@ var user = ({
 
                 if (user.$("user.navPanel")) {
 
-                    document.body.removeChild(user.$("user.navPanel"));
+                    // document.body.removeChild(user.$("user.navPanel"));
 
                 }
 
@@ -1648,7 +1646,7 @@ var user = ({
 
             user.showMsg(json.message);
 
-            if(user.$("user.content")) {
+            if (user.$("user.content")) {
 
                 user.loadUsers(user.settings.usersListingPath, user.$("user.content"));
 
