@@ -335,6 +335,8 @@ function saveRelationship(params, callback) {
 
     var relationship_type_id;
 
+    var reverse_relationship_type_id;
+
     async.series([
 
         function (iCallback) {
@@ -352,7 +354,20 @@ function saveRelationship(params, callback) {
 
                 relationship_type_id = relationshipType[0][0].relationship_type_id;
 
-                iCallback();
+                    var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = '" + relationship[1].trim() +
+                        "' AND b_is_to_a = '" + relationship[0].trim() + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (reverseRelationshipType) {
+
+                        console.log(reverseRelationshipType[0][0].relationship_type_id);
+
+                        reverse_relationship_type_id = reverseRelationshipType[0][0].relationship_type_id;
+
+                        iCallback();
+
+                    });
 
             });
 
@@ -362,8 +377,9 @@ function saveRelationship(params, callback) {
 
             if (!data.relation_id || (data.relation_id && data.relation_id.trim().length <= 0)) {
 
-                var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES ('" + data.gender +
-                    "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES ('" +
+                    data.gender.substring(0,1).toUpperCase() + "', (SELECT user_id FROM users WHERE username = '" +
+                    data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                 console.log(sql);
 
@@ -461,7 +477,7 @@ function saveRelationship(params, callback) {
                 console.log(relationship[0].insertId);
 
                 var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                    "'" + relation_id + "', '" + relationship_type_id + "', '" + person_id + "', " +
+                    "'" + relation_id + "', '" + reverse_relationship_type_id + "', '" + person_id + "', " +
                     "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                 console.log(sql);
