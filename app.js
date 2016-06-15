@@ -267,7 +267,16 @@ io.on('connection', function (socket) {
 
             console.log(JSON.stringify(data));
 
-            saveData(data, function () {
+            saveData(data, function (unathorized) {
+
+                if (unathorized) {
+
+                    nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
+                        data.data.patient_id + '!');
+
+                    return;
+
+                }
 
                 // if (people[data.data.patient_id])
                 //    people[data.data.patient_id].data.programs = {};
@@ -286,7 +295,16 @@ io.on('connection', function (socket) {
 
             console.log(JSON.stringify(data));
 
-            voidConcept(data, function () {
+            voidConcept(data, function (unathorized) {
+
+                if (unathorized) {
+
+                    nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
+                        data.data.patient_id + '!');
+
+                    return;
+
+                }
 
                 isDirty[data.patient_id] = true;
 
@@ -300,8 +318,16 @@ io.on('connection', function (socket) {
 
             console.log(JSON.stringify(data));
 
-            saveRelationship(data, function () {
+            saveRelationship(data, function (unathorized) {
 
+                if (unathorized) {
+
+                    nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
+                        data.data.patient_id + '!');
+
+                    return;
+
+                }
                 // if (people[data.data.patient_id])
                 //    people[data.data.patient_id].data.programs = {};
 
@@ -327,32 +353,40 @@ function saveRelationship(params, callback) {
 
     var data = params.data;
 
-    console.log(data);
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var person_id;
+        if (!authentic) {
 
-    var relation_id;
+            return callback(true);
 
-    var relationship_type_id;
+        }
 
-    var reverse_relationship_type_id;
+        console.log(data);
 
-    async.series([
+        var person_id;
 
-        function (iCallback) {
+        var relation_id;
 
-            var relationship = data.relationship_type.split(" - ");
+        var relationship_type_id;
 
-            var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = '" + relationship[0].trim() +
-                "' AND b_is_to_a = '" + relationship[1].trim() + "'";
+        var reverse_relationship_type_id;
 
-            console.log(sql);
+        async.series([
 
-            queryRaw(sql, function (relationshipType) {
+            function (iCallback) {
 
-                console.log(relationshipType[0][0].relationship_type_id);
+                var relationship = data.relationship_type.split(" - ");
 
-                relationship_type_id = relationshipType[0][0].relationship_type_id;
+                var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = '" + relationship[0].trim() +
+                    "' AND b_is_to_a = '" + relationship[1].trim() + "'";
+
+                console.log(sql);
+
+                queryRaw(sql, function (relationshipType) {
+
+                    console.log(relationshipType[0][0].relationship_type_id);
+
+                    relationship_type_id = relationshipType[0][0].relationship_type_id;
 
                     var sql = "SELECT relationship_type_id FROM relationship_type WHERE a_is_to_b = '" + relationship[1].trim() +
                         "' AND b_is_to_a = '" + relationship[0].trim() + "'";
@@ -369,58 +403,60 @@ function saveRelationship(params, callback) {
 
                     });
 
-            });
+                });
 
-        },
+            },
 
-        function (iCallback) {
+            function (iCallback) {
 
-            if (!data.relation_id || (data.relation_id && data.relation_id.trim().length <= 0)) {
+                if (!data.relation_id || (data.relation_id && data.relation_id.trim().length <= 0)) {
 
-                var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES ('" +
-                    data.gender.substring(0,1).toUpperCase() + "', (SELECT user_id FROM users WHERE username = '" +
-                    data.userId + "'), NOW(), '" + uuid.v1() + "')";
-
-                console.log(sql);
-
-                queryRaw(sql, function (person) {
-
-                    person_id = person[0].insertId;
-
-                    var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
-                        "uuid) VALUES ('" + person_id + "', '" + data.first_name + "', '" + data.last_name + "', " +
-                        "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                    var sql = "INSERT INTO person (gender, creator, date_created, uuid) VALUES ('" +
+                        data.gender.substring(0, 1).toUpperCase() + "', (SELECT user_id FROM users WHERE username = '" +
+                        data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                     console.log(sql);
 
-                    queryRaw(sql, function (name) {
+                    queryRaw(sql, function (person) {
 
-                        var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES ('" + person_id +
-                            "', " + "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                        person_id = person[0].insertId;
+
+                        var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
+                            "uuid) VALUES ('" + person_id + "', '" + data.first_name + "', '" + data.last_name + "', " +
+                            "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                         console.log(sql);
 
-                        queryRaw(sql, function (address) {
+                        queryRaw(sql, function (name) {
 
-                            var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
-                                person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
+                            var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES ('" + person_id +
+                                "', " + "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                             console.log(sql);
 
-                            queryRaw(sql, function (patient) {
+                            queryRaw(sql, function (address) {
 
-                                relation_id = patient[0].insertId;
+                                var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
+                                    person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
 
-                                console.log(relation_id);
+                                console.log(sql);
 
-                                generateId(relation_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
-                                    function (response) {
+                                queryRaw(sql, function (patient) {
 
-                                        var npid = response;
+                                    relation_id = patient[0].insertId;
 
-                                        iCallback();
+                                    console.log(relation_id);
 
-                                    });
+                                    generateId(relation_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
+                                        function (response) {
+
+                                            var npid = response;
+
+                                            iCallback();
+
+                                        });
+
+                                });
 
                             });
 
@@ -428,123 +464,133 @@ function saveRelationship(params, callback) {
 
                     });
 
-                });
+                } else {
 
-            } else {
+                    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.relation_id.trim() + "'";
 
-                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.relation_id.trim() + "'";
+                    console.log(sql);
+
+                    queryRaw(sql, function (patient) {
+
+                        relation_id = patient[0][0].patient_id;
+
+                        iCallback();
+
+                    });
+
+                }
+
+            },
+
+            function (iCallback) {
+
+                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.patient_id.trim() + "'";
 
                 console.log(sql);
 
                 queryRaw(sql, function (patient) {
 
-                    relation_id = patient[0][0].patient_id;
+                    person_id = patient[0][0].patient_id;
 
                     iCallback();
 
                 });
 
-            }
+            },
 
-        },
-
-        function (iCallback) {
-
-            var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.patient_id.trim() + "'";
-
-            console.log(sql);
-
-            queryRaw(sql, function (patient) {
-
-                person_id = patient[0][0].patient_id;
-
-                iCallback();
-
-            });
-
-        },
-
-        function (iCallback) {
-
-            var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                "'" + person_id + "', '" + relationship_type_id + "', '" + relation_id + "', " +
-                "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
-
-            console.log(sql);
-
-            queryRaw(sql, function (relationship) {
-
-                console.log(relationship[0].insertId);
+            function (iCallback) {
 
                 var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
-                    "'" + relation_id + "', '" + reverse_relationship_type_id + "', '" + person_id + "', " +
+                    "'" + person_id + "', '" + relationship_type_id + "', '" + relation_id + "', " +
                     "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
                 console.log(sql);
 
                 queryRaw(sql, function (relationship) {
 
-                    iCallback();
+                    console.log(relationship[0].insertId);
+
+                    var sql = "INSERT INTO relationship (person_a, relationship, person_b, creator, date_created, uuid) VALUES (" +
+                        "'" + relation_id + "', '" + reverse_relationship_type_id + "', '" + person_id + "', " +
+                        "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (relationship) {
+
+                        iCallback();
+
+                    });
 
                 });
 
-            });
+            }
 
-        }
+        ], function () {
 
-    ], function () {
+            callback();
 
-        callback();
+        })
 
-    })
+    });
 
 }
 
 function voidConcept(data, callback) {
 
-    console.log(Object.keys(data));
+    loggedIn(data.data.token, function (authentic, user_id, username) {
 
-    var sql = "SELECT encounter_id FROM obs WHERE voided = 0 AND uuid = '" + data.uuid + "'";
+        if (!authentic) {
 
-    queryRaw(sql, function (encounter) {
+            return callback(true);
 
-        var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
-            "'), date_voided = NOW(), void_reason = 'Patient dashboard data void.' WHERE uuid = '" + data.uuid + "'";
+        }
 
-        queryRaw(sql, function (obs) {
+        console.log(Object.keys(data));
 
-            console.log(obs);
+        var sql = "SELECT encounter_id FROM obs WHERE voided = 0 AND uuid = '" + data.uuid + "'";
 
-            var sql = "SELECT COUNT(obs_id) AS total FROM obs WHERE voided = 0 AND encounter_id = '" +
-                encounter[0][0].encounter_id + "'";
+        queryRaw(sql, function (encounter) {
 
-            console.log(sql);
+            var sql = "UPDATE obs SET voided = 1, voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
+                "'), date_voided = NOW(), void_reason = 'Patient dashboard data void.' WHERE uuid = '" + data.uuid + "'";
 
-            queryRaw(sql, function (total) {
+            queryRaw(sql, function (obs) {
 
-                console.log(total);
+                console.log(obs);
 
-                if (total[0][0].total <= 0) {
+                var sql = "SELECT COUNT(obs_id) AS total FROM obs WHERE voided = 0 AND encounter_id = '" +
+                    encounter[0][0].encounter_id + "'";
 
-                    var sql = "UPDATE encounter SET voided = 1, void_reason = 'No more existing active obs', " +
-                        "voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
-                        "'), date_voided = NOW() WHERE encounter_id = '" + encounter[0][0].encounter_id + "'";
+                console.log(sql);
 
-                    console.log(sql);
+                queryRaw(sql, function (total) {
 
-                    queryRaw(sql, function (encounter) {
+                    console.log(total);
+
+                    if (total[0][0].total <= 0) {
+
+                        var sql = "UPDATE encounter SET voided = 1, void_reason = 'No more existing active obs', " +
+                            "voided_by = (SELECT user_id FROM users WHERE username = '" + data.username +
+                            "'), date_voided = NOW() WHERE encounter_id = '" + encounter[0][0].encounter_id + "'";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (encounter) {
+
+                            callback();
+
+                        });
+
+                    } else {
 
                         callback();
 
-                    });
+                    }
 
-                } else {
+                })
 
-                    callback();
-
-                }
-
-            })
+            });
 
         });
 
@@ -554,390 +600,195 @@ function voidConcept(data, callback) {
 
 function saveData(data, callback) {
 
-    var patient_program_id;
+    loggedIn(data.data.token, function (authentic, user_id, username) {
 
-    var patient_id;
+        if (!authentic) {
 
-    var encounter_id;
+            return callback(true);
 
-    async.series([
+        }
 
-        function (icallback) {
+        var patient_program_id;
 
-            var npid = data.data.patient_id;
+        var patient_id;
 
-            var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + npid + "' AND voided = 0";
+        var encounter_id;
 
-            queryRaw(sql, function (res) {
+        async.series([
 
-                if (res[0].length > 0)
-                    patient_id = res[0][0].patient_id;
+            function (icallback) {
 
-                icallback();
+                var npid = data.data.patient_id;
 
-            });
-
-        },
-
-        function (icallback) {
-
-            var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
-                "patient_program.program_id WHERE patient_id = '" + patient_id + "' AND voided = 0 AND program.name = '" +
-                data.data.program + "'";
-
-            queryRaw(sql, function (res) {
-
-                if (res[0].length > 0)
-                    patient_program_id = res[0][0].patient_program_id;
-
-                icallback();
-
-            });
-
-        },
-
-        function (icallback) {
-
-            if (!patient_program_id) {
-
-                var sql = "INSERT INTO patient_program (patient_id, program_id, date_enrolled, creator, date_created, " +
-                    "uuid, location_id) VALUES ('" + patient_id + "', (SELECT program_id FROM program WHERE name = '" +
-                    data.data.program + "'), NOW(), (SELECT user_id FROM users WHERE username = '" + data.data.userId +
-                    "'), NOW(), '" + uuid.v1() + "', (SELECT location_id FROM location WHERE name = '" +
-                    (data.data.location ? data.data.location : "Unknown") + "'))";
+                var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + npid + "' AND voided = 0";
 
                 queryRaw(sql, function (res) {
 
-                    var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
-                        "patient_program.program_id WHERE patient_id = '" + patient_id +
-                        "' AND voided = 0 AND program.name = '" + data.data.program + "'";
+                    if (res[0].length > 0)
+                        patient_id = res[0][0].patient_id;
 
-                    queryRaw(sql, function (res) {
-
-                        if (res[0].length > 0)
-                            patient_program_id = res[0][0].patient_program_id;
-
-                        icallback();
-
-                    });
+                    icallback();
 
                 });
 
-            } else {
+            },
 
-                icallback();
+            function (icallback) {
 
-            }
+                var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
+                    "patient_program.program_id WHERE patient_id = '" + patient_id + "' AND voided = 0 AND program.name = '" +
+                    data.data.program + "'";
 
-        },
+                queryRaw(sql, function (res) {
 
-        function (icallback) {
+                    if (res[0].length > 0)
+                        patient_program_id = res[0][0].patient_program_id;
 
-            var sql = "INSERT INTO encounter (encounter_type, patient_id, provider_id, location_id, encounter_datetime, " +
-                "creator, date_created, uuid, patient_program_id) VALUES ((SELECT encounter_type_id FROM encounter_type " +
-                " WHERE name = '" + data.data.encounter_type + "'), '" + patient_id + "', (SELECT user_id FROM users " +
-                "WHERE username = '" + data.data.userId + "'), (SELECT location_id FROM location WHERE name = '" +
-                (data.data.location ? data.data.location : "Unknown") + "'), NOW(), (SELECT user_id FROM users WHERE " +
-                "username = '" + data.data.userId + "'), NOW(), '" + uuid.v1() + "', '" + patient_program_id + "')";
+                    icallback();
 
-            queryRaw(sql, function (res) {
+                });
 
-                encounter_id = res[0].insertId;
+            },
 
-                icallback();
+            function (icallback) {
 
-            });
+                if (!patient_program_id) {
 
-        },
-
-        function (icallback) {
-
-            var keys = Object.keys(data.data.obs);
-
-            async.each(keys, function (group, oCallback) {
-
-                var cKeys = Object.keys(data.data.obs[group]);
-
-                async.each(cKeys, function (concept, iOCallback) {
-
-                    var category = "value_text";
-
-                    if (group == "number") {
-
-                        category = "value_numeric";
-
-                    } else if (group == "date") {
-
-                        category = "value_datetime";
-
-                    }
-
-                    var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
-                        category + "," +
-                        " creator, date_created, uuid) VALUES ('" + patient_id + "', (SELECT concept_id FROM concept_name " +
-                        "WHERE name = '" + concept + "' AND voided = 0 LIMIT 1), '" + encounter_id + "', NOW(), " +
-                        "(SELECT location_id FROM location WHERE name = '" + (data.data.location ? data.data.location :
-                        "Unknown") + "'), '" + data.data.obs[group][concept] + "', (SELECT user_id FROM users WHERE username = '" +
-                        data.data.userId + "'), NOW(), '" + uuid.v1() + "')";
+                    var sql = "INSERT INTO patient_program (patient_id, program_id, date_enrolled, creator, date_created, " +
+                        "uuid, location_id) VALUES ('" + patient_id + "', (SELECT program_id FROM program WHERE name = '" +
+                        data.data.program + "'), NOW(), (SELECT user_id FROM users WHERE username = '" + data.data.userId +
+                        "'), NOW(), '" + uuid.v1() + "', (SELECT location_id FROM location WHERE name = '" +
+                        (data.data.location ? data.data.location : "Unknown") + "'))";
 
                     queryRaw(sql, function (res) {
 
-                        console.log(concept.trim().toLowerCase());
+                        var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
+                            "patient_program.program_id WHERE patient_id = '" + patient_id +
+                            "' AND voided = 0 AND program.name = '" + data.data.program + "'";
 
-                        if (concept.trim().toLowerCase() == "age") {
+                        queryRaw(sql, function (res) {
 
-                            var age = String(data.data.obs[group][concept]).match(/^(\d+)([Y|M|W|D|H])/);
+                            if (res[0].length > 0)
+                                patient_program_id = res[0][0].patient_program_id;
 
-                            if (age) {
+                            icallback();
 
-                                var number = parseInt(age[1]);
+                        });
 
-                                var type = age[2];
+                    });
 
-                                var dob;
+                } else {
 
-                                switch (type) {
+                    icallback();
 
-                                    case "Y":
+                }
 
-                                        dob = (new Date((new Date()).setFullYear((new Date()).getFullYear() -
-                                            number))).format("YYYY-mm-dd");
+            },
 
-                                        break;
+            function (icallback) {
 
-                                    case "M":
+                var sql = "INSERT INTO encounter (encounter_type, patient_id, provider_id, location_id, encounter_datetime, " +
+                    "creator, date_created, uuid, patient_program_id) VALUES ((SELECT encounter_type_id FROM encounter_type " +
+                    " WHERE name = '" + data.data.encounter_type + "'), '" + patient_id + "', (SELECT user_id FROM users " +
+                    "WHERE username = '" + data.data.userId + "'), (SELECT location_id FROM location WHERE name = '" +
+                    (data.data.location ? data.data.location : "Unknown") + "'), NOW(), (SELECT user_id FROM users WHERE " +
+                    "username = '" + data.data.userId + "'), NOW(), '" + uuid.v1() + "', '" + patient_program_id + "')";
 
-                                        dob = (new Date((new Date()).setMonth((new Date()).getMonth() -
-                                            number))).format("YYYY-mm-dd");
+                queryRaw(sql, function (res) {
 
-                                        break;
+                    encounter_id = res[0].insertId;
 
-                                    case "W":
+                    icallback();
 
-                                        dob = (new Date((new Date()).setDate((new Date()).getDate() -
-                                            (number * 7)))).format("YYYY-mm-dd");
+                });
 
-                                        break;
+            },
 
-                                    case "D":
+            function (icallback) {
 
-                                        dob = (new Date((new Date()).setDate((new Date()).getDate() - number))).format("YYYY-mm-dd");
+                var keys = Object.keys(data.data.obs);
 
-                                        break;
+                async.each(keys, function (group, oCallback) {
 
-                                    default:
+                    var cKeys = Object.keys(data.data.obs[group]);
 
-                                        dob = (new Date((new Date()).setHours((new Date()).getHours() - number))).format("YYYY-mm-dd");
+                    async.each(cKeys, function (concept, iOCallback) {
 
-                                        break;
+                        var category = "value_text";
 
-                                }
+                        if (group == "number") {
 
-                                var sql = "UPDATE person SET birthdate = '" + dob + "', birthdate_estimated = 1 WHERE " +
-                                    "person_id = '" + patient_id + "'";
+                            category = "value_numeric";
 
-                                queryRaw(sql, function (res) {
+                        } else if (group == "date") {
 
-                                    iOCallback();
+                            category = "value_datetime";
 
-                                });
+                        }
 
-                            } else {
+                        var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, location_id, " +
+                            category + "," +
+                            " creator, date_created, uuid) VALUES ('" + patient_id + "', (SELECT concept_id FROM concept_name " +
+                            "WHERE name = '" + concept + "' AND voided = 0 LIMIT 1), '" + encounter_id + "', NOW(), " +
+                            "(SELECT location_id FROM location WHERE name = '" + (data.data.location ? data.data.location :
+                            "Unknown") + "'), '" + data.data.obs[group][concept] + "', (SELECT user_id FROM users WHERE username = '" +
+                            data.data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
-                                iOCallback();
+                        queryRaw(sql, function (res) {
 
-                            }
+                            console.log(concept.trim().toLowerCase());
 
-                        } else if (concept.trim().toLowerCase() == "sex/pregnancy") {
+                            if (concept.trim().toLowerCase() == "age") {
 
-                            var gender = String(data.data.obs[group][concept]).trim().substring(0, 1).toUpperCase();
+                                var age = String(data.data.obs[group][concept]).match(/^(\d+)([Y|M|W|D|H])/);
 
+                                if (age) {
 
-                            var sql = "UPDATE person SET gender = '" + gender + "' WHERE person_id = '" + patient_id + "'";
+                                    var number = parseInt(age[1]);
 
-                            queryRaw(sql, function (res) {
+                                    var type = age[2];
 
-                                iOCallback();
+                                    var dob;
 
-                            });
+                                    switch (type) {
 
-                        } else if (concept.trim().toLowerCase() == "first name") {
+                                        case "Y":
 
-                            var firstName = String(data.data.obs[group][concept]).trim();
+                                            dob = (new Date((new Date()).setFullYear((new Date()).getFullYear() -
+                                                number))).format("YYYY-mm-dd");
 
+                                            break;
 
-                            var sql = "UPDATE person_name SET given_name = '" + firstName + "' WHERE person_id = '" + patient_id + "'";
+                                        case "M":
 
-                            queryRaw(sql, function (res) {
+                                            dob = (new Date((new Date()).setMonth((new Date()).getMonth() -
+                                                number))).format("YYYY-mm-dd");
 
-                                iOCallback();
+                                            break;
 
-                            });
+                                        case "W":
 
-                        } else if (concept.trim().toLowerCase() == "family name") {
+                                            dob = (new Date((new Date()).setDate((new Date()).getDate() -
+                                                (number * 7)))).format("YYYY-mm-dd");
 
-                            var lastName = String(data.data.obs[group][concept]).trim();
+                                            break;
 
+                                        case "D":
 
-                            var sql = "UPDATE person_name SET family_name = '" + lastName + "' WHERE person_id = '" + patient_id + "'";
+                                            dob = (new Date((new Date()).setDate((new Date()).getDate() - number))).format("YYYY-mm-dd");
 
-                            queryRaw(sql, function (res) {
+                                            break;
 
-                                iOCallback();
+                                        default:
 
-                            });
+                                            dob = (new Date((new Date()).setHours((new Date()).getHours() - number))).format("YYYY-mm-dd");
 
-                        } else if (concept.trim().toLowerCase() == "current district") {
+                                            break;
 
-                            var currentDistrict = String(data.data.obs[group][concept]).trim();
+                                    }
 
-                            var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
-
-                            queryRaw(sql, function (address) {
-
-                                var sql = "UPDATE person_address SET state_province = '" + currentDistrict +
-                                    "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                    address[0][0].person_address_id + "'";
-
-                                queryRaw(sql, function (res) {
-
-                                    iOCallback();
-
-                                });
-                            });
-
-                        } else if (concept.trim().toLowerCase() == "current t/a") {
-
-                            var currentTA = String(data.data.obs[group][concept]).trim();
-
-                            var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
-
-                            queryRaw(sql, function (address) {
-
-                                var sql = "UPDATE person_address SET township_division = '" + currentTA +
-                                    "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                    address[0][0].person_address_id + "'";
-
-                                queryRaw(sql, function (res) {
-
-                                    iOCallback();
-
-                                });
-
-                            });
-
-                        } else if (concept.trim().toLowerCase() == "current village") {
-
-                            var currentVillage = String(data.data.obs[group][concept]).trim();
-
-                            var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
-
-                            queryRaw(sql, function (address) {
-
-                                var sql = "UPDATE person_address SET city_village = '" + currentVillage +
-                                    "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                    address[0][0].person_address_id + "'";
-
-                                queryRaw(sql, function (res) {
-
-                                    iOCallback();
-
-                                });
-
-                            });
-
-                        } else if (concept.trim().toLowerCase() == "closest landmark") {
-
-                            var closestLandmark = String(data.data.obs[group][concept]).trim();
-
-                            var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
-
-                            queryRaw(sql, function (address) {
-
-                                var sql = "UPDATE person_address SET address1 = '" + closestLandmark +
-                                    "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
-                                    address[0][0].person_address_id + "'";
-
-                                queryRaw(sql, function (res) {
-
-                                    iOCallback();
-
-                                });
-
-                            });
-
-                        } else if (concept.trim().toLowerCase().match(/dispatch\sid/i) && false) {  // TODO: Temporary Lock. May Have to remove the block later
-
-                            var root = concept.trim().toLowerCase();
-                            var consumption_type = "Normal use";
-                            var dispatch_id = "";
-                            var consumption_quantity = 1;
-                            var who_consumed = data.data.patient_id;
-                            var date_consumed = data.data.today;
-                            var reason_for_consumption = "Normal use";
-                            var location = data.data.location;
-                            var userId = data.data.userId;
-
-                            switch (root) {
-
-                                case "first pass test kit 1 dispatch id":
-
-                                    dispatch_id = data.data.obs["text"]["First Pass Test Kit 1 Dispatch ID"];
-
-                                    break;
-
-                                case "first pass test kit 2 dispatch id":
-
-                                    dispatch_id = data.data.obs["text"]["First Pass Test Kit 2 Dispatch ID"];
-
-                                    break;
-
-                                case "immediate repeat test kit 1 dispatch id":
-
-                                    dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 1 Dispatch ID"];
-                                    k;
-
-                                case "immediate repeat test kit 2 dispatch id":
-
-                                    dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 2 Dispatch ID"];
-
-                                    break;
-
-                            }
-
-                            var iData = {
-                                consumption_type: consumption_type,
-                                dispatch_id: dispatch_id,
-                                consumption_quantity: consumption_quantity,
-                                who_consumed: who_consumed,
-                                date_consumed: date_consumed,
-                                reason_for_consumption: reason_for_consumption,
-                                location: location,
-                                userId: userId
-                            }
-
-                            saveConsumption(iData, undefined, function () {
-
-                                iOCallback();
-
-                            })
-
-                        } else if (concept.trim().toLowerCase() == "client phone number") {
-
-                            var phoneNumber = String(data.data.obs[group][concept]).trim();
-
-                            var sql = "SELECT person_attribute_id FROM person_attribute WHERE person_id = '" + patient_id + "'";
-
-                            queryRaw(sql, function (attr) {
-
-                                if (attr[0].length <= 0) {
-
-                                    // TODO: Need to find a way to push a proper user who creates here
-                                    var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
-                                        "creator, date_created, uuid) VALUES ('" + patient_id + "', '" + phoneNumber +
-                                        "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
-                                        "'Cell Phone Number' LIMIT 1), (SELECT user_id FROM users LIMIT 1), NOW(), '" +
-                                        uuid.v1() + "')";
+                                    var sql = "UPDATE person SET birthdate = '" + dob + "', birthdate_estimated = 1 WHERE " +
+                                        "person_id = '" + patient_id + "'";
 
                                     queryRaw(sql, function (res) {
 
@@ -947,9 +798,79 @@ function saveData(data, callback) {
 
                                 } else {
 
-                                    var sql = "UPDATE person_attribute SET value = '" + phoneNumber +
-                                        "' WHERE person_id = '" + patient_id + "' AND person_attribute_id = '" +
-                                        attr[0][0].person_attribute_id + "'";
+                                    iOCallback();
+
+                                }
+
+                            } else if (concept.trim().toLowerCase() == "sex/pregnancy") {
+
+                                var gender = String(data.data.obs[group][concept]).trim().substring(0, 1).toUpperCase();
+
+
+                                var sql = "UPDATE person SET gender = '" + gender + "' WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (res) {
+
+                                    iOCallback();
+
+                                });
+
+                            } else if (concept.trim().toLowerCase() == "first name") {
+
+                                var firstName = String(data.data.obs[group][concept]).trim();
+
+
+                                var sql = "UPDATE person_name SET given_name = '" + firstName + "' WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (res) {
+
+                                    iOCallback();
+
+                                });
+
+                            } else if (concept.trim().toLowerCase() == "family name") {
+
+                                var lastName = String(data.data.obs[group][concept]).trim();
+
+
+                                var sql = "UPDATE person_name SET family_name = '" + lastName + "' WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (res) {
+
+                                    iOCallback();
+
+                                });
+
+                            } else if (concept.trim().toLowerCase() == "current district") {
+
+                                var currentDistrict = String(data.data.obs[group][concept]).trim();
+
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (address) {
+
+                                    var sql = "UPDATE person_address SET state_province = '" + currentDistrict +
+                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
+                                        address[0][0].person_address_id + "'";
+
+                                    queryRaw(sql, function (res) {
+
+                                        iOCallback();
+
+                                    });
+                                });
+
+                            } else if (concept.trim().toLowerCase() == "current t/a") {
+
+                                var currentTA = String(data.data.obs[group][concept]).trim();
+
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (address) {
+
+                                    var sql = "UPDATE person_address SET township_division = '" + currentTA +
+                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
+                                        address[0][0].person_address_id + "'";
 
                                     queryRaw(sql, function (res) {
 
@@ -957,43 +878,179 @@ function saveData(data, callback) {
 
                                     });
 
+                                });
+
+                            } else if (concept.trim().toLowerCase() == "current village") {
+
+                                var currentVillage = String(data.data.obs[group][concept]).trim();
+
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (address) {
+
+                                    var sql = "UPDATE person_address SET city_village = '" + currentVillage +
+                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
+                                        address[0][0].person_address_id + "'";
+
+                                    queryRaw(sql, function (res) {
+
+                                        iOCallback();
+
+                                    });
+
+                                });
+
+                            } else if (concept.trim().toLowerCase() == "closest landmark") {
+
+                                var closestLandmark = String(data.data.obs[group][concept]).trim();
+
+                                var sql = "SELECT person_address_id FROM person_address WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (address) {
+
+                                    var sql = "UPDATE person_address SET address1 = '" + closestLandmark +
+                                        "' WHERE person_id = '" + patient_id + "' AND person_address_id = '" +
+                                        address[0][0].person_address_id + "'";
+
+                                    queryRaw(sql, function (res) {
+
+                                        iOCallback();
+
+                                    });
+
+                                });
+
+                            } else if (concept.trim().toLowerCase().match(/dispatch\sid/i) && false) {  // TODO: Temporary Lock. May Have to remove the block later
+
+                                var root = concept.trim().toLowerCase();
+                                var consumption_type = "Normal use";
+                                var dispatch_id = "";
+                                var consumption_quantity = 1;
+                                var who_consumed = data.data.patient_id;
+                                var date_consumed = data.data.today;
+                                var reason_for_consumption = "Normal use";
+                                var location = data.data.location;
+                                var userId = data.data.userId;
+
+                                switch (root) {
+
+                                    case "first pass test kit 1 dispatch id":
+
+                                        dispatch_id = data.data.obs["text"]["First Pass Test Kit 1 Dispatch ID"];
+
+                                        break;
+
+                                    case "first pass test kit 2 dispatch id":
+
+                                        dispatch_id = data.data.obs["text"]["First Pass Test Kit 2 Dispatch ID"];
+
+                                        break;
+
+                                    case "immediate repeat test kit 1 dispatch id":
+
+                                        dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 1 Dispatch ID"];
+                                        k;
+
+                                    case "immediate repeat test kit 2 dispatch id":
+
+                                        dispatch_id = data.data.obs["text"]["Immediate Repeat Test Kit 2 Dispatch ID"];
+
+                                        break;
+
                                 }
 
-                            });
+                                var iData = {
+                                    consumption_type: consumption_type,
+                                    dispatch_id: dispatch_id,
+                                    consumption_quantity: consumption_quantity,
+                                    who_consumed: who_consumed,
+                                    date_consumed: date_consumed,
+                                    reason_for_consumption: reason_for_consumption,
+                                    location: location,
+                                    userId: userId
+                                }
 
-                        } else {
+                                saveConsumption(iData, undefined, function () {
 
-                            iOCallback();
+                                    iOCallback();
 
-                        }
+                                })
 
-                    });
+                            } else if (concept.trim().toLowerCase() == "client phone number") {
+
+                                var phoneNumber = String(data.data.obs[group][concept]).trim();
+
+                                var sql = "SELECT person_attribute_id FROM person_attribute WHERE person_id = '" + patient_id + "'";
+
+                                queryRaw(sql, function (attr) {
+
+                                    if (attr[0].length <= 0) {
+
+                                        // TODO: Need to find a way to push a proper user who creates here
+                                        var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, " +
+                                            "creator, date_created, uuid) VALUES ('" + patient_id + "', '" + phoneNumber +
+                                            "', (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = " +
+                                            "'Cell Phone Number' LIMIT 1), (SELECT user_id FROM users LIMIT 1), NOW(), '" +
+                                            uuid.v1() + "')";
+
+                                        queryRaw(sql, function (res) {
+
+                                            iOCallback();
+
+                                        });
+
+                                    } else {
+
+                                        var sql = "UPDATE person_attribute SET value = '" + phoneNumber +
+                                            "' WHERE person_id = '" + patient_id + "' AND person_attribute_id = '" +
+                                            attr[0][0].person_attribute_id + "'";
+
+                                        queryRaw(sql, function (res) {
+
+                                            iOCallback();
+
+                                        });
+
+                                    }
+
+                                });
+
+                            } else {
+
+                                iOCallback();
+
+                            }
+
+                        });
+
+                    }, function () {
+
+                        oCallback();
+
+                    })
 
                 }, function () {
 
-                    oCallback();
+                    icallback();
 
                 })
 
-            }, function () {
+            }
 
-                icallback();
+        ], function (err, results) {
 
-            })
+            if (err) {
 
-        }
+                callback(err);
 
-    ], function (err, results) {
+            } else {
 
-        if (err) {
+                callback();
 
-            callback(err);
+            }
 
-        } else {
+        });
 
-            callback();
-
-        }
 
     });
 
@@ -2584,47 +2641,57 @@ app.post('/save_dummy_patient', function (req, res) {
 
     var data = req.body.data;
 
-    var npid;
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var person_id;
+        if (!authentic) {
 
-    var patient_id;
+            return res.status(200).json({message: "Unauthorized access!"});
 
-    var sql = "INSERT INTO person (creator, date_created, uuid) VALUES ((SELECT user_id FROM users WHERE username = '" +
-        data.userId + "'), NOW(), '" + uuid.v1() + "')";
+        }
 
-    queryRaw(sql, function (person) {
+        var npid;
 
-        person_id = person[0].insertId;
+        var person_id;
 
-        var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
-            "uuid) VALUES ('" + person_id + "', '-', '-', " + "(SELECT user_id FROM users WHERE " +
-            "username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+        var patient_id;
 
-        queryRaw(sql, function (name) {
+        var sql = "INSERT INTO person (creator, date_created, uuid) VALUES ((SELECT user_id FROM users WHERE username = '" +
+            data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
-            var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES ('" + person_id +
-                "', " + "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
+        queryRaw(sql, function (person) {
 
-            queryRaw(sql, function (address) {
+            person_id = person[0].insertId;
 
-                var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
-                    person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
+            var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, " +
+                "uuid) VALUES ('" + person_id + "', '-', '-', " + "(SELECT user_id FROM users WHERE " +
+                "username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
-                queryRaw(sql, function (patient) {
+            queryRaw(sql, function (name) {
 
-                    patient_id = patient[0].insertId;
+                var sql = "INSERT INTO person_address (person_id, creator, date_created, uuid) VALUES ('" + person_id +
+                    "', " + "(SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW(), '" + uuid.v1() + "')";
 
-                    console.log(patient_id);
+                queryRaw(sql, function (address) {
 
-                    generateId(patient_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
-                        function (response) {
+                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
+                        person_id + "', (SELECT user_id FROM users WHERE username = '" + data.userId + "'), NOW())";
 
-                            npid = response;
+                    queryRaw(sql, function (patient) {
 
-                            res.send(npid);
+                        patient_id = patient[0].insertId;
 
-                        });
+                        console.log(patient_id);
+
+                        generateId(patient_id, data.userId, (data.location != undefined ? data.location : "Unknown"),
+                            function (response) {
+
+                                npid = response;
+
+                                res.send(npid);
+
+                            });
+
+                    });
 
                 });
 
@@ -2642,73 +2709,83 @@ app.post('/save_patient', function (req, res) {
 
     var data = req.body.data;
 
-    var npid;
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var person_id;
+        if (!authentic) {
 
-    var patient_id;
+            return res.status(200).json({message: "Unauthorized access!"});
 
-    var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
-        data["Gender"] + "', '" + data["Date of birth"] + "', '" + data["Birthdate Estimated"] + "', " +
-        "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW(), '" + uuid.v1() + "')";
+        }
 
-    queryRaw(sql, function (person) {
+        var npid;
 
-        person_id = person[0].insertId;
+        var person_id;
 
-        console.log(person[0].insertId);
+        var patient_id;
 
-        var sql = "INSERT INTO person_address (person_id, address1, address2, city_village, state_province, " +
-            " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES ('" +
-            person_id + "', '" +
-            (data['Closest Landmark'] ? data['Closest Landmark'] : "") + "', '" +
-            (data['Home District'] ? data['Home District'] : "") + "', '" +
-            (data['Current Village'] ? data['Current Village'] : "") + "', '" +
-            (data['Current District'] ? data['Current District'] : "") + "', " +
-            "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "')," +
-            " NOW(), '" +
-            (data['Home T/A'] ? data['Home T/A'] : "") + "', '" +
-            (data['Home Village'] ? data['Home Village'] : "") + "', '" +
-            (data['Current T/A'] ? data['Current T/A'] : "") + "', '" +
-            uuid.v1() +
-            "')";
+        var sql = "INSERT INTO person (gender, birthdate, birthdate_estimated, creator, date_created, uuid) VALUES ('" +
+            data["Gender"] + "', '" + data["Date of birth"] + "', '" + data["Birthdate Estimated"] + "', " +
+            "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW(), '" + uuid.v1() + "')";
 
-        queryRaw(sql, function (address) {
+        queryRaw(sql, function (person) {
 
-            var address_id = address[0].insertId;
+            person_id = person[0].insertId;
 
-            console.log(address_id);
+            console.log(person[0].insertId);
 
-            var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES ('" +
-                person_id + "', '" + data["First Name"] + "', '" + (data["Middle Name"] ? data["Middle Name"] : "") + "', '" +
-                data["Last Name"] + "', " + "(SELECT user_id FROM users WHERE username = '" + data["User ID"] +
-                "'), NOW(), '" + uuid.v1() + "')";
+            var sql = "INSERT INTO person_address (person_id, address1, address2, city_village, state_province, " +
+                " creator, date_created, county_district, neighborhood_cell, township_division, uuid) VALUES ('" +
+                person_id + "', '" +
+                (data['Closest Landmark'] ? data['Closest Landmark'] : "") + "', '" +
+                (data['Home District'] ? data['Home District'] : "") + "', '" +
+                (data['Current Village'] ? data['Current Village'] : "") + "', '" +
+                (data['Current District'] ? data['Current District'] : "") + "', " +
+                "(SELECT user_id FROM users WHERE username = '" + data["User ID"] + "')," +
+                " NOW(), '" +
+                (data['Home T/A'] ? data['Home T/A'] : "") + "', '" +
+                (data['Home Village'] ? data['Home Village'] : "") + "', '" +
+                (data['Current T/A'] ? data['Current T/A'] : "") + "', '" +
+                uuid.v1() +
+                "')";
 
-            queryRaw(sql, function (name) {
+            queryRaw(sql, function (address) {
 
-                var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
-                    person_id + "', (SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW())";
+                var address_id = address[0].insertId;
 
-                queryRaw(sql, function (patient) {
+                console.log(address_id);
 
-                    patient_id = patient[0].insertId;
+                var sql = "INSERT INTO person_name (person_id, given_name, middle_name, family_name, creator, date_created, uuid) VALUES ('" +
+                    person_id + "', '" + data["First Name"] + "', '" + (data["Middle Name"] ? data["Middle Name"] : "") + "', '" +
+                    data["Last Name"] + "', " + "(SELECT user_id FROM users WHERE username = '" + data["User ID"] +
+                    "'), NOW(), '" + uuid.v1() + "')";
 
-                    console.log(patient_id);
+                queryRaw(sql, function (name) {
 
-                    generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] : "Unknown"),
-                        function (response) {
+                    var sql = "INSERT INTO patient (patient_id, creator, date_created) VALUES ('" +
+                        person_id + "', (SELECT user_id FROM users WHERE username = '" + data["User ID"] + "'), NOW())";
 
-                            npid = response;
+                    queryRaw(sql, function (patient) {
 
-                            res.send(npid);
+                        patient_id = patient[0].insertId;
 
-                        });
+                        console.log(patient_id);
 
-                })
+                        generateId(patient_id, data["User ID"], (data["Location"] != undefined ? data["Location"] : "Unknown"),
+                            function (response) {
 
-            });
+                                npid = response;
 
-        })
+                                res.send(npid);
+
+                            });
+
+                    })
+
+                });
+
+            })
+
+        });
 
     });
 
@@ -2720,86 +2797,96 @@ app.post('/updateUser', function (req, res) {
 
     var data = req.body;
 
-    var rString = randomstring.generate(12);
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var salt = rString;
+        if (!authentic) {
 
-    var password = encrypt(req.body.password, salt);
+            return res.status(200).json({message: "Unauthorized access!"});
 
-    var person_id;
+        }
 
-    sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+        var rString = randomstring.generate(12);
 
-    queryRaw(sql, function (verification) {
+        var salt = rString;
 
-        if (verification[0].length > 0) {
+        var password = encrypt(req.body.password, salt);
 
-            res.status(200).json({message: "Username already taken!"});
+        var person_id;
 
-        } else {
+        sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
 
-            var sql = "INSERT INTO person (gender, " + (data.date_of_birth ? "birthdate, birthdate_estimated, " : "") +
-                "creator, date_created, uuid) VALUES ('" + String(data.gender).substring(0, 1) + "', " + (data.date_of_birth ? "'" +
-                data.date_of_birth + "', '" + data.estimated + "', " : "") + " (SELECT user_id FROM users WHERE " +
-                "username = '" + (data.userId ? data.userId : "admin" ) + "'), NOW(), '" + uuid.v1() + "')";
+        queryRaw(sql, function (verification) {
 
-            queryRaw(sql, function (person) {
+            if (verification[0].length > 0) {
 
-                person_id = person[0].insertId;
+                res.status(200).json({message: "Username already taken!"});
 
-                console.log(person[0].insertId);
+            } else {
+
+                var sql = "INSERT INTO person (gender, " + (data.date_of_birth ? "birthdate, birthdate_estimated, " : "") +
+                    "creator, date_created, uuid) VALUES ('" + String(data.gender).substring(0, 1) + "', " + (data.date_of_birth ? "'" +
+                    data.date_of_birth + "', '" + data.estimated + "', " : "") + " (SELECT user_id FROM users WHERE " +
+                    "username = '" + (data.userId ? data.userId : "admin" ) + "'), NOW(), '" + uuid.v1() + "')";
+
+                queryRaw(sql, function (person) {
+
+                    person_id = person[0].insertId;
+
+                    console.log(person[0].insertId);
 
 
-                var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, uuid) VALUES ('" +
-                    person_id + "', '" + data.first_name + "', '" + data.last_name + "', " + "(SELECT user_id FROM " +
-                    "users WHERE username = '" + (data.userId != undefined ? data.userId : "admin" ) +
-                    "'), NOW(), '" + uuid.v1() + "')";
-
-                queryRaw(sql, function (name) {
-
-                    sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
-                        "date_created, uuid) VALUES ('" + person_id + "', '" + data.hts_provider_id + "', " +
-                        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'HTC Provider ID'), " +
-                        "(SELECT user_id FROM users WHERE username = '" + (data.userId ? data.userId : "admin" ) +
+                    var sql = "INSERT INTO person_name (person_id, given_name, family_name, creator, date_created, uuid) VALUES ('" +
+                        person_id + "', '" + data.first_name + "', '" + data.last_name + "', " + "(SELECT user_id FROM " +
+                        "users WHERE username = '" + (data.userId != undefined ? data.userId : "admin" ) +
                         "'), NOW(), '" + uuid.v1() + "')";
 
-                    queryRaw(sql, function (attr) {
+                    queryRaw(sql, function (name) {
 
-                        console.log(attr[0]);
+                        sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
+                            "date_created, uuid) VALUES ('" + person_id + "', '" + data.hts_provider_id + "', " +
+                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'HTC Provider ID'), " +
+                            "(SELECT user_id FROM users WHERE username = '" + (data.userId ? data.userId : "admin" ) +
+                            "'), NOW(), '" + uuid.v1() + "')";
 
-                        sql = "SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "'"
+                        queryRaw(sql, function (attr) {
 
-                        queryRaw(sql, function (updater) {
+                            console.log(attr[0]);
 
-                            console.log(updater[0][0].user_id);
+                            sql = "SELECT user_id FROM users WHERE username = '" + (req.body["User ID"] ? req.body["User ID"] : "admin" ) + "'"
 
-                            var sql = "INSERT INTO users (system_id, username, password, salt, creator, date_created, " +
-                                "person_id, uuid) VALUES ('" + data.username + "', '" + data.username + "', '" +
-                                password + "', '" + salt + "', '" + updater[0][0].user_id + "', NOW(), '" + person_id +
-                                "', '" + uuid.v1() + "')";
+                            queryRaw(sql, function (updater) {
 
-                            queryRaw(sql, function (user) {
+                                console.log(updater[0][0].user_id);
 
-                                console.log(user[0].insertId);
+                                var sql = "INSERT INTO users (system_id, username, password, salt, creator, date_created, " +
+                                    "person_id, uuid) VALUES ('" + data.username + "', '" + data.username + "', '" +
+                                    password + "', '" + salt + "', '" + updater[0][0].user_id + "', NOW(), '" + person_id +
+                                    "', '" + uuid.v1() + "')";
 
-                                var values = "";
+                                queryRaw(sql, function (user) {
 
-                                for (var i = 0; i < data.roles.length; i++) {
+                                    console.log(user[0].insertId);
 
-                                    values += (values.trim().length > 0 ? ", " : "") + "('" + user[0].insertId + "', '" +
-                                        data.roles[i] + "')";
+                                    var values = "";
 
-                                }
+                                    for (var i = 0; i < data.roles.length; i++) {
 
-                                sql = "INSERT INTO user_role (user_id, role) VALUES " + values;
+                                        values += (values.trim().length > 0 ? ", " : "") + "('" + user[0].insertId + "', '" +
+                                            data.roles[i] + "')";
 
-                                console.log(sql);
+                                    }
 
-                                queryRaw(sql, function (role) {
+                                    sql = "INSERT INTO user_role (user_id, role) VALUES " + values;
 
-                                    console.log(role[0]);
+                                    console.log(sql);
 
-                                    res.status(200).json({message: "User added!"});
+                                    queryRaw(sql, function (role) {
+
+                                        console.log(role[0]);
+
+                                        res.status(200).json({message: "User added!"});
+
+                                    });
 
                                 });
 
@@ -2811,9 +2898,9 @@ app.post('/updateUser', function (req, res) {
 
                 });
 
-            });
+            }
 
-        }
+        });
 
     });
 
@@ -3109,42 +3196,52 @@ app.post('/activate_user', function (req, res) {
 
     var data = req.body;
 
-    console.log(data);
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+        if (!authentic) {
 
-    console.log(sql);
+            return res.status(200).json({message: "Unauthorized access!"});
 
-    queryRaw(sql, function (user) {
+        }
 
-        if (user[0].length > 0) {
+        console.log(data);
 
-            var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
+        var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
 
-            console.log(sql);
+        console.log(sql);
 
-            queryRaw(sql, function (updater) {
+        queryRaw(sql, function (user) {
 
-                console.log(updater[0][0].user_id);
+            if (user[0].length > 0) {
 
-                var sql = "UPDATE users SET retired = 0, retired_by = NULL, date_retired = NULL, retire_reason = NULL " +
-                    " WHERE user_id = '" + user[0][0].user_id + "'";
+                var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
 
                 console.log(sql);
 
-                queryRaw(sql, function (user) {
+                queryRaw(sql, function (updater) {
 
-                    res.status(200).json({message: "User activated!"});
+                    console.log(updater[0][0].user_id);
+
+                    var sql = "UPDATE users SET retired = 0, retired_by = NULL, date_retired = NULL, retire_reason = NULL " +
+                        " WHERE user_id = '" + user[0][0].user_id + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (user) {
+
+                        res.status(200).json({message: "User activated!"});
+
+                    });
 
                 });
 
-            });
+            } else {
 
-        } else {
+                res.status(200).json({message: "User not found!"});
 
-            res.status(200).json({message: "User not found!"});
+            }
 
-        }
+        });
 
     });
 
@@ -3154,42 +3251,52 @@ app.post('/block_user', function (req, res) {
 
     var data = req.body;
 
-    console.log(data);
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
+        if (!authentic) {
 
-    console.log(sql);
+            return res.status(200).json({message: "Unauthorized access!"});
 
-    queryRaw(sql, function (user) {
+        }
 
-        if (user[0].length > 0) {
+        console.log(data);
 
-            var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
+        var sql = "SELECT user_id FROM users WHERE username = '" + data.username + "'";
 
-            console.log(sql);
+        console.log(sql);
 
-            queryRaw(sql, function (updater) {
+        queryRaw(sql, function (user) {
 
-                console.log(updater[0][0].user_id);
+            if (user[0].length > 0) {
 
-                var sql = "UPDATE users SET retired = 1, retired_by = '" + updater[0][0].user_id +
-                    "', date_retired = NOW(), retire_reason ='Blocked user.' WHERE user_id = '" + user[0][0].user_id + "'";
+                var sql = "SELECT user_id FROM users WHERE username = '" + data.userId + "'";
 
                 console.log(sql);
 
-                queryRaw(sql, function (user) {
+                queryRaw(sql, function (updater) {
 
-                    res.status(200).json({message: "User blocked!"});
+                    console.log(updater[0][0].user_id);
+
+                    var sql = "UPDATE users SET retired = 1, retired_by = '" + updater[0][0].user_id +
+                        "', date_retired = NOW(), retire_reason ='Blocked user.' WHERE user_id = '" + user[0][0].user_id + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (user) {
+
+                        res.status(200).json({message: "User blocked!"});
+
+                    });
 
                 });
 
-            });
+            } else {
 
-        } else {
+                res.status(200).json({message: "User not found!"});
 
-            res.status(200).json({message: "User not found!"});
+            }
 
-        }
+        });
 
     });
 
@@ -3631,47 +3738,57 @@ app.post('/save_item', function (req, res) {
 
     var data = req.body.data;
 
-    console.log(Object.keys(data));
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    switch (data.datatype) {
+        if (!authentic) {
 
-        case "receive":
+            return res.status(200).json({message: "Unauthorized access!"});
 
-            receiveStock(data, res);
+        }
 
-            break;
+        console.log(Object.keys(data));
 
-        case "stock":
+        switch (data.datatype) {
 
-            saveStock(data, res);
+            case "receive":
 
-            break;
+                receiveStock(data, res);
 
-        case 'dispatch':
+                break;
 
-            dispatchStock(data, res);
+            case "stock":
 
-            break;
+                saveStock(data, res);
 
-        case "transfer":
+                break;
 
-            transferStock(data, res);
+            case 'dispatch':
 
-            break;
+                dispatchStock(data, res);
 
-        case "batch":
+                break;
 
-            saveBatch(data, res);
+            case "transfer":
 
-            break;
+                transferStock(data, res);
 
-        case "consumption":
+                break;
 
-            saveConsumption(data, res);
+            case "batch":
 
-            break;
+                saveBatch(data, res);
 
-    }
+                break;
+
+            case "consumption":
+
+                saveConsumption(data, res);
+
+                break;
+
+        }
+
+    });
 
 })
 
@@ -3679,43 +3796,54 @@ app.post('/update_password', function (req, res) {
 
     var data = req.body;
 
-    console.log(data);
+    loggedIn(data.token, function (authentic, user_id, username) {
 
-    var sql = "SELECT user_id, password, salt FROM users WHERE username = '" + data.userId + "'";
+        if (!authentic) {
 
-    console.log(sql);
+            return res.status(200).json({message: "Unauthorized access!"});
+            ;
 
-    queryRaw(sql, function (user) {
+        }
 
-        if (user[0].length > 0) {
+        console.log(data);
 
-            var oldPassword = encrypt(data['currentPassword'], user[0][0].salt);
+        var sql = "SELECT user_id, password, salt FROM users WHERE username = '" + data.userId + "'";
 
-            if (oldPassword == user[0][0].password) {
+        console.log(sql);
 
-                var newPassword = encrypt(data['newPassword'], user[0][0].salt);
+        queryRaw(sql, function (user) {
 
-                var sql = "UPDATE users SET password = '" + newPassword + "' WHERE username = '" + data.userId + "'";
+            if (user[0].length > 0) {
 
-                console.log(sql);
+                var oldPassword = encrypt(data['currentPassword'], user[0][0].salt);
 
-                queryRaw(sql, function (user) {
+                if (oldPassword == user[0][0].password) {
 
-                    res.status(200).json({message: "Password updated!"});
+                    var newPassword = encrypt(data['newPassword'], user[0][0].salt);
 
-                });
+                    var sql = "UPDATE users SET password = '" + newPassword + "' WHERE username = '" + data.userId + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (user) {
+
+                        res.status(200).json({message: "Password updated!"});
+
+                    });
+
+                } else {
+
+                    res.status(200).json({message: "Wrong password!"});
+
+                }
 
             } else {
 
-                res.status(200).json({message: "Wrong password!"});
+                res.status(200).json({message: "User not found!"});
 
             }
 
-        } else {
-
-            res.status(200).json({message: "User not found!"});
-
-        }
+        });
 
     });
 

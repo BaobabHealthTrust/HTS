@@ -493,6 +493,8 @@ var user = ({
 
         data.data.userId = user.getCookie("username");
 
+        data.data.token = user.getCookie("token");
+
         if (data.data.datatype == "changePassword") {
 
             user.ajaxPostRequest(user.settings.passwordUpdatePath, data.data, function (sid) {
@@ -505,7 +507,7 @@ var user = ({
 
                 }
 
-                user.showMsg(json.message, "Password Change");
+                user.showMsg(json.message, "Password Change", "/");
 
             })
 
@@ -1576,7 +1578,8 @@ var user = ({
 
                                 user.processingData = {
                                     username: this.getAttribute("username"),
-                                    userId: user.getCookie("username")
+                                    userId: user.getCookie("username"),
+                                    token: user.getCookie("token")
                                 };
 
                                 user.showConfirmMsg("Do you really want to block this user?", "Confirm User Block",
@@ -1611,7 +1614,8 @@ var user = ({
 
                                 user.processingData = {
                                     username: this.getAttribute("username"),
-                                    userId: user.getCookie("username")
+                                    userId: user.getCookie("username"),
+                                    token: user.getCookie("token")
                                 };
 
                                 user.showConfirmMsg("Do you really want to activate this user?", "Confirm User Activation",

@@ -956,7 +956,8 @@ function saveConsumption(dispatch_id) {
             reason_for_consumption: reason_for_consumption,
             location: location,
             userId: userId,
-            datatype: "consumption"
+            datatype: "consumption",
+            token: getCookie("token")
         }
     }
 

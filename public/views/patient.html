@@ -21,7 +21,14 @@
         var nsp = io('/' + id);
 
         nsp.on('hi ' + id, function(data){
-            console.log(data);
+            // console.log(data);
+        });
+
+        nsp.on('kickout ' + id, function(data){
+            // console.log(data);
+
+            user.logout();
+
         });
 
         socket.emit('demographics', {id: id});

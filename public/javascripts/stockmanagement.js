@@ -1290,7 +1290,7 @@ var stock = ({
         fields[expiryLabel] = {
             field_type: "date",
             id: "data.expiry_date",
-            maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
+            maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
             optional: true
         };
 
