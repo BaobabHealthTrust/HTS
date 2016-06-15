@@ -1360,7 +1360,7 @@ var dashboard = ({
 
         }
 
-        if (dashboard.selectedVisit) {
+        if (dashboard.selectedVisit && dashboard.$(dashboard.selectedVisit)) {
 
             dashboard.$(dashboard.selectedVisit).click();
 
@@ -1486,6 +1486,10 @@ var dashboard = ({
                     dashboard.ignoreAutoContinue = false;
 
                 }
+
+            } else {
+
+                dashboard.$("btnContinue").className = "gray";
 
             }
 
