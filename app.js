@@ -2844,7 +2844,7 @@ app.post('/updateUser', function (req, res) {
 
                         sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
                             "date_created, uuid) VALUES ('" + person_id + "', '" + data.hts_provider_id + "', " +
-                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'HTC Provider ID'), " +
+                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'HTS Provider ID'), " +
                             "(SELECT user_id FROM users WHERE username = '" + (data.userId ? data.userId : "admin" ) +
                             "'), NOW(), '" + uuid.v1() + "')";
 
@@ -4375,7 +4375,7 @@ app.get('/report_q_htc_access_type_pitc', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Routine HTC within Health Service' " +
+    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Routine HTS within Health Service' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
         (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
 
@@ -4395,7 +4395,7 @@ app.get('/report_q_htc_access_type_frs', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Comes with HTC Family Reference Slip' " +
+    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Comes with HTS Family Reference Slip' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
         (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
 

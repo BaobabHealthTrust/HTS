@@ -9,7 +9,7 @@ Q.1.2. Referral for Re-Testing [pos:: 1$$ condition:: false$$ id:: referral]
 
 Q.1.3. Appointment Date Given [pos:: 2$$ id:: appointment$$ field_type:: date]
 
-Q.1.4. HTC Family Referral Slips Given [pos:: 3$$ concept:: HTC Family Referral Slips$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal]
+Q.1.4. HTS Family Referral Slips Given [pos:: 3$$ concept:: HTS Family Referral Slips$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal]
 
 Q.1.5. Male Condoms [pos:: 4$$ condition:: evalCondition(6)$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal]
 

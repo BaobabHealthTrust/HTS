@@ -1,7 +1,7 @@
 P.1. HTS VISIT [program:: HTS PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
-Q.1.1. HTC Access Type [pos:: 0$$ id:: htc_acc_type]
-O.1.1.1. Routine HTC within Health Service
-O.1.1.2. Comes with HTC Family Reference Slip
+Q.1.1. HTS Access Type [pos:: 0$$ id:: htc_acc_type]
+O.1.1.1. Routine HTS within Health Service
+O.1.1.2. Comes with HTS Family Reference Slip
 O.1.1.3. Other (VCT, etc.)
 Q.1.2. Last HIV Test [pos:: 1$$ id:: last_hiv_test]
 O.1.2.1. Never Tested

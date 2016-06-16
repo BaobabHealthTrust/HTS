@@ -13,7 +13,7 @@
         ["HTS Number", "HTS client clinic number"]
     ],
     "person_attribute_types": [
-        ["HTC Provider ID", "HTS service provider clinic code"]
+        ["HTS Provider ID", "HTS service provider clinic code"]
     ],
     "programs": [
         "HTS PROGRAM"
@@ -29,9 +29,9 @@
         "1-14 years",
         "15-24 years",
         "25+ years",
-        "HTC Access Type",
-        "Routine HTC within Health Service",
-        "Comes with HTC Family Reference Slip",
+        "HTS Access Type",
+        "Routine HTS within Health Service",
+        "Comes with HTS Family Reference Slip",
         "Other (VCT, etc.)",
         "Last HIV Test",
         "Never Tested",
@@ -79,7 +79,7 @@
         "Re-test",
         "Confirmatory Test at HIV Clinic",
         "Appointment Date Given",
-        "HTC Family Referral Slips",
+        "HTS Family Referral Slips",
         "Condoms",
         "Male Condoms",
         "Female Condoms",

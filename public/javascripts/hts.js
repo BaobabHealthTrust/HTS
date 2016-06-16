@@ -534,7 +534,7 @@ function showHTSVisitSummary() {
         tr.appendChild(td);
 
         var th = document.createElement("th");
-        th.innerHTML = "HTC Access Type";
+        th.innerHTML = "HTS Access Type";
         th.style.borderLeft = "1px solid #333";
         th.style.borderTop = "3px solid #333";
         th.colSpan = 3;
@@ -596,14 +596,14 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        verticalText("Routine<i style='color: #eee'>_</i>HTC<i style='color: #eee'>_</i>within Health Service", th);
+        verticalText("Routine<i style='color: #eee'>_</i>HTS<i style='color: #eee'>_</i>within Health Service", th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
 
         tr.appendChild(th);
 
-        verticalText("Comes<i style='color: #eee'>_</i>with<i style='color: #eee'>_</i>HTC Family<i style='color: #eee'>_</i>Ref.<i style='color: #eee'>_</i>Slip", th);
+        verticalText("Comes<i style='color: #eee'>_</i>with<i style='color: #eee'>_</i>HTS Family<i style='color: #eee'>_</i>Ref.<i style='color: #eee'>_</i>Slip", th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -683,8 +683,8 @@ function showHTSVisitSummary() {
         tr.appendChild(th);
 
         var HATMapping = {
-            "Routine HTC within Health Service": "PITC",
-            "Comes with HTC Family Reference Slip": "FRS",
+            "Routine HTS within Health Service": "PITC",
+            "Comes with HTS Family Reference Slip": "FRS",
             "Other (VCT, etc.)": "Oth"
         };
 
@@ -3091,7 +3091,7 @@ function showAssessmentSummary() {
         var td = document.createElement("td");
         td.style.verticalAlign = "top";
         td.align = "center";
-        td.innerHTML = "<b>HTC<br/>Family<br/>Slips</b>";
+        td.innerHTML = "<b>HTS<br/>Family<br/>Slips</b>";
 
         tr.appendChild(td);
 

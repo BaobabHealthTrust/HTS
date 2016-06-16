@@ -53,9 +53,9 @@ BEGIN
 
 	SELECT concept_id INTO @result_given_to_client FROM concept_name WHERE name = "Result Given to Client";  
 
-	SELECT concept_id INTO @htc_access_type FROM concept_name WHERE name = "HTC Access Type";  
+	SELECT concept_id INTO @htc_access_type FROM concept_name WHERE name = "HTS Access Type";
 
-	SELECT concept_id INTO @partner_htc_slips_given FROM concept_name WHERE name = "HTC Family Referral Slips";  
+	SELECT concept_id INTO @partner_htc_slips_given FROM concept_name WHERE name = "HTS Family Referral Slips";
 
 	CASE NEW.concept_id
 	
@@ -137,9 +137,9 @@ BEGIN
 
 		SELECT concept_id INTO @result_given_to_client FROM concept_name WHERE name = "Result Given to Client";  
 
-		SELECT concept_id INTO @htc_access_type FROM concept_name WHERE name = "HTC Access Type";  
+		SELECT concept_id INTO @htc_access_type FROM concept_name WHERE name = "HTS Access Type";
 
-		SELECT concept_id INTO @partner_htc_slips_given FROM concept_name WHERE name = "HTC Family Referral Slips";  
+		SELECT concept_id INTO @partner_htc_slips_given FROM concept_name WHERE name = "HTS Family Referral Slips";
 
 		CASE NEW.concept_id
 	

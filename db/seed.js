@@ -626,7 +626,7 @@ async.each(commands, function (cmd, callback) {
                         " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +
                         "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) " +
                         "VALUES((SELECT person_id FROM person LIMIT 1), \"HTS-0001\", (SELECT person_attribute_type_id FROM " +
-                        "person_attribute_type WHERE name = \"HTC Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
+                        "person_attribute_type WHERE name = \"HTS Provider ID\"), (SELECT user_id FROM users LIMIT 1), " +
                         "NOW(), \"" + uuid.v1() + "\")'"
                 },
                 {
