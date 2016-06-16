@@ -713,7 +713,8 @@ var landing = ({
 
         var data = {
             data: {
-                userId: landing.getCookie("username")
+                userId: landing.getCookie("username"),
+                token: landing.getCookie("token")
             }
         };
 
