@@ -1109,7 +1109,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnEdit = document.createElement("button");
-                        btnEdit.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
+                        btnEdit.className = "blue";
                         btnEdit.style.minWidth = "100px";
                         btnEdit.style.minHeight = "30px";
                         btnEdit.style.fontWeight = "normal";
@@ -1133,7 +1133,6 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnDelete = document.createElement("button");
-                        btnDelete.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
                         btnDelete.style.minWidth = "100px";
                         btnDelete.style.minHeight = "30px";
                         btnDelete.style.fontWeight = "normal";

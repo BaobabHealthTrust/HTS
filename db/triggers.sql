@@ -111,25 +111,25 @@ BEGIN
 
 END$$
 
-CREATE TRIGGER new_stock 
-AFTER INSERT ON `stock` FOR EACH ROW
-BEGIN
+-- CREATE TRIGGER new_stock 
+-- AFTER INSERT ON `stock` FOR EACH ROW
+-- BEGIN
 
-	INSERT INTO report (stock_id, item_name, reorder_level, category_name)
-	VALUES (NEW.stock_id, NEW.name, NEW.reorder_level, (SELECT name FROM category 
-		WHERE category_id = NEW.category_id));
+-- INSERT INTO report (stock_id, item_name, reorder_level, category_name)
+--	VALUES (NEW.stock_id, NEW.name, NEW.reorder_level, (SELECT name FROM category 
+--		WHERE category_id = NEW.category_id));
 
-END$$
+-- END$$
 
-CREATE TRIGGER stock_update
-AFTER UPDATE ON `stock` FOR EACH ROW
-BEGIN
+-- CREATE TRIGGER stock_update
+-- AFTER UPDATE ON `stock` FOR EACH ROW
+-- BEGIN
 
-	UPDATE report SET item_name = NEW.name, reorder_level = NEW.reorder_level, 
-		category_name = (SELECT name FROM category 
-		WHERE category_id = NEW.category_id) WHERE stock_id = NEW.stock_id;
+--	UPDATE report SET item_name = NEW.name, reorder_level = NEW.reorder_level, 
+--		category_name = (SELECT name FROM category 
+--		WHERE category_id = NEW.category_id) WHERE stock_id = NEW.stock_id;
 
-END$$
+-- END$$
 
 CREATE TRIGGER stock_delete
 BEFORE DELETE ON `stock` FOR EACH ROW
