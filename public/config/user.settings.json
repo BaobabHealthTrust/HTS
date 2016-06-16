@@ -15,5 +15,6 @@
     "rolesPath": "/roles",
     "userBlockPath": "/block_user/",
     "userActivatePath": "/activate_user/",
-    "locationsListPath": "/list_locations?name="
+    "locationsListPath": "/list_locations?name=",
+    "userEditPath": "/update_user"
 }

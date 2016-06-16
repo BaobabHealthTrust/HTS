@@ -249,6 +249,86 @@ var user = ({
 
     },
 
+    editUser: function (target, data) {
+
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div = document.createElement("div");
+        div.id = "content";
+
+        target.appendChild(div);
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        div.appendChild(form);
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                type: "hidden",
+                id: "data.datatype",
+                value: "editUser"
+            },
+            "First Name": {
+                field_type: "text",
+                id: "data.first_name",
+                allowFreeText: true,
+                ajaxURL: user.settings.firstNamesPath,
+                value: (data && data.first_name ? data.first_name : user.getCookie("given_name"))
+            },
+            "Last Name": {
+                field_type: "text",
+                id: "data.last_name",
+                allowFreeText: true,
+                ajaxURL: user.settings.lastNamesPath,
+                value: (data && data.last_name ? data.last_name : user.getCookie("family_name"))
+            },
+            "Gender": {
+                field_type: "select",
+                options: ["", "Male", "Female"],
+                id: "data.gender",
+                value: (data && data.gender ? data.gender : user.getCookie("gender"))
+            }
+        }
+
+        if(user.roles.indexOf("Admin") >= 0) {
+
+            fields["Role(s)"] = {
+                field_type: "select",
+                    id: "data.roles",
+                    multiple: "multiple",
+                    ajaxURL: user.settings.rolesPath
+            };
+
+        }
+
+        if (user.settings['hts.provider.id']) {
+
+            fields['HTS Provider ID'] = {
+                field_type: "text",
+                optional: true,
+                id: "data.hts_provider_id",
+                value: (data && data.hts_provider_id ? data.hts_provider_id : JSON.parse(user.getCookie("attrs"))['HTS Provider ID'])
+            }
+
+        }
+
+        user.buildFields(fields, table);
+
+        user.navPanel(form.outerHTML);
+
+    },
+
     settings: function (path) {
 
         this.ajaxRequest(path, function (data) {
@@ -377,7 +457,7 @@ var user = ({
 
     login: function () {
 
-        if(landing && landing.intBarcode) {
+        if (landing && landing.intBarcode) {
 
             clearInterval(landing.intBarcode);
 
@@ -421,9 +501,9 @@ var user = ({
 
     intBarcode: null,
 
-    checkLocationBarcode: function() {
+    checkLocationBarcode: function () {
 
-        if(user.$$("touchscreenInput" + user.__().tstCurrentPage).value.trim().match(/\$$/)) {
+        if (user.$$("touchscreenInput" + user.__().tstCurrentPage).value.trim().match(/\$$/)) {
 
             user.$$("touchscreenInput" + user.__().tstCurrentPage).value =
                 user.$$("touchscreenInput" + user.__().tstCurrentPage).value.trim().replace(/\$/g, "");
@@ -558,6 +638,24 @@ var user = ({
         } else if (data.data.datatype == "addUser") {
 
             user.ajaxPostRequest(user.settings.userAddPath, data.data, function (sid) {
+
+                var json = JSON.parse(sid);
+
+                if (user.$("user.navPanel")) {
+
+                    document.body.removeChild(user.$("user.navPanel"));
+
+                }
+
+                // window.location = "/";
+
+                user.showMsg(json.message, "Status", "/");
+
+            })
+
+        } else if (data.data.datatype == "editUser") {
+
+            user.ajaxPostRequest(user.settings.userEditPath, data.data, function (sid) {
 
                 var json = JSON.parse(sid);
 
@@ -1288,7 +1386,10 @@ var user = ({
 
         btnEdit.onclick = function () {
 
-            user.showMsg("Edit");
+            if (this.className.match(/gray/i))
+                return;
+
+            user.editUser(window.parent.document.body);
 
         }
 
@@ -1326,13 +1427,16 @@ var user = ({
         tr0_1_0_0_0_0_1_0_2.appendChild(td0_1_0_0_0_0_1_0_2_0);
 
         var btnManageUsers = document.createElement("button");
-        btnManageUsers.className = "blue";
+        btnManageUsers.className = (user.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
         btnManageUsers.style.margin = "8px";
         btnManageUsers.style.width = "250px";
         btnManageUsers.style.cssFloat = "right";
         btnManageUsers.innerHTML = "Manage Users";
 
         btnManageUsers.onclick = function () {
+
+            if (this.className.match(/gray/))
+                return;
 
             window.parent.user.showUsers(window.parent.document.body);
 
@@ -1595,7 +1699,7 @@ var user = ({
                             if (this.className.match(/gray/i))
                                 return;
 
-                            user.showMsg("TODO: Yet to add user edit");
+                            user.editUser(window.parent.document.body);
 
                         }
 
@@ -1726,13 +1830,21 @@ var user = ({
 
                 } else {
 
-                    user.ajaxRequest(user.settings.loginStatusCheckPath + user.getCookie("token"), function(data){
+                    user.ajaxRequest(user.settings.loginStatusCheckPath + user.getCookie("token"), function (data) {
 
                         var json = JSON.parse(data);
 
-                        if(!json.loggedIn) {
+                        if (!json.loggedIn) {
 
                             user.login();
+
+                        }
+
+                        user.roles = [];
+
+                        if (user.getCookie("roles").trim().length > 0) {
+
+                            user.roles = JSON.parse(user.getCookie("roles"));
 
                         }
 

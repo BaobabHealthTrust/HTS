@@ -3358,6 +3358,72 @@ app.post('/block_user', function (req, res) {
 
 })
 
+app.post('/update_user', function (req, res) {
+
+    var data = req.body;
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return res.status(200).json({message: "Unauthorized access!"});
+
+        }
+
+        console.log(data);
+
+        var sql = "SELECT user_id, person_id FROM users WHERE username = '" + data.userId + "'";
+
+        console.log(sql);
+
+        queryRaw(sql, function (person) {
+
+            console.log(person[0][0].person_id);
+
+            var sql = "UPDATE person_name SET given_name = '" + data.first_name + "', family_name = '" + data.last_name +
+                "' WHERE person_id = '" + person[0][0].person_id + "'";
+
+            console.log(sql);
+
+            queryRaw(sql, function (name) {
+
+                var sql = "UPDATE person SET gender = '" + data.gender.substring(0,1).toUpperCase() +
+                    "' WHERE person_id = '" + person[0][0].person_id + "'";
+
+                console.log(sql);
+
+                queryRaw(sql, function (name) {
+
+                    if(data.hts_provider_id) {
+
+                        var sql = "UPDATE person_attribute SET value = '" + data.hts_provider_id + "' WHERE person_id " +
+                            "= '" + person[0][0].person_id + "' AND person_attribute_type_id = (SELECT " +
+                            "person_attribute_type_id FROM person_attribute_type WHERE name = 'HTS Provider ID' LIMIT 1)";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (name) {
+
+                            res.status(200).json({message: "User updated!"});
+
+                        })
+
+                    } else {
+
+                        res.status(200).json({message: "User updated!"});
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    });
+
+})
+
 app.get('/users_listing', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -3614,7 +3680,7 @@ app.get('/available_batches_to_user', function (req, res) {
             result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
                 "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
                 "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
-                data[0][i].batch_number + " ("+ ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
+                data[0][i].batch_number + " (" + ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
                 data[0][i].available + ")" + "</li>";
 
         }
