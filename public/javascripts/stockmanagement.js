@@ -621,17 +621,31 @@ var stock = ({
         btnTransfer.style.minWidth = "130px";
         btnTransfer.innerHTML = "Transfer";
         btnTransfer.setAttribute("tag", pos);
+        btnTransfer.setAttribute("label", stock.stocks[i][keys[1]]);
 
-        btnTransfer.onmousedown = function () {
+        btnTransfer.onclick = function () {
 
             if (this.className.match(/gray/))
                 return;
 
-            stock.transferItem(this.getAttribute("tag"));
+            stock.transferItem(this.getAttribute("tag"), this.getAttribute("label"));
 
         }
 
         td.appendChild(btnTransfer);
+
+        stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[pos].name +
+            "&userId=" + stock.getCookie("username"), function (data, optionalControl) {
+
+            var json = JSON.parse(data);
+
+            if (optionalControl) {
+
+                optionalControl.className = (json.inStock && parseInt(json.inStock) > 0 ? "blue" : "gray");
+
+            }
+
+        }, btnTransfer);
 
         var btnEdit = document.createElement("button");
         btnEdit.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
@@ -972,8 +986,9 @@ var stock = ({
         table.appendChild(tr);
 
         var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Issue/Day",
-            "Receive", "Issue", "Edit", "Delete"];
-        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px"];
+            "Receive", "Issue", "Edit", "Delete", "Transfer"];
+        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px",
+            "80px"];
 
         for (var i = 0; i < fields.length; i++) {
 
@@ -1065,30 +1080,30 @@ var stock = ({
 
                         td.appendChild(btnIssue);
 
-                    } else if (j == 9 && false) {       // TODO: Marked for removal later
+                    } else if (j == 11) {
 
                         td.style.padding = "2px";
 
-                        var btnConsume = document.createElement("button");
-                        // btnConsume.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
-                        btnConsume.style.minWidth = "100px";
-                        btnConsume.style.minHeight = "30px";
-                        btnConsume.style.fontWeight = "normal";
-                        btnConsume.innerHTML = "Use";
-                        btnConsume.setAttribute("stock_id", stock.stocks[i].stock_id);
-                        btnConsume.setAttribute("pos", i);
+                        var btnTransfer = document.createElement("button");
+                        btnTransfer.style.minWidth = "100px";
+                        btnTransfer.style.minHeight = "30px";
+                        btnTransfer.style.fontWeight = "normal";
+                        btnTransfer.innerHTML = "Transfer";
+                        btnTransfer.setAttribute("stock_id", stock.stocks[i].stock_id);
+                        btnTransfer.setAttribute("pos", i);
+                        btnTransfer.setAttribute("label", stock.stocks[i][keys[1]]);
 
-                        btnConsume.onclick = function () {
+                        btnTransfer.onclick = function () {
 
                             if (this.className.match(/gray/))
                                 return;
 
-                            window.parent.stock.consumeItem(stock.stocks[this.getAttribute("pos")].name);
+                            stock.transferItem(this.getAttribute("pos"), this.getAttribute("label"));
 
                         }
 
 
-                        td.appendChild(btnConsume);
+                        td.appendChild(btnTransfer);
 
                         stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
                             "&userId=" + stock.getCookie("username"), function (data, optionalControl) {
@@ -1101,7 +1116,7 @@ var stock = ({
 
                             }
 
-                        }, btnConsume);
+                        }, btnTransfer);
 
                     } else if (j == 9) {
 
@@ -1589,7 +1604,7 @@ var stock = ({
             ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
                 stock.getCookie("username") + "&batch=",
             tt_onUnload: "if(__$('data.consumption_quantity')){var limit = __$('touchscreenInput' + " +
-                "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)[1]; " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                 "__$('data.consumption_quantity').setAttribute('absoluteMax', limit)}"
         };
 
@@ -1679,7 +1694,7 @@ var stock = ({
             id: "data.batch_number",
             ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
             tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
-                "tstCurrentPage).value.trim().match(/\\((\\d+)\\)/)[1]; " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                 "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
         };
 
@@ -1695,9 +1710,9 @@ var stock = ({
         };
 
         fields[dispatcherLabel] = {
-            field_type: "text",
+            field_type: "hidden",
             id: "data.dispatch_who_dispatched",
-            ajaxURL: stock.settings.userListingPath
+            value: stock.getCookie("username")
         };
 
         fields[receiverLabel] = {
@@ -1707,10 +1722,9 @@ var stock = ({
         };
 
         fields[authorityLabel] = {
-            field_type: "text",
+            field_type: "hidden",
             id: "data.dispatch_who_authorised",
-            allowFreeText: true,
-            ajaxURL: stock.settings.userListingPath
+            value: stock.getCookie("username")
         };
 
         fields[locationLabel] = {
@@ -1726,7 +1740,7 @@ var stock = ({
 
     },
 
-    transferItem: function (pos) {
+    transferItem: function (pos, label) {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -1746,7 +1760,16 @@ var stock = ({
             "Dispatch ID": {
                 field_type: "hidden",
                 id: "data.dispatch_id",
-                value: stock.stocks[pos].dispatch_id
+                value: ""           // stock.stocks[pos].dispatch_id
+            },
+            "Batch Number": {
+                field_type: "text",
+                id: "data.batch_number",
+                ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
+                    stock.getCookie("username") + "&batch=",
+                tt_onUnload: "if(__$('data.transfer_quantity')){var limit = __$('touchscreenInput' + " +
+                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                    "__$('data.transfer_quantity').setAttribute('absoluteMax', limit)}"
             },
             "Quantity to Transfer": {
                 field_type: "number",
@@ -1758,9 +1781,9 @@ var stock = ({
                 id: "data.transfer_datetime"
             },
             "Who Released Item": {
-                field_type: "text",
+                field_type: "hidden",
                 id: "data.transfer_who_transfered",
-                ajaxURL: stock.settings.userListingPath
+                value: stock.getCookie("username")
             },
             "Who Received": {
                 field_type: "text",
@@ -1769,9 +1792,9 @@ var stock = ({
                 ajaxURL: stock.settings.userListingPath
             },
             "Who Authorised Release": {
-                field_type: "text",
+                field_type: "hidden",
                 id: "data.transfer_who_authorised",
-                ajaxURL: stock.settings.userListingPath
+                ajaxURL: stock.getCookie("username")
             },
             "Transfer Location": {
                 field_type: "text",

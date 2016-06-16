@@ -1937,7 +1937,7 @@ function transferStock(data, res) {
             data.dispatch_id + "', '" + data.transfer_quantity + "', '" + data.transfer_datetime + "', '" + data.userId +
             "', '" + (data.transfer_who_received ? data.transfer_who_received : "") + "', '" +
             (data.transfer_who_authorised ? data.transfer_who_authorised : "") + "', '" +
-            (data.transfer_destination ? data.transfer_destination : "") + "')";
+            (data.transfer_location ? data.transfer_location : "") + "')";
 
         console.log(sql);
 
@@ -1945,7 +1945,44 @@ function transferStock(data, res) {
 
             console.log(stock[0]);
 
-            res.status(200).json({message: "Record saved!"});
+            var sql = "SELECT stock_id FROM dispatch WHERE dispatch_id = '" + data.dispatch_id + "' LIMIT 1";
+
+            console.log(sql);
+
+            queryRawStock(sql, function (dispatch) {
+
+                var stock_id = dispatch[0][0].stock_id;
+
+                console.log(stock_id);
+
+                var sql = "INSERT INTO dispatch (stock_id, batch_number, dispatch_quantity, dispatch_datetime, " +
+                    "dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination) " +
+                    "VALUES('" + stock_id + "', '" + data.batch_number + "', '" + data.transfer_quantity + "', '" +
+                    data.transfer_datetime + "', '" + data.userId + "', '" + (data.transfer_who_received ?
+                    data.transfer_who_received : "") + "', '" + (data.transfer_who_authorised ?
+                    data.transfer_who_authorised : "") + "', '" + (data.transfer_location ?
+                    data.transfer_location : "") + "')";
+
+                console.log(sql);
+
+                queryRawStock(sql, function (dispatch) {
+
+                    var sql = "UPDATE dispatch SET dispatch_quantity = (@cur_quantity := dispatch_quantity) - " +
+                        data.transfer_quantity + " WHERE " + "dispatch_id = '" + data.dispatch_id + "'";
+
+                    console.log(sql);
+
+                    queryRawStock(sql, function (result) {
+
+                        console.log(result);
+
+                        res.status(200).json({message: "Record saved!"});
+
+                    });
+
+                });
+
+            });
 
         });
 
@@ -3577,7 +3614,8 @@ app.get('/available_batches_to_user', function (req, res) {
             result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
                 "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
                 "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
-                data[0][i].batch_number + " (" + data[0][i].available + ")" + "</li>";
+                data[0][i].batch_number + " ("+ ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
+                data[0][i].available + ")" + "</li>";
 
         }
 
@@ -3593,7 +3631,7 @@ app.get('/available_batches', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT batch_number, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
+    var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
         "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
         query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
         "HAVING available > 0";
@@ -3609,7 +3647,9 @@ app.get('/available_batches', function (req, res) {
         for (var i = 0; i < data[0].length; i++) {
 
             result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available + "'>" +
-                data[0][i].batch_number + " (" + data[0][i].available + ")" + "</li>";
+                data[0][i].batch_number + " (" +
+                ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
+                data[0][i].available + ")" + "</li>";
 
         }
 
