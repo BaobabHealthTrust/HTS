@@ -251,6 +251,8 @@ var user = ({
 
     editUser: function (target, data) {
 
+        console.log(data);
+
         if (!target)
             return;
 
@@ -284,14 +286,14 @@ var user = ({
                 id: "data.first_name",
                 allowFreeText: true,
                 ajaxURL: user.settings.firstNamesPath,
-                value: (data && data.first_name ? data.first_name : user.getCookie("given_name"))
+                value: (data && data.given_name ? data.given_name : user.getCookie("given_name"))
             },
             "Last Name": {
                 field_type: "text",
                 id: "data.last_name",
                 allowFreeText: true,
                 ajaxURL: user.settings.lastNamesPath,
-                value: (data && data.last_name ? data.last_name : user.getCookie("family_name"))
+                value: (data && data.family_name ? data.family_name : user.getCookie("family_name"))
             },
             "Gender": {
                 field_type: "select",
@@ -318,7 +320,7 @@ var user = ({
                 field_type: "text",
                 optional: true,
                 id: "data.hts_provider_id",
-                value: (data && data.hts_provider_id ? data.hts_provider_id : JSON.parse(user.getCookie("attrs"))['HTS Provider ID'])
+                value: (data && data.attrs ? data.attrs['HTS Provider ID'] : "")
             }
 
         }
@@ -1699,7 +1701,7 @@ var user = ({
                             if (this.className.match(/gray/i))
                                 return;
 
-                            user.editUser(window.parent.document.body);
+                            user.editUser(window.parent.document.body, user.users[this.getAttribute("username")]);
 
                         }
 
