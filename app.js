@@ -2470,7 +2470,7 @@ app.post('/login', function (req, res) {
 
                             console.log(location);
 
-                            if(location[0].length > 0) {
+                            if (location[0].length > 0) {
 
                                 res.status(200).json({token: token, username: user[0][0].username, roles: collection,
                                     attributes: attributes, gender: gender, given_name: given_name,
@@ -3710,14 +3710,23 @@ app.get('/stock_search', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT report.stock_id, item_name AS name, description, category_name, SUM(COALESCE(receipt_quantity,0)) " +
+    /*var sql = "SELECT report.stock_id, item_name AS name, description, category_name, SUM(COALESCE(receipt_quantity,0)) " +
+     "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
+     "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+     "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
+     "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
+     "WHERE category_name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND name = '" +
+     query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id ";
+     // HAVING dispatch_quantity != 0 AND receipt_quantity != 0";*/
+
+    var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
-        "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
-        "WHERE category_name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND name = '" +
-        query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id ";
-        // HAVING dispatch_quantity != 0 AND receipt_quantity != 0";
+        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
+        "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
+        "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
+        "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.name = '" +
+        query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id";
 
     console.log(sql);
 
@@ -3731,7 +3740,7 @@ app.get('/stock_search', function (req, res) {
 
             var entry = {
                 stock_id: data[0][i].stock_id,
-                name: data[0][i].name,
+                name: data[0][i].item_name,
                 category: data[0][i].category_name,
                 description: data[0][i].description,
                 inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
@@ -3771,7 +3780,7 @@ app.post('/delete_item', function (req, res) {
 
         console.log(sql);
 
-        queryRawStock(sql, function(data){
+        queryRawStock(sql, function (data) {
 
             console.log(data);
 

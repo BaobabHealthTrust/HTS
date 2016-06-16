@@ -481,7 +481,7 @@ var stock = ({
 
         var cell1_2 = document.createElement("td");
         cell1_2.style.fontStyle = "italic";
-        cell1_2.innerHTML = stock.stocks[pos]["item_name"];
+        cell1_2.innerHTML = stock.stocks[pos]["name"];
 
         tr1.appendChild(cell1_2);
 
