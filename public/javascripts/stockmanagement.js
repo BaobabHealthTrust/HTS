@@ -21,9 +21,10 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
             if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
-                result = date.getFullYear() + "-" + stock;padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    stock.padZeros(date.getDate(), 2) + " " + stock.padZeros(date.getHours(), 2) + ":" +
-                    stock.padZeros(date.getMinutes(), 2) + ":" + stock.padZeros(date.getSeconds(), 2);
+                result = date.getFullYear() + "-" + stock;
+                padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                stock.padZeros(date.getDate(), 2) + " " + stock.padZeros(date.getHours(), 2) + ":" +
+                stock.padZeros(date.getMinutes(), 2) + ":" + stock.padZeros(date.getSeconds(), 2);
 
             } else if (format.match(/YYYY\-mm\-dd/)) {
 
@@ -66,7 +67,7 @@ var stock = ({
 
     $$: function (id) {
 
-        if(this.$("ifrMain")) {
+        if (this.$("ifrMain")) {
 
             return this.$("ifrMain").contentWindow.document.getElementById(id);
 
@@ -327,12 +328,6 @@ var stock = ({
         var url = stock.settings.searchPath + "/?category=" + stock.$("item_category").value.trim() +
             "&item_name=" + stock.$("item_name").value.trim() + "&page=" + page;
 
-        /*if (stock.$("nextButton")) {
-         stock.$("nextButton").className = "button gray navButton";
-         stock.$("nextButton").onclick = function () {
-         };
-         }*/
-
         if (stock.$("editItem")) {
 
             stock.$("editItem").className = "gray";
@@ -357,12 +352,6 @@ var stock = ({
 
         stock.$("leftpanel").innerHTML = "";
         stock.$("rightpanel").innerHTML = "";
-
-        /*if (stock.$("nextButton")) {
-         stock.$("nextButton").className = "button gray navButton";
-         stock.$("nextButton").onclick = function () {
-         };
-         }*/
 
         if (stock.$("editItem")) {
 
@@ -400,24 +389,12 @@ var stock = ({
 
                     }
 
-                    stock.$("selected_item").value = this.getAttribute("npid");
-
                     if (stock.$("editItem")) {
 
                         stock.$("editItem").className = "blue";
 
                     }
 
-                    /*if (stock.$('nextButton')) {
-                     stock.$("nextButton").innerHTML = "<span>Select</span>"
-                     stock.$("nextButton").className = "green navButton";
-
-                     stock.$('nextButton').onmousedown = function () {
-
-                     window.location = stock.settings.basePath + "/" + stock.$("selected_item").value.trim();
-
-                     }
-                     }*/
                 }
 
                 div.innerHTML = "<table width='100%'><tr><td style='width: 50%'>" + stock.stocks[i].name + " (" +
@@ -606,12 +583,15 @@ var stock = ({
         tr.appendChild(td);
 
         var btnReceive = document.createElement("button");
-        btnReceive.className = "blue";
+        btnReceive.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
         btnReceive.style.minWidth = "130px";
         btnReceive.innerHTML = "Receive";
         btnReceive.setAttribute("tag", pos);
 
         btnReceive.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
 
             stock.receiveItem(stock.stocks[parseInt(this.getAttribute("tag"))].stock_id);
 
@@ -620,12 +600,15 @@ var stock = ({
         td.appendChild(btnReceive);
 
         var btnIssue = document.createElement("button");
-        btnIssue.className = "blue";
+        btnIssue.className = (stock.stocks[pos]["inStock"] > 0 && stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
         btnIssue.style.minWidth = "130px";
         btnIssue.innerHTML = "Issue";
         btnIssue.setAttribute("tag", pos);
 
         btnIssue.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
 
             stock.dispatchItem(stock.stocks[parseInt(this.getAttribute("tag"))].stock_id);
 
@@ -634,12 +617,15 @@ var stock = ({
         td.appendChild(btnIssue);
 
         var btnTransfer = document.createElement("button");
-        btnTransfer.className = "blue";
+        btnTransfer.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
         btnTransfer.style.minWidth = "130px";
         btnTransfer.innerHTML = "Transfer";
         btnTransfer.setAttribute("tag", pos);
 
         btnTransfer.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
 
             stock.transferItem(this.getAttribute("tag"));
 
@@ -648,12 +634,15 @@ var stock = ({
         td.appendChild(btnTransfer);
 
         var btnEdit = document.createElement("button");
-        btnEdit.className = "blue";
+        btnEdit.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
         btnEdit.style.minWidth = "130px";
         btnEdit.innerHTML = "Edit";
         btnEdit.setAttribute("tag", pos);
 
         btnEdit.onmousedown = function () {
+
+            if (this.className.match(/gray/))
+                return;
 
             stock.editItem(this.getAttribute("tag"));
 
@@ -789,8 +778,12 @@ var stock = ({
         newPatient.innerHTML = "<span>New Item</span>";
         newPatient.id = "newPatient";
         newPatient.style.cssFloat = "right";
+        newPatient.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
 
         newPatient.onmousedown = function () {
+
+            if (this.className.match(/gray/i))
+                return;
 
             stock.addItem();
 
@@ -913,12 +906,15 @@ var stock = ({
         nav.appendChild(btnSearch);
 
         var btnAdd = document.createElement("button");
-        btnAdd.className = "blue";
+        btnAdd.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
         btnAdd.style.cssFloat = "right";
         btnAdd.style.margin = "15px";
         btnAdd.innerHTML = "Add Item";
 
         btnAdd.onclick = function () {
+
+            if (this.className.match(/gray/))
+                return;
 
             window.parent.stock.addItem();
 
@@ -976,8 +972,8 @@ var stock = ({
         table.appendChild(tr);
 
         var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Issue/Day",
-            "Receive", "Issue", "Use Stock", "Edit", "Delete"];
-        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px", "80px"];
+            "Receive", "Issue", "Edit", "Delete"];
+        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px"];
 
         for (var i = 0; i < fields.length; i++) {
 
@@ -1024,7 +1020,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnReceive = document.createElement("button");
-                        btnReceive.className = "blue";
+                        btnReceive.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
                         btnReceive.style.minWidth = "100px";
                         btnReceive.style.minHeight = "30px";
                         btnReceive.style.fontWeight = "normal";
@@ -1033,6 +1029,9 @@ var stock = ({
                         btnReceive.setAttribute("pos", i);
 
                         btnReceive.onclick = function () {
+
+                            if (this.className.match(/gray/))
+                                return;
 
                             window.parent.stock.receiveItem(this.getAttribute("stock_id"),
                                 stock.stocks[this.getAttribute("pos")].name);
@@ -1046,7 +1045,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnIssue = document.createElement("button");
-                        btnIssue.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
+                        btnIssue.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
                         btnIssue.style.minWidth = "100px";
                         btnIssue.style.minHeight = "30px";
                         btnIssue.style.fontWeight = "normal";
@@ -1066,7 +1065,7 @@ var stock = ({
 
                         td.appendChild(btnIssue);
 
-                    } else if (j == 9) {
+                    } else if (j == 9 && false) {       // TODO: Marked for removal later
 
                         td.style.padding = "2px";
 
@@ -1092,11 +1091,11 @@ var stock = ({
                         td.appendChild(btnConsume);
 
                         stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
-                            "&userId=" + stock.getCookie("username"), function(data, optionalControl) {
+                            "&userId=" + stock.getCookie("username"), function (data, optionalControl) {
 
                             var json = JSON.parse(data);
 
-                            if(optionalControl) {
+                            if (optionalControl) {
 
                                 optionalControl.className = (json.inStock && parseInt(json.inStock) > 0 ? "blue" : "gray");
 
@@ -1104,12 +1103,12 @@ var stock = ({
 
                         }, btnConsume);
 
-                    } else if (j == 10) {
+                    } else if (j == 9) {
 
                         td.style.padding = "2px";
 
                         var btnEdit = document.createElement("button");
-                        btnEdit.className = "blue";
+                        btnEdit.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
                         btnEdit.style.minWidth = "100px";
                         btnEdit.style.minHeight = "30px";
                         btnEdit.style.fontWeight = "normal";
@@ -1128,7 +1127,7 @@ var stock = ({
 
                         td.appendChild(btnEdit);
 
-                    } else if (j == 11) {
+                    } else if (j == 10) {
 
                         td.style.padding = "2px";
 
@@ -1137,7 +1136,7 @@ var stock = ({
                         btnDelete.style.minHeight = "30px";
                         btnDelete.style.fontWeight = "normal";
                         btnDelete.innerHTML = "Delete";
-                        btnDelete.className = "red";
+                        btnDelete.className = (stock.roles.indexOf("Admin") >= 0 ? "red" : "gray");
                         btnDelete.setAttribute("stock_id", stock.stocks[i].stock_id);
                         btnDelete.setAttribute("pos", i);
 
@@ -1788,7 +1787,7 @@ var stock = ({
 
     },
 
-    deleteItem: function(stock_id) {
+    deleteItem: function (stock_id) {
 
         var data = {
             data: {}
@@ -2181,6 +2180,8 @@ var stock = ({
 
     },
 
+    roles: [],
+
     init: function (settingsPath, userId) {
 
         this['settings'] = {};
@@ -2193,7 +2194,14 @@ var stock = ({
 
                 stock.settings = JSON.parse(settings);
 
-                // stock.searchForStock();
+                stock.roles = [];
+
+                if (stock.getCookie("roles").trim().length > 0) {
+
+                    stock.roles = JSON.parse(stock.getCookie("roles"));
+
+                }
+
 
             })
 
