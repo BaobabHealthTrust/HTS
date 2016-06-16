@@ -3455,8 +3455,6 @@ app.get('/stock_list', function (req, res) {
 
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
-    //  AND " + "COALESCE(batch_number,'') != ''
-
     var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
@@ -3710,14 +3708,9 @@ app.get('/stock_search', function (req, res) {
 
     var query = url_parts.query;
 
-    /*var sql = "SELECT report.stock_id, item_name AS name, description, category_name, SUM(COALESCE(receipt_quantity,0)) " +
-     "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
-     "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-     "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM report LEFT OUTER " +
-     "JOIN stock ON stock.stock_id = report.stock_id " + (query.category && query.item_name ?
-     "WHERE category_name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND name = '" +
-     query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id ";
-     // HAVING dispatch_quantity != 0 AND receipt_quantity != 0";*/
+    var pageSize = 10;
+
+    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
     var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
@@ -3726,7 +3719,8 @@ app.get('/stock_search', function (req, res) {
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
         "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
         "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.name = '" +
-        query.item_name + "'" : "") + " AND COALESCE(batch_number, '') != '' GROUP BY stock.stock_id";
+        query.item_name + "'" : "") + " GROUP BY stock.stock_id LIMIT " +
+        lowerLimit + ", " + pageSize;
 
     console.log(sql);
 
