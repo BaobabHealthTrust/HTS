@@ -428,7 +428,7 @@ var user = ({
             user.$$("touchscreenInput" + user.__().tstCurrentPage).value =
                 user.$$("touchscreenInput" + user.__().tstCurrentPage).value.trim().replace(/\$/g, "");
 
-            user.__().submitData();
+            user.__().gotoNextPage();
 
         }
 

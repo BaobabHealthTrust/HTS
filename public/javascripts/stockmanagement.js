@@ -1045,7 +1045,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnIssue = document.createElement("button");
-                        btnIssue.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
+                        btnIssue.className = (stock.stocks[i]["inStock"] > 0 && stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
                         btnIssue.style.minWidth = "100px";
                         btnIssue.style.minHeight = "30px";
                         btnIssue.style.fontWeight = "normal";
