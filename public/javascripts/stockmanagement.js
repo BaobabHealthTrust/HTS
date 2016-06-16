@@ -621,7 +621,7 @@ var stock = ({
         btnTransfer.style.minWidth = "130px";
         btnTransfer.innerHTML = "Transfer";
         btnTransfer.setAttribute("tag", pos);
-        btnTransfer.setAttribute("label", stock.stocks[i][keys[1]]);
+        btnTransfer.setAttribute("label", stock.stocks[pos].name);
 
         btnTransfer.onclick = function () {
 
