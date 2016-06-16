@@ -580,7 +580,7 @@ var landing = ({
         tdDiv2_1_4.style.textAlign = "left";
         tdDiv2_1_4.style.fontWeight = "bold";
         tdDiv2_1_4.style.paddingLeft = "10px";
-        tdDiv2_1_4.innerHTML = "Tasks";
+        tdDiv2_1_4.innerHTML = "Menu";
 
         trDiv2_1.appendChild(tdDiv2_1_4);
 

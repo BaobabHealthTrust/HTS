@@ -420,7 +420,7 @@ var stock = ({
                      }*/
                 }
 
-                div.innerHTML = "<table width='100%'><tr><td style='width: 50%'>" + stock.stocks[i].item_name + " (" +
+                div.innerHTML = "<table width='100%'><tr><td style='width: 50%'>" + stock.stocks[i].name + " (" +
                     stock.stocks[i].category + ")" + "</td></tr></table>";
 
                 stock.$("rightpanel").appendChild(div);
@@ -535,7 +535,7 @@ var stock = ({
 
         var cell7_2 = document.createElement("td");
         cell7_2.style.fontStyle = "italic";
-        cell7_2.innerHTML = stock.stocks[pos]["in_stock"];
+        cell7_2.innerHTML = stock.stocks[pos]["inStock"];
 
         tr7.appendChild(cell7_2);
 
@@ -565,14 +565,14 @@ var stock = ({
         var cell5_1 = document.createElement("th");
         cell5_1.style.textAlign = "right";
         cell5_1.style.color = "#000";
-        cell5_1.innerHTML = "Average Dispatch/Day:";
+        cell5_1.innerHTML = "Average Issue/Day:";
         cell5_1.style.borderRight = "1px dotted #000";
 
         tr5.appendChild(cell5_1);
 
         var cell5_2 = document.createElement("td");
         cell5_2.style.fontStyle = "italic";
-        cell5_2.innerHTML = stock.stocks[pos]["avg_dispatch_per_day"];
+        cell5_2.innerHTML = stock.stocks[pos]["avg"];
 
         tr5.appendChild(cell5_2);
 
@@ -619,19 +619,19 @@ var stock = ({
 
         td.appendChild(btnReceive);
 
-        var btnDispatch = document.createElement("button");
-        btnDispatch.className = "blue";
-        btnDispatch.style.minWidth = "130px";
-        btnDispatch.innerHTML = "Dispatch";
-        btnDispatch.setAttribute("tag", pos);
+        var btnIssue = document.createElement("button");
+        btnIssue.className = "blue";
+        btnIssue.style.minWidth = "130px";
+        btnIssue.innerHTML = "Issue";
+        btnIssue.setAttribute("tag", pos);
 
-        btnDispatch.onmousedown = function () {
+        btnIssue.onmousedown = function () {
 
             stock.dispatchItem(stock.stocks[parseInt(this.getAttribute("tag"))].stock_id);
 
         }
 
-        td.appendChild(btnDispatch);
+        td.appendChild(btnIssue);
 
         var btnTransfer = document.createElement("button");
         btnTransfer.className = "blue";
@@ -848,7 +848,7 @@ var stock = ({
         td0_0_0.style.color = "#eee";
         td0_0_0.style.padding = "15px";
         td0_0_0.style.textAlign = "center";
-        td0_0_0.innerHTML = "Inventory Management";
+        td0_0_0.innerHTML = "Inventory Control";
 
         tr0_0.appendChild(td0_0_0);
 
@@ -935,8 +935,6 @@ var stock = ({
 
     },
 
-    itemsList: [],
-
     loadListItems: function (path, target) {
 
         if (!path || !target)
@@ -944,7 +942,7 @@ var stock = ({
 
         stock.ajaxRequest(path, function (data) {
 
-            stock.itemsList = JSON.parse(data);
+            stock.stocks = JSON.parse(data);
 
             stock.buildUsersView(target);
 
@@ -957,7 +955,7 @@ var stock = ({
         if (!target)
             return;
 
-        if (!stock.itemsList)
+        if (!stock.stocks)
             return;
 
         target.innerHTML = "";
@@ -977,9 +975,9 @@ var stock = ({
 
         table.appendChild(tr);
 
-        var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Dispatch/Day",
-            "Receive", "Dispatch", "Use Stock"];
-        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px"];
+        var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Issue/Day",
+            "Receive", "Issue", "Use Stock", "Edit", "Delete"];
+        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px", "80px"];
 
         for (var i = 0; i < fields.length; i++) {
 
@@ -994,13 +992,13 @@ var stock = ({
 
         }
 
-        for (var i = 0; i < stock.itemsList.length; i++) {
+        for (var i = 0; i < stock.stocks.length; i++) {
 
             var tr = document.createElement("tr");
 
             table.appendChild(tr);
 
-            var keys = Object.keys(stock.itemsList[i]);
+            var keys = Object.keys(stock.stocks[i]);
 
             for (var j = 0; j < fields.length; j++) {
 
@@ -1031,13 +1029,13 @@ var stock = ({
                         btnReceive.style.minHeight = "30px";
                         btnReceive.style.fontWeight = "normal";
                         btnReceive.innerHTML = "Receive";
-                        btnReceive.setAttribute("stock_id", stock.itemsList[i].stock_id);
+                        btnReceive.setAttribute("stock_id", stock.stocks[i].stock_id);
                         btnReceive.setAttribute("pos", i);
 
                         btnReceive.onclick = function () {
 
                             window.parent.stock.receiveItem(this.getAttribute("stock_id"),
-                                stock.itemsList[this.getAttribute("pos")].name);
+                                stock.stocks[this.getAttribute("pos")].name);
 
                         }
 
@@ -1047,38 +1045,38 @@ var stock = ({
 
                         td.style.padding = "2px";
 
-                        var btnDispatch = document.createElement("button");
-                        btnDispatch.className = (stock.itemsList[i].inStock > 0 ? "blue" : "gray");
-                        btnDispatch.style.minWidth = "100px";
-                        btnDispatch.style.minHeight = "30px";
-                        btnDispatch.style.fontWeight = "normal";
-                        btnDispatch.innerHTML = "Dispatch";
-                        btnDispatch.setAttribute("stock_id", stock.itemsList[i].stock_id);
-                        btnDispatch.setAttribute("pos", i);
+                        var btnIssue = document.createElement("button");
+                        btnIssue.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
+                        btnIssue.style.minWidth = "100px";
+                        btnIssue.style.minHeight = "30px";
+                        btnIssue.style.fontWeight = "normal";
+                        btnIssue.innerHTML = "Issue";
+                        btnIssue.setAttribute("stock_id", stock.stocks[i].stock_id);
+                        btnIssue.setAttribute("pos", i);
 
-                        btnDispatch.onclick = function () {
+                        btnIssue.onclick = function () {
 
                             if (this.className.match(/gray/))
                                 return;
 
                             window.parent.stock.dispatchItem(this.getAttribute("stock_id"),
-                                stock.itemsList[this.getAttribute("pos")].name);
+                                stock.stocks[this.getAttribute("pos")].name);
 
                         }
 
-                        td.appendChild(btnDispatch);
+                        td.appendChild(btnIssue);
 
                     } else if (j == 9) {
 
                         td.style.padding = "2px";
 
                         var btnConsume = document.createElement("button");
-                        // btnConsume.className = (stock.itemsList[i].inStock > 0 ? "blue" : "gray");
+                        // btnConsume.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
                         btnConsume.style.minWidth = "100px";
                         btnConsume.style.minHeight = "30px";
                         btnConsume.style.fontWeight = "normal";
                         btnConsume.innerHTML = "Use";
-                        btnConsume.setAttribute("stock_id", stock.itemsList[i].stock_id);
+                        btnConsume.setAttribute("stock_id", stock.stocks[i].stock_id);
                         btnConsume.setAttribute("pos", i);
 
                         btnConsume.onclick = function () {
@@ -1086,14 +1084,14 @@ var stock = ({
                             if (this.className.match(/gray/))
                                 return;
 
-                            window.parent.stock.consumeItem(stock.itemsList[this.getAttribute("pos")].name);
+                            window.parent.stock.consumeItem(stock.stocks[this.getAttribute("pos")].name);
 
                         }
 
 
                         td.appendChild(btnConsume);
 
-                        stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.itemsList[i].name +
+                        stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
                             "&userId=" + stock.getCookie("username"), function(data, optionalControl) {
 
                             var json = JSON.parse(data);
@@ -1106,6 +1104,57 @@ var stock = ({
 
                         }, btnConsume);
 
+                    } else if (j == 10) {
+
+                        td.style.padding = "2px";
+
+                        var btnEdit = document.createElement("button");
+                        btnEdit.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
+                        btnEdit.style.minWidth = "100px";
+                        btnEdit.style.minHeight = "30px";
+                        btnEdit.style.fontWeight = "normal";
+                        btnEdit.innerHTML = "Edit";
+                        btnEdit.setAttribute("stock_id", stock.stocks[i].stock_id);
+                        btnEdit.setAttribute("pos", i);
+
+                        btnEdit.onclick = function () {
+
+                            if (this.className.match(/gray/))
+                                return;
+
+                            window.parent.stock.editItem(this.getAttribute("pos"));
+
+                        }
+
+                        td.appendChild(btnEdit);
+
+                    } else if (j == 11) {
+
+                        td.style.padding = "2px";
+
+                        var btnDelete = document.createElement("button");
+                        btnDelete.className = (stock.stocks[i].inStock > 0 ? "blue" : "gray");
+                        btnDelete.style.minWidth = "100px";
+                        btnDelete.style.minHeight = "30px";
+                        btnDelete.style.fontWeight = "normal";
+                        btnDelete.innerHTML = "Delete";
+                        btnDelete.className = "red";
+                        btnDelete.setAttribute("stock_id", stock.stocks[i].stock_id);
+                        btnDelete.setAttribute("pos", i);
+
+                        btnDelete.onclick = function () {
+
+                            if (this.className.match(/gray/))
+                                return;
+
+                            window.parent.stock.showConfirmMsg("Do you really want to delete this item permanently?",
+                                "Confirm Delete", "javascript:window.parent.stock.deleteItem('" +
+                                    this.getAttribute("stock_id") + "')");
+
+                        }
+
+                        td.appendChild(btnDelete);
+
                     }
 
                 } else if (j == 0) {
@@ -1116,7 +1165,7 @@ var stock = ({
 
                     td.style.fontWeight = "bold";
 
-                    if (parseInt(stock.itemsList[i][keys[j]]) > parseInt(stock.itemsList[i][keys[j + 1]])) {
+                    if (parseInt(stock.stocks[i][keys[j]]) > parseInt(stock.stocks[i][keys[j + 1]])) {
 
                         td.style.color = "green";
 
@@ -1126,11 +1175,11 @@ var stock = ({
 
                     }
 
-                    td.innerHTML = stock.itemsList[i][keys[j]];
+                    td.innerHTML = stock.stocks[i][keys[j]];
 
                 } else {
 
-                    td.innerHTML = stock.itemsList[i][keys[j]];
+                    td.innerHTML = stock.stocks[i][keys[j]];
 
                 }
 
@@ -1192,7 +1241,7 @@ var stock = ({
 
     },
 
-    editItem: function (pos) {
+    editItem: function (pos, stock_id) {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -1212,7 +1261,7 @@ var stock = ({
             "Stock ID": {
                 field_type: "hidden",
                 id: "data.stock_id",
-                value: stock.stocks[pos].stock_id
+                value: (pos ? stock.stocks[pos].stock_id : stock_id)
             },
             "Category": {
                 field_type: "text",
@@ -1227,7 +1276,7 @@ var stock = ({
                 field_type: "text",
                 allowFreeText: true,
                 id: "data.item_name",
-                value: stock.stocks[pos].item_name
+                value: stock.stocks[pos].name
             },
             "Description": {
                 field_type: "text",
@@ -1308,6 +1357,141 @@ var stock = ({
         stock.buildFields(fields, table);
 
         stock.navPanel(form.outerHTML);
+
+    },
+
+    showConfirmMsg: function (msg, topic, nextURL) {
+
+        if (!topic) {
+
+            topic = "Confirm";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "red";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset red";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+        var btnCancel = document.createElement("button");
+        btnCancel.className = "blue";
+        btnCancel.innerHTML = "Cancel";
+        btnCancel.style.minWidth = "100px";
+
+        btnCancel.onclick = function () {
+
+            if (user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
+
+            }
+
+        }
+
+        tdf.appendChild(btnCancel);
+
+        var btnOK = document.createElement("button");
+        btnOK.className = "red";
+        btnOK.innerHTML = "OK";
+        btnOK.style.minWidth = "100px";
+
+        if (nextURL)
+            btnOK.setAttribute("nextURL", nextURL);
+
+        btnOK.onclick = function () {
+
+            if (user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
+
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
+
+            }
+
+        }
+
+        tdf.appendChild(btnOK);
 
     },
 
@@ -1467,9 +1651,9 @@ var stock = ({
 
         var batchLabel = (label ? label + ": " : "") + "Batch Number";
 
-        var quantityLabel = (label ? label + ": " : "") + "Quantity to Dispatch";
+        var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue";
 
-        var dateLabel = (label ? label + ": " : "") + "Date of Dispatch";
+        var dateLabel = (label ? label + ": " : "") + "Date of Issue";
 
         var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
 
@@ -1477,7 +1661,7 @@ var stock = ({
 
         var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
 
-        var locationLabel = (label ? label + ": " : "") + "Dispatch Location";
+        var locationLabel = (label ? label + ": " : "") + "Issue Location";
 
         var fields = {
             "Datatype": {
@@ -1602,6 +1786,31 @@ var stock = ({
         stock.buildFields(fields, table);
 
         stock.navPanel(form.outerHTML);
+
+    },
+
+    deleteItem: function(stock_id) {
+
+        var data = {
+            data: {}
+        };
+
+        data.data.userId = stock.getCookie("username");
+
+        data.data.token = stock.getCookie("token");
+
+        data.data.stock_id = stock_id;
+
+        stock.ajaxPostRequest(stock.settings.itemDeletePath, data, function (sid) {
+
+            var json = JSON.parse(sid);
+
+            if (stock.$("stock.content"))
+                stock.loadListItems(stock.settings.listPath, stock.$("stock.content"));
+
+            stock.showMsg(json.message);
+
+        })
 
     },
 

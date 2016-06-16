@@ -598,7 +598,7 @@ var user = ({
 
                     user.setCookie("family_name", json["family_name"], 0.333333333);
 
-                    user.setCookie("location", data.data.location, 0.333333333);
+                    user.setCookie("location", json["location"], 0.333333333);
 
                     user.setCookie("attrs", JSON.stringify(json['attributes']), 0.333333333);
 
@@ -612,7 +612,9 @@ var user = ({
 
                         user.login();
 
-                        user.showAlertMsg("Wrong username/password!", "Access Denied!");
+                        // user.showAlertMsg("Wrong username/password!", "Access Denied!");
+
+                        user.showAlertMsg(json.message, "Access Denied!");
 
                     }
 

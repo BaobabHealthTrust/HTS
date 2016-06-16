@@ -135,6 +135,10 @@ CREATE TRIGGER stock_delete
 BEFORE DELETE ON `stock` FOR EACH ROW
 BEGIN
 
+	DELETE FROM dispatch WHERE stock_id = OLD.stock_id;
+	
+	DELETE FROM receipt WHERE stock_id = OLD.stock_id;
+
 	DELETE FROM report WHERE stock_id = OLD.stock_id;
 
 END$$

@@ -11,5 +11,6 @@
     "consumptionTypesPath": "/consumption_types",
     "availableBatchesToUserSummaryPath": "/available_batches_to_user_summary?item_name=",
     "userListingPath": "/list_users?name=",
-    "locationsListPath": "/list_locations?name="
+    "locationsListPath": "/list_locations?name=",
+    "itemDeletePath": "/delete_item"
 }

@@ -2406,7 +2406,7 @@ app.post('/login', function (req, res) {
 
         if (user[0].length <= 0) {
 
-            res.status(200).json({message: "Access denied!"});
+            res.status(200).json({message: "Wrong username/password!"});
 
         } else {
 
@@ -2462,8 +2462,27 @@ app.post('/login', function (req, res) {
 
                         }
 
-                        res.status(200).json({token: token, username: user[0][0].username, roles: collection,
-                            attributes: attributes, gender: gender, given_name: given_name, family_name: family_name});
+                        var sql = "SELECT name FROM location WHERE name = '" + data.location + "'";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (location) {
+
+                            console.log(location);
+
+                            if(location[0].length > 0) {
+
+                                res.status(200).json({token: token, username: user[0][0].username, roles: collection,
+                                    attributes: attributes, gender: gender, given_name: given_name,
+                                    family_name: family_name, location: location[0][0].name});
+
+                            } else {
+
+                                res.status(200).json({message: "Access denied! Unauthorized location!"});
+
+                            }
+
+                        })
 
                     });
 
@@ -3462,7 +3481,7 @@ app.get('/stock_list', function (req, res) {
                 description: data[0][i].description,
                 category: data[0][i].category_name,
                 inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
-                reorder_level: data[0][i].reorder_level,
+                re_order_level: data[0][i].reorder_level,
                 avg: (data[0][i].duration > 0 ?
                     (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
                 receipt_quantity: data[0][i].receipt_quantity,
@@ -3711,12 +3730,12 @@ app.get('/stock_search', function (req, res) {
 
             var entry = {
                 stock_id: data[0][i].stock_id,
-                item_name: data[0][i].name,
+                name: data[0][i].name,
                 category: data[0][i].category_name,
                 description: data[0][i].description,
-                in_stock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
+                inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
                 last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
-                avg_dispatch_per_day: (data[0][i].duration > 0 ?
+                avg: (data[0][i].duration > 0 ?
                     (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
                 re_order_level: data[0][i].reorder_level,
                 last_order_size: data[0][i].last_order_size
@@ -3731,6 +3750,35 @@ app.get('/stock_search', function (req, res) {
         res.status(200).json(collection);
 
     })
+
+})
+
+
+app.post('/delete_item', function (req, res) {
+
+    var data = req.body.data;
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return res.status(200).json({message: "Unauthorized access!"});
+
+        }
+
+        var sql = "DELETE FROM stock WHERE stock_id = '" + data.stock_id + "'";
+
+        console.log(sql);
+
+        queryRawStock(sql, function(data){
+
+            console.log(data);
+
+            return res.status(200).json({message: "Item deleted!"});
+
+        })
+
+    });
 
 })
 
