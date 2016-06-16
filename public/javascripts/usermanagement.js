@@ -66,6 +66,26 @@ var user = ({
         return document.getElementById(id);
     },
 
+    $$: function (id) {
+
+        if (this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow.document.getElementById(id);
+
+        }
+
+    },
+
+    __: function (id) {
+
+        if (this.$("ifrMain")) {
+
+            return this.$("ifrMain").contentWindow;
+
+        }
+
+    },
+
     padZeros: function (number, positions) {
         var zeros = parseInt(positions) - String(number).length;
         var padded = "";
@@ -357,6 +377,12 @@ var user = ({
 
     login: function () {
 
+        if(landing && landing.intBarcode) {
+
+            clearInterval(landing.intBarcode);
+
+        }
+
         var form = document.createElement("form");
         form.id = "data";
         form.action = "javascript:submitData()";
@@ -381,14 +407,32 @@ var user = ({
             "Location": {
                 field_type: "text",
                 id: "data.location",
-                ajaxURL: user.settings.locationsListPath,
-                allowFreeText: true
+                tt_onLoad: "window.parent.user.intBarcode = setInterval(function(){window.parent.user.checkLocationBarcode();}, 200);",
+                tt_onUnLoad: "clearTimeout(window.parent.user.intBarcode);",
+                tt_pageStyleClass: "NoKeyboard"
             }
         }
 
         user.buildFields(fields, table);
 
         user.navPanel(form.outerHTML);
+
+    },
+
+    intBarcode: null,
+
+    checkLocationBarcode: function() {
+
+        if(user.$$("touchscreenInput" + user.__().tstCurrentPage).value.trim().match(/\$$/)) {
+
+            user.$$("touchscreenInput" + user.__().tstCurrentPage).value =
+                user.$$("touchscreenInput" + user.__().tstCurrentPage).value.trim().replace(/\$/g, "");
+
+            user.__().submitData();
+
+        }
+
+        user.$$("touchscreenInput" + user.__().tstCurrentPage).focus();
 
     },
 
@@ -1683,8 +1727,6 @@ var user = ({
                     user.ajaxRequest(user.settings.loginStatusCheckPath + user.getCookie("token"), function(data){
 
                         var json = JSON.parse(data);
-
-                        console.log(json);
 
                         if(!json.loggedIn) {
 

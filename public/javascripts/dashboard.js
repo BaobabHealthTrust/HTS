@@ -2313,12 +2313,8 @@ var dashboard = ({
 
                 li.onclick = function () {
 
-                    console.log("Clicked");
-
                     if (this.className && this.className.match(/disabled/))
                         return;
-
-                    console.log(this.getAttribute("path"));
 
                     window.location = this.getAttribute("path");
 
@@ -3173,8 +3169,6 @@ var dashboard = ({
             data.data.token = dashboard.getCookie("token");
 
             if (data.data.datatype == "relationship") {
-
-                console.log("in relationship");
 
                 socket.emit('relationship', data);
 
