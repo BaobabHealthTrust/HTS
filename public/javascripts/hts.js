@@ -933,7 +933,7 @@ function setAjaxUrl(pos) {
 
 }
 
-function saveConsumption(dispatch_id) {
+function saveConsumption(dispatch_id, target_id) {
 
     var patient_id = getCookie("client_identifier");
 
@@ -962,6 +962,14 @@ function saveConsumption(dispatch_id) {
     }
 
     ajaxPostRequest("/save_item", data, function (result) {
+
+        var json = JSON.parse(result);
+
+        if(__$(target_id)) {
+
+            __$(target_id).setAttribute("consumption_id", json.consumption_id);
+
+        }
 
     })
 
@@ -3369,5 +3377,45 @@ function stopValidationChecks() {
         __$("nextButton").className = __$("nextButton").className.replace(/gray/, "green");
 
     }
+
+}
+
+
+function reverseConsumption(consumption_id, prefix, suffix) {
+
+    var location = getCookie("location");
+    var userId = getCookie("username");
+
+    var data = {
+        data: {
+            consumption_id: consumption_id,
+            location: location,
+            userId: userId,
+            datatype: "reverse_consumption",
+            token: getCookie("token")
+        }
+    }
+
+    ajaxPostRequest("/save_item", data, function (result) {
+
+        if(__$(prefix + "_lot_number" + suffix)) {
+
+            __$(prefix + "_lot_number" + suffix).removeAttribute("consumption_id");
+
+        }
+
+        if(__$(prefix + "_lot_" + suffix + "_dispatch_id")) {
+
+            __$(prefix + "_lot_" + suffix + "_dispatch_id").value = "";
+
+        }
+
+        if(__$(prefix + "_lot_" + suffix + "_expiry")) {
+
+            __$(prefix + "_lot_" + suffix + "_expiry").value = "";
+
+        }
+
+    })
 
 }

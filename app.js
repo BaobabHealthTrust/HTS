@@ -2307,7 +2307,9 @@ function saveConsumption(data, res, callback) {
 
                 } else {
 
-                    res.status(200).json({message: "Item saved!"});
+                    console.log(batch);
+
+                    res.status(200).json({message: "Item saved!", consumption_id: batch[0].insertId});
 
                 }
 
@@ -2318,6 +2320,44 @@ function saveConsumption(data, res, callback) {
     } else {
 
         res.status(200).json({message: "Missing dispatch association!"});
+
+    }
+
+}
+
+function reverseConsumption(data, res, callback) {
+
+    if (data.consumption_id) {
+
+        var sql = "DELETE FROM consumption WHERE consumption_id = '" + data.consumption_id + "'";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (batch) {
+
+            if (callback) {
+
+                callback();
+
+            } else {
+
+                res.status(200).json({message: "Consumption reversed!"});
+
+            }
+
+        });
+
+    } else {
+
+        if (callback) {
+
+            callback();
+
+        } else {
+
+            res.status(200).json({message: "Nothing done!"});
+
+        }
 
     }
 
@@ -2398,7 +2438,7 @@ function loggedIn(token, callback) {
 
 }
 
-app.post('/validate_credentials', function(req, res) {
+app.post('/validate_credentials', function (req, res) {
 
     console.log(req.body);
 
@@ -3428,14 +3468,14 @@ app.post('/update_user', function (req, res) {
 
             queryRaw(sql, function (name) {
 
-                var sql = "UPDATE person SET gender = '" + data.gender.substring(0,1).toUpperCase() +
+                var sql = "UPDATE person SET gender = '" + data.gender.substring(0, 1).toUpperCase() +
                     "' WHERE person_id = '" + person[0][0].person_id + "'";
 
                 console.log(sql);
 
                 queryRaw(sql, function (name) {
 
-                    if(data.hts_provider_id) {
+                    if (data.hts_provider_id) {
 
                         var sql = "UPDATE person_attribute SET value = '" + data.hts_provider_id + "' WHERE person_id " +
                             "= '" + person[0][0].person_id + "' AND person_attribute_type_id = (SELECT " +
@@ -3982,6 +4022,12 @@ app.post('/save_item', function (req, res) {
             case "consumption":
 
                 saveConsumption(data, res);
+
+                break;
+
+            case "reverse_consumption":
+
+                reverseConsumption(data, res);
 
                 break;
 
