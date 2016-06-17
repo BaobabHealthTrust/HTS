@@ -1322,7 +1322,7 @@ var stock = ({
 
         form.appendChild(table);
 
-        var batchLabel = (label ? label + ": " : "") + "Batch Number";
+        var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
         var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
 
@@ -1571,7 +1571,7 @@ var stock = ({
 
         form.appendChild(table);
 
-        var batchLabel = (label ? label + ": " : "") + "Batch Number";
+        var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
         var quantityLabel = (label ? label + ": " : "") + "Quantity to Consume";
 
@@ -1662,7 +1662,7 @@ var stock = ({
 
         form.appendChild(table);
 
-        var batchLabel = (label ? label + ": " : "") + "Batch Number";
+        var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
         var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue";
 
@@ -1762,7 +1762,7 @@ var stock = ({
                 id: "data.dispatch_id",
                 value: ""           // stock.stocks[pos].dispatch_id
             },
-            "Batch Number": {
+            "Lot Number": {
                 field_type: "text",
                 id: "data.batch_number",
                 ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
