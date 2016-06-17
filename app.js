@@ -224,130 +224,148 @@ io.on('connection', function (socket) {
     numClients++;
     io.emit('stats', { numClients: numClients, id: "ALL" });
 
-    // console.log('Connected clients:', numClients);
-
     socket.on('disconnect', function (me) {
+
         numClients--;
         io.emit('stats', { numClients: numClients, id: "ALL" });
 
-        // console.log('Connected clients:', numClients);
     });
 
     socket.on('init', function (custom) {
 
-        nsp[custom.id] = io.of('/' + custom.id);
-        nsp[custom.id].on('connection', function (me) {
+        verifyPatientById(custom.id, function (valid) {
 
-            var id = me.id.match(/\/([^\#]+)/)[1];
+            if(!valid) {
 
-            // console.log('someone connected on ' + id);
+                socket.emit('reject', {message: "No match found!"});
 
-        });
+                return;
 
-        nsp[custom.id].on('disconnect', function (me) {
+            }
 
-            var id = me.id.match(/\/([^\#]+)/)[1];
+            nsp[custom.id] = io.of('/' + custom.id);
+            nsp[custom.id].on('connection', function (me) {
 
-            // console.log('Connected clients on ' + id + ':', numConns[id]);
-
-        });
-
-        socket.on('demographics', function (data) {
-
-            updateUserView(data);
-
-        });
-
-        socket.on('click', function (data) {
-            // console.log("received event for: " + data.id);
-            nsp[data.id].emit('hi', "Someone says: " + data.message + " on " + data.id);
-        })
-
-        socket.on('update', function (data) {
-
-            console.log(JSON.stringify(data));
-
-            saveData(data, function (unathorized) {
-
-                if (unathorized) {
-
-                    nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
-                        data.data.patient_id + '!');
-
-                    return;
-
-                }
-
-                // if (people[data.data.patient_id])
-                //    people[data.data.patient_id].data.programs = {};
-
-                isDirty[data.data.patient_id] = true;
-
-                // console.log(JSON.stringify(people[data.data.patient_id].data.programs));
-
-                updateUserView({id: data.data.patient_id});
+                var id = me.id.match(/\/([^\#]+)/)[1];
 
             });
 
-        })
+            nsp[custom.id].on('disconnect', function (me) {
 
-        socket.on('void', function (data) {
-
-            console.log(JSON.stringify(data));
-
-            voidConcept(data, function (unathorized) {
-
-                if (unathorized) {
-
-                    nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
-                        data.data.patient_id + '!');
-
-                    return;
-
-                }
-
-                isDirty[data.patient_id] = true;
-
-                updateUserView({id: data.patient_id});
+                var id = me.id.match(/\/([^\#]+)/)[1];
 
             });
 
-        })
+            socket.on('demographics', function (data) {
 
-        socket.on('relationship', function (data) {
-
-            console.log(JSON.stringify(data));
-
-            saveRelationship(data, function (unathorized) {
-
-                if (unathorized) {
-
-                    nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
-                        data.data.patient_id + '!');
-
-                    return;
-
-                }
-                // if (people[data.data.patient_id])
-                //    people[data.data.patient_id].data.programs = {};
-
-                isDirty[data.data.patient_id] = true;
-
-                // console.log(JSON.stringify(people[data.data.patient_id].data.programs));
-
-                updateUserView({id: data.data.patient_id});
+                updateUserView(data);
 
             });
 
-        })
+            socket.on('click', function (data) {
 
-        nsp[custom.id].emit('hi ' + custom.id, 'New connection in ' + custom.id + '!');
+                nsp[data.id].emit('hi', "Someone says: " + data.message + " on " + data.id);
 
-        socket.emit('newConnection', {id: custom.id});
+            })
+
+            socket.on('update', function (data) {
+
+                console.log(JSON.stringify(data));
+
+                saveData(data, function (unathorized) {
+
+                    if (unathorized) {
+
+                        nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
+                            data.data.patient_id + '!');
+
+                        return;
+
+                    }
+
+                    isDirty[data.data.patient_id] = true;
+
+                    updateUserView({id: data.data.patient_id});
+
+                });
+
+            })
+
+            socket.on('void', function (data) {
+
+                console.log(JSON.stringify(data));
+
+                voidConcept(data, function (unathorized) {
+
+                    if (unathorized) {
+
+                        nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
+                            data.data.patient_id + '!');
+
+                        return;
+
+                    }
+
+                    isDirty[data.patient_id] = true;
+
+                    updateUserView({id: data.patient_id});
+
+                });
+
+            })
+
+            socket.on('relationship', function (data) {
+
+                console.log(JSON.stringify(data));
+
+                saveRelationship(data, function (unathorized) {
+
+                    if (unathorized) {
+
+                        nsp[custom.id].emit('kickout ' + data.data.patient_id, 'Unathorized connection detected. Locking ' +
+                            data.data.patient_id + '!');
+
+                        return;
+
+                    }
+
+                    isDirty[data.data.patient_id] = true;
+
+                    updateUserView({id: data.data.patient_id});
+
+                });
+
+            })
+
+            nsp[custom.id].emit('hi ' + custom.id, 'New connection in ' + custom.id + '!');
+
+            socket.emit('newConnection', {id: custom.id});
+
+        });
 
     });
 
 });
+
+function verifyPatientById(id, callback) {
+
+    var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + id + "'";
+
+    queryRaw(sql, function (patient) {
+
+        if (patient[0].length > 0) {
+
+            callback(true);
+
+        } else {
+
+            callback(false);
+
+        }
+
+    })
+
+}
 
 function saveRelationship(params, callback) {
 

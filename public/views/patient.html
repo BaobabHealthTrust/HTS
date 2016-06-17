@@ -16,6 +16,12 @@
 
     socket.emit("init", {id: id});
 
+    socket.on('reject', function(json) {
+
+        user.showMsg(json.message, "Oops!", "/");
+
+    });
+
     socket.on('newConnection', function(data) {
 
         var nsp = io('/' + id);
