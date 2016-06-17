@@ -1110,7 +1110,7 @@ function evalCondition(pos) {
 
 }
 
-function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget) {
+function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
 
     if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
@@ -1271,8 +1271,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = "Test 1 Result";
-    td.style.fontSize = "5vh";
+    td.innerHTML = (label1 ? label1 : "Test 1") + " Result";
+    td.style.fontSize = "3vh";
 
     tr.appendChild(td);
 
@@ -1501,8 +1501,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = "Test 2 Result";
-    td.style.fontSize = "5vh";
+    td.innerHTML = (label2 ? label2 : "Test 2") + " Result";
+    td.style.fontSize = "3vh";
 
     tr.appendChild(td);
 
@@ -1628,7 +1628,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 }
 
-function loadSerialTest(testTarget, testTimeTarget) {
+function loadSerialTest(testTarget, testTimeTarget, label) {
 
     if (!testTarget || !testTimeTarget) {
 
@@ -1768,8 +1768,8 @@ function loadSerialTest(testTarget, testTimeTarget) {
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = "Test Result";
-    td.style.fontSize = "5vh";
+    td.innerHTML = (label ? label : "Test") + " Result";
+    td.style.fontSize = "3vh";
 
     tr.appendChild(td);
 
@@ -3301,6 +3301,72 @@ function showAssessmentSummary() {
         td.innerHTML = "&nbsp;";
 
         tr.appendChild(td);
+
+    }
+
+}
+
+var hndValidation;
+
+function validateCredentials(username, password) {
+
+    var data = {
+        "data": {
+            "token": getCookie("token"),
+            "checkUsername": username,
+            "checkPassword": password
+        }
+    };
+
+    ajaxPostRequest("/validate_credentials", data, function (result) {
+
+        var json = JSON.parse(result);
+
+        if(json.valid) {
+
+            if(__$("nextButton")) {
+
+                __$("nextButton").className = __$("nextButton").className.replace(/gray/, "green");
+
+            }
+
+        } else {
+
+            if(__$("nextButton")) {
+
+                __$("nextButton").className = __$("nextButton").className.replace(/green/, "gray");
+
+            }
+
+        }
+
+    })
+
+}
+
+function checkValidation() {
+
+    if(__$("nextButton")) {
+
+        __$("nextButton").className = __$("nextButton").className.replace(/green/, "gray");
+
+    }
+
+    hndValidation = setInterval(function() {
+
+        validateCredentials(__$("im_tester").value.trim(), __$("touchscreenInput" + tstCurrentPage).value.trim())
+
+    }, 500);
+
+}
+
+function stopValidationChecks() {
+
+    clearInterval(hndValidation);
+
+    if(__$("nextButton")) {
+
+        __$("nextButton").className = __$("nextButton").className.replace(/gray/, "green");
 
     }
 

@@ -9,6 +9,7 @@
     "firstNamesPath": "/fnames_query",
     "lastNamesPath": "/lnames_query",
     "afterCreatePath": "http://localhost:3014",
+    "userValidationPath": "/validate_credentials",
     "demographics" : {
         "First Name": true,
         "Middle Name": true,

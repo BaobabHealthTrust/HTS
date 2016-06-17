@@ -2398,6 +2398,47 @@ function loggedIn(token, callback) {
 
 }
 
+app.post('/validate_credentials', function(req, res) {
+
+    console.log(req.body);
+
+    var data = req.body.data;
+
+    console.log(data.token);
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return res.status(200).json({message: "Unauthorized access!"});
+
+        }
+
+        var sql = "SELECT user_id FROM users WHERE username = '" + data.checkUsername + "' AND password = MD5(CONCAT('" +
+            data.checkPassword + "', salt))";
+
+        console.log(sql);
+
+        queryRaw(sql, function (user) {
+
+            console.log(user);
+
+            if (user[0].length > 0) {
+
+                res.status(200).json({valid: true});
+
+            } else {
+
+                res.status(200).json({valid: false});
+
+            }
+
+        });
+
+    });
+
+})
+
 app.get('/authentic/:id', function (req, res) {
 
     loggedIn(req.params.id, function (result, user_id, username) {
