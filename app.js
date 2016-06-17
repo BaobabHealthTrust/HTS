@@ -538,7 +538,7 @@ function saveRelationship(params, callback) {
 
 function voidConcept(data, callback) {
 
-    loggedIn(data.data.token, function (authentic, user_id, username) {
+    loggedIn(data.token, function (authentic, user_id, username) {
 
         if (!authentic) {
 

@@ -3190,7 +3190,8 @@ var dashboard = ({
             var data = {
                 uuid: uuid,
                 username: dashboard.getCookie("username"),
-                patient_id: patient_id.trim()
+                patient_id: patient_id.trim(),
+                token: dashboard.getCookie("token")
             }
 
             socket.emit('void', data);
