@@ -53,6 +53,8 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
 var stock = ({
 
+    version: "0.0.1",
+
     stocks: [],
 
     stockId: null,

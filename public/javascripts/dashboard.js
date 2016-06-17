@@ -66,6 +66,8 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var dashboard = ({
 
+    version: "0.0.1",
+
     gender: null,
 
     workflow: [],

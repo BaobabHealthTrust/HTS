@@ -52,6 +52,8 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
 var user = ({
 
+    version: "0.0.1",
+
     gender: null,
 
     username: null,

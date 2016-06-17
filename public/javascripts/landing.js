@@ -66,6 +66,8 @@ Object.defineProperty(Array.prototype, "shuffle", {
 
 var landing = ({
 
+    version: "0.0.1",
+
     $: function (id) {
         return document.getElementById(id);
     },
