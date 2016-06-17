@@ -1326,7 +1326,7 @@ var stock = ({
 
         var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
 
-        var receivedLabel = (label ? label + ": " : "") + "Received Quantity";
+        var receivedLabel = (label ? label + ": " : "") + "Received Quantity  (individual items)";
 
         var dateLabel = (label ? label + ": " : "") + "Date Received";
 
@@ -1573,7 +1573,7 @@ var stock = ({
 
         var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
-        var quantityLabel = (label ? label + ": " : "") + "Quantity to Consume";
+        var quantityLabel = (label ? label + ": " : "") + "Quantity to Consume  (individual items)";
 
         var dateLabel = (label ? label + ": " : "") + "Date of Consumption";
 
@@ -1664,7 +1664,7 @@ var stock = ({
 
         var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
-        var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue";
+        var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue (individual item)";
 
         var dateLabel = (label ? label + ": " : "") + "Date of Issue";
 
@@ -1771,7 +1771,7 @@ var stock = ({
                     "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                     "__$('data.transfer_quantity').setAttribute('absoluteMax', limit)}"
             },
-            "Quantity to Transfer": {
+            "Quantity to Transfer (individual items)": {
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
                 id: "data.transfer_quantity"
