@@ -1131,7 +1131,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     tmrControl2SecsCount = 0;
     tmrControl2MinsCount = 0;
 
-    if (__$("nextButton")) {
+    if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
 
         var currentClass = __$("nextButton").className;
 
@@ -1219,12 +1219,19 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.style.marginRight = "5px";
     btn.style.minWidth = "8vh";
     btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
 
     btn.onclick = function () {
 
         if (this.className.match(/gray/i)) {
 
             return;
+
+        }
+
+        if(__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
 
@@ -1290,7 +1297,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     tr.appendChild(td);
 
     var btn = document.createElement("button");
-    btn.className = "gray";
+    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
     btn.innerHTML = "-";
     btn.style.fontSize = "5vh !important";
     btn.style.minWidth = "8vh";
@@ -1319,7 +1326,13 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).value = (tmrControl1MinsCount + (tmrControl1SecsCount / 60)).toFixed(2);
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
         }
 
@@ -1344,7 +1357,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     tr.appendChild(td);
 
     var btn = document.createElement("button");
-    btn.className = "gray";
+    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
     btn.innerHTML = "+";
     btn.style.fontSize = "5vh !important";
     btn.style.minWidth = "8vh";
@@ -1373,7 +1386,13 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).value = (tmrControl1MinsCount + (tmrControl1SecsCount / 60)).toFixed(2);
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
         }
 
@@ -1449,12 +1468,19 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.style.marginLeft = "5px";
     btn.style.minWidth = "8vh";
     btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
 
     btn.onclick = function () {
 
         if (this.className.match(/gray/i)) {
 
             return;
+
+        }
+
+        if(__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
 
@@ -1520,7 +1546,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     tr.appendChild(td);
 
     var btn = document.createElement("button");
-    btn.className = "gray";
+    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
     btn.innerHTML = "-";
     btn.style.fontSize = "5vh !important";
     btn.style.minWidth = "8vh";
@@ -1555,7 +1581,13 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).value = (tmrControl2MinsCount + (tmrControl2SecsCount / 60)).toFixed(2);
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
         }
 
@@ -1580,7 +1612,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     tr.appendChild(td);
 
     var btn = document.createElement("button");
-    btn.className = "gray";
+    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
     btn.innerHTML = "+";
     btn.style.fontSize = "5vh !important";
     btn.style.minWidth = "8vh";
@@ -1615,7 +1647,13 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).value = (tmrControl2MinsCount + (tmrControl2SecsCount / 60)).toFixed(2);
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
         }
 
@@ -1647,7 +1685,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
     tmrControl1SecsCount = 0;
     tmrControl1MinsCount = 0;
 
-    if (__$("nextButton")) {
+    if (__$("nextButton") && testTimeTarget.getAttribute("startTime") == null) {
 
         var currentClass = __$("nextButton").className;
 
@@ -1716,12 +1754,19 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
     btn.style.marginRight = "5px";
     btn.style.minWidth = "8vh";
     btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", testTimeTarget.id);
 
     btn.onclick = function () {
 
         if (this.className.match(/gray/i)) {
 
             return;
+
+        }
+
+        if(__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
 
@@ -1787,7 +1832,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
     tr.appendChild(td);
 
     var btn = document.createElement("button");
-    btn.className = "gray";
+    btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
     btn.innerHTML = "-";
     btn.style.fontSize = "5vh !important";
     btn.style.minWidth = "8vh";
@@ -1820,7 +1865,13 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).value = (tmrControl1MinsCount + (tmrControl1SecsCount / 60)).toFixed(2);
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
         }
 
@@ -1842,7 +1893,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
     tr.appendChild(td);
 
     var btn = document.createElement("button");
-    btn.className = "gray";
+    btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
     btn.innerHTML = "+";
     btn.style.fontSize = "5vh !important";
     btn.style.minWidth = "8vh";
@@ -1875,7 +1926,13 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).value = (tmrControl1MinsCount + (tmrControl1SecsCount / 60)).toFixed(2);
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
         }
 
