@@ -5,11 +5,14 @@
     "districtQueryPath": "/district_query",
     "taQueryPath": "/ta_query",
     "villageQueryPath": "/village_query",
-    "nationalityQueryPath": "/nationality_query",
+    "nationalityQueryPath": "/nationality_query?nationality=",
+    "occupationsQueryPath": "/occupations_query?occupation=",
     "firstNamesPath": "/fnames_query",
     "lastNamesPath": "/lnames_query",
     "afterCreatePath": "http://localhost:3014",
     "userValidationPath": "/validate_credentials",
+    "demographicsQueryPath": "/demographics_by_field?field=",
+    "demographicsUpdatePath": "/demographics_update",
     "demographics" : {
         "First Name": true,
         "Middle Name": true,
@@ -23,11 +26,11 @@
         "Current Village": true,
         "Current T/A": true,
         "Current District": true,
-        "Closest Landmark": false,
-        "Cellphone Number": true,
-        "Home Phone Number": false,
-        "Office Phone Number": false,
-        "Occupation": false,
-        "Nationality": false
+        "Closest Landmark": true,
+        "Cell Phone Number": true,
+        "Home Phone Number": true,
+        "Office Phone Number": true,
+        "Occupation": true,
+        "Nationality": true
     }
 }

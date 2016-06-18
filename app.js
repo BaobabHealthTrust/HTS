@@ -79,7 +79,7 @@ function getAge(birthdate, estimated) {
 
     var age;
 
-    if ((new Date(birthdate)) == "Invalid Date") {
+    if (birthdate == null || (new Date(birthdate)) == "Invalid Date") {
 
         return "???";
 
@@ -235,7 +235,7 @@ io.on('connection', function (socket) {
 
         verifyPatientById(custom.id, function (valid) {
 
-            if(!valid) {
+            if (!valid) {
 
                 socket.emit('reject', {message: "No match found!"});
 
@@ -2640,6 +2640,66 @@ app.get('/data/modules.json', function (req, res) {
     res.sendFile(__dirname + '/data/modules.json');
 });
 
+app.get('/nationality_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT DISTINCT value FROM person_attribute WHERE person_attribute_type_id = " +
+        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'Citizenship' LIMIT 1) AND value LIKE '" +
+        (query.nationality ? query.nationality : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var nationality = data[0][i];
+
+            collection.push(nationality.value);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
+app.get('/occupations_query', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT DISTINCT value FROM person_attribute WHERE person_attribute_type_id = " +
+        "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = 'Occupation' LIMIT 1) AND value LIKE '" +
+        (query.occupation ? query.occupation : "") + "%'";
+
+    queryRaw(sql, function (data) {
+
+        var collection = [];
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            var occupation = data[0][i];
+
+            collection.push(occupation.value);
+
+        }
+
+        var result = "<li>" + collection.join("</li><li>") + "</li>";
+
+        res.send(result);
+
+    })
+
+});
+
 app.get('/district_query', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -2857,6 +2917,361 @@ app.post('/save_dummy_patient', function (req, res) {
     });
 
 });
+
+app.post('/update_patient', function (req, res) {
+
+    console.log(req.body.data);
+
+    var data = req.body.data;
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return res.status(200).json({message: "Unauthorized access!"});
+
+        }
+
+        var field = data.field;
+
+        switch (field) {
+
+            case "first_name":
+
+                var sql = "UPDATE person_name SET given_name = '" + data.value + "' WHERE person_id = '" +
+                    data.person_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+            case "last_name":
+
+                var sql = "UPDATE person_name SET family_name = '" + data.value + "' WHERE person_id = '" +
+                    data.person_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+            case "middle_name":
+
+                var sql = "UPDATE person_name SET middle_name = '" + data.value + "' WHERE person_id = '" +
+                    data.person_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+            case "gender":
+
+                var sql = "UPDATE person SET gender = '" + data.value + "' WHERE person_id = '" +
+                    data.person_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+            case "birthdate":
+
+                var sql = "UPDATE person SET birthdate = '" + data.value + "', bithdate_estimated = '" +
+                    (data.estimated ? data.estimated : 0) + "' WHERE person_id = '" + data.person_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+            case "current_residence":
+
+                var sql = "UPDATE person_address SET address1 = '" + data.closest_landmark + ", city_village = '" +
+                    data.current_village + "', state_province = '" + data.current_district + "', township_division = '" +
+                    data.current_ta + "' WHERE person_address_id = '" + data.person_address_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+            case "place_of_origin":
+
+                var sql = "UPDATE person_address SET address2 = '" + data.home_district + ", county_district = '" +
+                    data.home_ta + "', neighborhood_cell = '" + data.home_village + "' WHERE person_address_id = '" +
+                    data.person_address_id + "'";
+
+                queryRaw(sql, function (name) {
+
+                    res.status(200).json({message: "Change saved!"});
+
+                })
+
+                break;
+
+        }
+
+    });
+
+})
+
+app.post('/demographics_update', function (req, res) {
+
+    console.log(req.body.data);
+
+    var data = req.body.data;
+
+    loggedIn(data.token, function (authentic, user_id, username) {
+
+        if (!authentic) {
+
+            return res.status(200).json({message: "Unauthorized access!"});
+
+        }
+
+        if (data.target_field) {
+
+            switch (data.target_field) {
+
+                case "first_name":
+
+                    var sql = "UPDATE person_name SET given_name = '" + data[data.target_field] + "' WHERE " +
+                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "last_name":
+
+                    var sql = "UPDATE person_name SET family_name = '" + data[data.target_field] + "' WHERE " +
+                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "middle_name":
+
+                    var sql = "UPDATE person_name SET middle_name = '" + (data[data.target_field] ?
+                        data[data.target_field] : "") + "' WHERE " + data.target_field_id + " = '" +
+                        data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "gender":
+
+                    var sql = "UPDATE person SET gender = '" + (data[data.target_field] ? data[data.target_field].substring(0, 1).toUpperCase() :
+                        "") + "' WHERE " + data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "date_of_birth":
+
+                    var sql = "UPDATE person SET birthdate = '" + data[data.target_field] + "', birthdate_estimated = '" +
+                        data.date_of_birth_estimated + "' WHERE " + data.target_field_id + " = '" +
+                        data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "current_village":
+
+                case "current_ta":
+
+                case "current_district":
+
+                    var sql = "UPDATE person_address SET city_village = '" + data.current_village + "', township_division = '" +
+                        data.current_ta + "', state_province = '" + data.current_district + "' WHERE " +
+                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "home_district":
+
+                case "home_ta":
+
+                case "home_village":
+
+                    var sql = "UPDATE person_address SET address2 = '" + data.home_district + "', county_district = '" +
+                        data.home_ta + "', neighborhood_cell = '" + data.home_village + "' WHERE " +
+                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "closest_landmark":
+
+                    var sql = "UPDATE person_address SET address1 = '" + data.closest_landmark + "' WHERE " +
+                        data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                    console.log(sql);
+
+                    queryRaw(sql, function (data) {
+
+                        console.log(data);
+
+                        res.status(200).json({message: "Record updated!"});
+
+                    })
+
+                    break;
+
+                case "cell_phone_number":
+
+                case "nationality":
+
+                case "home_phone_number":
+
+                case "office_phone_number":
+
+                case "occupation":
+
+                    var attributeMapping = {
+                        cell_phone_number: "Cell Phone Number",
+                        nationality: "Citizenship",
+                        home_phone_number: "Home Phone Number",
+                        office_phone_number: "Office Phone Number",
+                        occupation: "Occupation"
+                    };
+
+                    if (data.target_field_id_value) {
+
+                        var sql = "UPDATE person_attribute SET value = '" + data[data.target_field] + "' WHERE " +
+                            data.target_field_id + " = '" + data.target_field_id_value + "'";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record updated!"});
+
+                        })
+
+                    } else {
+
+                        var sql = "INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, " +
+                            "date_created, uuid) VALUES('" + data.patient_id + "', '" + data[data.target_field] + "', " +
+                            "(SELECT person_attribute_type_id FROM person_attribute_type WHERE name = '" +
+                            attributeMapping[data.target_field] + "' LIMIT 1), '" + user_id + "', NOW(), '" + uuid.v1() + "')";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (data) {
+
+                            console.log(data);
+
+                            res.status(200).json({message: "Record created!"});
+
+                        })
+
+                    }
+
+                    break;
+
+                default:
+
+                    res.status(200).json({message: "Unsupported parameter received!"});
+
+                    break;
+
+            }
+
+        } else {
+
+            res.status(200).json({message: "No valid data sent!"});
+
+        }
+
+    });
+
+})
 
 app.post('/save_patient', function (req, res) {
 
@@ -3234,6 +3649,323 @@ app.get('/search_by_username', function (req, res) {
 
 })
 
+app.get("/demographics_by_field", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    if (query.field) {
+
+        switch (String(query.field).trim().toLowerCase()) {
+
+            case "first_name":
+
+                var sql = "SELECT person_name_id, given_name FROM person_name WHERE person_id = '" + query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({first_name: data[0][0].given_name, person_name_id: data[0][0].person_name_id,
+                            field: "first_name", field_id: "person_name_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "last_name":
+
+                var sql = "SELECT person_name_id, family_name FROM person_name WHERE person_id = '" + query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({last_name: data[0][0].family_name, person_name_id: data[0][0].person_name_id,
+                            field: "last_name", field_id: "person_name_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "middle_name":
+
+                var sql = "SELECT person_name_id, middle_name FROM person_name WHERE person_id = '" + query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({middle_name: data[0][0].middle_name, person_name_id: data[0][0].person_name_id,
+                            field: "middle_name", field_id: "person_name_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "gender":
+
+                var sql = "SELECT person_id, gender FROM person WHERE person_id = '" + query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({gender: data[0][0].gender, person_id: data[0][0].person_id,
+                            field: "gender", field_id: "person_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "date_of_birth":
+
+                var sql = "SELECT person_id, birthdate, birthdate_estimated FROM person WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({date_of_birth: data[0][0].birthdate, date_of_birth_estimated: data[0][0].birthdate_estimated, person_id: data[0][0].person_id,
+                            field: "date_of_birth", field_id: "person_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "current_village":
+
+                var sql = "SELECT person_address_id, city_village FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({current_village: data[0][0].city_village, person_address_id: data[0][0].person_address_id, field: "current_village", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "current_ta":
+
+                var sql = "SELECT person_address_id, township_division FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({current_ta: data[0][0].township_division, person_address_id: data[0][0].person_address_id, field: "current_ta", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "current_district":
+
+                var sql = "SELECT person_address_id, state_province FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({current_district: data[0][0].state_province, person_address_id: data[0][0].person_address_id, field: "current_district", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "home_district":
+
+                var sql = "SELECT person_address_id, address2 FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({home_district: data[0][0].address2, person_address_id: data[0][0].person_address_id, field: "home_district", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "home_ta":
+
+                var sql = "SELECT person_address_id, county_district FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({home_ta: data[0][0].county_district, person_address_id: data[0][0].person_address_id, field: "home_ta", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "home_village":
+
+                var sql = "SELECT person_address_id, neighborhood_cell FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({home_village: data[0][0].neighborhood_cell, person_address_id: data[0][0].person_address_id, field: "home_village", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "closest_landmark":
+
+                var sql = "SELECT person_address_id, address1 FROM person_address WHERE person_id = '" +
+                    query.person_id + "' LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        res.status(200).json({closest_landmark: data[0][0].address1, person_address_id: data[0][0].person_address_id, field: "closest_landmark", field_id: "person_address_id"});
+
+                    }
+
+                })
+
+                break;
+
+            case "cell_phone_number":
+
+            case "cell_phone_number":
+
+            case "nationality":
+
+            case "home_phone_number":
+
+            case "office_phone_number":
+
+            case "occupation":
+
+                var attributeMapping = {
+                    cell_phone_number: "Cell Phone Number",
+                    nationality: "Citizenship",
+                    home_phone_number: "Home Phone Number",
+                    office_phone_number: "Office Phone Number",
+                    occupation: "Occupation"
+                };
+
+                var sql = "SELECT person_attribute_id, value FROM person_attribute WHERE person_id = '" +
+                    query.person_id + "' AND person_attribute_type_id = (SELECT person_attribute_type_id FROM " +
+                    "person_attribute_type WHERE name = '" + attributeMapping[query.field] + "' LIMIT 1) LIMIT 1";
+
+                console.log(sql);
+
+                queryRaw(sql, function (data) {
+
+                    if (data[0].length > 0) {
+
+                        var result = {};
+
+                        result[query.field] = data[0][0].value;
+
+                        result.person_attribute_id = data[0][0].person_attribute_id;
+
+                        result.field = query.field;
+
+                        result.field_id = "person_attribute_id";
+
+                        res.status(200).json(result);
+
+                    } else {
+
+                        var result = {};
+
+                        result[query.field] = "";
+
+                        result.person_attribute_id = "";
+
+                        result.field = query.field;
+
+                        result.field_id = "person_attribute_id";
+
+                        res.status(200).json(result);
+
+                    }
+
+                })
+
+                break;
+
+            default:
+
+                res.status(200).json({message: "Unsupported parameter received!"});
+
+                break;
+
+        }
+
+    } else {
+
+        res.status(200).json({message: "Unsupported parameter received!"});
+
+    }
+
+})
+
 app.get('/search_for_patient', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -3322,7 +4054,9 @@ app.get('/search_for_patient', function (req, res) {
                 "addresses": {
                     "current_village": collection[key]["Addresses"]["Current Residence"]
                 },
-                "age": getAge(collection[key]["Date of Birth"], collection[key]["Estimated"])
+                "age": getAge(collection[key]["Date of Birth"], collection[key]["Estimated"]),
+                "date_of_birth": collection[key]["Date of Birth"],
+                "person_id": key
             }
 
             results.push(entry);
