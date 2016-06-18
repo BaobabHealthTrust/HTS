@@ -4492,7 +4492,7 @@ app.get('/available_batches_to_user', function (req, res) {
         " = receipt.batch_number WHERE COALESCE(report.batch_number,'') != '' AND item_name = '" +
         query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
         "' AND report.batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY report.batch_number " +
-        "HAVING available > 0";
+        "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
 
     console.log(sql);
 
@@ -4533,7 +4533,7 @@ app.get('/available_batches', function (req, res) {
     var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
         "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
         query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
-        "HAVING available > 0";
+        "HAVING available > 0 ORDER BY expiry_date ASC";
 
     queryRawStock(sql, function (data) {
 
