@@ -5444,13 +5444,46 @@ app.get('/relationship_types', function (req, res) {
 
         for (var i = 0; i < data[0].length; i++) {
 
-            // result += "<li tstValue='" + data[0][i].relationship_type_id + "'>" + data[0][i].relation + "</li>";
-
             result += "<li>" + data[0][i].relation + "</li>";
 
         }
 
         res.send(result);
+
+    });
+
+})
+
+app.get("/user_stats", function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT user_id, " + query.field + ", COUNT(obs_id) AS total FROM htc_report WHERE COALESCE(" +
+        query.field + ", '') != '' AND " + query.field + " = '" + query.value + "' AND user_id = (SELECT user_id " +
+        "FROM users WHERE username = '" + query.username + "') " + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) >= DATE('" +
+        query.end_date + "')" : "") + " GROUP BY " + query.field + ", user_id";
+
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var result = 0;
+
+        console.log(data);
+
+        if(data[0].length > 0) {
+
+            console.log(data[0][0].total);
+
+            result = data[0][0].total;
+
+        }
+
+        res.status(200).json({total: result});
 
     });
 

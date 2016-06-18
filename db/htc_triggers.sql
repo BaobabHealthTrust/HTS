@@ -16,6 +16,9 @@ CREATE TABLE `htc_report` (
   `result_given_to_client` varchar(255) DEFAULT NULL,
   `htc_access_type` varchar(255) DEFAULT NULL,
   `partner_htc_slips_given` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`obs_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,6 +43,8 @@ BEGIN
 	DECLARE result_given_to_client INT(11);
 	DECLARE htc_access_type INT(11);
 	DECLARE partner_htc_slips_given INT(11);
+	DECLARE location varchar(255);
+	DECLARE username varchar(255);
 	
 	SELECT concept_id INTO @sex_pregnancy FROM concept_name WHERE name = "Sex/Pregnancy";
 	
@@ -57,47 +62,51 @@ BEGIN
 
 	SELECT concept_id INTO @partner_htc_slips_given FROM concept_name WHERE name = "HTS Family Referral Slips";
 
+	SELECT name INTO @location FROM location WHERE location_id = NEW.location_id;
+
+	SELECT username INTO @username FROM users WHERE user_id = NEW.creator;
+
 	CASE NEW.concept_id
 	
 		WHEN @sex_pregnancy THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, sex_pregnancy)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, sex_pregnancy, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @last_hiv_test THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, last_hiv_test)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, last_hiv_test, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @outcome_summary THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, outcome_summary)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, outcome_summary, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @age_group THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, age_group)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, age_group, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @partner_present THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, partner_present)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, partner_present, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @result_given_to_client THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, result_given_to_client)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, result_given_to_client, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @htc_access_type THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, htc_access_type)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text);
+			INSERT INTO htc_report (obs_id, obs_datetime, htc_access_type, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_text, @location, @username, NEW.creator);
 		
 		WHEN @partner_htc_slips_given THEN
 		
-			INSERT INTO htc_report (obs_id, obs_datetime, partner_htc_slips_given)
-			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_numeric);
+			INSERT INTO htc_report (obs_id, obs_datetime, partner_htc_slips_given, location, username, user_id)
+			VALUES (NEW.obs_id, NEW.obs_datetime, NEW.value_numeric, @location, @username, NEW.creator);
 		
 		ELSE
 			BEGIN

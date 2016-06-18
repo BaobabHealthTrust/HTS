@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+</head>
+<body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
+
+<table width="100%" style="border: 0px solid #305d97; margin-top: 10px; font-size: 18px;" cellpadding="8"
+       cellspacing="0">
+    <tr style="color: #305d97;">
+        <td style="border-right: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+        <th style="border-right: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Today
+        </th>
+        <th style="border-right: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            This Month
+        </th>
+        <th style="border-bottom: 2px solid #305d97; width: 25%;">
+            This Year
+        </th>
+    </tr>
+
+    <tr>
+        <td style="border-right: 1px solid #305d97; color: #305d97; font-weight: bold; font-size: 16px; border-bottom: 1px solid #305d97;"
+            align="right">
+            Total Seen
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="total_seen_today" align="right">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="total_seen_in_month" align="right">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="total_seen_in_year" align="right">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; border-bottom: 1px dotted #eee; padding-right: 25px;"
+            align="right">
+            Male
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="male_seen_today" align="right">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="male_seen_in_month" align="right">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="male_seen_in_year" align="right">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; border-bottom: 1px dotted #eee; padding-right: 25px;"
+            align="right">
+            Female Non-Pregnant
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="fnp_seen_today" align="right">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="fnp_seen_in_month" align="right">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="fnp_seen_in_year" align="right">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; border-bottom: 1px solid #305d97; padding-right: 25px;"
+            align="right">
+            Female Pregnant
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="fp_seen_today" align="right">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="fp_seen_in_month" align="right">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="fp_seen_in_year" align="right">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; color: #305d97; font-weight: bold; font-size: 16px; border-bottom: 1px solid #305d97;"
+            align="right">
+            Kits Used
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="kits_used_today" align="right">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="kits_used_in_month" align="right">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="kits_used_in_year" align="right">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; border-bottom: 1px dotted #eee; padding-right: 25px;"
+            align="right">
+            Test Kit 1
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="utk1_today">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="utk1_in_month">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="utk1_in_year">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; border-bottom: 1px solid #305d97; padding-right: 25px;"
+            align="right">
+            Test Kit 2
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="utk2_today">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="utk2_in_month">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="utk2_in_year">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; color: #305d97; font-weight: bold; font-size: 16px; border-bottom: 1px solid #305d97;"
+            align="right">
+            My Stock
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="kits_used_today">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+            id="kits_used_in_month">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="kits_used_in_year">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; border-bottom: 1px dotted #eee; padding-right: 25px;"
+            align="right">
+            Test Kit 1
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="tk1_today">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;"
+            id="tk1_in_month">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="tk1_in_year">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; font-size: 14px; padding-right: 25px;" align="right">
+            Test Kit 2
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right;" id="tk1_today">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right;" id="tk1_in_month">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right;" id="tk1_in_year">
+            &nbsp;
+        </td>
+    </tr>
+</table>
+
+<script>
+
+    "use strict"
+
+    if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+        Object.defineProperty(Date.prototype, "format", {
+            value: function (format) {
+                var date = this;
+
+                var result = "";
+
+                if (!format) {
+
+                    format = ""
+
+                }
+
+                var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                    "October", "November", "December"];
+
+                if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                    result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                            padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
+                            padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
+
+                } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                    result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                            padZeros(date.getDate(), 2);
+
+                } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                    result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+                } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                    result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+                } else {
+
+                    result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+                }
+
+                return result;
+            }
+        });
+
+    }
+
+    function padZeros(number, positions) {
+        var zeros = parseInt(positions) - String(number).length;
+        var padded = "";
+
+        for (var i = 0; i < zeros; i++) {
+            padded += "0";
+        }
+
+        padded += String(number);
+
+        return padded;
+    }
+
+    (function () {
+
+        var fields = {
+
+            "male_seen_today": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+                    "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+
+            "male_seen_in_month": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                            "-01")).format("YYYY-mm-dd"),
+
+            "male_seen_in_year": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
+
+            "fp_seen_today": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+                    "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+
+            "fp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                            "-01")).format("YYYY-mm-dd"),
+
+            "fp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
+
+            "fnp_seen_today": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+                    "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+
+            "fnp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                            "-01")).format("YYYY-mm-dd"),
+
+            "fnp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd")
+
+        }
+
+        function loadFields() {
+
+            var keys = Object.keys(fields);
+
+            for(var i = 0; i < keys.length; i++) {
+
+                var key = keys[i];
+
+                ajaxRequest(fields[key], key, function(json){
+
+                    if(json && __$(json.id)) {
+
+                        __$(json.id).innerHTML = json.total;
+
+                    }
+
+                })
+
+            }
+
+        }
+
+        function __$(id) {
+
+            return document.getElementById(id);
+
+        }
+
+        function getCookie(cname) {
+
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+
+        }
+
+        function ajaxRequest(url, id, callback) {
+
+            var httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function () {
+
+                if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                        httpRequest.status == 304)) {
+
+                    if (httpRequest.responseText.trim().length > 0) {
+                        var result = httpRequest.responseText;
+
+                        var json = JSON.parse(result);
+
+                        json.id = id;
+
+                        callback(json);
+
+                    } else {
+
+                        callback(undefined);
+
+                    }
+
+                }
+
+            };
+            try {
+                httpRequest.open("GET", url, true);
+                httpRequest.send(null);
+            } catch (e) {
+            }
+
+        }
+
+        loadFields();
+
+    })();
+
+</script>
+
+</body>
+</html>

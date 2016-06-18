@@ -2,30 +2,31 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>My Account</title>
+    <title>Supplies</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
 </head>
-<body style="text-align: center; margin-top: 20px;">
+<body style="text-align: center; margin-top: 20px;" oncontextmenu="return false;">
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
             text-align: center; padding-top: 15px; margin: 10px;" class="button">
-    <img src="/images/password.png" height="80" style="margin-bottom: 10px;"/>
+    <img src="/images/stockLevels.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
-    Change Password
+    My Stock Levels
 </div>
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
             text-align: center; padding-top: 15px; margin: 10px;" class="button">
-    <img src="/images/edit_user.png" height="80" style="margin-bottom: 10px;"/>
+    <img src="/images/losses.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
-    Edit Demographics
+    Record Kit Losses
 </div>
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button">
-    <img src="/images/profile.png" height="80" style="margin-bottom: 10px;"/>
+            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button"
+            onclick="window.parent.stock.listItems(window.parent.document.body)">
+    <img src="/images/new.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
-    My Profile
+    Transfer Stock
 </div>
 
 </body>
