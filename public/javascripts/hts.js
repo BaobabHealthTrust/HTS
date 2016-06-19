@@ -142,7 +142,7 @@ function calculateAge() {
 
         }
 
-        if (age[2] == "Y" && age[0] >= 10 && age[0] <= 45) {
+        if (age[2] == "Y" && age[0] >= 10 && age[0] <= 50) {
 
             if (__$("pregnant")) {
 
