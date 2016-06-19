@@ -34,8 +34,11 @@ CREATE TRIGGER new_receipt
 AFTER INSERT ON `receipt` FOR EACH ROW
 BEGIN
 
-	INSERT INTO report (stock_id, item_name, receipt_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received)
-	VALUES (NEW.stock_id, (SELECT name FROM stock WHERE stock_id = NEW.stock_id), NEW.receipt_id, NEW.batch_number, NEW.expiry_date, NEW.receipt_quantity, NEW.receipt_datetime, NEW.receipt_who_received);
+	INSERT INTO report (stock_id, item_name, receipt_id, batch_number, expiry_date, receipt_quantity, receipt_datetime,
+	    receipt_who_received, username, transaction_date)
+	VALUES (NEW.stock_id, (SELECT name FROM stock WHERE stock_id = NEW.stock_id), NEW.receipt_id, NEW.batch_number,
+	    NEW.expiry_date, NEW.receipt_quantity, NEW.receipt_datetime, NEW.receipt_who_received, NEW.receipt_who_received,
+	    NEW.receipt_datetime);
 
 	UPDATE stock SET last_order_size = NEW.receipt_quantity WHERE stock_id = NEW.stock_id;
 
@@ -45,7 +48,9 @@ CREATE TRIGGER receipt_update
 AFTER UPDATE ON `receipt` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET batch_number = NEW.batch_number, expiry_date = NEW.expiry_date, receipt_quantity = NEW.receipt_quantity, receipt_datetime = NEW.receipt_datetime, receipt_who_received = NEW.receipt_who_received, voided = NEW.voided, date_voided = NEW.date_voided WHERE receipt_id = NEW.receipt_id;
+	UPDATE report SET batch_number = NEW.batch_number, expiry_date = NEW.expiry_date, receipt_quantity = NEW.receipt_quantity,
+	    receipt_datetime = NEW.receipt_datetime, receipt_who_received = NEW.receipt_who_received, voided = NEW.voided,
+	    date_voided = NEW.date_voided WHERE receipt_id = NEW.receipt_id;
 
 	UPDATE stock SET last_order_size = NEW.receipt_quantity WHERE stock_id = NEW.stock_id;
 
@@ -63,8 +68,11 @@ CREATE TRIGGER new_dispatch
 AFTER INSERT ON `dispatch` FOR EACH ROW
 BEGIN
 
-	INSERT INTO report (stock_id, item_name, batch_number, dispatch_id, dispatch_quantity, dispatch_datetime, dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination)
-	VALUES (NEW.stock_id, (SELECT name FROM stock WHERE stock_id = NEW.stock_id), NEW.batch_number, NEW.dispatch_id, NEW.dispatch_quantity, NEW.dispatch_datetime, NEW.dispatch_who_dispatched, NEW.dispatch_who_received, NEW.dispatch_who_authorised, NEW.dispatch_destination);
+	INSERT INTO report (stock_id, item_name, batch_number, dispatch_id, dispatch_quantity, dispatch_datetime,
+	    dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination, username, transaction_date)
+	VALUES (NEW.stock_id, (SELECT name FROM stock WHERE stock_id = NEW.stock_id), NEW.batch_number, NEW.dispatch_id,
+	    NEW.dispatch_quantity, NEW.dispatch_datetime, NEW.dispatch_who_dispatched, NEW.dispatch_who_received,
+	    NEW.dispatch_who_authorised, NEW.dispatch_destination, NEW.dispatch_who_received, NEW.dispatch_datetime);
 
 END$$
 
@@ -72,7 +80,11 @@ CREATE TRIGGER dispatch_update
 AFTER UPDATE ON `dispatch` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET batch_number = NEW.batch_number, dispatch_quantity = NEW.dispatch_quantity, dispatch_datetime = NEW.dispatch_datetime, dispatch_who_dispatched = NEW.dispatch_who_dispatched, dispatch_who_received = NEW.dispatch_who_received, dispatch_who_authorised = NEW.dispatch_who_authorised, dispatch_destination = NEW.dispatch_destination, voided = NEW.voided, date_voided = NEW.date_voided WHERE dispatch_id = NEW.dispatch_id AND COALESCE(consumption_id, 0) = 0;
+	UPDATE report SET batch_number = NEW.batch_number, dispatch_quantity = NEW.dispatch_quantity, dispatch_datetime =
+	    NEW.dispatch_datetime, dispatch_who_dispatched = NEW.dispatch_who_dispatched, dispatch_who_received =
+	    NEW.dispatch_who_received, dispatch_who_authorised = NEW.dispatch_who_authorised, dispatch_destination =
+	    NEW.dispatch_destination, voided = NEW.voided, date_voided = NEW.date_voided WHERE dispatch_id = NEW.dispatch_id
+	    AND COALESCE(consumption_id, 0) = 0;
 
 END$$
 
@@ -90,8 +102,12 @@ CREATE TRIGGER new_transfer
 AFTER INSERT ON `transfer` FOR EACH ROW
 BEGIN
 
-	INSERT INTO report (stock_id, transfer_id, transfer_dispatch_id, transfer_quantity, transfer_who_transfered, transfer_who_received, transfer_who_authorised, transfer_destination, transfer_datetime)
-	VALUES ((SELECT stock.stock_id FROM stock LEFT OUTER JOIN dispatch ON stock.stock_id = dispatch.stock_id WHERE dispatch_id = NEW.dispatch_id LIMIT 1), NEW.transfer_id, NEW.dispatch_id, NEW.transfer_quantity, NEW.transfer_who_transfered, NEW.transfer_who_received, NEW.transfer_who_authorised, NEW.transfer_destination, NEW.transfer_datetime);
+	INSERT INTO report (stock_id, transfer_id, transfer_dispatch_id, transfer_quantity, transfer_who_transfered,
+	    transfer_who_received, transfer_who_authorised, transfer_destination, transfer_datetime, username, transaction_date)
+	VALUES ((SELECT stock.stock_id FROM stock LEFT OUTER JOIN dispatch ON stock.stock_id = dispatch.stock_id WHERE
+	    dispatch_id = NEW.dispatch_id LIMIT 1), NEW.transfer_id, NEW.dispatch_id, NEW.transfer_quantity,
+      NEW.transfer_who_transfered, NEW.transfer_who_received, NEW.transfer_who_authorised, NEW.transfer_destination,
+      NEW.transfer_datetime, NEW.transfer_who_received, NEW.transfer_datetime);
 
 END$$
 
@@ -99,7 +115,12 @@ CREATE TRIGGER transfer_update
 AFTER UPDATE ON `transfer` FOR EACH ROW
 BEGIN
 
-	UPDATE report SET stock_id = (SELECT stock.stock_id FROM stock LEFT OUTER JOIN dispatch ON stock.stock_id = dispatch.stock_id WHERE dispatch_id = NEW.dispatch_id LIMIT 1), transfer_dispatch_id = NEW.dispatch_id, transfer_quantity = NEW.transfer_quantity, transfer_who_transfered = NEW.transfer_who_transfered, transfer_who_received = NEW.transfer_who_received, transfer_who_authorised = NEW.transfer_who_authorised, transfer_destination = NEW.transfer_destination, transfer_datetime = NEW.transfer_datetime, voided = NEW.voided, date_voided = NEW.date_voided WHERE transfer_id = NEW.transfer_id;
+	UPDATE report SET stock_id = (SELECT stock.stock_id FROM stock LEFT OUTER JOIN dispatch ON stock.stock_id =
+	dispatch.stock_id WHERE dispatch_id = NEW.dispatch_id LIMIT 1), transfer_dispatch_id = NEW.dispatch_id,
+	transfer_quantity = NEW.transfer_quantity, transfer_who_transfered = NEW.transfer_who_transfered,
+	transfer_who_received = NEW.transfer_who_received, transfer_who_authorised = NEW.transfer_who_authorised,
+	transfer_destination = NEW.transfer_destination, transfer_datetime = NEW.transfer_datetime, voided = NEW.voided,
+	date_voided = NEW.date_voided WHERE transfer_id = NEW.transfer_id;
 
 END$$
 
@@ -147,9 +168,8 @@ CREATE TRIGGER new_consumption
 AFTER INSERT ON `consumption` FOR EACH ROW
 BEGIN
 
-	INSERT report (stock_id, item_name, dispatch_who_received, batch_number, 
-			consumption_id, consumption_type, who_consumed, 
-			consumption_location, consumption_quantity, date_consumed, dispatch_id)
+	INSERT report (stock_id, item_name, dispatch_who_received, batch_number, consumption_id, consumption_type,
+	    who_consumed, consumption_location, consumption_quantity, date_consumed, dispatch_id, username, transaction_date)
 	VALUES(
 			(SELECT stock_id FROM dispatch WHERE dispatch_id = NEW.dispatch_id),
 			(SELECT name FROM stock LEFT OUTER JOIN dispatch ON dispatch.stock_id = 
@@ -162,7 +182,9 @@ BEGIN
 			NEW.location,
 			NEW.consumption_quantity,
 			NEW.date_consumed,
-			NEW.dispatch_id
+			NEW.dispatch_id,
+			NEW.creator,
+			NEW.date_consumed
 	);
 
 END$$

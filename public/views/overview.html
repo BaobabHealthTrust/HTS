@@ -29,15 +29,16 @@
             align="right">
             Total Seen
         </td>
-        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
-            id="total_seen_today" align="right">
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
+            id="sex_pregnancy_today" align="right">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
-            id="total_seen_in_month" align="right">
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
+            id="sex_pregnancy_in_month" align="right">
             &nbsp;
         </td>
-        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="total_seen_in_year" align="right">
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;" id="sex_pregnancy_in_year"
+            align="right">
             &nbsp;
         </td>
     </tr>
@@ -54,7 +55,8 @@
             id="male_seen_in_month" align="right">
             &nbsp;
         </td>
-        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="male_seen_in_year" align="right">
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="male_seen_in_year"
+            align="right">
             &nbsp;
         </td>
     </tr>
@@ -71,7 +73,8 @@
             id="fnp_seen_in_month" align="right">
             &nbsp;
         </td>
-        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="fnp_seen_in_year" align="right">
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px dotted #eee;" id="fnp_seen_in_year"
+            align="right">
             &nbsp;
         </td>
     </tr>
@@ -88,7 +91,8 @@
             id="fp_seen_in_month" align="right">
             &nbsp;
         </td>
-        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="fp_seen_in_year" align="right">
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="fp_seen_in_year"
+            align="right">
             &nbsp;
         </td>
     </tr>
@@ -97,15 +101,16 @@
             align="right">
             Kits Used
         </td>
-        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
             id="kits_used_today" align="right">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
             id="kits_used_in_month" align="right">
             &nbsp;
         </td>
-        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="kits_used_in_year" align="right">
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;" id="kits_used_in_year"
+            align="right">
             &nbsp;
         </td>
     </tr>
@@ -148,15 +153,15 @@
             align="right">
             My Stock
         </td>
-        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
             id="kits_used_today">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;"
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
             id="kits_used_in_month">
             &nbsp;
         </td>
-        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97;" id="kits_used_in_year">
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;" id="kits_used_in_year">
             &nbsp;
         </td>
     </tr>
@@ -195,196 +200,348 @@
 
 <script>
 
-    "use strict"
+"use strict"
 
-    if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
-        Object.defineProperty(Date.prototype, "format", {
-            value: function (format) {
-                var date = this;
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
 
-                var result = "";
+            var result = "";
 
-                if (!format) {
+            if (!format) {
 
-                    format = ""
+                format = ""
 
-                }
-
-                var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                    "October", "November", "December"];
-
-                if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
-
-                    result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                            padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
-                            padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
-
-                } else if (format.match(/YYYY\-mm\-dd/)) {
-
-                    result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                            padZeros(date.getDate(), 2);
-
-                } else if (format.match(/mmm\/d\/YYYY/)) {
-
-                    result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
-
-                } else if (format.match(/d\smmmm,\sYYYY/)) {
-
-                    result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
-
-                } else {
-
-                    result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
-
-                }
-
-                return result;
             }
-        });
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
+                        padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
+
+function padZeros(number, positions) {
+    var zeros = parseInt(positions) - String(number).length;
+    var padded = "";
+
+    for (var i = 0; i < zeros; i++) {
+        padded += "0";
+    }
+
+    padded += String(number);
+
+    return padded;
+}
+
+var fields = {
+
+    "male_seen_today": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+            "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+
+    "male_seen_in_month": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+            "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+            (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                    "-01")).format("YYYY-mm-dd"),
+
+    "male_seen_in_year": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+            "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+            (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
+
+    "fp_seen_today": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+            "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+
+    "fp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+            "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+            (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                    "-01")).format("YYYY-mm-dd"),
+
+    "fp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+            "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+            (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
+
+    "fnp_seen_today": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+            "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+
+    "fnp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+            "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+            (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                    "-01")).format("YYYY-mm-dd"),
+
+    "fnp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+            "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+            (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd")
+
+}
+
+var fieldTotals = {
+    sex_pregnancy: {
+        today: {
+            stats: {
+                male_seen_today: 0,
+                fp_seen_today: 0,
+                fnp_seen_today: 0
+            },
+            total: 0
+        },
+        in_month: {
+            stats: {
+                male_seen_in_month: 0,
+                fp_seen_in_month: 0,
+                fnp_seen_in_month: 0
+            },
+            total: 0
+        },
+        in_year: {
+            stats: {
+                male_seen_in_year: 0,
+                fp_seen_in_year: 0,
+                fnp_seen_in_year: 0
+            },
+            total: 0
+        }
+    }
+}
+
+function updateTotals(field, value) {
+
+    var node1, node2, node3;
+
+    switch (field) {
+
+        case "male_seen_today":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "today";
+
+            node3 = "male_seen_today";
+
+            break;
+
+        case "male_seen_in_month":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "in_month";
+
+            node3 = "male_seen_in_month";
+
+            break;
+
+        case "male_seen_in_year":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "in_year";
+
+            node3 = "male_seen_in_year";
+
+            break;
+
+        case "fp_seen_today":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "today";
+
+            node3 = "fp_seen_today";
+
+            break;
+
+        case "fp_seen_in_month":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "in_month";
+
+            node3 = "fp_seen_in_month";
+
+            break;
+
+        case "fp_seen_in_year":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "in_year";
+
+            node3 = "fp_seen_in_year";
+
+            break;
+
+        case "fnp_seen_today":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "today";
+
+            node3 = "fnp_seen_today";
+
+            break;
+
+        case "fnp_seen_in_month":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "in_month";
+
+            node3 = "fnp_seen_in_month";
+
+            break;
+
+        case "fnp_seen_in_year":
+
+            node1 = "sex_pregnancy";
+
+            node2 = "in_year";
+
+            node3 = "fnp_seen_in_year";
+
+            break;
+    }
+
+    if(node1 && node2 && node3) {
+
+        fieldTotals[node1][node2].stats[node3] = value;
+
+        var keys = Object.keys(fieldTotals[node1][node2].stats);
+
+        var sum = 0;
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            sum += fieldTotals[node1][node2].stats[key];
+
+        }
+
+        fieldTotals[node1][node2].total = sum;
+
+        if (__$(node1 + "_" + node2)) {
+
+            __$(node1 + "_" + node2).innerHTML = fieldTotals[node1][node2].total;
+
+        }
 
     }
 
-    function padZeros(number, positions) {
-        var zeros = parseInt(positions) - String(number).length;
-        var padded = "";
+}
 
-        for (var i = 0; i < zeros; i++) {
-            padded += "0";
-        }
+function loadFields() {
 
-        padded += String(number);
+    var keys = Object.keys(fields);
 
-        return padded;
+    for (var i = 0; i < keys.length; i++) {
+
+        var key = keys[i];
+
+        ajaxRequest(fields[key], key, function (json) {
+
+            if (json && __$(json.id)) {
+
+                __$(json.id).innerHTML = json.total;
+
+                updateTotals(json.id, json.total)
+
+            }
+
+        })
+
     }
 
-    (function () {
+}
 
-        var fields = {
+function __$(id) {
 
-            "male_seen_today": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
-                    "&start_date=" + (new Date()).format("YYYY-mm-dd"),
+    return document.getElementById(id);
 
-            "male_seen_in_month": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
-                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
-                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
-                            "-01")).format("YYYY-mm-dd"),
+}
 
-            "male_seen_in_year": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
-                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
-                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
+function getCookie(cname) {
 
-            "fp_seen_today": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
-                    "&start_date=" + (new Date()).format("YYYY-mm-dd"),
-
-            "fp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
-                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
-                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
-                            "-01")).format("YYYY-mm-dd"),
-
-            "fp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
-                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
-                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
-
-            "fnp_seen_today": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
-                    "&start_date=" + (new Date()).format("YYYY-mm-dd"),
-
-            "fnp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
-                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
-                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
-                            "-01")).format("YYYY-mm-dd"),
-
-            "fnp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
-                    "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
-                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd")
-
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
         }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 
-        function loadFields() {
+}
 
-            var keys = Object.keys(fields);
+function ajaxRequest(url, id, callback) {
 
-            for(var i = 0; i < keys.length; i++) {
+    var httpRequest = new XMLHttpRequest();
 
-                var key = keys[i];
+    httpRequest.onreadystatechange = function () {
 
-                ajaxRequest(fields[key], key, function(json){
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
 
-                    if(json && __$(json.id)) {
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = httpRequest.responseText;
 
-                        __$(json.id).innerHTML = json.total;
+                var json = JSON.parse(result);
 
-                    }
+                json.id = id;
 
-                })
+                callback(json);
+
+            } else {
+
+                callback(undefined);
 
             }
 
         }
 
-        function __$(id) {
+    };
+    try {
+        httpRequest.open("GET", url, true);
+        httpRequest.send(null);
+    } catch (e) {
+    }
 
-            return document.getElementById(id);
+}
 
-        }
-
-        function getCookie(cname) {
-
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-
-        }
-
-        function ajaxRequest(url, id, callback) {
-
-            var httpRequest = new XMLHttpRequest();
-
-            httpRequest.onreadystatechange = function () {
-
-                if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
-                        httpRequest.status == 304)) {
-
-                    if (httpRequest.responseText.trim().length > 0) {
-                        var result = httpRequest.responseText;
-
-                        var json = JSON.parse(result);
-
-                        json.id = id;
-
-                        callback(json);
-
-                    } else {
-
-                        callback(undefined);
-
-                    }
-
-                }
-
-            };
-            try {
-                httpRequest.open("GET", url, true);
-                httpRequest.send(null);
-            } catch (e) {
-            }
-
-        }
-
-        loadFields();
-
-    })();
+loadFields();
 
 </script>
 

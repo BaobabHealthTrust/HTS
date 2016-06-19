@@ -5489,6 +5489,75 @@ app.get("/user_stats", function(req, res) {
 
 })
 
+app.get("/used_stock_stats", function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, username, SUM(COALESCE(consumption_quantity,0)) " +
+        "AS used FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
+        "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.end_date + "')" : "") + " GROUP BY item_name, username ";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        console.log(data);
+
+        if(data[0].length > 0) {
+
+            console.log(data[0][0].used);
+
+            result = data[0][0].used;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/available_stock_stats", function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, username, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
+        "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.end_date + "')" : "") + " GROUP BY item_name, username " +
+        "HAVING available > 0";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        console.log(data);
+
+        if(data[0].length > 0) {
+
+            console.log(data[0][0].available);
+
+            result = data[0][0].available;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
 app.get('/patient/:id', function (req, res) {
     res.sendFile(__dirname + '/public/views/patient.html');
 });

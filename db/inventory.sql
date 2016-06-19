@@ -196,7 +196,9 @@ CREATE TABLE `report` (
   `voided` tinyint(4) DEFAULT NULL,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
-  `voided_by` varchar(45) DEFAULT NULL
+  `voided_by` varchar(45) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `transaction_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
