@@ -5473,17 +5473,43 @@ app.get("/user_stats", function(req, res) {
 
         var result = 0;
 
-        console.log(data);
-
         if(data[0].length > 0) {
-
-            console.log(data[0][0].total);
 
             result = data[0][0].total;
 
         }
 
         res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/stock_types", function(req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT name FROM stock";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = [];
+
+        if(data[0].length > 0) {
+
+            for(var i = 0; i < data[0].length; i++) {
+
+                result.push(data[0][i].name);
+
+            }
+
+        }
+
+        res.status(200).json(result);
 
     });
 
@@ -5507,11 +5533,7 @@ app.get("/used_stock_stats", function(req, res) {
 
         var result = 0;
 
-        console.log(data);
-
         if(data[0].length > 0) {
-
-            console.log(data[0][0].used);
 
             result = data[0][0].used;
 
@@ -5542,11 +5564,7 @@ app.get("/available_stock_stats", function(req, res) {
 
         var result = 0;
 
-        console.log(data);
-
         if(data[0].length > 0) {
-
-            console.log(data[0][0].available);
 
             result = data[0][0].available;
 
