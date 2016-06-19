@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>My Stock</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+</head>
+<body style="text-align: center; margin: 20px;" oncontextmenu="return false;">
+
+<table width="100%" style="border: 0px solid #305d97; margin-top: 10px; font-size: 18px;" cellpadding="8"
+       cellspacing="0">
+    <tr>
+        <th colspan="4" style="color: #305d97; border-bottom: 2px solid #305d97; padding: 10px; font-size: 28px;
+                font-weight: normal;">
+            My Stock Levels
+        </th>
+    </tr>
+    <tr style="color: #305d97;">
+        <td style="border-right: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            &nbsp;
+        </td>
+        <th style="border-right: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Today
+        </th>
+        <th style="border-right: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            This Month
+        </th>
+        <th style="border-bottom: 2px solid #305d97; width: 25%;">
+            This Year
+        </th>
+    </tr>
+
+    <tr>
+        <td style="border-right: 1px solid #305d97; color: #305d97; font-weight: bold; font-size: 16px; border-bottom: 1px solid #305d97;"
+            align="right">
+            Kits Used
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right;  padding-right: 25px;
+                border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
+            id="kits_used_today" align="right">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right;  padding-right: 25px;
+                border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97;"
+            id="kits_used_in_month" align="right">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold;
+                padding-right: 25px; color: #305d97;"
+            id="kits_used_in_year"
+            align="right">
+            &nbsp;
+        </td>
+    </tr>
+    <tbody id="used_stock"></tbody>
+    <tr>
+        <td style="border-right: 1px solid #305d97; color: #305d97; font-weight: bold; font-size: 16px;
+                border-bottom: 1px solid #305d97; border-top: 1px solid #305d97;"
+            align="right">
+            My Stock
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-top: 1px solid #305d97;
+                border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97; padding-right: 25px;"
+            id="kits_available_today">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-top: 1px solid #305d97;
+                border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97; padding-right: 25px;"
+            id="kits_available_in_month">
+            &nbsp;
+        </td>
+        <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold;
+                color: #305d97; border-top: 1px solid #305d97; padding-right: 25px;" id="kits_available_in_year">
+            &nbsp;
+        </td>
+    </tr>
+    <tbody id="available_stock"></tbody>
+</table>
+
+<script>
+
+"use strict"
+
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
+
+            var result = "";
+
+            if (!format) {
+
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
+                        padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
+
+function padZeros(number, positions) {
+    var zeros = parseInt(positions) - String(number).length;
+    var padded = "";
+
+    for (var i = 0; i < zeros; i++) {
+        padded += "0";
+    }
+
+    padded += String(number);
+
+    return padded;
+}
+
+var fields = {};
+
+var fieldTotals = {
+    kits_used: {
+        today: {
+            stats: {},
+            total: 0
+        },
+        in_month: {
+            stats: {},
+            total: 0
+        },
+        in_year: {
+            stats: {},
+            total: 0
+        }
+    },
+    kits_available: {
+        today: {
+            stats: {},
+            total: 0
+        },
+        in_month: {
+            stats: {},
+            total: 0
+        },
+        in_year: {
+            stats: {},
+            total: 0
+        }
+    }
+}
+
+var fieldParts = {};
+
+function updateTotals(field, value, node1, node2, node3) {
+
+    if (node1 && node2 && node3) {
+
+        fieldTotals[node1][node2].stats[node3] = value;
+
+        var keys = Object.keys(fieldTotals[node1][node2].stats);
+
+        var sum = 0;
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            sum += fieldTotals[node1][node2].stats[key];
+
+        }
+
+        fieldTotals[node1][node2].total = sum;
+
+        if (__$(node1 + "_" + node2)) {
+
+            __$(node1 + "_" + node2).innerHTML = fieldTotals[node1][node2].total;
+
+        }
+
+    }
+
+}
+
+function loadFields() {
+
+    ajaxRequest("/stock_types", undefined, function (types) {
+
+        for (var i = 0; i < types.length; i++) {
+
+            var root = types[i].toLowerCase().replace(/\s/g, "_").replace(/\//g, "_").replace(/\-/g, "_");
+
+            fields[root + "_used_today"] = "/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+                getCookie("username") + "&start_date=" + (new Date()).format("YYYY-mm-dd");
+
+            fieldTotals.kits_used.today.stats[root + "_used_today"] = 0;
+
+            fieldParts[root + "_used_today"] = ["kits_used", "today", root + "_used_today"];
+
+            fields[root + "_used_in_month"] = "/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+                    getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                            "-01")).format("YYYY-mm-dd");
+
+            fieldTotals.kits_used.in_month.stats[root + "_used_in_month"] = 0;
+
+            fieldParts[root + "_used_in_month"] = ["kits_used", "in_month", root + "_used_in_month"];
+
+            fields[root + "_used_in_year"] = "/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+                    getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd");
+
+            fieldTotals.kits_used.in_year.stats[root + "_used_in_year"] = 0;
+
+            fieldParts[root + "_used_in_year"] = ["kits_used", "in_year", root + "_used_in_year"];
+
+            fields[root + "_available_today"] = "/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+                    getCookie("username") + "&start_date=" + (new Date()).format("YYYY-mm-dd");
+
+            fieldTotals.kits_available.today.stats[root + "_available_today"] = 0;
+
+            fieldParts[root + "_available_today"] = ["kits_available", "today", root + "_available_today"];
+
+            fields[root + "_available_in_month"] = "/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+                    getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
+                            "-01")).format("YYYY-mm-dd");
+
+            fieldTotals.kits_available.in_month.stats[root + "_available_in_month"] = 0;
+
+            fieldParts[root + "_available_in_month"] = ["kits_available", "in_month", root + "_available_in_month"];
+
+            fields[root + "_available_in_year"] = "/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+                    getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
+                    (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd");
+
+            fieldTotals.kits_available.in_year.stats[root + "_available_in_year"] = 0;
+
+            fieldParts[root + "_available_in_year"] = ["kits_available", "in_year", root + "_available_in_year"];
+
+            if (__$("used_stock")) {
+
+                var tr = document.createElement("tr");
+
+                __$("used_stock").appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.borderRight = "1px solid #305d97";
+                td.style.fontSize = "14px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.innerHTML = types[i];
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.borderRight = "1px solid #305d97";
+                td.style.fontSize = "16px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.id = root + "_used_today";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.borderRight = "1px solid #305d97";
+                td.style.fontSize = "16px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.id = root + "_used_in_month";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.fontSize = "16px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.id = root + "_used_in_year";
+
+                tr.appendChild(td);
+
+            }
+
+            if (__$("available_stock")) {
+
+                var tr = document.createElement("tr");
+
+                __$("available_stock").appendChild(tr);
+
+                var td = document.createElement("td");
+                td.style.borderRight = "1px solid #305d97";
+                td.style.fontSize = "14px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.innerHTML = types[i];
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.borderRight = "1px solid #305d97";
+                td.style.fontSize = "16px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.id = root + "_available_today";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.borderRight = "1px solid #305d97";
+                td.style.fontSize = "16px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.id = root + "_available_in_month";
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.style.fontSize = "16px";
+                td.style.borderBottom = "1px dotted #eee";
+                td.style.paddingRight = "25px";
+                td.style.textAlign = "right";
+                td.id = root + "_available_in_year";
+
+                tr.appendChild(td);
+
+            }
+
+        }
+
+        var keys = Object.keys(fields);
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            ajaxRequest(fields[key], key, function (json) {
+
+                if (json && __$(json.id)) {
+
+                    __$(json.id).innerHTML = json.total;
+
+                    updateTotals(json.id, json.total, (fieldParts[json.id] ? fieldParts[json.id][0] : undefined),
+                            (fieldParts[json.id] ? fieldParts[json.id][1] : undefined),
+                            (fieldParts[json.id] ? fieldParts[json.id][2] : undefined)
+                    );
+
+                }
+
+            })
+
+        }
+
+    })
+
+}
+
+function __$(id) {
+
+    return document.getElementById(id);
+
+}
+
+function getCookie(cname) {
+
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+
+}
+
+function ajaxRequest(url, id, callback) {
+
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function () {
+
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
+
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = httpRequest.responseText;
+
+                var json = JSON.parse(result);
+
+                json.id = id;
+
+                callback(json);
+
+            } else {
+
+                callback(undefined);
+
+            }
+
+        }
+
+    };
+    try {
+        httpRequest.open("GET", url, true);
+        httpRequest.send(null);
+    } catch (e) {
+    }
+
+}
+
+loadFields();
+
+</script>
+
+</body>
+</html>

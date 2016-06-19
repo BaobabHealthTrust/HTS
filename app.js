@@ -4487,10 +4487,10 @@ app.get('/available_batches_to_user', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
+    var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
         "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
-        " = receipt.batch_number WHERE COALESCE(report.batch_number,'') != '' AND item_name = '" +
-        query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
+        " = receipt.batch_number WHERE COALESCE(report.batch_number,'') != '' AND item_name LIKE '" +
+        (query.item_name ? query.item_name : "") + "%' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
         "' AND report.batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY report.batch_number " +
         "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
 
@@ -4513,7 +4513,8 @@ app.get('/available_batches_to_user', function (req, res) {
             result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
                 "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
                 "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
-                data[0][i].batch_number + " (" + ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
+                (!query.item_name ? data[0][i].item_name + ": " : "") + data[0][i].batch_number + " (" +
+                ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
                 data[0][i].available + ")" + "</li>";
 
         }

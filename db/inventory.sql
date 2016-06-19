@@ -359,7 +359,8 @@ CREATE TABLE `consumption_type` (
 
 LOCK TABLES `consumption_type` WRITE;
 /*!40000 ALTER TABLE `consumption_type` DISABLE KEYS */;
-INSERT INTO `consumption_type` VALUES (1,'Normal use', NOW(), 'admin', NULL, NULL),(2,'Damaged', NOW(), 'admin', NULL, NULL);
+INSERT INTO `consumption_type` VALUES (1,'Normal use', NOW(), 'admin', NULL, NULL),(2,'Damaged', NOW(), 'admin', NULL, NULL),
+  (3,'Disposal', NOW(), 'admin', NULL, NULL);
 /*!40000 ALTER TABLE `consumption_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
