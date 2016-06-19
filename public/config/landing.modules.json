@@ -8,6 +8,9 @@
             "Reports": "/views/reports.html",
             "Administration": "/views/administration.html"
         },
-        "program" : "HTS PROGRAM"
+        "program" : "HTS PROGRAM",
+        "admin_only": {
+            "Administration": true
+        }
     }
 }
