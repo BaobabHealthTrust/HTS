@@ -4237,13 +4237,79 @@ app.post('/update_user', function (req, res) {
 
                         queryRaw(sql, function (name) {
 
-                            res.status(200).json({message: "User updated!"});
+                            if(data.roles) {
+
+                                var sql = "DELETE FROM user_role WHERE user_id = '" + person[0][0].user_id + "'";
+
+                                queryRaw(sql, function (user) {
+
+                                    var values = "";
+
+                                    for (var i = 0; i < data.roles.length; i++) {
+
+                                        values += (values.trim().length > 0 ? ", " : "") + "('" + person[0][0].user_id + "', '" +
+                                            data.roles[i] + "')";
+
+                                    }
+
+                                    sql = "INSERT INTO user_role (user_id, role) VALUES " + values;
+
+                                    console.log(sql);
+
+                                    queryRaw(sql, function (role) {
+
+                                        console.log(role[0]);
+
+                                        res.status(200).json({message: "User updated!"});
+
+                                    });
+
+                                })
+
+                            } else {
+
+                                res.status(200).json({message: "User updated!"});
+
+                            }
 
                         })
 
                     } else {
 
-                        res.status(200).json({message: "User updated!"});
+                        if(data.roles) {
+
+                            var sql = "DELETE FROM user_role WHERE user_id = '" + person[0][0].user_id + "'";
+
+                            queryRaw(sql, function (user) {
+
+                                var values = "";
+
+                                for (var i = 0; i < data.roles.length; i++) {
+
+                                    values += (values.trim().length > 0 ? ", " : "") + "('" + person[0][0].user_id + "', '" +
+                                        data.roles[i] + "')";
+
+                                }
+
+                                sql = "INSERT INTO user_role (user_id, role) VALUES " + values;
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (role) {
+
+                                    console.log(role[0]);
+
+                                    res.status(200).json({message: "User updated!"});
+
+                                });
+
+                            })
+
+                        } else {
+
+                            res.status(200).json({message: "User updated!"});
+
+                        }
 
                     }
 
