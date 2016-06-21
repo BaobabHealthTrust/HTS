@@ -780,7 +780,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("N", __$("partner_present").value.trim().substring(0, 1).toUpperCase(), th);
+        addDiv("N", (__$("partner_present") ? __$("partner_present").value.trim().substring(0, 1).toUpperCase() : ""), th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -789,7 +789,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("Y", __$("partner_present").value.trim().substring(0, 1).toUpperCase(), th);
+        addDiv("Y", (__$("partner_present") ? __$("partner_present").value.trim().substring(0, 1).toUpperCase() : ""), th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -965,7 +965,7 @@ function saveConsumption(dispatch_id, target_id) {
 
         var json = JSON.parse(result);
 
-        if(__$(target_id)) {
+        if (__$(target_id)) {
 
             __$(target_id).setAttribute("consumption_id", json.consumption_id);
 
@@ -1229,7 +1229,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        if(__$(this.getAttribute("timeTarget"))) {
+        if (__$(this.getAttribute("timeTarget"))) {
 
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
@@ -1478,7 +1478,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        if(__$(this.getAttribute("timeTarget"))) {
+        if (__$(this.getAttribute("timeTarget"))) {
 
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
@@ -1764,7 +1764,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         }
 
-        if(__$(this.getAttribute("timeTarget"))) {
+        if (__$(this.getAttribute("timeTarget"))) {
 
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
@@ -2025,14 +2025,14 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Negative";
 
-                result = "Inconclusive";
+                result = "New Inconclusive";
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
 
                 outcome = "Test 1 & Test 2 Positive";
 
-                result = "Confirmed Positive";
+                result = "Confirmatory Positive";
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
@@ -2040,14 +2040,14 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Discordant";
 
-                result = "Inconclusive";
+                result = "New  Inconclusive";
 
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim() == "+" && imTest2Result.trim() == "+") {
 
                 outcome = "Test 1 & Test 2 Positive";
 
-                result = "Confirmed Positive";
+                result = "Confirmatory Positive";
 
             }
 
@@ -2066,14 +2066,14 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Positive";
 
-                result = "Confirmed Positive";
+                result = "Confirmatory Positive";
 
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim().length <= 0 && imTest2Result.trim().length <= 0) {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
-                result = "Inconclusive";
+                result = "Confirmatory Inconclusive";
 
             }
 
@@ -2637,8 +2637,8 @@ function showHIVTestingSummary() {
             "New Positive": "N+",
             "New Exposed Infant": "N<span style='font-size: 10px'>Ex</span>",
             "New Inconclusive": "N<span style='font-size: 10px'>In</span>",
-            "Confirmed Positive": "C+",
-            "Inconclusive": "C<span style='font-size: 10px'>In</span>",
+            "Confirmatory Positive": "C+",
+            "Confirmatory Inconclusive": "C<span style='font-size: 10px'>In</span>",
             "": ""
         };
 
@@ -2794,8 +2794,8 @@ function showDetailsSummary() {
         td.style.borderBottom = "1px solid #333";
         td.style.borderRight = "1px solid #333";
 
-        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "(no consent)" : __$("1.2").value.trim() +
-            " " + __$("1.3").value.trim());
+        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "(no consent)" : __$("first_name").value.trim() +
+            " " + __$("last_name").value.trim());
 
         tr.appendChild(td);
 
@@ -2803,7 +2803,7 @@ function showDetailsSummary() {
         td.style.borderBottom = "1px solid #333";
         td.style.borderRight = "1px solid #333";
 
-        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "" : (__$("1.4").value.trim() ==
+        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "" : (__$("1.10").value.trim() ==
             "Phone Number" ? __$("phone_number").value.trim() : __$("village").value.trim() + ", " +
             __$("closest_landmark").value.trim()));
 
@@ -2839,7 +2839,31 @@ function evaluateReferral() {
     testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "HIV TESTING", "Result Given to Client")).trim();
 
-    if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
+    if (pregnant && testResult.trim().toLowerCase() == "new negative") {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 45))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 45))))).format("YYYY-mm-dd");
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+            "health and to prevent transmission.", "Re-Test");
+
+    } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
         "new negative") {
 
         if (__$("referral")) {
@@ -2854,9 +2878,10 @@ function evaluateReferral() {
 
         }
 
-        window.parent.dashboard.showMsg("No Re-Test Needed!");
+        window.parent.dashboard.showMsg("No Re-Test Needed. Client should go for re-testing <u>if in future</u> a <i>" +
+            "High Risk Event</i> occurs or if they enter into <i>On-Going Risk</i> behaviour", "No Re-Test Needed");
 
-    } else if (testResult.trim().toLowerCase() == "confirmed positive") {
+    } else if (testResult.trim().toLowerCase() == "confirmatory positive") {
 
         if (__$("referral")) {
 
@@ -2870,7 +2895,7 @@ function evaluateReferral() {
 
         }
 
-        window.parent.dashboard.showMsg("No Re-Test Needed!");
+        window.parent.dashboard.showMsg("No Re-Test Needed. Client confirmed positive.", "No Re-Test Needed!");
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
         (testResult.trim().toLowerCase() == "new inconclusive") || (testResult.trim().toLowerCase() == "new negative")) {
@@ -2896,9 +2921,10 @@ function evaluateReferral() {
 
         }
 
-        window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks!");
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks to rule out or confirm a new " +
+            "infection (window period)", "Re-Test");
 
-    } else if (riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
+    } else if (riskCategory && riskCategory.trim().toLowerCase() == "on-going risk" &&
         (testResult.trim().toLowerCase() == "new negative")) {
 
         if (__$("referral")) {
@@ -2922,29 +2948,8 @@ function evaluateReferral() {
 
         }
 
-        window.parent.dashboard.showMsg("Book appointment for Re-Test after 12 months!");
-
-    } else if (pregnant && testResult.trim().toLowerCase() == "new negative") {
-
-        if (__$("referral")) {
-
-            __$("referral").value = "Re-Test";
-
-        }
-
-        if (__$("appointment")) {
-
-            __$("appointment").removeAttribute("condition");
-
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
-                (7 * 45))))).format("YYYY-mm-dd"))
-
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
-                (7 * 45))))).format("YYYY-mm-dd");
-
-        }
-
-        window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy!");
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 12 months to detect an infection that may " +
+            "happen in future and to ensure timely enrollment in ART", "Re-Test");
 
     } else if (testResult.trim().toLowerCase() == "new exposed infant") {
 
@@ -2969,7 +2974,7 @@ function evaluateReferral() {
 
         }
 
-        window.parent.dashboard.showMsg("Book appointment for Re-Test when child at 12-24 months!");
+        window.parent.dashboard.showMsg("Book appointment for Re-Test when child at 12-24 months!", "Re-Test");
 
     } else if (testResult.trim().toLowerCase() == "new positive") {
 
@@ -2992,7 +2997,7 @@ function evaluateReferral() {
         }
 
         window.parent.dashboard.showMsg("Book appointment for Confirmatory Testing at the HIV Clinic " +
-            "<u>as soon as possible</u>!");
+            "<u>as soon as possible</u>!", "Re-Test");
 
     }
 
@@ -3327,7 +3332,7 @@ function showAssessmentSummary() {
         td.style.borderRight = "1px solid #333";
         td.align = "center";
 
-        td.innerHTML = (__$("1.4").value.trim().length > 0 ? __$("1.4").value.trim() : 0);
+        td.innerHTML = (__$("slips").value.trim().length > 0 ? __$("slips").value.trim() : 0);
 
         tr.appendChild(td);
 
@@ -3337,7 +3342,7 @@ function showAssessmentSummary() {
         td.style.borderRight = "1px solid #333";
         td.align = "center";
 
-        td.innerHTML = (__$("1.5").value.trim().length > 0 ? __$("1.5").value.trim() : 0);
+        td.innerHTML = (__$("male").value.trim().length > 0 ? __$("male").value.trim() : 0);
 
         tr.appendChild(td);
 
@@ -3347,7 +3352,7 @@ function showAssessmentSummary() {
         td.style.borderRight = "1px solid #333";
         td.align = "center";
 
-        td.innerHTML = (__$("1.6").value.trim().length > 0 ? __$("1.6").value.trim() : 0);
+        td.innerHTML = (__$("female").value.trim().length > 0 ? __$("female").value.trim() : 0);
 
         tr.appendChild(td);
 
@@ -3356,7 +3361,7 @@ function showAssessmentSummary() {
         td.style.borderTop = "1px solid #333";
         td.style.borderRight = "1px solid #333";
 
-        td.innerHTML = (__$("1.7").value.trim().length > 0 ? __$("1.7").value.trim() : "");
+        td.innerHTML = (__$("comments").value.trim().length > 0 ? __$("comments").value.trim() : "");
 
         tr.appendChild(td);
 
@@ -3387,9 +3392,9 @@ function validateCredentials(username, password) {
 
         var json = JSON.parse(result);
 
-        if(json.valid) {
+        if (json.valid) {
 
-            if(__$("nextButton")) {
+            if (__$("nextButton")) {
 
                 __$("nextButton").className = __$("nextButton").className.replace(/gray/, "green");
 
@@ -3397,7 +3402,7 @@ function validateCredentials(username, password) {
 
         } else {
 
-            if(__$("nextButton")) {
+            if (__$("nextButton")) {
 
                 __$("nextButton").className = __$("nextButton").className.replace(/green/, "gray");
 
@@ -3411,13 +3416,13 @@ function validateCredentials(username, password) {
 
 function checkValidation() {
 
-    if(__$("nextButton")) {
+    if (__$("nextButton")) {
 
         __$("nextButton").className = __$("nextButton").className.replace(/green/, "gray");
 
     }
 
-    hndValidation = setInterval(function() {
+    hndValidation = setInterval(function () {
 
         validateCredentials(__$("im_tester").value.trim(), __$("touchscreenInput" + tstCurrentPage).value.trim())
 
@@ -3429,7 +3434,7 @@ function stopValidationChecks() {
 
     clearInterval(hndValidation);
 
-    if(__$("nextButton")) {
+    if (__$("nextButton")) {
 
         __$("nextButton").className = __$("nextButton").className.replace(/gray/, "green");
 
@@ -3455,19 +3460,19 @@ function reverseConsumption(consumption_id, prefix, suffix) {
 
     ajaxPostRequest("/save_item", data, function (result) {
 
-        if(__$(prefix + "_lot_number" + suffix)) {
+        if (__$(prefix + "_lot_number" + suffix)) {
 
             __$(prefix + "_lot_number" + suffix).removeAttribute("consumption_id");
 
         }
 
-        if(__$(prefix + "_lot_" + suffix + "_dispatch_id")) {
+        if (__$(prefix + "_lot_" + suffix + "_dispatch_id")) {
 
             __$(prefix + "_lot_" + suffix + "_dispatch_id").value = "";
 
         }
 
-        if(__$(prefix + "_lot_" + suffix + "_expiry")) {
+        if (__$(prefix + "_lot_" + suffix + "_expiry")) {
 
             __$(prefix + "_lot_" + suffix + "_expiry").value = "";
 

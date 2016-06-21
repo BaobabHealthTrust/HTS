@@ -7,7 +7,7 @@
         ["CLIENT RISK ASSESSMENT", "HTS Client risk assessment encounter"],
         ["ITEMS GIVEN", "HTS Client items given encounter"],
         ["APPOINTMENT", "Appointment encounter"],
-        ["SEIZURE TYPE", "Epilepsy encounter"]
+        ["REFERRAL FOR RE-TESTING", "HTS encounter type for referral for re-testing"]
     ],
     "patient_identifier_types": [
         ["HTS Number", "HTS client clinic number"],
