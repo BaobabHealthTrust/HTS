@@ -7,10 +7,11 @@
         ["CLIENT RISK ASSESSMENT", "HTS Client risk assessment encounter"],
         ["ITEMS GIVEN", "HTS Client items given encounter"],
         ["APPOINTMENT", "Appointment encounter"],
-        ["COMMENTS", "Clinical comments encounter"]
+        ["SEIZURE TYPE", "Epilepsy encounter"]
     ],
     "patient_identifier_types": [
-        ["HTS Number", "HTS client clinic number"]
+        ["HTS Number", "HTS client clinic number"],
+        ["Epilepsy Clinic Number", "Epilepsy clinic number"]
     ],
     "person_attribute_types": [
         ["HTS Provider ID", "HTS service provider clinic code"]

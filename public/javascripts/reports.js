@@ -41,7 +41,57 @@ function __$(id) {
 
 }
 
+function padZeros(number, positions) {
+    var zeros = parseInt(positions) - String(number).length;
+    var padded = "";
+
+    for (var i = 0; i < zeros; i++) {
+        padded += "0";
+    }
+
+    padded += String(number);
+
+    return padded;
+}
+
+function leapYear(year) {
+
+    var yr = parseInt(year);
+
+    var result = ((yr % 4 == 0 && yr % 100 != 0) || yr % 400 == 0);
+
+    return result;
+
+}
+
 function loadFields() {
+
+    var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
+
+    var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
+
+    var startDate = (year + "-" + month + "-01");
+
+    var lastDate = {
+        "01": 31,
+        "02": (leapYear(year) ? 29 : 28),
+        "03": 31,
+        "04": 30,
+        "05": 31,
+        "06": 30,
+        "07": 31,
+        "08": 31,
+        "09": 30,
+        "10": 31,
+        "11": 30,
+        "12": 31
+    }
+
+    var endDate = (year + "-" + month + "-" + lastDate[month]);
+
+    console.log(startDate);
+
+    console.log(endDate);
 
     htcReport = {
         "sex_pregnancy": {total: 0},
@@ -53,7 +103,7 @@ function loadFields() {
         "result_given_to_client": {total: 0}
     };
 
-    ajaxRequest("/report_q_sex_pregnancy_m", function (json) {
+    ajaxRequest("/report_q_sex_pregnancy_m?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("M")) {
 
@@ -67,7 +117,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_sex_pregnancy_fnp", function (json) {
+    ajaxRequest("/report_q_sex_pregnancy_fnp?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("FNP")) {
 
@@ -81,7 +131,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_sex_pregnancy_fp", function (json) {
+    ajaxRequest("/report_q_sex_pregnancy_fp?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("FP")) {
 
@@ -95,7 +145,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_last_hiv_test_lnev", function (json) {
+    ajaxRequest("/report_q_last_hiv_test_lnev?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("LNEV")) {
 
@@ -109,7 +159,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_last_hiv_test_ln", function (json) {
+    ajaxRequest("/report_q_last_hiv_test_ln?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("LN")) {
 
@@ -123,7 +173,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_last_hiv_test_lp", function (json) {
+    ajaxRequest("/report_q_last_hiv_test_lp?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("LP")) {
 
@@ -137,7 +187,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_last_hiv_test_lex", function (json) {
+    ajaxRequest("/report_q_last_hiv_test_lex?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("LEX")) {
 
@@ -151,7 +201,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_last_hiv_test_lin", function (json) {
+    ajaxRequest("/report_q_last_hiv_test_lin?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("LIN")) {
 
@@ -165,7 +215,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_outcome_summary_n", function (json) {
+    ajaxRequest("/report_q_outcome_summary_n?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("N")) {
 
@@ -179,7 +229,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_outcome_summary_p", function (json) {
+    ajaxRequest("/report_q_outcome_summary_p?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("P")) {
 
@@ -193,7 +243,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_outcome_summary_t12n", function (json) {
+    ajaxRequest("/report_q_outcome_summary_t12n?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("T12N")) {
 
@@ -207,7 +257,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_outcome_summary_t12p", function (json) {
+    ajaxRequest("/report_q_outcome_summary_t12p?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("T12P")) {
 
@@ -221,7 +271,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_outcome_summary_t12d", function (json) {
+    ajaxRequest("/report_q_outcome_summary_t12d?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("T12D")) {
 
@@ -235,7 +285,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_age_group_0_11m", function (json) {
+    ajaxRequest("/report_q_age_group_0_11m?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("0_11M")) {
 
@@ -249,7 +299,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_age_group_1_14y", function (json) {
+    ajaxRequest("/report_q_age_group_1_14y?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("1_14Y")) {
 
@@ -263,7 +313,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_age_group_15_24y", function (json) {
+    ajaxRequest("/report_q_age_group_15_24y?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("15_24Y")) {
 
@@ -277,7 +327,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_age_group_25p", function (json) {
+    ajaxRequest("/report_q_age_group_25p?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("25P")) {
 
@@ -291,7 +341,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_partner_present_yes", function (json) {
+    ajaxRequest("/report_q_partner_present_yes?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("PPY")) {
 
@@ -305,7 +355,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_partner_present_no", function (json) {
+    ajaxRequest("/report_q_partner_present_no?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("PPN")) {
 
@@ -319,7 +369,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_result_given_to_client_nn", function (json) {
+    ajaxRequest("/report_q_result_given_to_client_nn?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("RGTCNN")) {
 
@@ -333,7 +383,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_result_given_to_client_np", function (json) {
+    ajaxRequest("/report_q_result_given_to_client_np?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("RGTCNP")) {
 
@@ -347,7 +397,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_result_given_to_client_nex", function (json) {
+    ajaxRequest("/report_q_result_given_to_client_nex?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("RGTCNEX")) {
 
@@ -361,7 +411,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_result_given_to_client_ni", function (json) {
+    ajaxRequest("/report_q_result_given_to_client_ni?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("RGTCNI")) {
 
@@ -375,7 +425,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_result_given_to_client_cp", function (json) {
+    ajaxRequest("/report_q_result_given_to_client_cp?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("RGTCCP")) {
 
@@ -389,7 +439,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_result_given_to_client_in", function (json) {
+    ajaxRequest("/report_q_result_given_to_client_in?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("RGTCIN")) {
 
@@ -403,7 +453,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_partner_htc_slips_given_slips", function (json) {
+    ajaxRequest("/report_q_partner_htc_slips_given_slips?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("PHSG")) {
 
@@ -413,7 +463,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_htc_access_type_pitc", function (json) {
+    ajaxRequest("/report_q_htc_access_type_pitc?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("PITC")) {
 
@@ -427,7 +477,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_htc_access_type_frs", function (json) {
+    ajaxRequest("/report_q_htc_access_type_frs?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("FRS")) {
 
@@ -441,7 +491,7 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/report_q_htc_access_type_vct", function (json) {
+    ajaxRequest("/report_q_htc_access_type_vct?start_date=" + startDate + "&end_date=" + endDate, function (json) {
 
         if (__$("VCT")) {
 
@@ -452,6 +502,26 @@ function loadFields() {
         htcReport.htc_access_type["VCT"] = json.count;
 
         updateTotals("htc_access_type");
+
+    });
+
+    ajaxRequest("/test_1_kit_name?start_date=" + startDate + "&end_date=" + endDate, function (json) {
+
+        if (__$("test_1_kit_name")) {
+
+            __$("test_1_kit_name").innerHTML = json.name;
+
+        }
+
+    });
+
+    ajaxRequest("/test_2_kit_name?start_date=" + startDate + "&end_date=" + endDate, function (json) {
+
+        if (__$("test_2_kit_name")) {
+
+            __$("test_2_kit_name").innerHTML = json.name;
+
+        }
 
     });
 
@@ -476,7 +546,7 @@ function updateTotals(category) {
 
     }
 
-    if(__$(category)) {
+    if (__$(category)) {
 
         __$(category).innerHTML = sum;
 

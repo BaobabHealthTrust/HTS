@@ -4237,7 +4237,7 @@ app.post('/update_user', function (req, res) {
 
                         queryRaw(sql, function (name) {
 
-                            if(data.roles) {
+                            if (data.roles) {
 
                                 var sql = "DELETE FROM user_role WHERE user_id = '" + person[0][0].user_id + "'";
 
@@ -4276,7 +4276,7 @@ app.post('/update_user', function (req, res) {
 
                     } else {
 
-                        if(data.roles) {
+                        if (data.roles) {
 
                             var sql = "DELETE FROM user_role WHERE user_id = '" + person[0][0].user_id + "'";
 
@@ -4921,13 +4921,15 @@ app.get('/report_q_sex_pregnancy_m', function (req, res) {
 
     var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,'') = 'M' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -4941,13 +4943,15 @@ app.get('/report_q_sex_pregnancy_fnp', function (req, res) {
 
     var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,'') = 'FNP' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -4961,13 +4965,15 @@ app.get('/report_q_sex_pregnancy_fp', function (req, res) {
 
     var sql = "SELECT COUNT(sex_pregnancy) AS total FROM htc_report WHERE COALESCE(sex_pregnancy,'') = 'FP' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -4981,13 +4987,15 @@ app.get('/report_q_last_hiv_test_lnev', function (req, res) {
 
     var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Never Tested' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5001,13 +5009,15 @@ app.get('/report_q_last_hiv_test_ln', function (req, res) {
 
     var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Negative' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5021,13 +5031,15 @@ app.get('/report_q_last_hiv_test_lp', function (req, res) {
 
     var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Positive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5041,13 +5053,15 @@ app.get('/report_q_last_hiv_test_lex', function (req, res) {
 
     var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Exposed Infant' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5061,13 +5075,15 @@ app.get('/report_q_last_hiv_test_lin', function (req, res) {
 
     var sql = "SELECT COUNT(last_hiv_test) AS total FROM htc_report WHERE COALESCE(last_hiv_test,'') = 'Last Inconclusive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5081,13 +5097,15 @@ app.get('/report_q_outcome_summary_n', function (req, res) {
 
     var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Single Negative' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5101,13 +5119,15 @@ app.get('/report_q_outcome_summary_p', function (req, res) {
 
     var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Single Positive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5121,13 +5141,15 @@ app.get('/report_q_outcome_summary_t12n', function (req, res) {
 
     var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Negative' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5141,13 +5163,15 @@ app.get('/report_q_outcome_summary_t12p', function (req, res) {
 
     var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Positive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5161,13 +5185,15 @@ app.get('/report_q_outcome_summary_t12d', function (req, res) {
 
     var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Discordant' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5181,13 +5207,15 @@ app.get('/report_q_age_group_0_11m', function (req, res) {
 
     var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '0-11 months' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5201,13 +5229,15 @@ app.get('/report_q_age_group_1_14y', function (req, res) {
 
     var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '1-14 years' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5221,13 +5251,15 @@ app.get('/report_q_age_group_15_24y', function (req, res) {
 
     var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '15-24 years' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5241,13 +5273,15 @@ app.get('/report_q_age_group_25p', function (req, res) {
 
     var sql = "SELECT COUNT(age_group) AS total FROM htc_report WHERE COALESCE(age_group,'') = '25+ years' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5261,13 +5295,15 @@ app.get('/report_q_partner_present_yes', function (req, res) {
 
     var sql = "SELECT COUNT(partner_present) AS total FROM htc_report WHERE COALESCE(partner_present,'') = 'Yes' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5281,13 +5317,15 @@ app.get('/report_q_partner_present_no', function (req, res) {
 
     var sql = "SELECT COUNT(partner_present) AS total FROM htc_report WHERE COALESCE(partner_present,'') = 'No' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5301,13 +5339,15 @@ app.get('/report_q_result_given_to_client_nn', function (req, res) {
 
     var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Negative' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5321,13 +5361,15 @@ app.get('/report_q_result_given_to_client_np', function (req, res) {
 
     var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Positive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5341,13 +5383,15 @@ app.get('/report_q_result_given_to_client_nex', function (req, res) {
 
     var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Exposed Infant' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5361,13 +5405,15 @@ app.get('/report_q_result_given_to_client_ni', function (req, res) {
 
     var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'New Inconclusive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5381,13 +5427,15 @@ app.get('/report_q_result_given_to_client_cp', function (req, res) {
 
     var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Confirmed Positive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5401,13 +5449,15 @@ app.get('/report_q_result_given_to_client_in', function (req, res) {
 
     var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Inconclusive' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5421,13 +5471,15 @@ app.get('/report_q_partner_htc_slips_given_slips', function (req, res) {
 
     var sql = "SELECT SUM(partner_htc_slips_given) AS total FROM htc_report WHERE COALESCE(partner_htc_slips_given,'') != '' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5441,13 +5493,15 @@ app.get('/report_q_htc_access_type_pitc', function (req, res) {
 
     var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Routine HTS within Health Service' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5461,13 +5515,15 @@ app.get('/report_q_htc_access_type_frs', function (req, res) {
 
     var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Comes with HTS Family Reference Slip' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5481,13 +5537,17 @@ app.get('/report_q_htc_access_type_vct', function (req, res) {
 
     var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Other (VCT, etc.)' " +
         (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
-        (query.end_date ? " AND DATE(obs_datetime)) <= DATE('" + query.end_date + "')" : "");
+        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
     console.log(sql);
 
     queryRaw(sql, function (data) {
 
-        res.status(200).json({count: data[0][0].total});
+        var total = data[0] && (data[0][0] ? data[0][0].total : 0);
+
+        console.log(total);
+
+        res.status(200).json({count: total});
 
     });
 
@@ -5521,7 +5581,7 @@ app.get('/relationship_types', function (req, res) {
 
 })
 
-app.get("/user_stats", function(req, res) {
+app.get("/user_stats", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -5540,7 +5600,7 @@ app.get("/user_stats", function(req, res) {
 
         var result = 0;
 
-        if(data[0].length > 0) {
+        if (data[0].length > 0) {
 
             result = data[0][0].total;
 
@@ -5552,7 +5612,7 @@ app.get("/user_stats", function(req, res) {
 
 })
 
-app.get("/stock_types", function(req, res) {
+app.get("/stock_types", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -5566,9 +5626,9 @@ app.get("/stock_types", function(req, res) {
 
         var result = [];
 
-        if(data[0].length > 0) {
+        if (data[0].length > 0) {
 
-            for(var i = 0; i < data[0].length; i++) {
+            for (var i = 0; i < data[0].length; i++) {
 
                 result.push(data[0][i].name);
 
@@ -5582,7 +5642,7 @@ app.get("/stock_types", function(req, res) {
 
 })
 
-app.get("/used_stock_stats", function(req, res) {
+app.get("/used_stock_stats", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -5591,7 +5651,7 @@ app.get("/used_stock_stats", function(req, res) {
     var sql = "SELECT item_name, username, SUM(COALESCE(consumption_quantity,0)) " +
         "AS used FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
         "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE('" +
         query.end_date + "')" : "") + " GROUP BY item_name, username ";
 
     console.log(sql);
@@ -5600,7 +5660,7 @@ app.get("/used_stock_stats", function(req, res) {
 
         var result = 0;
 
-        if(data[0].length > 0) {
+        if (data[0].length > 0) {
 
             result = data[0][0].used;
 
@@ -5612,7 +5672,7 @@ app.get("/used_stock_stats", function(req, res) {
 
 })
 
-app.get("/available_stock_stats", function(req, res) {
+app.get("/available_stock_stats", function (req, res) {
 
     var url_parts = url.parse(req.url, true);
 
@@ -5621,7 +5681,7 @@ app.get("/available_stock_stats", function(req, res) {
     var sql = "SELECT item_name, username, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
         "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
         "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
-        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE('" +
         query.end_date + "')" : "") + " GROUP BY item_name, username " +
         "HAVING available > 0";
 
@@ -5631,13 +5691,71 @@ app.get("/available_stock_stats", function(req, res) {
 
         var result = 0;
 
-        if(data[0].length > 0) {
+        if (data[0].length > 0) {
 
             result = data[0][0].available;
 
         }
 
         res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get('/test_1_kit_name', function(req, res){
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
+        "WHERE name = 'First Pass Test Kit 1 Name'" + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
+        query.end_date + "')" : "") + " LIMIT 1) LIMIT 1";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var result = "";
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].value_text;
+
+        }
+
+        res.status(200).json({name: result});
+
+    });
+
+})
+
+app.get('/test_2_kit_name', function(req, res){
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
+        "WHERE name = 'First Pass Test Kit 2 Name'" + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
+        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
+        query.end_date + "')" : "") + " LIMIT 1) LIMIT 1";
+
+    console.log(sql);
+
+    queryRaw(sql, function (data) {
+
+        var result = "";
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].value_text;
+
+        }
+
+        res.status(200).json({name: result});
 
     });
 
