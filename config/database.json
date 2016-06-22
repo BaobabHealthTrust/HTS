@@ -1,7 +1,0 @@
-{
-    "host": "localhost",
-    "user": "root",
-    "password": "admin",
-    "database": "htc1_7",
-    "stockDatabase": "htc_inventory"
-}

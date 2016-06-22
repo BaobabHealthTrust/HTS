@@ -15,6 +15,8 @@ var mutex = new Mutex('htc_lock');
 
 var url = require('url');
 
+var site = require(__dirname + "/config/site.json");
+
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 
@@ -5758,6 +5760,192 @@ app.get('/test_2_kit_name', function(req, res){
         res.status(200).json({name: result});
 
     });
+
+})
+
+app.get("/total_in_rooms_at_month_start", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
+        "' " + (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") +
+        " GROUP BY item_name HAVING available > 0";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].available;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/total_tests_received_during_month", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, SUM(receipt_quantity) AS received_quantity FROM report WHERE COALESCE(receipt_quantity,0) " +
+        "> 0 AND item_name = '" + query.item_name + "' " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.start_date + "')" : "") +  (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date +
+        "')" : "") + " GROUP BY item_name";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].received_quantity;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/total_tests_used_for_testing_clients", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') = " +
+        "'Normal use' AND item_name = '" + query.item_name + "' " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
+        query.start_date + "')" : "") + (query.end_date ? " AND DATE(transaction_date) <= " +
+        "DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].total;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/total_other_tests", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') " +
+        "NOT IN ('Normal use', 'Disposal') AND item_name = '" + query.item_name + "' "  + (query.start_date ?
+        " AND DATE(transaction_date) >= DATE('" + query.start_date + "')" : "")+ (query.end_date ?
+        " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].total;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/total_disposals", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,'') " +
+        "IN ('Disposal', 'Expired') AND item_name = '" + query.item_name + "' " + (query.start_date ?
+        " AND DATE(transaction_date) >= DATE('" + query.start_date + "')" : "") + (query.end_date ?
+        " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") + " GROUP BY item_name";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].total;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get("/total_in_rooms_at_month_end", function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var sql = "SELECT item_name, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
+        "' " + (query.end_date ? " AND DATE(transaction_date) <= DATE('" + query.end_date + "')" : "") +
+        " GROUP BY item_name HAVING available > 0";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = 0;
+
+        if (data[0].length > 0) {
+
+            result = data[0][0].available;
+
+        }
+
+        res.status(200).json({total: result});
+
+    });
+
+})
+
+app.get('/facility', function(req, res) {
+
+    res.status(200).json({facility: site.facility});
+
+})
+
+app.get('/location', function(req, res) {
+
+    res.status(200).json({location: site.location});
 
 })
 

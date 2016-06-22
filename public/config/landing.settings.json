@@ -3,5 +3,6 @@
     "modulesPath": "/config/landing.modules.json",
     "barcodePath": "/patient/",
     "savePath": "/save_other",
-    "dummyPatientCreatePath": "/save_dummy_patient"
+    "dummyPatientCreatePath": "/save_dummy_patient",
+    "facilityPath": "/facility"
 }

@@ -4,16 +4,26 @@
     <meta charset="UTF-8">
     <title>Site Report</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+    <style>
+        th {
+            font-weight: normal;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
 </head>
 <body oncontextmenu="return false;" style="margin: 20px; font-size: 14px;">
 
 <table width="100%" style="border-collapse: collapse" cellpadding="8">
 <tr>
-    <th style="font-size: 13px; width: 100px; text-align: left;" colspan="2">
+    <th style="font-size: 13px; width: 100px; text-align: left;" colspan="2" class="bold">
         M<span style="font-size: 12px">ALAWI</span> HTS R<span style="font-size: 11px">EGISTER</span><br/>
         V<span style="font-size: 10px">ERSION</span> 3
     </th>
-    <th style="font-size: 20px" colspan="4">
+    <th style="font-size: 20px" colspan="4" class="bold">
         HIV T<span style="font-size: 18px">ESTING AND</span> C<span style="font-size: 18px">OUNSELLING</span> - M<span
             style="font-size: 18px">ONTHLY</span> S<span style="font-size: 18px">ITE</span> R<span
             style="font-size: 18px">EPORT</span><br/>
@@ -35,7 +45,7 @@
     <td style="border-left: 1px solid #333; border-top: 1px solid #333; width: 150px;">
         Facility/Site
     </td>
-    <td style="border-left: 1px solid #333; border-top: 1px solid #333; border-right: 1px solid #333;" colspan="5">
+    <td style="border-left: 1px solid #333; border-top: 1px solid #333; border-right: 1px solid #333;" colspan="5" id="lblFacility">
         &nbsp;
     </td>
 </tr>
@@ -46,19 +56,19 @@
     <td style="border-left: 1px solid #333;">
         Reporting Year
     </td>
-    <td style="border: 1px solid #333;">
+    <td style="border: 1px solid #333;" id="lblYear">
         &nbsp;
     </td>
     <td style="border-top: 1px solid #333; width: 120px;" align="center">
         Month
     </td>
-    <td style="border: 1px solid #333;">
+    <td style="border: 1px solid #333;" id="lblMonth">
         &nbsp;
     </td>
     <td style="border-top: 1px solid #333; width: 120px;" align="center">
         HTS Location<sup>1</sup>
     </td>
-    <td style="border: 1px solid #333; min-width: 25%;">
+    <td style="border: 1px solid #333; min-width: 25%;" id="lblLocation">
         &nbsp;
     </td>
 </tr>
@@ -70,7 +80,7 @@
         Was any client served at this site/location during this month?<span style="font-size: 11px"> If no, still
             submit report</span>
     </td>
-    <td style="border: 1px solid #333;">
+    <td style="border: 1px solid #333;" id="lblClientsServed">
         &nbsp;
     </td>
 </tr>
@@ -81,13 +91,13 @@
     <td>
         &nbsp;
     </td>
-    <th align="left" colspan="3">
+    <th align="left" colspan="3" class="bold">
         Sex/Pregnancy
     </th>
-    <th align="left" colspan="3">
+    <th align="left" colspan="3" class="bold">
         Last HIV Test
     </th>
-    <th align="left" colspan="2" style=" min-width: 300px;">
+    <th align="left" colspan="2" style=" min-width: 300px;" class="bold">
         Outcome Summary (HIV Test)
     </th>
 </tr>
@@ -559,13 +569,17 @@
     <td style=" width: 30px;">
         &nbsp;
     </td>
-    <th align="left" colspan="2">
+    <th align="left" colspan="2" class="bold">
         Test Kit Use Summary
     </th>
-    <th style=" width: 150px;">
+    <td style="width: 10px;">
+    </td>
+    <th style=" width: 150px;" class="bold">
         Test 1
     </th>
-    <th style=" width: 150px;">
+    <td style="width: 10px;">
+    </td>
+    <th style=" width: 150px;" class="bold">
         Test 2
     </th>
     <td style=" width: 150px;">
@@ -582,10 +596,14 @@
     <td style=" border-top: 1px solid #333;">
         Kit Name
     </td>
-    <th style=" width: 150px; border: 1px solid #333; font-weight: normal;" id="test_1_kit_name">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; font-weight: normal;" id="test_1_kit_name">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333; font-weight: normal;" id="test_2_kit_name">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; font-weight: normal;" id="test_2_kit_name">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -602,10 +620,14 @@
     <td>
         Opening
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_opening">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_opening">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -622,10 +644,16 @@
     <td>
         Receipts
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        +
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_receipts">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        +
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_receipts">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -642,10 +670,16 @@
     <td>
         Used for Clients
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_used_for_clients">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_used_for_clients">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -662,10 +696,16 @@
     <td>
         Used for Other
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_for_other">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_for_other">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -682,10 +722,16 @@
     <td>
         Losses
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_disposals">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_disposals">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -702,10 +748,16 @@
     <td>
         Balance
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        =
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_balance">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        =
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_balance">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -722,10 +774,16 @@
     <td>
         Closing
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_in_rooms">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        -
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_in_rooms">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -742,10 +800,16 @@
     <td style=" border-bottom: 1px solid #333;">
         Difference
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        =
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_1_difference">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+        =
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;" id="test_2_difference">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -765,10 +829,14 @@
     <td style=" border-top: 1px solid #333;">
         Opening
     </td>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333;">
@@ -785,10 +853,14 @@
     <td style=" border-bottom: 1px solid #333;">
         Closing
     </td>
-    <th style=" width: 150px; border: 1px solid #333; border-bottom: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-bottom: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;">
         &nbsp;
     </th>
-    <th style=" width: 150px; border: 1px solid #333; border-bottom: 1px solid #333;">
+    <td style="width: 10px; border: 1px solid #333; border-right: none;">
+    </td>
+    <th style=" width: 150px; border: 1px solid #333; border-bottom: 1px solid #333; border-left: none; padding-right: 15px; text-align: right;">
         &nbsp;
     </th>
     <td style=" width: 150px; border: 1px solid #333; border-bottom: 1px solid #333;">
@@ -814,10 +886,10 @@
                 <td align="center">
                     Name
                 </td>
-                <td align="center">
+                <td align="center" colspan="2">
                     Phone
                 </td>
-                <td align="center">
+                <td align="center" colspan="2">
                     Notes
                 </td>
             </tr>
@@ -825,7 +897,7 @@
                 <td style=" width: 30px;">
                     &nbsp;
                 </td>
-                <th align="left" style="width: 40px;">
+                <th align="left" style="width: 40px;" class="bold">
                     Filled
                 </th>
                 <td align="center" style="border: 1px solid #333;">
@@ -834,10 +906,10 @@
                 <td align="center" style="border: 1px solid #333;">
                     &nbsp;
                 </td>
-                <td align="center" style="border: 1px solid #333; border-bottom: none;">
+                <td align="center" style="border: 1px solid #333; border-bottom: none;" colspan="2">
                     &nbsp;
                 </td>
-                <td align="center" style="border: 1px solid #333; border-bottom: none;">
+                <td align="center" style="border: 1px solid #333; border-bottom: none;" colspan="2">
                     &nbsp;
                 </td>
             </tr>
@@ -845,7 +917,7 @@
                 <td style=" width: 30px;">
                     &nbsp;
                 </td>
-                <th align="left" style="width: 40px;">
+                <th align="left" style="width: 40px;" class="bold">
                     Recvd
                 </th>
                 <td align="center" style="border: 1px solid #333;">
@@ -854,10 +926,10 @@
                 <td align="center" style="border: 1px solid #333;">
                     &nbsp;
                 </td>
-                <td align="center" style="border: 1px solid #333; border-top: none;">
+                <td align="center" style="border: 1px solid #333; border-top: none;" colspan="2">
                     &nbsp;
                 </td>
-                <td align="center" style="border: 1px solid #333; border-top: none;">
+                <td align="center" style="border: 1px solid #333; border-top: none;" colspan="2">
                     &nbsp;
                 </td>
             </tr>
@@ -865,7 +937,7 @@
     </td>
 </tr>
 <tr>
-    <td colspan="7">
+    <td colspan="8">
         &nbsp;
     </td>
 </tr>

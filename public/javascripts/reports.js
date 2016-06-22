@@ -3,6 +3,58 @@
  */
 
 var htcReport = {};
+var htcStockReport = {};
+var greaterThanZero = false;
+
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
+
+            var result = "";
+
+            if (!format) {
+
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
+                    padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
 
 function ajaxRequest(url, callback) {
 
@@ -66,6 +118,62 @@ function leapYear(year) {
 
 function loadFields() {
 
+    greaterThanZero = false;
+
+    if (__$("lblClientsServed") && !greaterThanZero) {
+
+        __$("lblClientsServed").innerHTML = "No";
+
+    }
+
+    var months = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December",
+        "": "&nbsp;"
+    }
+
+    if (__$("lblYear")) {
+
+        __$("lblYear").innerHTML = (window.parent.__$("year") ? window.parent.__$("year").value : "&nbsp;");
+
+    }
+
+    if (__$("lblMonth")) {
+
+        __$("lblMonth").innerHTML = months[(window.parent.__$("month") ? window.parent.__$("month").value : "")];
+
+    }
+
+    ajaxRequest("/facility", function (json) {
+
+        if (__$("lblFacility")) {
+
+            __$("lblFacility").innerHTML = json.facility;
+
+        }
+
+    });
+
+    ajaxRequest("/location", function (json) {
+
+        if (__$("lblLocation")) {
+
+            __$("lblLocation").innerHTML = json.location;
+
+        }
+
+    });
+
     var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
 
     var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
@@ -88,10 +196,6 @@ function loadFields() {
     }
 
     var endDate = (year + "-" + month + "-" + lastDate[month]);
-
-    console.log(startDate);
-
-    console.log(endDate);
 
     htcReport = {
         "sex_pregnancy": {total: 0},
@@ -505,7 +609,55 @@ function loadFields() {
 
     });
 
-    ajaxRequest("/test_1_kit_name?start_date=" + startDate + "&end_date=" + endDate, function (json) {
+    var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
+
+    var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
+
+    var stockStartDate = (new Date(year + "-" + month + "-01"));
+
+    stockStartDate = (new Date(stockStartDate.setMonth(stockStartDate.getMonth() - 6))).format("YYYY-mm-dd");
+
+    var lastDate = {
+        "01": 31,
+        "02": (leapYear(year) ? 29 : 28),
+        "03": 31,
+        "04": 30,
+        "05": 31,
+        "06": 30,
+        "07": 31,
+        "08": 31,
+        "09": 30,
+        "10": 31,
+        "11": 30,
+        "12": 31
+    }
+
+    var stockEndDate = (year + "-" + month + "-" + lastDate[month]);
+
+    htcStockReport = {
+        test_1: {
+            opening: 0,
+            receipts: 0,
+            clients: 0,
+            other: 0,
+            losses: 0,
+            balance: 0,
+            closing: 0,
+            difference: 0
+        },
+        test_2: {
+            opening: 0,
+            receipts: 0,
+            clients: 0,
+            other: 0,
+            losses: 0,
+            balance: 0,
+            closing: 0,
+            difference: 0
+        }
+    }
+
+    ajaxRequest("/test_1_kit_name?start_date=" + stockStartDate + "&end_date=" + stockEndDate, function (json) {
 
         if (__$("test_1_kit_name")) {
 
@@ -513,9 +665,99 @@ function loadFields() {
 
         }
 
+        ajaxRequest("/total_in_rooms_at_month_start?start_date=" + stockStartDate + "&end_date=" + startDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_1_opening")) {
+
+                __$("test_1_opening").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_1.opening = json.total;
+
+            updateStockTotals("test_1");
+
+        });
+
+        ajaxRequest("/total_tests_received_during_month?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_1_receipts")) {
+
+                __$("test_1_receipts").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_1.receipts = json.total;
+
+            updateStockTotals("test_1");
+
+        });
+
+        ajaxRequest("/total_tests_used_for_testing_clients?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_1_used_for_clients")) {
+
+                __$("test_1_used_for_clients").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_1.clients = json.total;
+
+            updateStockTotals("test_1");
+
+        });
+
+        ajaxRequest("/total_other_tests?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_1_for_other")) {
+
+                __$("test_1_for_other").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_1.other = json.total;
+
+            updateStockTotals("test_1");
+
+        });
+
+        ajaxRequest("/total_disposals?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_1_disposals")) {
+
+                __$("test_1_disposals").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_1.losses = json.total;
+
+            updateStockTotals("test_1");
+
+        });
+
+        ajaxRequest("/total_in_rooms_at_month_end?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_1_in_rooms")) {
+
+                __$("test_1_in_rooms").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_1.closing = json.total;
+
+            updateStockTotals("test_1");
+
+        });
+
     });
 
-    ajaxRequest("/test_2_kit_name?start_date=" + startDate + "&end_date=" + endDate, function (json) {
+    ajaxRequest("/test_2_kit_name?start_date=" + stockStartDate + "&end_date=" + stockEndDate, function (json) {
 
         if (__$("test_2_kit_name")) {
 
@@ -523,8 +765,104 @@ function loadFields() {
 
         }
 
+        ajaxRequest("/total_in_rooms_at_month_start?start_date=" + stockStartDate + "&end_date=" + startDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_2_opening")) {
+
+                __$("test_2_opening").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_2.opening = json.total;
+
+            updateStockTotals("test_2");
+
+        });
+
+        ajaxRequest("/total_tests_received_during_month?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_2_receipts")) {
+
+                __$("test_2_receipts").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_2.receipts = json.total;
+
+            updateStockTotals("test_2");
+
+        });
+
+        ajaxRequest("/total_tests_used_for_testing_clients?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_2_used_for_clients")) {
+
+                __$("test_2_used_for_clients").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_2.clients = json.total;
+
+            updateStockTotals("test_2");
+
+        });
+
+        ajaxRequest("/total_other_tests?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_2_for_other")) {
+
+                __$("test_2_for_other").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_2.other = json.total;
+
+            updateStockTotals("test_2");
+
+        });
+
+        ajaxRequest("/total_disposals?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_2_disposals")) {
+
+                __$("test_2_disposals").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_2.losses = json.total;
+
+            updateStockTotals("test_2");
+
+        });
+
+        ajaxRequest("/total_in_rooms_at_month_end?start_date=" + startDate + "&end_date=" + endDate + "&item_name=" +
+            encodeURIComponent(json.name), function (json) {
+
+            if (__$("test_2_in_rooms")) {
+
+                __$("test_2_in_rooms").innerHTML = numberWithCommas(json.total);
+
+            }
+
+            htcStockReport.test_2.closing = json.total;
+
+            updateStockTotals("test_2");
+
+        });
+
     });
 
+}
+
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
 }
 
 function updateTotals(category) {
@@ -549,6 +887,59 @@ function updateTotals(category) {
     if (__$(category)) {
 
         __$(category).innerHTML = sum;
+
+    }
+
+    if (sum > 0) {
+
+        greaterThanZero = true;
+
+    }
+
+    if (__$("lblClientsServed") && greaterThanZero) {
+
+        __$("lblClientsServed").innerHTML = "Yes";
+
+    }
+
+}
+
+/*
+ test_1: {
+ opening: 0,
+ receipts: 0,
+ clients: 0,
+ other: 0,
+ losses: 0,
+ balance: 0,
+ closing: 0,
+ difference: 0
+ }
+ */
+
+function updateStockTotals(category) {
+
+    if (!htcStockReport[category])
+        return;
+
+
+    var sum = 0;
+
+    sum = htcStockReport[category].opening + htcStockReport[category].receipts;
+
+    var balance = sum - htcStockReport[category].clients - htcStockReport[category].other - htcStockReport[category].losses;
+
+    var difference = balance - htcStockReport[category].closing;
+
+    if(__$(category + "_balance")) {
+
+        __$(category + "_balance").innerHTML = numberWithCommas(balance);
+
+    }
+
+    if(__$(category + "_difference")) {
+
+        __$(category + "_difference").innerHTML = numberWithCommas(difference);
 
     }
 
