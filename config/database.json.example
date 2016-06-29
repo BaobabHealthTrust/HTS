@@ -2,5 +2,6 @@
     "host": "localhost",
     "user": "",
     "password": "",
-    "database": "hotline_1_7_development"
+    "database": "htc1_7",
+    "stockDatabase": "htc_inventory"
 }

@@ -6,7 +6,7 @@ var async = require('async');
 
 var uuid = require("node-uuid");
 
-var connection = require("./database.json");
+var connection = require("../config/database.json");
 
 var existingConcepts = require("./concepts.json");
 
@@ -46,7 +46,7 @@ function loadSeedData(eCallback) {
             host: connection.host,
             user: connection.user,
             password: connection.password,
-            database: connection.inventory_database
+            database: connection.stockDatabase
         }
     });
 
@@ -511,21 +511,21 @@ var commands = [
 if (process.argv.indexOf("-o") < 0) {
 
     commands.push({
-        message: "Dropping '" + connection.inventory_database + "' database...",
+        message: "Dropping '" + connection.stockDatabase + "' database...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-            " -e 'DROP SCHEMA IF EXISTS " + connection.inventory_database + "'"
+            " -e 'DROP SCHEMA IF EXISTS " + connection.stockDatabase + "'"
     });
 
     commands.push({
-        message: "Creating '" + connection.inventory_database + "' database...",
+        message: "Creating '" + connection.stockDatabase + "' database...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-            " -e 'CREATE SCHEMA " + connection.inventory_database + "'"
+            " -e 'CREATE SCHEMA " + connection.stockDatabase + "'"
     });
 
     commands.push({
-        message: "Loading '" + connection.inventory_database + "' Metadata...",
+        message: "Loading '" + connection.stockDatabase + "' Metadata...",
         cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-            " " + connection.inventory_database + " < inventory.sql"
+            " " + connection.stockDatabase + " < inventory.sql"
     });
 
 }
@@ -574,10 +574,10 @@ async.each(commands, function (cmd, callback) {
 
             if (process.argv.indexOf("-o") < 0) {
 
-                console.log("Loading '" + connection.inventory_database + "' Triggers...");
+                console.log("Loading '" + connection.stockDatabase + "' Triggers...");
 
                 var cmd = "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
-                    " " + connection.inventory_database + " < triggers.sql";
+                    " " + connection.stockDatabase + " < triggers.sql";
 
                 runCmd(cmd, function (error, stdout, stderr) {
 
