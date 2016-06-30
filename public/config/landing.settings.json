@@ -1,8 +1,1 @@
-{
-    "basePath": "http://localhost:3014",
-    "modulesPath": "/config/landing.modules.json",
-    "barcodePath": "/patient/",
-    "savePath": "/save_other",
-    "dummyPatientCreatePath": "/save_dummy_patient",
-    "facilityPath": "/facility"
-}
+{"basePath":"http://192.168.43.250:3014","modulesPath":"/config/landing.modules.json","barcodePath":"/patient/","savePath":"/save_other","dummyPatientCreatePath":"/save_dummy_patient","facilityPath":"/facility"}

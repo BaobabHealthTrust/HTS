@@ -1,8 +1,1 @@
-{
-    "basePath": "http://localhost:3014",
-    "conceptVoidPath": "/concept_void?uuid=",
-    "searchPath": "/search_for_patient",
-    "firstNamesPath": "/fnames_query?name=",
-    "lastNamesPath": "/lnames_query?name=",
-    "relationshipTypePath": "/relationship_types?type="
-}
+{"basePath":"http://192.168.43.250:3014","conceptVoidPath":"/concept_void?uuid=","searchPath":"/search_for_patient","firstNamesPath":"/fnames_query?name=","lastNamesPath":"/lnames_query?name=","relationshipTypePath":"/relationship_types?type="}
