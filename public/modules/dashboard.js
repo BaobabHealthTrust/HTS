@@ -3061,7 +3061,10 @@ var dashboard = ({
                 "content='text/html;charset=UTF-8'/><script language='javascript'>tstUsername = '';" +
                 "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
                 "\"javascript:window.parent.document.exitNavPanel()\";tt_cancel_show = " +
-                "\"javascript:window.parent.document.exitNavPanel()\";</script></head><body>";
+                "\"javascript:window.parent.document.exitNavPanel()\";function submitData(){" +
+                "var data = form2js(document.getElementById('data'), undefined, true); console.log(data);" +
+                "if(window.parent) window.parent.dashboard.submitData(data);" +
+                "}</script></head><body>";
 
             html += "<div id='content'></div></body>";
 
