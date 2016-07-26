@@ -2095,7 +2095,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Positive";
 
-                result = "Confirmatory Positive";
+                result = "New Positive";
 
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim().length <= 0 && imTest2Result.trim().length <= 0) {
