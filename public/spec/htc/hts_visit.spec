@@ -20,6 +20,6 @@ Q.1.4. Estimate [pos:: 3$$ id:: estimate$$ condition:: false]
 
 Q.1.5. Time Since Last Test [pos:: 4$$ id:: time_since_last_test$$ condition:: false]
 
-Q.1.6. Time Since Last Test [pos:: 5$$ concept:: Time Since Last Test Display$$ id:: time_since_last_test_date$$ field_type:: birthdate$$ estimate_field:: estimate$$ condition:: __$('last_hiv_test').value != 'Never Tested']
+Q.1.6. Time Since Last Test [pos:: 5$$ concept:: Time Since Last Test$$ id:: time_since_last_test_date$$ field_type:: birthdate$$ estimate_field:: estimate$$ condition:: __$('last_hiv_test').value != 'Never Tested']
 
 Q.1.7. HTS Visit Summary [pos:: 6$$ tt_onLoad:: showHTSVisitSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
