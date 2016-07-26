@@ -8,7 +8,7 @@ O.1.1.4. Partner Positive
 
 Q.1.2. Partner HIV Status [pos:: 1$$ id:: phs$$ value:: No Partner$$ condition:: false]
 
-Q.1.3. Client Risk Category [pos:: 2$$ tt_onUnload:: evaluateReferral()$$ id:: risk_category]
+Q.1.3. Client Risk Category [pos:: 2$$ tt_onUnload:: evaluateReferral();setMaxDate("appointment",1)$$ id:: risk_category]
 O.1.3.1. Low Risk
 O.1.3.2. On-going Risk
 O.1.3.3. High Risk Event in Last 3 months

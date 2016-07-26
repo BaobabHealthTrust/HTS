@@ -3510,3 +3510,11 @@ function reverseConsumption(consumption_id, prefix, suffix) {
     })
 
 }
+
+function setMaxDate(element,number_of_years){
+
+    var max_date =  new Date(((new Date()).setYear((new Date()).getFullYear() + number_of_years))).format("YYYY-mm-dd");
+
+    __$(element).setAttribute("maxDate",max_date);
+
+}
