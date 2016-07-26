@@ -117,6 +117,7 @@
         "Immediate Repeat Test Kit 2 Testing Duration (Minutes)",
         "Immediate Repeat Tester ID Number",
         "Immediate Repeat Tester",
-        "Partner HIV Status"
+        "Partner HIV Status",
+        "Time Since Last Test Date"
     ]
 }

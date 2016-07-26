@@ -770,8 +770,8 @@ function showHTSVisitSummary() {
         th.style.color = "blue";
 
         tr.appendChild(th);
-
-        addDiv(__$("time_since_last_test").value, "", th, true);
+        var age = getAge(__$("time_since_last_test_date").value, 0);
+        addDiv(age[1], "", th, true);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
