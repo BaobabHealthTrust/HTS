@@ -1286,7 +1286,22 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = (label1 ? label1 : "Test 1") + " Result";
+
+    var test1 = "First";
+
+    if(__$("fp_item_name1").value && __$("fp_item_name1").value != ""){
+
+        test1 = __$("fp_item_name1").value
+
+    }
+
+    if(__$("im_item_name1").value && __$("im_item_name1").value != ""){
+
+        test1 = __$("im_item_name1").value
+
+    }
+
+    td.innerHTML = (label1 ? label1 : test1+" Test") + " Result";
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);
@@ -1535,7 +1550,21 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = (label2 ? label2 : "Test 2") + " Result";
+
+    var test2 = "Second";
+
+    if(__$("fp_item_name2").value && __$("fp_item_name2").value != ""){
+
+        test2 = __$("fp_item_name2").value
+
+    }
+
+    if(__$("im_item_name2").value && __$("im_item_name2").value != ""){
+
+        test2 = __$("im_item_name2").value
+
+    }
+    td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result";
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);
