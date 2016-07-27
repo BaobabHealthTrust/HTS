@@ -898,7 +898,7 @@ function setAjaxUrl(pos) {
             if (__$("im_lot_number1")) {
 
                 __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
-                    __$("im_tester").value.trim() + "&item_name=" + __$('touchscreenInput' +
+                    getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -921,7 +921,7 @@ function setAjaxUrl(pos) {
             if (__$("im_lot_number2")) {
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
-                    __$("im_tester").value.trim() + "&item_name=" + __$('touchscreenInput' +
+                    getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&batch=");
 
             }
