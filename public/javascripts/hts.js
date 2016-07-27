@@ -3518,3 +3518,21 @@ function setMaxDate(element,number_of_years){
     __$(element).setAttribute("maxDate",max_date);
 
 }
+
+function setPhoneNumberValidatetion(phone_number){
+
+    if(__$(phone_number)){
+
+        var field = __$(phone_number);
+
+        field.setAttribute("validationRule","^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$");
+
+        field.setAttribute("validationMessage","Not a valid phone number");
+
+        field.setAttribute("field_type","number");
+
+        field.setAttribute("tt_pageStyleClass","NumbersWithUnknown nota");
+
+    }
+
+}
