@@ -13,7 +13,7 @@ O.1.6.2. Female
 Q.1.6.2.1. Is client pregnant? [pos:: 6$$ id:: pregnant]
 O.1.6.2.1.1. Yes
 O.1.6.2.1.2. No
-Q.1.7. Client Details Can Be Captured? [pos:: 7$$ id:: capture_details]
+Q.1.7. Consent given to capture personal details? [pos:: 7$$ id:: capture_details]
 O.1.7.1. Yes
 O.1.7.2. No
 Q.1.8. First Name [pos:: 8$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /fnames_query?name=$$ id:: first_name]
