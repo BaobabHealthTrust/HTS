@@ -1088,6 +1088,14 @@ function evalCondition(pos) {
 
             }
 
+            if(__$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
+                 && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
+                __$("fp_test2_result").value)){
+
+
+                result = true;
+            }
+
             break;
 
         case 6:
@@ -2060,8 +2068,9 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
         case "last exposed infant":
 
-            if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
-                imTest2Result.trim().length <= 0) {
+            if ((fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) || (fpTest1Result.trim() != fpTest2Result.trim() && 
+                imTest1Result.trim() != imTest2Result.trim())) {
 
                 outcome = "Test 1 & Test 2 Negative";
 
