@@ -2047,6 +2047,17 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
             break;
         case "last positive":
+
+            if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-")))
+            {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "Confirmatory Inconclusive";
+            }
+            break;
+
         case "last exposed infant":
 
             if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
