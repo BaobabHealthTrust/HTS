@@ -2014,6 +2014,18 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
     switch (lastHIVTestResult.trim().toLowerCase()) {
 
         case "never tested":
+
+            if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0){
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "New Positive";
+
+            }
+
+            break;
+
         case "last negative":
 
             if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
@@ -2079,9 +2091,28 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
 
-                outcome = "Test 1 & Test 2 Positive";
+                var age = window.parent.dashboard.queryExistingObsArray("Age");
 
-                result = "Confirmatory Positive";
+                var key = Object.keys(age);
+
+
+                if(age[key[0]] == "1Y"){
+
+
+                    outcome = "Test 1 & Test 2 Positive";
+
+                    result = "New Positive";
+
+
+                }else{
+
+                    outcome = "Test 1 & Test 2 Positive";
+
+                    result = "Confirmatory Positive";
+
+                }
+
+               
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
