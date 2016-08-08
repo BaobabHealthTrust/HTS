@@ -2015,12 +2015,26 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
         case "never tested":
 
-            if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+            if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Single Negative";
+
+                result = "New Negative";
+
+            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0){
 
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = "New Positive";
+
+            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "New Inconclusive";
 
             }
 
@@ -2075,6 +2089,16 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "Confirmatory Inconclusive";
+
+            }else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-"){
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "Confirmatory Inconclusive";
+
+                window.parent.dashboard.showMsg("Take DBS sample", "");
+
+
             }
             break;
 
@@ -2154,6 +2178,8 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "Confirmatory Inconclusive";
+
+                window.parent.dashboard.showMsg("Take DBS sample", "");
 
             }
 
@@ -3365,7 +3391,7 @@ function showAssessmentSummary() {
 
         var referralMapping = {
             "No Re-Test Needed": "NoT",
-            "Re-Test": "RoT",
+            "Re-Test": "ReT",
             "Confirmatory Test at HIV Clinic": "CT",
             "": ""
         };
@@ -3386,7 +3412,7 @@ function showAssessmentSummary() {
 
         tr.appendChild(td);
 
-        addDiv("RoT", referralMapping[__$("referral").value.trim()], td);
+        addDiv("ReT", referralMapping[__$("referral").value.trim()], td);
 
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
