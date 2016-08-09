@@ -80,6 +80,13 @@ Object.defineProperty(Date.prototype, "format", {
     }
 });
 
+/*
+ *  Calculates the age from an input date of birth.
+ *
+ *  @param {string} birthdate - Date of birth. REQUIRED Field.
+ *  @param {integer} estimated - 1 if given date is an estimate OR 0 if it is NOT an estimate
+ *  @return {string} A string of the age in human readable form
+ */
 function getAge(birthdate, estimated) {
 
     var age;
@@ -4558,11 +4565,14 @@ app.get('/available_batches_to_user', function (req, res) {
 
     var query = url_parts.query;
 
+    var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
+
     var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
         "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
-        " = receipt.batch_number WHERE COALESCE(report.batch_number,'') != '' AND item_name LIKE '" +
-        (query.item_name ? query.item_name : "") + "%' AND COALESCE(dispatch_who_received,'') = '" + query.userId +
-        "' AND report.batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY report.batch_number " +
+        " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
+        (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
+        "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
+        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " GROUP BY report.batch_number " +
         "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
 
     console.log(sql);
