@@ -864,8 +864,10 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_item_name2")) {
 
+                 var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
+
                 __$('fp_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim() + "&exceptions=" + exceptions +'&item_name=');
 
             }
 
@@ -879,6 +881,8 @@ function setAjaxUrl(pos) {
 
                 __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&exceptions=" + exceptions + "&batch=");
+
+
 
             }
 
@@ -911,8 +915,10 @@ function setAjaxUrl(pos) {
 
             if (__$("im_item_name2")) {
 
+                 var exceptions = encodeURIComponent('["' + __$("im_item_name1").value + '"]');
+
                 __$('im_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim()  + "&exceptions=" + exceptions +'&item_name=');
 
             }
 
