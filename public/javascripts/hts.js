@@ -3638,3 +3638,17 @@ function isNotInfant(){
 
     return is_not_infant;
 }
+
+function removeListElement(id){
+
+    var control = __$("options");
+
+    var li = control.getElementsByTagName("li");
+
+    var value = __$(id).value;
+
+    console.log(li);
+
+    console.log(value);
+
+}
