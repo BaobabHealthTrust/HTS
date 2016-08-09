@@ -200,6 +200,76 @@ var dashboard = ({
         return result;
 
     },
+    queryExistingObsArray: function (concept, callback) {
+
+        var result = {};
+
+        var programs = Object.keys(dashboard.data.data.programs);
+
+        for (var p = 0; p < programs.length; p++) {
+
+            var program = programs[p];
+
+            if (this.data && this.data.data && this.data.data.programs && this.data.data.programs[program] &&
+                Object.keys(this.data.data.programs).length > 0) {
+
+                var patientPrograms = this.data.data.programs[program].patient_programs;
+
+                var pKeys = Object.keys(patientPrograms);
+
+                for (var i = 0; i < pKeys.length; i++) {
+
+                    var key = pKeys[i];
+
+                    if (!patientPrograms[key].date_completed) {
+
+                        var vKeys = Object.keys(patientPrograms[key].visits);
+
+                        for (var j = 0; j < vKeys.length; j++) {
+
+                            var visit = vKeys[j];
+
+                            var eKeys = Object.keys(patientPrograms[key].visits[visit]);
+
+                            for (var k = 0; k < eKeys.length; k++) {
+
+                                var encounter = eKeys[k];
+
+                                var oKeys = Object.keys(patientPrograms[key].visits[visit][encounter]);
+
+                                for (var l = 0; l < oKeys.length; l++) {
+
+                                    if (patientPrograms[key].visits[visit][encounter][l][concept]) {
+
+                                        result[visit] = patientPrograms[key].visits[visit][encounter][l][concept].response.value;
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if (callback) {
+
+            callback(result);
+
+        } else {
+
+            return result;
+
+        }
+
+    },
 
     setCookie: function (cname, cvalue, exdays) {
 

@@ -770,8 +770,8 @@ function showHTSVisitSummary() {
         th.style.color = "blue";
 
         tr.appendChild(th);
-
-        addDiv(__$("time_since_last_test").value, "", th, true);
+        var age = getAge(__$("time_since_last_test_date").value, 0);
+        addDiv(age[1], "", th, true);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -900,7 +900,7 @@ function setAjaxUrl(pos) {
             if (__$("im_lot_number1")) {
 
                 __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
-                    __$("im_tester").value.trim() + "&item_name=" + __$('touchscreenInput' +
+                    getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -923,7 +923,7 @@ function setAjaxUrl(pos) {
             if (__$("im_lot_number2")) {
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
-                    __$("im_tester").value.trim() + "&item_name=" + __$('touchscreenInput' +
+                    getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -1088,6 +1088,14 @@ function evalCondition(pos) {
 
                 result = true;
 
+            }
+
+            if(__$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
+                 && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
+                __$("fp_test2_result").value)){
+
+
+                result = true;
             }
 
             break;
@@ -1288,7 +1296,22 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = (label1 ? label1 : "Test 1") + " Result";
+
+    var test1 = "First";
+
+    if(__$("fp_item_name1").value && __$("fp_item_name1").value != ""){
+
+        test1 = __$("fp_item_name1").value
+
+    }
+
+    if(__$("im_item_name1").value && __$("im_item_name1").value != ""){
+
+        test1 = __$("im_item_name1").value
+
+    }
+
+    td.innerHTML = (label1 ? label1 : test1+" Test") + " Result";
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);
@@ -1537,7 +1560,21 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = (label2 ? label2 : "Test 2") + " Result";
+
+    var test2 = "Second";
+
+    if(__$("fp_item_name2").value && __$("fp_item_name2").value != ""){
+
+        test2 = __$("fp_item_name2").value
+
+    }
+
+    if(__$("im_item_name2").value && __$("im_item_name2").value != ""){
+
+        test2 = __$("im_item_name2").value
+
+    }
+    td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result";
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);
@@ -1979,6 +2016,32 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
     switch (lastHIVTestResult.trim().toLowerCase()) {
 
         case "never tested":
+
+            if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
+
+                outcome = "Single Negative";
+
+                result = "New Negative";
+
+            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0){
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "New Positive";
+
+            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "New Inconclusive";
+
+            }
+
+            break;
+
         case "last negative":
 
             if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
@@ -2020,10 +2083,32 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
             break;
         case "last positive":
+
+            if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-")))
+            {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "Confirmatory Inconclusive";
+
+            }else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-"){
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "Confirmatory Inconclusive";
+
+                window.parent.dashboard.showMsg("Take DBS sample", "");
+
+
+            }
+            break;
+
         case "last exposed infant":
 
-            if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
-                imTest2Result.trim().length <= 0) {
+            if ((fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) || (fpTest1Result.trim() != fpTest2Result.trim() && 
+                imTest1Result.trim() != imTest2Result.trim())) {
 
                 outcome = "Test 1 & Test 2 Negative";
 
@@ -2032,9 +2117,28 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
 
-                outcome = "Test 1 & Test 2 Positive";
+                var age = window.parent.dashboard.queryExistingObsArray("Age");
 
-                result = "Confirmatory Positive";
+                var key = Object.keys(age);
+
+
+                if(age[key[0]] == "1Y"){
+
+
+                    outcome = "Test 1 & Test 2 Positive";
+
+                    result = "New Positive";
+
+
+                }else{
+
+                    outcome = "Test 1 & Test 2 Positive";
+
+                    result = "Confirmatory Positive";
+
+                }
+
+               
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
@@ -2068,7 +2172,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Positive";
 
-                result = "Confirmatory Positive";
+                result = "New Positive";
 
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim().length <= 0 && imTest2Result.trim().length <= 0) {
@@ -2076,6 +2180,8 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "Confirmatory Inconclusive";
+
+                window.parent.dashboard.showMsg("Take DBS sample", "");
 
             }
 
@@ -3287,7 +3393,7 @@ function showAssessmentSummary() {
 
         var referralMapping = {
             "No Re-Test Needed": "NoT",
-            "Re-Test": "RoT",
+            "Re-Test": "ReT",
             "Confirmatory Test at HIV Clinic": "CT",
             "": ""
         };
@@ -3308,7 +3414,7 @@ function showAssessmentSummary() {
 
         tr.appendChild(td);
 
-        addDiv("RoT", referralMapping[__$("referral").value.trim()], td);
+        addDiv("ReT", referralMapping[__$("referral").value.trim()], td);
 
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
@@ -3482,4 +3588,55 @@ function reverseConsumption(consumption_id, prefix, suffix) {
 
     })
 
+}
+
+function setMaxDate(element,number_of_years){
+
+    var max_date =  new Date(((new Date()).setYear((new Date()).getFullYear() + number_of_years))).format("YYYY-mm-dd");
+
+    __$(element).setAttribute("maxDate",max_date);
+
+}
+
+function setPhoneNumberValidatetion(phone_number){
+
+    if(__$(phone_number)){
+
+        var field = __$(phone_number);
+
+        field.setAttribute("validationRule","^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$");
+
+        field.setAttribute("validationMessage","Not a valid phone number");
+
+        field.setAttribute("field_type","number");
+
+        field.setAttribute("tt_pageStyleClass","NumbersWithUnknown nota");
+
+    }
+
+}
+
+
+function isNotInfant(){
+
+    var is_not_infant = true;
+
+    window.parent.dashboard.queryExistingObsArray("Age Group", function(data){ 
+
+        var  keys = Object.keys(data);
+
+        for (var i = 0 ; i < keys.length; i++){
+
+            if(data[keys[i]]=="1-14 years"){
+
+                is_not_infant = false;
+
+            }
+
+        }
+
+
+    });
+
+    return is_not_infant;
 }

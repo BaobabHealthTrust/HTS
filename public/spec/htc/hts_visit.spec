@@ -1,6 +1,6 @@
 P.1. HTS VISIT [program:: HTS PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
 
-Q.1.1. Partner Present at this Session? [pos:: 0$$ id:: partner_present$$ tt_onLoad:: updateTimeSinceLastTest()]
+Q.1.1. Partner Present at this Session? [pos:: 0$$ id:: partner_present]
 O.1.1.1. Yes
 O.1.1.2. No
 
@@ -18,8 +18,8 @@ O.1.3.5. Last Inconclusive
 
 Q.1.4. Estimate [pos:: 3$$ id:: estimate$$ condition:: false]
 
-Q.1.5. Time Since Last Test [pos:: 4$$ id:: time_since_last_test$$ condition:: false]
+Q.1.5. Time Since Last Test [pos:: 5$$ id:: time_since_last_test$$type:: hidden]
 
-Q.1.6. Time Since Last Test [pos:: 5$$ concept:: Time Since Last Test Display$$ id:: time_since_last_test_date$$ field_type:: birthdate$$ estimate_field:: estimate$$ condition:: __$('last_hiv_test').value != 'Never Tested']
+Q.1.6. Time Since Last Test Date [pos:: 4$$ concept:: Time Since Last Test$$ id:: time_since_last_test_date$$ field_type:: birthdate$$ estimate_field:: estimate$$ condition:: __$('last_hiv_test').value != 'Never Tested']
 
-Q.1.7. HTS Visit Summary [pos:: 6$$ tt_onLoad:: showHTSVisitSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.7. HTS Visit Summary [pos:: 6$$ tt_onLoad:: showHTSVisitSummary(),updateTimeSinceLastTest()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]

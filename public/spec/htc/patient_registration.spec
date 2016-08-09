@@ -13,12 +13,12 @@ O.1.6.2. Female
 Q.1.6.2.1. Is client pregnant? [pos:: 6$$ id:: pregnant]
 O.1.6.2.1.1. Yes
 O.1.6.2.1.2. No
-Q.1.7. Client Details Can Be Captured? [pos:: 7$$ id:: capture_details]
+Q.1.7. Consent given to capture personal details? [pos:: 7$$ id:: capture_details]
 O.1.7.1. Yes
 O.1.7.2. No
 Q.1.8. First Name [pos:: 8$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /fnames_query?name=$$ id:: first_name]
 Q.1.9. Family Name [pos:: 9$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /lnames_query?name=$$ id:: last_name]
-Q.1.10. Contact Detail Type [pos:: 10 $$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes';]
+Q.1.10. Contact Detail Type [pos:: 10 $$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes';$$tt_onUnload:: setPhoneNumberValidatetion('phone_number')]
 O.1.10.1. Phone Number
 Q.1.10.1.1. Client Phone Number [pos:: 11$$ id:: phone_number]
 O.1.10.2. Current Residence

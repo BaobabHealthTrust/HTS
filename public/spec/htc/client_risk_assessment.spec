@@ -8,7 +8,7 @@ O.1.1.4. Partner Positive
 
 Q.1.2. Partner HIV Status [pos:: 1$$ id:: phs$$ value:: No Partner$$ condition:: false]
 
-Q.1.3. Client Risk Category [pos:: 2$$ tt_onUnload:: evaluateReferral()$$ id:: risk_category]
+Q.1.3. Client Risk Category [pos:: 2$$ tt_onUnload:: evaluateReferral();setMaxDate("appointment",1)$$ id:: risk_category]
 O.1.3.1. Low Risk
 O.1.3.2. On-going Risk
 O.1.3.3. High Risk Event in Last 3 months
@@ -20,9 +20,9 @@ Q.1.5. Appointment Date Given [pos:: 4$$ id:: appointment$$ field_type:: date]
 
 Q.1.6. HTS Family Referral Slips Given [pos:: 5$$ concept:: HTS Family Referral Slips$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: slips]
 
-Q.1.7. Male Condoms [pos:: 6$$ condition:: evalCondition(6)$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: male]
+Q.1.7. Male Condoms [pos:: 6$$ condition:: evalCondition(6) && isNotInfant() $$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: male]
 
-Q.1.8. Female Condoms [pos:: 7$$ condition:: evalCondition(7)$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: female]
+Q.1.8. Female Condoms [pos:: 7$$ condition:: evalCondition(7) && isNotInfant()$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: female]
 
 Q.1.9. Comments [pos:: 8$$ optional:: true$$ field_type:: textarea$$ id:: comments]
 
