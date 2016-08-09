@@ -875,8 +875,10 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_lot_number2")) {
 
+                var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
+
                 __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
-                    "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
+                    "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&exceptions=" + exceptions + "&batch=");
 
             }
 
@@ -3637,18 +3639,4 @@ function isNotInfant(){
     });
 
     return is_not_infant;
-}
-
-function removeListElement(id){
-
-    var control = __$("options");
-
-    var li = control.getElementsByTagName("li");
-
-    var value = __$(id).value;
-
-    console.log(li);
-
-    console.log(value);
-
 }
