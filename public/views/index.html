@@ -36,6 +36,14 @@
 
         }
 
+        var btns = document.getElementsByClassName("green");
+
+        if(btns.length > 0) {
+
+            btns[0].innerHTML = "Find";
+
+        }
+
         if(!done1 || !done2) {
 
             tmrInterval = setInterval(function(){
