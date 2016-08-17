@@ -1348,6 +1348,18 @@ function gotoPage(destPage, validate, navback) {
 
     var navback = (navback ? navback : false);
 
+    if(navback) {
+
+        if(__$("nextButton")) {
+
+            var currentClass = __$("nextButton").className;
+
+            __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+        }
+
+    }
+
     tstMultipleSelected[tstCurrentPage] = {};
 
     //	tt_BeforeUnload
@@ -1435,6 +1447,9 @@ function navigateToPage(destPage, validate, navback) {
         // skip destination page when a condition is false
         if (condition) {
             if (!eval(condition)) {
+
+                tstFormElements[tstPages[destPage]].setAttribute("disabled", true);
+
                 tstCurrentPage = destPage;
                 if (currentPage <= destPage) {
                     gotoPage(destPage + 1);
@@ -1442,6 +1457,10 @@ function navigateToPage(destPage, validate, navback) {
                     gotoPage(destPage - 1);		// reverse skipping
                 }
                 return;
+            } else {
+
+                tstFormElements[tstPages[destPage]].removeAttribute("disabled");
+
             }
         }
         /*
@@ -1955,6 +1974,15 @@ function gotoNextPage() {
     if (__$("category")) {
         document.body.removeChild(__$("category"));
     }
+
+    if(__$("nextButton")) {
+
+        var currentClass = __$("nextButton").className;
+
+        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+    }
+
     gotoPage(tstCurrentPage + 1, true);
 }
 

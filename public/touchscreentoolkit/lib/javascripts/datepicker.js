@@ -612,7 +612,7 @@ var datePicker = ({
 
         }
 
-        if (parseInt(datePicker.estimate.value.trim()) == 1 && dat == 5) {
+        if (datePicker.estimate && parseInt(datePicker.estimate.value.trim()) == 1 && dat == 5) {
 
             if (datePicker.$("text1-7")) {
 
@@ -665,7 +665,8 @@ var datePicker = ({
 
         var grid = [
             [
-                ["Age Estimate", 3, "font-weight: normal; font-size: 30px; padding: 8px;"]
+                [(datePicker.seedDate.getAttribute("estimate_label") ? datePicker.seedDate.getAttribute("estimate_label") :
+                    "Age Estimate"), 3, "font-weight: normal; font-size: 30px; padding: 8px;"]
             ],
             [
                 [undefined, 3, "width: 210px; height: 30px; text-align: center; font-size: 24px; min-height: 50px;", undefined, undefined, true]
@@ -764,13 +765,13 @@ var datePicker = ({
 
                         if (datePicker.$("text1-0") && datePicker.$("text1-0").value.trim().length <= 0) {
 
-                            if(datePicker.$("btn5-0")) {
+                            if (datePicker.$("btn5-0")) {
 
                                 datePicker.$("btn5-0").className = "datePickerGray datePickerButton";
 
                             }
 
-                            if(datePicker.$("btn5-1")) {
+                            if (datePicker.$("btn5-1")) {
 
                                 datePicker.$("btn5-1").className = "datePickerGray datePickerButton";
 
@@ -778,13 +779,13 @@ var datePicker = ({
 
                         } else {
 
-                            if(datePicker.$("btn5-0")) {
+                            if (datePicker.$("btn5-0")) {
 
                                 datePicker.$("btn5-0").className = "datePickerBlue datePickerButton";
 
                             }
 
-                            if(datePicker.$("btn5-1")) {
+                            if (datePicker.$("btn5-1")) {
 
                                 datePicker.$("btn5-1").className = "datePickerBlue datePickerButton";
 
@@ -793,13 +794,13 @@ var datePicker = ({
                             var date = ((new Date()).getFullYear() - parseInt(datePicker.$("text1-0").value.trim())) +
                                 "-07-15";
 
-                            if(datePicker.seedDate) {
+                            if (datePicker.seedDate) {
 
                                 datePicker.seedDate.value = date;
 
                             }
 
-                            if(datePicker.estimate) {
+                            if (datePicker.estimate) {
 
                                 datePicker.estimate.value = 1;
 
@@ -836,7 +837,7 @@ var datePicker = ({
         label.style.padding = "5px";
         label.style.color = "black";
 
-        if(document.getElementById("date.picker.div")) {
+        if (document.getElementById("date.picker.div")) {
 
             document.getElementById("date.picker.div").appendChild(label);
 
@@ -970,7 +971,8 @@ var datePicker = ({
         this.addCSSRule(style, ".datePickerRed:hover", "background-image: linear-gradient(to bottom, #77021d, #3a000d)");
         this.addCSSRule(style, ".datePickerRed:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#77021d, endColorstr=#3a000d)");
 
-        this.addCSSRule(style, ".datePickerGray", "border: 1px solid #ccc");
+        // this.addCSSRule(style, ".datePickerGray", "display: none");
+        this.addCSSRule(style, ".datePickerGray", "border: 0px solid #ddd");
         this.addCSSRule(style, ".datePickerGray", "-webkit-border-radius: 3px");
         this.addCSSRule(style, ".datePickerGray", "-moz-border-radius: 3px");
         this.addCSSRule(style, ".datePickerGray", "border-radius: 3px");
@@ -979,34 +981,41 @@ var datePicker = ({
         this.addCSSRule(style, ".datePickerGray", "padding: 10px 10px 10px 10px");
         this.addCSSRule(style, ".datePickerGray", "text-decoration: none");
         this.addCSSRule(style, ".datePickerGray", "display: inline-block");
-        this.addCSSRule(style, ".datePickerGray", "text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3)");
-        this.addCSSRule(style, ".datePickerGray", "font-weight: bold");
-        this.addCSSRule(style, ".datePickerGray", "color: #FFFFFF");
-        this.addCSSRule(style, ".datePickerGray", "background-color: #ccc");
-        this.addCSSRule(style, ".datePickerGray", "background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999))");
-        this.addCSSRule(style, ".datePickerGray", "background-image: -webkit-linear-gradient(top, #ccc, #999)");
-        this.addCSSRule(style, ".datePickerGray", "background-image: -moz-linear-gradient(top, #ccc, #999)");
-        this.addCSSRule(style, ".datePickerGray", "background-image: -ms-linear-gradient(top, #ccc, #999)");
-        this.addCSSRule(style, ".datePickerGray", "background-image: -o-linear-gradient(top, #ccc, #999)");
-        this.addCSSRule(style, ".datePickerGray", "background-image: linear-gradient(to bottom, #ccc, #999)");
-        this.addCSSRule(style, ".datePickerGray", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ccc, endColorstr=#999)");
+        this.addCSSRule(style, ".datePickerGray", "text-shadow: 0px 0px 0 rgba(0, 0, 0, 0.3)");
+        this.addCSSRule(style, ".datePickerGray", "font-weight: normal");
+        this.addCSSRule(style, ".datePickerGray", "color: #bbb");
+        this.addCSSRule(style, ".datePickerGray", "background-color: #ddd");
+        this.addCSSRule(style, ".datePickerGray", "background-image: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#ddd))");
+        this.addCSSRule(style, ".datePickerGray", "background-image: -webkit-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray", "background-image: -moz-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray", "background-image: -ms-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray", "background-image: -o-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray", "background-image: linear-gradient(to bottom, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ddd, endColorstr=#ddd)");
 
-        this.addCSSRule(style, ".datePickerGray:hover", "border: 1px solid #ccc");
+        this.addCSSRule(style, ".datePickerGray:hover", "border: 0px solid #ddd");
         this.addCSSRule(style, ".datePickerGray:hover", "background-color: #ddd");
-        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc))");
-        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -webkit-linear-gradient(top, #333, #ccc)");
-        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -moz-linear-gradient(top, #333, #ccc)");
-        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -ms-linear-gradient(top, #333, #ccc)");
-        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -o-linear-gradient(top, #333, #ccc)");
-        this.addCSSRule(style, ".datePickerGray:hover", "background-image: linear-gradient(to bottom, #333, #ccc)");
-        this.addCSSRule(style, ".datePickerGray:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#333, endColorstr=#ccc)");
+        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#ddd))");
+        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -webkit-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -moz-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -ms-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray:hover", "background-image: -o-linear-gradient(top, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray:hover", "background-image: linear-gradient(to bottom, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ddd, endColorstr=#ddd)");
+
+        this.addCSSRule(style, ".datePickerGray:active", "background-color: #ddd !important");
+        this.addCSSRule(style, ".datePickerGray:active", "background-image: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#ddd)) !important");
+        this.addCSSRule(style, ".datePickerGray:active", "background-image: -webkit-linear-gradient(top, #ddd, #ddd) !important");
+        this.addCSSRule(style, ".datePickerGray:active", "background-image: -moz-linear-gradient(top, #ddd, #ddd) !important");
+        this.addCSSRule(style, ".datePickerGray:active", "background-image: -ms-linear-gradient(top, #ddd, #ddd) !important");
+        this.addCSSRule(style, ".datePickerGray:active", "background-image: -o-linear-gradient(top, #ddd, #ddd) !important");
+        this.addCSSRule(style, ".datePickerGray:active", "background-image: linear-gradient(to bottom, #ddd, #ddd)");
+        this.addCSSRule(style, ".datePickerGray:active", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ddd, endColorstr=#ddd) !important");
 
         var div = document.createElement("div");
         div.id = "date.picker.div";
         div.style.width = "100%";
         div.style.height = "100%";
-        // div.style.border = "2px inset #ccc";
-        // div.style.borderRadius = "20px";
         div.style.backgroundColor = "#fff";
         div.style.MozUserSelect = "none";
         div.style.font = "28px 'Nimbus Sans L', 'Arial Narrow', sans-serif";
@@ -1498,7 +1507,7 @@ var datePicker = ({
 
                     }
 
-                    switch(j) {
+                    switch (j) {
 
                         case 0:
                         case 1:
@@ -1575,13 +1584,17 @@ var datePicker = ({
         label.style.padding = "5px";
         label.style.color = "black";
 
-        if(document.getElementById("date.picker.div")) {
+        if (document.getElementById("date.picker.div")) {
 
             document.getElementById("date.picker.div").appendChild(label);
 
         }
 
     },
+
+    targetValue: "",
+
+    tmrInterval: null,
 
     init: function (target, seedDate, estimate, maxDate, minDate) {
 
@@ -1595,16 +1608,75 @@ var datePicker = ({
 
         this.estimate = estimate;
 
+        this.targetValue = this.seedDate.value;
+
         this.buildControl();
 
-        setInterval(function () {
+        if (!datePicker.seedDate.getAttribute("optional")) {
 
-            if (datePicker.$("date.picker.div")) {
+            var currentClass = datePicker.$("nextButton").className;
 
+            datePicker.$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
 
-            }
+            datePicker.tmrInterval = setInterval(function () {
 
-        }, 10);
+                if (datePicker.$("text1-0") && datePicker.$("text1-1") && datePicker.$("text1-2") && datePicker.$("text1-3") &&
+                    datePicker.$("text1-5") && datePicker.$("text1-7") && datePicker.$("text1-8")) {
+
+                    if (datePicker.$("text1-0").value.trim().length <= 0 || datePicker.$("text1-1").value.trim().length <= 0 ||
+                        datePicker.$("text1-2").value.trim().length <= 0 || datePicker.$("text1-3").value.trim().length <= 0 ||
+                        datePicker.$("text1-5").value.trim().length <= 0 || datePicker.$("text1-7").value.trim().length <= 0 ||
+                        datePicker.$("text1-8").value.trim().length <= 0) {
+
+                        if (datePicker.seedDate) {
+
+                            datePicker.seedDate.value = "";
+
+                        }
+
+                    }
+
+                } else {
+
+                    clearInterval(datePicker.tmrInterval);
+
+                    var currentClass = datePicker.$("nextButton").className;
+
+                    datePicker.$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    return;
+
+                }
+
+                if (datePicker.seedDate.value.trim() != datePicker.targetValue.trim() && datePicker.seedDate.value.trim().length > 0) {
+
+                    datePicker.targetValue = datePicker.seedDate.value.trim();
+
+                    var testDate = isNaN((new Date(datePicker.seedDate.value.trim())).getFullYear());
+
+                    if (!testDate && datePicker.seedDate.value.trim().match(/^\d{4}\-\d{2}-\d{2}/) && datePicker.$("nextButton")) {
+
+                        var currentClass = datePicker.$("nextButton").className;
+
+                        datePicker.$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                } else if (datePicker.seedDate.value.trim().length <= 0) {
+
+                    if (datePicker.$("nextButton")) {
+
+                        var currentClass = datePicker.$("nextButton").className;
+
+                        datePicker.$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+                    }
+
+                }
+
+            }, 100);
+
+        }
 
     }
 
