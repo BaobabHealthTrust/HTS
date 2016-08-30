@@ -505,6 +505,12 @@ function updateTimeSinceLastTest() {
 
 function showHTSVisitSummary() {
 
+    if(__$("last_72") && __$("last_72").value =="Yes"){
+
+            window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
+
+    }
+
     if (__$("inputFrame" + tstCurrentPage)) {
 
         __$("inputFrame" + tstCurrentPage).style.overflow = "auto";
@@ -890,7 +896,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("NoP", PTSMapping[__$("partner_status").value.trim()], th);
+        addDiv("NoP", PTSMapping[__$("phs").value.trim()], th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -898,7 +904,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("P?", PTSMapping[__$("partner_status").value.trim()], th);
+        addDiv("P?", PTSMapping[__$("phs").value.trim()], th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -906,7 +912,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("P-", PTSMapping[__$("partner_status").value.trim()], th);
+        addDiv("P-", PTSMapping[__$("phs").value.trim()], th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -915,7 +921,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("P+", PTSMapping[__$("partner_status").value.trim()], th);
+        addDiv("P+", PTSMapping[__$("phs").value.trim()], th);
 
         var risksMapping = {
             "Low Risk": "Low",
