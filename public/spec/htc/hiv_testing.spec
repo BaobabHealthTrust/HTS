@@ -57,6 +57,6 @@ Q.1.33. Immediate Repeat Test Kit 2 Testing Duration (Minutes) [pos:: 32$$ id:: 
 
 Q.1.34. Outcome Summary [pos:: 33$$ id:: outcome_summary$$ condition:: false]
 
-Q.1.35. Result Given To Client [pos:: 34$$ id:: result_given_to_client$$ condition:: false]
+Q.1.35. Result Given To Client [pos:: 34$$ id:: result_given_to_client$$ type::hidden]
 
 Q.1.36. Client Registration Summary [pos:: 35$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
