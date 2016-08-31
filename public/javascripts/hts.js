@@ -2379,7 +2379,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Discordant";
 
-                result = "Confirmatory Inconclusive";
+                result = "New Inconclusive";
 
                  __$("sample_id").setAttribute("condition",true);
 
