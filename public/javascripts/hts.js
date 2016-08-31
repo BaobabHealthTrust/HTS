@@ -2288,7 +2288,17 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "Confirmatory Inconclusive";
 
+                __$("sample_id").setAttribute("condition",true);
+
                 window.parent.dashboard.showMsg("Take DBS sample", "");
+
+
+            }
+            else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+"){
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "Confirmatory Positive";
 
 
             }
@@ -2370,6 +2380,8 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "Confirmatory Inconclusive";
+
+                 __$("sample_id").setAttribute("condition",true);
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 

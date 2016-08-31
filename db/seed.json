@@ -120,6 +120,8 @@
         "Immediate Repeat Tester ID Number",
         "Immediate Repeat Tester",
         "Partner HIV Status",
-        "Time Since Last Test Date"
+        "Time Since Last Test Date",
+        "Event in the last 72 hrs?",
+        "DBS Sample ID"
     ]
 }
