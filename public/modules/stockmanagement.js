@@ -1059,6 +1059,7 @@ var stock = ({
 
                     } else if (j == 8) {
 
+
                         td.style.padding = "2px";
 
                         var btnIssue = document.createElement("button");
@@ -1100,14 +1101,17 @@ var stock = ({
                             if (this.className.match(/gray/))
                                 return;
 
-                            stock.transferItem(this.getAttribute("label"));
+                            window.parent.stock.dispatchItemToFacility(this.getAttribute("stock_id"),
+                                stock.stocks[this.getAttribute("pos")].name);
+
+                            //stock.transferItem(this.getAttribute("label"));
 
                         }
 
 
                         td.appendChild(btnTransfer);
 
-                        stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
+                        /*stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
                             "&userId=" + stock.getCookie("username"), function (data, optionalControl) {
 
                             var json = JSON.parse(data);
@@ -1118,7 +1122,7 @@ var stock = ({
 
                             }
 
-                        }, btnTransfer);
+                        }, btnTransfer);**/
 
                     } else if (j == 9) {
 
@@ -1829,6 +1833,94 @@ var stock = ({
             id: "data.dispatch_destination",
             allowFreeText: true,
             ajaxURL: stock.settings.locationsListPath
+        };
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    },
+
+    dispatchItemToFacility: function (stock_id, label) {
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+        var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue (individual item)";
+
+        var dateLabel = (label ? label + ": " : "") + "Date of Issue";
+
+        var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+
+        var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+
+        var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+
+        var locationLabel = (label ? label + ": " : "") + "Facility to Relocation";
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "dispatch"
+            },
+            "Stock ID": {
+                field_type: "hidden",
+                id: "data.stock_id",
+                value: stock_id
+            }
+        };
+
+        fields[batchLabel] = {
+            field_type: "text",
+            id: "data.batch_number",
+            ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+            tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+        };
+
+        fields[quantityLabel] = {
+            field_type: "number",
+            tt_pageStyleClass: "NumbersOnly",
+            id: "data.dispatch_quantity"
+        };
+
+        fields[dateLabel] = {
+            field_type: "date",
+            id: "data.dispatch_datetime"
+        };
+
+        fields[dispatcherLabel] = {
+            field_type: "hidden",
+            id: "data.dispatch_who_dispatched",
+            value: stock.getCookie("username")
+        };
+
+        fields[receiverLabel] = {
+            field_type: "text",
+            id: "data.dispatch_who_received"
+        };
+
+        fields[authorityLabel] = {
+            field_type: "hidden",
+            id: "data.dispatch_who_authorised",
+            value: stock.getCookie("username")
+        };
+
+        fields[locationLabel] = {
+            field_type: "text",
+            id: "data.dispatch_destination",
+            allowFreeText: true,
+            ajaxURL: "/facilities?name="
         };
 
         stock.buildFields(fields, table);
