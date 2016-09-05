@@ -1211,7 +1211,23 @@ var stock = ({
         }
 
     },
+    isNameUnique: function(value){
 
+        if(value){
+
+            stock.ajaxRequest("/stock_items?category=Test Kits&item_name",function(data){ 
+                
+                if(data.indexOf(value) >= 0){
+
+                    stock.showActionTerminateMsg("Item already exist","Click OK to return to Item List","javascript:window.parent.stock.listItems(window.parent.document.body)");
+
+                }
+
+            })
+
+        }
+
+    },
     addItem: function () {
 
         var form = document.createElement("form");
@@ -1233,21 +1249,20 @@ var stock = ({
                 field_type: "text",
                 ajaxURL: stock.settings.categorySearchPath + "?category=",
                 allowFreeText: true,
-                id: "data.category",
-                tt_onUnLoad: "__$('data.item_name').setAttribute('ajaxURL', '" + stock.settings.stockItemsSearchPath +
-                    "?category=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&item_name=')"
+                id: "data.category"
             },
             "Item Name": {
                 field_type: "text",
                 allowFreeText: true,
-                id: "data.item_name"
+                id: "data.item_name",
+                tt_onUnload: "window.parent.stock.isNameUnique(__$('data.item_name').value)"
             },
             "Description": {
                 field_type: "text",
                 id: "data.description",
                 optional: true
             },
-            "Re-Order Level": {
+            "Minimum stock Level": {
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
                 id: "data.re_order_level"
@@ -1513,7 +1528,124 @@ var stock = ({
         tdf.appendChild(btnOK);
 
     },
+    showActionTerminateMsg: function (msg, topic, nextURL) {
 
+        if (!topic) {
+
+            topic = "Confirm";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "red";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset red";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+
+        var btnOK = document.createElement("button");
+        btnOK.className = "red";
+        btnOK.innerHTML = "OK";
+        btnOK.style.minWidth = "100px";
+
+        if (nextURL)
+            btnOK.setAttribute("nextURL", nextURL);
+
+        btnOK.onclick = function () {
+
+            if (user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
+
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
+
+            }
+
+        }
+
+        tdf.appendChild(btnOK);
+
+    },
     buildFields: function (fields, table) {
 
         var keys = Object.keys(fields);
@@ -1775,7 +1907,7 @@ var stock = ({
 
         var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
 
-        var locationLabel = (label ? label + ": " : "") + "Issue Location";
+        var locationLabel = (label ? label + ": " : "") + "Receiving Location";
 
         var fields = {
             "Datatype": {

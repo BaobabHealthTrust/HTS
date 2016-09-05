@@ -1019,8 +1019,10 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_item_name1")) {
 
+                /*First Kit always Determin Hard Coded*/
+
                 __$('fp_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim() + '&item_name=Deter');
 
             }
 
@@ -1069,8 +1071,10 @@ function setAjaxUrl(pos) {
 
             if (__$("im_item_name1")) {
 
+                /*First Kit always Determin Hard Coded*/
+
                 __$('im_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim() + '&item_name=Deter');
 
             }
 
