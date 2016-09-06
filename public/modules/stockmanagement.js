@@ -1260,7 +1260,9 @@ var stock = ({
             "Description": {
                 field_type: "text",
                 id: "data.description",
-                optional: true
+                optional: true,
+                tt_pageStyleClass: "NoKeyboard",
+                tt_onLoad: "window.parent.stock.descriptionOptions()"
             },
             "In Multiples Of" : {
                 field_type : "number",
@@ -1282,70 +1284,114 @@ var stock = ({
         stock.navPanel(form.outerHTML);
 
     },
+    descriptionOptions: function(){
+
+        var viewport = window.parent.stock.$$("viewport");
+
+        viewport.style.display ="block";
+
+        var option_div = window.parent.stock.$$("options");
+
+        var ul = document.createElement("ul");
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>First Test</li>";
+
+        ul.appendChild(li);
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>Second Test</li>";
+
+        ul.appendChild(li);
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>Quality Assurance</li>";
+
+        ul.appendChild(li);
+
+        option_div.appendChild(ul);
+
+    },
 
     editItem: function (pos, stock_id) {
 
-        var form = document.createElement("form");
-        form.id = "data";
-        form.action = "javascript:submitData()";
-        form.style.display = "none";
+         stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(stock.stocks[pos].name), function(data) {
 
-        var table = document.createElement("table");
+            if(!data)
+                var data = {};
 
-        form.appendChild(table);
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
-        var fields = {
-            "Datatype": {
-                field_type: "hidden",
-                id: "data.datatype",
-                value: "stock"
-            },
-            "Stock ID": {
-                field_type: "hidden",
-                id: "data.stock_id",
-                value: (pos ? stock.stocks[pos].stock_id : stock_id)
-            },
-            "Category": {
-                field_type: "text",
-                ajaxURL: stock.settings.categorySearchPath + "?category=",
-                allowFreeText: true,
-                id: "data.category",
-                tt_onUnLoad: "__$('data.item_name').setAttribute('ajaxURL', '" + stock.settings.stockItemsSearchPath +
-                    "?category=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&item_name=')",
-                value: stock.stocks[pos].category
-            },
-            "Item Name": {
-                field_type: "text",
-                allowFreeText: true,
-                id: "data.item_name",
-                value: stock.stocks[pos].name
-            },
-            "Description": {
-                field_type: "text",
-                id: "data.description",
-                optional: true,
-                value: stock.stocks[pos].description
+            var limit = (json.limit ? json.limit : 1);
+
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
+
+            var table = document.createElement("table");
+
+            form.appendChild(table);
+
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "stock"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: (pos ? stock.stocks[pos].stock_id : stock_id)
+                },
+                "Category": {
+                    field_type: "text",
+                    ajaxURL: stock.settings.categorySearchPath + "?category=",
+                    allowFreeText: true,
+                    id: "data.category",
+                    tt_onUnLoad: "__$('data.item_name').setAttribute('ajaxURL', '" + stock.settings.stockItemsSearchPath +
+                        "?category=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&item_name=')",
+                    value: stock.stocks[pos].category
+                },
+                "Item Name": {
+                    field_type: "text",
+                    allowFreeText: true,
+                    id: "data.item_name",
+                    value: stock.stocks[pos].name
+                },
+                "Description": {
+                    field_type: "text",
+                    id: "data.description",
+                    optional: true,
+                    value: stock.stocks[pos].description,
+                    tt_pageStyleClass: "NoKeyboard",
+                    tt_onLoad: "window.parent.stock.descriptionOptions()"
+                }
+                ,
+                "In Multiples Of" : {
+                    field_type : "number",
+                    id: "data.in_multiples_of",
+                    value: limit,
+                    tt_pageStyleClass : "Numeric NumbersOnly",
+                    min : "0",
+                    max : "10000"
+                },
+                "Minimum stock Level": {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.re_order_level",
+                    value: stock.stocks[pos].re_order_level
+                }
             }
-            ,
-            "In Multiples Of" : {
-                field_type : "number",
-                id: "data.in_multiples_of",
-                value: stock.stocks[pos].in_multiples_of,
-                tt_pageStyleClass : "Numeric NumbersOnly",
-                min : "0",
-                max : "10000"
-            },
-            "Minimum stock Level": {
-                field_type: "number",
-                tt_pageStyleClass: "NumbersOnly",
-                id: "data.re_order_level",
-                value: stock.stocks[pos].re_order_level
-            }
-        }
 
-        stock.buildFields(fields, table);
+            stock.buildFields(fields, table);
 
-        stock.navPanel(form.outerHTML);
+            stock.navPanel(form.outerHTML);
+
+        });
 
     },
 
