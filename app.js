@@ -2125,6 +2125,7 @@ function saveStock(data, res) {
 
                     var sql = "UPDATE stock SET name = '" + data.item_name + "', " +
                         "description = '" + (data.description ? data.description : "") + "', " +
+                        "in_multiples_of = " + (data.in_multiples_of ? data.in_multiples_of : "") + ", " +
                         "reorder_level = '" + data.re_order_level + "', " +
                         "category_id = '" + category_id + "', " +
                         "date_created = NOW(), " +
@@ -2164,6 +2165,7 @@ function saveStock(data, res) {
 
                 var sql = "UPDATE stock SET name = '" + data.item_name + "', " +
                     "description = '" + (data.description ? data.description : "") + "', " +
+                    "in_multiples_of = " + (data.in_multiples_of ? data.in_multiples_of : "") + ", " +
                     "reorder_level = '" + data.re_order_level + "', " +
                     "category_id = '" + category_id + "', " +
                     "date_created = NOW(), " +
@@ -2200,9 +2202,9 @@ function saveStock(data, res) {
 
                     var category_id = category[0].insertId;
 
-                    var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', '" + data.re_order_level +
-                        "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                    var sql = "INSERT INTO stock (name, description,in_multiples_of, reorder_level, category_id, date_created, creator) VALUES('" +
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', "+(data.in_multiples_of ? data.in_multiples_of : "")+",'" + 
+                        data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                     console.log(sql);
 
@@ -2236,9 +2238,9 @@ function saveStock(data, res) {
 
                 var category_id = category[0][0].category_id;
 
-                var sql = "INSERT INTO stock (name, description, reorder_level, category_id, date_created, creator) VALUES('" +
-                    data.item_name + "', '" + (data.description ? data.description : "") + "', '" + data.re_order_level +
-                    "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                var sql = "INSERT INTO stock (name, description,in_multiples_of, reorder_level, category_id, date_created, creator) VALUES('" +
+                    data.item_name + "', '" + (data.description ? data.description : "") + "', "+(data.in_multiples_of ? data.in_multiples_of : "")+",'" + 
+                    data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                 console.log(sql);
 
@@ -4470,7 +4472,7 @@ app.get('/stock_list', function (req, res) {
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
     var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
+        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
@@ -4492,6 +4494,7 @@ app.get('/stock_list', function (req, res) {
                 stock_id: data[0][i].stock_id,
                 name: data[0][i].name,
                 description: data[0][i].description,
+                in_multiples_of: data[0][i].in_multiples_of,
                 category: data[0][i].category_name,
                 inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
                 re_order_level: data[0][i].reorder_level,
@@ -4737,7 +4740,7 @@ app.get('/stock_search', function (req, res) {
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
     var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity, stock.reorder_level, " +
+        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level, " +
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
@@ -4761,6 +4764,7 @@ app.get('/stock_search', function (req, res) {
                 name: data[0][i].item_name,
                 category: data[0][i].category_name,
                 description: data[0][i].description,
+                in_multiples_of: data[0][i].in_multiples_of,
                 inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
                 last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
                 avg: (data[0][i].duration > 0 ?
@@ -5993,6 +5997,25 @@ app.get("/facilities", function(req, res){
 
 app.get('/patient/:id', function (req, res) {
     res.sendFile(__dirname + '/public/views/patient.html');
+});
+
+app.get('/get_pack_size/:id', function (req, res) {
+    
+    var packName = req.params.id;
+
+    var sql = "SELECT in_multiples_of FROM stock WHERE name = \"" + packName + "\"";
+
+    queryRawStock(sql, function(data) {
+
+        var json = {};
+
+        if(data[0].length > 0)
+            json = {limit: data[0][0].in_multiples_of};
+
+        res.status(200).json(json);
+
+    }) 
+    
 });
 
 app.get('/', function (req, res) {

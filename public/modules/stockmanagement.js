@@ -1262,6 +1262,14 @@ var stock = ({
                 id: "data.description",
                 optional: true
             },
+            "In Multiples Of" : {
+                field_type : "number",
+                id: "data.in_multiples_of",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "10000"
+            }
+            ,
             "Minimum stock Level": {
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
@@ -1317,8 +1325,17 @@ var stock = ({
                 id: "data.description",
                 optional: true,
                 value: stock.stocks[pos].description
+            }
+            ,
+            "In Multiples Of" : {
+                field_type : "number",
+                id: "data.in_multiples_of",
+                value: stock.stocks[pos].in_multiples_of,
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "10000"
             },
-            "Re-Order Level": {
+            "Minimum stock Level": {
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
                 id: "data.re_order_level",
@@ -1334,63 +1351,79 @@ var stock = ({
 
     receiveItem: function (stock_id, label) {
 
-        var form = document.createElement("form");
-        form.id = "data";
-        form.action = "javascript:submitData()";
-        form.style.display = "none";
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
 
-        var table = document.createElement("table");
+            if(!data)
+                var data = {};
 
-        form.appendChild(table);
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
-        var batchLabel = (label ? label + ": " : "") + "Lot Number";
+            var limit = (json.limit ? json.limit : 1);
 
-        var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+            var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                    ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                    limit + "')}, 10); }" ;
 
-        var receivedLabel = (label ? label + ": " : "") + "Received Quantity  (individual items)";
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
 
-        var dateLabel = (label ? label + ": " : "") + "Date Received";
+            var table = document.createElement("table");
 
-        var fields = {
-            "Datatype": {
-                field_type: "hidden",
-                id: "data.datatype",
-                value: "receive"
-            },
-            "Stock ID": {
-                field_type: "hidden",
-                id: "data.stock_id",
-                value: stock_id
-            }
-        };
+            form.appendChild(table);
 
-        fields[batchLabel] = {
-            field_type: "text",
-            id: "data.batch_number",
-            optional: true
-        };
+            var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
-        fields[expiryLabel] = {
-            field_type: "date",
-            id: "data.expiry_date",
-            maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
-            optional: true
-        };
+            var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
 
-        fields[receivedLabel] = {
-            field_type: "number",
-            tt_pageStyleClass: "NumbersOnly",
-            id: "data.receipt_quantity"
-        };
+            var receivedLabel = (label ? label + ": " : "") + "Received Quantity  (individual items)";
 
-        fields[dateLabel] = {
-            field_type: "date",
-            id: "data.receipt_datetime"
-        };
+            var dateLabel = (label ? label + ": " : "") + "Date Received";
 
-        stock.buildFields(fields, table);
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "receive"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: stock_id
+                }
+            };
 
-        stock.navPanel(form.outerHTML);
+            fields[batchLabel] = {
+                field_type: "text",
+                id: "data.batch_number",
+                optional: true
+            };
+
+            fields[expiryLabel] = {
+                field_type: "date",
+                id: "data.expiry_date",
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
+                optional: true
+            };
+
+            fields[receivedLabel] = {
+                field_type: "number",
+                tt_pageStyleClass: "NumbersOnly",
+                id: "data.receipt_quantity",
+                tt_onUnload: validation_condition_string             
+            };
+
+            fields[dateLabel] = {
+                field_type: "date",
+                id: "data.receipt_datetime"
+            };
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+
+        })
 
     },
 
