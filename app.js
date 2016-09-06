@@ -4494,7 +4494,6 @@ app.get('/stock_list', function (req, res) {
                 stock_id: data[0][i].stock_id,
                 name: data[0][i].name,
                 description: data[0][i].description,
-                in_multiples_of: data[0][i].in_multiples_of,
                 category: data[0][i].category_name,
                 inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
                 re_order_level: data[0][i].reorder_level,
@@ -4764,7 +4763,6 @@ app.get('/stock_search', function (req, res) {
                 name: data[0][i].item_name,
                 category: data[0][i].category_name,
                 description: data[0][i].description,
-                in_multiples_of: data[0][i].in_multiples_of,
                 inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
                 last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
                 avg: (data[0][i].duration > 0 ?
