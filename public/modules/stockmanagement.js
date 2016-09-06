@@ -1228,6 +1228,26 @@ var stock = ({
         }
 
     },
+    highlighteFirst: function(){
+
+            var tmrInterval = setInterval(function () {
+
+                 clearInterval(tmrInterval);
+
+
+            var control = window.parent.stock.$$("options");
+
+            if(control){
+
+                var list = control.getElementsByTagName("li");
+
+                list[0].click();
+
+            }
+
+        }, 500);
+
+    },
     addItem: function () {
 
         var form = document.createElement("form");
@@ -1964,6 +1984,7 @@ var stock = ({
     },
 
     dispatchItem: function (stock_id, label) {
+
          stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
 
             if(!data)
@@ -2017,6 +2038,7 @@ var stock = ({
                 field_type: "text",
                 id: "data.batch_number",
                 ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                tt_onLoad:"window.parent.stock.highlighteFirst()",
                 tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                     "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                     "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"

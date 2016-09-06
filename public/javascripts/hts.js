@@ -1019,10 +1019,10 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_item_name1")) {
 
-                /*First Kit always Determin Hard Coded*/
+                /*First Kit always With description of First Test*/
 
                 __$('fp_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=Deter');
+                    tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test")+'&item_name=');
 
             }
 
@@ -1046,7 +1046,7 @@ function setAjaxUrl(pos) {
                  var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
 
                 __$('fp_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&exceptions=" + exceptions +'&item_name=');
+                    tstCurrentPage).value.trim() + "&exceptions=" + exceptions +"&description="+encodeURIComponent("Second Test")+'&item_name=');
 
             }
 
@@ -1071,10 +1071,9 @@ function setAjaxUrl(pos) {
 
             if (__$("im_item_name1")) {
 
-                /*First Kit always Determin Hard Coded*/
 
                 __$('im_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=Deter');
+                    tstCurrentPage).value.trim() + '&item_name=');
 
             }
 

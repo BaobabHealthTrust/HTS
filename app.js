@@ -4678,9 +4678,11 @@ app.get('/stock_items', function (req, res) {
 
     var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
 
+    var description = (query.description ? " AND stock.description ='"+ query.description +"'" : "");
+
     var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
-        "category.name = '" + query.category + "' AND stock.name LIKE '" + query.item_name + "%'"+ (exceptions ?
-        " AND NOT stock.name IN (\"" + exceptions.join("\", \"") + "\")" : "");
+        "category.name = '" + query.category + "' AND stock.name LIKE '" + query.item_name + "%'"+ description +
+        (exceptions ? " AND NOT stock.name IN (\"" + exceptions.join("\", \"") + "\")" : "");
 
     queryRawStock(sql, function (data) {
 
