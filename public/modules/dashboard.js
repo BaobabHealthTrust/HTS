@@ -2271,6 +2271,16 @@ var dashboard = ({
 
                 }
 
+                if(dashboard.getCookie("autoContinue") && eval(dashboard.getCookie("autoContinue"))){
+
+                    dashboard.$(dashboard.workflow[0]).click();
+
+                    dashboard.autoContinue = true;
+
+                    dashboard.setCookie("autoContinue",null);
+
+                }
+
                 if (dashboard.autoContinue && done) {
 
                     dashboard.$(dashboard.workflow[0]).click();

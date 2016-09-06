@@ -688,6 +688,8 @@ var landing = ({
             if (this.className.match(/gray/))
                 return;
 
+            landing.setCookie("autoContinue",true);
+
             landing.startProtocol();
 
         }
