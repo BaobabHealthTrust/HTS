@@ -1463,7 +1463,9 @@ var stock = ({
             fields[batchLabel] = {
                 field_type: "text",
                 id: "data.batch_number",
-                optional: true
+                optional: true,
+                validationRule: "^.{6}$",
+                validationMessage: "Lot Number should have exactly 6 characters"
             };
 
             fields[expiryLabel] = {
