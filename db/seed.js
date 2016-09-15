@@ -621,6 +621,11 @@ async.each(commands, function (cmd, callback) {
                         " " + connection.database + " < locations.sql"
                 },
                 {
+                    message: "Loading 'Nationalities' seed data...",
+                    cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+                        " " + connection.database + " < nationalities.sql"
+                },
+                {
                     message: "Initializing user admin...",
                     cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
                         " " + connection.database + " -e 'DELETE FROM person_attribute WHERE person_id = 1; " +

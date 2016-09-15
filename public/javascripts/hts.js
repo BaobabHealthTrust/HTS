@@ -1073,7 +1073,7 @@ function setAjaxUrl(pos) {
 
 
                 __$('im_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test") +'&item_name=');
 
             }
 
@@ -3499,7 +3499,15 @@ function evaluateReferral2() {
     }
 
 }
+function setAppiontment(){
 
+    __$("today").click();
+
+    __$("today").setAttribute("disabled","disabled");
+
+    __$("today").style.display = "none";
+
+}
 function loadPost(){
 
     evaluateReferral2();
@@ -3507,6 +3515,23 @@ function loadPost(){
     setMaxDate("appointment",1)
 
     return false;
+
+}
+
+function  validateAppointment(){
+
+
+    var appointment  = __$("appointment").value;
+
+    var date_today = new Date();
+
+    if(appointment < date_today.format("YYYY-mm-dd")){
+
+        gotoPage(tstCurrentPage - 1, false, true); 
+
+        window.parent.dashboard.showMsg("The date booked is behind today","Invalide Date");
+
+    }
 
 }
 

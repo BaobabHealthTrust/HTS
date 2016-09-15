@@ -23,10 +23,9 @@ Q.1.5. Time Since Last Test [pos:: 4$$ id:: time_since_last_test$$type:: hidden]
 Q.1.6. Time Since Last Test Date [pos:: 5$$ concept:: Time Since Last Test$$ id:: time_since_last_test_date$$ field_type:: birthdate$$ estimate_field:: estimate$$estimate_label::Time Estimate in Years$$ condition:: __$('last_hiv_test').value != 'Never Tested']
 
 Q.1.7. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos:: 6$$id::partner_status$$ tt_onUnLoad:: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim() $$ condition:: __$("partner_present").value == "Yes"]
-O.1.7.1. No Partner
-O.1.7.2. HIV Unknown
-O.1.7.3. Partner Negative
-O.1.7.4. Partner Positive
+O.1.7.1. HIV Unknown
+O.1.7.2. Partner Negative
+O.1.7.3. Partner Positive
 
 Q.1.8. Partner HIV Status [pos:: 7$$ id:: phs$$ value:: No Partner$$ condition:: false]
 

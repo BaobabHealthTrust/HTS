@@ -39,6 +39,7 @@ button:active {
     min-height: 55px;
     border-radius: 0px !important;
     margin: 3px;
+    float: left;
 }
 
 .button:active {
