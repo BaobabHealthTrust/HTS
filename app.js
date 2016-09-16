@@ -5706,11 +5706,15 @@ app.get("/used_stock_stats", function (req, res) {
 
     var query = url_parts.query;
 
+    var username_filter = (query.username? "AND username ='"+query.username+"'":"")
+
+    var group_filter = (query.username? "item_name, username":"item_name")
+
     var sql = "SELECT item_name, username, SUM(COALESCE(consumption_quantity,0)) " +
         "AS used FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
-        "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
+        "'" + username_filter + " " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
         query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE('" +
-        query.end_date + "')" : "") + " GROUP BY item_name, username ";
+        query.end_date + "')" : "") + " GROUP BY  " + group_filter;
 
     console.log(sql);
 
@@ -5736,12 +5740,16 @@ app.get("/available_stock_stats", function (req, res) {
 
     var query = url_parts.query;
 
+    var username_filter = (query.username? "AND username ='"+query.username+"'":"")
+
+    var group_filter = (query.username? "item_name, username":"item_name")
+
     var sql = "SELECT item_name, username, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
         "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" + query.item_name +
-        "' AND username = '" + query.username + "'" + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
+        "' " + username_filter + " " + (query.start_date ? " AND DATE(transaction_date) >= DATE('" +
         query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE('" +
-        query.end_date + "')" : "") + " GROUP BY item_name, username " +
-        "HAVING available > 0";
+        query.end_date + "')" : "") + " GROUP BY  " + group_filter +
+        " HAVING available > 0";
 
     console.log(sql);
 
