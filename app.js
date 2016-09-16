@@ -4476,7 +4476,7 @@ app.get('/stock_list', function (req, res) {
         "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
-        "stock.category_id WHERE COALESCE(report.voided,0) = 0 GROUP BY stock.stock_id LIMIT " +
+        "stock.category_id WHERE COALESCE(report.voided,0) = 0 AND stock.voided = 0  GROUP BY stock.stock_id LIMIT " +
         lowerLimit + ", " + pageSize;
 
     console.log(sql);
@@ -4570,11 +4570,11 @@ app.get('/available_batches_to_user', function (req, res) {
     var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
 
     var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
-        "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
+        "SUM(COALESCE(consumption_quantity,0))) AS available FROM stock LEFT OUTER JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN receipt ON report.batch_number " +
         " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
         (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
         "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
-        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " GROUP BY report.batch_number " +
+        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " AND stock.voided = 0 GROUP BY report.batch_number " +
         "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
 
     console.log(sql);
@@ -4621,7 +4621,7 @@ app.get('/batch_numbers_to_user', function (req, res) {
         " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
         (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
         "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
-        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " GROUP BY report.batch_number " +
+        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + "  AND stock.voided = 0 GROUP BY report.batch_number " +
         "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
 
     console.log(sql);
@@ -4649,9 +4649,11 @@ app.get('/available_batches', function (req, res) {
     var query = url_parts.query;
 
     var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
-        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
-        query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%' GROUP BY batch_number " +
+        "AS available FROM stock LEFT OUTER JOIN report ON stock.stock_id = report.stock_id WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+        query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%'  AND stock.voided = 0 GROUP BY batch_number " +
         "HAVING available > 0 ORDER BY expiry_date ASC";
+
+    console.log(sql)
 
     queryRawStock(sql, function (data) {
 
@@ -4715,7 +4717,7 @@ app.get('/stock_items', function (req, res) {
     var description = (query.description ? " AND stock.description ='"+ query.description +"'" : "");
 
     var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
-        "category.name = '" + query.category + "' AND stock.name LIKE '" + query.item_name + "%'"+ description +
+        "category.name = '" + query.category + "' AND stock.voided = 0 AND stock.name LIKE '" + query.item_name + "%'"+ description +
         (exceptions ? " AND NOT stock.name IN (\"" + exceptions.join("\", \"") + "\")" : "");
 
     queryRawStock(sql, function (data) {
@@ -4744,7 +4746,7 @@ app.get('/items_list', function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.name LIKE '" + query.item_name + "%'";
+    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.voided = 0 AND stock.name LIKE '" + query.item_name + "%'";
 
     queryRawStock(sql, function (data) {
 
@@ -4780,7 +4782,7 @@ app.get('/stock_search', function (req, res) {
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
         "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
-        "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.name = '" +
+        "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.voided = 0 AND stock.name = '" +
         query.item_name + "'" : "") + " GROUP BY stock.stock_id LIMIT " +
         lowerLimit + ", " + pageSize;
 
@@ -4832,7 +4834,7 @@ app.post('/delete_item', function (req, res) {
 
         }
 
-        var sql = "DELETE FROM stock WHERE stock_id = '" + data.stock_id + "'";
+        var sql =  "UPDATE stock SET stock.voided = 1 WHERE stock_id = '" + data.stock_id + "'";
 
         console.log(sql);
 
@@ -5674,7 +5676,7 @@ app.get("/stock_types", function (req, res) {
 
     var query = url_parts.query;
 
-    var sql = "SELECT name FROM stock";
+    var sql = "SELECT name FROM stock  WHERE stock.voided = 0";
 
     console.log(sql);
 
@@ -6037,7 +6039,7 @@ app.get('/get_pack_size/:id', function (req, res) {
     
     var packName = req.params.id;
 
-    var sql = "SELECT in_multiples_of FROM stock WHERE name = \"" + packName + "\"";
+    var sql = "SELECT in_multiples_of FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
 
     queryRawStock(sql, function(data) {
 
