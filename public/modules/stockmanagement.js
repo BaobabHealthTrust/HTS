@@ -2193,8 +2193,31 @@ var stock = ({
         });
 
     },
+    validateBatchMultiple: function(limit){
 
+        if(stock.$$('data.transfer_quantity')){
+
+            stock.$$('data.transfer_quantity').setAttribute("absoluteMax",limit);
+
+        }
+
+        var inputBatch = stock.$$('data.batch_number').value.trim();
+
+        var multiple = stock.stockLimits[stock.batNumbers[inputBatch]];
+
+
+
+        var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (multiple <= 0 ? 1 : multiple) +
+                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                        multiple + "')}, 10); }" ;
+
+        stock.$$('data.transfer_quantity').setAttribute("tt_onUnload", validation_condition_string);
+
+
+    },
     transferItem: function (label) {
+
+        stock.setStockLimit();
 
         var form = document.createElement("form");
         form.id = "data";
@@ -2221,9 +2244,8 @@ var stock = ({
                 id: "data.batch_number",
                 ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
                     stock.getCookie("username") + "&batch=",
-                tt_onUnload: "if(__$('data.transfer_quantity')){var limit = __$('touchscreenInput' + " +
-                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                    "__$('data.transfer_quantity').setAttribute('absoluteMax', limit)}"
+                tt_onUnload: "window.parent.stock.validateBatchMultiple(__$('touchscreenInput' + " +
+                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1])"
             },
             "Quantity to Transfer (individual items)": {
                 field_type: "number",
@@ -2288,7 +2310,83 @@ var stock = ({
         })
 
     },
+     setStockLimit: function(){
 
+        var category_url = stock.settings.categorySearchPath + "?category=";
+
+        stock.ajaxRequest(category_url,function(data){
+
+            var categories = data.replace("<li>","").split("</li>");
+
+            for(var i = 0; i < categories.length ; i++){
+
+                var category = categories[i].replace("<li>","").replace("</li>","");
+
+                if(category.length != 0){
+
+                    var stock_item_url = "/stock_items?category="+encodeURIComponent(category)+"&item_name=";
+
+                    stock.ajaxRequest(stock_item_url,function(stock_item_data){
+
+                           var stock_items = stock_item_data.replace("<li>","").split("</li>");
+
+                           for(var j = 0; j < stock_items.length ; j++){
+
+                                var stock_item = stock_items[j].replace("<li>","").replace("</li>",""); 
+
+                                if(stock_item.length != 0){
+
+
+                                    stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(stock_item), function(limit_data) {
+
+                                        if(!limit_data)
+                                            var limit_data = {};
+
+                                        var json = (typeof limit_data == typeof String() ? JSON.parse(limit_data) : limit_data);
+
+                                        var limit = (json.limit ? json.limit : 1);
+
+                                        var name = (json.id ? json.id : 1);
+
+                                        if(!stock.stockLimits)
+                                                stock.stockLimits = {};
+
+                                        stock.stockLimits[name] = limit;
+                                        
+                                    });
+
+
+                                }
+
+                            }
+
+
+                    });
+
+
+                    var batch_number_url = '/batch_numbers_to_user?userId=' + stock.getCookie("username")+"&batch="
+
+                    stock.ajaxRequest(batch_number_url, function(batch_data) {
+
+                                        if(!batch_data)
+                                            var batch_data = {};
+
+                                        var json = JSON.parse(batch_data);
+
+                                        stock.batNumbers = json;
+
+                                        
+                                        
+                    });
+
+                }
+
+            }
+
+
+        });
+
+    },
     submitData: function (data) {
 
         if (stock.$("stock.navPanel")) {

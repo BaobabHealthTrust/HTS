@@ -4608,6 +4608,40 @@ app.get('/available_batches_to_user', function (req, res) {
 
 })
 
+app.get('/batch_numbers_to_user', function (req, res) {
+
+    var url_parts = url.parse(req.url, true);
+
+    var query = url_parts.query;
+
+    var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
+
+    var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
+        "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
+        " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
+        (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
+        "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
+        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " GROUP BY report.batch_number " +
+        "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
+
+    console.log(sql);
+
+    queryRawStock(sql, function (data) {
+
+        var result = {};
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            result[data[0][i].batch_number] = data[0][i].item_name;
+
+        }
+
+        res.send(result);
+
+    })
+
+})
+
 app.get('/available_batches', function (req, res) {
 
     var url_parts = url.parse(req.url, true);
@@ -6010,7 +6044,7 @@ app.get('/get_pack_size/:id', function (req, res) {
         var json = {};
 
         if(data[0].length > 0)
-            json = {limit: data[0][0].in_multiples_of};
+            json = {limit: data[0][0].in_multiples_of, id: packName};
 
         res.status(200).json(json);
 
