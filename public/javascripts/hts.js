@@ -1450,8 +1450,17 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
             if (__$("tmrControl1")) {
-
+		
                 __$("tmrControl1").innerHTML = time;
+
+                  if (tmrControl1MinsCount >15 && __$('fp_item_name2').value.toLowerCase().indexOf("gold") != -1) {
+                          __$("tmrControl1").style.color = "green";
+                 }
+                 
+                 if(tmrControl1MinsCount> 10 && __$('fp_item_name1').value.toLowerCase().indexOf(notUnigold) != -1) {
+                         __$("tmrControl1").style.color = "green";
+                         notUnigold = "false"
+                 }
 
             }
 
@@ -1497,7 +1506,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     }
 
-    td.innerHTML = (label1 ? label1 : test1+" Test") + " Result";
+    td.innerHTML = (label1 ? label1 : test1+" Test") + " Result" +  "<font style='color:green'> - 15 minutes</font>";
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);
@@ -1760,7 +1769,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
         test2 = __$("im_item_name2").value
 
     }
-    td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result";
+    td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result "+ "<font style='color:green'> - 10 minutes</font>";
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);
@@ -2013,10 +2022,20 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
+	    var notUnigold = "hiv" 
             if (__$("tmrControl1")) {
 
                 __$("tmrControl1").innerHTML = time;
 
+
+                 if (tmrControl1MinsCount >15 && __$('fp_item_name2').value.toLowerCase().indexOf("gold") != -1) {
+                         __$("tmrControl1").style.color = "green";
+                }
+
+		if(tmrControl1MinsCount> 10 && __$('fp_item_name1').value.toLowerCase().indexOf(notUnigold) != -1) {
+			__$("tmrControl1").style.color = "green";
+			notUnigold = "false"
+		}
             }
 
         }, 1000);
@@ -2046,7 +2065,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
     table.appendChild(tr);
 
     var td = document.createElement("td");
-    td.innerHTML = (label ? label : "Test") + " Result";
+    td.innerHTML = (label ? label : "Test") + " Result " + (label.indexOf("gold") >= 0  ? "<font style='color:green'> - 10 minutes</font>" : "<font style='color:green'> - 15  minutes</font>");
     td.style.fontSize = "3vh";
 
     tr.appendChild(td);

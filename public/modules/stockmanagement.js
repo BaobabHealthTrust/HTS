@@ -562,7 +562,7 @@ var stock = ({
         var cell6_1 = document.createElement("th");
         cell6_1.style.textAlign = "right";
         cell6_1.style.color = "#000";
-        cell6_1.innerHTML = "Re-Order Level:";
+        cell6_1.innerHTML = "AMC:";
         cell6_1.style.borderRight = "1px dotted #000";
 
         tr6.appendChild(cell6_1);
@@ -987,10 +987,10 @@ var stock = ({
 
         table.appendChild(tr);
 
-        var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Issue/Day",
-            "Receive", "Issue", "Edit", "Delete", "Transfer"];
-        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px",
-            "80px"];
+        var fields = ["", "Item Name", "Description", "Category", "In Stock", "AMC", "Average Issue/Day",
+            "Receive", "Issue", "Edit", "Delete", "Relocation Out"];
+        var colSizes = ["30px", "180px", undefined, "150px", "90px", "90px", "90px", "80px", "80px", "80px", "80px",
+            "180px"];
 
         for (var i = 0; i < fields.length; i++) {
 
@@ -1091,7 +1091,7 @@ var stock = ({
                         btnTransfer.style.minWidth = "100px";
                         btnTransfer.style.minHeight = "30px";
                         btnTransfer.style.fontWeight = "normal";
-                        btnTransfer.innerHTML = "Transfer";
+                        btnTransfer.innerHTML = "Relocation Out";
                         btnTransfer.setAttribute("stock_id", stock.stocks[i].stock_id);
                         btnTransfer.setAttribute("pos", i);
                         btnTransfer.setAttribute("label", stock.stocks[i][keys[1]]);
@@ -1284,7 +1284,7 @@ var stock = ({
                 tt_pageStyleClass: "NoKeyboard",
                 tt_onLoad: "window.parent.stock.descriptionOptions()"
             },
-            "In Multiples Of" : {
+            "Units per Pack" : {
                 field_type : "number",
                 id: "data.in_multiples_of",
                 tt_pageStyleClass : "Numeric NumbersOnly",
@@ -1292,7 +1292,7 @@ var stock = ({
                 max : "10000"
             }
             ,
-            "Minimum stock Level": {
+            "Average Monthly Consumption (AMC) - Number of Packs": {
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
                 id: "data.re_order_level"

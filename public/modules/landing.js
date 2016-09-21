@@ -1007,7 +1007,7 @@ var landing = ({
                 "background-color:blue;}.none{background-color:black;}</style>";
 
             html += "<img src='" + icon + "' height='200' style='margin-top: 5%;' /><br/><h1>" + module +
-                " Stastistics</h1></body></html>";
+                " Statistics</h1></body></html>";
 
             var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
 
