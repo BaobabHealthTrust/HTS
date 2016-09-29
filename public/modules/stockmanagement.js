@@ -607,6 +607,7 @@ var stock = ({
         btnIssue.innerHTML = "Issue";
         btnIssue.setAttribute("tag", pos);
 
+
         btnIssue.onmousedown = function () {
 
             if (this.className.match(/gray/))
@@ -1091,7 +1092,7 @@ var stock = ({
                         btnTransfer.style.minWidth = "100px";
                         btnTransfer.style.minHeight = "30px";
                         btnTransfer.style.fontWeight = "normal";
-                        btnTransfer.innerHTML = "Relocation Out";
+                        btnTransfer.innerHTML = "&nbsp;&nbsp; Reloc Out &nbsp;&nbsp;";
                         btnTransfer.setAttribute("stock_id", stock.stocks[i].stock_id);
                         btnTransfer.setAttribute("pos", i);
                         btnTransfer.setAttribute("label", stock.stocks[i][keys[1]]);
@@ -1184,7 +1185,8 @@ var stock = ({
 
                     td.style.fontWeight = "bold";
 
-                    if (parseInt(stock.stocks[i][keys[j]]) > parseInt(stock.stocks[i][keys[j + 1]])) {
+
+                    if (parseInt(stock.stocks[i][keys[j]]) >= 2*parseInt(stock.stocks[i][keys[j + 1]])) {
 
                         td.style.color = "green";
 
@@ -1195,6 +1197,11 @@ var stock = ({
                     }
 
                     td.innerHTML = stock.stocks[i][keys[j]];
+
+
+                } else if (j == 1) {
+
+                    td.innerHTML = stock.stocks[i][keys[j]] + '<span style="float: right; color: #3c60b1; font-size: smaller;"><a href="javascript:stock.showSummary('+i+')">...more</a></span>';
 
                 } else {
 
@@ -1209,6 +1216,32 @@ var stock = ({
             }
 
         }
+
+    },
+    showSummary: function(pos){
+
+        var stock_item = stock.stocks[pos];
+
+        var url = stock.settings.availableBatchesPath+stock_item.name;
+
+        stock.ajaxRequest(url, function(data){
+
+            stock.showMsg("","Item Summary");
+
+            var message_div = stock.$("msg.content");
+
+            var ul = document.createElement("ul");
+
+            ul.innerHTML = data;
+
+
+            message_div.appendChild(ul);
+
+        });
+
+
+        
+        
 
     },
     isNameUnique: function(value){
@@ -1391,7 +1424,7 @@ var stock = ({
                     tt_onLoad: "window.parent.stock.descriptionOptions()"
                 }
                 ,
-                "In Multiples Of" : {
+                "Units per Pack" : {
                     field_type : "number",
                     id: "data.in_multiples_of",
                     value: limit,
@@ -1399,7 +1432,7 @@ var stock = ({
                     min : "0",
                     max : "10000"
                 },
-                "Minimum stock Level": {
+                "Average Monthly Consumption (AMC)": {
                     field_type: "number",
                     tt_pageStyleClass: "NumbersOnly",
                     id: "data.re_order_level",
@@ -2126,7 +2159,7 @@ var stock = ({
 
                 var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
 
-                var locationLabel = (label ? label + ": " : "") + "Facility to Relocation";
+                var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
 
                 var fields = {
                     "Datatype": {
@@ -2188,7 +2221,9 @@ var stock = ({
 
                 stock.buildFields(fields, table);
 
-                stock.navPanel(form.outerHTML);
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
 
         });
 
@@ -2553,8 +2588,8 @@ var stock = ({
 
         document.body.appendChild(shield);
 
-        var width = 420;
-        var height = 280;
+        var width = 560;
+        var height = 390;
 
         var div = document.createElement("div");
         div.id = "msg.popup";
