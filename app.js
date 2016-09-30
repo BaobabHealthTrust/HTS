@@ -2202,9 +2202,9 @@ function saveStock(data, res) {
 
                     var category_id = category[0].insertId;
 
-                    var sql = "INSERT INTO stock (name, description,in_multiples_of, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', "+(data.in_multiples_of ? data.in_multiples_of : "")+",'" + 
-                        data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                    var sql = "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "") + "," + 
+                        (data.recommended_test_time ? data.recommended_test_time : "") + "," + (data.window_test_time ? data.window_test_time : "") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                     console.log(sql);
 
@@ -2238,9 +2238,11 @@ function saveStock(data, res) {
 
                 var category_id = category[0][0].category_id;
 
-                var sql = "INSERT INTO stock (name, description,in_multiples_of, reorder_level, category_id, date_created, creator) VALUES('" +
-                    data.item_name + "', '" + (data.description ? data.description : "") + "', "+(data.in_multiples_of ? data.in_multiples_of : "")+",'" + 
-                    data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+
+
+                var sql =  "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "") + "," + 
+                        (data.recommended_test_time ? data.recommended_test_time : "") + "," + (data.window_test_time ? data.window_test_time : "") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                 console.log(sql);
 
@@ -6047,14 +6049,16 @@ app.get('/get_pack_size/:id', function (req, res) {
     
     var packName = req.params.id;
 
-    var sql = "SELECT in_multiples_of FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
+    var sql = "SELECT in_multiples_of,recommended_test_time,window_test_time FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
 
     queryRawStock(sql, function(data) {
 
         var json = {};
 
+        console.log(data[0][0]);
+
         if(data[0].length > 0)
-            json = {limit: data[0][0].in_multiples_of, id: packName};
+            json = {limit: data[0][0].in_multiples_of, id: packName, rec_time: data[0][0].recommended_test_time , window_time: data[0][0].window_test_time };
 
         res.status(200).json(json);
 
