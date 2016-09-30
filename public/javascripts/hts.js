@@ -1997,6 +1997,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
                 __$("l2_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label2].rec_time + " Minutes";
 
+                clearInterval(minuteLabelInterval);
+
             },500);
 
 }
