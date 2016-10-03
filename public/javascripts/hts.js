@@ -3437,8 +3437,7 @@ function evaluateReferral2() {
 
         }
 
-        window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks to rule out or confirm a new " +
-            "infection (window period)", "Re-Test");
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks", "Re-Test");
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "on-going risk" &&
         (testResult.trim().toLowerCase() == "new negative")) {
