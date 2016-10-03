@@ -2098,6 +2098,22 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             },500);
 
+            if(test1Target.id == "fp_test1_result" && test2Target.id == "fp_test2_result"){
+
+                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+
+                __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+            }
+
+            if(test1Target.id == "im_test1_result" && test2Target.id == "im_test2_result"){
+
+                __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
+
+                __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
+
+            }
+
 }
 
 
@@ -2445,7 +2461,19 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                
             }
 
-            td.appendChild(btn);                                    
+            td.appendChild(btn);    
+
+            if(testTarget.id == "fp_test1_result"){
+
+                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+
+              
+
+            }else if( testTarget.id == "fp_test2_result"){
+
+                  __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+            }                              
                                         
     }, null);
 
@@ -4625,4 +4653,52 @@ function isNotInfant(){
 
 
     return is_not_infant;
+}
+
+function setTestKits(){
+
+    var descriptions = ["First Test", "Second Test"];
+
+
+    for (var i = 0 ; i < descriptions.length ; i++){
+
+         getAjaxRequest("/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+
+                var kit_data = JSON.parse(data);
+
+                if(!window.parent.dashboard.data.kits)
+                    window.parent.dashboard.data.kits = {};
+
+                window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
+
+                console.log(kit_data.description);
+
+                if(kit_data.description == "First Test"){
+
+
+
+                    __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + kit_data.name + "&batch=");
+
+                    __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+
+
+                }
+
+                else{
+
+                    __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                        "&item_name=" + kit_data.name + "&batch=");
+
+                    __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                    getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
+
+                }
+
+        });
+
+
+    }
+
 }

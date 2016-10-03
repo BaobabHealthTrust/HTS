@@ -6074,6 +6074,27 @@ app.get('/get_pack_size/:id', function (req, res) {
     
 });
 
+app.get("/available_kits_by_desctiption/:description", function(req, res){
+
+    var description = req.params.description;
+
+    var sql = "SELECT name, description FROM stock WHERE description ='"+description+"' ORDER BY stock_id DESC LIMIT 1";
+
+    queryRawStock(sql, function(data) {
+
+        var json = {};
+
+        console.log(data[0][0]);
+
+        if(data[0].length > 0)
+            json = {description: data[0][0].description, name: data[0][0].name};
+
+        res.status(200).json(json);
+
+    })
+
+});
+
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/views/index.html');
 });
