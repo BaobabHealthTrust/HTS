@@ -1627,6 +1627,32 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
                 }
 
+                //Disbabling the other button
+
+                __$('btnTest1Nve').className = "green";
+
+                __$('btnTest1Pve').className = "gray";
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(test1Target.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(test1Target.id.trim() == "im_test1_result"){
+
+
+                    __$("im_test1_time").setAttribute("condition",true);
+
+                    __$("im_test1_time").value = time;
+
+                }                
+
+
             }
 
             td.appendChild(btn);
@@ -1687,6 +1713,34 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
                 }
 
+                //Disbabling the other button
+
+                __$('btnTest1Nve').className = "gray";
+
+                __$('btnTest1Pve').className = "green";
+
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(test1Target.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(test1Target.id.trim() == "im_test1_result"){
+
+
+                    __$("im_test1_time").setAttribute("condition",true);
+
+                    __$("im_test1_time").value = time;
+
+                }                
+
+
+               
             }
 
             td.appendChild(btn);
@@ -1912,6 +1966,32 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
                 }
 
+                //Disbabling the other button
+
+                __$('btnTest2Nve').className = "green";
+
+                __$('btnTest2Pve').className = "gray";
+
+                var time = __$("tmrControl2").innerHTML;
+
+                if(test2Target.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+                if(test2Target.id.trim() == "im_test2_result"){
+
+
+                    __$("im_test2_time").setAttribute("condition",true);
+
+                    __$("im_test2_time").value = time;
+
+                }                
+
+
             }
 
             td.appendChild(btn);
@@ -1966,12 +2046,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                     __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
                 }
-              
-                var btnNV2Class = __$('btnTest2Nve').className;
+
+                //Disbabling the other button
 
                 __$('btnTest2Nve').className = "gray";
-
-                var btnPV2Class = __$("btnTest2Pve").className;
 
                 __$('btnTest2Pve').className = "green";
 
@@ -1986,6 +2064,25 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                     }
 
                 }
+
+                var time = __$("tmrControl2").innerHTML;
+
+                if(test2Target.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+                if(test2Target.id.trim() == "im_test2_result"){
+
+
+                    __$("im_test2_time").setAttribute("condition",true);
+
+                    __$("im_test2_time").value = time;
+
+                }   
 
             }
 
@@ -2241,6 +2338,26 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
                 }
 
+                var time = __$("tmrControl1").innerHTML;
+
+                if(testTarget.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(testTarget.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+                
+                
+
             }
 
             td.appendChild(btn);
@@ -2307,6 +2424,25 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
                 }
 
+                var time = __$("tmrControl1").innerHTML;
+
+                if(testTarget.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(testTarget.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+               
             }
 
             td.appendChild(btn);                                    

@@ -48,17 +48,22 @@ Q.1.28. Immediate Repeat Test 2 Result [pos:: 27$$ id:: im_test2_result$$ tt_onL
 O.1.28.1. -
 O.1.28.2. +
 
-Q.1.29. Immediate Repeat Test 1 & 2 Parallel Tests [pos:: 28$$ id:: fp_parallel$$ tt_onLoad:: saveConsumption(__$("fp_lot_1_dispatch_id").value, "im_lot_number1"); saveConsumption(__$("fp_lot_2_dispatch_id").value, "im_lot_number2");recommendedTimmerForLabels([__$("im_item_name1").value,__$("im_item_name2").value]);loadPassParallelTests(__$("im_test1_result"), __$("im_test1_duration"), __$("im_test2_result"), __$("im_test2_duration"), __$("im_item_name1").value.trim(), __$("im_item_name2").value.trim()); __$("helpText" + tstCurrentPage).innerHTML = "Immediate Repeat " + __$("im_item_name1").value.trim() + " & " + __$("im_item_name2").value.trim() + " Parallel Tests"$$ condition:: evalCondition(5)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true$$ tt_onUnload:: activateNavBtn()]
+Q.1.29. Immediate Repeat Test 1 & 2 Parallel Tests [pos:: 28$$ id:: fp_parallel$$ tt_onLoad:: saveConsumption(__$("fp_lot_1_dispatch_id").value, "im_lot_number1"); saveConsumption(__$("fp_lot_2_dispatch_id").value, "im_lot_number2");recommendedTimmerForLabels([__$("im_item_name1").value,__$("im_item_name2").value]);loadPassParallelTests(__$("im_test1_result"), __$("im_test1_duration"), __$("im_test2_result"), __$("im_test2_duration"), __$("im_item_name1").value.trim(), __$("im_item_name2").value.trim()); __$("helpText" + tstCurrentPage).innerHTML = "Immediate Repeat Parallel Tests"$$ condition:: evalCondition(5)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true$$ tt_onUnload:: activateNavBtn()]
 
 Q.1.30. First Pass Test Kit 1 Testing Duration (Minutes) [pos:: 29$$ id:: fp_test1_duration$$ condition:: false]
 Q.1.31. First Pass Test Kit 2 Testing Duration (Minutes) [pos:: 30$$ id:: fp_test2_duration$$ condition:: false]
 Q.1.32. Immediate Repeat Test Kit 1 Testing Duration (Minutes) [pos:: 31$$ id:: im_test1_duration$$ condition:: false]
 Q.1.33. Immediate Repeat Test Kit 2 Testing Duration (Minutes) [pos:: 32$$ id:: im_test2_duration$$ condition:: false]
 
-Q.1.34. Outcome Summary [pos:: 33$$ id:: outcome_summary$$ condition:: false]
+Q.1.34. First Pass Test Kit 1 Testing Duration (Minutes) [pos:: 33$$ id:: fp_test1_time $$ type::hidden $$ condition:: false]
+Q.1.35. First Pass Test Kit 2 Testing Duration (Minutes) [pos:: 34$$ id:: fp_test2_time $$ type::hidden $$ condition:: false]
+Q.1.36. Immediate Repeat Test Kit 1 Testing Duration (Minutes) [pos:: 35$$ id:: im_test1_time $$ type::hidden $$ condition:: false]
+Q.1.37. Immediate Repeat Test Kit 2 Testing Duration (Minutes) [pos:: 36$$ id:: im_test2_time $$ type::hidden $$ condition:: false]
 
-Q.1.35. Result Given To Client [pos:: 34$$ id:: result_given_to_client$$ type::hidden]
+Q.1.38. Outcome Summary [pos:: 37$$ id:: outcome_summary$$ condition:: false]
 
-Q.1.36. DBS Sample ID [pos :: 35 $$ id :: sample_id $$condition::false]
+Q.1.39. Result Given To Client [pos:: 38$$ id:: result_given_to_client$$ type::hidden]
 
-Q.1.37. Client Registration Summary [pos:: 36$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.40. DBS Sample ID [pos :: 39 $$ id :: sample_id $$condition::false]
+
+Q.1.41. Client Registration Summary [pos:: 40$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
