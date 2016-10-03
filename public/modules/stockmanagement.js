@@ -1316,7 +1316,8 @@ var stock = ({
                 optional: true,
                 tt_pageStyleClass: "NoKeyboard",
                 tt_onLoad: "window.parent.stock.descriptionOptions()"
-            },
+            }
+            ,
             "Units per Pack" : {
                 field_type : "number",
                 id: "data.in_multiples_of",
@@ -1329,6 +1330,22 @@ var stock = ({
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
                 id: "data.re_order_level"
+            },
+            "Recommended Test Time (Minutes)" :{
+                field_type : "number",
+                id: "data.recommended_test_time",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "30"
+
+            },
+            "Window Test Time (Minutes)" :{
+                field_type : "number",
+                id: "data.window_test_time",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "30"
+
             }
         }
 
@@ -1437,6 +1454,24 @@ var stock = ({
                     tt_pageStyleClass: "NumbersOnly",
                     id: "data.re_order_level",
                     value: stock.stocks[pos].re_order_level
+                },
+                "Recommended Test Time (Minutes)" :{
+                    field_type : "number",
+                    id: "data.recommended_test_time",
+                    tt_pageStyleClass : "Numeric NumbersOnly",
+                    value: stock.stocks[pos].recommended_test_time,
+                    min : "0",
+                    max : "30"
+
+                },
+                "Window Test Time (Minutes)" :{
+                    field_type : "number",
+                    id: "data.window_test_time",
+                    tt_pageStyleClass : "Numeric NumbersOnly",
+                    value: stock.stocks[pos].window_test_time,
+                    min : "0",
+                    max : "30"
+
                 }
             }
 

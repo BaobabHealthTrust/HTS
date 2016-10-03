@@ -2127,6 +2127,8 @@ function saveStock(data, res) {
                         "description = '" + (data.description ? data.description : "") + "', " +
                         "in_multiples_of = " + (data.in_multiples_of ? data.in_multiples_of : "") + ", " +
                         "reorder_level = '" + data.re_order_level + "', " +
+                        "recommended_test_time = '" + data.recommended_test_time + "', " +
+                        "window_test_time = '" + data.window_test_time + "', " +
                         "category_id = '" + category_id + "', " +
                         "date_created = NOW(), " +
                         "creator= '" + data.userId + "' WHERE stock_id = '" + data.stock_id + "'";
@@ -2167,6 +2169,8 @@ function saveStock(data, res) {
                     "description = '" + (data.description ? data.description : "") + "', " +
                     "in_multiples_of = " + (data.in_multiples_of ? data.in_multiples_of : "") + ", " +
                     "reorder_level = '" + data.re_order_level + "', " +
+                    "recommended_test_time = '" + data.recommended_test_time + "', " +
+                    "window_test_time = '" + data.window_test_time + "', " +
                     "category_id = '" + category_id + "', " +
                     "date_created = NOW(), " +
                     "creator= '" + data.userId + "' WHERE stock_id = '" + data.stock_id + "'";
@@ -2202,9 +2206,9 @@ function saveStock(data, res) {
 
                     var category_id = category[0].insertId;
 
-                    var sql = "INSERT INTO stock (name, description,in_multiples_of, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', "+(data.in_multiples_of ? data.in_multiples_of : "")+",'" + 
-                        data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                    var sql = "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "") + "," + 
+                        (data.recommended_test_time ? data.recommended_test_time : "") + "," + (data.window_test_time ? data.window_test_time : "") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                     console.log(sql);
 
@@ -2238,9 +2242,11 @@ function saveStock(data, res) {
 
                 var category_id = category[0][0].category_id;
 
-                var sql = "INSERT INTO stock (name, description,in_multiples_of, reorder_level, category_id, date_created, creator) VALUES('" +
-                    data.item_name + "', '" + (data.description ? data.description : "") + "', "+(data.in_multiples_of ? data.in_multiples_of : "")+",'" + 
-                    data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+
+
+                var sql =  "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "") + "," + 
+                        (data.recommended_test_time ? data.recommended_test_time : "") + "," + (data.window_test_time ? data.window_test_time : "") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                 console.log(sql);
 
@@ -4472,8 +4478,8 @@ app.get('/stock_list', function (req, res) {
     var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
 
     var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level, " +
-        "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level,stock.recommended_test_time, " +
+        " stock.window_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
         "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
         "stock.category_id WHERE COALESCE(report.voided,0) = 0 AND stock.voided = 0  GROUP BY stock.stock_id LIMIT " +
@@ -4501,7 +4507,9 @@ app.get('/stock_list', function (req, res) {
                     (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
                 receipt_quantity: data[0][i].receipt_quantity,
                 dispatch_quantity: data[0][i].dispatch_quantity,
-                last_order_size: data[0][i].last_order_size
+                last_order_size: data[0][i].last_order_size,
+                recommended_test_time: data[0][i].recommended_test_time,
+                window_test_time: data[0][i].window_test_time
             };
 
             collection.push(entry);
@@ -4778,8 +4786,8 @@ app.get('/stock_search', function (req, res) {
 
     var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
         "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level, " +
-        "MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
+        "stock.recommended_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+        "DATEDIFF(MAX(dispatch_datetime),stock.window_test_time, MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
         "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
         "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
         "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.voided = 0 AND stock.name = '" +
@@ -4806,7 +4814,9 @@ app.get('/stock_search', function (req, res) {
                 avg: (data[0][i].duration > 0 ?
                     (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
                 re_order_level: data[0][i].reorder_level,
-                last_order_size: data[0][i].last_order_size
+                last_order_size: data[0][i].last_order_size,
+                recommended_test_time: data[0][i].recommended_test_time,
+                window_test_time: data[0][i].window_test_time
             }
 
             collection.push(entry);
@@ -6047,14 +6057,16 @@ app.get('/get_pack_size/:id', function (req, res) {
     
     var packName = req.params.id;
 
-    var sql = "SELECT in_multiples_of FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
+    var sql = "SELECT in_multiples_of,recommended_test_time,window_test_time FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
 
     queryRawStock(sql, function(data) {
 
         var json = {};
 
+        console.log(data[0][0]);
+
         if(data[0].length > 0)
-            json = {limit: data[0][0].in_multiples_of, id: packName};
+            json = {limit: data[0][0].in_multiples_of, id: packName, rec_time: data[0][0].recommended_test_time , window_time: data[0][0].window_test_time };
 
         res.status(200).json(json);
 

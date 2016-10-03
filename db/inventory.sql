@@ -225,6 +225,8 @@ CREATE TABLE `stock` (
   `in_multiples_of` int(5) DEFAULT 1,
   `reorder_level` int(11) DEFAULT NULL,
   `last_order_size` int(11) DEFAULT NULL,
+  `recommended_test_time` int(11) DEFAULT NULL,
+  `window_test_time` int(11) DEFAULT NULL,
   `voided` tinyint(4) DEFAULT 0,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
