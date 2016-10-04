@@ -2071,7 +2071,7 @@ function receiveStock(data, res) {
 
         var sql = "UPDATE receipt SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
             "', expiry_date = '" + data.expiry_date + "', receipt_quantity = '" + data.receipt_quantity +
-            "', receipt_datetime = '" + data.receipt_datetime + "', receipt_who_received = '" + data.userId + "' WHERE " +
+            "', receipt_datetime = '" + data.receipt_datetime + "', receipt_who_received = '" + data.userId + "', origin_facility = '" + data.origin_facility + "' WHERE " +
             "receipt_id = '" + data.receipt_id;
 
         console.log(sql);
@@ -2087,8 +2087,8 @@ function receiveStock(data, res) {
     }
     else {
 
-        var sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
-            data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.receipt_quantity +
+        var sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date,origin_facility, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
+            data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.origin_facility + "', '" + data.receipt_quantity +
             "', '" + data.receipt_datetime + "', '" + data.userId + "')";
 
         console.log(sql);

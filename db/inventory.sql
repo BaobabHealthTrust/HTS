@@ -128,6 +128,7 @@ CREATE TABLE `receipt` (
   `stock_id` int(11) DEFAULT NULL,
   `batch_number` varchar(255) DEFAULT NULL,
   `expiry_date` datetime DEFAULT NULL,
+  `origin_facility` varchar(255) DEFAULT NULL,
   `receipt_quantity` int(11) DEFAULT NULL,
   `receipt_datetime` datetime DEFAULT NULL,
   `receipt_who_received` varchar(45) DEFAULT NULL,
