@@ -46,8 +46,10 @@ Q.1.14. Current T/A [pos:: 14$$ id:: ta$$ tt_onUnload:: setAjaxUrl(2)$$ tt_requi
 
 Q.1.15. Current Village [pos:: 15$$ id:: village$$ tt_requireNextClick:: false $$ condition:: __$('ta').value.trim().length > 0]
 
-Q.1.16. Closest Landmark [pos:: 16$$ id:: closest_landmark $$ condition:: __$('village').value.trim().length > 0]
+Q.1.16. Current Village Specify [pos:: 16$$ id:: village_specify$$ tt_requireNextClick:: true $$ condition:: __$('village').value == 'Other']
 
-Q.1.17. Client Registration Summary [pos:: 18$$ tt_onLoad:: showDetailsSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.17. Closest Landmark [pos:: 17$$ id:: closest_landmark $$ condition:: __$('village').value.trim().length > 0]
 
-Q.1.18. Client Registration Summary (cont'd) [pos:: 19$$ tt_onLoad:: updatePregnancy()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.18. Client Registration Summary [pos:: 18$$ tt_onLoad:: showDetailsSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+
+Q.1.19. Client Registration Summary (cont'd) [pos:: 19$$ tt_onLoad:: updatePregnancy()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]

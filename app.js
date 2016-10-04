@@ -2804,6 +2804,8 @@ app.get('/village_query', function (req, res) {
 
         }
 
+        collection.push("Other");
+
         var result = "<li>" + collection.join("</li><li>") + "</li>";
 
         res.send(result);
