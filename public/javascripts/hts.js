@@ -1350,7 +1350,12 @@ function evalCondition(pos) {
 
 function recommendedTimmerForLabels(labels){
 
+    if(labels[0].length == 0)
+        return;
+
     for(var i = 0 ; i < labels.length ; i++){
+
+        console.log(i);
 
         getAjaxRequest("/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
 
@@ -2088,6 +2093,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             td.appendChild(btn);
 
+
             var minuteLabelInterval = setInterval(function(){
 
                 __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
@@ -2113,6 +2119,9 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                 __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
 
             }
+
+
+            
 
 }
 
@@ -4671,7 +4680,6 @@ function setTestKits(){
 
                 window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
 
-                console.log(kit_data.description);
 
                 if(kit_data.description == "First Test"){
 
@@ -4695,6 +4703,9 @@ function setTestKits(){
                     getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
 
                 }
+
+                if(kit_data.name && kit_data.name.length > 0)
+                        recommendedTimmerForLabels([kit_data.name]);
 
         });
 
