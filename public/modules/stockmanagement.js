@@ -1232,11 +1232,11 @@ var stock = ({
 
                             "Relocate In"          : "receiveItemFromFaclity('"+id+"','"+name+"')",
 
-                            "Loss"                 : "loss()",
+                            "Record Kit Losses"    : "lostItems('"+name+"')",
 
-                            "Disposal"             : "dispose()",
+                            "Kits Disposal"        : "disposeItem('"+name+"')",
 
-                            "Not Captures Stock"   : "unCaptured()"
+                            "Not Captures Stock"   : "unCapturedItems('"+name+"')"
             }
 
             var action_keys = Object.keys(actions);
@@ -2216,7 +2216,194 @@ var stock = ({
         stock.navPanel(form.outerHTML);
 
     },
+    lostItems: function (label) {
 
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+        var quantityLabel = (label ? label + ": " : "") + "Quantity Lost  (individual items)";
+
+        var dateLabel = (label ? label + ": " : "") + "Date of Lost";
+
+        var typeLabel = (label ? label + ": " : "") + "Consumption Type";
+
+        var receiverLabel = (label ? label + ": " : "") + "Who Consumed";
+
+        //var reasonLabel = (label ? label + ": " : "") + "Reason for Disposal";
+
+        var locationLabel = (label ? label + ": " : "") + "Consumption Location";
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "consumption"
+            },
+            "Dispatch ID": {
+                field_type: "hidden",
+                id: "data.dispatch_id",
+                value: ""
+            },
+            "Reason for Disposal":{
+                field_type: "hidden",
+                id: "data.reason_for_consumption",
+                value: "Lost Kits"
+
+            }
+        };
+
+        fields[batchLabel] = {
+            field_type: "text",
+            id: "data.batch_number",
+            ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
+                stock.getCookie("username") + "&batch=",
+            tt_onUnload: "if(__$('data.consumption_quantity')){var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                "__$('data.consumption_quantity').setAttribute('absoluteMax', limit)}"
+        };
+
+        fields[quantityLabel] = {
+            field_type: "number",
+            tt_pageStyleClass: "NumbersOnly",
+            id: "data.consumption_quantity"
+        };
+
+        fields[dateLabel] = {
+            field_type: "date",
+            id: "data.date_consumed"
+        };
+
+        fields[typeLabel] = {
+            field_type: "hidden",
+            id: "data.consumption_type",
+            ajaxURL: stock.settings.consumptionTypesPath,
+            value: "Disposal"
+        };
+
+        fields[receiverLabel] = {
+            field_type: "hidden",
+            id: "data.who_consumed",
+            allowFreeText: true,
+            ajaxURL: stock.settings.userListingPath,
+            value: stock.getCookie("username")
+        };
+
+        fields[locationLabel] = {
+            field_type: "hidden",
+            id: "data.location",
+            allowFreeText: true,
+            ajaxURL: stock.settings.locationsListPath,
+            value: stock.getCookie("location")
+        };
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    },
+
+    unCapturedItems: function (label) {
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+        var quantityLabel = (label ? label + ": " : "") + "Quantity not captured  (individual items)";
+
+        var dateLabel = (label ? label + ": " : "") + "Date of Consumption";
+
+        var typeLabel = (label ? label + ": " : "") + "Consumption Type";
+
+        var receiverLabel = (label ? label + ": " : "") + "Who Consumed";
+
+        //var reasonLabel = (label ? label + ": " : "") + "Reason for Disposal";
+
+        var locationLabel = (label ? label + ": " : "") + "Consumption Location";
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "consumption"
+            },
+            "Dispatch ID": {
+                field_type: "hidden",
+                id: "data.dispatch_id",
+                value: ""
+            },
+            "Reason for Disposal":{
+                field_type: "hidden",
+                id: "data.reason_for_consumption",
+                value: "Not Captured"
+
+            }
+        };
+
+        fields[batchLabel] = {
+            field_type: "text",
+            id: "data.batch_number",
+            ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
+                stock.getCookie("username") + "&batch=",
+            tt_onUnload: "if(__$('data.consumption_quantity')){var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                "__$('data.consumption_quantity').setAttribute('absoluteMax', limit)}"
+        };
+
+        fields[quantityLabel] = {
+            field_type: "number",
+            tt_pageStyleClass: "NumbersOnly",
+            id: "data.consumption_quantity"
+        };
+
+        fields[dateLabel] = {
+            field_type: "date",
+            id: "data.date_consumed"
+        };
+
+        fields[typeLabel] = {
+            field_type: "hidden",
+            id: "data.consumption_type",
+            ajaxURL: stock.settings.consumptionTypesPath,
+            value: "Disposal"
+        };
+
+        fields[receiverLabel] = {
+            field_type: "hidden",
+            id: "data.who_consumed",
+            allowFreeText: true,
+            ajaxURL: stock.settings.userListingPath,
+            value: stock.getCookie("username")
+        };
+
+        fields[locationLabel] = {
+            field_type: "hidden",
+            id: "data.location",
+            allowFreeText: true,
+            ajaxURL: stock.settings.locationsListPath,
+            value: stock.getCookie("location")
+        };
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    }
+    ,
     dispatchItem: function (stock_id, label) {
 
          stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
