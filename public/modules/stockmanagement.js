@@ -1089,7 +1089,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnActions = document.createElement("button");
-                        btnActions.style.minWidth = "100px";
+                        btnActions.style.minWidth = "100%";
                         btnActions.style.minHeight = "30px";
                         btnActions.style.fontWeight = "normal";
                         btnActions.innerHTML = " More...";
