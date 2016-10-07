@@ -4713,3 +4713,990 @@ function setTestKits(){
     }
 
 }
+
+function setDateToday(){
+
+    var today = new Date();
+
+    __$("touchscreenInput"+tstCurrentPage).value = today.format("YYYY-mm-dd");
+
+    var dateParts = today.format("YYYY-mm-dd").split("-");
+
+    __$("year").innerHTML = dateParts[0];
+    __$("month").innerHTML = dateParts[1];
+    __$("day").innerHTML =  dateParts[2];
+
+}
+
+function increament(field){
+
+    var input = __$(field);
+
+    var currentInput = parseInt(input.innerHTML) + 1;
+
+
+    if(field=="year" && currentInput.toString().length >= 4){
+
+        var today = new Date();
+
+        var year = today.getFullYear();
+
+        
+        if(parseInt(currentInput) <= year){
+
+            
+                input.innerHTML = currentInput;
+
+        }
+
+    }else if( field == "day" && currentInput.toString().length <= 2){
+
+        if(currentInput <= 31){
+
+            if(currentInput < 10){
+
+                    input.innerHTML = "0"+currentInput;
+
+            }else{
+
+                    input.innerHTML = currentInput;
+
+            }
+
+        }
+
+
+    }else if(field == "month"){
+
+            if(currentInput > 0 && currentInput <= 12){
+
+                if(currentInput < 10){
+
+                    input.innerHTML = "0"+currentInput;
+
+                }else{
+
+                    input.innerHTML = currentInput;
+
+                }
+
+            }
+
+    }
+
+
+
+}
+
+
+function decreament(field){
+
+    var input = __$(field);
+
+    var currentInput = parseInt(input.innerHTML) - 1;
+
+    if(field=="year" && currentInput.toString().length >= 4){
+
+        var today = new Date();
+
+        var year = today.getFullYear();
+
+        
+        if(parseInt(currentInput) >= (parseInt(year)-120)){
+
+            
+                input.innerHTML = currentInput;
+
+        }
+
+    }else if( field == "day" && currentInput.toString().length <= 2){
+
+        if(currentInput > 0){
+
+            if(currentInput < 10){
+
+                    input.innerHTML = "0"+currentInput;
+
+            }else{
+
+                    input.innerHTML = currentInput;
+
+            }
+
+        }
+
+
+    }
+    else if(field == "month"){
+
+            if(currentInput > 0 && currentInput <= 12){
+
+                if(currentInput < 10){
+
+                    input.innerHTML = "0"+currentInput;
+
+                }else{
+
+                    input.innerHTML = currentInput;
+
+                }
+
+            }
+
+    }
+
+
+}
+
+function buildDateControl(target){
+
+    var mainDiv = document.createElement("div");
+
+    mainDiv.style.width = "98%";
+
+    target.appendChild(mainDiv);
+
+    var table = document.createElement("table");
+
+    table.style.width = "100%"
+
+    mainDiv.appendChild(table);
+
+
+
+    //First Row
+    var tr = document.createElement("tr")
+
+    table.appendChild(tr);
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "+";
+
+    button.setAttribute("onmousedown","increament('year')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "+";
+
+    button.setAttribute("onmousedown","increament('month')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "+";
+
+    button.setAttribute("onmousedown","increament('day')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    td.setAttribute("colSpan","2")
+
+    tr.appendChild(td);
+
+    //Row two
+     var tr = document.createElement("tr")
+
+    table.appendChild(tr);
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    td.style.border = "1px solid rgba(82, 82, 82, 0.8)";
+
+    td.style.borderRadius = "4px";
+
+    td.setAttribute("onclick", "createPopup('year')");
+
+    td.style.width = "20%";
+
+    tr.appendChild(td);
+
+    var span =document.createElement("span");
+
+    span.id = "year";
+
+    span.style.height ="50px";
+
+    span.style.color = "rgba(33, 33, 33, 1)";
+
+    span.style.fontSize = "2em";
+
+    td.appendChild(span);
+
+
+
+   var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    td.style.border = "1px solid rgba(82, 82, 82, 0.8)";
+
+    td.style.borderRadius = "4px";
+
+    td.setAttribute("onclick", "createPopup('month')");
+
+    td.style.width = "20%";
+
+    tr.appendChild(td);
+
+    var span =document.createElement("span");
+
+    span.id = "month";
+
+    span.style.height ="50px";
+
+    span.style.color = "rgba(33, 33, 33, 1)";
+
+    span.style.fontSize = "2em";
+
+    
+
+    td.appendChild(span);
+
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    td.style.border = "1px solid rgba(82, 82, 82, 0.8)";
+
+    td.style.borderRadius = "4px";
+
+    td.setAttribute("onclick", "createPopup('day')");
+
+    td.style.width = "20%";
+
+    tr.appendChild(td);
+
+    var span =document.createElement("span");
+
+    span.id = "day";
+
+    span.style.height ="50px";
+
+    span.style.color = "rgba(33, 33, 33, 1)";
+
+    span.style.fontSize = "2em";    
+
+    td.appendChild(span);
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "Today";
+
+    button.setAttribute("onmousedown","setDateToday()")
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "Unknown";
+
+    button.setAttribute("onmousedown","createEstimatePopup('ageEstimateInput')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+
+    //Law Three
+
+    var tr = document.createElement("tr")
+
+    table.appendChild(tr);
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "-";
+
+    button.setAttribute("onmousedown", "decreament('year')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "-";
+
+    button.setAttribute("onmousedown", "decreament('month')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    tr.appendChild(td);
+
+    var button =document.createElement("button");
+
+    button.className = "blue";
+
+    button.innerHTML = "-";
+
+    button.setAttribute("onmousedown", "decreament('day')");
+
+    button.style.width = "100%";
+
+    td.appendChild(button);
+
+    var td = document.createElement("td");
+
+    td.style.textAlign = "center";
+
+    td.setAttribute("colSpan","2")
+
+    tr.appendChild(td);
+
+    setDateToday();
+
+
+}
+
+function setInput(field,value){
+    
+    var inputId = field.id;
+
+    var input = __$(inputId);
+
+    var currentInput = input.innerHTML + value;
+
+    if(inputId=="year" && currentInput.length >= 4){
+
+        var today = new Date();
+
+        var year = today.getFullYear();
+
+        
+        if(parseInt(currentInput) > year){
+
+            alert("Birth Year Greater");
+
+        }
+        else if(parseInt(currentInput) < (year - 120)){
+
+            alert("Birth Year Lesser");
+        }
+        else{
+
+            input.innerHTML = currentInput;
+        }
+
+    }else{
+
+        input.innerHTML = currentInput;
+
+    }
+
+
+
+}
+function removePopup(){
+
+    __$("content").removeChild(__$("popup.shield"));
+
+}
+
+function deleteInput(input){
+
+    var value = input.innerHTML;
+
+    var valueLength = parseInt(value.length);
+
+    if(valueLength > 0)
+        
+        input.innerHTML = value.substr(0,valueLength - 1);
+
+}
+
+function clearInput(input){
+
+    input.innerHTML = "";
+
+}
+function keyPad(inputId){
+
+
+        var table = document.createElement("table");
+
+        table.style.width = "98%";
+
+        var numberSets = [["1","2","3","Cancel"],["4","5","6","Clear"],["7","8","9","Delete"],["","0","","Done"]]
+
+        for(var i = 0 ; i < numberSets.length; i++){
+
+            var numberRow = numberSets[i];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr)
+
+            for(var j = 0 ; j < numberRow.length ; j++ ){
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                var button = document.createElement("button");
+
+                
+
+                button.innerHTML = numberRow[j];
+
+                button.style.width = "100%";
+
+                if(numberRow[j]=="Cancel"){
+
+                    button.className = "red";
+
+                    button.setAttribute("onmousedown","removePopup()");
+
+                }else if(numberRow[j]=="Done"){
+
+                    button.className = "green";
+
+                    button.setAttribute("onmousedown","removePopup()");
+
+
+                }
+                else if(numberRow[j]=="Delete"){
+
+                    button.className = "blue";
+
+                    button.setAttribute("onmousedown","deleteInput("+inputId+")");
+
+                }
+                else if(numberRow[j]=="Clear"){
+
+                     button.className = "blue";
+
+                    button.setAttribute("onmousedown","clearInput("+inputId+")");
+
+                }
+                else{
+
+                        button.className = "blue";
+
+                      button.setAttribute("onmousedown","setInput("+inputId+","+numberRow[j]+")");
+                }
+              
+
+                if(numberRow[1].trim() != ""){
+
+                    td.appendChild(button);
+
+                }
+
+            }
+
+        }
+
+        return table;
+
+}
+
+function ageEstimateKeyPad(inputId){
+
+
+        var table = document.createElement("table");
+
+        table.style.width = "98%";
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.innerHTML = "Time Estimate In Years";
+
+        td.style.textAlign = "center";
+
+        td.style.fontSize = "1.5em";
+
+        td.setAttribute("colSpan","4");
+
+        table.style.width = "98%";
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.id = "estimated_message";
+
+        td.style.maxHeight = "30px";
+
+        td.setAttribute("colSpan","4");
+
+        table.style.width = "98%";
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.id = "ageEstimateInput"
+
+        td.style.border = "1px solid rgba(82, 82, 82, 0.8)";
+
+        td.style.borderRadius = "4px";
+
+        td.style.height = "40px";
+
+        td.style.textAlign = "right";
+
+        td.style.fontSize = "1.5em";
+
+        td.innerHTML = "";
+
+        td.setAttribute("colSpan","4");
+
+
+        var numberSets = [["1","2","3","Cancel"],["4","5","6","Clear"],["7","8","9","Delete"],["","0","","Done"]]
+
+        for(var i = 0 ; i < numberSets.length; i++){
+
+            var numberRow = numberSets[i];
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr)
+
+            for(var j = 0 ; j < numberRow.length ; j++ ){
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                var button = document.createElement("button");
+
+                
+
+                button.innerHTML = numberRow[j];
+
+                button.style.width = "100%";
+
+                if(numberRow[j]=="Cancel"){
+
+                    button.className = "red";
+
+                    button.setAttribute("onmousedown","removePopup()");
+
+                }else if(numberRow[j]=="Done"){
+
+                    button.className = "green";
+
+                    button.setAttribute("onmousedown","removePopup()");
+
+
+                }
+                else if(numberRow[j]=="Delete"){
+
+                    button.className = "blue";
+
+                    button.setAttribute("onmousedown","deleteInput("+inputId+")");
+
+                }
+                else if(numberRow[j]=="Clear"){
+
+                     button.className = "blue";
+
+                    button.setAttribute("onmousedown","clearInput("+inputId+")");
+
+                }
+                else{
+
+                        button.className = "blue";
+
+                      button.setAttribute("onmousedown","setInput("+inputId+","+numberRow[j]+")");
+                }
+              
+
+                if(numberRow[1].trim() != ""){
+
+                    td.appendChild(button);
+
+                }
+
+            }
+
+        }
+
+        return table;
+
+}
+
+
+function setMonthInput(inputId,value){
+
+    if(parseInt(value) < 10){
+
+        inputId.innerHTML = 0 +""+ value;
+
+    }else{
+
+        inputId.innerHTML = value;
+
+    }
+
+    __$("content").removeChild(__$("popup.shield"));
+
+
+}
+
+function monthDiv(inputId){
+
+    var div = document.createElement("div");
+
+    var table = document.createElement("table");
+
+    table.style.width = "100%";
+
+    div.appendChild(table);
+
+    var months = {
+                    "01" : "January",
+                    "02" : "February",
+                    "03" : "March",
+                    "04" : "April",
+                    "05" : "May",
+                    "06" : "June",
+                    "07" : "Juy",
+                    "08" : "August",
+                    "09" : "September",
+                    "10" : "October",
+                    "11" : "November",
+                    "12" : "December",
+                    "Unk"  : "Unknown"
+    }
+
+    var month_keys = Object.keys(months);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    tr.appendChild(td);
+
+    td.style.textAlign = "center";
+
+    td.setAttribute("colSpan","2");
+
+    td.innerHTML = "Select Month";
+
+    td.style.fontSize = "2em";
+
+    td.style.backgroundColor = "#5683ab"
+
+    td.style.color = "#ffffff";
+
+    var tr ;
+
+    var row = 0;
+
+    for(var i = 0 ; i < month_keys.length ; i++){
+
+        if((i % 2) == 0){
+
+           tr = document.createElement("tr");
+
+           table.appendChild(tr);
+
+           row = 0 + 1;
+
+           if(row % 2 == 0){
+
+                tr.style.backgroundColor = "#ffffff";
+
+           }
+
+        }
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.width = "50%";
+
+        td.style.fontSize ="1.8em";
+
+        td.style.textAlign = "left";
+
+        td.style.paddingLeft = "1em";
+
+        td.setAttribute("onmousedown","setMonthInput("+inputId+","+month_keys[i]+")");
+
+        td.innerHTML = months[month_keys[i]]
+
+        /*
+        var li = document.createElement("li");
+
+        ul.appendChild(li);
+
+        li.style.fontSize ="2em";
+
+        li.style.textAlign = "center";
+
+
+        li.onmouseover = function () {
+            
+            li.style.backgroundColor ="#99cfee";
+
+        }
+
+        if((i % 2) == 0){
+
+            li.style.backgroundColor = "#e0dfdf";
+
+        }
+
+        li.setAttribute("onmousedown","setMonthInput("+inputId+","+month_keys[i]+")");
+
+        li.innerHTML = months[month_keys[i]]*/
+
+    }
+
+    return div;
+
+
+}
+
+function createPopup(inputId){
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "popup.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.45)";
+        shield.style.zIndex = 1050;
+
+        __$("content").appendChild(shield);
+
+         var width = 420;
+        var height = 320;
+
+
+        var div = document.createElement("div");
+
+        div.id = "control_panel";
+
+        div.style.position = "absolute";
+
+        div.style.width = width + "px";
+
+        div.style.height = height + "px";
+
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+
+        if(inputId == "month"){
+
+            div.appendChild(monthDiv(inputId));
+
+        }else if(inputId == "ageEstimateInput"){
+
+            div.appendChild(ageEstimateKeyPad("ageEstimateInput"));
+
+        }
+        else{
+
+            div.appendChild(keyPad(inputId));
+
+        }
+
+        
+
+
+
+}
+
+function createEstimatePopup(inputId){
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "popup.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.45)";
+        shield.style.zIndex = 1050;
+
+        __$("content").appendChild(shield);
+
+         var width = 420;
+        var height = 390;
+
+
+        var div = document.createElement("div");
+
+        div.id = "control_panel";
+
+        div.style.position = "absolute";
+
+        div.style.width = width + "px";
+
+        div.style.height = height + "px";
+
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+
+        if(inputId == "month"){
+
+            div.appendChild(monthDiv(inputId));
+
+        }else if(inputId == "ageEstimateInput"){
+
+            div.appendChild(ageEstimateKeyPad("ageEstimateInput"));
+
+        }
+        else{
+
+            div.appendChild(keyPad(inputId));
+
+        }
+
+        
+
+
+
+}
+
+function getDatePickerCustom() {
+    if (typeof(DateSelector) == "undefined")
+        return;
+
+    var inputElement = tstFormElements[tstPages[tstCurrentPage]];
+
+    __$("inputFrame"+tstCurrentPage).style.height = "50px";
+
+    var keyboardDiv = __$('keyboard');
+
+    keyboardDiv.innerHTML = "";
+
+    buildDateControl(keyboardDiv);
+
+    
+}

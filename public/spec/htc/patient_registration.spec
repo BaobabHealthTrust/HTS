@@ -10,7 +10,7 @@ Q.1.3. Age [pos:: 2$$ id:: age$$ type::hidden]
 
 Q.1.4. Age Group [pos:: 3$$ id:: age_group$$ type::hidden]
 
-Q.1.5. Birthdate [pos:: 4$$ id:: birthdate$$ field_type:: birthdate$$ estimate_field:: estimate]
+Q.1.5. Birthdate [pos:: 4$$ id:: birthdate$$ estimate_field:: estimate$$tt_onLoad::getDatePickerCustom()]
 
 Q.1.6. Gender [pos:: 5$$ id:: gender$$ tt_onLoad:: calculateAge()]
 O.1.6.1. Male
