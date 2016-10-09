@@ -1564,6 +1564,26 @@ var stock = ({
                                     ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                     limit + "')}, 10); }" ;
 
+            var lotNumberValidate = "";
+
+            var lotNumberValidationMessage = "";
+
+            if(label.trim().toLowerCase().match(/deter/)){
+
+                lotNumberValidate = "^.{9}$";
+
+                lotNumberValidationMessage = "Lot Number should have exactly 9 characters";
+
+            }
+
+            if(label.trim().toLowerCase().match(/gold/)){
+
+                lotNumberValidate = "^.{10}$";
+
+                lotNumberValidationMessage = "Lot Number should have exactly 10 characters"
+
+            }
+
             var form = document.createElement("form");
             form.id = "data";
             form.action = "javascript:submitData()";
@@ -1604,8 +1624,8 @@ var stock = ({
                 field_type: "text",
                 id: "data.batch_number",
                 optional: true,
-                validationRule: "^.{6}$",
-                validationMessage: "Lot Number should have exactly 6 characters"
+                validationRule: lotNumberValidate,
+                validationMessage: lotNumberValidationMessage
             };
 
             fields[expiryLabel] = {
