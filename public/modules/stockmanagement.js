@@ -908,19 +908,19 @@ var stock = ({
 
         nav.appendChild(btnFinish);
 
-        var btnSearch = document.createElement("button");
-        btnSearch.className = "blue";
-        btnSearch.style.cssFloat = "right";
-        btnSearch.style.marginTop = "15px";
-        btnSearch.innerHTML = "Search for Inventory";
+        // var btnSearch = document.createElement("button");
+        // btnSearch.className = "blue";
+        // btnSearch.style.cssFloat = "right";
+        // btnSearch.style.marginTop = "15px";
+        // btnSearch.innerHTML = "Search for Inventory";
 
-        btnSearch.onclick = function () {
+        // btnSearch.onclick = function () {
 
-            window.parent.stock.searchForStock();
+        //     window.parent.stock.searchForStock();
 
-        }
+        // }
 
-        nav.appendChild(btnSearch);
+        // nav.appendChild(btnSearch);
 
         var btnAdd = document.createElement("button");
         btnAdd.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
@@ -1365,10 +1365,10 @@ var stock = ({
                 value: "stock"
             },
             "Category": {
-                field_type: "text",
-                ajaxURL: stock.settings.categorySearchPath + "?category=",
+                field_type: "select",
                 allowFreeText: true,
-                id: "data.category"
+                id: "data.category",
+                options : ["Test Kits","Serum","DTS"]
             },
             "Item Name": {
                 field_type: "text",
@@ -2000,30 +2000,94 @@ var stock = ({
 
             tr.appendChild(td2);
 
-            var input = document.createElement("input");
-            input.id = fields[key].id;
-            input.name = fields[key].id;
-            input.setAttribute("helpText", key);
+            var fieldType = fields[key].field_type;
 
-            if (fields[key].field_type == "hidden") {
+            switch (fieldType) {
 
-                input.type = "hidden";
+                case "select":
 
-            } else {
+                    var select = document.createElement("select");
+                    select.id = fields[key].id;
+                    select.name = fields[key].id;
+                    select.setAttribute("helpText", key);
 
-                input.type = "text";
+                    td2.appendChild(select);
 
-            }
+                    if (fields[key].options) {
 
-            td2.appendChild(input);
+                        for (var o = 0; o < fields[key].options.length; o++) {
 
-            var elements = Object.keys(fields[key]);
+                            var opt = document.createElement("option");
+                            opt.innerHTML = fields[key].options[o];
 
-            elements.splice(elements.indexOf("id"), 1);
+                            select.appendChild(opt);
 
-            for (var j = 0; j < elements.length; j++) {
+                        }
 
-                input.setAttribute(elements[j], fields[key][elements[j]]);
+                    }
+
+                    var exceptions = ["options", "helpText"]
+
+                    var attrs = Object.keys(fields[key]);
+
+                    for (var a = 0; a < exceptions.length; a++) {
+
+                        if (attrs.indexOf(exceptions[a]) >= 0) {
+
+                            attrs.splice(attrs.indexOf(exceptions[a]), 1);
+
+                        }
+
+                    }
+
+                    if (attrs.length > 0) {
+
+                        for (var a = 0; a < attrs.length; a++) {
+
+                            var attr = attrs[a];
+
+                            select.setAttribute(attr, fields[key][attr]);
+
+                        }
+
+                    }
+
+                    break;
+
+                default:
+
+                    var input = document.createElement("input");
+                    input.id = fields[key].id;
+                    input.name = fields[key].id;
+                    input.setAttribute("helpText", key);
+
+                    if (fields[key].field_type == "hidden") {
+
+                        input.type = "hidden";
+
+                    } else if (fields[key].field_type == "password") {
+
+                        input.type = "password";
+
+                        fields[key].field_type = "text";
+
+                    } else {
+
+                        input.type = "text";
+
+                    }
+
+                    td2.appendChild(input);
+
+                    var elements = Object.keys(fields[key]);
+
+                    elements.splice(elements.indexOf("id"), 1);
+
+                    for (var j = 0; j < elements.length; j++) {
+
+                        input.setAttribute(elements[j], fields[key][elements[j]]);
+
+                    }
 
             }
 
@@ -2645,6 +2709,95 @@ var stock = ({
         })
 
     },
+
+    showItem: function (label) {
+
+        stock.setStockLimit();
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "quality_assurance"
+            },
+            "Show ID": {
+                field_type: "hidden",
+                id: "data.show_id",
+                value: ""
+            },
+            "Choose Sample Type for QC Tests": {
+                field_type: "select",
+                id: "data.show_choose_sample_type",
+                tt_pageStyleClass: "NoKeyboard",
+                options: ["Serum", "DTS"]
+            },
+            "Select Test kit type": {
+                field_type: "select",
+                id: "data.show_test_kit_type",
+                tt_pageStyleClass: "NoKeyboard",
+                options: ["Determine", "UniGold"]
+            },
+            "Select Serum type": {
+                field_type: "select",
+                id: "data.show_serum_type",
+                tt_pageStyleClass: "NoKeyboard",
+                condition: "__$('data.show_choose_sample_type').value.trim().toLowerCase().match(/serum/i)",
+                ajaxURL : "/stock_items?category=Serum&description=Quality Assurance&item_name=",
+                tt_onUnload : "var serum_name = __$('touchscreenInput' + tstCurrentPage).value; if(serum_name){"+
+                               "__$('data.show_search_serum').setAttribute('ajaxURL','/available_batches?item_name='+serum_name+'&batch=');"+
+                               "__$('data.show_search_serum').setAttribute('condition',true)}"
+            },
+            "Select DTS type": {
+                field_type: "select",
+                id: "data.show_dts_type",
+                tt_pageStyleClass: "NoKeyboard",
+                condition: "__$('data.show_choose_sample_type').value.trim().toLowerCase().match(/dts/i)",
+                ajaxURL : "/stock_items?category=Dts&description=Quality Assurance&item_name=",
+                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
+                               "__$('data.show_search_dts').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
+                               " __$('data.show_search_dts').setAttribute('condition',true)}"
+
+            },
+            "Search serum": {
+                field_type: "select",
+                id: "data.show_search_serum",
+                condition : false
+                
+            },
+              "Search DTS": {
+                field_type: "select",
+                id: "data.show_search_dts",
+                 condition : false
+                
+            },
+            "Control line seen": {
+                field_type: "select",
+                id: "data.show_control_line_seen",
+                options: ["Yes", "No"]
+            },
+            "Result": {
+                field_type: "select",
+                id: "data.show_result",
+                tt_pageStyleClass: "NoKeyboard",
+                options: ["Negative", "Weak positive", "Strong positive"]
+            }
+        }
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    },
+
 
     navPanel: function (content) {
 

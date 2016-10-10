@@ -4919,6 +4919,11 @@ app.post('/save_item', function (req, res) {
                 reverseConsumption(data, res);
 
                 break;
+            case "quality_assurance": 
+
+                console.log("Quality Assurance");
+                
+                break;
 
         }
 
