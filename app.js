@@ -2660,6 +2660,23 @@ app.get('/data/modules.json', function (req, res) {
     res.sendFile(__dirname + '/data/modules.json');
 });
 
+app.get('/month', function (req, res) {
+    
+    var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December","Unknown"];
+
+    var result = "";
+
+    for(var i = 0 ; i < monthList.length ; i++){
+
+        result = result + "<li>"+monthList[i]+"</li>"
+
+    }
+
+    res.send(result);
+
+});
+
 app.get('/nationality_query', function (req, res) {
 
     var url_parts = url.parse(req.url, true);

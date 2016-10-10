@@ -1089,7 +1089,7 @@ var stock = ({
                         td.style.padding = "2px";
 
                         var btnActions = document.createElement("button");
-                        btnActions.style.minWidth = "100px";
+                        btnActions.style.minWidth = "100%";
                         btnActions.style.minHeight = "30px";
                         btnActions.style.fontWeight = "normal";
                         btnActions.innerHTML = " More...";
@@ -1232,11 +1232,11 @@ var stock = ({
 
                             "Relocate In"          : "receiveItemFromFaclity('"+id+"','"+name+"')",
 
-                            "Loss"                 : "loss()",
+                            "Record Kit Losses"    : "lostItems('"+id+"','"+name+"')",
 
-                            "Disposal"             : "dispose()",
+                            "Kits Disposal"        : "centralDisposeItem('"+id+"','"+name+"')",
 
-                            "Not Captures Stock"   : "unCaptured()"
+                            "Not Captures Stock"   : "unCapturedItems('"+id+"','"+name+"')"
             }
 
             var action_keys = Object.keys(actions);
@@ -1564,6 +1564,26 @@ var stock = ({
                                     ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                     limit + "')}, 10); }" ;
 
+            var lotNumberValidate = "";
+
+            var lotNumberValidationMessage = "";
+
+            if(label.trim().toLowerCase().match(/deter/)){
+
+                lotNumberValidate = "^.{9}$";
+
+                lotNumberValidationMessage = "Lot Number should have exactly 9 characters";
+
+            }
+
+            if(label.trim().toLowerCase().match(/gold/)){
+
+                lotNumberValidate = "^.{10}$";
+
+                lotNumberValidationMessage = "Lot Number should have exactly 10 characters"
+
+            }
+
             var form = document.createElement("form");
             form.id = "data";
             form.action = "javascript:submitData()";
@@ -1604,8 +1624,8 @@ var stock = ({
                 field_type: "text",
                 id: "data.batch_number",
                 optional: true,
-                validationRule: "^.{6}$",
-                validationMessage: "Lot Number should have exactly 6 characters"
+                validationRule: lotNumberValidate,
+                validationMessage: lotNumberValidationMessage
             };
 
             fields[expiryLabel] = {
@@ -2280,7 +2300,320 @@ var stock = ({
         stock.navPanel(form.outerHTML);
 
     },
+    lostItems: function (stock_id,label) {
 
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+                if(!data)
+                    var data = {};
+
+                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+                var limit = (json.limit ? json.limit : 1);
+
+                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                        limit + "')}, 10); }" ;
+
+                var form = document.createElement("form");
+                form.id = "data";
+                form.action = "javascript:submitData()";
+                form.style.display = "none";
+
+                var table = document.createElement("table");
+
+                form.appendChild(table);
+
+                var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+                var quantityLabel = (label ? label + ": " : "") + "Quantity Lost (individual item)";
+
+                var dateLabel = (label ? label + ": " : "") + "Date Lost";
+
+                var dispatcherLabel = (label ? label + ": " : "") + "Who Lost Item";
+
+                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+
+                var authorityLabel = (label ? label + ": " : "") + "Who Supervised";
+
+                //var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
+
+                var fields = {
+                    "Datatype": {
+                        field_type: "hidden",
+                        id: "data.datatype",
+                        value: "dispatch"
+                    },
+                    "Stock ID": {
+                        field_type: "hidden",
+                        id: "data.stock_id",
+                        value: stock_id
+                    },
+                    "Destination" :{
+                        field_type: "hidden",
+                        id: "data.dispatch_destination",
+                        value: "Central Lost Kits"
+
+                    }
+                };
+
+                fields[batchLabel] = {
+                    field_type: "text",
+                    id: "data.batch_number",
+                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                };
+
+                fields[quantityLabel] = {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.dispatch_quantity",
+                     tt_onUnload : validation_condition_string
+                };
+
+                fields[dateLabel] = {
+                    field_type: "date",
+                    id: "data.dispatch_datetime"
+                };
+
+                fields[dispatcherLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_dispatched",
+                    value: stock.getCookie("username")
+                };
+
+                fields[receiverLabel] = {
+                    field_type: "text",
+                    id: "data.dispatch_who_received"
+                };
+
+                fields[authorityLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_authorised",
+                    value: stock.getCookie("username")
+                };
+
+                stock.buildFields(fields, table);
+
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
+
+        });
+
+    },
+
+    unCapturedItems: function (stock_id,label) {
+
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+                if(!data)
+                    var data = {};
+
+                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+                var limit = (json.limit ? json.limit : 1);
+
+                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                        limit + "')}, 10); }" ;
+
+                var form = document.createElement("form");
+                form.id = "data";
+                form.action = "javascript:submitData()";
+                form.style.display = "none";
+
+                var table = document.createElement("table");
+
+                form.appendChild(table);
+
+                var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+                var quantityLabel = (label ? label + ": " : "") + "Quantity not Captured (individual item)";
+
+                var dateLabel = (label ? label + ": " : "") + "Date of Consumption";
+
+                var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+
+                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+
+                var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+
+                //var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
+
+                var fields = {
+                    "Datatype": {
+                        field_type: "hidden",
+                        id: "data.datatype",
+                        value: "dispatch"
+                    },
+                    "Stock ID": {
+                        field_type: "hidden",
+                        id: "data.stock_id",
+                        value: stock_id
+                    },
+                    "Destination" :{
+                        field_type: "hidden",
+                        id: "data.dispatch_destination",
+                        value: "Not captured"
+
+                    }
+                };
+
+                fields[batchLabel] = {
+                    field_type: "text",
+                    id: "data.batch_number",
+                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                };
+
+                fields[quantityLabel] = {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.dispatch_quantity",
+                     tt_onUnload : validation_condition_string
+                };
+
+                fields[dateLabel] = {
+                    field_type: "date",
+                    id: "data.dispatch_datetime"
+                };
+
+                fields[dispatcherLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_dispatched",
+                    value: stock.getCookie("username")
+                };
+
+                fields[receiverLabel] = {
+                    field_type: "text",
+                    id: "data.dispatch_who_received"
+                };
+
+                fields[authorityLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_authorised",
+                    value: stock.getCookie("username")
+                };
+
+                stock.buildFields(fields, table);
+
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
+
+        });
+
+    },
+    centralDisposeItem: function (stock_id,label) {
+
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+                if(!data)
+                    var data = {};
+
+                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+                var limit = (json.limit ? json.limit : 1);
+
+                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                        limit + "')}, 10); }" ;
+
+                var form = document.createElement("form");
+                form.id = "data";
+                form.action = "javascript:submitData()";
+                form.style.display = "none";
+
+                var table = document.createElement("table");
+
+                form.appendChild(table);
+
+                var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+                var quantityLabel = (label ? label + ": " : "") + "Quantity to Dispose (individual item)";
+
+                var dateLabel = (label ? label + ": " : "") + "Date Lost";
+
+                var dispatcherLabel = (label ? label + ": " : "") + "Who Disposed Item";
+
+                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+
+                var authorityLabel = (label ? label + ": " : "") + "Who Authorised Disposal";
+
+                //var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
+
+                var fields = {
+                    "Datatype": {
+                        field_type: "hidden",
+                        id: "data.datatype",
+                        value: "dispatch"
+                    },
+                    "Stock ID": {
+                        field_type: "hidden",
+                        id: "data.stock_id",
+                        value: stock_id
+                    },
+                    "Destination" :{
+                        field_type: "hidden",
+                        id: "data.dispatch_destination",
+                        value: "Central Disposal"
+
+                    }
+                };
+
+                fields[batchLabel] = {
+                    field_type: "text",
+                    id: "data.batch_number",
+                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                };
+
+                fields[quantityLabel] = {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.dispatch_quantity",
+                     tt_onUnload : validation_condition_string
+                };
+
+                fields[dateLabel] = {
+                    field_type: "date",
+                    id: "data.dispatch_datetime"
+                };
+
+                fields[dispatcherLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_dispatched",
+                    value: stock.getCookie("username")
+                };
+
+                fields[receiverLabel] = {
+                    field_type: "text",
+                    id: "data.dispatch_who_received"
+                };
+
+                fields[authorityLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_authorised",
+                    value: stock.getCookie("username")
+                };
+
+                stock.buildFields(fields, table);
+
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
+
+        });
+
+    }
+    ,
     dispatchItem: function (stock_id, label) {
 
          stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {

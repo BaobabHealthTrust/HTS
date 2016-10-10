@@ -4713,3 +4713,350 @@ function setTestKits(){
     }
 
 }
+
+function getMonthList(){
+
+    var ul = __$("options");
+
+    //ul.innerHTML = "";
+
+    var windowHeight = window.innerHeight;
+
+
+    ul.style.height = (0.65 * windowHeight) + "px";
+
+    ul.style.overflowY = "scroll";
+
+
+
+    /*var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December","Unknown"];
+
+    for (var i = 0 ; i < monthList.length ; i++){
+
+        var li  = document.createElement("li");
+
+        ul.appendChild(li);
+
+        li.id = i;
+
+        if(i % 2 == 0){
+
+            li.className = "even"
+
+            li.setAttribute("tag","even");
+
+        }else{
+
+            li.className = "odd"
+
+            li.setAttribute("tag","odd")
+
+        }
+
+        li.setAttribute("tstvalue",monthList[i]);
+
+        li.setAttribute("onclick", "null; updateTouchscreenInputForSelect(this); ");
+
+        li.innerHTML = monthList[i];
+
+
+
+    }
+
+    //ul.innerHTML = "";*/
+
+}
+
+function monthDaysKeyPad(){
+
+    var keyboard = __$("keyboard");
+
+    __$("inputFrame"+tstCurrentPage).style.height = "50px";
+
+    keyboard.innerHTML = "";
+
+    var keyPadDiv = document.createElement("div");
+
+    keyPadDiv.style.width = "40%";
+
+    keyPadDiv.style.float = "left";
+
+    keyboard.appendChild(keyPadDiv);
+
+    var months = {
+                    "January"   : 0,
+                   "February"   : 1 ,
+                    "March"     : 2,
+                    "April"     : 3,
+                    "May"       : 4,
+                    "June"      : 5,
+                    "Juy"       : 6,
+                    "August"    : 7,
+                    "September" : 8,
+                    "October"   : 9,
+                    "November"  : 10,
+                    "December"  : 11
+        }
+
+    var year = __$("birthyear").value;
+
+    var month = __$("birthmonth").value;
+
+    var nextMonthNumber = parseInt(months[month]) + 2;
+
+    var date = new Date(year + "-" + padZeros(nextMonthNumber,2)+"-"+"01");
+
+    date.setDate(date.getDate()-1);
+
+    var lateDayOfSelectedMonth = date.getDate()
+
+    var table = document.createElement("table");
+
+    table.style.width = "100%";
+
+    keyPadDiv.appendChild(table);
+
+
+    var tr ;
+
+    for (var i = 1 ; i <= 31 ; i++){
+
+        if((i-1) % 7 == 0){
+
+            tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+        }
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+
+        td.appendChild(button);
+        
+
+        if(i <= 9){
+
+            button.innerHTML = "0"+i;
+
+            button.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ="0"+'+i);
+
+        }else{
+
+            button.innerHTML = i ;
+
+             button.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ='+i);
+
+        }
+
+        if(i > parseInt(lateDayOfSelectedMonth)){
+
+            button.className = "gray";
+
+            button.removeAttribute("onclick");
+        }
+        else{
+
+            button.className = "blue";
+
+        }
+
+    }
+
+    var unknownButton = document.createElement("button");
+
+    unknownButton.innerHTML = "Unknown";
+
+    unknownButton.style.float = "right";
+
+    unknownButton.style.marginTop = "10%";
+
+    unknownButton.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ="Unknown"');
+
+    keyboard.appendChild(unknownButton);
+
+}
+
+function setAgeValues(){
+
+    var birthyear = __$("birthyear").value;
+
+    var birthmonth = __$('birthmonth').value;
+
+    var birthday = __$("birthday").value ;
+
+    if(birthday.trim().toLowerCase() == "unknown"){
+
+         birthday = "01";
+
+    }
+
+
+     var months = {
+                    "January"   : 0,
+                   "February"   : 1 ,
+                    "March"     : 2,
+                    "April"     : 3,
+                    "May"       : 4,
+                    "June"      : 5,
+                    "Juy"       : 6,
+                    "August"    : 7,
+                    "September" : 8,
+                    "October"   : 9,
+                    "November"  : 10,
+                    "December"  : 11
+        }
+
+        var birthdate = birthyear +"-"+ padZeros(parseInt(months[birthmonth]) + 1 , 2)+"-" + padZeros(parseInt(birthday),2);
+
+        __$("birthdate").value = birthdate;
+
+       
+
+}
+
+function validateMaxMinYear(){
+
+    var today = new Date();
+
+    if(parseInt(__$("birthyear").value) < (parseInt(today.getFullYear())-120)){
+
+        var message = "Year entered is less than "+(parseInt(today.getFullYear())-120);
+
+        alert(message);
+
+        setTimeout(function(){
+
+            gotoPage(tstCurrentPage - 1, false, true);
+
+            window.parent.dashboard.showMsg(message,"Year of Birth Validation")
+
+        },10);
+
+    }
+
+    if(parseInt(__$("birthyear").value) > parseInt(today.getFullYear())){
+
+        var message = "Year entered is greater than "+parseInt(today.getFullYear());
+
+         setTimeout(function(){
+
+            gotoPage(tstCurrentPage - 1, false, true);
+
+            window.parent.dashboard.showMsg(message,"Year of Birth Validation")
+
+        },10);
+
+    }
+
+}
+
+function validateAndProcessMonth(){
+
+   var year = __$("birthyear").value 
+
+   var month = __$('birthmonth').value;
+
+   if(month.trim().toLowerCase() == "unknown"){
+
+
+        var birthdate = __$("birthdate");
+
+        var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
+                    __$(birthdate.getAttribute("estimate_field")) : undefined);
+
+        if(estimate_field){
+
+            estimate_field.value = 1
+
+        }
+
+        var estimateBirthDate = year+"-06-01";
+
+        birthdate.value = estimateBirthDate
+
+   }else{
+
+     var months = {
+                    "January"   : 0,
+                   "February"   : 1 ,
+                    "March"     : 2,
+                    "April"     : 3,
+                    "May"       : 4,
+                    "June"      : 5,
+                    "Juy"       : 6,
+                    "August"    : 7,
+                    "September" : 8,
+                    "October"   : 9,
+                    "November"  : 10,
+                    "December"  : 11
+        }
+
+        var today = new Date();
+
+
+
+        if(parseInt(year) == parseInt(today.getFullYear()) && parseInt(months[month]) > parseInt(today.getMonth())){
+
+            var message = "Month selected is greater than Current Month";
+
+            setTimeout(function(){
+
+                gotoPage(tstCurrentPage - 1, false, true);
+
+                window.parent.dashboard.showMsg(message,"Month of Birth Validation")
+
+            },10);
+
+
+        }
+
+   }
+
+}
+
+function setEstimatedAgeValue(){
+
+    var ageEstimateValue = __$("age_estimate").value;
+
+    if(parseInt(ageEstimateValue) <  1 || parseInt(ageEstimateValue) > 150){
+
+            var message = "Invalid Age Esimate";
+
+            setTimeout(function(){
+
+                gotoPage(tstCurrentPage - 1, false, true);
+
+                window.parent.dashboard.showMsg(message,"Age Esimate Validation")
+
+            },10);
+
+    }
+
+    var birthdate = __$("birthdate");
+
+    var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
+                __$(birthdate.getAttribute("estimate_field")) : undefined);
+
+    if(estimate_field){
+
+        estimate_field.value = 1
+
+    }
+
+    var today = new  Date();
+
+    var currentYear = today.getFullYear();
+
+    var estimateYear = parseInt(currentYear) - parseInt(ageEstimateValue);
+
+    var estimateBirthDate = estimateYear +"-06-01";
+
+    birthdate.value = estimateBirthDate;
+
+
+}
