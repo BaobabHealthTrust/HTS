@@ -3083,9 +3083,8 @@ var stock = ({
                                "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
             },
             "Teskit Lot Number": {
-                field_type: "select",
-                id: "data.test_kit_lot_number",
-                tt_pageStyleClass: "NoKeyboard"
+                field_type: "text",
+                id: "data.test_kit_lot_number"
 
 
             },
@@ -3106,8 +3105,8 @@ var stock = ({
                 condition: "__$('data.sample_type').value.trim().toLowerCase().match(/dts/i)",
                 ajaxURL : "/stock_items?category=Dts&description=Quality Assurance&item_name=",
                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.serum_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
-                               " __$('data.serum_lot_number').setAttribute('condition',true)}"
+                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
+                               " __$('data.dts_lot_number').setAttribute('condition',true)}"
 
             },
             "Serum Lot Number": {
@@ -3119,7 +3118,7 @@ var stock = ({
               "DTS Lot Number": {
                 field_type: "select",
                 id: "data.dts_lot_number",
-                 condition : false
+                condition : false
                 
             },
             "Control line seen": {
