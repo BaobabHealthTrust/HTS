@@ -3043,7 +3043,7 @@ var stock = ({
 
     },
 
-    showItem: function (label) {
+    qualityControlTest: function (label) {
 
         stock.setStockLimit();
 
@@ -3069,57 +3069,67 @@ var stock = ({
             },
             "Choose Sample Type for QC Tests": {
                 field_type: "select",
-                id: "data.show_choose_sample_type",
+                id: "data.sample_type",
                 tt_pageStyleClass: "NoKeyboard",
                 options: ["Serum", "DTS"]
             },
-            "Select Test kit type": {
+            "Select Test kit name": {
                 field_type: "select",
-                id: "data.show_test_kit_type",
+                id: "data.test_kit_name",
                 tt_pageStyleClass: "NoKeyboard",
-                options: ["Determine", "UniGold"]
+                ajaxURL : '/stock_items?category=Test Kits&item_name=',
+                tt_onUnload : "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){"+
+                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+kit_name+'&batch=');"+
+                               "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
             },
-            "Select Serum type": {
+            "Teskit Lot Number": {
                 field_type: "select",
-                id: "data.show_serum_type",
-                tt_pageStyleClass: "NoKeyboard",
-                condition: "__$('data.show_choose_sample_type').value.trim().toLowerCase().match(/serum/i)",
-                ajaxURL : "/stock_items?category=Serum&description=Quality Assurance&item_name=",
-                tt_onUnload : "var serum_name = __$('touchscreenInput' + tstCurrentPage).value; if(serum_name){"+
-                               "__$('data.show_search_serum').setAttribute('ajaxURL','/available_batches?item_name='+serum_name+'&batch=');"+
-                               "__$('data.show_search_serum').setAttribute('condition',true)}"
-            },
-            "Select DTS type": {
-                field_type: "select",
-                id: "data.show_dts_type",
-                tt_pageStyleClass: "NoKeyboard",
-                condition: "__$('data.show_choose_sample_type').value.trim().toLowerCase().match(/dts/i)",
-                ajaxURL : "/stock_items?category=Dts&description=Quality Assurance&item_name=",
-                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.show_search_dts').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
-                               " __$('data.show_search_dts').setAttribute('condition',true)}"
+                id: "data.test_kit_lot_number",
+                tt_pageStyleClass: "NoKeyboard"
+
 
             },
-            "Search serum": {
+            "Select Serum Name": {
                 field_type: "select",
-                id: "data.show_search_serum",
+                id: "data.serum_name",
+                tt_pageStyleClass: "NoKeyboard",
+                condition: "__$('data.sample_type').value.trim().toLowerCase().match(/serum/i)",
+                ajaxURL : "/stock_items?category=Serum&description=Quality Assurance&item_name=",
+                tt_onUnload : "var serum_name = __$('touchscreenInput' + tstCurrentPage).value; if(serum_name){"+
+                               "__$('data.serum_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+serum_name+'&batch=');"+
+                               "__$('data.serum_lot_number').setAttribute('condition',true)}"
+            },
+            "Select DTS Name": {
+                field_type: "select",
+                id: "data.dts_name",
+                tt_pageStyleClass: "NoKeyboard",
+                condition: "__$('data.sample_type').value.trim().toLowerCase().match(/dts/i)",
+                ajaxURL : "/stock_items?category=Dts&description=Quality Assurance&item_name=",
+                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
+                               "__$('data.serum_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
+                               " __$('data.serum_lot_number').setAttribute('condition',true)}"
+
+            },
+            "Serum Lot Number": {
+                field_type: "select",
+                id: "data.serum_lot_number",
                 condition : false
                 
             },
-              "Search DTS": {
+              "DTS Lot Number": {
                 field_type: "select",
-                id: "data.show_search_dts",
+                id: "data.dts_lot_number",
                  condition : false
                 
             },
             "Control line seen": {
                 field_type: "select",
-                id: "data.show_control_line_seen",
+                id: "data.control_line_seen",
                 options: ["Yes", "No"]
             },
             "Result": {
                 field_type: "select",
-                id: "data.show_result",
+                id: "data.result",
                 tt_pageStyleClass: "NoKeyboard",
                 options: ["Negative", "Weak positive", "Strong positive"]
             }
