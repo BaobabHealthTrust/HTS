@@ -2453,6 +2453,16 @@ function saveBatch(data, res) {
 
 }
 
+function saveQualityTes(data, res){
+
+    if(data.datatype.trom() == "quality_assurance"){
+
+
+
+    }
+
+}
+
 function loggedIn(token, callback) {
 
     var sql = "SELECT user_property.user_id, username FROM user_property LEFT OUTER JOIN users ON users.user_id = " +
@@ -4938,7 +4948,7 @@ app.post('/save_item', function (req, res) {
                 break;
             case "quality_assurance": 
 
-                console.log("Quality Assurance");
+                saveQualityTes(data, res);
                 
                 break;
 
