@@ -2453,7 +2453,7 @@ function saveBatch(data, res) {
 
 }
 
-function saveQualityTes(data, res){
+function saveQualityTest(data, res){
 
     if(data.datatype.trim() == "quality_assurance"){
 
@@ -2477,6 +2477,12 @@ function saveQualityTes(data, res){
         }
 
         console.log(sql);
+
+        queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Quality test Done!"});
+
+        });
 
     }
 
@@ -4967,7 +4973,7 @@ app.post('/save_item', function (req, res) {
                 break;
             case "quality_assurance": 
 
-                saveQualityTes(data, res);
+                saveQualityTest(data, res);
                 
                 break;
 
