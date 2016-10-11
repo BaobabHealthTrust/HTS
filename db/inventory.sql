@@ -454,8 +454,8 @@ CREATE TABLE `quality_assurance` (
   `voided_date` varchar(255) NOT NULL,
   `voided_by` varchar(255) NOT NULL,
   `tested_by` varchar(255) NOT NULL,
-  `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `changed_by` varchar(255) NOT NULL,
   PRIMARY KEY (`quality_assurance_test_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

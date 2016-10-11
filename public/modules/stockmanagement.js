@@ -1444,7 +1444,7 @@ var stock = ({
 
         var li = document.createElement("li");
 
-        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>Quality Assurance</li>";
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>Quality Control</li>";
 
         ul.appendChild(li);
 
@@ -3094,7 +3094,7 @@ var stock = ({
                 id: "data.serum_name",
                 tt_pageStyleClass: "NoKeyboard",
                 condition: "__$('data.sample_type').value.trim().toLowerCase().match(/serum/i)",
-                ajaxURL : "/stock_items?category=Serum&description=Quality Assurance&item_name=",
+                ajaxURL : "/stock_items?category=Serum&description=Quality Control&item_name=",
                 tt_onUnload : "var serum_name = __$('touchscreenInput' + tstCurrentPage).value; if(serum_name){"+
                                "__$('data.serum_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+serum_name+'&batch=');"+
                                "__$('data.serum_lot_number').setAttribute('condition',true)}"
@@ -3104,7 +3104,7 @@ var stock = ({
                 id: "data.dts_name",
                 tt_pageStyleClass: "NoKeyboard",
                 condition: "__$('data.sample_type').value.trim().toLowerCase().match(/dts/i)",
-                ajaxURL : "/stock_items?category=Dts&description=Quality Assurance&item_name=",
+                ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
                                "__$('data.serum_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
                                " __$('data.serum_lot_number').setAttribute('condition',true)}"
