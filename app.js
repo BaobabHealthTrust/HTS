@@ -2453,6 +2453,41 @@ function saveBatch(data, res) {
 
 }
 
+function saveQualityTest(data, res){
+
+    if(data.datatype.trim() == "quality_assurance"){
+
+         var sql = "";
+
+        if(data.sample_type.trim().toLowerCase() == "serum"){
+
+            sql = "INSERT INTO quality_assurance (sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
+                      ",control_line_seen,quality_test_result,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
+                      "' , '"+ data.test_kit_lot_number + "' , '"+ data.serum_name + "' , '"+ data.serum_lot_number + 
+                      "' , '"+ data.control_line_seen + "' , '"+ data.result + "',CURRENT_TIMESTAMP())";
+
+        }
+        else if(data.sample_type.trim().toLowerCase() == "dts"){
+
+            sql = "INSERT INTO quality_assurance (sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
+                      ",control_line_seen,quality_test_result,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
+                      "' , '"+ data.test_kit_lot_number + "' , '"+ data.dts_name + "' , '"+ data.dts_lot_number + 
+                      "' , '"+ data.control_line_seen + "' , '"+ data.result + "',CURRENT_TIMESTAMP())";
+
+        }
+
+        console.log(sql);
+
+        queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Quality test Done!"});
+
+        });
+
+    }
+
+}
+
 function loggedIn(token, callback) {
 
     var sql = "SELECT user_property.user_id, username FROM user_property LEFT OUTER JOIN users ON users.user_id = " +
@@ -4938,7 +4973,7 @@ app.post('/save_item', function (req, res) {
                 break;
             case "quality_assurance": 
 
-                console.log("Quality Assurance");
+                saveQualityTest(data, res);
                 
                 break;
 
