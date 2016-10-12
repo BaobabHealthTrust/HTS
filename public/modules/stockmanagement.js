@@ -1564,25 +1564,34 @@ var stock = ({
                                     ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                     limit + "')}, 10); }" ;
 
-            var lotNumberValidate = "";
+
+            var lotNumberCharacter = "> 0";
 
             var lotNumberValidationMessage = "";
 
             if(label.trim().toLowerCase().match(/deter/)){
 
-                lotNumberValidate = "^.{9}$";
+                lotNumberCharacter = "==9"
 
-                lotNumberValidationMessage = "Lot Number should have exactly 9 characters";
+                lotNumberValidationMessage = "Lot Number of Determine should have exactly 9 characters";
 
             }
 
             if(label.trim().toLowerCase().match(/gold/)){
 
-                lotNumberValidate = "^.{10}$";
+                lotNumberCharacter = "==10"
 
-                lotNumberValidationMessage = "Lot Number should have exactly 10 characters"
+                 lotNumberValidationMessage = "Lot Number of Uni Gold should have exactly 10 characters";
+
 
             }
+
+            var lotNumberOnUnLoad = " var lot_number = __$('touchscreenInput'+tstCurrentPage).value ;"+
+                                    "if(lot_number){ var indexofBrace = lot_number.indexOf('(');"+
+                                    " if(indexofBrace >= 0){ lot_number = lot_number.substr(0,indexofBrace);"+
+                                    " __$('data.batch_number').value = lot_number; __$('data.expiry_date').setAttribute('condition',false) }else{ if(lot_number.length"+lotNumberCharacter
+                                    +"){ __$('data.batch_number').value = lot_number; }else{ setTimeout(function(){"+
+                                    "gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('"+lotNumberValidationMessage+"')},10)}}}";
 
             var form = document.createElement("form");
             form.id = "data";
@@ -1624,8 +1633,7 @@ var stock = ({
                 field_type: "text",
                 id: "data.batch_number",
                 optional: true,
-                validationRule: lotNumberValidate,
-                validationMessage: lotNumberValidationMessage
+                tt_onUnload: lotNumberOnUnLoad
             };
 
             fields[expiryLabel] = {
@@ -1670,25 +1678,34 @@ var stock = ({
                                     ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                     limit + "')}, 10); }" ;
 
-            var lotNumberValidate = "";
+            var lotNumberCharacter = "> 0";
 
             var lotNumberValidationMessage = "";
 
             if(label.trim().toLowerCase().match(/deter/)){
 
-                lotNumberValidate = "^.{9}$";
+                lotNumberCharacter = "==9"
 
-                lotNumberValidationMessage = "Lot Number should have exactly 9 characters";
+                lotNumberValidationMessage = "Lot Number of Determine should have exactly 9 characters";
 
             }
 
             if(label.trim().toLowerCase().match(/gold/)){
 
-                lotNumberValidate = "^.{10}$";
 
-                lotNumberValidationMessage = "Lot Number should have exactly 10 characters"
+                lotNumberCharacter = "==10"
+
+                 lotNumberValidationMessage = "Lot Number of Uni Gold should have exactly 10 characters";
+
 
             }
+
+            var lotNumberOnUnLoad = " var lot_number = __$('touchscreenInput'+tstCurrentPage).value ;"+
+                                    "if(lot_number){ var indexofBrace = lot_number.indexOf('(');"+
+                                    " if(indexofBrace >= 0){ lot_number = lot_number.substr(0,indexofBrace);"+
+                                    " __$('data.batch_number').value = lot_number; __$('data.expiry_date').setAttribute('condition',false) }else{ if(lot_number.length"+lotNumberCharacter
+                                    +"){ __$('data.batch_number').value = lot_number; }else{ setTimeout(function(){"+
+                                    "gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('"+lotNumberValidationMessage+"')},10)}}}";
 
             var form = document.createElement("form");
             form.id = "data";
@@ -1726,8 +1743,7 @@ var stock = ({
                 field_type: "text",
                 id: "data.batch_number",
                 optional: true,
-                validationRule: lotNumberValidate,
-                validationMessage: lotNumberValidationMessage
+               tt_onUnload: lotNumberOnUnLoad
             };
 
             fields[expiryLabel] = {
@@ -2331,9 +2347,11 @@ var stock = ({
 
                 var limit = (json.limit ? json.limit : 1);
 
-                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
-                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
-                                        limit + "')}, 10); }" ;
+                var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected'+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
 
                 var form = document.createElement("form");
                 form.id = "data";
@@ -2381,7 +2399,7 @@ var stock = ({
                     ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
                     tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                         "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                        "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
                 };
 
                 fields[quantityLabel] = {
@@ -2422,104 +2440,119 @@ var stock = ({
 
         stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
 
-                if(!data)
-                    var data = {};
+            if(!data)
+                var data = {};
 
-                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
-                var limit = (json.limit ? json.limit : 1);
+            var limit = (json.limit ? json.limit : 1);
 
-                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
-                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
-                                        limit + "')}, 10); }" ;
+            var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                    ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                    limit + "')}, 10); }" ;
 
-                var form = document.createElement("form");
-                form.id = "data";
-                form.action = "javascript:submitData()";
-                form.style.display = "none";
+            var lotNumberCharacter = "> 0";
 
-                var table = document.createElement("table");
+            var lotNumberValidationMessage = "";
 
-                form.appendChild(table);
+            if(label.trim().toLowerCase().match(/deter/)){
 
-                var batchLabel = (label ? label + ": " : "") + "Lot Number";
+                lotNumberCharacter = "==9"
 
-                var quantityLabel = (label ? label + ": " : "") + "Quantity not Captured (individual item)";
+                lotNumberValidationMessage = "Lot Number of Determine should have exactly 9 characters";
 
-                var dateLabel = (label ? label + ": " : "") + "Date of Consumption";
+            }
 
-                var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+            if(label.trim().toLowerCase().match(/gold/)){
 
-                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+                lotNumberCharacter = "==10"
 
-                var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+                 lotNumberValidationMessage = "Lot Number of Uni Gold should have exactly 10 characters";
 
-                //var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
 
-                var fields = {
-                    "Datatype": {
-                        field_type: "hidden",
-                        id: "data.datatype",
-                        value: "dispatch"
-                    },
-                    "Stock ID": {
-                        field_type: "hidden",
-                        id: "data.stock_id",
-                        value: stock_id
-                    },
-                    "Destination" :{
-                        field_type: "hidden",
-                        id: "data.dispatch_destination",
-                        value: "Not captured"
+            }
 
-                    }
-                };
+            var lotNumberOnUnLoad = " var lot_number = __$('touchscreenInput'+tstCurrentPage).value ;"+
+                                    "if(lot_number){ var indexofBrace = lot_number.indexOf('(');"+
+                                    " if(indexofBrace >= 0){ lot_number = lot_number.substr(0,indexofBrace);"+
+                                    " __$('data.batch_number').value = lot_number; __$('data.expiry_date').setAttribute('condition',false) }else{ if(lot_number.length"+lotNumberCharacter
+                                    +"){ __$('data.batch_number').value = lot_number; }else{ setTimeout(function(){"+
+                                    "gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('"+lotNumberValidationMessage+"')},10)}}}";
 
-                fields[batchLabel] = {
-                    field_type: "text",
-                    id: "data.batch_number",
-                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
-                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
-                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
-                };
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
 
-                fields[quantityLabel] = {
-                    field_type: "number",
-                    tt_pageStyleClass: "NumbersOnly",
-                    id: "data.dispatch_quantity",
-                     tt_onUnload : validation_condition_string
-                };
+            var table = document.createElement("table");
 
-                fields[dateLabel] = {
-                    field_type: "date",
-                    id: "data.dispatch_datetime"
-                };
+            form.appendChild(table);
 
-                fields[dispatcherLabel] = {
+            var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+            var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+
+            var receivedLabel = (label ? label + ": " : "") + "Un Captured Quantity  (individual items)";
+
+            var dateLabel = (label ? label + ": " : "") + "Date Captured";
+
+            var fields = {
+                "Datatype": {
                     field_type: "hidden",
-                    id: "data.dispatch_who_dispatched",
-                    value: stock.getCookie("username")
-                };
-
-                fields[receiverLabel] = {
-                    field_type: "text",
-                    id: "data.dispatch_who_received"
-                };
-
-                fields[authorityLabel] = {
+                    id: "data.datatype",
+                    value: "receive"
+                },
+                "Stock ID": {
                     field_type: "hidden",
-                    id: "data.dispatch_who_authorised",
-                    value: stock.getCookie("username")
-                };
+                    id: "data.stock_id",
+                    value: stock_id
+                },
+                "Origin Facility":{
+                    field_type: "hidden",
+                    id: "data.origin_facility",
+                    value: "Not Captured"
 
-                stock.buildFields(fields, table);
+                },
+                "Batch Number" :{
+                        field_type: "hidden",
+                        id: "data.batch_number"
+                }
+            };
 
-                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+            fields[batchLabel] = {
+                field_type: "text",
+                id: "data.lot_number",
+                ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                allowFreeText : true,
+                optional: true,
+                tt_onUnload: lotNumberOnUnLoad 
+            };
 
-                stock.navPanel(form.outerHTML + script);
+            fields[expiryLabel] = {
+                field_type: "date",
+                id: "data.expiry_date",
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
+                optional: true
+            };
 
-        });
+            fields[receivedLabel] = {
+                field_type: "number",
+                tt_pageStyleClass: "NumbersOnly",
+                id: "data.receipt_quantity",
+                tt_onUnload: validation_condition_string             
+            };
+
+            fields[dateLabel] = {
+                field_type: "date",
+                id: "data.receipt_datetime",
+                field_type: "hidden"
+            };
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+
+        })
 
     },
     centralDisposeItem: function (stock_id,label) {
@@ -2533,9 +2566,11 @@ var stock = ({
 
                 var limit = (json.limit ? json.limit : 1);
 
-                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
-                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
-                                        limit + "')}, 10); }" ;
+                var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected'+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
 
                 var form = document.createElement("form");
                 form.id = "data";
@@ -2585,7 +2620,7 @@ var stock = ({
                     ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
                     tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                         "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                        "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
                 };
 
                 fields[quantityLabel] = {
@@ -2638,9 +2673,11 @@ var stock = ({
 
             var limit = (json.limit ? json.limit : 1);
 
-            var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
-                                    ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
-                                    limit + "')}, 10); }" ;
+            var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected('+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
 
             var form = document.createElement("form");
             form.id = "data";
@@ -2685,7 +2722,7 @@ var stock = ({
                 tt_onLoad:"window.parent.stock.highlighteFirst()",
                 tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                     "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                    "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                    "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
             };
 
             fields[quantityLabel] = {
@@ -2743,9 +2780,11 @@ var stock = ({
 
                 var limit = (json.limit ? json.limit : 1);
 
-                var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
-                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
-                                        limit + "')}, 10); }" ;
+                var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected'+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
 
                 var form = document.createElement("form");
                 form.id = "data";
@@ -2789,7 +2828,7 @@ var stock = ({
                     ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
                     tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                         "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                        "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
+                        "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
                 };
 
                 fields[quantityLabel] = {
