@@ -1,1 +1,1 @@
-{"basePath":"http://192.168.18.242:3014","modulesPath":"/config/landing.modules.json","barcodePath":"/patient/","savePath":"/save_other","dummyPatientCreatePath":"/save_dummy_patient","facilityPath":"/facility"}
+{"basePath":"http://192.168.6.168:3014","modulesPath":"/config/landing.modules.json","barcodePath":"/patient/","savePath":"/save_other","dummyPatientCreatePath":"/save_dummy_patient","facilityPath":"/facility"}

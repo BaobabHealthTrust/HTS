@@ -3847,6 +3847,412 @@ function  validateAppointment(){
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var currentRange;
+var target = "duration_ago";
+
+
+function showTimeSinceLastDate() {
+
+        parent.innerHTML = "";
+
+        if (__$("nextButton")) {
+
+            var initNavLogic = __$("nextButton").onmousedown;
+
+            __$("nextButton").className = __$("nextButton").className.replace(/green/i, "gray");
+
+            __$("nextButton").onmousedown = function () {
+
+                if (__$("nextButton").className.match(/gray/i))
+                    return;
+
+                if (String(typeof initNavLogic).toLowerCase() == "function")
+                    initNavLogic();
+
+            }
+
+        }
+
+        if(__$("backButton")) {
+
+            var oldCallback = __$("backButton").onmousedown;
+
+            __$("backButton").onmousedown = function() {
+
+                if(__$('nextButton'))
+                    __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+
+                oldCallback();
+
+            }
+
+        }
+
+        var lt = document.getElementById("inputFrame5");
+        var div = document.createElement("div");
+        div.style.width = "100%";
+        div.style.border = "1px solid #ccc";
+        div.style.height = "calc(100vh - 175px)";
+        div.style.overflow = "hidden";
+
+        lt.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.cellPadding = "10";
+
+        div.appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.fontSize = "2em";
+        td.style.borderBottom = "1px solid #ccc";
+        td.colSpan = 2;
+        td.innerHTML = "Duration ago";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.width = "40%";
+        td.style.height = "calc(100vh - 173px)";
+        td.style.verticalAlign = "top";
+        td.style.borderRight = "1px dotted #ccc";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        var ul = document.createElement("ul");
+        ul.style.listStyle = "none";
+        ul.style.padding = "0px";
+
+        td.appendChild(ul);
+
+        var durations = ["Years", "Months", "Weeks", "Days"];
+
+        for(var i = 0; i < durations.length; i++) {
+
+            var duration = durations[i];
+
+            var li = document.createElement("li");
+            li.style.padding = "10px";
+            li.style.fontSize = "2em";
+            li.style.borderBottom = "1px dotted #ccc";
+            li.id = duration;
+
+            li.onclick = function() {
+
+                updateRange(this.id);
+
+            }
+
+            ul.appendChild(li);
+
+            var liTable = document.createElement("table");
+            liTable.width = "100%";
+            liTable.style.fontSize = "1.1em";
+
+            li.appendChild(liTable);
+
+            var liTr = document.createElement("tr");
+
+            liTable.appendChild(liTr);
+
+            var liTd = document.createElement("td");
+            liTd.innerHTML = duration;
+
+            liTr.appendChild(liTd);
+
+            var liTd = document.createElement("td");
+            liTd.style.textAlign = "right";
+
+            liTr.appendChild(liTd);
+
+            var img = document.createElement("img");
+            img.setAttribute("src", "touchscreentoolkit/lib/images/unchecked.png");
+            img.height = "40";
+            img.id = "img" + duration;
+
+            liTd.appendChild(img);
+
+        }
+
+        var td = document.createElement("td");
+        td.style.width = "60%";
+        td.style.fontSize = "2.2em";
+        td.id = "lblDuration";
+        td.align = "center";
+        td.innerHTML = "How many years ago?";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.padding = "0px";
+
+        tr.appendChild(td);
+
+        var input = document.createElement("input");
+        input.style.fontSize = "2.5em";
+        input.style.border = "1px #ccc solid";
+        input.style.padding = "10px";
+        input.style.width = "100%";
+        input.style.backgroundColor = "#eee";
+        input.style.textAlign = "center";
+        input.id = "duration";
+        input.type = "text";
+        input.value = "";
+
+        td.appendChild(input);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.verticalAlign = "top";
+        td.style.height = "calc(100vh - 320px)";
+        td.id = "numberPad";
+
+        tr.appendChild(td);
+
+        var table = document.createElement("table");
+        table.style.margin = "auto";
+
+        td.appendChild(table);
+
+        var buttons = [[7,8,9], [4,5,6], [1,2,3], ["clear", 0, "del"]];
+
+        for(var i = 0; i < buttons.length; i++) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            for(var j = 0; j < buttons[i].length; j++) {
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                var button = document.createElement("button");
+                button.innerHTML = buttons[i][j];
+                button.className = "click";
+                button.style.minWidth = "100px";
+
+                td.appendChild(button);
+
+            }
+
+        }
+
+        init();
+}
+
+function updateDuration(token) {
+
+    if (!token)
+        return;
+
+    if (token.match(/\d/)) {
+
+        if (__$("duration")) {
+
+            __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+        }
+
+    } else if (token.trim().toLowerCase() == "del") {
+
+        if (__$("duration")) {
+
+            var word = (String(__$("duration").value).trim());
+
+            __$("duration").value = word.substring(0, (word.length - 1));
+
+        }
+
+    } else if (token.trim().toLowerCase() == "clear") {
+
+        if (__$("duration")) {
+
+            __$("duration").value = "";
+
+        }
+
+    }
+
+}
+
+function updateRange(id) {
+
+    if (currentRange) {
+
+        if (__$("img" + currentRange)) {
+
+            __$("img" + currentRange).setAttribute("src", "touchscreentoolkit/lib/images/unchecked.png");
+
+        }
+
+        if (__$(currentRange)) {
+
+            __$(currentRange).style.backgroundColor = "";
+
+        }
+
+    }
+
+    switch (id) {
+
+        case "Years":
+
+            currentRange = "Years";
+
+            break;
+
+        case "Months":
+
+            currentRange = "Months";
+
+            break;
+
+        case "Weeks":
+
+            currentRange = "Weeks";
+
+            break;
+
+        case "Days":
+
+            currentRange = "Days";
+
+            break;
+
+    }
+
+    if (currentRange) {
+
+        if (__$("img" + currentRange)) {
+
+            __$("img" + currentRange).setAttribute("src", "touchscreentoolkit/lib/images/checked.png");
+
+        }
+
+        if (__$(currentRange)) {
+
+            __$(currentRange).style.backgroundColor = "lightblue";
+
+        }
+
+        if (__$("lblDuration")) {
+
+            __$("lblDuration").innerHTML = "How many " + currentRange.trim().toLowerCase() + " ago?";
+
+        }
+
+        updateResult();
+
+    }
+
+}
+
+function updateResult() {
+
+    if (__$("duration") && __$(target) && currentRange) {
+
+        var days = 0;
+
+        var duration = (__$("duration").value.match(/^\d+$/) ? __$("duration").value.trim() : 0);
+
+        switch (currentRange) {
+
+            case "Years":
+
+                days = 365 * parseInt(duration);
+
+                break;
+
+            case "Months":
+
+                days = 30 * parseInt(duration);
+
+                break;
+
+            case "Weeks":
+
+                days = 7 * parseInt(duration);
+
+                break;
+
+            case "Days":
+
+                days = parseInt(duration);
+
+                break;
+
+        }
+
+        __$(target).value = days;
+
+        if(__$("duration").value.trim().length > 0) {
+
+            if(__$('nextButton'))
+                __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+
+        } else {
+
+            if(__$('nextButton'))
+                __$('nextButton').className = __$('nextButton').className.replace(/green/i, 'gray');
+
+        }
+
+    }
+
+}
+
+function init() {
+
+    var buttons = document.getElementsByClassName("click");
+
+    for (var i = 0; i < buttons.length; i++) {
+
+        buttons[i].onclick = function () {
+
+            updateDuration(this.innerHTML.trim());
+            __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+
+
+        }
+
+    }
+
+    setInterval(function () {
+
+        updateResult();
+
+    }, 100);
+
+    if (__$("Years")) {
+
+        __$("Years").click();
+
+    }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 function showAssessmentSummary() {
 
     if (__$("inputFrame" + tstCurrentPage)) {
