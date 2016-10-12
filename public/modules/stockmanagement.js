@@ -989,7 +989,7 @@ var stock = ({
         table.appendChild(tr);
 
         var fields = ["", "Item Name", "Description", "Category", "In Stock", "AMC", "Average Issue/Day",
-            "Receive", "Issue", "Edit", "Delete", "More Operations"];
+            "Receive", "Issue", "Edit", "Delete", "Adjustments"];
         var colSizes = ["30px", "180px", undefined, "150px", "90px", "90px", "90px", "80px", "80px", "80px", "80px",
             "180px"];
 
@@ -1092,7 +1092,7 @@ var stock = ({
                         btnActions.style.minWidth = "100%";
                         btnActions.style.minHeight = "30px";
                         btnActions.style.fontWeight = "normal";
-                        btnActions.innerHTML = " More...";
+                        btnActions.innerHTML = "Adjustments";
                         btnActions.setAttribute("stock_id", stock.stocks[i].stock_id);
                         btnActions.setAttribute("pos", i);
                         btnActions.setAttribute("label", stock.stocks[i][keys[1]]);
@@ -1219,7 +1219,7 @@ var stock = ({
     moreAction: function(id, name){
 
 
-            stock.showMsg("Hello world", "More Inventory Actions");
+            stock.showMsg("Hello world", "Adjustments");
 
             var ok_button = stock.$("ok_button");
 
@@ -1232,11 +1232,11 @@ var stock = ({
 
                             "Relocate In"          : "receiveItemFromFaclity('"+id+"','"+name+"')",
 
-                            "Record Kit Losses"    : "lostItems('"+id+"','"+name+"')",
+                            "Loss"                 : "lostItems('"+id+"','"+name+"')",
 
-                            "Kits Disposal"        : "centralDisposeItem('"+id+"','"+name+"')",
+                            "Disposal"              : "centralDisposeItem('"+id+"','"+name+"')",
 
-                            "Not Captures Stock"   : "unCapturedItems('"+id+"','"+name+"')"
+                            "Not Captured Stock"   : "unCapturedItems('"+id+"','"+name+"')"
             }
 
             var action_keys = Object.keys(actions);
@@ -1670,6 +1670,26 @@ var stock = ({
                                     ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                     limit + "')}, 10); }" ;
 
+            var lotNumberValidate = "";
+
+            var lotNumberValidationMessage = "";
+
+            if(label.trim().toLowerCase().match(/deter/)){
+
+                lotNumberValidate = "^.{9}$";
+
+                lotNumberValidationMessage = "Lot Number should have exactly 9 characters";
+
+            }
+
+            if(label.trim().toLowerCase().match(/gold/)){
+
+                lotNumberValidate = "^.{10}$";
+
+                lotNumberValidationMessage = "Lot Number should have exactly 10 characters"
+
+            }
+
             var form = document.createElement("form");
             form.id = "data";
             form.action = "javascript:submitData()";
@@ -1706,8 +1726,8 @@ var stock = ({
                 field_type: "text",
                 id: "data.batch_number",
                 optional: true,
-                validationRule: "^.{6}$",
-                validationMessage: "Lot Number should have exactly 6 characters"
+                validationRule: lotNumberValidate,
+                validationMessage: lotNumberValidationMessage
             };
 
             fields[expiryLabel] = {
@@ -2328,11 +2348,9 @@ var stock = ({
 
                 var quantityLabel = (label ? label + ": " : "") + "Quantity Lost (individual item)";
 
-                var dateLabel = (label ? label + ": " : "") + "Date Lost";
+                var dateLabel = (label ? label + ": " : "") + "Date of Recording";
 
                 var dispatcherLabel = (label ? label + ": " : "") + "Who Lost Item";
-
-                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
 
                 var authorityLabel = (label ? label + ": " : "") + "Who Supervised";
 
@@ -2382,11 +2400,6 @@ var stock = ({
                     field_type: "hidden",
                     id: "data.dispatch_who_dispatched",
                     value: stock.getCookie("username")
-                };
-
-                fields[receiverLabel] = {
-                    field_type: "text",
-                    id: "data.dispatch_who_received"
                 };
 
                 fields[authorityLabel] = {
@@ -2537,7 +2550,7 @@ var stock = ({
 
                 var quantityLabel = (label ? label + ": " : "") + "Quantity to Dispose (individual item)";
 
-                var dateLabel = (label ? label + ": " : "") + "Date Lost";
+                var dateLabel = (label ? label + ": " : "") + "Date of Recording";
 
                 var dispatcherLabel = (label ? label + ": " : "") + "Who Disposed Item";
 
@@ -3067,13 +3080,32 @@ var stock = ({
                 id: "data.show_id",
                 value: ""
             },
-            "Choose Sample Type for QC Tests": {
-                field_type: "select",
-                id: "data.sample_type",
-                tt_pageStyleClass: "NoKeyboard",
-                options: ["Serum", "DTS"]
+            "Date of QC testing": {
+                field_type: "date",
+                id: "data.qc_testing_date"
             },
-            "Select Test kit name": {
+            "HTS provider ID": {
+                field_type: "text",
+                id: "data.provider_id",
+                allowFreeText: true
+            },
+            "Select DTS Type": {
+                field_type: "select",
+                id: "data.dts_name",
+                tt_pageStyleClass: "NoKeyboard",
+                ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
+                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
+                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
+                               " __$('data.dts_lot_number').setAttribute('condition',true)}"
+
+            },
+              "DTS Lot Number": {
+                field_type: "select",
+                id: "data.dts_lot_number",
+                condition : false
+                
+            },
+            "Select Test kit to evaluate": {
                 field_type: "select",
                 id: "data.test_kit_name",
                 tt_pageStyleClass: "NoKeyboard",
@@ -3085,41 +3117,6 @@ var stock = ({
             "Teskit Lot Number": {
                 field_type: "text",
                 id: "data.test_kit_lot_number"
-
-
-            },
-            "Select Serum Name": {
-                field_type: "select",
-                id: "data.serum_name",
-                tt_pageStyleClass: "NoKeyboard",
-                condition: "__$('data.sample_type').value.trim().toLowerCase().match(/serum/i)",
-                ajaxURL : "/stock_items?category=Serum&description=Quality Control&item_name=",
-                tt_onUnload : "var serum_name = __$('touchscreenInput' + tstCurrentPage).value; if(serum_name){"+
-                               "__$('data.serum_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+serum_name+'&batch=');"+
-                               "__$('data.serum_lot_number').setAttribute('condition',true)}"
-            },
-            "Select DTS Name": {
-                field_type: "select",
-                id: "data.dts_name",
-                tt_pageStyleClass: "NoKeyboard",
-                condition: "__$('data.sample_type').value.trim().toLowerCase().match(/dts/i)",
-                ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
-                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
-                               " __$('data.dts_lot_number').setAttribute('condition',true)}"
-
-            },
-            "Serum Lot Number": {
-                field_type: "select",
-                id: "data.serum_lot_number",
-                condition : false
-                
-            },
-              "DTS Lot Number": {
-                field_type: "select",
-                id: "data.dts_lot_number",
-                condition : false
-                
             },
             "Control line seen": {
                 field_type: "select",
@@ -3131,6 +3128,16 @@ var stock = ({
                 id: "data.result",
                 tt_pageStyleClass: "NoKeyboard",
                 options: ["Negative", "Weak positive", "Strong positive"]
+            },
+            "Interpretation": {
+                field_type: "text",
+                id: "data.interpretation",
+                allowFreeText: true
+            },
+            "Supervisor code": {
+                field_type: "text",
+                id: "data.supervisor_code",
+                allowFreeText: true
             }
         }
 
