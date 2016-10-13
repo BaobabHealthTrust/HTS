@@ -2469,6 +2469,10 @@ function saveBatch(data, res) {
 
 function saveQualityTest(data, res){
 
+    console.log("Quality quality_assurance ///////////////////////////////////////////////////////");
+
+    console.log(data);
+
     if(data.datatype.trim() == "quality_assurance"){
 
          var sql = "";
@@ -2476,17 +2480,17 @@ function saveQualityTest(data, res){
         if(data.sample_type.trim().toLowerCase() == "serum"){
 
             sql = "INSERT INTO quality_assurance (sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
-                      ",control_line_seen,quality_test_result,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
+                      ",control_line_seen,quality_test_result,supervisir_code,interpretation,provider_id,outcome,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
                       "' , '"+ data.test_kit_lot_number + "' , '"+ data.serum_name + "' , '"+ data.serum_lot_number + 
-                      "' , '"+ data.control_line_seen + "' , '"+ data.result + "',CURRENT_TIMESTAMP())";
+                      "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome +  "',CURRENT_TIMESTAMP())";
 
         }
         else if(data.sample_type.trim().toLowerCase() == "dts"){
 
             sql = "INSERT INTO quality_assurance (sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
-                      ",control_line_seen,quality_test_result,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
+                      ",control_line_seen,quality_test_result,supervisor_code,interpretation,provider_id,outcome,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
                       "' , '"+ data.test_kit_lot_number + "' , '"+ data.dts_name + "' , '"+ data.dts_lot_number + 
-                      "' , '"+ data.control_line_seen + "' , '"+ data.result + "',CURRENT_TIMESTAMP())";
+                      "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome + "',CURRENT_TIMESTAMP())";
 
         }
 

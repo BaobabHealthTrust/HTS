@@ -3127,6 +3127,9 @@ var stock = ({
 
         form.appendChild(table);
 
+        var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
+                             " outcome  = 'Acceptable'} __$('data.outcome').value  = outcome;";
+
         var fields = {
             "Datatype": {
                 field_type: "hidden",
@@ -3138,6 +3141,17 @@ var stock = ({
                 id: "data.show_id",
                 value: ""
             },
+            "Sample Type":{
+                field_type: "hidden",
+                id: "data.sample_type",
+                value: "dts"
+            }
+            ,
+            "Serum Type":{
+                field_type: "hidden",
+                id: "data.outcome"
+            }
+            ,
             "Date of QC testing": {
                 field_type: "date",
                 id: "data.qc_testing_date"
@@ -3191,7 +3205,7 @@ var stock = ({
                 field_type: "text",
                 id: "data.interpretation",
                 allowFreeText: true,
-                tt_onLoad: "window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
+                tt_onLoad: update_outcome+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
                 field_type: "text",
