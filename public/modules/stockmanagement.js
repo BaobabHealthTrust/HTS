@@ -988,7 +988,7 @@ var stock = ({
 
         table.appendChild(tr);
 
-        var fields = ["", "Item Name", "Description", "Category", "In Stock", "AMC", "Average Issue/Day",
+        var fields = ["", "Item Name - <i>Tap name to view Lot #'s</i>", "Description", "Category", "In Stock", "AMC", "Average Issue/Day",
             "Receive", "Issue", "Edit", "Delete", "Adjustments"];
         var colSizes = ["30px", "180px", undefined, "150px", "90px", "90px", "90px", "80px", "80px", "80px", "80px",
             "180px"];
@@ -1199,13 +1199,17 @@ var stock = ({
 
                 } else if (j == 1) {
 
-                    td.innerHTML = stock.stocks[i][keys[j]] + '<span style="float: right; color: #3c60b1; font-size: smaller;"><a href="javascript:stock.showSummary('+i+')">...more</a></span>';
+                    td.innerHTML = "<font style ='color : #3c60b1; width: 100%;' onclick = 'stock.showSummary("+i+")'>"+stock.stocks[i][keys[j]]+"</font>"
+
+                    //td.innerHTML = stock.stocks[i][keys[j]] + '<span style="float: right; color: #3c60b1; font-size: smaller;"><a href="javascript:stock.showSummary('+i+')">...more</a></span>';
 
                 } else {
 
-                    td.innerHTML = stock.stocks[i][keys[j]];
+                    td.innerHTML = stock.stocks[i][keys[j]] ;
 
                 }
+
+                //td.setAttribute("onclick","stock.showSummary('"+i+"')");
 
                 td.style.borderColor = "#eee";
 
@@ -3106,7 +3110,7 @@ var stock = ({
         }
 
         stock.showMsg(outcome);
-        
+
 
     },
 
