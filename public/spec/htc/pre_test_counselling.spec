@@ -24,26 +24,30 @@ Q.1.5. Estimate [pos:: 4$$ id:: estimate$$ condition:: false]
 
 Q.1.6. Time Since Last Test [pos:: 5$$ id:: time_since_last_test$$type:: hidden]
 
-Q.1.7. Time Since Last Test Date [pos:: 6$$ id:: time_since_last_test_date$$ tt_onLoad:: showTimeSinceLastDate()$$ tt_pageStyleClass:: NoControls NoKeyboard condition:: __$('last_hiv_test').value != 'Never Tested']
+Q.1.7. Duration in Days [pos:: 6$$ id:: duration_in_days$$type:: hidden]
 
-Q.1.8. Captured Duration Value [pos :: 7 $$ id :: captured_value $$ condition:: __$('partner').value == "Yes" $$ tt_onLoad :: __$('touchscreenInput' + tstCurrentPage).value = __$('time_since_last_test_date').value;]
+Q.1.8. Time Since Last Test Date [pos:: 7$$ id:: time_since_last_test_date$$type:: hidden]
 
-Q.1.9. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos:: 8$$id::partner_status$$ tt_onUnLoad:: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim()$$ condition:: __$('partner').value == "Yes"]
-O.1.9.1. HIV Unknown
-O.1.9.2. Partner Negative
-O.1.9.3. Partner Positive
+Q.1.9. Duration Control [pos:: 8$$ id:: duration_ago$$ tt_onLoad:: showTimeSinceLastDate()$$ tt_pageStyleClass:: NoControls NoKeyboard condition:: __$('last_hiv_test').value != 'Never Tested' $$ optional :: true $$ helpText :: Time Since Last Test Date]
 
-Q.1.10. Partner HIV Status [pos:: 9$$ id:: phs$$ value:: No Partner$$ condition:: false]
+Q.1.10. Captured Duration Value [pos :: 9 $$ id :: captured_value $$ tt_onLoad :: __$('touchscreenInput' + tstCurrentPage).value = __$('duration_ago').value $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ condition :: false]
 
-Q.1.11. Client Risk Category [pos:: 10$$ id:: risk_category]
-O.1.11.1. Low Risk
-O.1.11.2. On-going Risk
-O.1.11.3. High Risk Event in Last 3 months
-O.1.11.4. Risk assessment Not Done
+Q.1.11. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos:: 10$$id::partner_status$$ tt_onUnLoad:: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim()$$ condition:: __$('partner').value == "Yes"]
+O.1.11.1. HIV Unknown
+O.1.11.2. Partner Negative
+O.1.11.3. Partner Positive
 
-Q.1.12. Event in the last 72 hrs? [pos::11 $$id ::last_72 $$ condition:: __$("risk_category").value == "High Risk Event in Last 3 months"]
-O.1.12.1. Yes
-O.1.12.2. No
+Q.1.12. Partner HIV Status [pos:: 11$$ id:: phs$$ value:: No Partner$$ condition:: false]
+
+Q.1.13. Client Risk Category [pos:: 12$$ id:: risk_category]
+O.1.13.1. Low Risk
+O.1.13.2. On-going Risk
+O.1.13.3. High Risk Event in Last 3 months
+O.1.13.4. Risk assessment Not Done
+
+Q.1.14. Event in the last 72 hrs? [pos::13 $$id ::last_72 $$ condition:: __$("risk_category").value == "High Risk Event in Last 3 months"]
+O.1.14.1. Yes
+O.1.14.2. No
 
 
-Q.1.13. HTS Visit Summary [pos:: 12$$ tt_onLoad:: showHTSVisitSummary(),updateTimeSinceLastTest()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.15. HTS Visit Summary [pos:: 14$$ tt_onLoad::setTimeSinceLastDate(), showHTSVisitSummary(),updateTimeSinceLastTest()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]

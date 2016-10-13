@@ -3849,7 +3849,7 @@ function  validateAppointment(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var currentRange;
-var target = "duration_ago";
+var target = "duration_in_days";
 
 
 function showTimeSinceLastDate() {
@@ -3889,7 +3889,7 @@ function showTimeSinceLastDate() {
 
         }
 
-        var lt = document.getElementById("inputFrame5");
+        var lt = document.getElementById("inputFrame"+tstCurrentPage);
         var div = document.createElement("div");
         div.style.width = "100%";
         div.style.border = "1px solid #ccc";
@@ -4058,6 +4058,20 @@ function showTimeSinceLastDate() {
         }
 
         init();
+
+      
+}
+
+function setTimeSinceLastDate(){
+
+       var time_in_days = parseInt(__$("duration_in_days").value);
+
+       var date = new Date();
+
+       date.setDate(date.getDate() - time_in_days);
+
+       __$("time_since_last_test_date").value = date.format("YYYY-mm-dd");
+
 }
 
 function updateDuration(token) {
@@ -4231,6 +4245,7 @@ function init() {
 
             updateDuration(this.innerHTML.trim());
             __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+            __$('nextButton').onmousedown=function(){gotoNextPage()};
 
 
         }
