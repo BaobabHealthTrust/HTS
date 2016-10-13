@@ -442,6 +442,7 @@ DROP TABLE IF EXISTS `quality_assurance`;
 
 CREATE TABLE `quality_assurance` (
   `quality_assurance_test_id` int(11) NOT NULL AUTO_INCREMENT,
+  `provider_id` varchar(255) NOT NULL,
   `sample_type` varchar(255) NOT NULL,
   `test_kit_name` varchar(255) NOT NULL,
   `test_kit_lot_number` varchar(255) NOT NULL,
@@ -449,6 +450,9 @@ CREATE TABLE `quality_assurance` (
   `sample_name_lot_number` varchar(255) NOT NULL,
   `control_line_seen` varchar(3) NOT NULL,
   `quality_test_result` varchar(255) NOT NULL,
+  `outcome` varchar(255) NOT NULL,
+  `interpretation` varchar(255) NOT NULL,
+  `supervisor_code` varchar(255) NOT NULL,
   `voided` tinyint(1) NOT NULL,
   `voided_reason` varchar(255) NOT NULL,
   `voided_date` varchar(255) NOT NULL,
