@@ -1916,7 +1916,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var btn = document.createElement("button");
             btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "-";
+            btn.innerHTML = "Negative";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -2008,7 +2008,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var btn = document.createElement("button");
             btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "+";
+            btn.innerHTML = "Positive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
