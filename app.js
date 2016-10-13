@@ -2067,6 +2067,8 @@ function dispatchStock(data, res) {
 
 function receiveStock(data, res) {
 
+
+
     if (data.receipt_id) {
 
         var sql = "UPDATE receipt SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
@@ -2087,9 +2089,21 @@ function receiveStock(data, res) {
     }
     else {
 
-        var sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date,origin_facility, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
+        var sql ="";
+
+        if(!data.expiry_date && data.origin_facility == "Not Captured"){
+
+            sql ="UPDATE receipt SET receipt_quantity = receipt_quantity +" + data.receipt_quantity + " WHERE batch_number = '" + data.batch_number.trim() + "'";
+
+
+        }else{
+
+            sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date,origin_facility, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
             data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.origin_facility + "', '" + data.receipt_quantity +
             "', '" + data.receipt_datetime + "', '" + data.userId + "')";
+
+
+        }
 
         console.log(sql);
 
