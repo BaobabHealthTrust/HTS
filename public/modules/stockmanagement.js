@@ -3095,6 +3095,21 @@ var stock = ({
 
     },
 
+    outcome: function(dts_type, result){
+
+        var outcome = "Not acceptable";
+
+        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
+
+            outcome  = "Acceptable"
+        
+        }
+
+        stock.showMsg(outcome);
+        
+
+    },
+
     qualityControlTest: function (label) {
 
         stock.setStockLimit();
@@ -3171,7 +3186,8 @@ var stock = ({
             "Interpretation": {
                 field_type: "text",
                 id: "data.interpretation",
-                allowFreeText: true
+                allowFreeText: true,
+                tt_onLoad: "window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
                 field_type: "text",
