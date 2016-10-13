@@ -3126,6 +3126,9 @@ var stock = ({
         var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
                              " outcome  = 'Acceptable'} __$('data.outcome').value  = outcome;";
 
+        var include_summary_js = "var script = document.createElement('script'); script.type = 'text/javascript'; script.src ='/javascripts/quality_control_summary.js';"+
+                                "__$('data').appendChild(script);"
+
         var fields = {
             "Datatype": {
                 field_type: "hidden",
@@ -3201,12 +3204,18 @@ var stock = ({
                 field_type: "text",
                 id: "data.interpretation",
                 allowFreeText: true,
-                tt_onLoad: update_outcome+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
+                tt_onLoad: update_outcome+include_summary_js+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
                 field_type: "text",
                 id: "data.supervisor_code",
                 allowFreeText: true
+            },
+            "Quality Control Testing Log" :{
+                field_type: "text",
+                id:"data.summary",
+                tt_onLoad: "showQualityControlTestSummary()",
+                tt_pageStyleClass: "NoKeyboard"
             }
         }
 
