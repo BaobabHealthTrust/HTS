@@ -1372,13 +1372,13 @@ var stock = ({
                 field_type: "select",
                 allowFreeText: true,
                 id: "data.category",
-                options : ["Test Kits","Serum","DTS"]
+                options : ["Test Kits","DTS"]
             },
             "Item Name": {
                 field_type: "text",
                 allowFreeText: true,
                 id: "data.item_name",
-                tt_onUnload: "window.parent.stock.isNameUnique(__$('data.item_name').value)"
+                tt_onUnload: "window.parent.stock.isNameUnique(__$('data.item_name').value);"
             },
             "Description": {
                 field_type: "text",
@@ -1406,7 +1406,8 @@ var stock = ({
                 id: "data.recommended_test_time",
                 tt_pageStyleClass : "Numeric NumbersOnly",
                 min : "0",
-                max : "30"
+                max : "30",
+                condition: "__$('data.category').value.trim().toLowerCase() != 'dts'"
 
             },
             "Window Test Time (Minutes)" :{
@@ -1414,7 +1415,8 @@ var stock = ({
                 id: "data.window_test_time",
                 tt_pageStyleClass : "Numeric NumbersOnly",
                 min : "0",
-                max : "30"
+                max : "30",
+                condition: "__$('data.category').value.trim().toLowerCase() != 'dts'"
 
             }
         }
@@ -3130,6 +3132,9 @@ var stock = ({
         var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
                              " outcome  = 'Acceptable'; __$('data.interpretation').setAttribute('condition', false); gotoNextPage() }else{} __$('data.outcome').value  = outcome;";
 
+        var include_summary_js = "var script = document.createElement('script'); script.type = 'text/javascript'; script.src ='/javascripts/quality_control_summary.js';"+
+                                "__$('data').appendChild(script);"
+
         var fields = {
             "Datatype": {
                 field_type: "hidden",
@@ -3179,6 +3184,13 @@ var stock = ({
                 condition : false
                 
             },
+            "DTS Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.dts_expiry_date"
+
+            }
+            ,
             "Select Test kit to evaluate": {
                 field_type: "select",
                 id: "data.test_kit_name",
@@ -3208,12 +3220,19 @@ var stock = ({
                 id: "data.interpretation",
                 allowFreeText: true,
                 optional: true,
-                tt_onLoad: update_outcome+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
+                tt_onLoad: update_outcome+include_summary_js+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
                 field_type: "text",
                 id: "data.supervisor_code",
                 allowFreeText: true
+            },
+            "Quality Control Testing Log" :{
+                field_type: "text",
+                id:"data.summary",
+                tt_onLoad: "showQualityControlTestSummary()",
+                tt_pageStyleClass: "NoKeyboard",
+                condition: false
             }
         }
 
