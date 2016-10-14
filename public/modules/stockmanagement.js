@@ -2410,7 +2410,7 @@ var stock = ({
                     field_type: "number",
                     tt_pageStyleClass: "NumbersOnly",
                     id: "data.dispatch_quantity",
-                     tt_onUnload : validation_condition_string
+                    tt_onUnload : validation_condition_string
                 };
 
                 fields[dateLabel] = {
@@ -2631,7 +2631,7 @@ var stock = ({
                     field_type: "number",
                     tt_pageStyleClass: "NumbersOnly",
                     id: "data.dispatch_quantity",
-                     tt_onUnload : validation_condition_string
+                    tt_onUnload : validation_condition_string
                 };
 
                 fields[dateLabel] = {
@@ -2839,7 +2839,7 @@ var stock = ({
                     field_type: "number",
                     tt_pageStyleClass: "NumbersOnly",
                     id: "data.dispatch_quantity",
-                     tt_onUnload : validation_condition_string
+                    tt_onUnload : validation_condition_string
                 };
 
                 fields[dateLabel] = {
@@ -3128,7 +3128,7 @@ var stock = ({
         form.appendChild(table);
 
         var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
-                             " outcome  = 'Acceptable'} __$('data.outcome').value  = outcome;";
+                             " outcome  = 'Acceptable'; __$('data.interpretation').setAttribute('condition', false); gotoNextPage() }else{} __$('data.outcome').value  = outcome;";
 
         var fields = {
             "Datatype": {
@@ -3157,9 +3157,11 @@ var stock = ({
                 id: "data.qc_testing_date"
             },
             "HTS provider ID": {
-                field_type: "text",
+                field_type: "number",
                 id: "data.provider_id",
-                allowFreeText: true
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                validationRule: "^\\d{4}$",
+                validationMessage: "The code is not valid"
             },
             "Select DTS Type": {
                 field_type: "select",
@@ -3205,6 +3207,7 @@ var stock = ({
                 field_type: "text",
                 id: "data.interpretation",
                 allowFreeText: true,
+                optional: true,
                 tt_onLoad: update_outcome+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
