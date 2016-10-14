@@ -5348,8 +5348,6 @@ function validateMaxMinYear(){
 
         var message = "Year entered is less than "+(parseInt(today.getFullYear())-120);
 
-        alert(message);
-
         setTimeout(function(){
 
             gotoPage(tstCurrentPage - 1, false, true);
@@ -5479,5 +5477,30 @@ function setEstimatedAgeValue(){
 
     birthdate.value = estimateBirthDate;
 
+
+}
+
+function validateExpiryDate(date_string){
+
+
+            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+            var today = new Date();
+
+            var date = new Date(date_string);
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+                setTimeout(function(){
+
+                        window.parent.dashboard.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+
+
+                        gotoPage(tstCurrentPage - 1, false, true);
+
+
+                },10);
+
+            }
 
 }
