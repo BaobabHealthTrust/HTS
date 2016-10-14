@@ -3180,6 +3180,13 @@ var stock = ({
                 condition : false
                 
             },
+            "DTS Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.dts_expiry_date"
+
+            }
+            ,
             "Select Test kit to evaluate": {
                 field_type: "select",
                 id: "data.test_kit_name",
@@ -3219,7 +3226,8 @@ var stock = ({
                 field_type: "text",
                 id:"data.summary",
                 tt_onLoad: "showQualityControlTestSummary()",
-                tt_pageStyleClass: "NoKeyboard"
+                tt_pageStyleClass: "NoKeyboard",
+                condition: false
             }
         }
 

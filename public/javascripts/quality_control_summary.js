@@ -391,14 +391,7 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
+	td.innerHTML = __$("data.qc_testing_date").value;
 
 
 	var td = document.createElement("td");
@@ -409,6 +402,8 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.innerHTML = __$("data.provider_id").value;
+
 
 	var td = document.createElement("td");
 
@@ -417,6 +412,65 @@ function showQualityControlTestSummary(){
 	td.style.borderRight= "1px solid black";
 
 	td.style.borderBottom= "2px solid black";
+
+	td.innerHTML = __$("data.dts_lot_number").value;
+
+	
+
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.borderBottom= "2px solid black";
+
+	/*var expiry_date = __$("data.dts_lot_number").value.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+	__$("data.dts_expiry_date").value = expiry_date;*/
+
+	td.innerHTML = "dts expiry_date";
+
+
+	var dts_type = __$("data.dts_name").value
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.borderBottom= "2px solid black";
+
+	td.style.fontSize= "20px";
+
+	td.style.textAlign = "center";
+
+	if(dts_type.match(/Negative/i)){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.height = "30px";
+
+		span.style.border = "1px solid black";
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "-";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>-</b>"
+
+	}
+	
+
+
 
 	var td = document.createElement("td");
 
@@ -428,21 +482,31 @@ function showQualityControlTestSummary(){
 
 	td.style.fontSize= "15px";
 
-	td.innerHTML ="<b>-</b>"
+	td.style.textAlign = "center";
 
+	if(dts_type.match(/Positive/i)){
 
+		var span = document.createElement("span");
 
-	var td = document.createElement("td");
+		span.style.width = "30px";
 
-	tr.appendChild(td);
+		span.style.padding  = 
 
-	td.style.borderRight= "1px solid black";
+		span.style.height = "30px";
 
-	td.style.borderBottom= "2px solid black";
+		span.style.border = "2px solid black";
 
-	td.style.fontSize= "15px";
+		span.style.borderRadius = "50%";
 
-	td.innerHTML ="<b>+</b>"
+		span.innerHTML = "+";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>+</b>"
+
+	}
 
 
 	var td = document.createElement("td");
