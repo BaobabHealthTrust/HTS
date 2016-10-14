@@ -1372,13 +1372,13 @@ var stock = ({
                 field_type: "select",
                 allowFreeText: true,
                 id: "data.category",
-                options : ["Test Kits","Serum","DTS"]
+                options : ["Test Kits","DTS"]
             },
             "Item Name": {
                 field_type: "text",
                 allowFreeText: true,
                 id: "data.item_name",
-                tt_onUnload: "window.parent.stock.isNameUnique(__$('data.item_name').value)"
+                tt_onUnload: "window.parent.stock.isNameUnique(__$('data.item_name').value);"
             },
             "Description": {
                 field_type: "text",
@@ -1406,7 +1406,8 @@ var stock = ({
                 id: "data.recommended_test_time",
                 tt_pageStyleClass : "Numeric NumbersOnly",
                 min : "0",
-                max : "30"
+                max : "30",
+                condition: "__$('data.category').value.trim().toLowerCase() != 'dts'"
 
             },
             "Window Test Time (Minutes)" :{
@@ -1414,7 +1415,8 @@ var stock = ({
                 id: "data.window_test_time",
                 tt_pageStyleClass : "Numeric NumbersOnly",
                 min : "0",
-                max : "30"
+                max : "30",
+                condition: "__$('data.category').value.trim().toLowerCase() != 'dts'"
 
             }
         }

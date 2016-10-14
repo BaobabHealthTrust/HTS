@@ -2221,8 +2221,8 @@ function saveStock(data, res) {
                     var category_id = category[0].insertId;
 
                     var sql = "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "") + "," + 
-                        (data.recommended_test_time ? data.recommended_test_time : "") + "," + (data.window_test_time ? data.window_test_time : "") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "1") + "," + 
+                        (data.recommended_test_time ? data.recommended_test_time : "0") + "," + (data.window_test_time ? data.window_test_time : "0") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                     console.log(sql);
 
@@ -2259,8 +2259,8 @@ function saveStock(data, res) {
 
 
                 var sql =  "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "") + "," + 
-                        (data.recommended_test_time ? data.recommended_test_time : "") + "," + (data.window_test_time ? data.window_test_time : "") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "1") + "," + 
+                        (data.recommended_test_time ? data.recommended_test_time : "0") + "," + (data.window_test_time ? data.window_test_time : "0") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                 console.log(sql);
 
