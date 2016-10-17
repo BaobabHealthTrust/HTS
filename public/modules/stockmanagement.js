@@ -1653,7 +1653,8 @@ var stock = ({
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
                 id: "data.receipt_quantity",
-                tt_onUnload: validation_condition_string             
+                tt_onUnload: validation_condition_string,
+                tt_onLoad: "window.parent.stock.validateExpiryDate(__$('data.expiry_date').value, '')"            
             };
 
             fields[dateLabel] = {
@@ -1763,7 +1764,8 @@ var stock = ({
                 field_type: "text",
                 id: "data.origin_facility",
                 allowFreeText: true,
-                ajaxURL: "/facilities?name=" 
+                ajaxURL: "/facilities?name=",
+                tt_onLoad: "window.parent.stock.validateExpiryDate(__$('data.expiry_date').value, '')" 
 
             };
 
@@ -2668,6 +2670,80 @@ var stock = ({
 
     }
     ,
+    validateExpiryDate: function(date_string,action){
+
+        if(action =='dispatch'){
+
+            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+            var today = new Date();
+
+            var date = new Date(date_string);
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+                stock.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+
+                var ok = stock.$("ok_button");
+
+                ok.innerHTML = "Ok";
+
+                ok.setAttribute("onclick","window.parent.stock.listItems(window.parent.document.body)");
+
+            }
+
+        }
+        else{
+
+            var date = new Date(date_string);
+
+            var today = new Date();
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+                stock.showMsg("The product  expired on ("+date.format()+") please proceed and remember to dispose","Stock Expiry Date");
+
+                var pop_button_panel = stock.$("pop_button_panel");
+
+                pop_button_panel.innerHTML = "";
+
+                var cancel = document.createElement("button");
+
+                pop_button_panel.appendChild(cancel);
+
+                cancel.className = "red";
+
+                cancel.innerHTML = "Cancel";
+
+                cancel.style.marginRight = "15%";
+
+                cancel.setAttribute("onclick","window.parent.stock.listItems(window.parent.document.body)");
+
+                var ok = document.createElement("button");
+
+                pop_button_panel.appendChild(ok);
+
+                ok.className = "blue";
+
+                ok.innerHTML = "Proceed";
+
+                ok.onclick = function () {
+
+                    if (stock.$("msg.shield")) {
+
+                        document.body.removeChild(stock.$("msg.shield"));
+
+                    }
+
+                }
+
+            }
+        }
+
+        
+
+    }
+    ,
     dispatchItem: function (stock_id, label) {
 
          stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
@@ -2684,6 +2760,8 @@ var stock = ({
                                               "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
                                               ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                               limit + "')}, 10);}" ;
+
+
 
             var form = document.createElement("form");
             form.id = "data";
@@ -2726,7 +2804,7 @@ var stock = ({
                 id: "data.batch_number",
                 ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
                 tt_onLoad:"window.parent.stock.highlighteFirst()",
-                tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                tt_onUnload: "window.parent.stock.validateExpiryDate(__$('touchscreenInput'+tstCurrentPage).value,'dispatch');if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                     "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                     "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
             };
@@ -2832,7 +2910,7 @@ var stock = ({
                     field_type: "text",
                     id: "data.batch_number",
                     ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
-                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                    tt_onUnload: "window.parent.stock.validateExpiryDate(__$('touchscreenInput'+tstCurrentPage).value,'dispatch');if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
                         "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                         "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
                 };
@@ -3327,6 +3405,7 @@ var stock = ({
 
         var tdf = document.createElement("td");
         tdf.align = "center";
+        tdf.id = "pop_button_panel"
 
         trf.appendChild(tdf);
 

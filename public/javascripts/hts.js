@@ -1418,6 +1418,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             mainRow.appendChild(mainTd2);
 
             var table = document.createElement("table");
+            table.id = "timeTable1";
             table.style.margin = "auto";
             table.border = 0;
 
@@ -1751,6 +1752,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             td.appendChild(btn);
 
             var table = document.createElement("table");
+            table.id ="timeTable2";
             table.style.margin = "auto";
             table.border = 0;
 
@@ -2152,6 +2154,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
             var label_data = JSON.parse(data);
 
             var table = document.createElement("table");
+            table.id = "timeTable1";
             table.style.margin = "auto";
             table.border = 0;
 
@@ -2166,6 +2169,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
             table.appendChild(tr);
 
             var td = document.createElement("td");
+            td.id = "timeTD1";
             td.align = "center";
             td.verticalAlign = "middle";
             td.style.border = "1px solid #3c60b1";
@@ -5348,8 +5352,6 @@ function validateMaxMinYear(){
 
         var message = "Year entered is less than "+(parseInt(today.getFullYear())-120);
 
-        alert(message);
-
         setTimeout(function(){
 
             gotoPage(tstCurrentPage - 1, false, true);
@@ -5479,5 +5481,80 @@ function setEstimatedAgeValue(){
 
     birthdate.value = estimateBirthDate;
 
+
+}
+
+function validateExpiryDate(date_string){
+
+        if(date_string.length > 0){
+
+
+            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+            var today = new Date();
+
+            var date = new Date(date_string);
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+
+                setTimeout(function(){
+
+                        window.parent.dashboard.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+
+                        gotoPage(tstCurrentPage - 1, null, true);
+
+
+
+
+                },10);
+
+                setTimeout(function(){
+
+                    if( __$("timeTable1")){
+
+                        __$("timeTable1").innerHTML = "";
+
+                    }
+
+                    if( __$("timeTable2")){
+
+                        __$("timeTable2").innerHTML = "";
+
+                    }
+
+                    __$("nextButton").className = __$("nextButton").className.replace("gray","blue");
+
+                },100);
+
+            }else{
+
+                if(__$("fp_lot_1_dispatch_id").value){
+
+                    saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1");
+
+                }
+                if(__$("fp_lot_2_dispatch_id").value){
+
+                    saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");
+
+                }
+
+                if(__$("im_lot_1_dispatch_id").value){
+
+                    saveConsumption(__$("im_lot_1_dispatch_id").value, "im_lot_number1")
+
+                }
+
+                if(__$("im_lot_2_dispatch_id").value){
+
+                    saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
+
+                }
+
+
+            }
+
+        }
 
 }
