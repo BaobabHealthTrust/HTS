@@ -2496,7 +2496,7 @@ function saveQualityTest(data, res){
 
         console.log(sql);
 
-        queryRawStock(sql, function (batch) {
+        queryRawQualityControl(sql, function (batch) {
 
                 res.status(200).json({message: "Quality test Done!"});
 
@@ -6174,9 +6174,45 @@ app.get("/available_kits_by_desctiption/:description", function(req, res){
 
 //Quality Control and proficiency test routes
 
-app.post('/save_quality_control_test', function (req, res) {
+function queryRawQualityControl(sql, callback) {
 
-    var data = req.body.data;
+    var config = require(__dirname + "/config/database.json");
+
+    var knex = require('knex')({
+        client: 'mysql',
+        connection: {
+            host: config.host,
+            user: config.user,
+            password: config.password,
+            database: config.qualityControlDatabase
+        },
+        pool: {
+            min: 0,
+            max: 500
+        }
+    });
+
+    knex.raw(sql)
+        .then(function (result) {
+
+            callback(result);
+
+        })
+        .catch(function (err) {
+
+            console.log(err.message);
+
+            callback(err);
+
+        });
+
+}
+
+app.post('/save_quality_control_test/', function (req, res) {
+
+    var data = req.body;
+
+    console.log(data)
 
     switch (data.datatype) {
 

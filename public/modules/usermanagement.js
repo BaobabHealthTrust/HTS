@@ -674,8 +674,7 @@ var user = ({
                 field_type: "text",
                 id:"data.summary",
                 tt_onLoad: "showQualityControlTestSummary()",
-                tt_pageStyleClass: "NoKeyboard",
-                condition: false
+                tt_pageStyleClass: "NoKeyboard"
             }
         }
 
@@ -684,6 +683,21 @@ var user = ({
         user.navPanel(form.outerHTML);
 
     },
+    outcome: function(dts_type, result){
+
+        var outcome = "Not acceptable";
+
+        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
+
+            outcome  = "Acceptable"
+        
+        }
+
+        user.showMsg(outcome);
+
+
+    }
+    ,
 
     proficiencyTest: function (label) {
 
@@ -901,7 +915,7 @@ var user = ({
 
         }else if(data.data.datatype == "quality_assurance"){
 
-                user.ajaxPostRequest("/save_quality_control_test", data.data, function (sid) {
+                user.ajaxPostRequest("/save_quality_control_test/", data.data, function (sid) {
 
                     var json = JSON.parse(sid);
 
@@ -913,7 +927,7 @@ var user = ({
 
                     // window.location = "/";
 
-                    user.showMsg(json.message, "Status", "/");
+                    user.showMsg(json.message, "Status", null);
 
                 })
 

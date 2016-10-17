@@ -530,6 +530,28 @@ if (process.argv.indexOf("-o") < 0) {
 
 }
 
+if (process.argv.indexOf("-o") < 0) {
+
+    commands.push({
+        message: "Dropping '" + connection.qualityControlDatabase + "' database...",
+        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+            " -e 'DROP SCHEMA IF EXISTS " + connection.qualityControlDatabase + "'"
+    });
+
+    commands.push({
+        message: "Creating '" + connection.qualityControlDatabase + "' database...",
+        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+            " -e 'CREATE SCHEMA " + connection.qualityControlDatabase + "'"
+    });
+
+    commands.push({
+        message: "Loading '" + connection.qualityControlDatabase + "' Metadata...",
+        cmd: "mysql -h " + connection.host + " -u " + connection.user + " -p" + connection.password +
+            " " + connection.qualityControlDatabase + " < quality_control.sql"
+    });
+
+}
+
 async.each(commands, function (cmd, callback) {
 
     console.log(cmd.message);
