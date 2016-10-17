@@ -605,6 +605,19 @@ var user = ({
                 id: "data.dts_expiry_date"
 
             },
+            "Location":{
+
+                field_type: "hidden",
+                id: "data.location",
+                value: user.getCookie("location")
+            },
+            "User":{
+
+                field_type: "hidden",
+                id: "data.user",
+                value:  user.getCookie("username")
+            }
+            ,
             "Date of QC testing": {
                 field_type: "date",
                 id: "data.qc_testing_date",
@@ -623,7 +636,7 @@ var user = ({
                 tt_pageStyleClass: "NoKeyboard",
                 ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
+                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
                                " __$('data.dts_lot_number').setAttribute('condition',true)}"
 
             },
@@ -641,7 +654,7 @@ var user = ({
                 tt_pageStyleClass: "NoKeyboard",
                 ajaxURL : '/stock_items?category=Test Kits&item_name=',
                 tt_onUnload : "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){"+
-                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+kit_name+'&batch=');"+
+                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+kit_name+'&batch=');"+
                                "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
             },
             "Teskit Lot Number": {

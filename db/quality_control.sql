@@ -24,11 +24,14 @@ DROP TABLE IF EXISTS `quality_assurance`;
 CREATE TABLE `quality_assurance` (
   `quality_assurance_test_id` int(11) NOT NULL AUTO_INCREMENT,
   `provider_id` varchar(255) NOT NULL,
+  `qc_test_date` varchar(255) NOT NULL,
   `sample_type` varchar(255) NOT NULL,
   `test_kit_name` varchar(255) NOT NULL,
   `test_kit_lot_number` varchar(255) NOT NULL,
+  `test_kit_expiry_date` varchar(255) NOT NULL,
   `sample_name` varchar(255) NOT NULL,
   `sample_name_lot_number` varchar(255) NOT NULL,
+  `sample_expiry_date` varchar(255) NOT NULL,
   `control_line_seen` varchar(3) NOT NULL,
   `quality_test_result` varchar(255) NOT NULL,
   `outcome` varchar(255) NOT NULL,
@@ -38,12 +41,13 @@ CREATE TABLE `quality_assurance` (
   `voided_reason` varchar(255) NOT NULL,
   `voided_date` varchar(255) NOT NULL,
   `voided_by` varchar(255) NOT NULL,
-  `tested_by` varchar(255) NOT NULL,
+  `created_by` varchar(255) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `changed_by` varchar(255) NOT NULL,
   PRIMARY KEY (`quality_assurance_test_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
 
 LOCK TABLES `quality_assurance` WRITE;
 /*!40000 ALTER TABLE `quality_assurance` DISABLE KEYS */;

@@ -1157,6 +1157,8 @@ function setAjaxUrl(pos) {
 
 function saveConsumption(dispatch_id, target_id) {
 
+    console.log(dispatch_id);
+
     var patient_id = getCookie("client_identifier");
 
     var consumption_type = "Normal use";
