@@ -1,3 +1,5 @@
+var dts_expiry_date = "";
+var test_kit_expiry_date = "";
 function verticalText(text, parent) {
 
     if (!parent)
@@ -31,7 +33,7 @@ function showQualityControlTestSummary(){
 
 	table.style.borderCollapse = "collapse";
     table.style.margin = "auto";
-    table.style.marginTop = "20px";
+    table.style.top = "15%";
     table.style.color = "#333";
     table.cellPadding = "10px";
     table.border = 0;
@@ -60,7 +62,11 @@ function showQualityControlTestSummary(){
 
 	td.style.borderRight= "2px solid black";
 
+	td.style.borderLeft= "2px solid black";
+
 	td.style.borderBottom= "2px solid black";
+
+	td.style.borderTop= "2px solid black";
 
 
 	var td = document.createElement("td");
@@ -77,6 +83,9 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.style.borderTop= "2px solid black";
+
+
 
 	var td = document.createElement("td");
 
@@ -92,6 +101,9 @@ function showQualityControlTestSummary(){
 
 	td.style.borderRight= "2px solid black";
 
+	td.style.borderTop= "2px solid black";
+
+
 
 	var td = document.createElement("td");
 
@@ -104,6 +116,9 @@ function showQualityControlTestSummary(){
 	td.setAttribute("colspan", "8");
 
 	td.style.borderRight= "2px solid black";
+
+	td.style.borderTop= "2px solid black";
+
 
 
 	var td = document.createElement("td");
@@ -120,6 +135,10 @@ function showQualityControlTestSummary(){
 
 	td.style.borderRight= "1px solid black";
 
+	td.style.borderTop= "2px solid black";
+
+
+
 	var td = document.createElement("td");
 
 	tr.appendChild(td);
@@ -127,6 +146,8 @@ function showQualityControlTestSummary(){
 	td.style.borderRight= "2px solid black";
 
 	td.style.borderBottom= "2px solid black";
+
+	td.style.borderTop= "2px solid black";
 
 	td.innerHTML ="<b>Reviewed by Supervisor</b>";
 
@@ -391,7 +412,15 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
-	td.innerHTML = __$("data.qc_testing_date").value;
+	td.style.borderLeft= "2px solid black";
+
+	td.style.padding = "1em";
+
+	td.style.textAlign = "center";
+
+	var test_date = new Date( __$("data.qc_testing_date").value)
+
+	td.innerHTML = test_date.format();
 
 
 	var td = document.createElement("td");
@@ -400,7 +429,11 @@ function showQualityControlTestSummary(){
 
 	td.style.borderRight= "1px solid black";
 
+	td.style.padding = "1em";
+
 	td.style.borderBottom= "2px solid black";
+
+	td.style.textAlign = "center";
 
 	td.innerHTML = __$("data.provider_id").value;
 
@@ -410,6 +443,11 @@ function showQualityControlTestSummary(){
 	tr.appendChild(td);
 
 	td.style.borderRight= "1px solid black";
+
+	td.style.padding = "1em";
+
+	td.style.textAlign = "center";
+
 
 	td.style.borderBottom= "2px solid black";
 
@@ -426,11 +464,16 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.style.padding = "1em";
+
+	td.style.textAlign = "center";
+
 	/*var expiry_date = __$("data.dts_lot_number").value.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
 
 	__$("data.dts_expiry_date").value = expiry_date;*/
 
-	td.innerHTML = "dts expiry_date";
+	td.innerHTML = __$("data.dts_expiry_date").value;
+
 
 
 	var dts_type = __$("data.dts_name").value
@@ -440,6 +483,8 @@ function showQualityControlTestSummary(){
 	tr.appendChild(td);
 
 	td.style.borderRight= "1px solid black";
+
+	td.style.padding = "1em";
 
 	td.style.borderBottom= "2px solid black";
 
@@ -455,7 +500,9 @@ function showQualityControlTestSummary(){
 
 		span.style.height = "30px";
 
-		span.style.border = "1px solid black";
+		span.style.border = "2px solid red";
+
+		span.style.padding  = "0.8em"
 
 		span.style.borderRadius = "50%";
 
@@ -480,6 +527,8 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.style.padding = "1em";
+
 	td.style.fontSize= "15px";
 
 	td.style.textAlign = "center";
@@ -490,11 +539,11 @@ function showQualityControlTestSummary(){
 
 		span.style.width = "30px";
 
-		span.style.padding  = 
+		span.style.padding  = "0.8em"
 
 		span.style.height = "30px";
 
-		span.style.border = "2px solid black";
+		span.style.border = "2px solid red";
 
 		span.style.borderRadius = "50%";
 
@@ -517,6 +566,27 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.style.padding = "1em";
+
+	td.style.textAlign = "center";
+
+	td.innerHTML = __$("data.test_kit_name").value;
+
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.padding = "1em";
+
+	td.style.textAlign = "center";
+
+	td.style.borderBottom= "2px solid black";
+
+	td.innerHTML = __$("data.test_kit_lot_number").value;
+
 
 	var td = document.createElement("td");
 
@@ -526,6 +596,15 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.style.textAlign = "center";
+
+	td.style.padding = "1em";
+
+	td.innerHTML = __$("data.test_kit_expiry_date").value;
+
+
+
+	var control_line_seen =__$("data.control_line_seen").value;
 
 	var td = document.createElement("td");
 
@@ -535,6 +614,35 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
+	td.style.textAlign = "center";
+
+	td.style.fontSize= "15px";
+
+	td.style.padding = "1em";
+
+	if(control_line_seen.match(/No/i)){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.padding  = "0.8em"
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid red";
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "N";
+
+		td.appendChild(span);
+	} else{
+
+		td.innerHTML ="<b>N</b>";
+
+
+	}
 
 
 	var td = document.createElement("td");
@@ -547,7 +655,194 @@ function showQualityControlTestSummary(){
 
 	td.style.fontSize= "15px";
 
-	td.innerHTML ="<b>N</b>";
+	td.style.padding = "1em";
+
+	if(control_line_seen.match(/Yes/i)){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.padding  = "0.8em"
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid black";
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "Y";
+
+		td.appendChild(span);
+
+	} else{
+
+		td.innerHTML ="<b>Y</b>";
+		
+
+	}
+
+
+	var result = __$("data.result").value;
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.borderBottom= "2px solid black";
+
+	td.style.textAlign = "center";
+
+	td.style.fontSize= "15px";
+
+	td.style.padding = "1em";
+
+	if(result.match(/Negative/i)){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid red";
+
+		span.style.padding  = "0.8em"
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "-";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>-</b>"
+
+	}
+
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.borderBottom= "2px solid black";
+
+	td.style.textAlign = "center";
+
+	td.style.fontSize= "15px";
+
+	td.style.padding = "1em";
+
+	if(result.match(/Weak/i)){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid red";
+
+		span.style.padding  = "0.8em"
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "+";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>+</b>"
+
+	}
+
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.borderBottom= "2px solid black";
+
+	td.style.textAlign = "center";
+
+	td.style.fontSize= "18px";
+
+	td.style.padding = "1em";
+
+	if(result.match(/Strong/i)){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid red";
+
+		span.style.padding  = "0.5em"
+
+		span.style.borderRadius = "50%";
+
+		span.style.fontSize= "18px";
+
+		span.innerHTML = "<b>+</b>";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>+</b>"
+
+	}
+
+
+	var test_out_come = __$("data.outcome").value
+
+	var td = document.createElement("td");
+
+	tr.appendChild(td);
+
+	td.style.borderRight= "1px solid black";
+
+	td.style.borderBottom= "2px solid black";
+
+	td.style.textAlign = "center";
+
+	td.style.fontSize= "15px";
+
+	td.style.padding = "1em";
+
+	if(test_out_come=="Acceptable"){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid red";
+
+		span.style.padding  = "0.8em"
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "A";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>A</b>"
+
+	}
 
 
 	var td = document.createElement("td");
@@ -560,7 +855,31 @@ function showQualityControlTestSummary(){
 
 	td.style.fontSize= "15px";
 
-	td.innerHTML ="<b>Y</b>"
+	td.style.padding = "1em";
+
+	if(test_out_come=="Not Acceptable"){
+
+		var span = document.createElement("span");
+
+		span.style.width = "30px";
+
+		span.style.height = "30px";
+
+		span.style.border = "2px solid red";
+
+		span.style.padding  = "0.8em"
+
+		span.style.borderRadius = "50%";
+
+		span.innerHTML = "NA";
+
+		td.appendChild(span);
+
+	}else{
+
+		td.innerHTML ="<b>NA</b>"
+
+	}
 
 
 
@@ -572,71 +891,11 @@ function showQualityControlTestSummary(){
 
 	td.style.borderBottom= "2px solid black";
 
-	td.style.fontSize= "15px";
+	td.style.textAlign = "center";
 
-	td.innerHTML ="-"
+	td.style.padding = "1em";
 
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	td.style.fontSize= "15px";
-
-	td.innerHTML ="+"
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	td.style.fontSize= "16px";
-
-	td.innerHTML ="<b>+</b>"
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	td.style.fontSize= "15px";
-
-	td.innerHTML ="<b>A</b>";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	td.style.fontSize= "15px";
-
-	td.innerHTML ="<b>NA</b>"
-
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
+	td.innerHTML = __$("data.interpretation").value;
 
 
 	var td = document.createElement("td");
@@ -645,7 +904,27 @@ function showQualityControlTestSummary(){
 
 	td.style.borderRight= "2px solid black";
 
+	td.style.textAlign = "center";
+
 	td.style.borderBottom= "2px solid black";
 
+	td.style.padding = "1em";
+
+	td.innerHTML = __$("data.supervisor_code").value;
+
+
+}
+
+function setExpiryDate(date_string,field){
+
+        if(date_string.length > 0){
+
+            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+            __$(field).value = date_string;
+
+           	console.log(__$(field).value);
+
+         }
 
 }

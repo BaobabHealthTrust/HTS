@@ -595,13 +595,20 @@ var user = ({
                 id: "data.sample_type",
                 value: "dts"
             },
-            "Serum Type":{
+            "DTS Outcome":{
                 field_type: "hidden",
                 id: "data.outcome"
             },
+            "DTS Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.dts_expiry_date"
+
+            },
             "Date of QC testing": {
                 field_type: "date",
-                id: "data.qc_testing_date"
+                id: "data.qc_testing_date",
+                tt_onUnload: include_summary_js
             },
             "HTS provider ID": {
                 field_type: "number",
@@ -623,15 +630,11 @@ var user = ({
               "DTS Lot Number": {
                 field_type: "select",
                 id: "data.dts_lot_number",
-                condition : false
+                condition : false,
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_expiry_date')"
                 
             },
-            "DTS Expiry Date": {
-
-                field_type: "hidden",
-                id: "data.dts_expiry_date"
-
-            },
+            
             "Select Test kit to evaluate": {
                 field_type: "select",
                 id: "data.test_kit_name",
@@ -643,8 +646,16 @@ var user = ({
             },
             "Teskit Lot Number": {
                 field_type: "text",
-                id: "data.test_kit_lot_number"
+                id: "data.test_kit_lot_number",
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit_expiry_date')"
             },
+             "Test Kit Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.test_kit_expiry_date"
+
+            }
+            ,
             "Control line seen": {
                 field_type: "select",
                 id: "data.control_line_seen",
@@ -661,7 +672,7 @@ var user = ({
                 id: "data.interpretation",
                 allowFreeText: true,
                 optional: true,
-                tt_onLoad: update_outcome+include_summary_js+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
+                tt_onLoad: update_outcome+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
                 field_type: "number",
