@@ -560,6 +560,230 @@ var user = ({
 
     },
 
+    qualityControlTest: function (label) {
+
+        stock.setStockLimit();
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
+                             " outcome  = 'Acceptable'; __$('data.interpretation').setAttribute('condition', false); gotoNextPage() }else{} __$('data.outcome').value  = outcome;";
+
+        var include_summary_js = "var script = document.createElement('script'); script.type = 'text/javascript'; script.src ='/javascripts/quality_control_summary.js';"+
+                                "__$('data').appendChild(script);"
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "quality_assurance"
+            },
+            "Show ID": {
+                field_type: "hidden",
+                id: "data.show_id",
+                value: ""
+            },
+            "Sample Type":{
+                field_type: "hidden",
+                id: "data.sample_type",
+                value: "dts"
+            },
+            "Serum Type":{
+                field_type: "hidden",
+                id: "data.outcome"
+            },
+            "Date of QC testing": {
+                field_type: "date",
+                id: "data.qc_testing_date"
+            },
+            "HTS provider ID": {
+                field_type: "number",
+                id: "data.provider_id",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                validationRule: "^\\d{4}$",
+                validationMessage: "The code is not valid"
+            },
+            "Select DTS Type": {
+                field_type: "select",
+                id: "data.dts_name",
+                tt_pageStyleClass: "NoKeyboard",
+                ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
+                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
+                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+dts_name+'&batch=');"+
+                               " __$('data.dts_lot_number').setAttribute('condition',true)}"
+
+            },
+              "DTS Lot Number": {
+                field_type: "select",
+                id: "data.dts_lot_number",
+                condition : false
+                
+            },
+            "DTS Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.dts_expiry_date"
+
+            },
+            "Select Test kit to evaluate": {
+                field_type: "select",
+                id: "data.test_kit_name",
+                tt_pageStyleClass: "NoKeyboard",
+                ajaxURL : '/stock_items?category=Test Kits&item_name=',
+                tt_onUnload : "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){"+
+                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/available_batches?item_name='+kit_name+'&batch=');"+
+                               "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
+            },
+            "Teskit Lot Number": {
+                field_type: "text",
+                id: "data.test_kit_lot_number"
+            },
+            "Control line seen": {
+                field_type: "select",
+                id: "data.control_line_seen",
+                options: ["Yes", "No"]
+            },
+            "Result": {
+                field_type: "select",
+                id: "data.result",
+                tt_pageStyleClass: "NoKeyboard",
+                options: ["Negative", "Weak positive", "Strong positive"]
+            },
+            "Interpretation": {
+                field_type: "text",
+                id: "data.interpretation",
+                allowFreeText: true,
+                optional: true,
+                tt_onLoad: update_outcome+include_summary_js+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
+            },
+            "Supervisor code": {
+                field_type: "number",
+                id: "data.supervisor_code",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                validationRule: "^\\d{4}$",
+                validationMessage: "The code is not valid"
+            },
+            "Quality Control Testing Log" :{
+                field_type: "text",
+                id:"data.summary",
+                tt_onLoad: "showQualityControlTestSummary()",
+                tt_pageStyleClass: "NoKeyboard",
+                condition: false
+            }
+        }
+
+        user.buildFields(fields, table);
+
+        user.navPanel(form.outerHTML);
+
+    },
+
+    proficiencyTest: function (label) {
+
+        stock.setStockLimit();
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "proficiency_test"
+            },
+            "Show ID": {
+                field_type: "hidden",
+                id: "data.show_id",
+                value: ""
+            },
+            "Date of Proficiency testing": {
+                field_type: "date",
+                id: "data.proficiency_testing_date"
+            },
+            "HTS provider ID": {
+                field_type: "number",
+                id: "data.provider_id",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                validationRule: "^\\d{4}$",
+                validationMessage: "The code is not valid"
+            },
+            "Phone number": {
+                field_type: "number",
+                id: "data.phone_number",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                validationRule: "^\\d{10}$",
+                validationMessage: "The Phone number is not valid"
+            },
+            "Tester First Name": {
+                field_type: "text",
+                id: "data.first_name",
+                allowFreeText: true,
+                ajaxURL: user.settings.firstNamesPath
+            },
+            "Tester Last Name": {
+                field_type: "text",
+                id: "data.last_name",
+                allowFreeText: true,
+                ajaxURL: user.settings.lastNamesPath
+            }
+            // "Teskit Lot Number": {
+            //     field_type: "text",
+            //     id: "data.test_kit_lot_number"
+            // },
+            // "Control line seen": {
+            //     field_type: "select",
+            //     id: "data.control_line_seen",
+            //     options: ["Yes", "No"]
+            // },
+            // "Result": {
+            //     field_type: "select",
+            //     id: "data.result",
+            //     tt_pageStyleClass: "NoKeyboard",
+            //     options: ["Negative", "Weak positive", "Strong positive"]
+            // }
+            // "Interpretation": {
+            //     field_type: "text",
+            //     id: "data.interpretation",
+            //     allowFreeText: true,
+            //     optional: true,
+            //     tt_onLoad: update_outcome+include_summary_js+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
+            // },
+            // "Supervisor code": {
+            //     field_type: "number",
+            //     id: "data.supervisor_code",
+            //     tt_pageStyleClass : "Numeric NumbersOnly",
+            //     validationRule: "^\\d{4}$",
+            //     validationMessage: "The code is not valid"
+            // },
+            // "Quality Control Testing Log" :{
+            //     field_type: "text",
+            //     id:"data.summary",
+            //     tt_onLoad: "showQualityControlTestSummary()",
+            //     tt_pageStyleClass: "NoKeyboard",
+            //     condition: false
+            // }
+        }
+
+        user.buildFields(fields, table);
+
+        user.navPanel(form.outerHTML);
+
+    },
+
+
     navPanel: function (content) {
 
         if (user.$("user.navPanel")) {
@@ -617,6 +841,8 @@ var user = ({
 
     submitData: function (data) {
 
+        console.log(data);
+
         data.data.userId = user.getCookie("username");
 
         data.data.token = user.getCookie("token");
@@ -673,7 +899,26 @@ var user = ({
 
             })
 
-        } else {
+        }else if(data.data.datatype == "quality_assurance"){
+
+                user.ajaxPostRequest("/save_quality_control_test", data.data, function (sid) {
+
+                    var json = JSON.parse(sid);
+
+                    if (user.$("user.navPanel")) {
+
+                        document.body.removeChild(user.$("user.navPanel"));
+
+                    }
+
+                    // window.location = "/";
+
+                    user.showMsg(json.message, "Status", "/");
+
+                })
+
+        } 
+        else {
 
             user.ajaxPostRequest(user.settings.loginPath, data.data, function (sid) {
 

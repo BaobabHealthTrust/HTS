@@ -6172,6 +6172,25 @@ app.get("/available_kits_by_desctiption/:description", function(req, res){
 
 });
 
+//Quality Control and proficiency test routes
+
+app.post('/save_quality_control_test', function (req, res) {
+
+    var data = req.body.data;
+
+    switch (data.datatype) {
+
+            case "quality_assurance": 
+
+                saveQualityTest(data, res);
+                
+                break;
+
+    }
+
+
+})
+
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/views/index.html');
 });
