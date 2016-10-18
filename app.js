@@ -2500,7 +2500,7 @@ function saveQualityTest(data, res){
 
          queryRawStock(consumption_kit_query, function (batch) {
 
-            console.log("Consumption kit");
+            console.log("Kit Consumption Query");
 
         });                        
 
@@ -2515,7 +2515,7 @@ function saveQualityTest(data, res){
 
          queryRawStock(consumption_sample__query, function (batch) {
 
-            console.log("Consumption Kit Query");
+            console.log("Sample Consumption Query");
 
         });
 
@@ -2527,6 +2527,25 @@ function saveQualityTest(data, res){
 
         });
 
+    }
+
+}
+
+function saveFacility(data, res){
+
+    if(data.datatype =="add_facility"){
+
+        var sql = "INSERT INTO relocation_facility (name,region,district,created_by,date_created) VALUES('"+data.name+"','"+data.region+
+
+                    "','"+data.district+"','"+data.user+"',NOW())";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Facility Saved!"});
+
+        });
     }
 
 }
@@ -5020,6 +5039,12 @@ app.post('/save_item', function (req, res) {
                 
                 break;
 
+            case "add_facility" :
+
+                saveFacility(data, res);
+
+                break;
+
         }
 
     });
@@ -6146,6 +6171,7 @@ app.get("/facilities", function(req, res){
         }
 
     }
+    
 
     res.send("<li>" + results.join("</li><li>") + "</li>");
 

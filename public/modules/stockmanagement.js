@@ -3077,7 +3077,54 @@ var stock = ({
         })
 
     },
-     setStockLimit: function(){
+    AddFacility : function(){
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "add_facility"
+            },
+            "User":{
+                field_type: "hidden",
+                id: "data.user",
+                value: stock.getCookie("username")
+            },
+            "Facility / Location Name":{
+                field_type: "text",
+                id: "data.name"
+
+            },
+            "Region" : {
+                field_type : "select",
+                id: "data.region",
+                options : ["Central Region","Northern Region", "Southern Region"],
+                tt_onUnload: "__$('data.district').setAttribute('ajaxURL','/district_query?region='+__$('touchscreenInput'+tstCurrentPage).value +'&district=')"
+
+            },
+            "District" :{
+                field_type: "text",
+                id: "data.district"
+            }
+        }
+
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+
+    },
+    setStockLimit: function(){
 
         var category_url = stock.settings.categorySearchPath + "?category=";
 
