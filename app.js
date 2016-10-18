@@ -2535,20 +2535,46 @@ function saveFacility(data, res){
 
     if(data.datatype =="add_facility"){
 
-        var sql = "INSERT INTO relocation_facility (name,region,district,created_by,date_created) VALUES('"+data.name+"','"+data.region+
+        var sql = "";
+
+        if(data.id){
+
+            sql = "UPDATE relocation_facility SET name='"+data.name+"',region = '" +data.region+"',district = '"+data.district+
+                  "',changed_by='"+data.user+"' WHERE facility_id ="+data.id;
+
+        }
+        else{
+
+            sql = "INSERT INTO relocation_facility (name,region,district,created_by,date_created) VALUES('"+data.name+"','"+data.region+
 
                     "','"+data.district+"','"+data.user+"',NOW())";
+        }
 
         console.log(sql);
 
         queryRawStock(sql, function (batch) {
 
-                res.status(200).json({message: "Facility Saved!"});
+                res.status(200).json({message: "Facility Saved!",add_facility:data.name});
 
         });
     }
 
 }
+
+app.post("/delete_facility",function(req,res){
+
+    var data = req.body.data;
+
+    var sql = "DELETE FROM relocation_facility WHERE facility_id ="+data.id ;
+
+
+    queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Facility Deleted!"});
+
+    });
+
+});
 
 function loggedIn(token, callback) {
 
@@ -6171,9 +6197,57 @@ app.get("/facilities", function(req, res){
         }
 
     }
-    
 
-    res.send("<li>" + results.join("</li><li>") + "</li>");
+    var sql = "SELECT name FROM relocation_facility";
+
+    queryRawStock(sql, function (data) {
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            if (!data[0][i].name)
+                continue;
+
+            results.push(data[0][i].name)
+
+
+        }
+
+        res.send("<li>" + results.join("</li><li>") + "</li>");
+
+    })
+
+});
+
+app.get("/relocation_facility_list",function(req, res){
+
+    var sql = "SELECT * FROM relocation_facility";
+
+    queryRawStock(sql, function (data) {
+
+        var results = []
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            if (!data[0][i].name)
+                continue;
+
+            var entry = {
+                            id: data[0][i].facility_id,
+                            name: data[0][i].name,
+                            region : data[0][i].region,
+                            district: data[0][i].district
+
+
+            }
+
+            results.push(entry)
+
+
+        }
+
+        res.send(results);
+
+    })
 
 });
 
