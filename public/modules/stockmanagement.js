@@ -2530,6 +2530,7 @@ var stock = ({
             fields[batchLabel] = {
                 field_type: "text",
                 id: "data.lot_number",
+                helpText: batchLabel + "<i style='font-size:20px; font-weight:normal' >(  Select from list if exist or type new Lot Number  )</i>",
                 ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
                 allowFreeText : true,
                 optional: true,
