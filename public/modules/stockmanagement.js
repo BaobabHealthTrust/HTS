@@ -988,7 +988,7 @@ var stock = ({
 
         table.appendChild(tr);
 
-        var fields = ["", "Item Name - <i>Tap name to view Lot #'s</i>", "Description", "Category", "In Stock", "AMC", "Average Issue/Day",
+        var fields = ["", "Item Name <i>(Tap name to view Lot #'s)</i>", "Description", "Category", "In Stock", "AMC <i>(Number of Packs)</i>", "Average Issue/Day",
             "Receive", "Issue", "Edit", "Delete", "Adjustments"];
         var colSizes = ["30px", "180px", undefined, "150px", "90px", "90px", "90px", "80px", "80px", "80px", "80px",
             "180px"];
@@ -1645,7 +1645,7 @@ var stock = ({
             fields[expiryLabel] = {
                 field_type: "date",
                 id: "data.expiry_date",
-                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
                 optional: true
             };
 
