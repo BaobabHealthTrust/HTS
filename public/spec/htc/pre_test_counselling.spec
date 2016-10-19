@@ -28,7 +28,7 @@ Q.1.7. Duration in Days [pos:: 6$$ id:: duration_in_days$$type:: hidden]
 
 Q.1.8. Time Since Last Test Date [pos:: 7$$ id:: time_since_last_test_date$$type:: hidden]
 
-Q.1.9. Duration Control [pos:: 8$$ id:: duration_ago$$ tt_onLoad:: showTimeSinceLastDate()$$ tt_pageStyleClass:: NoControls NoKeyboard condition:: __$('last_hiv_test').value != 'Never Tested' $$ optional :: true $$ helpText :: Time Since Last Test Date]
+Q.1.9. Duration Control [pos:: 8$$ id:: duration_ago$$ tt_onLoad:: showTimeSinceLastDate()$$ tt_pageStyleClass:: NoControls NoKeyboard $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ optional :: true $$ helpText :: Time Since Last Test Date]
 
 Q.1.10. Captured Duration Value [pos :: 9 $$ id :: captured_value $$ tt_onLoad :: __$('touchscreenInput' + tstCurrentPage).value = __$('duration_ago').value $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ condition :: false]
 

@@ -4134,7 +4134,81 @@ function updateDuration(token) {
 
         if (__$("duration")) {
 
-            __$("duration").value = (String(__$("duration").value).trim()) + token;
+            var birthdate = window.parent.dashboard.data.data.birthdate;
+
+
+
+            switch (currentRange) {
+
+                case "Years":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 30){
+
+                        window.parent.dashboard.showMsg("Years you are about enter is greater than (30 years)","Time Since Last Test")
+
+
+                    }else if(birthdate && birthdate.length > 0 && parseInt(getAge(birthdate)[0]) < parseInt((String(__$("duration").value).trim()) + token)){
+
+                         window.parent.dashboard.showMsg("Years you are about enter  is greater than  age of the client ("+parseInt(getAge(birthdate)[0])+" years)","Time Since Last Test");
+
+
+                    }else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+
+                    }
+
+                    break;
+                case "Months":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+
+                        window.parent.dashboard.showMsg("Months you are about enter is greater than (24 months)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+
+                case "Weeks":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+
+                        window.parent.dashboard.showMsg("Weeks you are about enter is greater than (24 weeks)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+
+                case "Days":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 31){
+
+                        window.parent.dashboard.showMsg("Days you are about enter is greater than (31 days)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+            }
+
 
         }
 
