@@ -383,15 +383,15 @@ padZeros: function (number, positions) {
 
         	fields["First Pass Test Kit 1 Lot Number"+i] = entry;
 
-        	/*var entry = {
-        		field_type: "text",
-        		id: "fp_lot_number1",
-        		expiry: "fp_lot_1_expiry",
-        		dispatch: "fp_lot_1_dispatch_id",
-        		tt_onUnload: "validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)",
-        		tt_onLoad: "if(__$('fp_lot_number1').getAttribute('consumption_id')){reverseConsumption(__$('fp_lot_number1').getAttribute('consumption_id')); 'fp', '1'}"
+        	var entry = {
+        		field_type: "select",
+        		id: "data.fp_test1_result"+i,
+                options: ["-","+"],
+                helpText: "First Pass Test 1 Result",
+                tt_onLoad: "loadSerialTest(__$('fp_test1_result"+i+"'), __$('fp_test1_duration'), window.parent.proficiency.kits['First Test'])"
 
-        	}*/
+        	}
+            fields ["First Pass Test 1 Result"+i] = entry;
 
         }
 
