@@ -353,7 +353,7 @@ padZeros: function (number, positions) {
         	// var setAjaxUrlName2 = "__$('data.fp_item_name2_"+i+"').setAttribute('ajaxURL','/stock_items?category='+__$('touchscreenInput'+tstCurrentPage).value +'&description=' + encodeURIComponent('Second Test')+ '&item_name=')"
 
 
-        	/*var entry = {
+        	var entry = {
         		field_type: "text",
         		id : "data.category"+i,
         		ajaxURL: "/stock_categories?category=",
@@ -370,9 +370,9 @@ padZeros: function (number, positions) {
         		tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
         		helpText: "First Pass Test Kit 1 Name",
         		tt_onUnload : lotNumber1
-        	}*/
+        	}
 
-        	//fields["First Pass Test Kit 1 Name " + i] = entry;
+        	fields["First Pass Test Kit 1 Name " + i] = entry;
 
         	var entry = {
         		field_type: "text",
