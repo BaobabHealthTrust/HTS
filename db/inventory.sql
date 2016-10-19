@@ -438,33 +438,22 @@ LOCK TABLES `transfer` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-DROP TABLE IF EXISTS `quality_assurance`;
 
-CREATE TABLE `quality_assurance` (
-  `quality_assurance_test_id` int(11) NOT NULL AUTO_INCREMENT,
-  `provider_id` varchar(255) NOT NULL,
-  `sample_type` varchar(255) NOT NULL,
-  `test_kit_name` varchar(255) NOT NULL,
-  `test_kit_lot_number` varchar(255) NOT NULL,
-  `sample_name` varchar(255) NOT NULL,
-  `sample_name_lot_number` varchar(255) NOT NULL,
-  `control_line_seen` varchar(3) NOT NULL,
-  `quality_test_result` varchar(255) NOT NULL,
-  `outcome` varchar(255) NOT NULL,
-  `interpretation` varchar(255) NOT NULL,
-  `supervisor_code` varchar(255) NOT NULL,
-  `voided` tinyint(1) NOT NULL,
-  `voided_reason` varchar(255) NOT NULL,
-  `voided_date` varchar(255) NOT NULL,
-  `voided_by` varchar(255) NOT NULL,
-  `tested_by` varchar(255) NOT NULL,
-  `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+DROP TABLE IF EXISTS `relocation_facility`;
+
+CREATE TABLE `relocation_facility` (
+  `facility_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `district` varchar(255) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_by` char(255) NOT NULL,
+  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `changed_by` varchar(255) NOT NULL,
-  PRIMARY KEY (`quality_assurance_test_id`)
+  PRIMARY KEY (`facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `quality_assurance` WRITE;
+LOCK TABLES `relocation_facilit` WRITE;
 /*!40000 ALTER TABLE `quality_assurance` DISABLE KEYS */;
 /*!40000 ALTER TABLE `quality_assurance` ENABLE KEYS */;
 UNLOCK TABLES;

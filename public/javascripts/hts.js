@@ -1157,6 +1157,8 @@ function setAjaxUrl(pos) {
 
 function saveConsumption(dispatch_id, target_id) {
 
+    console.log(dispatch_id);
+
     var patient_id = getCookie("client_identifier");
 
     var consumption_type = "Normal use";
@@ -3375,14 +3377,22 @@ function showDetailsSummary() {
         var th = document.createElement("th");
         th.innerHTML = "Phone/Physical Address";
         th.style.padding = "10px";
-        th.style.borderRight = "1px solid #333";
         th.style.borderTop = "3px solid #333";
         th.style.verticalAlign = "top";
 
         tr.appendChild(th);
 
         var td = document.createElement("td");
-        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        //td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "3px solid #333";
         td.innerHTML = "&nbsp;";
         td.style.width = "30px";
@@ -3390,6 +3400,8 @@ function showDetailsSummary() {
         td.rowSpan = 2;
 
         tr.appendChild(td);
+
+
 
         var tr = document.createElement("tr");
 
@@ -3402,10 +3414,18 @@ function showDetailsSummary() {
         th.style.fontWeight = "normal";
         th.style.fontSize = "11px";
         th.style.verticalAlign = "bottom";
-        th.style.borderRight = "1px solid #333";
         th.colSpan = 2;
 
         tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        
+        tr.appendChild(td);
 
         var tr = document.createElement("tr");
 
@@ -3433,9 +3453,36 @@ function showDetailsSummary() {
         td.style.borderBottom = "1px solid #333";
         td.style.borderRight = "1px solid #333";
 
-        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "" : (__$("1.10").value.trim() ==
-            "Phone Number" ? __$("phone_number").value.trim() : __$("village").value.trim() + ", " +
-            __$("closest_landmark").value.trim()));
+
+        if(__$("capture_details").value.trim() == "No"){
+
+            td.innerHTML = "";
+
+        }else{
+
+            td.innerHTML =  __$("phone_number").value.trim();
+
+
+        }
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+
+        if(__$("capture_details").value.trim() == "No"){
+
+            td.innerHTML = "";
+
+        }else{
+
+            td.innerHTML = __$("village").value.trim() + ", " + __$("closest_landmark").value.trim();
+
+
+        }
 
         tr.appendChild(td);
 
@@ -4087,7 +4134,81 @@ function updateDuration(token) {
 
         if (__$("duration")) {
 
-            __$("duration").value = (String(__$("duration").value).trim()) + token;
+            var birthdate = window.parent.dashboard.data.data.birthdate;
+
+
+
+            switch (currentRange) {
+
+                case "Years":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 30){
+
+                        window.parent.dashboard.showMsg("Years you are about enter is greater than (30 years)","Time Since Last Test")
+
+
+                    }else if(birthdate && birthdate.length > 0 && parseInt(getAge(birthdate)[0]) < parseInt((String(__$("duration").value).trim()) + token)){
+
+                         window.parent.dashboard.showMsg("Years you are about enter  is greater than  age of the client ("+parseInt(getAge(birthdate)[0])+" years)","Time Since Last Test");
+
+
+                    }else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+
+                    }
+
+                    break;
+                case "Months":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+
+                        window.parent.dashboard.showMsg("Months you are about enter is greater than (24 months)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+
+                case "Weeks":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+
+                        window.parent.dashboard.showMsg("Weeks you are about enter is greater than (24 weeks)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+
+                case "Days":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 31){
+
+                        window.parent.dashboard.showMsg("Days you are about enter is greater than (31 days)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+            }
+
 
         }
 
@@ -5051,7 +5172,7 @@ function setPhoneNumberValidation(phone_number){
 
         var field = __$(phone_number);
 
-        field.setAttribute("validationRule","^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$");
+        field.setAttribute("validationRule","^01\\d{6}$|Unknown|Not Available|^01\\d{8}$|^02\\d{8}$|^03\\d{8}$|^04\\d{8}$|^05\\d{8}$|^06\\d{8}$|^07\\d{8}$|^08\\d{8}$|^09\\d{8}$|^N\\/A$");
 
         field.setAttribute("validationMessage","Not a valid phone number");
 

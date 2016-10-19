@@ -2469,32 +2469,57 @@ function saveBatch(data, res) {
 
 function saveQualityTest(data, res){
 
-    console.log("Quality quality_assurance ///////////////////////////////////////////////////////");
-
-    console.log(data);
-
     if(data.datatype.trim() == "quality_assurance"){
 
          var sql = "";
 
         if(data.sample_type.trim().toLowerCase() == "serum"){
 
-            sql = "INSERT INTO quality_assurance (sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
-                      ",control_line_seen,quality_test_result,supervisir_code,interpretation,provider_id,outcome,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
+            sql = "INSERT INTO quality_assurance (qc_test_date,sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
+                      ",control_line_seen,quality_test_result,supervisir_code,interpretation,provider_id,outcome,date_created) VALUES('" +data.qc_testing_date+"' , '"+ data.sample_type +"' , '"+ data.test_kit_name+
                       "' , '"+ data.test_kit_lot_number + "' , '"+ data.serum_name + "' , '"+ data.serum_lot_number + 
                       "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome +  "',CURRENT_TIMESTAMP())";
 
         }
         else if(data.sample_type.trim().toLowerCase() == "dts"){
 
-            sql = "INSERT INTO quality_assurance (sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
-                      ",control_line_seen,quality_test_result,supervisor_code,interpretation,provider_id,outcome,date_created) VALUES('"+ data.sample_type +"' , '"+ data.test_kit_name+
-                      "' , '"+ data.test_kit_lot_number + "' , '"+ data.dts_name + "' , '"+ data.dts_lot_number + 
-                      "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome + "',CURRENT_TIMESTAMP())";
+            sql = "INSERT INTO quality_assurance (qc_test_date,sample_type,test_kit_name,test_kit_lot_number,test_kit_expiry_date,sample_name,sample_name_lot_number,sample_expiry_date"+
+                      ",control_line_seen,quality_test_result,supervisor_code,interpretation,provider_id,outcome,created_by,date_created) VALUES('"+data.qc_testing_date+"' , '"+ data.sample_type +"' , '"+ data.test_kit_name+
+                      "' , '"+ data.test_kit_lot_number+ "' , '"+ data.test_kit_expiry_date + "' , '"+ data.dts_name + "' , '"+ data.dts_lot_number +  "' , '"+ data.dts_expiry_date +
+                      "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome + "' , '"+ data.user+ "',CURRENT_TIMESTAMP())";
 
         }
 
-        console.log(sql);
+
+        var test_kit_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.test_kit_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+
+        var consumption_kit_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                "consumption_type WHERE name = 'Quality Control'), (" + test_kit_dispatch_id_query + "), '" +
+                                1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.user+ "')";
+
+         queryRawStock(consumption_kit_query, function (batch) {
+
+            console.log("Kit Consumption Query");
+
+        });                        
+
+
+        var sample_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.dts_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+
+
+        var consumption_sample__query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                "consumption_type WHERE name = 'Quality Control'), (" + sample_dispatch_id_query + "), '" +
+                                1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.user+ "')";
+
+         queryRawStock(consumption_sample__query, function (batch) {
+
+            console.log("Sample Consumption Query");
+
+        });
+
+
 
         queryRawQualityControl(sql, function (batch) {
 
@@ -2505,6 +2530,51 @@ function saveQualityTest(data, res){
     }
 
 }
+
+function saveFacility(data, res){
+
+    if(data.datatype =="add_facility"){
+
+        var sql = "";
+
+        if(data.id){
+
+            sql = "UPDATE relocation_facility SET name='"+data.name+"',region = '" +data.region+"',district = '"+data.district+
+                  "',changed_by='"+data.user+"' WHERE facility_id ="+data.id;
+
+        }
+        else{
+
+            sql = "INSERT INTO relocation_facility (name,region,district,created_by,date_created) VALUES('"+data.name+"','"+data.region+
+
+                    "','"+data.district+"','"+data.user+"',NOW())";
+        }
+
+        console.log(sql);
+
+        queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Facility Saved!",add_facility:data.name});
+
+        });
+    }
+
+}
+
+app.post("/delete_facility",function(req,res){
+
+    var data = req.body.data;
+
+    var sql = "DELETE FROM relocation_facility WHERE facility_id ="+data.id ;
+
+
+    queryRawStock(sql, function (batch) {
+
+                res.status(200).json({message: "Facility Deleted!"});
+
+    });
+
+});
 
 function loggedIn(token, callback) {
 
@@ -4995,6 +5065,12 @@ app.post('/save_item', function (req, res) {
                 
                 break;
 
+            case "add_facility" :
+
+                saveFacility(data, res);
+
+                break;
+
         }
 
     });
@@ -6122,7 +6198,56 @@ app.get("/facilities", function(req, res){
 
     }
 
-    res.send("<li>" + results.join("</li><li>") + "</li>");
+    var sql = "SELECT name FROM relocation_facility";
+
+    queryRawStock(sql, function (data) {
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            if (!data[0][i].name)
+                continue;
+
+            results.push(data[0][i].name)
+
+
+        }
+
+        res.send("<li>" + results.join("</li><li>") + "</li>");
+
+    })
+
+});
+
+app.get("/relocation_facility_list",function(req, res){
+
+    var sql = "SELECT * FROM relocation_facility";
+
+    queryRawStock(sql, function (data) {
+
+        var results = []
+
+        for (var i = 0; i < data[0].length; i++) {
+
+            if (!data[0][i].name)
+                continue;
+
+            var entry = {
+                            id: data[0][i].facility_id,
+                            name: data[0][i].name,
+                            region : data[0][i].region,
+                            district: data[0][i].district
+
+
+            }
+
+            results.push(entry)
+
+
+        }
+
+        res.send(results);
+
+    })
 
 });
 

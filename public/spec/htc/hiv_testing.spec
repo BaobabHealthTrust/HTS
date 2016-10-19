@@ -78,4 +78,4 @@ Q.1.39. Result Given To Client [pos:: 38$$ id:: result_given_to_client$$ type::h
 
 Q.1.40. DBS Sample ID [pos :: 39 $$ id :: sample_id $$condition::false]
 
-Q.1.41. Client Registration Summary [pos:: 40$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.41. HIV Testing Summary [pos:: 40$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]

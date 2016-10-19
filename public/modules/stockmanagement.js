@@ -988,7 +988,7 @@ var stock = ({
 
         table.appendChild(tr);
 
-        var fields = ["", "Item Name - <i>Tap name to view Lot #'s</i>", "Description", "Category", "In Stock", "AMC", "Average Issue/Day",
+        var fields = ["", "Item Name <i>(Tap name to view Lot #'s)</i>", "Description", "Category", "In Stock", "AMC <i>(Number of Packs)</i>", "Average Issue/Day",
             "Receive", "Issue", "Edit", "Delete", "Adjustments"];
         var colSizes = ["30px", "180px", undefined, "150px", "90px", "90px", "90px", "80px", "80px", "80px", "80px",
             "180px"];
@@ -1653,7 +1653,7 @@ var stock = ({
             fields[expiryLabel] = {
                 field_type: "date",
                 id: "data.expiry_date",
-                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
                 optional: true
             };
 
@@ -2538,6 +2538,7 @@ var stock = ({
             fields[batchLabel] = {
                 field_type: "text",
                 id: "data.lot_number",
+                helpText: batchLabel + "<i style='font-size:20px; font-weight:normal' >(  Select from list if exist or type new Lot Number  )</i>",
                 ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
                 allowFreeText : true,
                 optional: true,
@@ -3085,7 +3086,417 @@ var stock = ({
         })
 
     },
-     setStockLimit: function(){
+    relocationFacilityList : function(target){
+
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "Relocation Facilities";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "stock.content";
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "1px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
+
+        div0.appendChild(div0_1_0_0);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.location = "/";
+
+        }
+
+        nav.appendChild(btnFinish);
+
+        // var btnSearch = document.createElement("button");
+        // btnSearch.className = "blue";
+        // btnSearch.style.cssFloat = "right";
+        // btnSearch.style.marginTop = "15px";
+        // btnSearch.innerHTML = "Search for Inventory";
+
+        // btnSearch.onclick = function () {
+
+        //     window.parent.stock.searchForStock();
+
+        // }
+
+        // nav.appendChild(btnSearch);
+
+        var btnAdd = document.createElement("button");
+        btnAdd.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
+        btnAdd.style.cssFloat = "right";
+        btnAdd.style.margin = "15px";
+        btnAdd.innerHTML = "Add Item";
+
+        btnAdd.onclick = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            window.parent.stock.addFacility();
+
+        }
+
+        nav.appendChild(btnAdd);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+        stock.loadListRelocation("/relocation_facility_list", div0_1_0_0);
+
+    },
+    addFacility : function(){
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "add_facility"
+            },
+            "User":{
+                field_type: "hidden",
+                id: "data.user",
+                value: stock.getCookie("username")
+            },
+            "Facility / Location Name":{
+                field_type: "text",
+                id: "data.name"
+
+            },
+            "Region" : {
+                field_type : "select",
+                id: "data.region",
+                options : ["Central Region","Northern Region", "Southern Region"],
+                tt_onUnload: "__$('data.district').setAttribute('ajaxURL','/district_query?region='+__$('touchscreenInput'+tstCurrentPage).value +'&district=')"
+
+            },
+            "District" :{
+                field_type: "text",
+                id: "data.district"
+            }
+        }
+
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+
+    },
+    loadListRelocation: function(path,target){
+
+        if (!path || !target)
+            return;
+
+        stock.ajaxRequest(path, function (data) {
+
+            var data = JSON.parse(data);
+
+            if (!target)
+            return;
+
+            if (!data)
+                return;
+
+            target.innerHTML = "";
+
+            var table = document.createElement("table");
+            table.style.borderCollapse = "collapse";
+            table.border = 1;
+            table.style.borderColor = "#eee";
+            table.width = "100%";
+            table.cellPadding = "8";
+
+            target.appendChild(table);
+
+            var tr = document.createElement("tr");
+            tr.style.backgroundColor = "#999";
+            tr.style.color = "#eee";
+
+            table.appendChild(tr);
+
+            var fields = ["", "Name", "Region", "District", "Edit", "Delete"];
+            var colSizes = ["20px", "18%", "18%", "18%", "18%", "18%", "18%", "80px", "80px", "80px", "80px",
+                "180px"];
+
+            for (var i = 0; i < fields.length; i++) {
+
+                var th = document.createElement("th");
+
+                if (colSizes[i])
+                    th.style.width = colSizes[i];
+
+                th.innerHTML = fields[i];
+
+                tr.appendChild(th);
+
+            }
+
+            for(var i = 0; i < data.length ; i++){
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.innerHTML = i+1;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].name
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].region
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].district
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                var editBtn = document.createElement("button");
+
+                td.appendChild(editBtn);
+
+                editBtn.className = "blue";
+
+                editBtn.innerHTML = "Edit";
+
+                editBtn.style.width = "60%";
+
+                editBtn.style.minWidth = "100px";
+
+                editBtn.style.minHeight = "30px";
+
+                editBtn.style.fontWeight = "normal"
+
+                editBtn.setAttribute("onclick","window.parent.stock.editFacitity('"+JSON.stringify(data[i])+"')");
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                var delteBtn = document.createElement("button");
+
+                td.appendChild(delteBtn);
+
+                delteBtn.className = "red";
+
+                delteBtn.innerHTML = "Delete";
+
+                delteBtn.style.width = "60%";
+
+                delteBtn.style.minWidth = "100px";
+
+                delteBtn.style.minHeight = "30px";
+
+                delteBtn.style.fontWeight = "normal";
+
+                delteBtn.setAttribute("onclick","window.parent.stock.deleteFacitity('"+data[i].id+"')");
+
+
+
+            }
+
+
+        })
+
+
+    },
+    editFacitity: function(data){
+
+        console.log(data);
+
+        var data =  JSON.parse(data);
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "add_facility"
+            },
+            "Facility ID" :{
+                field_type: "hidden",
+                id:"data.id",
+                value: data.id
+
+            },
+            "User":{
+                field_type: "hidden",
+                id: "data.user",
+                value: stock.getCookie("username")
+            },
+            "Facility / Location Name":{
+                field_type: "text",
+                id: "data.name",
+                value: data.name
+
+            },
+            "Region" : {
+                field_type : "select",
+                id: "data.region",
+                options : ["Central Region","Northern Region", "Southern Region"],
+                tt_onUnload: "__$('data.district').setAttribute('ajaxURL','/district_query?region='+__$('touchscreenInput'+tstCurrentPage).value +'&district=')",
+                value: data.region
+
+            },
+            "District" :{
+                field_type: "text",
+                id: "data.district",
+                value: data.district
+            }
+        }
+
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    },
+    deleteFacitity: function(id){
+
+        var data = {
+            data: {}
+        };
+
+        data.data.userId = stock.getCookie("username");
+
+        data.data.token = stock.getCookie("token");
+
+        data.data.id = id;
+
+        stock.ajaxPostRequest("/delete_facility", data, function (sid) {
+
+            var json = JSON.parse(sid);
+
+            window.parent.stock.relocationFacilityList(window.parent.document.body);
+
+            stock.showMsg(json.message);
+
+        })
+
+    },
+
+    setStockLimit: function(){
 
         var category_url = stock.settings.categorySearchPath + "?category=";
 
@@ -3178,8 +3589,15 @@ var stock = ({
 
             var json = JSON.parse(sid);
 
-            if (stock.$("stock.content"))
+            if(json.add_facility){
+
+                stock.relocationFacilityList(window.parent.document.body);
+
+            }else if (!json.add_facility && stock.$("stock.content")){
+
                 stock.loadListItems(stock.settings.listPath, stock.$("stock.content"));
+
+            }
 
             stock.showMsg(json.message);
 
