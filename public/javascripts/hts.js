@@ -1237,7 +1237,7 @@ function evalCondition(pos) {
 
         case 0:
 
-            if (__$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") ||
                 (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
                     decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
@@ -1251,7 +1251,7 @@ function evalCondition(pos) {
 
         case 1:
 
-            if (__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")) {
 
                 result = true;
@@ -1262,7 +1262,7 @@ function evalCondition(pos) {
 
         case 2:
 
-            if (__$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
                 __$("fp_test1_result").value == "+") || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
@@ -1276,7 +1276,7 @@ function evalCondition(pos) {
 
         case 3:
 
-            if (__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") && __$("fp_test1_result").value == "+") {
 
                 result = true;
@@ -1287,7 +1287,7 @@ function evalCondition(pos) {
 
         case 4:
 
-            if (__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant")) {
 
@@ -1299,7 +1299,7 @@ function evalCondition(pos) {
 
         case 5:
 
-            if (__$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
                 __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value) || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" &&
@@ -1310,7 +1310,7 @@ function evalCondition(pos) {
 
             }
 
-            if(__$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
+            if(__$("consent") && __$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
                  && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value)){
 
@@ -5138,7 +5138,60 @@ function setTestKits(){
     }
 
 }
+function setTestKitsProfiency(){
 
+    var descriptions = ["First Test", "Second Test"];
+
+
+    for (var i = 0 ; i < descriptions.length ; i++){
+
+         getAjaxRequest("/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+
+                var kit_data = JSON.parse(data);
+
+                if(!window.parent.proficiency.kits)
+                    window.parent.proficiency.kits = {};
+
+                window.parent.proficiency.kits[kit_data.description] = kit_data.name;
+
+
+                for( var i = 0 ; i < 5 ; i =  i + 1){
+
+                       if(kit_data.description == "First Test"){
+
+                            console.log('data.fp_lot_number1_' + i);
+
+
+                            __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                            "&item_name=" + kit_data.name + "&batch=");
+
+                            //__$('im_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                            //getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+
+
+                        }
+
+                        else{
+
+                            __$('data.fp_lot_number2_' + i ).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                                "&item_name=" + kit_data.name + "&batch=");
+
+                            //__$('im_lot_number2' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                            //getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
+
+                        }
+
+                        if(kit_data.name && kit_data.name.length > 0)
+                                recommendedTimmerForLabels([kit_data.name]);
+
+                }
+
+        });
+
+
+    }
+
+}
 function getMonthList(){
 
     var ul = __$("options");

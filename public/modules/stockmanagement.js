@@ -1302,10 +1302,18 @@ var stock = ({
 
             var ul = document.createElement("ul");
 
-            ul.innerHTML = data;
+            if(data){
 
+                ul.innerHTML = data;
 
-            message_div.appendChild(ul);
+                message_div.appendChild(ul);
+
+            }else{
+
+                message_div.innerHTML = "No Available Lot Numbers for "+stock_item.name;                
+            }
+
+            
 
         });
 

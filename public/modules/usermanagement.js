@@ -707,106 +707,87 @@ var user = ({
         user.showMsg(outcome);
 
 
-    }
-    ,
-
-    proficiencyTest: function (label) {
-
-        stock.setStockLimit();
-
-        var form = document.createElement("form");
-        form.id = "data";
-        form.action = "javascript:submitData()";
-        form.style.display = "none";
-
-        var table = document.createElement("table");
-
-        form.appendChild(table);
-
-        var fields = {
-            "Datatype": {
-                field_type: "hidden",
-                id: "data.datatype",
-                value: "proficiency_test"
-            },
-            "Show ID": {
-                field_type: "hidden",
-                id: "data.show_id",
-                value: ""
-            },
-            "Date of Proficiency testing": {
-                field_type: "date",
-                id: "data.proficiency_testing_date"
-            },
-            "HTS provider ID": {
-                field_type: "number",
-                id: "data.provider_id",
-                tt_pageStyleClass : "Numeric NumbersOnly",
-                validationRule: "^\\d{4}$",
-                validationMessage: "The code is not valid"
-            },
-            "Phone number": {
-                field_type: "number",
-                id: "data.phone_number",
-                tt_pageStyleClass : "Numeric NumbersOnly",
-                validationRule: "^\\d{10}$",
-                validationMessage: "The Phone number is not valid"
-            },
-            "Tester First Name": {
-                field_type: "text",
-                id: "data.first_name",
-                allowFreeText: true,
-                ajaxURL: user.settings.firstNamesPath
-            },
-            "Tester Last Name": {
-                field_type: "text",
-                id: "data.last_name",
-                allowFreeText: true,
-                ajaxURL: user.settings.lastNamesPath
-            }
-            // "Teskit Lot Number": {
-            //     field_type: "text",
-            //     id: "data.test_kit_lot_number"
-            // },
-            // "Control line seen": {
-            //     field_type: "select",
-            //     id: "data.control_line_seen",
-            //     options: ["Yes", "No"]
-            // },
-            // "Result": {
-            //     field_type: "select",
-            //     id: "data.result",
-            //     tt_pageStyleClass: "NoKeyboard",
-            //     options: ["Negative", "Weak positive", "Strong positive"]
-            // }
-            // "Interpretation": {
-            //     field_type: "text",
-            //     id: "data.interpretation",
-            //     allowFreeText: true,
-            //     optional: true,
-            //     tt_onLoad: update_outcome+include_summary_js+";window.parent.stock.outcome(__$('data.dts_name').value,__$('data.result').value)"
-            // },
-            // "Supervisor code": {
-            //     field_type: "number",
-            //     id: "data.supervisor_code",
-            //     tt_pageStyleClass : "Numeric NumbersOnly",
-            //     validationRule: "^\\d{4}$",
-            //     validationMessage: "The code is not valid"
-            // },
-            // "Quality Control Testing Log" :{
-            //     field_type: "text",
-            //     id:"data.summary",
-            //     tt_onLoad: "showQualityControlTestSummary()",
-            //     tt_pageStyleClass: "NoKeyboard",
-            //     condition: false
-            // }
-        }
-
-        user.buildFields(fields, table);
-
-        user.navPanel(form.outerHTML);
-
     },
+
+    //     proficiencyTest: function (label) {
+
+    //     stock.setStockLimit();
+
+    //     var form = document.createElement("form");
+    //     form.id = "data";
+    //     form.action = "javascript:submitData()";
+    //     form.style.display = "none";
+
+    //     var table = document.createElement("table");
+
+    //     form.appendChild(table);
+
+    //     var fields = {
+    //         "Datatype": {
+    //             field_type: "hidden",
+    //             id: "data.datatype",
+    //             value: "proficiency_test"
+    //         },
+    //         "Show ID": {
+    //             field_type: "hidden",
+    //             id: "data.show_id",
+    //             value: ""
+    //         },
+    //         "Date of Proficiency testing": {
+    //             field_type: "date",
+    //             id: "data.proficiency_testing_date"
+    //         },
+    //         "HTS provider ID": {
+    //             field_type: "number",
+    //             id: "data.provider_id",
+    //             tt_pageStyleClass : "Numeric NumbersOnly",
+    //             validationRule: "^\\d{4}$",
+    //             validationMessage: "The code is not valid"
+    //         },
+    //         "Phone number": {
+    //             field_type: "number",
+    //             id: "data.phone_number",
+    //             tt_pageStyleClass : "Numeric NumbersOnly",
+    //             validationRule: "^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$",
+    //             validationMessage: "Not a valid phone number"
+    //         },
+    //         "Tester First Name": {
+    //             field_type: "text",
+    //             id: "data.first_name",
+    //             allowFreeText: true,
+    //             ajaxURL: user.settings.firstNamesPath
+    //         },
+    //         "Tester Last Name": {
+    //             field_type: "text",
+    //             id: "data.last_name",
+    //             allowFreeText: true,
+    //             ajaxURL: user.settings.lastNamesPath
+    //         },
+    //         "DTS Lot Number": {
+    //             field_type: "select",
+    //             id: "data.dts_lot_number",
+    //             condition : false
+                
+    //         },
+    //         "DTS pack checklist": {
+    //             field_type: "select",
+    //             id: "data.dts_pack_checklist",
+    //             multiple: "multiple",
+    //             tt_pageStyleClass: "MultiSelectList",
+    //             tt_pageStyleClass: "NoKeyboard",
+    //             optional: true,
+    //             options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"]
+    //         },
+    //         "Panel 1 Test": {
+
+    //         }
+    //     }
+
+    //     user.buildFields(fields, table);
+
+    //     user.navPanel(form.outerHTML);
+
+    // },
 
 
     navPanel: function (content) {
