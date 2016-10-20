@@ -21,14 +21,14 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
             if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
-                result = date.getFullYear() + "-" + proficiency.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    proficiency.padZeros(date.getDate(), 2) + " " + proficiency.padZeros(date.getHours(), 2) + ":" +
-                    proficiency.padZeros(date.getMinutes(), 2) + ":" + proficiency.padZeros(date.getSeconds(), 2);
+                result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    user.padZeros(date.getDate(), 2) + " " + user.padZeros(date.getHours(), 2) + ":" +
+                    user.padZeros(date.getMinutes(), 2) + ":" + user.padZeros(date.getSeconds(), 2);
 
             } else if (format.match(/YYYY\-mm\-dd/)) {
 
-                result = date.getFullYear() + "-" + proficiency.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    proficiency.padZeros(date.getDate(), 2);
+                result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    user.padZeros(date.getDate(), 2);
 
             } else if (format.match(/mmm\/d\/YYYY/)) {
 
@@ -48,15 +48,15 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
         }
     });
 
-};
+}
 
-var proficiency = ({
+var quality = ({
 
     version: "0.0.1",
 
-    proficiency: [],
+    quality: [],
 
-    proficiencyId: null,
+    qualityId: null,
 
     kits : {}
     ,
@@ -79,9 +79,7 @@ var proficiency = ({
 
     },
 
-
-
-padZeros: function (number, positions) {
+    padZeros: function (number, positions) {
         var zeros = parseInt(positions) - String(number).length;
         var padded = "";
 
@@ -163,7 +161,7 @@ padZeros: function (number, positions) {
             var key = keys[i];
 
             var td1 = document.createElement("td");
-            td1.innerHTML = (fields[key].helpText ? fields[key].helpText : key);
+            td1.innerHTML = key;
 
             tr.appendChild(td1);
 
@@ -180,7 +178,7 @@ padZeros: function (number, positions) {
                     var select = document.createElement("select");
                     select.id = fields[key].id;
                     select.name = fields[key].id;
-                    select.setAttribute("helpText", (fields[key].helpText ? fields[key].helpText : key));
+                    select.setAttribute("helpText", key);
 
                     td2.appendChild(select);
 
@@ -230,7 +228,7 @@ padZeros: function (number, positions) {
                     var input = document.createElement("input");
                     input.id = fields[key].id;
                     input.name = fields[key].id;
-                    input.setAttribute("helpText", (fields[key].helpText ? fields[key].helpText : key));
+                    input.setAttribute("helpText", key);
 
                     if (fields[key].field_type == "hidden") {
 
@@ -266,9 +264,9 @@ padZeros: function (number, positions) {
 
     },
 
-    proficiencyTest: function (label) {
+    qualityControlTest: function (label) {
 
-        stock.setStockLimit();        
+        stock.setStockLimit();
 
         var form = document.createElement("form");
         form.id = "data";
@@ -279,26 +277,55 @@ padZeros: function (number, positions) {
 
         form.appendChild(table);
 
-        var script = document.createElement("script");
-        script.setAttribute("src", "/javascripts/hts.js");
+        var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
+                             " outcome  = 'Acceptable'; __$('data.interpretation').setAttribute('condition', false); gotoNextPage() }else{} __$('data.outcome').value  = outcome;";
 
-        form.appendChild(script);
+        var include_summary_js = "var script = document.createElement('script'); script.type = 'text/javascript'; script.src ='/javascripts/quality_control_summary.js';"+
+                                "__$('data').appendChild(script);"
 
         var fields = {
             "Datatype": {
                 field_type: "hidden",
                 id: "data.datatype",
-                value: "proficiency_test"
+                value: "quality_assurance"
             },
             "Show ID": {
                 field_type: "hidden",
                 id: "data.show_id",
                 value: ""
             },
-            "Date of Proficiency testing": {
+            "Sample Type":{
+                field_type: "hidden",
+                id: "data.sample_type",
+                value: "dts"
+            },
+            "DTS Outcome":{
+                field_type: "hidden",
+                id: "data.outcome"
+            },
+            "DTS Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.dts_expiry_date"
+
+            },
+            "Location":{
+
+                field_type: "hidden",
+                id: "data.location",
+                value: user.getCookie("location")
+            },
+            "User":{
+
+                field_type: "hidden",
+                id: "data.user",
+                value:  user.getCookie("username")
+            }
+            ,
+            "Date of QC testing": {
                 field_type: "date",
-                id: "data.proficiency_testing_date",
-                tt_onUnload: "setTestKitsProfiency()"
+                id: "data.qc_testing_date",
+                tt_onUnload: include_summary_js
             },
             "HTS provider ID": {
                 field_type: "number",
@@ -307,307 +334,153 @@ padZeros: function (number, positions) {
                 validationRule: "^\\d{4}$",
                 validationMessage: "The code is not valid"
             },
-            "Phone number": {
-                field_type: "number",
-                id: "data.phone_number",
-                tt_pageStyleClass : "Numeric NumbersWithUnknown",
-                validationRule: "^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$",
-                validationMessage: "Not a valid phone number"
+            "Select DTS Type": {
+                field_type: "select",
+                id: "data.dts_name",
+                tt_pageStyleClass: "NoKeyboard",
+                ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
+                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
+                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
+                               " __$('data.dts_lot_number').setAttribute('condition',true)}"
+
             },
-            "Tester First Name": {
-                field_type: "text",
-                id: "data.first_name",
-                allowFreeText: true,
-                ajaxURL: user.settings.firstNamesPath
-            },
-            "Tester Last Name": {
-                field_type: "text",
-                id: "data.last_name",
-                allowFreeText: true,
-                ajaxURL: user.settings.lastNamesPath
-            },
-            "DTS Lot Number": {
+              "DTS Lot Number": {
                 field_type: "select",
                 id: "data.dts_lot_number",
-                condition : false
+                condition : false,
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_expiry_date')"
                 
             },
-            "DTS pack checklist": {
+            
+            "Select Test kit to evaluate": {
                 field_type: "select",
-                id: "data.dts_pack_checklist",
-                multiple: "multiple",
-                selectAll: true,
-                tt_pageStyleClass: "MultiSelectList",
+                id: "data.test_kit_name",
                 tt_pageStyleClass: "NoKeyboard",
-                options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"]
+                ajaxURL : '/stock_items?category=Test Kits&item_name=',
+                tt_onUnload : "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){"+
+                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+kit_name+'&batch=');"+
+                               "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
+            },
+            "Teskit Lot Number": {
+                field_type: "text",
+                id: "data.test_kit_lot_number",
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit_expiry_date')"
+            },
+             "Test Kit Expiry Date": {
+
+                field_type: "hidden",
+                id: "data.test_kit_expiry_date"
+
+            }
+            ,
+            "Control line seen": {
+                field_type: "select",
+                id: "data.control_line_seen",
+                options: ["Yes", "No"]
+            },
+            "Result": {
+                field_type: "select",
+                id: "data.result",
+                tt_pageStyleClass: "NoKeyboard",
+                options: ["Negative", "Weak positive", "Strong positive"]
+            },
+            "Interpretation": {
+                field_type: "text",
+                id: "data.interpretation",
+                allowFreeText: true,
+                optional: true,
+                tt_onLoad: update_outcome+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
+            },
+            "Supervisor code": {
+                field_type: "number",
+                id: "data.supervisor_code",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                validationRule: "^\\d{4}$",
+                validationMessage: "The code is not valid"
+            },
+            "Quality Control Testing Log" :{
+                field_type: "text",
+                id:"data.summary",
+                tt_onLoad: "showQualityControlTestSummary()",
+                tt_pageStyleClass: "NoKeyboard"
             }
         }
 
-        for(var i = 0; i < 5; i++) {
+        user.buildFields(fields, table);
 
-        	var setAjaxUrlName1 = "__$('data.fp_item_name1_"+i+"').setAttribute('ajaxURL','/stock_items?category='+__$('touchscreenInput'+tstCurrentPage).value +'&description=' + encodeURIComponent('First Test')+ '&item_name=')";
+        user.navPanel(form.outerHTML);
 
-        	var lotNumber1 = "__$('data.fp_lot_number1_"+i+"').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie('username') + '&item_name=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&batch=')";
+    },
+    outcome: function(dts_type, result){
 
+        var outcome = "Not acceptable";
 
-            var setAjaxUrlName2 = "__$('data.fp_item_name2_"+i+"').setAttribute('ajaxURL','/stock_items?category='+__$('touchscreenInput'+tstCurrentPage).value +'&description=' + encodeURIComponent('Second Test')+ '&item_name=')";
+        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
 
-            var lotNumber2 = "__$('data.fp_lot_number2_"+i+"').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie('username') + '&item_name=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&batch=')";
-
-
-            var imsetAjaxUrlName1 = "__$('data.im_item_name1_"+i+"').setAttribute('ajaxURL','/stock_items?category='+__$('touchscreenInput'+tstCurrentPage).value +'&description=' + encodeURIComponent('First Test')+ '&item_name=')";
-
-            var imlotNumber1 = "__$('data.im_lot_number1_"+i+"').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie('username') + '&item_name=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&batch=')";
-
-
-            var imsetAjaxUrlName2 = "__$('data.im_item_name2_"+i+"').setAttribute('ajaxURL','/stock_items?category='+__$('touchscreenInput'+tstCurrentPage).value +'&description=' + encodeURIComponent('Second Test')+ '&item_name=')";
-
-            var imlotNumber2 = "__$('data.im_lot_number2_"+i+"').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie('username') + '&item_name=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&batch=')";
-
-
-        	// var setAjaxUrlName2 = "__$('data.fp_item_name2_"+i+"').setAttribute('ajaxURL','/stock_items?category='+__$('touchscreenInput'+tstCurrentPage).value +'&description=' + encodeURIComponent('Second Test')+ '&item_name=')"
-
-
-        	var entry = {
-        		field_type: "text",
-        		id : "data.category"+i,
-        		ajaxURL: "/stock_categories?category=",
-        		tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-        		helpText: "First Pass Test 1 Kit Category",
-        		tt_onUnload : setAjaxUrlName1
-        	}
-
-        	fields["First Pass Test 1 Kit Category " + i] = entry;
-
-        	var entry = {
-        		field_type: "text",
-        		id: "data.fp_item_name1_"+i,
-        		tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-        		helpText: "First Pass Test Kit 1 Name",
-        		tt_onUnload : lotNumber1
-        	}
-
-        	fields["First Pass Test Kit 1 Name " + i] = entry;
-
-        	var entry = {
-        		field_type: "text",
-        		id: "data.fp_lot_number1_"+i,
-        		tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-        		helpText: "First Pass Test Kit 1 Lot Number"
-        	}
-
-        	fields["First Pass Test Kit 1 Lot Number"+i] = entry;
-
-        	var entry = {
-        		field_type: "select",
-        		id: "data.fp_test1_result"+i,
-                options: ["-","+"],
-                tt_pageStyleClass:"NoControls NoKeyboard",
-                helpText: "First Pass Test 1 Result",
-                tt_onLoad: "loadSerialTest(__$('data.fp_test1_result"+i+"'), __$('data.fp_test1_duration"+i+"'), window.parent.proficiency.kits['First Test'])"
-
-        	}
-            fields ["First Pass Test 1 Result"+i] = entry;
-
-            var entry ={
-                field_type : "hidden",
-                id: "data.fp_test1_duration"+i,
-                condition: false
-
-            }
-
-            fields["First Pass Test Kit 1 Testing Duration (Minutes)"+i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id : "data.category2"+i,
-                ajaxURL: "/stock_categories?category=",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                helpText: "First Pass Test 2 Kit Category",
-                tt_onUnload : setAjaxUrlName2
-            }
-
-            fields["First Pass Test 2 Kit Category " + i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id: "data.fp_item_name2_"+i,
-                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                helpText: "First Pass Test Kit 2 Name",
-                tt_onUnload : lotNumber2
-            }
-
-            fields["First Pass Test Kit 2 Name " + i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id: "data.fp_lot_number2_"+i,
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
-                helpText: "First Pass Test Kit 2 Lot Number"
-            }
-
-            fields["First Pass Test Kit 2 Lot Number"+i] = entry;
-
-            var entry = {
-                field_type: "select",
-                id: "data.fp_test2_result"+i,
-                options: ["-","+"],
-                tt_pageStyleClass:"NoControls NoKeyboard",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
-                helpText: "First Pass Test 2 Result",
-                tt_onLoad: "loadSerialTest(__$('data.fp_test2_result"+i+"'), __$('data.fp_test2_duration"+i+"'), window.parent.proficiency.kits['Second Test'])"
-
-            }
-            fields ["First Pass Test 2 Result"+i] = entry;
-
-            var entry ={
-                field_type : "hidden",
-                id: "data.fp_test2_duration"+i,
-                condition: false
-
-            }
-
-            fields["First Pass Test Kit 2 Testing Duration (Minutes)"+i] = entry;
-
-
-
-            ///Repeat test
-
-            var entry = {
-                field_type: "text",
-                id : "data.im_category"+i,
-                ajaxURL: "/stock_categories?category=",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                helpText: "Repeat Test 1 Kit Category",
-                tt_onUnload : imsetAjaxUrlName1
-            }
-
-            fields["Repeat Test 1 Kit Category" + i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id: "data.im_item_name1_"+i,
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                helpText: "Repeat Test Kit 1 Name",
-                tt_onUnload : imlotNumber1
-            }
-
-            fields["Repeat Test Kit 1 Name " + i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id: "data.im_lot_number1_"+i,
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                helpText: "Repeat Test Kit 1 Lot Number"
-            }
-
-            fields["Repeat Test Kit 1 Lot Number"+i] = entry;
-
-            var entry = {
-                field_type: "select",
-                id: "data.im_test1_result"+i,
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                options: ["-","+"],
-                helpText: "Repeat Test 1 Result",
-                condition: false
-
-            }
-            fields ["Repeat Test 1 Result"+i] = entry;
-
-            var entry ={
-                field_type : "hidden",
-                id: "data.im_test1_duration"+i,
-                condition: false
-
-            }
-
-            fields["Repeat Test Kit 1 Testing Duration (Minutes)"+i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id : "data.im_category2"+i,
-                ajaxURL: "/stock_categories?category=",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                helpText: "Repeat Test 2 Kit Category",
-                tt_onUnload : imsetAjaxUrlName2
-            }
-
-            fields["Repeat Test 2 Kit Category " + i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id: "data.im_item_name2_"+i,
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                helpText: "Repeat Test Kit 2 Name",
-                tt_onUnload : imlotNumber2
-            }
-
-            fields["Repeat Test Kit 2 Name " + i] = entry;
-
-            var entry = {
-                field_type: "text",
-                id: "data.im_lot_number2_"+i,
-                tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                helpText: "Repeat Test Kit 2 Lot Number"
-            }
-
-            fields["Repeat Test Kit 2 Lot Number"+i] = entry;
-
-            var entry = {
-                field_type: "select",
-                id: "data.im_test2_result"+i,
-                options: ["-","+"],
-                helpText: "Repeat Test 2 Result",
-                condition: false
-
-            }
-            fields ["Repeat Test 2 Result"+i] = entry;
-
-            var entry ={
-                field_type : "hidden",
-                id: "data.im_test2_duration"+i,
-                condition: false
-
-            }
-
-            fields["Repeat Test Kit 2 Testing Duration (Minutes)"+i] = entry;
-
-            var entry = {
-
-                    field_type: "text",
-                    id:"data.im_parallel",
-                    condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
-                    tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
-                    tt_onLoad: "recommendedTimmerForLabelsProficiency([__$('data.im_item_name1_"+i+"').value,__$('data.im_item_name2_"+i+"').value]);loadPassParallelTestsProfiiency(__$('data.im_test1_result"+i+"'), __$('data.im_test1_duration"+i+"'), __$('data.im_test2_result"+i
-                                +"'), __$('data.im_test2_duration"+i+"'),window.parent.proficiency.kits['First Test'], window.parent.proficiency.kits['Second Test'],"+i+")",
-                     tt_pageStyleClass: "NoControls NoKeyboard",
-                     helpText: "Repeat Test 1 & 2 Parallel Tests"
-
-            }
-
-             fields["Repeat Test 1 & 2 Parallel Tests)"+i] = entry;
-
-
-
+            outcome  = "Acceptable"
+        
         }
 
-        proficiency.buildFields(fields, table);
-
-        proficiency.navPanel(form.outerHTML);
+        user.showMsg(outcome);
 
     },
 
+    navPanel: function (content) {
 
-showMsg: function (msg, topic, nextURL) {
+        if (user.$("user.navPanel")) {
+
+            document.body.removeChild(user.$("user.navPanel"));
+
+        }
+
+        var divPanel = document.createElement("div");
+        divPanel.style.position = "absolute";
+        divPanel.style.left = "0px";
+        divPanel.style.top = "0px";
+        divPanel.style.width = "100%";
+        divPanel.style.height = "100%";
+        divPanel.style.backgroundColor = "#fff";
+        divPanel.id = "user.navPanel";
+        divPanel.style.zIndex = 800;
+        divPanel.style.overflow = "hidden";
+
+        document.body.appendChild(divPanel);
+
+        var iframe = document.createElement("iframe");
+        iframe.id = "ifrMain";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "1px solid #000";
+
+        var url = window.location.href.match(/(.+)\/[^\/]+$/);
+
+        // var base = (url ? url[1] : "");
+
+        var base = user.settings.basePath;
+
+        var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
+            "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
+            "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+            "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
+            "'/'; tt_cancel_show = '/';" +
+            "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
+            "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
+
+        html += "<div id='content'>" + content + "</div></body>";
+
+        var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+
+        iframe.setAttribute("src", page);
+
+        divPanel.appendChild(iframe);
+
+        iframe.onload = function () {
+
+        }
+
+    },
+
+    showMsg: function (msg, topic, nextURL) {
 
         if (!topic) {
 
@@ -709,9 +582,9 @@ showMsg: function (msg, topic, nextURL) {
 
         btn.onclick = function () {
 
-            if (proficiency.$("msg.shield")) {
+            if (user.$("msg.shield")) {
 
-                document.body.removeChild(proficiency.$("msg.shield"));
+                document.body.removeChild(user.$("msg.shield"));
 
                 if (this.getAttribute("nextURL"))
                     window.location = this.getAttribute("nextURL");
@@ -826,9 +699,9 @@ showMsg: function (msg, topic, nextURL) {
 
         btn.onclick = function () {
 
-            if (proficiency.$("msg.shield")) {
+            if (user.$("msg.shield")) {
 
-                document.body.removeChild(proficiency.$("msg.shield"));
+                document.body.removeChild(user.$("msg.shield"));
 
                 if (this.getAttribute("nextURL"))
                     window.location = this.getAttribute("nextURL");
@@ -941,9 +814,9 @@ showMsg: function (msg, topic, nextURL) {
 
         btnCancel.onclick = function () {
 
-            if (proficiency.$("msg.shield")) {
+            if (user.$("msg.shield")) {
 
-                document.body.removeChild(proficiency.$("msg.shield"));
+                document.body.removeChild(user.$("msg.shield"));
 
             }
 
@@ -961,9 +834,9 @@ showMsg: function (msg, topic, nextURL) {
 
         btnOK.onclick = function () {
 
-            if (proficiency.$("msg.shield")) {
+            if (user.$("msg.shield")) {
 
-                document.body.removeChild(proficiency.$("msg.shield"));
+                document.body.removeChild(user.$("msg.shield"));
 
                 if (this.getAttribute("nextURL"))
                     window.location = this.getAttribute("nextURL");
@@ -976,60 +849,115 @@ showMsg: function (msg, topic, nextURL) {
 
     },
 
+    ajaxPostRequest: function (url, data, callback) {
 
-    navPanel: function (content) {
+        var httpRequest = new XMLHttpRequest();
 
-        if (user.$("user.navPanel")) {
+        httpRequest.onreadystatechange = function () {
 
-            document.body.removeChild(user.$("user.navPanel"));
+            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
 
+                if (httpRequest.responseText.trim().length > 0) {
+                    var result = httpRequest.responseText;
+
+                    callback(result);
+
+                } else {
+
+                    callback(undefined);
+
+                }
+
+            }
+
+        };
+        try {
+            httpRequest.open("POST", url, true);
+            httpRequest.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+            httpRequest.send(JSON.stringify(data));
+        } catch (e) {
         }
 
-        var divPanel = document.createElement("div");
-        divPanel.style.position = "absolute";
-        divPanel.style.left = "0px";
-        divPanel.style.top = "0px";
-        divPanel.style.width = "100%";
-        divPanel.style.height = "100%";
-        divPanel.style.backgroundColor = "#fff";
-        divPanel.id = "user.navPanel";
-        divPanel.style.zIndex = 800;
-        divPanel.style.overflow = "hidden";
+    },
 
-        document.body.appendChild(divPanel);
+    ajaxRequest: function (url, callback) {
 
-        var iframe = document.createElement("iframe");
-        iframe.id = "ifrMain";
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.border = "1px solid #000";
+        var httpRequest = new XMLHttpRequest();
 
-        var url = window.location.href.match(/(.+)\/[^\/]+$/);
+        httpRequest.onreadystatechange = function () {
 
-        // var base = (url ? url[1] : "");
+            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
 
-        var base = user.settings.basePath;
+                if (httpRequest.responseText.trim().length > 0) {
+                    var result = httpRequest.responseText;
 
-        var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
-            "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
-            "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
-            "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
-            "'/'; tt_cancel_show = '/';" +
-            "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
-            "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
+                    callback(result);
 
-        html += "<div id='content'>" + content + "</div></body>";
+                } else {
 
-        var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+                    callback(undefined);
 
-        iframe.setAttribute("src", page);
+                }
 
-        divPanel.appendChild(iframe);
+            }
 
-        iframe.onload = function () {
+        };
+        try {
+            httpRequest.open("GET", url, true);
+            httpRequest.send(null);
+        } catch (e) {
+        }
+
+    },
+
+    init: function (settingsPath, target, updateURL) {
+
+        this.action = updateURL;
+
+        this.target = target;
+
+        if (typeof settingsPath != undefined) {
+
+            this.ajaxRequest(settingsPath, function (settings) {
+
+                user.settings = JSON.parse(settings);
+
+                if (user.getCookie("token").trim().length <= 0) {
+
+                    user.login();
+
+                } else {
+
+                    user.ajaxRequest(user.settings.loginStatusCheckPath + user.getCookie("token"), function (data) {
+
+                        var json = JSON.parse(data);
+
+                        if (!json.loggedIn) {
+
+                            user.login();
+
+                        }
+
+                        user.roles = [];
+
+                        if (user.getCookie("roles").trim().length > 0) {
+
+                            user.roles = JSON.parse(user.getCookie("roles"));
+
+                        }
+
+                    })
+
+                }
+
+            })
 
         }
 
     }
 
- });
+});
+
+

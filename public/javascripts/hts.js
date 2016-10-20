@@ -539,12 +539,6 @@ function updateTimeSinceLastTest() {
 
 function showHTSVisitSummary() {
 
-    // if(__$("last_72") && __$("last_72").value =="Yes"){
-
-    //         window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
-
-    // }
-
     if (__$("inputFrame" + tstCurrentPage)) {
 
         __$("inputFrame" + tstCurrentPage).style.overflow = "auto";

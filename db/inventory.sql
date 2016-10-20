@@ -453,9 +453,9 @@ CREATE TABLE `relocation_facility` (
   PRIMARY KEY (`facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `relocation_facilit` WRITE;
-/*!40000 ALTER TABLE `quality_assurance` DISABLE KEYS */;
-/*!40000 ALTER TABLE `quality_assurance` ENABLE KEYS */;
+LOCK TABLES `relocation_facility` WRITE;
+/*!40000 ALTER TABLE `relocation_facility` DISABLE KEYS */;
+/*!40000 ALTER TABLE `relocation_facility` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

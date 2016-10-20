@@ -1277,9 +1277,19 @@ var stock = ({
                 button.setAttribute("onclick", " document.body.removeChild(window.parent.stock.$('msg.shield'));window.parent.stock."+actions[action_keys[i]]);
             }
 
+             var msgpop = stock.$("msg.popup");
+
+             msgpop.style.height = "480px"
+
+            var msgtd = stock.$("msg.td");
+
+            msgtd.style.height = "370px";
+
             var content_div = stock.$("msg.content");
 
             content_div.style.padding = "0";
+
+            content_div.style.height = "335px"
 
             content_div.innerHTML = "";
 
@@ -2364,7 +2374,7 @@ var stock = ({
                 var limit = (json.limit ? json.limit : 1);
 
                 var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
-                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected'+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
                                               "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
                                               ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                               limit + "')}, 10);}" ;
@@ -2584,7 +2594,7 @@ var stock = ({
                 var limit = (json.limit ? json.limit : 1);
 
                 var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
-                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected'+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
                                               "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
                                               ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                               limit + "')}, 10);}" ;
@@ -2691,7 +2701,7 @@ var stock = ({
 
             if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
 
-                stock.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+                stock.showMsg("The product  expired on "+date_string+ " please proceed and remember to dispose","Stock Expiry Date");
 
                 var ok = stock.$("ok_button");
 
@@ -2765,7 +2775,7 @@ var stock = ({
             var limit = (json.limit ? json.limit : 1);
 
             var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
-                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected('+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
                                               "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
                                               ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                               limit + "')}, 10);}" ;
@@ -2874,7 +2884,7 @@ var stock = ({
                 var limit = (json.limit ? json.limit : 1);
 
                 var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
-                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected'+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
                                               "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
                                               ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
                                               limit + "')}, 10);}" ;
@@ -3807,6 +3817,8 @@ var stock = ({
         table.appendChild(tr2);
 
         var td2 = document.createElement("td");
+
+        td2.id = "msg.td";
 
         tr2.appendChild(td2);
 
