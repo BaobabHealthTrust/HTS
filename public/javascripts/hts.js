@@ -539,11 +539,11 @@ function updateTimeSinceLastTest() {
 
 function showHTSVisitSummary() {
 
-    if(__$("last_72") && __$("last_72").value =="Yes"){
+    // if(__$("last_72") && __$("last_72").value =="Yes"){
 
-            window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
+    //         window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
 
-    }
+    // }
 
     if (__$("inputFrame" + tstCurrentPage)) {
 
@@ -2721,6 +2721,19 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 }
 
 function showHIVTestingSummary() {
+
+    window.parent.dashboard.queryExistingObsArray("Event in the last 72 hrs?", function(data){
+
+        var ob = Object.keys(data);
+
+          if(data[ob[0]]&& data[ob[0]] =="Yes"  && __$("fp_test1_result").value =="-"){
+
+                window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
+
+        }
+
+
+    });
 
     if (__$("inputFrame" + tstCurrentPage)) {
 
