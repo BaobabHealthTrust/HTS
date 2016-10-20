@@ -33,9 +33,9 @@ Q.1.9. Duration Control [pos:: 8$$ id:: duration_ago$$ tt_onLoad:: showTimeSince
 Q.1.10. Captured Duration Value [pos :: 9 $$ id :: captured_value $$ tt_onLoad :: __$('touchscreenInput' + tstCurrentPage).value = __$('duration_ago').value $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ condition :: false]
 
 Q.1.11. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos:: 10$$id::partner_status$$ tt_onUnLoad:: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim()$$ condition:: __$('partner').value == "Yes"]
-O.1.11.1. HIV Unknown
-O.1.11.2. Partner Negative
-O.1.11.3. Partner Positive
+O.1.11.1. Partner Negative
+O.1.11.2. Partner Positive
+O.1.11.3. HIV Unknown
 
 Q.1.12. Partner HIV Status [pos:: 11$$ id:: phs$$ value:: No Partner$$ condition:: false]
 
