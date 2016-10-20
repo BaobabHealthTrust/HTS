@@ -422,6 +422,7 @@ padZeros: function (number, positions) {
                 field_type: "text",
                 id : "data.category2"+i,
                 ajaxURL: "/stock_categories?category=",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                 helpText: "First Pass Test 2 Kit Category",
                 tt_onUnload : setAjaxUrlName2
@@ -432,6 +433,7 @@ padZeros: function (number, positions) {
             var entry = {
                 field_type: "text",
                 id: "data.fp_item_name2_"+i,
+                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                 helpText: "First Pass Test Kit 2 Name",
                 tt_onUnload : lotNumber2
@@ -443,6 +445,7 @@ padZeros: function (number, positions) {
                 field_type: "text",
                 id: "data.fp_lot_number2_"+i,
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
                 helpText: "First Pass Test Kit 2 Lot Number"
             }
 
@@ -453,6 +456,7 @@ padZeros: function (number, positions) {
                 id: "data.fp_test2_result"+i,
                 options: ["-","+"],
                 tt_pageStyleClass:"NoControls NoKeyboard",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+'",
                 helpText: "First Pass Test 2 Result",
                 tt_onLoad: "loadSerialTest(__$('data.fp_test2_result"+i+"'), __$('data.fp_test2_duration"+i+"'), window.parent.proficiency.kits['Second Test'])"
 
@@ -476,6 +480,7 @@ padZeros: function (number, positions) {
                 field_type: "text",
                 id : "data.im_category"+i,
                 ajaxURL: "/stock_categories?category=",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                 helpText: "Repeat Test 1 Kit Category",
                 tt_onUnload : imsetAjaxUrlName1
@@ -486,6 +491,7 @@ padZeros: function (number, positions) {
             var entry = {
                 field_type: "text",
                 id: "data.im_item_name1_"+i,
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                 helpText: "Repeat Test Kit 1 Name",
                 tt_onUnload : imlotNumber1
@@ -497,6 +503,7 @@ padZeros: function (number, positions) {
                 field_type: "text",
                 id: "data.im_lot_number1_"+i,
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 helpText: "Repeat Test Kit 1 Lot Number"
             }
 
@@ -505,6 +512,7 @@ padZeros: function (number, positions) {
             var entry = {
                 field_type: "select",
                 id: "data.im_test1_result"+i,
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 options: ["-","+"],
                 helpText: "Repeat Test 1 Result",
                 condition: false
@@ -525,6 +533,7 @@ padZeros: function (number, positions) {
                 field_type: "text",
                 id : "data.im_category2"+i,
                 ajaxURL: "/stock_categories?category=",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                 helpText: "Repeat Test 2 Kit Category",
                 tt_onUnload : imsetAjaxUrlName2
@@ -535,6 +544,7 @@ padZeros: function (number, positions) {
             var entry = {
                 field_type: "text",
                 id: "data.im_item_name2_"+i,
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                 helpText: "Repeat Test Kit 2 Name",
                 tt_onUnload : imlotNumber2
@@ -546,6 +556,7 @@ padZeros: function (number, positions) {
                 field_type: "text",
                 id: "data.im_lot_number2_"+i,
                 tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
+                condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                 helpText: "Repeat Test Kit 2 Lot Number"
             }
 
@@ -574,6 +585,7 @@ padZeros: function (number, positions) {
 
                     field_type: "text",
                     id:"data.im_parallel",
+                    condition: "__$('data.fp_test1_result"+i+"').value =='+' && __$('data.fp_test2_result"+i+"').value =='-'",
                     tt_onLoad: "showCategory(\"Panel Test " + (i + 1) + "\")",
                     tt_onLoad: "recommendedTimmerForLabelsProficiency([__$('data.im_item_name1_"+i+"').value,__$('data.im_item_name2_"+i+"').value]);loadPassParallelTestsProfiiency(__$('data.im_test1_result"+i+"'), __$('data.im_test1_duration"+i+"'), __$('data.im_test2_result"+i
                                 +"'), __$('data.im_test2_duration"+i+"'),window.parent.proficiency.kits['First Test'], window.parent.proficiency.kits['Second Test'],"+i+")",

@@ -2691,7 +2691,7 @@ var stock = ({
 
             if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
 
-                stock.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+                stock.showMsg("The product  expired on "+date_string+ " please proceed and remember to dispose","Stock Expiry Date");
 
                 var ok = stock.$("ok_button");
 
