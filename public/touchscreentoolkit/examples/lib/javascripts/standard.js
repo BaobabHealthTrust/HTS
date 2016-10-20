@@ -2146,14 +2146,14 @@ function getDatePicker() {
             year: arrDate[0],
             month: arrDate[1],
             date: arrDate[2],
-            format: "dd-MM-yyyy",
+            format: tstInputTarget.getAttribute("format") || "dd-MM-yyyy",
             max: (maxDate ? maxDate : new Date())
         });
     } else {
         ds = new DateSelector({
             element: keyboardDiv,
             target: tstInputTarget,
-            format: "dd-MMM-yyyy",
+            format: tstInputTarget.getAttribute("format") || "dd-MMM-yyyy",
             max: (maxDate ? maxDate : new Date())
         });
     }
@@ -3208,7 +3208,7 @@ var DateSelector = function() {
         year: arguments[0].year || this.date.getFullYear(),
         month: arguments[0].month || this.date.getMonth() + 1,
         date: arguments[0].date || this.date.getDate(),
-        format: "yyyy-MM-dd",
+        format: arguments[0].format || "dd/MMM/yyyy",  // "yyyy-MM-dd",
         element: arguments[0].element || document.body,
         target: arguments[0].target,
         maxDate: arguments[0].max || this.date
@@ -3262,12 +3262,11 @@ DateSelector.prototype = {
         // TODO: move style stuff to a css file
         node.innerHTML = ' \
 			<div id="dateselector" class="dateselector"> \
-			<table><tr> \
-			<td> \
-			<div style="display: inline;" > \
-				<button id="dateselector_nextYear" onmousedown="ds.incrementYear();"><span>+</span></button> \
-				<input id="dateselector_year" type="text" > \
-				<button id="dateselector_preYear" onmousedown="ds.decrementYear();"><span>-</span></button> \
+			<table><tr><td> \
+			<div style="display: inline;"> \
+				<button id="dateselector_nextDay" onmousedown="ds.incrementDay();"><span>+</span></button> \
+				<input id="dateselector_day" type="text"> \
+				<button id="dateselector_preDay" onmousedown="ds.decrementDay();"><span>-</span></button> \
 			</div> \
 			</td><td> \
 			<div style="display: inline;"> \
@@ -3275,11 +3274,12 @@ DateSelector.prototype = {
 				<input id="dateselector_month" type="text"> \
 				<button id="dateselector_preMonth" onmousedown="ds.decrementMonth();"><span>-</span></button> \
 			</div> \
-			</td><td> \
-			<div style="display: inline;"> \
-				<button id="dateselector_nextDay" onmousedown="ds.incrementDay();"><span>+</span></button> \
-				<input id="dateselector_day" type="text"> \
-				<button id="dateselector_preDay" onmousedown="ds.decrementDay();"><span>-</span></button> \
+			</td> \
+			<td> \
+			<div style="display: inline;" > \
+				<button id="dateselector_nextYear" onmousedown="ds.incrementYear();"><span>+</span></button> \
+				<input id="dateselector_year" type="text" > \
+				<button id="dateselector_preYear" onmousedown="ds.decrementYear();"><span>-</span></button> \
 			</div> \
 			</td><td> \
                         <button id="today" ' + (tstCurrentDate ? (tstCurrentDate == tstInternalCurrentDate ? 
@@ -3403,12 +3403,14 @@ DateSelector.prototype = {
     },
 
     update: function(aDateElement) {
+        
         var aTargetElement = aDateElement || this.target;
 
         if (!aTargetElement)
             return;
 
-        aTargetElement.value = this.formatDate(this.date);
+        aTargetElement.value = (new Date(this.date)).format(this.options.format);
+        
     }
 
 };
@@ -3505,9 +3507,9 @@ function setToday(){
     
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    document.getElementById("touchscreenInput" + tstCurrentPage).value =
+    /*document.getElementById("touchscreenInput" + tstCurrentPage).value =
     d.getFullYear() + "-" + ((d.getMonth() + 1) < 10 ? "0" : "") + (d.getMonth() + 1) +
-    "-" + ((d.getDate()) < 10 ? "0" : "") + (d.getDate());
+    "-" + ((d.getDate()) < 10 ? "0" : "") + (d.getDate());*/
 
     document.getElementById("dateselector_year").value = d.getFullYear();
     document.getElementById("dateselector_month").value = months[d.getMonth()];
@@ -3516,6 +3518,9 @@ function setToday(){
     ds.date.setFullYear(d.getFullYear());
     ds.date.setMonth(d.getMonth());
     ds.date.setDate(d.getDate());
+    
+    ds.update(document.getElementById("touchscreenInput" + tstCurrentPage));
+    
 }
 
 var TimeSelector = function() {
@@ -5205,4 +5210,74 @@ function createSingleSelectControl(){
     }        
         
 }
-      
+  
+if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+    Object.defineProperty(Date.prototype, "format", {
+        value: function (format) {
+            var date = this;
+
+            var result = "";
+
+            if (!format) {
+
+                format = ""
+
+            }
+
+            var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/i)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
+                    padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
+
+            } else if (format.match(/YYYY\-mm\-dd/i)) {
+
+                result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    padZeros(date.getDate(), 2);
+
+            } else if (format.match(/mmm\/d\/YYYY/i)) {
+
+                result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+            } else if (format.match(/dd-mmm-YYYY/i)) {
+
+                result = padZeros(date.getDate(), 2) + "-" + months[parseInt(date.getMonth())] + "-" + date.getFullYear();
+
+            } else if (format.match(/d-mmm-YYYY/i)) {
+
+                result = date.getDate() + "-" + months[parseInt(date.getMonth())] + "-" + date.getFullYear();
+
+            } else if (format.match(/dd\smmm\sYYYY/i)) {
+
+                result = padZeros(date.getDate(), 2) + " " + months[parseInt(date.getMonth())] + " " + date.getFullYear();
+
+            } else if (format.match(/dd\/mmm\/YYYY/i)) {
+
+                result = padZeros(date.getDate(), 2) + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmm\sYYYY/i)) {
+
+                result = date.getDate() + " " + months[parseInt(date.getMonth())] + " " + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/i)) {
+
+                result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+            } else {
+
+                result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            }
+
+            return result;
+        }
+    });
+
+}
+    

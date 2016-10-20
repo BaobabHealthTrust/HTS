@@ -1304,3 +1304,15 @@ button:active {
 }
 
 .NumbersOnly .inputFrameClass { height: 50px !important }
+
+.multi .inputFrameClass {
+    height: calc(100vh - 150px) !important;
+}
+
+.multi .touchscreenTextInput {
+    display: none !important;
+}
+
+.multi .options {
+    height: 100% !important;
+}
