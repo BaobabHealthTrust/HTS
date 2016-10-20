@@ -2201,15 +2201,15 @@ function getDatePicker() {
 
     defaultDate = defaultDate.replace("/", "-", "g");
     var arrDate = defaultDate.split('-');
-    __$("touchscreenInput" + tstCurrentPage).value = defaultDate;
+    __$("touchscreenInput"+tstCurrentPage).value = defaultDate;
 
     var maximumDate = (tstInputTarget.getAttribute("maxDate") != null ? tstInputTarget.getAttribute("maxDate") : "");
     var maxDate = null;
 
-    if (maximumDate != "") {
+    if(maximumDate != ""){
         var tmpDate = maximumDate.split("-");
 
-        if (tmpDate.length == 3) {
+        if(tmpDate.length == 3){
             maxDate = new Date(tmpDate[0], tmpDate[1] - 1, tmpDate[2]);
         }
     }
@@ -2221,14 +2221,14 @@ function getDatePicker() {
             year: arrDate[0],
             month: arrDate[1],
             date: arrDate[2],
-            format: "dd-MM-yyyy",
+            format: tstInputTarget.getAttribute("format") || "dd-MM-yyyy",
             max: (maxDate ? maxDate : new Date())
         });
     } else {
         ds = new DateSelector({
             element: keyboardDiv,
             target: tstInputTarget,
-            format: "dd-MMM-yyyy",
+            format: tstInputTarget.getAttribute("format") || "dd-MMM-yyyy",
             max: (maxDate ? maxDate : new Date())
         });
     }
@@ -3301,46 +3301,46 @@ function updateKeyColor(element) {
     element.style.backgroundColor = "lightblue"
 }
 
-var DateSelector = function () {
+var DateSelector = function() {
     this.date = new Date();
-    if (!arguments[0])
+    if (! arguments[0])
         arguments[0] = {};
 
     this.options = {
         year: arguments[0].year || this.date.getFullYear(),
         month: arguments[0].month || this.date.getMonth() + 1,
         date: arguments[0].date || this.date.getDate(),
-        format: "yyyy-MM-dd",
+        format: arguments[0].format || "dd/MMM/yyyy",  // "yyyy-MM-dd",
         element: arguments[0].element || document.body,
         target: arguments[0].target,
         maxDate: arguments[0].max || this.date
     };
 
-    if (!isNaN(Date.parse(new Date(this.options.year, (stripZero(this.options.month) - 1), stripZero(this.options.date))))) {
-
-        this.date = new Date(this.options.year, (stripZero(this.options.month) - 1), stripZero(this.options.date));
+    if (!isNaN(Date.parse(new Date(this.options.year, (stripZero(this.options.month) -1), stripZero(this.options.date))))){
+        
+        this.date = new Date(this.options.year, (stripZero(this.options.month) -1), stripZero(this.options.date));
 
     } else if (typeof(tstCurrentDate) != "undefined" && tstCurrentDate) {
 
         var splitDate = tstCurrentDate.split("-");
 
         if (splitDate.length == 3) {
-            this.date = new Date(splitDate[0], splitDate[1] - 1, splitDate[2]);
+            this.date = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
         } else {
             var splitDate2 = tstCurrentDate.split("/");
 
             if (splitDate2.length == 3) {
-                this.date = new Date(splitDate2[0], splitDate2[1] - 1, splitDate2[2]);
+                this.date = new Date(splitDate2[0], splitDate2[1]-1, splitDate2[2]);
             }
         }
-    } else {
+    }	else {
         this.date = new Date();
     }
 
     this.element = this.options.element;
     this.format = this.options.format;
 
-    this.formatDate = this.format.length > 0 ? DateUtil.simpleFormat(this.format) : DateUtil.toLocaleDateString;
+    this.formatDate = this.format.length>0 ? DateUtil.simpleFormat(this.format) : DateUtil.toLocaleDateString;
 
     this.target = this.options.target;
 
@@ -3358,18 +3358,17 @@ var DateSelector = function () {
 };
 
 DateSelector.prototype = {
-    build: function () {
-
+    build: function() {
+        
         var node = document.createElement('div');
         // TODO: move style stuff to a css file
         node.innerHTML = ' \
 			<div id="dateselector" class="dateselector"> \
-			<table><tr> \
-			<td> \
-			<div style="display: inline;" > \
-				<button id="dateselector_nextYear" onmousedown="ds.incrementYear();"><span>+</span></button> \
-				<input id="dateselector_year" type="text" > \
-				<button id="dateselector_preYear" onmousedown="ds.decrementYear();"><span>-</span></button> \
+			<table><tr><td> \
+			<div style="display: inline;"> \
+				<button id="dateselector_nextDay" onmousedown="ds.incrementDay();"><span>+</span></button> \
+				<input id="dateselector_day" type="text"> \
+				<button id="dateselector_preDay" onmousedown="ds.decrementDay();"><span>-</span></button> \
 			</div> \
 			</td><td> \
 			<div style="display: inline;"> \
@@ -3377,18 +3376,19 @@ DateSelector.prototype = {
 				<input id="dateselector_month" type="text"> \
 				<button id="dateselector_preMonth" onmousedown="ds.decrementMonth();"><span>-</span></button> \
 			</div> \
-			</td><td> \
-			<div style="display: inline;"> \
-				<button id="dateselector_nextDay" onmousedown="ds.incrementDay();"><span>+</span></button> \
-				<input id="dateselector_day" type="text"> \
-				<button id="dateselector_preDay" onmousedown="ds.decrementDay();"><span>-</span></button> \
+			</td> \
+			<td> \
+			<div style="display: inline;" > \
+				<button id="dateselector_nextYear" onmousedown="ds.incrementYear();"><span>+</span></button> \
+				<input id="dateselector_year" type="text" > \
+				<button id="dateselector_preYear" onmousedown="ds.decrementYear();"><span>-</span></button> \
 			</div> \
 			</td><td> \
-                        <button id="today" ' + (tstCurrentDate ? (tstCurrentDate == tstInternalCurrentDate ?
-            'class="blue" ' : 'class="red" ') : 'class="blue" ') +
-            ' onmousedown="setToday()" style="width: 150px;"><span>Today</span></button> \
-                <!--button id="num" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Num</span></button--> \
-                <button id="Unknown" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>' + (typeof(tstLocaleWords) != "undefined" ? (tstLocaleWords["unknown"] ? tstLocaleWords["unknown"] : "Unknown") : "Unknown") + '</span></button> \
+                        <button id="today" ' + (tstCurrentDate ? (tstCurrentDate == tstInternalCurrentDate ? 
+            'class="blue" ' : 'class="red" ') : 'class="blue" ') + 
+        ' onmousedown="setToday()" style="width: 150px;"><span>Today</span></button> \
+			<!--button id="num" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Num</span></button--> \
+			<button id="Unknown" onmousedown="updateKeyColor(this);press(this.id);" style="width: 150px;"><span>Unknown</span></button> \
 			</tr></table> \
 			</div> \
 		';
@@ -3396,36 +3396,36 @@ DateSelector.prototype = {
         return node;
     },
 
-    getMonth: function () {
+    getMonth: function() {
         return  DateUtil.months[this.date.getMonth()];
     },
 
-    init: function () {
+    init: function() {
         this.update(this.target);
     },
 
 
-    incrementYear: function () {
+    incrementYear: function() {
         // Only increment if year is less than this year
-        if (this.currentYear.value < (this.options.maxDate.getFullYear())) this.currentYear.value++;
+        if(this.currentYear.value < (this.options.maxDate.getFullYear())) this.currentYear.value++;
 
         this.date.setFullYear(this.currentYear.value);
         this.update(this.target);
     },
 
-    decrementYear: function () {
-        if (this.currentYear.value > 1) {	// > minimum Year
+    decrementYear: function() {
+        if (this.currentYear.value > 1)	{	// > minimum Year
             this.currentYear.value--;
             this.date.setFullYear(this.currentYear.value);
             this.update(this.target);
         }
     },
 
-    incrementMonth: function () {
+    incrementMonth: function() {
         var currentDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1,
             this.date.getDate());
 
-        if (this.options.maxDate > currentDate) {
+        if(this.options.maxDate > currentDate){
 
             if (this.date.getMonth() >= 11) {
                 ds.incrementYear();
@@ -3434,20 +3434,20 @@ DateSelector.prototype = {
                 this.date.setDate(1);
                 this.currentDay.value = 1;
             } else {
-                var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth() + 1).getDate();
+                var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth()+1).getDate();
                 if (lastDate < this.date.getDate()) {
                     this.currentDay.value = lastDate;
                     this.date.setDate(lastDate);
                 }
 
-                this.date.setMonth(this.date.getMonth() + 1);
+                this.date.setMonth(this.date.getMonth()+1);
                 this.currentMonth.value = this.getMonth();
             }
         }
         this.update(this.target);
     },
 
-    decrementMonth: function () {
+    decrementMonth: function() {
         var thisMonth = this.date.getMonth();
         if (thisMonth <= 0) {
             ds.decrementYear();
@@ -3460,25 +3460,25 @@ DateSelector.prototype = {
             this.date.setDate(lastDate);
 
         } else {
-            var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth() - 1).getDate();
+            var lastDate = DateUtil.getLastDate(this.date.getFullYear(), this.date.getMonth()-1).getDate();
             if (lastDate < this.date.getDate()) {
                 this.currentDay.value = lastDate;
                 this.date.setDate(lastDate);
             }
 
-            this.date.setMonth(thisMonth - 1)
+            this.date.setMonth(thisMonth-1)
             this.currentMonth.value = this.getMonth();
         }
         this.update(this.target);
     },
 
-    incrementDay: function () {
+    incrementDay: function() {
         var currentDate = new Date(this.date.getFullYear(), this.date.getMonth(),
-                this.date.getDate() + 1);
+            this.date.getDate() + 1);
 
-        if (this.options.maxDate >= currentDate) {
+        if(this.options.maxDate >= currentDate){
             if (currentDate.getMonth() == this.date.getMonth())
-                this.date.setDate(this.date.getDate() + 1);
+                this.date.setDate(this.date.getDate()+1);
             else {
                 this.date.setDate(1);
                 ds.incrementMonth();
@@ -3491,7 +3491,7 @@ DateSelector.prototype = {
         this.update(this.target);
     },
 
-    decrementDay: function () {
+    decrementDay: function() {
         if (this.currentDay.value > 1)
             this.currentDay.value--;
         else {
@@ -3504,13 +3504,15 @@ DateSelector.prototype = {
         this.update(this.target);
     },
 
-    update: function (aDateElement) {
+    update: function(aDateElement) {
+        
         var aTargetElement = aDateElement || this.target;
 
         if (!aTargetElement)
             return;
 
-        aTargetElement.value = this.formatDate(this.date);
+        aTargetElement.value = (new Date(this.date)).format(this.options.format);
+        
     }
 
 };
@@ -3526,21 +3528,21 @@ var DateUtil = {
 
     daysOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 
-    isLeapYear: function (year) {
+    isLeapYear: function(year) {
         if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
             return true;
         return false;
     },
 
-    nextDate: function (date) {
+    nextDate: function(date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
     },
 
-    previousDate: function (date) {
+    previousDate: function(date) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
     },
 
-    getLastDate: function (year, month) {
+    getLastDate: function(year, month) {
         var last = this.daysOfMonth[month];
         if ((month == 1) && this.isLeapYear(year)) {
             return new Date(year, month, last + 1);
@@ -3548,14 +3550,14 @@ var DateUtil = {
         return new Date(year, month, last);
     },
 
-    getFirstDate: function (year, month) {
+    getFirstDate: function(year, month) {
         if (year.constructor == Date) {
             return new Date(year.getFullYear(), year.getMonth(), 1);
         }
         return new Date(year, month, 1);
     },
 
-    getWeekTurn: function (date, firstDWeek) {
+    getWeekTurn: function(date, firstDWeek) {
         var limit = 6 - firstDWeek + 1;
         var turn = 0;
         while (limit < date) {
@@ -3565,16 +3567,16 @@ var DateUtil = {
         return turn;
     },
 
-    toDateString: function (date) {
+    toDateString: function(date) {
         return date.toDateString();
     },
 
-    toLocaleDateString: function (date) {
+    toLocaleDateString: function(date) {
         return date.toLocaleDateString();
     },
 
-    simpleFormat: function (formatStr) {
-        return function (date) {
+    simpleFormat: function(formatStr) {
+        return function(date) {
             var formated = formatStr.replace(/M+/g, DateUtil.zerofill((date.getMonth() + 1).toString(), 2));
             formated = formated.replace(/d+/g, DateUtil.zerofill(date.getDate().toString(), 2));
             formated = formated.replace(/y{4}/g, date.getFullYear());
@@ -3585,11 +3587,11 @@ var DateUtil = {
         }
     },
 
-    zerofill: function (date, digit) {
+    zerofill: function(date,digit){
         var result = date;
-        if (date.length < digit) {
+        if(date.length < digit){
             var tmp = digit - date.length;
-            for (i = 0; i < tmp; i++) {
+            for(i=0; i < tmp; i++){
                 result = "0" + result;
             }
         }
@@ -3597,19 +3599,19 @@ var DateUtil = {
     }
 }
 
-function setToday() {
+function setToday(){
     var d = new Date();
     if (tstCurrentDate) {
-        if (tstCurrentDate.match(/\d{4}\-\d{2}\-\d{2}/)) {
+        if(tstCurrentDate.match(/\d{4}\-\d{2}\-\d{2}/)){
             d = new Date(tstCurrentDate);
         }
     }
-
+    
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    document.getElementById("touchscreenInput" + tstCurrentPage).value =
-        d.getFullYear() + "-" + ((d.getMonth() + 1) < 10 ? "0" : "") + (d.getMonth() + 1) +
-        "-" + ((d.getDate()) < 10 ? "0" : "") + (d.getDate());
+    /*document.getElementById("touchscreenInput" + tstCurrentPage).value =
+    d.getFullYear() + "-" + ((d.getMonth() + 1) < 10 ? "0" : "") + (d.getMonth() + 1) +
+    "-" + ((d.getDate()) < 10 ? "0" : "") + (d.getDate());*/
 
     document.getElementById("dateselector_year").value = d.getFullYear();
     document.getElementById("dateselector_month").value = months[d.getMonth()];
@@ -3618,6 +3620,9 @@ function setToday() {
     ds.date.setFullYear(d.getFullYear());
     ds.date.setMonth(d.getMonth());
     ds.date.setDate(d.getDate());
+    
+    ds.update(document.getElementById("touchscreenInput" + tstCurrentPage));
+    
 }
 
 var TimeSelector = function () {
@@ -5342,7 +5347,7 @@ function getCookie(cname) {
     return "";
 
 }
-
+  
 if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
     Object.defineProperty(Date.prototype, "format", {
@@ -5362,22 +5367,42 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
             var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
                 "October", "November", "December"];
 
-            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+            if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/i)) {
 
                 result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
                     padZeros(date.getDate(), 2) + " " + padZeros(date.getHours(), 2) + ":" +
                     padZeros(date.getMinutes(), 2) + ":" + padZeros(date.getSeconds(), 2);
 
-            } else if (format.match(/YYYY\-mm\-dd/)) {
+            } else if (format.match(/YYYY\-mm\-dd/i)) {
 
                 result = date.getFullYear() + "-" + padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
                     padZeros(date.getDate(), 2);
 
-            } else if (format.match(/mmm\/d\/YYYY/)) {
+            } else if (format.match(/mmm\/d\/YYYY/i)) {
 
                 result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
 
-            } else if (format.match(/d\smmmm,\sYYYY/)) {
+            } else if (format.match(/dd-mmm-YYYY/i)) {
+
+                result = padZeros(date.getDate(), 2) + "-" + months[parseInt(date.getMonth())] + "-" + date.getFullYear();
+
+            } else if (format.match(/d-mmm-YYYY/i)) {
+
+                result = date.getDate() + "-" + months[parseInt(date.getMonth())] + "-" + date.getFullYear();
+
+            } else if (format.match(/dd\smmm\sYYYY/i)) {
+
+                result = padZeros(date.getDate(), 2) + " " + months[parseInt(date.getMonth())] + " " + date.getFullYear();
+
+            } else if (format.match(/dd\/mmm\/YYYY/i)) {
+
+                result = padZeros(date.getDate(), 2) + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+            } else if (format.match(/d\smmm\sYYYY/i)) {
+
+                result = date.getDate() + " " + months[parseInt(date.getMonth())] + " " + date.getFullYear();
+
+            } else if (format.match(/d\smmmm,\sYYYY/i)) {
 
                 result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
 
@@ -5393,5 +5418,152 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
 }
 
+//Add beautify() method to String Class
+if (Object.getOwnPropertyNames(String.prototype).indexOf("beautify") < 0) {
 
-      
+    Object.defineProperty(String.prototype, "beautify", {
+
+        value: function (size1, size2) {
+
+            var parts = this.split(" ");
+
+            var result = "";
+
+            for (var i = 0; i < parts.length; i++) {
+
+                var part = parts[i];
+
+                var root = part.substring(0, 1).toUpperCase();
+
+                var stem = part.substring(1, part.trim().length).toUpperCase();
+
+                result += (result.trim().length > 0 ? " " : "") + "<span style='font-size: " + size1 + "'>" + root +
+                    "</span><span style='font-size: " + size2 + "'>" + stem + "</span>";
+
+            }
+
+            return result;
+
+        }
+
+    });
+
+}
+
+function showSummary() {
+
+    if (__$("keyboard")) {
+
+        __$("keyboard").style.display = "none";
+
+    }
+
+    if (__$("tt_page_summary")) {
+
+        __$("tt_page_summary").innerHTML = "";
+
+        var table = document.createElement("table");
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+
+        __$("tt_page_summary").appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var th = document.createElement("th");
+        th.style.fontSize = "2em";
+        th.style.textAlign = "left";
+        th.style.padding = "20px";
+        th.style.borderBottom = "1px solid #ccc";
+        th.innerHTML = "Encounter Summary";
+
+        tr.appendChild(th);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        var div = document.createElement("div");
+        div.style.width = "100%";
+        div.style.height = "calc(100vh - 180px)";
+        div.style.overflow = "auto";
+
+        td.appendChild(div);
+
+        var tableContent = document.createElement("table");
+        tableContent.style.width = "100%";
+        tableContent.style.borderCollapse = "collapse";
+        tableContent.cellPadding = "10";
+        tableContent.style.fontSize = "2em";
+
+        div.appendChild(tableContent);
+
+        var k = 0;
+
+        for (var i = 0; i < tstFormElements.length; i++) {
+
+            if (tstFormElements[i].value.trim().length <= 0)
+                continue;
+
+            if (tstFormElements[i].type == "password")
+                continue;
+
+            var tr = document.createElement("tr");
+
+            if (k % 2 > 0)
+                tr.style.backgroundColor = "#eee";
+
+            tableContent.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.style.width = "40%";
+            td.style.textAlign = "right";
+            td.style.borderRight = "1px dotted #ccc";
+            td.style.borderBottom = "1px dotted #ccc";
+            td.style.color = "#333";
+            td.style.verticalAlign = "top";
+            td.innerHTML = tstFormElements[i].getAttribute("helpText").beautify("0.9em", "0.55em");
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.style.textAlign = "left";
+            td.style.borderBottom = "1px dotted #ccc";
+            td.style.verticalAlign = "top";
+
+            if(tstFormElements[i].tagName.toLowerCase() == "select") {
+
+                var opts = tstFormElements[i].selectedOptions;
+
+                var arr = [];
+
+                for(var j = 0; j < opts.length; j++) {
+
+                    arr.push(opts[j].innerHTML);
+
+                }
+
+                td.innerHTML = arr.join(",");
+
+            } else {
+
+                td.innerHTML = tstFormElements[i].value;
+
+            }
+
+            tr.appendChild(td);
+
+            k++;
+
+        }
+
+    }
+
+}
+
