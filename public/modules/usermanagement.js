@@ -684,15 +684,15 @@ var user = ({
                 field_type: "text",
                 id: "data.interpretation",
                 allowFreeText: true,
-                optional: true,
-                tt_onLoad: update_outcome+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
+                optional: true
             },
             "Supervisor code": {
                 field_type: "number",
                 id: "data.supervisor_code",
                 tt_pageStyleClass : "Numeric NumbersOnly",
                 validationRule: "^\\d{4}$",
-                validationMessage: "The code is not valid"
+                validationMessage: "The code is not valid",
+                tt_onLoad: update_outcome+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Quality Control Testing Log" :{
                 field_type: "text",
