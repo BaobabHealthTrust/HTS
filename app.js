@@ -6280,7 +6280,7 @@ app.get("/available_kits_by_desctiption/:description", function(req, res){
 
     var description = req.params.description;
 
-    var sql = "SELECT name, description FROM stock WHERE description ='"+description+"' ORDER BY stock_id DESC LIMIT 1";
+    var sql = "SELECT name, description FROM stock WHERE description ='"+description+"' ORDER BY stock_id ASC LIMIT 1";
 
     queryRawStock(sql, function(data) {
 
