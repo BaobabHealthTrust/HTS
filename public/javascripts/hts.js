@@ -143,7 +143,7 @@ function calculateAge() {
 
         }
 
-        if (age[2] == "Y" && age[0] >= 10 && age[0] <= 50) {
+        if (age[2] == "Y" && age[0] >= 12 && age[0] <= 50) {
 
             if (__$("pregnant")) {
 
@@ -900,7 +900,15 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("N", (__$("partner_present") ? __$("partner_present").value.trim().substring(0, 1).toUpperCase() : ""), th);
+        var partner_present = "N";
+
+        if(__$("partner_present") &&  __$("partner_present").value){
+
+            partner_present = __$("partner_present").value.trim().substring(0, 1).toUpperCase();
+
+        }
+
+        addDiv("N", partner_present , th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -909,7 +917,7 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("Y", (__$("partner_present") ? __$("partner_present").value.trim().substring(0, 1).toUpperCase() : ""), th);
+        addDiv("Y", partner_present, th);
 
         var PTSMapping = {
             "No Partner": "NoP",
@@ -1436,7 +1444,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             tr.appendChild(td);
 
             var div = document.createElement("div");
-            div.style.border = "3px inset #3c60b1";
+            div.style.border = "3px solid #3c60b1";
             div.style.borderRadius = "calc(50vh - 150px)";
             div.style.width = "calc(100vh - 300px)";
             div.id = "tmrControl1";
@@ -1580,7 +1588,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var btn = document.createElement("button");
             btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Negative";
+            btn.innerHTML = "Non Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -1666,7 +1674,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var btn = document.createElement("button");
             btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Positive";
+            btn.innerHTML = "Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -1762,7 +1770,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             td.align = "center";
             td.verticalAlign = "middle";
             td.style.border = "1px solid #3c60b1";
-            td.style.borderRadius = "10px";
+            //td.style.borderRadius = "10px";
             td.style.padding = "25px";
             td.colSpan = 3;
             td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
@@ -1770,7 +1778,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             tr.appendChild(td);
 
             var div = document.createElement("div");
-            div.style.border = "3px inset #3c60b1";
+            div.style.border = "3px solid #3c60b1";
             div.style.borderRadius = "calc(50vh - 150px)";
             div.style.width = "calc(100vh - 300px)";
             div.id = "tmrControl2";
@@ -1914,7 +1922,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var btn = document.createElement("button");
             btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Negative";
+            btn.innerHTML = "Non Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -2006,7 +2014,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var btn = document.createElement("button");
             btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Positive";
+            btn.innerHTML = "Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -2170,7 +2178,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
             td.align = "center";
             td.verticalAlign = "middle";
             td.style.border = "1px solid #3c60b1";
-            td.style.borderRadius = "10px";
+            //td.style.borderRadius = "10px";
             td.style.padding = "25px";
             td.colSpan = 3;
             td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
@@ -2309,7 +2317,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             var btn = document.createElement("button");
             btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Negative";
+            btn.innerHTML = "Non Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -2395,7 +2403,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             var btn = document.createElement("button");
             btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Positive";
+            btn.innerHTML = "Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -5388,7 +5396,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
             tr.appendChild(td);
 
             var div = document.createElement("div");
-            div.style.border = "3px inset #3c60b1";
+            div.style.border = "3px solid #3c60b1";
             div.style.borderRadius = "calc(50vh - 150px)";
             div.style.width = "calc(100vh - 300px)";
             div.id = "tmrControl1";
@@ -5533,7 +5541,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var btn = document.createElement("button");
             btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Negative";
+            btn.innerHTML = "Non Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -5619,7 +5627,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var btn = document.createElement("button");
             btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Positive";
+            btn.innerHTML = "Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -5715,7 +5723,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
             td.align = "center";
             td.verticalAlign = "middle";
             td.style.border = "1px solid #3c60b1";
-            td.style.borderRadius = "10px";
+            //td.style.borderRadius = "10px";
             td.style.padding = "25px";
             td.colSpan = 3;
             td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
@@ -5867,7 +5875,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var btn = document.createElement("button");
             btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Negative";
+            btn.innerHTML = "Non Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
@@ -5959,7 +5967,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var btn = document.createElement("button");
             btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Positive";
+            btn.innerHTML = "Reactive";
             btn.style.fontSize = "5vh !important";
             btn.style.minWidth = "8vh";
             btn.style.minHeight = "5vh";
