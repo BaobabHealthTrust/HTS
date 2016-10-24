@@ -29,36 +29,38 @@ Q.1.10.2.1. Is client pregnant? [pos:: 10$$ id:: pregnant]
 O.1.10.2.1.1. Yes
 O.1.10.2.1.2. No
 
-Q.1.11. Consent given to be contacted? [pos:: 11$$ id:: capture_details]
+Q.1.10.2.2. How many months pregnant? [pos :: 11 $$ id :: months_pregnant $$ field_type :: number $$ tt_pageStyleClass:: Numeric NumbersOnly $$ condition :: __$('pregnant').value.trim().toLowerCase() == 'yes' $$ min ::1 $$ max :: 10]
+
+Q.1.11. Consent given to be contacted? [pos:: 12$$ id:: capture_details]
 O.1.11.1. Yes
 O.1.11.2. No
 
-Q.1.12. First Name [pos:: 12$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /fnames_query?name=$$ id:: first_name]
+Q.1.12. First Name [pos:: 13$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /fnames_query?name=$$ id:: first_name]
 
-Q.1.13. Family Name [pos:: 13$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /lnames_query?name=$$ id:: last_name]
+Q.1.13. Family Name [pos:: 14$$ allowFreeText:: true$$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ ajaxURL:: /lnames_query?name=$$ id:: last_name]
 
-Q.1.14. Contact Detail Type [pos:: 14 $$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes';$$tt_onUnload:: setPhoneNumberValidation('phone_number')$$ id :: detail_type]
+Q.1.14. Contact Detail Type [pos:: 15 $$ condition:: __$('capture_details').value.trim().toLowerCase() == 'yes';$$tt_onUnload:: setPhoneNumberValidation('phone_number')$$ id :: detail_type]
 O.1.14.1. Phone Number
 O.1.14.2. Current Residence
 O.1.14.3. Both
 
-Q.1.15. Client Phone Number [pos:: 15$$ id:: phone_number $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
+Q.1.15. Client Phone Number [pos:: 16$$ id:: phone_number $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
 
-Q.1.16. Current Region [pos:: 16 $$ id :: region $$ tt_onUnload:: setAjaxUrl(0)$$ tt_requireNextClick:: false $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both']
+Q.1.16. Current Region [pos:: 17 $$ id :: region $$ tt_onUnload:: setAjaxUrl(0)$$ tt_requireNextClick:: false $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both']
 O.1.16.1. Central Region
 O.1.16.2. Northern Region
 O.1.16.3. Southern Region
 
-Q.1.17. Current District [pos:: 17$$ id:: district$$ tt_onUnload:: setAjaxUrl(1)$$ tt_requireNextClick:: false $$ condition:: __$('region').value.trim().length > 0]
+Q.1.17. Current District [pos:: 18$$ id:: district$$ tt_onUnload:: setAjaxUrl(1)$$ tt_requireNextClick:: false $$ condition:: __$('region').value.trim().length > 0]
 
-Q.1.19. Current T/A [pos:: 18 $$ id:: ta$$ tt_onUnload:: setAjaxUrl(2)$$ tt_requireNextClick:: false $$ condition:: __$('district').value.trim().length > 0]
+Q.1.19. Current T/A [pos:: 19 $$ id:: ta$$ tt_onUnload:: setAjaxUrl(2)$$ tt_requireNextClick:: false $$ condition:: __$('district').value.trim().length > 0]
 
-Q.1.20. Current Village [pos:: 19 $$ id:: village$$ tt_requireNextClick:: false $$ condition:: __$('ta').value.trim().length > 0]
+Q.1.20. Current Village [pos:: 20 $$ id:: village$$ tt_requireNextClick:: false $$ condition:: __$('ta').value.trim().length > 0]
 
-Q.1.21. Current Village Specify [pos:: 20 $$ id:: village_specify$$ tt_requireNextClick:: true $$ condition:: __$('village').value == 'Other']
+Q.1.21. Current Village Specify [pos:: 21 $$ id:: village_specify$$ tt_requireNextClick:: true $$ condition:: __$('village').value == 'Other']
 
-Q.1.22. Closest Landmark [pos:: 21 $$ id:: closest_landmark $$ condition:: __$('village').value.trim().length > 0]
+Q.1.22. Closest Landmark [pos:: 22 $$ id:: closest_landmark $$ condition:: __$('village').value.trim().length > 0]
 
-Q.1.23. Client Registration Summary [pos:: 22 $$ tt_onLoad:: showDetailsSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.23. Client Registration Summary [pos:: 23 $$ tt_onLoad:: showDetailsSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
 
-Q.1.24. Client Registration Summary (cont'd) [pos:: 23 $$ tt_onLoad:: updatePregnancy()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.24. Client Registration Summary (cont'd) [pos:: 24 $$ tt_onLoad:: updatePregnancy()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
