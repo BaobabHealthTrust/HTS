@@ -336,7 +336,6 @@ padZeros: function (number, positions) {
                 field_type: "select",
                 id: "data.dts_pack_checklist",
                 multiple: "multiple",
-                selectAll: true,
                 tt_pageStyleClass: "MultiSelectList",
                 tt_pageStyleClass: "NoKeyboard",
                 options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"]
