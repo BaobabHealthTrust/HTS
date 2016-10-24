@@ -2607,6 +2607,8 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "Confirmatory Inconclusive";
 
+                window.parent.dashboard.showMsg("Take DBS sample", "");
+
             }else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-"){
 
                 outcome = "Test 1 & Test 2 Discordant";
@@ -3552,6 +3554,17 @@ function evaluateReferral() {
 
         }
 
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"), 
+        "HTS CLIENT REGISTRATION", "How many months pregnant?");
+
+        console.log(pregnancy_months);
+
+        if(parseInt(pregnancy_months) <= 6 ){
+
+            alert("Test again after 6 months"); 
+
+        }
+
         window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
             "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
             "health and to prevent transmission.", "Re-Test");
@@ -3736,6 +3749,17 @@ function evaluateReferral2() {
 
         }
 
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"), 
+        "HTS CLIENT REGISTRATION", "How many months pregnant?");
+
+        console.log(pregnancy_months);
+
+        if(parseInt(pregnancy_months) <= 6 ){
+
+            alert("Test again after 6 months"); 
+
+        }
+
         window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
             "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
             "health and to prevent transmission.", "Re-Test");
@@ -3774,8 +3798,9 @@ function evaluateReferral2() {
 
         window.parent.dashboard.showMsg("No Re-Test Needed. Client confirmed positive.", "No Re-Test Needed!");
 
-    } else if (riskCategory && riskCategory.trim().toLowerCase() == "high risk event in last 3 months" &&
-        (testResult.trim().toLowerCase() == "new inconclusive") || (testResult.trim().toLowerCase() == "new negative")) {
+    } else if (riskCategory && (riskCategory.trim().toLowerCase() == "high risk event in last 3 months" && (testResult.trim().toLowerCase() == "new inconclusive")
+
+        || (riskCategory.trim().toLowerCase() == "high risk event in last 3 months" && testResult.trim().toLowerCase() == "new negative"))) {
 
         if (__$("referral")) {
 
