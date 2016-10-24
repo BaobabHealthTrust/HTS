@@ -389,7 +389,7 @@ var quality = ({
                 id: "data.interpretation",
                 allowFreeText: true,
                 optional: true,
-                tt_onLoad: update_outcome+";window.parent.user.outcome(__$('data.dts_name').value,__$('data.result').value)"
+                tt_onLoad: update_outcome+";window.parent.quality.outcome(__$('data.dts_name').value,__$('data.result').value)"
             },
             "Supervisor code": {
                 field_type: "number",
@@ -479,6 +479,36 @@ var quality = ({
         }
 
     },
+
+     submitData: function (data) {
+
+        console.log(data);
+
+        data.data.userId = quality.getCookie("username");
+
+        data.data.token = quality.getCookie("token");
+
+        if(data.data.datatype == "quality_assurance"){
+
+                user.ajaxPostRequest("/save_quality_control_test/", data.data, function (sid) {
+
+                    var json = JSON.parse(sid);
+
+                    if (user.$("user.navPanel")) {
+
+                        document.body.removeChild(user.$("user.navPanel"));
+
+                    }
+
+                    // window.location = "/";
+
+                    user.showMsg(json.message, "Status", null);
+
+                })
+
+            }
+
+        },
 
     showMsg: function (msg, topic, nextURL) {
 
