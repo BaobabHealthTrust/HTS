@@ -21,14 +21,14 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
             if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
-                result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    user.padZeros(date.getDate(), 2) + " " + user.padZeros(date.getHours(), 2) + ":" +
-                    user.padZeros(date.getMinutes(), 2) + ":" + user.padZeros(date.getSeconds(), 2);
+                result = date.getFullYear() + "-" + quality.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    quality.padZeros(date.getDate(), 2) + " " + quality.padZeros(date.getHours(), 2) + ":" +
+                    quality.padZeros(date.getMinutes(), 2) + ":" + quality.padZeros(date.getSeconds(), 2);
 
             } else if (format.match(/YYYY\-mm\-dd/)) {
 
-                result = date.getFullYear() + "-" + user.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                    user.padZeros(date.getDate(), 2);
+                result = date.getFullYear() + "-" + quality.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                    quality.padZeros(date.getDate(), 2);
 
             } else if (format.match(/mmm\/d\/YYYY/)) {
 
@@ -427,9 +427,9 @@ var quality = ({
 
     navPanel: function (content) {
 
-        if (user.$("user.navPanel")) {
+        if (quality.$("quality.navPanel")) {
 
-            document.body.removeChild(user.$("user.navPanel"));
+            document.body.removeChild(quality.$("quality.navPanel"));
 
         }
 
@@ -440,7 +440,7 @@ var quality = ({
         divPanel.style.width = "100%";
         divPanel.style.height = "100%";
         divPanel.style.backgroundColor = "#fff";
-        divPanel.id = "user.navPanel";
+        divPanel.id = "quality.navPanel";
         divPanel.style.zIndex = 800;
         divPanel.style.overflow = "hidden";
 
@@ -456,7 +456,7 @@ var quality = ({
 
         // var base = (url ? url[1] : "");
 
-        var base = user.settings.basePath;
+        var base = quality.settings.basePath;
 
         var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
             "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
@@ -912,43 +912,23 @@ var quality = ({
 
     },
 
-    init: function (settingsPath, target, updateURL) {
+    init: function (settingsPath, userId) {
 
-        this.action = updateURL;
+        this['settings'] = {};
 
-        this.target = target;
+        this['userId'] = userId;
 
         if (typeof settingsPath != undefined) {
 
             this.ajaxRequest(settingsPath, function (settings) {
 
-                user.settings = JSON.parse(settings);
+                quality.settings = JSON.parse(settings);
 
-                if (user.getCookie("token").trim().length <= 0) {
+                quality.roles = [];
 
-                    user.login();
+                if (quality.getCookie("roles").trim().length > 0) {
 
-                } else {
-
-                    user.ajaxRequest(user.settings.loginStatusCheckPath + user.getCookie("token"), function (data) {
-
-                        var json = JSON.parse(data);
-
-                        if (!json.loggedIn) {
-
-                            user.login();
-
-                        }
-
-                        user.roles = [];
-
-                        if (user.getCookie("roles").trim().length > 0) {
-
-                            user.roles = JSON.parse(user.getCookie("roles"));
-
-                        }
-
-                    })
+                    quality.roles = JSON.parse(quality.getCookie("roles"));
 
                 }
 
