@@ -411,19 +411,6 @@ var quality = ({
         user.navPanel(form.outerHTML);
 
     },
-    outcome: function(dts_type, result){
-
-        var outcome = "Not acceptable";
-
-        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
-
-            outcome  = "Acceptable"
-        
-        }
-
-        user.showMsg(outcome);
-
-    },
 
     navPanel: function (content) {
 
@@ -480,7 +467,7 @@ var quality = ({
 
     },
 
-     submitData: function (data) {
+    submitData: function (data) {
 
         console.log(data);
 
@@ -488,27 +475,101 @@ var quality = ({
 
         data.data.token = quality.getCookie("token");
 
-        if(data.data.datatype == "quality_assurance"){
+        if (data.data.datatype == "changePassword") {
 
-                user.ajaxPostRequest("/save_quality_control_test/", data.data, function (sid) {
+            quality.ajaxPostRequest(quality.settings.passwordUpdatePath, data.data, function (sid) {
+
+                var json = JSON.parse(sid);
+
+                if (quality.$("quality.navPanel")) {
+
+                    document.body.removeChild(user.$("quality.navPanel"));
+
+                }
+
+                quality.showMsg(json.message, "Password Change", "/");
+
+            })
+
+        }else if(data.data.datatype == "quality_assurance"){
+
+                quality.ajaxPostRequest("/save_quality_control_test/", data.data, function (sid) {
 
                     var json = JSON.parse(sid);
 
-                    if (user.$("user.navPanel")) {
+                    if (quality.$("user.navPanel")) {
 
-                        document.body.removeChild(user.$("user.navPanel"));
+                        document.body.removeChild(quality.$("quality.navPanel"));
 
                     }
 
                     // window.location = "/";
 
-                    user.showMsg(json.message, "Status", null);
+                    quality.showMsg(json.message, "Status", null);
 
                 })
 
-            }
+        } 
+        else {
 
-        },
+            quality.ajaxPostRequest(quality.settings.loginPath, data.data, function (sid) {
+
+                var json = JSON.parse(sid);
+
+                if (quality.$("quality.navPanel")) {
+
+                    // document.body.removeChild(user.$("user.navPanel"));
+
+                }
+
+                // Sessions expire after 8 hrs if user does not logout
+                if (Object.keys(json).indexOf("token") >= 0) {
+
+                    quality.setCookie("token", json["token"], 0.333333333);
+
+                    quality.setCookie("username", json["username"], 0.333333333);
+
+                    quality.setCookie("gender", json["gender"], 0.333333333);
+
+                    quality.setCookie("given_name", json["given_name"], 0.333333333);
+
+                    quality.setCookie("family_name", json["family_name"], 0.333333333);
+
+                    quality.setCookie("location", json["location"], 0.333333333);
+
+                    quality.setCookie("attrs", JSON.stringify(json['attributes']), 0.333333333);
+
+                    quality.setCookie("roles", JSON.stringify(json['roles']), 0.333333333);
+
+                    window.location = "/";
+
+                } else {
+
+                    quality.login();
+
+                    quality.showAlertMsg(json.message, "Access Denied!");
+
+                }
+
+            })
+
+        }
+
+    },
+
+    outcome: function(dts_type, result){
+
+        var outcome = "Not acceptable";
+
+        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
+
+            outcome  = "Acceptable"
+        
+        }
+
+        user.showMsg(outcome);
+
+    },
 
     showMsg: function (msg, topic, nextURL) {
 
