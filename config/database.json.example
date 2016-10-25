@@ -3,5 +3,6 @@
     "user": "",
     "password": "",
     "database": "htc1_7",
-    "stockDatabase": "htc_inventory"
+    "stockDatabase": "htc_inventory",
+    "qualityControlDatabase" : "htc_quality_control"
 }

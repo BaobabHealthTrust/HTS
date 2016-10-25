@@ -11,6 +11,7 @@ var tmrControl1Hnd;
 var tmrControl2SecsCount = 0;
 var tmrControl2MinsCount = 0;
 var tmrControl2Hnd;
+var notUnigold = "hiv"
 
 function getCookie(cname) {
 
@@ -142,7 +143,7 @@ function calculateAge() {
 
         }
 
-        if (age[2] == "Y" && age[0] >= 10 && age[0] <= 50) {
+        if (age[2] == "Y" && age[0] >= 12 && age[0] <= 50) {
 
             if (__$("pregnant")) {
 
@@ -162,6 +163,39 @@ function calculateAge() {
     }
 
 }
+
+
+function getAjaxRequest(url, callback, optionalControl) {
+
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onreadystatechange = function () {
+
+            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
+
+                if (httpRequest.responseText.trim().length > 0) {
+                    var result = httpRequest.responseText;
+
+                    callback(result, optionalControl);
+
+                } else {
+
+                    callback(undefined);
+
+                }
+
+            }
+
+        };
+        try {
+            httpRequest.open("GET", url, true);
+            httpRequest.send(null);
+        } catch (e) {
+        }
+
+    }
+
 
 function updatePregnancy() {
 
@@ -577,6 +611,27 @@ function showHTSVisitSummary() {
 
         tr.appendChild(td);
 
+        var th = document.createElement("th");
+        th.innerHTML = "Partner Status";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.padding = "10px";
+        th.style.verticalAlign = "top";
+        th.colSpan = 4;
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Client Risk Category";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.padding = "10px";
+        th.style.verticalAlign = "top";
+        th.colSpan = 4;
+
+        tr.appendChild(th);
+
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "3px solid #333";
@@ -670,6 +725,71 @@ function showHTSVisitSummary() {
 
         verticalText("Yes", th);
 
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.style.paddingRight = "15px";
+       
+
+        tr.appendChild(th);
+
+        verticalText("No Partner", th);
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.style.paddingRight = "15px";
+
+        tr.appendChild(th);
+
+        verticalText("HIV Unknown", th);
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.style.paddingRight = "15px";
+
+        tr.appendChild(th);
+
+        verticalText("Partner Neg.", th);
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.style.paddingRight = "15px";
+         th.style.borderRight = "1px solid #333";
+
+        tr.appendChild(th);
+
+        verticalText("Partner Pos.", th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+     
+
+        tr.appendChild(td);
+
+        verticalText("Low<i style='color: #eee'>_</i>Risk", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+
+        tr.appendChild(td);
+
+        verticalText("On-going<i style='color: #eee'>_</i>Risk", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+
+        tr.appendChild(td);
+
+        verticalText("High<i style='color: #eee'>_</i>Risk<i style='color: #eee'>_</i>Event<i style='color: #eee'>_</i>" +
+            "in<br/>last<i style='color: #eee'>_</i>3<i style='color: #eee'>_</i>months", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        verticalText("Risk<i style='color: #eee'>_</i>assessment<br/>Not<i style='color: #eee'>_</i>Done", td);
+
 
         var tr = document.createElement("tr");
 
@@ -683,7 +803,7 @@ function showHTSVisitSummary() {
         tr.appendChild(th);
 
         var HATMapping = {
-            "Routine HTS within Health Service": "PITC",
+            "Routine HTS (PITC) within Health Service": "PITC",
             "Comes with HTS Family Reference Slip": "FRS",
             "Other (VCT, etc.)": "Oth"
         };
@@ -780,7 +900,15 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("N", (__$("partner_present") ? __$("partner_present").value.trim().substring(0, 1).toUpperCase() : ""), th);
+        var partner_present = "N";
+
+        if(__$("partner_present") &&  __$("partner_present").value){
+
+            partner_present = __$("partner_present").value.trim().substring(0, 1).toUpperCase();
+
+        }
+
+        addDiv("N", partner_present , th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -789,7 +917,92 @@ function showHTSVisitSummary() {
 
         tr.appendChild(th);
 
-        addDiv("Y", (__$("partner_present") ? __$("partner_present").value.trim().substring(0, 1).toUpperCase() : ""), th);
+        addDiv("Y", partner_present, th);
+
+        var PTSMapping = {
+            "No Partner": "NoP",
+            "HIV Unknown": "P?",
+            "Partner Negative": "P-",
+            "Partner Positive": "P+"
+        };
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.align = "center";
+
+        tr.appendChild(th);
+
+        addDiv("NoP", PTSMapping[__$("phs").value.trim()], th);
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.align = "center";
+
+        tr.appendChild(th);
+
+        addDiv("P?", PTSMapping[__$("phs").value.trim()], th);
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.align = "center";
+
+        tr.appendChild(th);
+
+        addDiv("P-", PTSMapping[__$("phs").value.trim()], th);
+
+        var th = document.createElement("td");
+        th.style.borderBottom = "1px solid #333";
+        th.align = "center";
+        th.style.borderRight = "1px solid #333";
+
+        tr.appendChild(th);
+
+        addDiv("P+", PTSMapping[__$("phs").value.trim()], th);
+
+        var risksMapping = {
+            "Low Risk": "Low",
+            "On-going Risk": "Ong",
+            "High Risk Event in Last 3 months": "Hi",
+            "Risk assessment Not Done": "ND",
+            "": ""
+        };
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Low", risksMapping[__$("risk_category").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Ong", risksMapping[__$("risk_category").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("Hi", risksMapping[__$("risk_category").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("ND", risksMapping[__$("risk_category").value.trim()], td);
+        
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -842,8 +1055,10 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_item_name1")) {
 
+                /*First Kit always With description of First Test*/
+
                 __$('fp_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test")+'&item_name=');
 
             }
 
@@ -867,7 +1082,7 @@ function setAjaxUrl(pos) {
                  var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
 
                 __$('fp_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&exceptions=" + exceptions +'&item_name=');
+                    tstCurrentPage).value.trim() + "&exceptions=" + exceptions +"&description="+encodeURIComponent("Second Test")+'&item_name=');
 
             }
 
@@ -892,8 +1107,9 @@ function setAjaxUrl(pos) {
 
             if (__$("im_item_name1")) {
 
+
                 __$('im_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + '&item_name=');
+                    tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test") +'&item_name=');
 
             }
 
@@ -942,6 +1158,8 @@ function setAjaxUrl(pos) {
 }
 
 function saveConsumption(dispatch_id, target_id) {
+
+    console.log(dispatch_id);
 
     var patient_id = getCookie("client_identifier");
 
@@ -1023,7 +1241,7 @@ function evalCondition(pos) {
 
         case 0:
 
-            if (__$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") ||
                 (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
                     decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
@@ -1037,7 +1255,7 @@ function evalCondition(pos) {
 
         case 1:
 
-            if (__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")) {
 
                 result = true;
@@ -1048,7 +1266,7 @@ function evalCondition(pos) {
 
         case 2:
 
-            if (__$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
                 __$("fp_test1_result").value == "+") || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
@@ -1062,7 +1280,7 @@ function evalCondition(pos) {
 
         case 3:
 
-            if (__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") && __$("fp_test1_result").value == "+") {
 
                 result = true;
@@ -1073,7 +1291,7 @@ function evalCondition(pos) {
 
         case 4:
 
-            if (__$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant")) {
 
@@ -1085,7 +1303,7 @@ function evalCondition(pos) {
 
         case 5:
 
-            if (__$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
                 __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value) || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" &&
@@ -1096,7 +1314,7 @@ function evalCondition(pos) {
 
             }
 
-            if(__$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
+            if(__$("consent") && __$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
                  && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value)){
 
@@ -1134,864 +1352,1148 @@ function evalCondition(pos) {
 
 }
 
-function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
+function recommendedTimmerForLabels(labels){
 
-    if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
-
+    if(labels[0].length == 0)
         return;
 
-    }
+    for(var i = 0 ; i < labels.length ; i++){
 
-    tmrControl1SecsCount = 0;
-    tmrControl1MinsCount = 0;
-    tmrControl2SecsCount = 0;
-    tmrControl2MinsCount = 0;
+        console.log(i);
 
-    if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+        getAjaxRequest("/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
 
-        var currentClass = __$("nextButton").className;
+                var label_data = JSON.parse(data);
 
-        __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+                if(!window.parent.dashboard.data.stock_label_data)
+                    window.parent.dashboard.data.stock_label_data = {};
 
-    }
+                window.parent.dashboard.data.stock_label_data[label_data.id] = {rec_time: label_data.rec_time ,window_time: label_data.window_time}
 
-    var mainTable = document.createElement("table");
-    mainTable.style.margin = "auto";
-
-    if (__$("inputFrame" + tstCurrentPage)) {
-
-        __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+        });
 
     }
-
-    var mainRow = document.createElement("tr");
-
-    mainTable.appendChild(mainRow);
-
-    var mainTd1 = document.createElement("td");
-    mainTd1.style.paddingRight = "20px";
-
-    mainRow.appendChild(mainTd1);
-
-    var mainTd2 = document.createElement("td");
-    mainTd2.style.paddingLeft = "20px";
-
-    mainRow.appendChild(mainTd2);
-
-    var table = document.createElement("table");
-    table.style.margin = "auto";
-    table.border = 0;
-
-    mainTd1.appendChild(table);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-    td.align = "center";
-    td.verticalAlign = "middle";
-    td.style.border = "1px solid #3c60b1";
-    td.style.borderRadius = "g10px";
-    td.style.padding = "25px";
-    td.colSpan = 3;
-    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-
-    tr.appendChild(td);
-
-    var div = document.createElement("div");
-    div.style.border = "3px inset #3c60b1";
-    div.style.borderRadius = "calc(50vh - 150px)";
-    div.style.width = "calc(100vh - 300px)";
-    div.id = "tmrControl1";
-    div.style.height = "calc(100vh - 300px)";
-    div.style.margin = "auto";
-    div.style.textAlign = "center";
-    div.style.verticalAlign = "middle";
-    div.style.display = "table-cell";
-    div.innerHTML = "00:00";
-    div.style.fontSize = "20vh";
-    div.style.color = "#3c60b1";
-    div.style.backgroundColor = "#fff";
-    div.style.zIndex = 100;
-
-    td.appendChild(div);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-    td.colSpan = 3;
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = "blue";
-    btn.innerHTML = "Start";
-    btn.style.cssFloat = "right";
-    btn.style.fontSize = "5vh !important";
-    btn.style.marginTop = "-60px";
-    btn.style.marginRight = "5px";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.setAttribute("timeTarget", test1TimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
-
-        }
-
-        var currentClass = __$("nextButton").className;
-
-        this.className = currentClass.replace(/blue|green/i, "gray");
-
-        tmrControl1Hnd = setInterval(function () {
-
-            tmrControl1SecsCount++;
-
-            if (tmrControl1SecsCount == 60) {
-
-                tmrControl1SecsCount = 0;
-
-                tmrControl1MinsCount++;
-
-            }
-
-            var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
-
-            if (__$("tmrControl1")) {
-
-                __$("tmrControl1").innerHTML = time;
-
-            }
-
-        }, 1000);
-
-        if (__$("btnTest1Nve")) {
-
-            var currentClass = __$("btnTest1Nve").className;
-
-            __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
-
-        }
-
-        if (__$("btnTest1Pve")) {
-
-            var currentClass = __$("btnTest1Pve").className;
-
-            __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
-
-        }
-
-    }
-
-    td.appendChild(btn);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-
-    var test1 = "First";
-
-    if(__$("fp_item_name1").value && __$("fp_item_name1").value != ""){
-
-        test1 = __$("fp_item_name1").value
-
-    }
-
-    if(__$("im_item_name1").value && __$("im_item_name1").value != ""){
-
-        test1 = __$("im_item_name1").value
-
-    }
-
-    td.innerHTML = (label1 ? label1 : test1+" Test") + " Result";
-    td.style.fontSize = "3vh";
-
-    tr.appendChild(td);
-
-    var td = document.createElement("td");
-    td.align = "right";
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-    btn.innerHTML = "-";
-    btn.style.fontSize = "5vh !important";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.id = "btnTest1Nve";
-    btn.setAttribute("target", test1Target.id);
-    btn.setAttribute("timeTarget", test1TimeTarget.id);
-    btn.setAttribute("target2", test2Target.id);
-    btn.setAttribute("timeTarget2", test2TimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        clearInterval(tmrControl1Hnd);
-
-        if (__$(this.getAttribute("target"))) {
-
-            __$(this.getAttribute("target")).value = "-";
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-            var now = (new Date());
-
-            var duration = (now - startTime) / (60 * 1000);
-
-            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-        }
-
-        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                var currentClass = __$("nextButton").className;
-
-                __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-            }
-
-        }
-
-    }
-
-    td.appendChild(btn);
-
-    var td = document.createElement("td");
-    td.align = "right";
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-    btn.innerHTML = "+";
-    btn.style.fontSize = "5vh !important";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.id = "btnTest1Pve";
-    btn.setAttribute("target", test1Target.id);
-    btn.setAttribute("timeTarget", test1TimeTarget.id);
-    btn.setAttribute("target2", test2Target.id);
-    btn.setAttribute("timeTarget2", test2TimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        clearInterval(tmrControl1Hnd);
-
-        if (__$(this.getAttribute("target"))) {
-
-            __$(this.getAttribute("target")).value = "+";
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-            var now = (new Date());
-
-            var duration = (now - startTime) / (60 * 1000);
-
-            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-        }
-
-        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                var currentClass = __$("nextButton").className;
-
-                __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-            }
-
-        }
-
-    }
-
-    td.appendChild(btn);
-
-    var table = document.createElement("table");
-    table.style.margin = "auto";
-    table.border = 0;
-
-    mainTd2.appendChild(table);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-    td.align = "center";
-    td.verticalAlign = "middle";
-    td.style.border = "1px solid #3c60b1";
-    td.style.borderRadius = "10px";
-    td.style.padding = "25px";
-    td.colSpan = 3;
-    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-
-    tr.appendChild(td);
-
-    var div = document.createElement("div");
-    div.style.border = "3px inset #3c60b1";
-    div.style.borderRadius = "calc(50vh - 150px)";
-    div.style.width = "calc(100vh - 300px)";
-    div.id = "tmrControl2";
-    div.style.height = "calc(100vh - 300px)";
-    div.style.margin = "auto";
-    div.style.textAlign = "center";
-    div.style.verticalAlign = "middle";
-    div.style.display = "table-cell";
-    div.innerHTML = "00:00";
-    div.style.fontSize = "20vh";
-    div.style.color = "#3c60b1";
-    div.style.backgroundColor = "#fff";
-    div.style.zIndex = 100;
-
-    td.appendChild(div);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-    td.colSpan = 3;
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = "blue";
-    btn.innerHTML = "Start";
-    btn.style.cssFloat = "left";
-    btn.style.fontSize = "5vh !important";
-    btn.style.marginTop = "-60px";
-    btn.style.marginLeft = "5px";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.setAttribute("timeTarget", test2TimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
-
-        }
-
-        var currentClass = __$("nextButton").className;
-
-        this.className = currentClass.replace(/blue|green/i, "gray");
-
-        tmrControl2Hnd = setInterval(function () {
-
-            tmrControl2SecsCount++;
-
-            if (tmrControl2SecsCount == 60) {
-
-                tmrControl2SecsCount = 0;
-
-                tmrControl2MinsCount++;
-
-            }
-
-            var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
-
-            if (__$("tmrControl2")) {
-
-                __$("tmrControl2").innerHTML = time;
-
-            }
-
-        }, 1000);
-
-        if (__$("btnTest2Nve")) {
-
-            var currentClass = __$("btnTest2Nve").className;
-
-            __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
-
-        }
-
-        if (__$("btnTest2Pve")) {
-
-            var currentClass = __$("btnTest2Pve").className;
-
-            __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
-
-        }
-
-    }
-
-    td.appendChild(btn);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-
-    var test2 = "Second";
-
-    if(__$("fp_item_name2").value && __$("fp_item_name2").value != ""){
-
-        test2 = __$("fp_item_name2").value
-
-    }
-
-    if(__$("im_item_name2").value && __$("im_item_name2").value != ""){
-
-        test2 = __$("im_item_name2").value
-
-    }
-    td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result";
-    td.style.fontSize = "3vh";
-
-    tr.appendChild(td);
-
-    var td = document.createElement("td");
-    td.align = "right";
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-    btn.innerHTML = "-";
-    btn.style.fontSize = "5vh !important";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.id = "btnTest2Nve";
-    btn.setAttribute("target", test2Target.id);
-    btn.setAttribute("timeTarget", test2TimeTarget.id);
-    btn.setAttribute("target2", test1Target.id);
-    btn.setAttribute("timeTarget2", test1TimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        clearInterval(tmrControl2Hnd);
-
-        if (__$(this.getAttribute("target"))) {
-
-            __$(this.getAttribute("target")).value = "-";
-
-        }
-
-        if (__$("touchscreenInput" + tstCurrentPage)) {
-
-            __$("touchscreenInput" + tstCurrentPage).value = "-";
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-            var now = (new Date());
-
-            var duration = (now - startTime) / (60 * 1000);
-
-            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-        }
-
-        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                var currentClass = __$("nextButton").className;
-
-                __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-            }
-
-        }
-
-    }
-
-    td.appendChild(btn);
-
-    var td = document.createElement("td");
-    td.align = "right";
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-    btn.innerHTML = "+";
-    btn.style.fontSize = "5vh !important";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.id = "btnTest2Pve";
-    btn.setAttribute("target", test2Target.id);
-    btn.setAttribute("timeTarget", test2TimeTarget.id);
-    btn.setAttribute("target2", test1Target.id);
-    btn.setAttribute("timeTarget2", test1TimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        clearInterval(tmrControl2Hnd);
-
-        if (__$(this.getAttribute("target"))) {
-
-            __$(this.getAttribute("target")).value = "+";
-
-        }
-
-        if (__$("touchscreenInput" + tstCurrentPage)) {
-
-            __$("touchscreenInput" + tstCurrentPage).value = "+";
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-            var now = (new Date());
-
-            var duration = (now - startTime) / (60 * 1000);
-
-            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-        }
-
-        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                var currentClass = __$("nextButton").className;
-
-                __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-            }
-
-        }
-
-    }
-
-    td.appendChild(btn);
 
 }
 
+function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
+
+
+         if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
+
+                return;
+
+            }
+
+            tmrControl1SecsCount = 0;
+            tmrControl1MinsCount = 0;
+            tmrControl2SecsCount = 0;
+            tmrControl2MinsCount = 0;
+
+            if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+            }
+
+            var mainTable = document.createElement("table");
+            mainTable.style.margin = "auto";
+
+            if (__$("inputFrame" + tstCurrentPage)) {
+
+                __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+
+            }
+
+            var mainRow = document.createElement("tr");
+
+            mainTable.appendChild(mainRow);
+
+            var mainTd1 = document.createElement("td");
+            mainTd1.style.paddingRight = "20px";
+
+            mainRow.appendChild(mainTd1);
+
+            var mainTd2 = document.createElement("td");
+            mainTd2.style.paddingLeft = "20px";
+
+            mainRow.appendChild(mainTd2);
+
+            var table = document.createElement("table");
+            table.id = "timeTable1";
+            table.style.margin = "auto";
+            table.border = 0;
+
+            mainTd1.appendChild(table);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.align = "center";
+            td.verticalAlign = "middle";
+            td.style.border = "1px solid #3c60b1";
+            td.style.borderRadius = "g10px";
+            td.style.padding = "25px";
+            td.colSpan = 3;
+            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+            tr.appendChild(td);
+
+            var div = document.createElement("div");
+            div.style.border = "3px solid #3c60b1";
+            div.style.borderRadius = "calc(50vh - 150px)";
+            div.style.width = "calc(100vh - 300px)";
+            div.id = "tmrControl1";
+            div.style.height = "calc(100vh - 300px)";
+            div.style.margin = "auto";
+            div.style.textAlign = "center";
+            div.style.verticalAlign = "middle";
+            div.style.display = "table-cell";
+            div.innerHTML = "00:00";
+            div.style.fontSize = "20vh";
+            div.style.color = "#3c60b1";
+            div.style.backgroundColor = "#fff";
+            div.style.zIndex = 100;
+
+            td.appendChild(div);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.colSpan = 3;
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = "blue";
+            btn.innerHTML = "Start";
+            btn.style.cssFloat = "right";
+            btn.style.fontSize = "5vh !important";
+            btn.style.marginTop = "-60px";
+            btn.style.marginRight = "5px";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.setAttribute("timeTarget", test1TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+                }
+
+                var currentClass = __$("nextButton").className;
+
+                this.className = currentClass.replace(/blue|green/i, "gray");
+
+                tmrControl1Hnd = setInterval(function () {
+
+                    tmrControl1SecsCount++;
+
+                    if (tmrControl1SecsCount == 60) {
+
+                        tmrControl1SecsCount = 0;
+
+                        tmrControl1MinsCount++;
+
+                    }
+
+                    var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
+
+                    if (__$("tmrControl1")) {
+                
+                        __$("tmrControl1").innerHTML = time;
+
+                        var label_data = window.parent.dashboard.data.stock_label_data[label1]
+
+                        var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
+
+
+                        if(tmrControl1MinsCount  >= parseInt(label_data.rec_time) && tmrControl1MinsCount <  window_time){
+
+                             __$("tmrControl1").style.color = "green";
+
+                        }else if(tmrControl1MinsCount >= window_time){
+
+                             __$("tmrControl1").style.color = "#d9d8d7";
+
+                        }
+
+                    }
+
+                }, 1000);
+
+                if (__$("btnTest1Nve")) {
+
+                    var currentClass = __$("btnTest1Nve").className;
+
+                    __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+                if (__$("btnTest1Pve")) {
+
+                    var currentClass = __$("btnTest1Pve").className;
+
+                    __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+            }
+
+            td.appendChild(btn);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            var test1 = "First";
+
+            if(__$("fp_item_name1").value && __$("fp_item_name1").value != ""){
+
+                test1 = __$("fp_item_name1").value
+
+            }
+
+            if(__$("im_item_name1").value && __$("im_item_name1").value != ""){
+
+                test1 = __$("im_item_name1").value
+
+            }
+
+            td.innerHTML = (label1 ? label1 : test1+" Test") + " Result " +  "<font style='color:green' id='l1_minutes'> </font>";
+            td.style.fontSize = "3vh";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Non Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest1Nve";
+            btn.setAttribute("target", test1Target.id);
+            btn.setAttribute("timeTarget", test1TimeTarget.id);
+            btn.setAttribute("target2", test2Target.id);
+            btn.setAttribute("timeTarget2", test2TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl1Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "-";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest1Nve').className = "green";
+
+                __$('btnTest1Pve').className = "gray";
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(test1Target.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(test1Target.id.trim() == "im_test1_result"){
+
+
+                    __$("im_test1_time").setAttribute("condition",true);
+
+                    __$("im_test1_time").value = time;
+
+                }                
+
+
+            }
+
+            td.appendChild(btn);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest1Pve";
+            btn.setAttribute("target", test1Target.id);
+            btn.setAttribute("timeTarget", test1TimeTarget.id);
+            btn.setAttribute("target2", test2Target.id);
+            btn.setAttribute("timeTarget2", test2TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl1Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "+";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest1Nve').className = "gray";
+
+                __$('btnTest1Pve').className = "green";
+
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(test1Target.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(test1Target.id.trim() == "im_test1_result"){
+
+
+                    __$("im_test1_time").setAttribute("condition",true);
+
+                    __$("im_test1_time").value = time;
+
+                }                
+
+
+               
+            }
+
+            td.appendChild(btn);
+
+            var table = document.createElement("table");
+            table.id ="timeTable2";
+            table.style.margin = "auto";
+            table.border = 0;
+
+            mainTd2.appendChild(table);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.align = "center";
+            td.verticalAlign = "middle";
+            td.style.border = "1px solid #3c60b1";
+            //td.style.borderRadius = "10px";
+            td.style.padding = "25px";
+            td.colSpan = 3;
+            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+            tr.appendChild(td);
+
+            var div = document.createElement("div");
+            div.style.border = "3px solid #3c60b1";
+            div.style.borderRadius = "calc(50vh - 150px)";
+            div.style.width = "calc(100vh - 300px)";
+            div.id = "tmrControl2";
+            div.style.height = "calc(100vh - 300px)";
+            div.style.margin = "auto";
+            div.style.textAlign = "center";
+            div.style.verticalAlign = "middle";
+            div.style.display = "table-cell";
+            div.innerHTML = "00:00";
+            div.style.fontSize = "20vh";
+            div.style.color = "#3c60b1";
+            div.style.backgroundColor = "#fff";
+            div.style.zIndex = 100;
+
+            td.appendChild(div);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.colSpan = 3;
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = "blue";
+            btn.innerHTML = "Start";
+            btn.style.cssFloat = "left";
+            btn.style.fontSize = "5vh !important";
+            btn.style.marginTop = "-60px";
+            btn.style.marginLeft = "5px";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.setAttribute("timeTarget", test2TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+                }
+
+                var currentClass = __$("nextButton").className;
+
+                this.className = currentClass.replace(/blue|green/i, "gray");
+
+                tmrControl2Hnd = setInterval(function () {
+
+                    tmrControl2SecsCount++;
+
+                    if (tmrControl2SecsCount == 60) {
+
+                        tmrControl2SecsCount = 0;
+
+                        tmrControl2MinsCount++;
+
+                    }
+
+                    var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
+
+                    if (__$("tmrControl2")) {
+
+                        __$("tmrControl2").innerHTML = time;
+
+                        var label2_data = window.parent.dashboard.data.stock_label_data[label2]
+
+                        var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
+
+
+                        if(tmrControl2MinsCount  >= parseInt(label2_data.rec_time) && tmrControl2MinsCount <  window_time){
+
+                             __$("tmrControl2").style.color = "green";
+
+                        }else if(tmrControl2MinsCount >= window_time){
+
+                             __$("tmrControl2").style.color = "#d9d8d7";
+
+                        }
+
+                    }
+
+                }, 1000);
+
+                if (__$("btnTest2Nve")) {
+
+                    var currentClass = __$("btnTest2Nve").className;
+
+                    __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+                if (__$("btnTest2Pve")) {
+
+                    var currentClass = __$("btnTest2Pve").className;
+
+                    __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+            }
+
+            td.appendChild(btn);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            var test2 = "Second";
+
+            if(__$("fp_item_name2").value && __$("fp_item_name2").value != ""){
+
+                test2 = __$("fp_item_name2").value
+
+            }
+
+            if(__$("im_item_name2").value && __$("im_item_name2").value != ""){
+
+                test2 = __$("im_item_name2").value
+
+            }
+
+            td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result "+ "<font style='color:green' id='l2_minutes'></font>";
+            td.style.fontSize = "3vh";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Non Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest2Nve";
+            btn.setAttribute("target", test2Target.id);
+            btn.setAttribute("timeTarget", test2TimeTarget.id);
+            btn.setAttribute("target2", test1Target.id);
+            btn.setAttribute("timeTarget2", test1TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl2Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "-";
+
+                }
+
+                if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                    __$("touchscreenInput" + tstCurrentPage).value = "-";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest2Nve').className = "green";
+
+                __$('btnTest2Pve').className = "gray";
+
+                var time = __$("tmrControl2").innerHTML;
+
+                if(test2Target.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+                if(test2Target.id.trim() == "im_test2_result"){
+
+
+                    __$("im_test2_time").setAttribute("condition",true);
+
+                    __$("im_test2_time").value = time;
+
+                }                
+
+
+            }
+
+            td.appendChild(btn);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest2Pve";
+            btn.setAttribute("target", test2Target.id);
+            btn.setAttribute("timeTarget", test2TimeTarget.id);
+            btn.setAttribute("target2", test1Target.id);
+            btn.setAttribute("timeTarget2", test1TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl2Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "+";
+
+                }
+
+                if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                    __$("touchscreenInput" + tstCurrentPage).value = "+";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest2Nve').className = "gray";
+
+                __$('btnTest2Pve').className = "green";
+
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                var time = __$("tmrControl2").innerHTML;
+
+                if(test2Target.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+                if(test2Target.id.trim() == "im_test2_result"){
+
+
+                    __$("im_test2_time").setAttribute("condition",true);
+
+                    __$("im_test2_time").value = time;
+
+                }   
+
+            }
+
+            td.appendChild(btn);
+
+
+            var minuteLabelInterval = setInterval(function(){
+
+                __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
+
+                __$("l2_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label2].rec_time + " Minutes";
+
+                clearInterval(minuteLabelInterval);
+
+            },500);
+
+            if(test1Target.id == "fp_test1_result" && test2Target.id == "fp_test2_result"){
+
+                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+
+                __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+            }
+
+            if(test1Target.id == "im_test1_result" && test2Target.id == "im_test2_result"){
+
+                __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
+
+                __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
+
+            }
+
+
+            
+
+}
+
+
 function loadSerialTest(testTarget, testTimeTarget, label) {
 
-    if (!testTarget || !testTimeTarget) {
+    var url = "/get_pack_size/"+ encodeURIComponent(label);
 
-        return;
+    getAjaxRequest(url, function(data) {
 
-    }
 
-    tmrControl1SecsCount = 0;
-    tmrControl1MinsCount = 0;
+            if (!testTarget || !testTimeTarget) {
 
-    if (__$("nextButton") && testTimeTarget.getAttribute("startTime") == null) {
-
-        var currentClass = __$("nextButton").className;
-
-        __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
-
-    }
-
-    var table = document.createElement("table");
-    table.style.margin = "auto";
-    table.border = 0;
-
-    if (__$("inputFrame" + tstCurrentPage)) {
-
-        __$("inputFrame" + tstCurrentPage).appendChild(table);
-
-    }
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-    td.align = "center";
-    td.verticalAlign = "middle";
-    td.style.border = "1px solid #3c60b1";
-    td.style.borderRadius = "10px";
-    td.style.padding = "25px";
-    td.colSpan = 3;
-    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-
-    tr.appendChild(td);
-
-    var div = document.createElement("div");
-    div.style.border = "3px inset #3c60b1";
-    div.style.borderRadius = "calc(50vh - 150px)";
-    div.style.width = "calc(100vh - 300px)";
-    div.id = "tmrControl1";
-    div.style.height = "calc(100vh - 300px)";
-    div.style.margin = "auto";
-    div.style.textAlign = "center";
-    div.style.verticalAlign = "middle";
-    div.style.display = "table-cell";
-    div.innerHTML = "00:00";
-    div.style.fontSize = "20vh";
-    div.style.color = "#3c60b1";
-    div.style.backgroundColor = "#fff";
-    div.style.zIndex = 100;
-
-    td.appendChild(div);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
-    td.colSpan = 3;
-
-    tr.appendChild(td);
-
-    var btn = document.createElement("button");
-    btn.className = "blue";
-    btn.innerHTML = "Start";
-    btn.style.cssFloat = "right";
-    btn.style.fontSize = "5vh !important";
-    btn.style.marginTop = "-60px";
-    btn.style.marginRight = "5px";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.setAttribute("timeTarget", testTimeTarget.id);
-
-    btn.onclick = function () {
-
-        if (this.className.match(/gray/i)) {
-
-            return;
-
-        }
-
-        if (__$(this.getAttribute("timeTarget"))) {
-
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
-
-        }
-
-        var currentClass = __$("nextButton").className;
-
-        this.className = currentClass.replace(/blue|green/i, "gray");
-
-        tmrControl1Hnd = setInterval(function () {
-
-            tmrControl1SecsCount++;
-
-            if (tmrControl1SecsCount == 60) {
-
-                tmrControl1SecsCount = 0;
-
-                tmrControl1MinsCount++;
+                return;
 
             }
 
-            var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
+            tmrControl1SecsCount = 0;
+            tmrControl1MinsCount = 0;
 
-            if (__$("tmrControl1")) {
+            if (__$("nextButton") && testTimeTarget.getAttribute("startTime") == null) {
 
-                __$("tmrControl1").innerHTML = time;
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
 
             }
 
-        }, 1000);
+            var label_data = JSON.parse(data);
 
-        if (__$("btnTest1Nve")) {
+            var table = document.createElement("table");
+            table.id = "timeTable1";
+            table.style.margin = "auto";
+            table.border = 0;
 
-            var currentClass = __$("btnTest1Nve").className;
+            if (__$("inputFrame" + tstCurrentPage)) {
 
-            __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+                __$("inputFrame" + tstCurrentPage).appendChild(table);
 
-        }
+            }
 
-        if (__$("btnTest1Pve")) {
+            var tr = document.createElement("tr");
 
-            var currentClass = __$("btnTest1Pve").className;
+            table.appendChild(tr);
 
-            __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+            var td = document.createElement("td");
+            td.id = "timeTD1";
+            td.align = "center";
+            td.verticalAlign = "middle";
+            td.style.border = "1px solid #3c60b1";
+            //td.style.borderRadius = "10px";
+            td.style.padding = "25px";
+            td.colSpan = 3;
+            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
 
-        }
+            tr.appendChild(td);
 
-    }
+            var div = document.createElement("div");
+            div.style.border = "3px inset #3c60b1";
+            div.style.borderRadius = "calc(50vh - 150px)";
+            div.style.width = "calc(100vh - 300px)";
+            div.id = "tmrControl1";
+            div.style.height = "calc(100vh - 300px)";
+            div.style.margin = "auto";
+            div.style.textAlign = "center";
+            div.style.verticalAlign = "middle";
+            div.style.display = "table-cell";
+            div.innerHTML = "00:00";
+            div.style.fontSize = "20vh";
+            div.style.color = "#3c60b1";
+            div.style.backgroundColor = "#fff";
+            div.style.zIndex = 100;
 
-    td.appendChild(btn);
+            td.appendChild(div);
 
-    var tr = document.createElement("tr");
+            var tr = document.createElement("tr");
 
-    table.appendChild(tr);
+            table.appendChild(tr);
 
-    var td = document.createElement("td");
-    td.innerHTML = (label ? label : "Test") + " Result";
-    td.style.fontSize = "3vh";
+            var td = document.createElement("td");
+            td.colSpan = 3;
 
-    tr.appendChild(td);
+            tr.appendChild(td);
 
-    var td = document.createElement("td");
-    td.align = "right";
+            var btn = document.createElement("button");
+            btn.className = "blue";
+            btn.innerHTML = "Start";
+            btn.style.cssFloat = "right";
+            btn.style.fontSize = "5vh !important";
+            btn.style.marginTop = "-60px";
+            btn.style.marginRight = "5px";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.setAttribute("timeTarget", testTimeTarget.id);
 
-    tr.appendChild(td);
+            btn.onclick = function () {
 
-    var btn = document.createElement("button");
-    btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-    btn.innerHTML = "-";
-    btn.style.fontSize = "5vh !important";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.id = "btnTest1Nve";
-    btn.setAttribute("target", testTarget.id);
-    btn.setAttribute("timeTarget", testTimeTarget.id);
+                if (this.className.match(/gray/i)) {
 
-    btn.onclick = function () {
+                    return;
 
-        if (this.className.match(/gray/i)) {
+                }
 
-            return;
+                if (__$(this.getAttribute("timeTarget"))) {
 
-        }
+                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
-        clearInterval(tmrControl1Hnd);
+                }
 
-        if (__$(this.getAttribute("target"))) {
+                var currentClass = __$("nextButton").className;
 
-            __$(this.getAttribute("target")).value = "-";
+                this.className = currentClass.replace(/blue|green/i, "gray");
 
-        }
+                tmrControl1Hnd = setInterval(function () {
 
-        if (__$("touchscreenInput" + tstCurrentPage)) {
+                    tmrControl1SecsCount++;
 
-            __$("touchscreenInput" + tstCurrentPage).value = "-";
+                    if (tmrControl1SecsCount == 60) {
 
-        }
+                        tmrControl1SecsCount = 0;
 
-        if (__$(this.getAttribute("timeTarget"))) {
+                        tmrControl1MinsCount++;
 
-            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+                    }
 
-            var now = (new Date());
+                    var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
-            var duration = (now - startTime) / (60 * 1000);
+                 
+                    if (__$("tmrControl1")) {
 
-            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+                        __$("tmrControl1").innerHTML = time;
 
-        }
+                        var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
 
-        if (__$("nextButton")) {
 
-            var currentClass = __$("nextButton").className;
+                        if(tmrControl1MinsCount  >= parseInt(label_data.rec_time) && tmrControl1MinsCount <  window_time){
 
-            __$("nextButton").className = currentClass.replace(/gray/i, "green");
+                             __$("tmrControl1").style.color = "green";
 
-        }
+                        }else if(tmrControl1MinsCount >= window_time){
 
-    }
+                             __$("tmrControl1").style.color = "#d9d8d7";
 
-    td.appendChild(btn);
+                        }
 
-    var td = document.createElement("td");
-    td.align = "right";
 
-    tr.appendChild(td);
+                    }
 
-    var btn = document.createElement("button");
-    btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-    btn.innerHTML = "+";
-    btn.style.fontSize = "5vh !important";
-    btn.style.minWidth = "8vh";
-    btn.style.minHeight = "5vh";
-    btn.id = "btnTest1Pve";
-    btn.setAttribute("target", testTarget.id);
-    btn.setAttribute("timeTarget", testTimeTarget.id);
+                }, 1000);
 
-    btn.onclick = function () {
+                if (__$("btnTest1Nve")) {
 
-        if (this.className.match(/gray/i)) {
+                    var currentClass = __$("btnTest1Nve").className;
 
-            return;
+                    __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
 
-        }
+                }
 
-        clearInterval(tmrControl1Hnd);
+                if (__$("btnTest1Pve")) {
 
-        if (__$(this.getAttribute("target"))) {
+                    var currentClass = __$("btnTest1Pve").className;
 
-            __$(this.getAttribute("target")).value = "+";
+                    __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
 
-        }
+                }
 
-        if (__$("touchscreenInput" + tstCurrentPage)) {
+            }
 
-            __$("touchscreenInput" + tstCurrentPage).value = "+";
+            td.appendChild(btn);
 
-        }
+            var tr = document.createElement("tr");
 
-        if (__$(this.getAttribute("timeTarget"))) {
+            table.appendChild(tr);
 
-            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+            var td = document.createElement("td");
 
-            var now = (new Date());
 
-            var duration = (now - startTime) / (60 * 1000);
+            td.innerHTML = (label ? label : "Test") + " Result " + (label_data.rec_time  ? "<font style='color:green'> - "+label_data.rec_time+" Minutes</font>" : "");
+            td.style.fontSize = "3vh";
 
-            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+            tr.appendChild(td);
 
-        }
+            var td = document.createElement("td");
+            td.align = "right";
 
-        if (__$("nextButton")) {
+            tr.appendChild(td);
 
-            var currentClass = __$("nextButton").className;
+            var btn = document.createElement("button");
+            btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Non Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest1Nve";
+            btn.setAttribute("target", testTarget.id);
+            btn.setAttribute("timeTarget", testTimeTarget.id);
 
-            __$("nextButton").className = currentClass.replace(/gray/i, "green");
+            btn.onclick = function () {
 
-        }
+                if (this.className.match(/gray/i)) {
 
-    }
+                    return;
 
-    td.appendChild(btn);
+                }
+
+                clearInterval(tmrControl1Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "-";
+
+                }
+
+                if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                    __$("touchscreenInput" + tstCurrentPage).value = "-";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+
+                __$('btnTest1Nve').className = "green";
+
+                __$('btnTest1Pve').className = "gray";
+
+                if (__$("nextButton")) {
+
+                    var currentClass = __$("nextButton").className;
+
+                    __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                }
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(testTarget.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(testTarget.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+                
+                
+
+            }
+
+            td.appendChild(btn);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest1Pve";
+            btn.setAttribute("target", testTarget.id);
+            btn.setAttribute("timeTarget", testTimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl1Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "+";
+
+                }
+
+                if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                    __$("touchscreenInput" + tstCurrentPage).value = "+";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                __$('btnTest1Nve').className = "gray";
+
+                __$('btnTest1Pve').className = "green";
+
+
+                if (__$("nextButton")) {
+
+                    var currentClass = __$("nextButton").className;
+
+                    __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                }
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(testTarget.id.trim() == "fp_test1_result"){
+
+                    __$("fp_test1_time").setAttribute("condition",true);
+
+                    __$("fp_test1_time").value = time;
+
+                }
+
+                if(testTarget.id.trim() == "fp_test2_result"){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+               
+            }
+
+            td.appendChild(btn);    
+
+            if(testTarget.id == "fp_test1_result"){
+
+                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+
+              
+
+            }else if( testTarget.id == "fp_test2_result"){
+
+                  __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+            }                              
+                                        
+    }, null);
 
 }
 
@@ -2039,6 +2541,13 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
             }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
+
+                outcome = "Test 1 & Test 2 Discordant";
+
+                result = "New Inconclusive";
+
+            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "-") {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
@@ -2098,13 +2607,25 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "Confirmatory Inconclusive";
 
+                window.parent.dashboard.showMsg("Take DBS sample", "");
+
             }else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-"){
 
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "Confirmatory Inconclusive";
 
+                __$("sample_id").setAttribute("condition",true);
+
                 window.parent.dashboard.showMsg("Take DBS sample", "");
+
+
+            }
+            else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+"){
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "Confirmatory Positive";
 
 
             }
@@ -2185,7 +2706,9 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Discordant";
 
-                result = "Confirmatory Inconclusive";
+                result = "New Inconclusive";
+
+                 __$("sample_id").setAttribute("condition",true);
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
@@ -2202,6 +2725,19 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 }
 
 function showHIVTestingSummary() {
+
+    window.parent.dashboard.queryExistingObsArray("Event in the last 72 hrs?", function(data){
+
+        var ob = Object.keys(data);
+
+          if(data[ob[0]]&& data[ob[0]] =="Yes"  && __$("fp_test1_result").value =="-"){
+
+                window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
+
+        }
+
+
+    });
 
     if (__$("inputFrame" + tstCurrentPage)) {
 
@@ -2859,14 +3395,22 @@ function showDetailsSummary() {
         var th = document.createElement("th");
         th.innerHTML = "Phone/Physical Address";
         th.style.padding = "10px";
-        th.style.borderRight = "1px solid #333";
         th.style.borderTop = "3px solid #333";
         th.style.verticalAlign = "top";
 
         tr.appendChild(th);
 
         var td = document.createElement("td");
-        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        //td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "3px solid #333";
         td.innerHTML = "&nbsp;";
         td.style.width = "30px";
@@ -2874,6 +3418,8 @@ function showDetailsSummary() {
         td.rowSpan = 2;
 
         tr.appendChild(td);
+
+
 
         var tr = document.createElement("tr");
 
@@ -2886,10 +3432,18 @@ function showDetailsSummary() {
         th.style.fontWeight = "normal";
         th.style.fontSize = "11px";
         th.style.verticalAlign = "bottom";
-        th.style.borderRight = "1px solid #333";
         th.colSpan = 2;
 
         tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        
+        tr.appendChild(td);
 
         var tr = document.createElement("tr");
 
@@ -2917,9 +3471,36 @@ function showDetailsSummary() {
         td.style.borderBottom = "1px solid #333";
         td.style.borderRight = "1px solid #333";
 
-        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "" : (__$("1.10").value.trim() ==
-            "Phone Number" ? __$("phone_number").value.trim() : __$("village").value.trim() + ", " +
-            __$("closest_landmark").value.trim()));
+
+        if(__$("capture_details").value.trim() == "No"){
+
+            td.innerHTML = "";
+
+        }else{
+
+            td.innerHTML =  __$("phone_number").value.trim();
+
+
+        }
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+
+        if(__$("capture_details").value.trim() == "No"){
+
+            td.innerHTML = "";
+
+        }else{
+
+            td.innerHTML = __$("village").value.trim() + ", " + __$("closest_landmark").value.trim();
+
+
+        }
 
         tr.appendChild(td);
 
@@ -2970,6 +3551,17 @@ function evaluateReferral() {
 
             __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
                 (7 * 45))))).format("YYYY-mm-dd");
+
+        }
+
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"), 
+        "HTS CLIENT REGISTRATION", "How many months pregnant?");
+
+        console.log(pregnancy_months);
+
+        if(parseInt(pregnancy_months) <= 6 ){
+
+            alert("Test again after 6 months"); 
 
         }
 
@@ -3116,6 +3708,731 @@ function evaluateReferral() {
     }
 
 }
+
+
+
+function evaluateReferral2() {
+
+    var riskCategory;
+
+    var testResult;
+
+    var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "FP");
+
+    riskCategory = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Client Risk Category");
+
+
+
+    testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "HIV TESTING", "Result Given to Client")).trim();
+
+
+    if (pregnant && testResult.trim().toLowerCase() == "new negative") {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 45))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 45))))).format("YYYY-mm-dd");
+
+        }
+
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"), 
+        "HTS CLIENT REGISTRATION", "How many months pregnant?");
+
+        console.log(pregnancy_months);
+
+        if(parseInt(pregnancy_months) <= 6 ){
+
+            alert("Test again after 6 months"); 
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+            "health and to prevent transmission.", "Re-Test");
+
+    } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
+        "new negative") {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "No Re-Test Needed";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").setAttribute("condition", false);
+
+        }
+
+        window.parent.dashboard.showMsg("No Re-Test Needed. Client should go for re-testing <u>if in future</u> a <i>" +
+            "High Risk Event</i> occurs or if they enter into <i>On-Going Risk</i> behaviour", "No Re-Test Needed");
+
+    } else if (testResult.trim().toLowerCase() == "confirmatory positive") {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "No Re-Test Needed";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").setAttribute("condition", false);
+
+        }
+
+        window.parent.dashboard.showMsg("No Re-Test Needed. Client confirmed positive.", "No Re-Test Needed!");
+
+    } else if (riskCategory && (riskCategory.trim().toLowerCase() == "high risk event in last 3 months" && (testResult.trim().toLowerCase() == "new inconclusive")
+
+        || (riskCategory.trim().toLowerCase() == "high risk event in last 3 months" && testResult.trim().toLowerCase() == "new negative"))) {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 4))))).format("YYYY-mm-dd"))
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 4 * 2))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 4))))).format("YYYY-mm-dd");
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 4 weeks", "Re-Test");
+
+    } else if (riskCategory && riskCategory.trim().toLowerCase() == "on-going risk" &&
+        (testResult.trim().toLowerCase() == "new negative")) {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52 * 2))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test after 12 months to detect an infection that may " +
+            "happen in future and to ensure timely enrollment in ART", "Re-Test");
+
+    } else if (testResult.trim().toLowerCase() == "new exposed infant") {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "Re-Test";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52 * 2))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Re-Test when child at 12-24 months!", "Re-Test");
+
+    } else if (testResult.trim().toLowerCase() == "new positive") {
+
+        if (__$("referral")) {
+
+            __$("referral").value = "Confirmatory Test at HIV Clinic";
+
+        }
+
+        if (__$("appointment")) {
+
+            __$("appointment").removeAttribute("condition");
+
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd"))
+
+            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");
+
+        }
+
+        window.parent.dashboard.showMsg("Book appointment for Confirmatory Testing at the HIV Clinic " +
+            "<u>as soon as possible</u>!", "Re-Test");
+
+    }
+
+}
+function setAppiontment(){
+
+    __$("today").click();
+
+    __$("today").setAttribute("disabled","disabled");
+
+    __$("today").style.display = "none";
+
+}
+function loadPost(){
+
+    evaluateReferral2();
+
+    setMaxDate("appointment",1)
+
+    return false;
+
+}
+
+function  validateAppointment(){
+
+
+    var appointment  = __$("appointment").value;
+
+    var date_today = new Date();
+
+    if(appointment < date_today.format("YYYY-mm-dd")){
+
+        gotoPage(tstCurrentPage - 1, false, true); 
+
+        window.parent.dashboard.showMsg("The date booked is behind today","Invalide Date");
+
+    }
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var currentRange;
+var target = "duration_in_days";
+
+
+function showTimeSinceLastDate() {
+
+        parent.innerHTML = "";
+
+        if (__$("nextButton")) {
+
+            var initNavLogic = __$("nextButton").onmousedown;
+
+            __$("nextButton").className = __$("nextButton").className.replace(/green/i, "gray");
+
+            __$("nextButton").onmousedown = function () {
+
+                if (__$("nextButton").className.match(/gray/i))
+                    return;
+
+                if (String(typeof initNavLogic).toLowerCase() == "function")
+                    initNavLogic();
+
+            }
+
+        }
+
+        if(__$("backButton")) {
+
+            var oldCallback = __$("backButton").onmousedown;
+
+            __$("backButton").onmousedown = function() {
+
+                if(__$('nextButton'))
+                    __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+
+                oldCallback();
+
+            }
+
+        }
+
+        var lt = document.getElementById("inputFrame"+tstCurrentPage);
+        var div = document.createElement("div");
+        div.style.width = "100%";
+        div.style.border = "1px solid #ccc";
+        div.style.height = "calc(100vh - 175px)";
+        div.style.overflow = "hidden";
+
+        lt.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.cellPadding = "10";
+
+        div.appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.fontSize = "2em";
+        td.style.borderBottom = "1px solid #ccc";
+        td.colSpan = 2;
+        td.innerHTML = "Duration ago";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.width = "40%";
+        td.style.height = "calc(100vh - 173px)";
+        td.style.verticalAlign = "top";
+        td.style.borderRight = "1px dotted #ccc";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        var ul = document.createElement("ul");
+        ul.style.listStyle = "none";
+        ul.style.padding = "0px";
+
+        td.appendChild(ul);
+
+        var durations = ["Years", "Months", "Weeks", "Days"];
+
+        for(var i = 0; i < durations.length; i++) {
+
+            var duration = durations[i];
+
+            var li = document.createElement("li");
+            li.style.padding = "10px";
+            li.style.fontSize = "2em";
+            li.style.borderBottom = "1px dotted #ccc";
+            li.id = duration;
+
+            li.onclick = function() {
+
+                updateRange(this.id);
+
+            }
+
+            ul.appendChild(li);
+
+            var liTable = document.createElement("table");
+            liTable.width = "100%";
+            liTable.style.fontSize = "1.1em";
+
+            li.appendChild(liTable);
+
+            var liTr = document.createElement("tr");
+
+            liTable.appendChild(liTr);
+
+            var liTd = document.createElement("td");
+            liTd.innerHTML = duration;
+
+            liTr.appendChild(liTd);
+
+            var liTd = document.createElement("td");
+            liTd.style.textAlign = "right";
+
+            liTr.appendChild(liTd);
+
+            var img = document.createElement("img");
+            img.setAttribute("src", "touchscreentoolkit/lib/images/unchecked.png");
+            img.height = "40";
+            img.id = "img" + duration;
+
+            liTd.appendChild(img);
+
+        }
+
+        var td = document.createElement("td");
+        td.style.width = "60%";
+        td.style.fontSize = "2.2em";
+        td.id = "lblDuration";
+        td.align = "center";
+        td.innerHTML = "How many years ago?";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.padding = "0px";
+
+        tr.appendChild(td);
+
+        var input = document.createElement("input");
+        input.style.fontSize = "2.5em";
+        input.style.border = "1px #ccc solid";
+        input.style.padding = "10px";
+        input.style.width = "100%";
+        input.style.backgroundColor = "#eee";
+        input.style.textAlign = "center";
+        input.id = "duration";
+        input.type = "text";
+        input.value = "";
+
+        td.appendChild(input);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.verticalAlign = "top";
+        td.style.height = "calc(100vh - 320px)";
+        td.id = "numberPad";
+
+        tr.appendChild(td);
+
+        var table = document.createElement("table");
+        table.style.margin = "auto";
+
+        td.appendChild(table);
+
+        var buttons = [[7,8,9], [4,5,6], [1,2,3], ["clear", 0, "del"]];
+
+        for(var i = 0; i < buttons.length; i++) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            for(var j = 0; j < buttons[i].length; j++) {
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                var button = document.createElement("button");
+                button.innerHTML = buttons[i][j];
+                button.className = "click";
+                button.style.minWidth = "100px";
+
+                td.appendChild(button);
+
+            }
+
+        }
+
+        init();
+
+      
+}
+
+function setTimeSinceLastDate(){
+
+       var time_in_days = parseInt(__$("duration_in_days").value);
+
+       var date = new Date();
+
+       date.setDate(date.getDate() - time_in_days);
+
+       __$("time_since_last_test_date").value = date.format("YYYY-mm-dd");
+
+}
+
+function updateDuration(token) {
+
+    if (!token)
+        return;
+
+    if (token.match(/\d/)) {
+
+        if (__$("duration")) {
+
+            var birthdate = window.parent.dashboard.data.data.birthdate;
+
+
+
+            switch (currentRange) {
+
+                case "Years":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 30){
+
+                        window.parent.dashboard.showMsg("Years you are about enter is greater than (30 years)","Time Since Last Test")
+
+
+                    }else if(birthdate && birthdate.length > 0 && parseInt(getAge(birthdate)[0]) < parseInt((String(__$("duration").value).trim()) + token)){
+
+                         window.parent.dashboard.showMsg("Years you are about enter  is greater than  age of the client ("+parseInt(getAge(birthdate)[0])+" years)","Time Since Last Test");
+
+
+                    }else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+
+                    }
+
+                    break;
+                case "Months":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+
+                        window.parent.dashboard.showMsg("Months you are about enter is greater than (24 months)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+
+                case "Weeks":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+
+                        window.parent.dashboard.showMsg("Weeks you are about enter is greater than (24 weeks)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+
+                case "Days":
+
+                    if(parseInt((String(__$("duration").value).trim()) + token) > 31){
+
+                        window.parent.dashboard.showMsg("Days you are about enter is greater than (31 days)","Time Since Last Test")
+
+
+                    }
+                    else{
+
+                        __$("duration").value = (String(__$("duration").value).trim()) + token;
+
+                    }
+
+                    break;
+            }
+
+
+        }
+
+    } else if (token.trim().toLowerCase() == "del") {
+
+        if (__$("duration")) {
+
+            var word = (String(__$("duration").value).trim());
+
+            __$("duration").value = word.substring(0, (word.length - 1));
+
+        }
+
+    } else if (token.trim().toLowerCase() == "clear") {
+
+        if (__$("duration")) {
+
+            __$("duration").value = "";
+
+        }
+
+    }
+
+}
+
+function updateRange(id) {
+
+    if (currentRange) {
+
+        if (__$("img" + currentRange)) {
+
+            __$("img" + currentRange).setAttribute("src", "touchscreentoolkit/lib/images/unchecked.png");
+
+        }
+
+        if (__$(currentRange)) {
+
+            __$(currentRange).style.backgroundColor = "";
+
+        }
+
+    }
+
+    switch (id) {
+
+        case "Years":
+
+            currentRange = "Years";
+
+            break;
+
+        case "Months":
+
+            currentRange = "Months";
+
+            break;
+
+        case "Weeks":
+
+            currentRange = "Weeks";
+
+            break;
+
+        case "Days":
+
+            currentRange = "Days";
+
+            break;
+
+    }
+
+    if (currentRange) {
+
+        if (__$("img" + currentRange)) {
+
+            __$("img" + currentRange).setAttribute("src", "touchscreentoolkit/lib/images/checked.png");
+
+        }
+
+        if (__$(currentRange)) {
+
+            __$(currentRange).style.backgroundColor = "lightblue";
+
+        }
+
+        if (__$("lblDuration")) {
+
+            __$("lblDuration").innerHTML = "How many " + currentRange.trim().toLowerCase() + " ago?";
+
+        }
+
+        updateResult();
+
+    }
+
+}
+
+function updateResult() {
+
+    if (__$("duration") && __$(target) && currentRange) {
+
+        var days = 0;
+
+        var duration = (__$("duration").value.match(/^\d+$/) ? __$("duration").value.trim() : 0);
+
+        switch (currentRange) {
+
+            case "Years":
+
+                days = 365 * parseInt(duration);
+
+                break;
+
+            case "Months":
+
+                days = 30 * parseInt(duration);
+
+                break;
+
+            case "Weeks":
+
+                days = 7 * parseInt(duration);
+
+                break;
+
+            case "Days":
+
+                days = parseInt(duration);
+
+                break;
+
+        }
+
+        __$(target).value = days;
+
+        if(__$("duration").value.trim().length > 0) {
+
+            if(__$('nextButton'))
+                __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+
+        } else {
+
+            if(__$('nextButton'))
+                __$('nextButton').className = __$('nextButton').className.replace(/green/i, 'gray');
+
+        }
+
+    }
+
+}
+
+function init() {
+
+    var buttons = document.getElementsByClassName("click");
+
+    for (var i = 0; i < buttons.length; i++) {
+
+        buttons[i].onclick = function () {
+
+            updateDuration(this.innerHTML.trim());
+            __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+            __$('nextButton').onmousedown=function(){gotoNextPage()};
+
+
+        }
+
+    }
+
+    setInterval(function () {
+
+        updateResult();
+
+    }, 100);
+
+    if (__$("Years")) {
+
+        __$("Years").click();
+
+    }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function showAssessmentSummary() {
 
@@ -3490,6 +4807,292 @@ function showAssessmentSummary() {
 
 }
 
+
+function showPostSummary() {
+
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).style.overflow = "auto";
+
+        var table = document.createElement("table");
+        table.style.borderCollapse = "collapse";
+        table.style.margin = "auto";
+        table.style.marginTop = "20px";
+        table.style.color = "#333";
+        table.cellPadding = "10px";
+        table.border = 0;
+
+        __$("inputFrame" + tstCurrentPage).appendChild(table);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Referral for Re-Testing";
+        th.style.padding = "10px";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+        th.colSpan = 4;
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Number of Items<br />Given";
+        th.style.padding = "10px";
+        th.style.borderLeft = "1px solid #333";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+        th.colSpan = 3;
+
+        tr.appendChild(th);
+
+        var th = document.createElement("th");
+        th.innerHTML = "Comments";
+        th.style.padding = "10px";
+        th.style.borderRight = "1px solid #333";
+        th.style.borderTop = "3px solid #333";
+        th.style.verticalAlign = "top";
+
+        tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        th.style.borderLeft = "1px solid #333";
+        td.style.borderTop = "3px solid #333";
+        td.innerHTML = "&nbsp;";
+        td.style.width = "30px";
+        td.style.height = "50px";
+        td.rowSpan = 4;
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("No<i style='color: #eee'>_</i>Re-Test<i style='color: #eee'>_</i>needed", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("Re-Test", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 3;
+
+        tr.appendChild(td);
+
+        verticalText("Confirmatory<i style='color: #eee'>_</i>Test<br/>at<i style='color: #eee'>_</i>HIV" +
+            "<i style='color: #eee'>_</i>Clinic", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.rowSpan = 3;
+        td.style.verticalAlign = "bottom";
+        td.innerHTML = "Appointment<br/>Date Given";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.verticalAlign = "top";
+        td.align = "center";
+        td.innerHTML = "<b>HTS<br/>Family<br/>Slips</b>";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.verticalAlign = "top";
+        td.colSpan = 2;
+        td.align = "center";
+        td.innerHTML = "<b>Condoms</b>";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.verticalAlign = "bottom";
+        td.innerHTML = "<i>Specimen ID for DBS<br />samples sent to lab.</i>";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.verticalAlign = "bottom";
+        td.align = "center";
+        td.rowSpan = 2;
+        td.innerHTML = "<i>1 Slip for each<br/>partner+ each<br/>U5 child with<br/>unk. status</i>";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.rowSpan = 2;
+
+        tr.appendChild(td);
+
+        verticalText("Male", td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.rowSpan = 2;
+
+        tr.appendChild(td);
+
+        verticalText("Female", td);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.verticalAlign = "top";
+        td.rowSpan = 2;
+        td.innerHTML = "<i>Follow-up outcome for<br/>clients referred, etc.</i>";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.fontSize = "12px";
+
+        table.appendChild(tr);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid #333";
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+        var referralMapping = {
+            "No Re-Test Needed": "NoT",
+            "Re-Test": "ReT",
+            "Confirmatory Test at HIV Clinic": "CT",
+            "": ""
+        };
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("NoT", referralMapping[__$("referral").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("ReT", referralMapping[__$("referral").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        tr.appendChild(td);
+
+        addDiv("CT", referralMapping[__$("referral").value.trim()], td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        td.innerHTML = (__$("appointment").value.trim().length > 0 ? __$("appointment").value.trim() : "");
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.align = "center";
+
+        td.innerHTML = (__$("slips").value.trim().length > 0 ? __$("slips").value.trim() : 0);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.align = "center";
+
+        td.innerHTML = (__$("male").value.trim().length > 0 ? __$("male").value.trim() : 0);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+        td.align = "center";
+
+        td.innerHTML = (__$("female").value.trim().length > 0 ? __$("female").value.trim() : 0);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.style.borderRight = "1px solid #333";
+
+        td.innerHTML = (__$("comments").value.trim().length > 0 ? __$("comments").value.trim() : "");
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid #333";
+        td.style.borderTop = "1px solid #333";
+        td.innerHTML = "&nbsp;";
+
+        tr.appendChild(td);
+
+    }
+
+}
+
 var hndValidation;
 
 function validateCredentials(username, password) {
@@ -3604,19 +5207,19 @@ function setMaxDate(element,number_of_years){
 
 }
 
-function setPhoneNumberValidatetion(phone_number){
+function setPhoneNumberValidation(phone_number){
 
     if(__$(phone_number)){
 
         var field = __$(phone_number);
 
-        field.setAttribute("validationRule","^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$");
+        field.setAttribute("validationRule","^01\\d{6}$|Unknown|Not Available|^01\\d{8}$|^02\\d{8}$|^03\\d{8}$|^04\\d{8}$|^05\\d{8}$|^06\\d{8}$|^07\\d{8}$|^08\\d{8}$|^09\\d{8}$|^N\\/A$");
 
         field.setAttribute("validationMessage","Not a valid phone number");
 
         field.setAttribute("field_type","number");
 
-        field.setAttribute("tt_pageStyleClass","NumbersWithUnknown nota");
+        field.setAttribute("tt_pageStyleClass","Numeric NumbersOnly");
 
     }
 
@@ -3644,5 +5247,1307 @@ function isNotInfant(){
 
     });
 
+
     return is_not_infant;
+}
+
+function setTestKits(){
+
+    var descriptions = ["First Test", "Second Test"];
+
+
+    for (var i = 0 ; i < descriptions.length ; i++){
+
+         getAjaxRequest("/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+
+                var kit_data = JSON.parse(data);
+
+                if(!window.parent.dashboard.data.kits)
+                    window.parent.dashboard.data.kits = {};
+
+                window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
+
+
+                if(kit_data.description == "First Test"){
+
+
+
+                    __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + kit_data.name + "&batch=");
+
+                    __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+
+
+                }
+
+                else{
+
+                    __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                        "&item_name=" + kit_data.name + "&batch=");
+
+                    __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                    getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
+
+                }
+
+                if(kit_data.name && kit_data.name.length > 0)
+                        recommendedTimmerForLabels([kit_data.name]);
+
+        });
+
+
+    }
+
+}
+function setTestKitsProfiency(){
+
+    var descriptions = ["First Test", "Second Test"];
+
+
+    for (var i = 0 ; i < descriptions.length ; i++){
+
+         getAjaxRequest("/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+
+                var kit_data = JSON.parse(data);
+
+                if(!window.parent.proficiency.kits)
+                    window.parent.proficiency.kits = {};
+
+                window.parent.proficiency.kits[kit_data.description] = kit_data.name;
+
+
+                for( var i = 0 ; i < 5 ; i =  i + 1){
+
+                       if(kit_data.description == "First Test"){
+
+                            console.log('data.fp_lot_number1_' + i);
+
+
+                            __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                            "&item_name=" + kit_data.name + "&batch=");
+
+                            __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' +getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+
+
+                        }
+
+                        else{
+
+                            __$('data.fp_lot_number2_' + i ).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                                "&item_name=" + kit_data.name + "&batch=");
+
+                            __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
+
+                        }
+
+                        if(kit_data.name && kit_data.name.length > 0)
+                                recommendedTimmerForLabelsProficiency([kit_data.name]);
+
+                }
+
+        });
+
+
+    }
+
+}
+
+function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2,iterator) {
+
+
+         if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
+
+                return;
+
+            }
+
+            tmrControl1SecsCount = 0;
+            tmrControl1MinsCount = 0;
+            tmrControl2SecsCount = 0;
+            tmrControl2MinsCount = 0;
+
+            if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+            }
+
+            var mainTable = document.createElement("table");
+            mainTable.style.margin = "auto";
+
+            if (__$("inputFrame" + tstCurrentPage)) {
+
+                __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+
+            }
+
+            var mainRow = document.createElement("tr");
+
+            mainTable.appendChild(mainRow);
+
+            var mainTd1 = document.createElement("td");
+            mainTd1.style.paddingRight = "20px";
+
+            mainRow.appendChild(mainTd1);
+
+            var mainTd2 = document.createElement("td");
+            mainTd2.style.paddingLeft = "20px";
+
+            mainRow.appendChild(mainTd2);
+
+            var table = document.createElement("table");
+            table.id = "timeTable1";
+            table.style.margin = "auto";
+            table.border = 0;
+
+            mainTd1.appendChild(table);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.align = "center";
+            td.verticalAlign = "middle";
+            td.style.border = "1px solid #3c60b1";
+            td.style.borderRadius = "g10px";
+            td.style.padding = "25px";
+            td.colSpan = 3;
+            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+            tr.appendChild(td);
+
+            var div = document.createElement("div");
+            div.style.border = "3px solid #3c60b1";
+            div.style.borderRadius = "calc(50vh - 150px)";
+            div.style.width = "calc(100vh - 300px)";
+            div.id = "tmrControl1";
+            div.style.height = "calc(100vh - 300px)";
+            div.style.margin = "auto";
+            div.style.textAlign = "center";
+            div.style.verticalAlign = "middle";
+            div.style.display = "table-cell";
+            div.innerHTML = "00:00";
+            div.style.fontSize = "20vh";
+            div.style.color = "#3c60b1";
+            div.style.backgroundColor = "#fff";
+            div.style.zIndex = 100;
+
+            td.appendChild(div);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.colSpan = 3;
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = "blue";
+            btn.innerHTML = "Start";
+            btn.style.cssFloat = "right";
+            btn.style.fontSize = "5vh !important";
+            btn.style.marginTop = "-60px";
+            btn.style.marginRight = "5px";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.setAttribute("timeTarget", test1TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+                }
+
+                var currentClass = __$("nextButton").className;
+
+                this.className = currentClass.replace(/blue|green/i, "gray");
+
+                tmrControl1Hnd = setInterval(function () {
+
+                    tmrControl1SecsCount++;
+
+                    if (tmrControl1SecsCount == 60) {
+
+                        tmrControl1SecsCount = 0;
+
+                        tmrControl1MinsCount++;
+
+                    }
+
+                    var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
+
+                    if (__$("tmrControl1")) {
+                
+                        __$("tmrControl1").innerHTML = time;
+
+                        var label_data = window.parent.dashboard.data.stock_label_data[label1]
+
+                        var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
+
+
+                        if(tmrControl1MinsCount  >= parseInt(label_data.rec_time) && tmrControl1MinsCount <  window_time){
+
+                             __$("tmrControl1").style.color = "green";
+
+                        }else if(tmrControl1MinsCount >= window_time){
+
+                             __$("tmrControl1").style.color = "#d9d8d7";
+
+                        }
+
+                    }
+
+                }, 1000);
+
+                if (__$("btnTest1Nve")) {
+
+                    var currentClass = __$("btnTest1Nve").className;
+
+                    __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+                if (__$("btnTest1Pve")) {
+
+                    var currentClass = __$("btnTest1Pve").className;
+
+                    __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+            }
+
+            td.appendChild(btn);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            var test1 = "First";
+
+
+            if(__$("data.fp_item_name1_"+iterator).value && __$("data.fp_item_name1_"+iterator).value != ""){
+
+                test1 = __$("data.fp_item_name1_"+iterator).value
+
+            }
+
+            if(__$("data.im_item_name1_"+iterator).value && __$("data.im_item_name1_"+iterator).value != ""){
+
+                test1 = __$("data.im_item_name1_"+iterator).value
+
+            }
+
+            td.innerHTML = (label1 ? label1 : test1+" Test") + " Result " +  "<font style='color:green' id='l1_minutes'> </font>";
+            td.style.fontSize = "3vh";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Non Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest1Nve";
+            btn.setAttribute("target", test1Target.id);
+            btn.setAttribute("timeTarget", test1TimeTarget.id);
+            btn.setAttribute("target2", test2Target.id);
+            btn.setAttribute("timeTarget2", test2TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl1Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "-";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest1Nve').className = "green";
+
+                __$('btnTest1Pve').className = "gray";
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(test1Target.id.trim() == "data.fp_test1_result"+iterator){
+
+                    __$("fp_test1_time"+iterator).setAttribute("condition",true);
+
+                    __$("fp_test1_time"+iterator).value = time;
+
+                }
+
+                if(test1Target.id.trim() == "data.im_test1_result"+iterator){
+
+
+                    __$("im_test1_time"+iterator).setAttribute("condition",true);
+
+                    __$("im_test1_time"+iterator).value = time;
+
+                }                
+
+
+            }
+
+            td.appendChild(btn);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest1Pve";
+            btn.setAttribute("target", test1Target.id);
+            btn.setAttribute("timeTarget", test1TimeTarget.id);
+            btn.setAttribute("target2", test2Target.id);
+            btn.setAttribute("timeTarget2", test2TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl1Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "+";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest1Nve').className = "gray";
+
+                __$('btnTest1Pve').className = "green";
+
+
+                var time = __$("tmrControl1").innerHTML;
+
+                if(test1Target.id.trim() == "data.fp_test1_result"+iterator){
+
+                    __$("fp_test1_time"+iterator).setAttribute("condition",true);
+
+                    __$("fp_test1_time"+iterator).value = time;
+
+                }
+
+                if(test1Target.id.trim() == "data.im_test1_result"+iterator){
+
+
+                    __$("im_test1_time"+iterator).setAttribute("condition",true);
+
+                    __$("im_test1_time"+iterator).value = time;
+
+                }                
+
+
+               
+            }
+
+            td.appendChild(btn);
+
+            var table = document.createElement("table");
+            table.id ="timeTable2";
+            table.style.margin = "auto";
+            table.border = 0;
+
+            mainTd2.appendChild(table);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.align = "center";
+            td.verticalAlign = "middle";
+            td.style.border = "1px solid #3c60b1";
+            //td.style.borderRadius = "10px";
+            td.style.padding = "25px";
+            td.colSpan = 3;
+            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+            tr.appendChild(td);
+
+            var div = document.createElement("div");
+            div.style.border = "3px inset #3c60b1";
+            div.style.borderRadius = "calc(50vh - 150px)";
+            div.style.width = "calc(100vh - 300px)";
+            div.id = "tmrControl2";
+            div.style.height = "calc(100vh - 300px)";
+            div.style.margin = "auto";
+            div.style.textAlign = "center";
+            div.style.verticalAlign = "middle";
+            div.style.display = "table-cell";
+            div.innerHTML = "00:00";
+            div.style.fontSize = "20vh";
+            div.style.color = "#3c60b1";
+            div.style.backgroundColor = "#fff";
+            div.style.zIndex = 100;
+
+            td.appendChild(div);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+            td.colSpan = 3;
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = "blue";
+            btn.innerHTML = "Start";
+            btn.style.cssFloat = "left";
+            btn.style.fontSize = "5vh !important";
+            btn.style.marginTop = "-60px";
+            btn.style.marginLeft = "5px";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.setAttribute("timeTarget", test2TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+                }
+
+                var currentClass = __$("nextButton").className;
+
+                this.className = currentClass.replace(/blue|green/i, "gray");
+
+                tmrControl2Hnd = setInterval(function () {
+
+                    tmrControl2SecsCount++;
+
+                    if (tmrControl2SecsCount == 60) {
+
+                        tmrControl2SecsCount = 0;
+
+                        tmrControl2MinsCount++;
+
+                    }
+
+                    var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
+
+                    if (__$("tmrControl2")) {
+
+                        __$("tmrControl2").innerHTML = time;
+
+                        var label2_data = window.parent.proficiency.stock_label_data[label2]
+
+                        var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
+
+
+                        if(tmrControl2MinsCount  >= parseInt(label2_data.rec_time) && tmrControl2MinsCount <  window_time){
+
+                             __$("tmrControl2").style.color = "green";
+
+                        }else if(tmrControl2MinsCount >= window_time){
+
+                             __$("tmrControl2").style.color = "#d9d8d7";
+
+                        }
+
+                    }
+
+                }, 1000);
+
+                if (__$("btnTest2Nve")) {
+
+                    var currentClass = __$("btnTest2Nve").className;
+
+                    __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+                if (__$("btnTest2Pve")) {
+
+                    var currentClass = __$("btnTest2Pve").className;
+
+                    __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
+
+                }
+
+            }
+
+            td.appendChild(btn);
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            var test2 = "Second";
+
+            if(__$("data.fp_item_name2_"+iterator).value && __$("data.fp_item_name2_"+iterator).value != ""){
+
+                test2 = __$("data.fp_item_name2_"+iterator).value
+
+            }
+
+            if(__$("data.im_item_name2_"+iterator).value && __$("data.im_item_name2_"+iterator).value != ""){
+
+                test2 = __$("data.im_item_name2_"+iterator).value
+
+            }
+
+            td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result "+ "<font style='color:green' id='l2_minutes'></font>";
+            td.style.fontSize = "3vh";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Non Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest2Nve";
+            btn.setAttribute("target", test2Target.id);
+            btn.setAttribute("timeTarget", test2TimeTarget.id);
+            btn.setAttribute("target2", test1Target.id);
+            btn.setAttribute("timeTarget2", test1TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl2Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "-";
+
+                }
+
+                if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                    __$("touchscreenInput" + tstCurrentPage).value = "-";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest2Nve').className = "green";
+
+                __$('btnTest2Pve').className = "gray";
+
+                var time = __$("tmrControl2").innerHTML;
+
+                if(test2Target.id.trim() == "data.fp_test2_result"+iterator){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+                if(test2Target.id.trim() == "data.im_test2_result"+iterator){
+
+
+                    __$("im_test2_time").setAttribute("condition",true);
+
+                    __$("im_test2_time").value = time;
+
+                }                
+
+
+            }
+
+            td.appendChild(btn);
+
+            var td = document.createElement("td");
+            td.align = "right";
+
+            tr.appendChild(td);
+
+            var btn = document.createElement("button");
+            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+            btn.innerHTML = "Reactive";
+            btn.style.fontSize = "5vh !important";
+            btn.style.minWidth = "8vh";
+            btn.style.minHeight = "5vh";
+            btn.id = "btnTest2Pve";
+            btn.setAttribute("target", test2Target.id);
+            btn.setAttribute("timeTarget", test2TimeTarget.id);
+            btn.setAttribute("target2", test1Target.id);
+            btn.setAttribute("timeTarget2", test1TimeTarget.id);
+
+            btn.onclick = function () {
+
+                if (this.className.match(/gray/i)) {
+
+                    return;
+
+                }
+
+                clearInterval(tmrControl2Hnd);
+
+                if (__$(this.getAttribute("target"))) {
+
+                    __$(this.getAttribute("target")).value = "+";
+
+                }
+
+                if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                    __$("touchscreenInput" + tstCurrentPage).value = "+";
+
+                }
+
+                if (__$(this.getAttribute("timeTarget"))) {
+
+                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                    var now = (new Date());
+
+                    var duration = (now - startTime) / (60 * 1000);
+
+                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+                }
+
+                //Disbabling the other button
+
+                __$('btnTest2Nve').className = "gray";
+
+                __$('btnTest2Pve').className = "green";
+
+
+                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                        var currentClass = __$("nextButton").className;
+
+                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                    }
+
+                }
+
+                var time = __$("tmrControl2").innerHTML;
+
+                if(test2Target.id.trim() == "data.fp_test2_result"+iterator){
+
+                    __$("fp_test2_time").setAttribute("condition",true);
+
+                    __$("fp_test2_time").value = time;
+
+                }
+
+                if(test2Target.id.trim() == "data.im_test2_result"+iterator){
+
+
+                    __$("im_test2_time").setAttribute("condition",true);
+
+                    __$("im_test2_time").value = time;
+
+                }   
+
+            }
+
+            td.appendChild(btn);
+
+
+            var minuteLabelInterval = setInterval(function(){
+
+                __$("l1_minutes").innerHTML = window.parent.proficiency.stock_label_data[label1].rec_time + " Minutes";
+
+                __$("l2_minutes").innerHTML = window.parent.proficiency.stock_label_data[label2].rec_time + " Minutes";
+
+                clearInterval(minuteLabelInterval);
+
+            },500);
+
+            if(test1Target.id == "data.fp_test1_result"+iterator && test2Target.id == "data.fp_test2_result"+iterator){
+
+                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+
+                __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+            }
+
+            if(test1Target.id == "data.im_test1_result"+iterator && test2Target.id == "data.im_test2_result"+iterator){
+
+                __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
+
+                __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
+
+            }
+
+
+            
+
+}
+
+function recommendedTimmerForLabelsProficiency(labels){
+
+    if(labels[0].length == 0)
+        return;
+
+    for(var i = 0 ; i < labels.length ; i++){
+
+        console.log(i);
+
+        getAjaxRequest("/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
+
+                var label_data = JSON.parse(data);
+
+                if(!window.parent.proficiency.stock_label_data)
+                    window.parent.dashboard.data.stock_label_data = {};
+
+                window.parent.proficiency.stock_label_data[label_data.id] = {rec_time: label_data.rec_time ,window_time: label_data.window_time}
+
+        });
+
+    }
+
+}
+function getMonthList(){
+
+    var ul = __$("options");
+
+    //ul.innerHTML = "";
+
+    var windowHeight = window.innerHeight;
+
+
+    ul.style.height = (0.65 * windowHeight) + "px";
+
+    ul.style.overflowY = "scroll";
+
+
+
+    /*var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December","Unknown"];
+
+    for (var i = 0 ; i < monthList.length ; i++){
+
+        var li  = document.createElement("li");
+
+        ul.appendChild(li);
+
+        li.id = i;
+
+        if(i % 2 == 0){
+
+            li.className = "even"
+
+            li.setAttribute("tag","even");
+
+        }else{
+
+            li.className = "odd"
+
+            li.setAttribute("tag","odd")
+
+        }
+
+        li.setAttribute("tstvalue",monthList[i]);
+
+        li.setAttribute("onclick", "null; updateTouchscreenInputForSelect(this); ");
+
+        li.innerHTML = monthList[i];
+
+
+
+    }
+
+    //ul.innerHTML = "";*/
+
+}
+
+function monthDaysKeyPad(){
+
+    var keyboard = __$("keyboard");
+
+    __$("inputFrame"+tstCurrentPage).style.height = "50px";
+
+    keyboard.innerHTML = "";
+
+    var keyPadDiv = document.createElement("div");
+
+    keyPadDiv.style.width = "40%";
+
+    keyPadDiv.style.float = "left";
+
+    keyboard.appendChild(keyPadDiv);
+
+    var months = {
+                    "January"   : 0,
+                   "February"   : 1 ,
+                    "March"     : 2,
+                    "April"     : 3,
+                    "May"       : 4,
+                    "June"      : 5,
+                    "Juy"       : 6,
+                    "August"    : 7,
+                    "September" : 8,
+                    "October"   : 9,
+                    "November"  : 10,
+                    "December"  : 11
+        }
+
+    var year = __$("birthyear").value;
+
+    var month = __$("birthmonth").value;
+
+    var nextMonthNumber = parseInt(months[month]) + 2;
+
+    var date = new Date(year + "-" + padZeros(nextMonthNumber,2)+"-"+"01");
+
+    date.setDate(date.getDate()-1);
+
+    var lateDayOfSelectedMonth = date.getDate()
+
+    var table = document.createElement("table");
+
+    table.style.width = "100%";
+
+    keyPadDiv.appendChild(table);
+
+
+    var tr ;
+
+    for (var i = 1 ; i <= 31 ; i++){
+
+        if((i-1) % 7 == 0){
+
+            tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+        }
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+
+        td.appendChild(button);
+        
+
+        if(i <= 9){
+
+            button.innerHTML = "0"+i;
+
+            button.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ="0"+'+i);
+
+        }else{
+
+            button.innerHTML = i ;
+
+             button.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ='+i);
+
+        }
+
+        if(i > parseInt(lateDayOfSelectedMonth)){
+
+            button.className = "gray";
+
+            button.removeAttribute("onclick");
+        }
+        else{
+
+            button.className = "blue";
+
+        }
+
+    }
+
+    var unknownButton = document.createElement("button");
+
+    unknownButton.innerHTML = "Unknown";
+
+    unknownButton.style.float = "right";
+
+    unknownButton.style.marginTop = "10%";
+
+    unknownButton.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ="Unknown"');
+
+    keyboard.appendChild(unknownButton);
+
+}
+
+function setAgeValues(){
+
+    var birthyear = __$("birthyear").value;
+
+    var birthmonth = __$('birthmonth').value;
+
+    var birthday = __$("birthday").value ;
+
+    if(birthday.trim().toLowerCase() == "unknown"){
+
+         birthday = "01";
+
+    }
+
+
+     var months = {
+                    "January"   : 0,
+                   "February"   : 1 ,
+                    "March"     : 2,
+                    "April"     : 3,
+                    "May"       : 4,
+                    "June"      : 5,
+                    "Juy"       : 6,
+                    "August"    : 7,
+                    "September" : 8,
+                    "October"   : 9,
+                    "November"  : 10,
+                    "December"  : 11
+        }
+
+        var birthdate = birthyear +"-"+ padZeros(parseInt(months[birthmonth]) + 1 , 2)+"-" + padZeros(parseInt(birthday),2);
+
+        __$("birthdate").value = birthdate;
+
+       
+
+}
+
+function validateMaxMinYear(){
+
+    var today = new Date();
+
+    if(parseInt(__$("birthyear").value) < (parseInt(today.getFullYear())-120)){
+
+        var message = "Year entered is less than "+(parseInt(today.getFullYear())-120);
+
+        setTimeout(function(){
+
+            gotoPage(tstCurrentPage - 1, false, true);
+
+            window.parent.dashboard.showMsg(message,"Year of Birth Validation")
+
+        },10);
+
+    }
+
+    if(parseInt(__$("birthyear").value) > parseInt(today.getFullYear())){
+
+        var message = "Year entered is greater than "+parseInt(today.getFullYear());
+
+         setTimeout(function(){
+
+            gotoPage(tstCurrentPage - 1, false, true);
+
+            window.parent.dashboard.showMsg(message,"Year of Birth Validation")
+
+        },10);
+
+    }
+
+}
+
+function validateAndProcessMonth(){
+
+   var year = __$("birthyear").value 
+
+   var month = __$('birthmonth').value;
+
+   if(month.trim().toLowerCase() == "unknown"){
+
+
+        var birthdate = __$("birthdate");
+
+        var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
+                    __$(birthdate.getAttribute("estimate_field")) : undefined);
+
+        if(estimate_field){
+
+            estimate_field.value = 1
+
+        }
+
+        var estimateBirthDate = year+"-06-01";
+
+        birthdate.value = estimateBirthDate
+
+   }else{
+
+     var months = {
+                    "January"   : 0,
+                   "February"   : 1 ,
+                    "March"     : 2,
+                    "April"     : 3,
+                    "May"       : 4,
+                    "June"      : 5,
+                    "Juy"       : 6,
+                    "August"    : 7,
+                    "September" : 8,
+                    "October"   : 9,
+                    "November"  : 10,
+                    "December"  : 11
+        }
+
+        var today = new Date();
+
+
+
+        if(parseInt(year) == parseInt(today.getFullYear()) && parseInt(months[month]) > parseInt(today.getMonth())){
+
+            var message = "Month selected is greater than Current Month";
+
+            setTimeout(function(){
+
+                gotoPage(tstCurrentPage - 1, false, true);
+
+                window.parent.dashboard.showMsg(message,"Month of Birth Validation")
+
+            },10);
+
+
+        }
+
+   }
+
+}
+
+function setEstimatedAgeValue(){
+
+    var ageEstimateValue = __$("age_estimate").value;
+
+    if(parseInt(ageEstimateValue) <  1 || parseInt(ageEstimateValue) > 150){
+
+            var message = "Invalid Age Esimate";
+
+            setTimeout(function(){
+
+                gotoPage(tstCurrentPage - 1, false, true);
+
+                window.parent.dashboard.showMsg(message,"Age Esimate Validation")
+
+            },10);
+
+    }
+
+    var birthdate = __$("birthdate");
+
+    var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
+                __$(birthdate.getAttribute("estimate_field")) : undefined);
+
+    if(estimate_field){
+
+        estimate_field.value = 1
+
+    }
+
+    var today = new  Date();
+
+    var currentYear = today.getFullYear();
+
+    var estimateYear = parseInt(currentYear) - parseInt(ageEstimateValue);
+
+    var estimateBirthDate = estimateYear +"-06-01";
+
+    birthdate.value = estimateBirthDate;
+
+
+}
+
+function validateExpiryDate(date_string){
+
+        if(date_string.length > 0){
+
+
+            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+            var today = new Date();
+
+            var date = new Date(date_string);
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+
+                setTimeout(function(){
+
+                        window.parent.dashboard.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+
+                        gotoPage(tstCurrentPage - 1, null, true);
+
+
+
+
+                },10);
+
+                setTimeout(function(){
+
+                    if( __$("timeTable1")){
+
+                        __$("timeTable1").innerHTML = "";
+
+                    }
+
+                    if( __$("timeTable2")){
+
+                        __$("timeTable2").innerHTML = "";
+
+                    }
+
+                    __$("nextButton").className = __$("nextButton").className.replace("gray","blue");
+
+                },100);
+
+            }else{
+
+                if(__$("fp_lot_1_dispatch_id").value){
+
+                    saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1");
+
+                }
+                if(__$("fp_lot_2_dispatch_id").value){
+
+                    saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");
+
+                }
+
+                if(__$("im_lot_1_dispatch_id").value){
+
+                    saveConsumption(__$("im_lot_1_dispatch_id").value, "im_lot_number1")
+
+                }
+
+                if(__$("im_lot_2_dispatch_id").value){
+
+                    saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
+
+                }
+
+
+            }
+
+        }
+
 }

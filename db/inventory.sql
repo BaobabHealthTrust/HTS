@@ -128,6 +128,7 @@ CREATE TABLE `receipt` (
   `stock_id` int(11) DEFAULT NULL,
   `batch_number` varchar(255) DEFAULT NULL,
   `expiry_date` datetime DEFAULT NULL,
+  `origin_facility` varchar(255) DEFAULT NULL,
   `receipt_quantity` int(11) DEFAULT NULL,
   `receipt_datetime` datetime DEFAULT NULL,
   `receipt_who_received` varchar(45) DEFAULT NULL,
@@ -222,9 +223,12 @@ CREATE TABLE `stock` (
   `stock_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
+  `in_multiples_of` int(5) DEFAULT 1,
   `reorder_level` int(11) DEFAULT NULL,
   `last_order_size` int(11) DEFAULT NULL,
-  `voided` tinyint(4) DEFAULT NULL,
+  `recommended_test_time` int(11) DEFAULT NULL,
+  `window_test_time` int(11) DEFAULT NULL,
+  `voided` tinyint(4) DEFAULT 0,
   `void_reason` varchar(255) DEFAULT NULL,
   `date_voided` datetime DEFAULT NULL,
   `voided_by` varchar(45) DEFAULT NULL,
@@ -433,6 +437,28 @@ LOCK TABLES `transfer` WRITE;
 /*!40000 ALTER TABLE `transfer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+DROP TABLE IF EXISTS `relocation_facility`;
+
+CREATE TABLE `relocation_facility` (
+  `facility_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `district` varchar(255) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_by` char(255) NOT NULL,
+  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `changed_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`facility_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `relocation_facility` WRITE;
+/*!40000 ALTER TABLE `relocation_facility` DISABLE KEYS */;
+/*!40000 ALTER TABLE `relocation_facility` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

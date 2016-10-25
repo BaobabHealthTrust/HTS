@@ -2271,6 +2271,16 @@ var dashboard = ({
 
                 }
 
+                if(dashboard.getCookie("autoContinue") && eval(dashboard.getCookie("autoContinue"))){
+
+                    dashboard.$(dashboard.workflow[0]).click();
+
+                    dashboard.autoContinue = true;
+
+                    dashboard.setCookie("autoContinue",null);
+
+                }
+
                 if (dashboard.autoContinue && done) {
 
                     dashboard.$(dashboard.workflow[0]).click();
@@ -2965,7 +2975,7 @@ var dashboard = ({
         trf.appendChild(tdf);
 
         var btnCancel = document.createElement("button");
-        btnCancel.className = "blue";
+        btnCancel.className = "red";
         btnCancel.innerHTML = "Cancel";
         btnCancel.style.minWidth = "100px";
 
@@ -2982,7 +2992,7 @@ var dashboard = ({
         tdf.appendChild(btnCancel);
 
         var btnOK = document.createElement("button");
-        btnOK.className = "red";
+        btnOK.className = "blue";
         btnOK.innerHTML = "OK";
         btnOK.style.minWidth = "100px";
 
@@ -3489,6 +3499,41 @@ var dashboard = ({
         }
 
         tdf.appendChild(btn);
+
+    },
+     saveAs: function (data, callback) {
+
+            var uri = 'data:application/label; charset=utf-8; filename=test.lbl; disposition=inline,' + encodeURIComponent(data);
+
+            var ifrm = document.createElement("iframe");
+
+            ifrm.setAttribute("src", uri);
+
+            document.body.appendChild(ifrm);
+
+            setTimeout(function () {
+
+                document.body.removeChild(ifrm);
+
+            }, 100);
+
+            callback();
+
+        },
+    printBarcode: function (npid, callback) {
+
+        dashboard.ajaxRequest(dashboard.settings.patientBarcodeDataPath + dashboard.getCookie("token") + "&npid=" + npid,
+            function (data) {
+
+                var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
+                    data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                    data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                    (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
+                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";
+
+                dashboard.saveAs(text, callback);
+
+            });
 
     },
 

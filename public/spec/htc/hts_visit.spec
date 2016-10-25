@@ -5,7 +5,7 @@ O.1.1.1. Yes
 O.1.1.2. No
 
 Q.1.2. HTS Access Type [pos:: 1$$ id:: htc_acc_type]
-O.1.2.1. Routine HTS within Health Service
+O.1.2.1. Routine HTS (PITC) within Health Service
 O.1.2.2. Comes with HTS Family Reference Slip
 O.1.2.3. Other (VCT, etc.)
 

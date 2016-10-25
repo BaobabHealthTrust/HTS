@@ -562,7 +562,7 @@ var stock = ({
         var cell6_1 = document.createElement("th");
         cell6_1.style.textAlign = "right";
         cell6_1.style.color = "#000";
-        cell6_1.innerHTML = "Re-Order Level:";
+        cell6_1.innerHTML = "AMC:";
         cell6_1.style.borderRight = "1px dotted #000";
 
         tr6.appendChild(cell6_1);
@@ -606,6 +606,7 @@ var stock = ({
         btnIssue.style.minWidth = "130px";
         btnIssue.innerHTML = "Issue";
         btnIssue.setAttribute("tag", pos);
+
 
         btnIssue.onmousedown = function () {
 
@@ -907,19 +908,19 @@ var stock = ({
 
         nav.appendChild(btnFinish);
 
-        var btnSearch = document.createElement("button");
-        btnSearch.className = "blue";
-        btnSearch.style.cssFloat = "right";
-        btnSearch.style.marginTop = "15px";
-        btnSearch.innerHTML = "Search for Inventory";
+        // var btnSearch = document.createElement("button");
+        // btnSearch.className = "blue";
+        // btnSearch.style.cssFloat = "right";
+        // btnSearch.style.marginTop = "15px";
+        // btnSearch.innerHTML = "Search for Inventory";
 
-        btnSearch.onclick = function () {
+        // btnSearch.onclick = function () {
 
-            window.parent.stock.searchForStock();
+        //     window.parent.stock.searchForStock();
 
-        }
+        // }
 
-        nav.appendChild(btnSearch);
+        // nav.appendChild(btnSearch);
 
         var btnAdd = document.createElement("button");
         btnAdd.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
@@ -987,10 +988,10 @@ var stock = ({
 
         table.appendChild(tr);
 
-        var fields = ["", "Item Name", "Description", "Category", "In Stock", "Re-Order Level", "Average Issue/Day",
-            "Receive", "Issue", "Edit", "Delete", "Transfer"];
-        var colSizes = ["30px", "200px", undefined, "200px", "100px", "100px", "100px", "80px", "80px", "80px", "80px",
-            "80px"];
+        var fields = ["", "Item Name <i>(Tap name to view Lot #'s)</i>", "Description", "Category", "In Stock", "AMC <i>(Number of Packs)</i>", "Average Issue/Day",
+            "Receive", "Issue", "Edit", "Delete", "Adjustments"];
+        var colSizes = ["30px", "180px", undefined, "150px", "90px", "90px", "90px", "80px", "80px", "80px", "80px",
+            "180px"];
 
         for (var i = 0; i < fields.length; i++) {
 
@@ -1059,6 +1060,7 @@ var stock = ({
 
                     } else if (j == 8) {
 
+
                         td.style.padding = "2px";
 
                         var btnIssue = document.createElement("button");
@@ -1086,28 +1088,29 @@ var stock = ({
 
                         td.style.padding = "2px";
 
-                        var btnTransfer = document.createElement("button");
-                        btnTransfer.style.minWidth = "100px";
-                        btnTransfer.style.minHeight = "30px";
-                        btnTransfer.style.fontWeight = "normal";
-                        btnTransfer.innerHTML = "Transfer";
-                        btnTransfer.setAttribute("stock_id", stock.stocks[i].stock_id);
-                        btnTransfer.setAttribute("pos", i);
-                        btnTransfer.setAttribute("label", stock.stocks[i][keys[1]]);
+                        var btnActions = document.createElement("button");
+                        btnActions.style.minWidth = "100%";
+                        btnActions.style.minHeight = "30px";
+                        btnActions.style.fontWeight = "normal";
+                        btnActions.innerHTML = "Adjustments";
+                        btnActions.setAttribute("stock_id", stock.stocks[i].stock_id);
+                        btnActions.setAttribute("pos", i);
+                        btnActions.setAttribute("label", stock.stocks[i][keys[1]]);
 
-                        btnTransfer.onclick = function () {
+                        btnActions.onclick = function () {
 
                             if (this.className.match(/gray/))
                                 return;
 
-                            stock.transferItem(this.getAttribute("label"));
+                            window.parent.stock.moreAction(this.getAttribute("stock_id"), stock.stocks[this.getAttribute("pos")].name);
+
 
                         }
 
 
-                        td.appendChild(btnTransfer);
+                        td.appendChild(btnActions);
 
-                        stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
+                        /*stock.ajaxRequest(stock.settings.availableBatchesToUserSummaryPath + stock.stocks[i].name +
                             "&userId=" + stock.getCookie("username"), function (data, optionalControl) {
 
                             var json = JSON.parse(data);
@@ -1118,7 +1121,7 @@ var stock = ({
 
                             }
 
-                        }, btnTransfer);
+                        }, btnTransfer);**/
 
                     } else if (j == 9) {
 
@@ -1180,7 +1183,8 @@ var stock = ({
 
                     td.style.fontWeight = "bold";
 
-                    if (parseInt(stock.stocks[i][keys[j]]) > parseInt(stock.stocks[i][keys[j + 1]])) {
+
+                    if (parseInt(stock.stocks[i][keys[j]]) >= 2*parseInt(stock.stocks[i][keys[j + 1]])) {
 
                         td.style.color = "green";
 
@@ -1192,11 +1196,20 @@ var stock = ({
 
                     td.innerHTML = stock.stocks[i][keys[j]];
 
+
+                } else if (j == 1) {
+
+                    td.innerHTML = "<font style ='color : #3c60b1; width: 100%;' onclick = 'stock.showSummary("+i+")'>"+stock.stocks[i][keys[j]]+"</font>"
+
+                    //td.innerHTML = stock.stocks[i][keys[j]] + '<span style="float: right; color: #3c60b1; font-size: smaller;"><a href="javascript:stock.showSummary('+i+')">...more</a></span>';
+
                 } else {
 
-                    td.innerHTML = stock.stocks[i][keys[j]];
+                    td.innerHTML = stock.stocks[i][keys[j]] ;
 
                 }
+
+                //td.setAttribute("onclick","stock.showSummary('"+i+"')");
 
                 td.style.borderColor = "#eee";
 
@@ -1207,7 +1220,155 @@ var stock = ({
         }
 
     },
+    moreAction: function(id, name){
 
+
+            stock.showMsg("Hello world", "Adjustments");
+
+            var ok_button = stock.$("ok_button");
+
+            ok_button.innerHTML = "Cancel";
+
+            ok_button.className = "red";
+
+            var actions = {
+                            "Relocate Out"         : "dispatchItemToFacility('"+id+"','"+name+"')",
+
+                            "Relocate In"          : "receiveItemFromFaclity('"+id+"','"+name+"')",
+
+                            "Loss"                 : "lostItems('"+id+"','"+name+"')",
+
+                            "Disposal"              : "centralDisposeItem('"+id+"','"+name+"')",
+
+                            "Not Captured Stock"   : "unCapturedItems('"+id+"','"+name+"')"
+            }
+
+            var action_keys = Object.keys(actions);
+
+            var table = document.createElement("table");
+
+            table.style.margin ="auto";
+
+            for(var i = 0 ; i < action_keys.length ; i++){
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                var button = document.createElement("button");
+
+                button.style.width = "100%";
+
+                button.style.fontSize= "9px";
+
+                td.appendChild(button);
+
+                button.className = "blue";
+
+                button.innerHTML = action_keys[i];
+
+                var action = "window.parent.stock."+actions[action_keys[i]];
+
+
+                button.setAttribute("onclick", " document.body.removeChild(window.parent.stock.$('msg.shield'));window.parent.stock."+actions[action_keys[i]]);
+            }
+
+             var msgpop = stock.$("msg.popup");
+
+             msgpop.style.height = "480px"
+
+            var msgtd = stock.$("msg.td");
+
+            msgtd.style.height = "370px";
+
+            var content_div = stock.$("msg.content");
+
+            content_div.style.padding = "0";
+
+            content_div.style.height = "335px"
+
+            content_div.innerHTML = "";
+
+            content_div.appendChild(table);
+
+
+    },
+
+    showSummary: function(pos){
+
+        var stock_item = stock.stocks[pos];
+
+        var url = stock.settings.availableBatchesPath+stock_item.name;
+
+        stock.ajaxRequest(url, function(data){
+
+            stock.showMsg("","Item Summary");
+
+            var message_div = stock.$("msg.content");
+
+            var ul = document.createElement("ul");
+
+            if(data){
+
+                ul.innerHTML = data;
+
+                message_div.appendChild(ul);
+
+            }else{
+
+                message_div.innerHTML = "No Available Lot Numbers for "+stock_item.name;                
+            }
+
+            
+
+        });
+
+
+        
+        
+
+    },
+    isNameUnique: function(value){
+
+        if(value){
+
+            stock.ajaxRequest("/stock_items?category=Test Kits&item_name",function(data){ 
+                
+                if(data.indexOf(value) >= 0){
+
+                    stock.showActionTerminateMsg("Item already exist","Click OK to return to Item List","javascript:window.parent.stock.listItems(window.parent.document.body)");
+
+                }
+
+            })
+
+        }
+
+    },
+    highlighteFirst: function(){
+
+            var tmrInterval = setInterval(function () {
+
+                 clearInterval(tmrInterval);
+
+
+            var control = window.parent.stock.$$("options");
+
+            if(control){
+
+                var list = control.getElementsByTagName("li");
+
+                list[0].click();
+
+            }
+
+        }, 500);
+
+    },
     addItem: function () {
 
         var form = document.createElement("form");
@@ -1226,84 +1387,55 @@ var stock = ({
                 value: "stock"
             },
             "Category": {
-                field_type: "text",
-                ajaxURL: stock.settings.categorySearchPath + "?category=",
+                field_type: "select",
                 allowFreeText: true,
                 id: "data.category",
-                tt_onUnLoad: "__$('data.item_name').setAttribute('ajaxURL', '" + stock.settings.stockItemsSearchPath +
-                    "?category=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&item_name=')"
-            },
-            "Item Name": {
-                field_type: "text",
-                allowFreeText: true,
-                id: "data.item_name"
-            },
-            "Description": {
-                field_type: "text",
-                id: "data.description",
-                optional: true
-            },
-            "Re-Order Level": {
-                field_type: "number",
-                tt_pageStyleClass: "NumbersOnly",
-                id: "data.re_order_level"
-            }
-        }
-
-        stock.buildFields(fields, table);
-
-        stock.navPanel(form.outerHTML);
-
-    },
-
-    editItem: function (pos, stock_id) {
-
-        var form = document.createElement("form");
-        form.id = "data";
-        form.action = "javascript:submitData()";
-        form.style.display = "none";
-
-        var table = document.createElement("table");
-
-        form.appendChild(table);
-
-        var fields = {
-            "Datatype": {
-                field_type: "hidden",
-                id: "data.datatype",
-                value: "stock"
-            },
-            "Stock ID": {
-                field_type: "hidden",
-                id: "data.stock_id",
-                value: (pos ? stock.stocks[pos].stock_id : stock_id)
-            },
-            "Category": {
-                field_type: "text",
-                ajaxURL: stock.settings.categorySearchPath + "?category=",
-                allowFreeText: true,
-                id: "data.category",
-                tt_onUnLoad: "__$('data.item_name').setAttribute('ajaxURL', '" + stock.settings.stockItemsSearchPath +
-                    "?category=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&item_name=')",
-                value: stock.stocks[pos].category
+                options : ["Test Kits","DTS"]
             },
             "Item Name": {
                 field_type: "text",
                 allowFreeText: true,
                 id: "data.item_name",
-                value: stock.stocks[pos].name
+                tt_onUnload: "window.parent.stock.isNameUnique(__$('data.item_name').value);"
             },
             "Description": {
                 field_type: "text",
                 id: "data.description",
                 optional: true,
-                value: stock.stocks[pos].description
-            },
-            "Re-Order Level": {
+                tt_pageStyleClass: "NoKeyboard",
+                tt_onLoad: "window.parent.stock.descriptionOptions()"
+            }
+            ,
+            "Units per Pack" : {
+                field_type : "number",
+                id: "data.in_multiples_of",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "10000"
+            }
+            ,
+            "Average Monthly Consumption (AMC) - Number of Packs": {
                 field_type: "number",
                 tt_pageStyleClass: "NumbersOnly",
-                id: "data.re_order_level",
-                value: stock.stocks[pos].re_order_level
+                id: "data.re_order_level"
+            },
+            "Recommended Test Time (Minutes)" :{
+                field_type : "number",
+                id: "data.recommended_test_time",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "30",
+                condition: "__$('data.category').value.trim().toLowerCase() != 'dts'"
+
+            },
+            "Window Test Time (Minutes)" :{
+                field_type : "number",
+                id: "data.window_test_time",
+                tt_pageStyleClass : "Numeric NumbersOnly",
+                min : "0",
+                max : "30",
+                condition: "__$('data.category').value.trim().toLowerCase() != 'dts'"
+
             }
         }
 
@@ -1312,68 +1444,370 @@ var stock = ({
         stock.navPanel(form.outerHTML);
 
     },
+    descriptionOptions: function(){
+
+        var viewport = window.parent.stock.$$("viewport");
+
+        viewport.style.display ="block";
+
+        var option_div = window.parent.stock.$$("options");
+
+        var ul = document.createElement("ul");
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>First Test</li>";
+
+        ul.appendChild(li);
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>Second Test</li>";
+
+        ul.appendChild(li);
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "<li onmousedown='null; updateTouchscreenInput(this);'>Quality Control</li>";
+
+        ul.appendChild(li);
+
+        option_div.appendChild(ul);
+
+    },
+
+    editItem: function (pos, stock_id) {
+
+         stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(stock.stocks[pos].name), function(data) {
+
+            if(!data)
+                var data = {};
+
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+            var limit = (json.limit ? json.limit : 1);
+
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
+
+            var table = document.createElement("table");
+
+            form.appendChild(table);
+
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "stock"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: (pos ? stock.stocks[pos].stock_id : stock_id)
+                },
+                "Category": {
+                    field_type: "text",
+                    ajaxURL: stock.settings.categorySearchPath + "?category=",
+                    allowFreeText: true,
+                    id: "data.category",
+                    tt_onUnLoad: "__$('data.item_name').setAttribute('ajaxURL', '" + stock.settings.stockItemsSearchPath +
+                        "?category=' + __$('touchscreenInput' + tstCurrentPage).value.trim() + '&item_name=')",
+                    value: stock.stocks[pos].category
+                },
+                "Item Name": {
+                    field_type: "text",
+                    allowFreeText: true,
+                    id: "data.item_name",
+                    value: stock.stocks[pos].name
+                },
+                "Description": {
+                    field_type: "text",
+                    id: "data.description",
+                    optional: true,
+                    value: stock.stocks[pos].description,
+                    tt_pageStyleClass: "NoKeyboard",
+                    tt_onLoad: "window.parent.stock.descriptionOptions()"
+                }
+                ,
+                "Units per Pack" : {
+                    field_type : "number",
+                    id: "data.in_multiples_of",
+                    value: limit,
+                    tt_pageStyleClass : "Numeric NumbersOnly",
+                    min : "0",
+                    max : "10000"
+                },
+                "Average Monthly Consumption (AMC)": {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.re_order_level",
+                    value: stock.stocks[pos].re_order_level
+                },
+                "Recommended Test Time (Minutes)" :{
+                    field_type : "number",
+                    id: "data.recommended_test_time",
+                    tt_pageStyleClass : "Numeric NumbersOnly",
+                    value: stock.stocks[pos].recommended_test_time,
+                    min : "0",
+                    max : "30"
+
+                },
+                "Window Test Time (Minutes)" :{
+                    field_type : "number",
+                    id: "data.window_test_time",
+                    tt_pageStyleClass : "Numeric NumbersOnly",
+                    value: stock.stocks[pos].window_test_time,
+                    min : "0",
+                    max : "30"
+
+                }
+            }
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+
+        });
+
+    },
 
     receiveItem: function (stock_id, label) {
 
-        var form = document.createElement("form");
-        form.id = "data";
-        form.action = "javascript:submitData()";
-        form.style.display = "none";
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
 
-        var table = document.createElement("table");
+            if(!data)
+                var data = {};
 
-        form.appendChild(table);
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
-        var batchLabel = (label ? label + ": " : "") + "Lot Number";
+            var limit = (json.limit ? json.limit : 1);
 
-        var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+            var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                    ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                    limit + "')}, 10); }" ;
 
-        var receivedLabel = (label ? label + ": " : "") + "Received Quantity  (individual items)";
 
-        var dateLabel = (label ? label + ": " : "") + "Date Received";
+            var lotNumberCharacter = "> 0";
 
-        var fields = {
-            "Datatype": {
-                field_type: "hidden",
-                id: "data.datatype",
-                value: "receive"
-            },
-            "Stock ID": {
-                field_type: "hidden",
-                id: "data.stock_id",
-                value: stock_id
+            var lotNumberValidationMessage = "";
+
+            if(label.trim().toLowerCase().match(/deter/)){
+
+                lotNumberCharacter = "==9"
+
+                lotNumberValidationMessage = "Lot Number of Determine should have exactly 9 characters";
+
             }
-        };
 
-        fields[batchLabel] = {
-            field_type: "text",
-            id: "data.batch_number",
-            optional: true
-        };
+            if(label.trim().toLowerCase().match(/gold/)){
 
-        fields[expiryLabel] = {
-            field_type: "date",
-            id: "data.expiry_date",
-            maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
-            optional: true
-        };
+                lotNumberCharacter = "==10"
 
-        fields[receivedLabel] = {
-            field_type: "number",
-            tt_pageStyleClass: "NumbersOnly",
-            id: "data.receipt_quantity"
-        };
+                 lotNumberValidationMessage = "Lot Number of Uni Gold should have exactly 10 characters";
 
-        fields[dateLabel] = {
-            field_type: "date",
-            id: "data.receipt_datetime"
-        };
 
-        stock.buildFields(fields, table);
+            }
 
-        stock.navPanel(form.outerHTML);
+            var lotNumberOnUnLoad = " var lot_number = __$('touchscreenInput'+tstCurrentPage).value ;"+
+                                    "if(lot_number){ var indexofBrace = lot_number.indexOf('(');"+
+                                    " if(indexofBrace >= 0){ lot_number = lot_number.substr(0,indexofBrace);"+
+                                    " __$('data.batch_number').value = lot_number; __$('data.expiry_date').setAttribute('condition',false) }else{ if(lot_number.length"+lotNumberCharacter
+                                    +"){ __$('data.batch_number').value = lot_number; }else{ setTimeout(function(){"+
+                                    "gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('"+lotNumberValidationMessage+"')},10)}}}";
+
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
+
+            var table = document.createElement("table");
+
+            form.appendChild(table);
+
+            var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+            var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+
+            var receivedLabel = (label ? label + ": " : "") + "Received Quantity  (individual items)";
+
+            var dateLabel = (label ? label + ": " : "") + "Date Received";
+
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "receive"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: stock_id
+                },
+                "Origin Facility":{
+                    field_type: "hidden",
+                    id: "data.origin_facility",
+                    value: "Central"
+
+                }
+            };
+
+            fields[batchLabel] = {
+                field_type: "text",
+                id: "data.batch_number",
+                optional: true,
+                tt_onUnload: lotNumberOnUnLoad
+            };
+
+            fields[expiryLabel] = {
+                field_type: "date",
+                id: "data.expiry_date",
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 5))).format("YYYY-mm-dd"),
+                optional: true
+            };
+
+            fields[receivedLabel] = {
+                field_type: "number",
+                tt_pageStyleClass: "NumbersOnly",
+                id: "data.receipt_quantity",
+                tt_onUnload: validation_condition_string,
+                tt_onLoad: "window.parent.stock.validateExpiryDate(__$('data.expiry_date').value, '')"            
+            };
+
+            fields[dateLabel] = {
+                field_type: "date",
+                id: "data.receipt_datetime"
+            };
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+
+        })
 
     },
+
+    receiveItemFromFaclity: function (stock_id, label) {
+
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+            if(!data)
+                var data = {};
+
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+            var limit = (json.limit ? json.limit : 1);
+
+            var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                    ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                    limit + "')}, 10); }" ;
+
+            var lotNumberCharacter = "> 0";
+
+            var lotNumberValidationMessage = "";
+
+            if(label.trim().toLowerCase().match(/deter/)){
+
+                lotNumberCharacter = "==9"
+
+                lotNumberValidationMessage = "Lot Number of Determine should have exactly 9 characters";
+
+            }
+
+            if(label.trim().toLowerCase().match(/gold/)){
+
+
+                lotNumberCharacter = "==10"
+
+                 lotNumberValidationMessage = "Lot Number of Uni Gold should have exactly 10 characters";
+
+
+            }
+
+            var lotNumberOnUnLoad = " var lot_number = __$('touchscreenInput'+tstCurrentPage).value ;"+
+                                    "if(lot_number){ var indexofBrace = lot_number.indexOf('(');"+
+                                    " if(indexofBrace >= 0){ lot_number = lot_number.substr(0,indexofBrace);"+
+                                    " __$('data.batch_number').value = lot_number; __$('data.expiry_date').setAttribute('condition',false) }else{ if(lot_number.length"+lotNumberCharacter
+                                    +"){ __$('data.batch_number').value = lot_number; }else{ setTimeout(function(){"+
+                                    "gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('"+lotNumberValidationMessage+"')},10)}}}";
+
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
+
+            var table = document.createElement("table");
+
+            form.appendChild(table);
+
+            var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+            var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+
+            var originFacilityLabel =  (label ? label + ": " : "") + "Origin Facility";
+
+            var receivedLabel = (label ? label + ": " : "") + "Received Quantity  (individual items)";
+
+            var dateLabel = (label ? label + ": " : "") + "Date Received";
+
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "receive"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: stock_id
+                }
+            };
+
+            fields[batchLabel] = {
+                field_type: "text",
+                id: "data.batch_number",
+                optional: true,
+               tt_onUnload: lotNumberOnUnLoad
+            };
+
+            fields[expiryLabel] = {
+                field_type: "date",
+                id: "data.expiry_date",
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
+                optional: true
+            };
+
+            fields[originFacilityLabel] = {
+                field_type: "text",
+                id: "data.origin_facility",
+                allowFreeText: true,
+                ajaxURL: "/facilities?name=",
+                tt_onLoad: "window.parent.stock.validateExpiryDate(__$('data.expiry_date').value, '')" 
+
+            };
+
+            fields[receivedLabel] = {
+                field_type: "number",
+                tt_pageStyleClass: "NumbersOnly",
+                id: "data.receipt_quantity",
+                tt_onUnload: validation_condition_string             
+            };
+
+            fields[dateLabel] = {
+                field_type: "date",
+                id: "data.receipt_datetime"
+            };
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+
+        })
+
+    }
+
+    ,
 
     showConfirmMsg: function (msg, topic, nextURL) {
 
@@ -1509,7 +1943,124 @@ var stock = ({
         tdf.appendChild(btnOK);
 
     },
+    showActionTerminateMsg: function (msg, topic, nextURL) {
 
+        if (!topic) {
+
+            topic = "Confirm";
+
+        }
+
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
+
+        document.body.appendChild(shield);
+
+        var width = 420;
+        var height = 280;
+
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
+
+        shield.appendChild(div);
+
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
+
+        div.appendChild(table);
+
+        var trh = document.createElement("tr");
+
+        table.appendChild(trh);
+
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "red";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset red";
+
+        trh.appendChild(th);
+
+        var tr2 = document.createElement("tr");
+
+        table.appendChild(tr2);
+
+        var td2 = document.createElement("td");
+
+        tr2.appendChild(td2);
+
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
+
+        content.innerHTML = msg;
+
+        td2.appendChild(content);
+
+        var trf = document.createElement("tr");
+
+        table.appendChild(trf);
+
+        var tdf = document.createElement("td");
+        tdf.align = "center";
+
+        trf.appendChild(tdf);
+
+
+        var btnOK = document.createElement("button");
+        btnOK.className = "red";
+        btnOK.innerHTML = "OK";
+        btnOK.style.minWidth = "100px";
+
+        if (nextURL)
+            btnOK.setAttribute("nextURL", nextURL);
+
+        btnOK.onclick = function () {
+
+            if (user.$("msg.shield")) {
+
+                document.body.removeChild(user.$("msg.shield"));
+
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
+
+            }
+
+        }
+
+        tdf.appendChild(btnOK);
+
+    },
     buildFields: function (fields, table) {
 
         var keys = Object.keys(fields);
@@ -1531,30 +2082,94 @@ var stock = ({
 
             tr.appendChild(td2);
 
-            var input = document.createElement("input");
-            input.id = fields[key].id;
-            input.name = fields[key].id;
-            input.setAttribute("helpText", key);
+            var fieldType = fields[key].field_type;
 
-            if (fields[key].field_type == "hidden") {
+            switch (fieldType) {
 
-                input.type = "hidden";
+                case "select":
 
-            } else {
+                    var select = document.createElement("select");
+                    select.id = fields[key].id;
+                    select.name = fields[key].id;
+                    select.setAttribute("helpText", key);
 
-                input.type = "text";
+                    td2.appendChild(select);
 
-            }
+                    if (fields[key].options) {
 
-            td2.appendChild(input);
+                        for (var o = 0; o < fields[key].options.length; o++) {
 
-            var elements = Object.keys(fields[key]);
+                            var opt = document.createElement("option");
+                            opt.innerHTML = fields[key].options[o];
 
-            elements.splice(elements.indexOf("id"), 1);
+                            select.appendChild(opt);
 
-            for (var j = 0; j < elements.length; j++) {
+                        }
 
-                input.setAttribute(elements[j], fields[key][elements[j]]);
+                    }
+
+                    var exceptions = ["options", "helpText"]
+
+                    var attrs = Object.keys(fields[key]);
+
+                    for (var a = 0; a < exceptions.length; a++) {
+
+                        if (attrs.indexOf(exceptions[a]) >= 0) {
+
+                            attrs.splice(attrs.indexOf(exceptions[a]), 1);
+
+                        }
+
+                    }
+
+                    if (attrs.length > 0) {
+
+                        for (var a = 0; a < attrs.length; a++) {
+
+                            var attr = attrs[a];
+
+                            select.setAttribute(attr, fields[key][attr]);
+
+                        }
+
+                    }
+
+                    break;
+
+                default:
+
+                    var input = document.createElement("input");
+                    input.id = fields[key].id;
+                    input.name = fields[key].id;
+                    input.setAttribute("helpText", key);
+
+                    if (fields[key].field_type == "hidden") {
+
+                        input.type = "hidden";
+
+                    } else if (fields[key].field_type == "password") {
+
+                        input.type = "password";
+
+                        fields[key].field_type = "text";
+
+                    } else {
+
+                        input.type = "text";
+
+                    }
+
+                    td2.appendChild(input);
+
+                    var elements = Object.keys(fields[key]);
+
+                    elements.splice(elements.indexOf("id"), 1);
+
+                    for (var j = 0; j < elements.length; j++) {
+
+                        input.setAttribute(elements[j], fields[key][elements[j]]);
+
+                    }
 
             }
 
@@ -1747,97 +2362,648 @@ var stock = ({
         stock.navPanel(form.outerHTML);
 
     },
+    lostItems: function (stock_id,label) {
 
-    dispatchItem: function (stock_id, label) {
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
 
-        var form = document.createElement("form");
-        form.id = "data";
-        form.action = "javascript:submitData()";
-        form.style.display = "none";
+                if(!data)
+                    var data = {};
 
-        var table = document.createElement("table");
+                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
-        form.appendChild(table);
+                var limit = (json.limit ? json.limit : 1);
 
-        var batchLabel = (label ? label + ": " : "") + "Lot Number";
+                var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
 
-        var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue (individual item)";
+                var form = document.createElement("form");
+                form.id = "data";
+                form.action = "javascript:submitData()";
+                form.style.display = "none";
 
-        var dateLabel = (label ? label + ": " : "") + "Date of Issue";
+                var table = document.createElement("table");
 
-        var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+                form.appendChild(table);
 
-        var receiverLabel = (label ? label + ": " : "") + "Who Received";
+                var batchLabel = (label ? label + ": " : "") + "Lot Number";
 
-        var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+                var quantityLabel = (label ? label + ": " : "") + "Quantity Lost (individual item)";
 
-        var locationLabel = (label ? label + ": " : "") + "Issue Location";
+                var dateLabel = (label ? label + ": " : "") + "Date of Recording";
 
-        var fields = {
-            "Datatype": {
-                field_type: "hidden",
-                id: "data.datatype",
-                value: "dispatch"
-            },
-            "Stock ID": {
-                field_type: "hidden",
-                id: "data.stock_id",
-                value: stock_id
-            }
-        };
+                var dispatcherLabel = (label ? label + ": " : "") + "Who Lost Item";
 
-        fields[batchLabel] = {
-            field_type: "text",
-            id: "data.batch_number",
-            ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
-            tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
-                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                "__$('data.dispatch_quantity').setAttribute('absoluteMax', limit)}"
-        };
+                var authorityLabel = (label ? label + ": " : "") + "Who Supervised";
 
-        fields[quantityLabel] = {
-            field_type: "number",
-            tt_pageStyleClass: "NumbersOnly",
-            id: "data.dispatch_quantity"
-        };
+                //var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
 
-        fields[dateLabel] = {
-            field_type: "date",
-            id: "data.dispatch_datetime"
-        };
+                var fields = {
+                    "Datatype": {
+                        field_type: "hidden",
+                        id: "data.datatype",
+                        value: "dispatch"
+                    },
+                    "Stock ID": {
+                        field_type: "hidden",
+                        id: "data.stock_id",
+                        value: stock_id
+                    },
+                    "Destination" :{
+                        field_type: "hidden",
+                        id: "data.dispatch_destination",
+                        value: "Central Lost Kits"
 
-        fields[dispatcherLabel] = {
-            field_type: "hidden",
-            id: "data.dispatch_who_dispatched",
-            value: stock.getCookie("username")
-        };
+                    }
+                };
 
-        fields[receiverLabel] = {
-            field_type: "text",
-            id: "data.dispatch_who_received",
-            ajaxURL: stock.settings.userListingPath
-        };
+                fields[batchLabel] = {
+                    field_type: "text",
+                    id: "data.batch_number",
+                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                        "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
+                };
 
-        fields[authorityLabel] = {
-            field_type: "hidden",
-            id: "data.dispatch_who_authorised",
-            value: stock.getCookie("username")
-        };
+                fields[quantityLabel] = {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.dispatch_quantity",
+                    tt_onUnload : validation_condition_string
+                };
 
-        fields[locationLabel] = {
-            field_type: "text",
-            id: "data.dispatch_destination",
-            allowFreeText: true,
-            ajaxURL: stock.settings.locationsListPath
-        };
+                fields[dateLabel] = {
+                    field_type: "date",
+                    id: "data.dispatch_datetime"
+                };
 
-        stock.buildFields(fields, table);
+                fields[dispatcherLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_dispatched",
+                    value: stock.getCookie("username")
+                };
 
-        stock.navPanel(form.outerHTML);
+                fields[authorityLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_authorised",
+                    value: stock.getCookie("username")
+                };
+
+                stock.buildFields(fields, table);
+
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
+
+        });
 
     },
 
+    unCapturedItems: function (stock_id,label) {
+
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+            if(!data)
+                var data = {};
+
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+            var limit = (json.limit ? json.limit : 1);
+
+            var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                    ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                    limit + "')}, 10); }" ;
+
+            var lotNumberCharacter = "> 0";
+
+            var lotNumberValidationMessage = "";
+
+            if(label.trim().toLowerCase().match(/deter/)){
+
+                lotNumberCharacter = "==9"
+
+                lotNumberValidationMessage = "Lot Number of Determine should have exactly 9 characters";
+
+            }
+
+            if(label.trim().toLowerCase().match(/gold/)){
+
+                lotNumberCharacter = "==10"
+
+                 lotNumberValidationMessage = "Lot Number of Uni Gold should have exactly 10 characters";
+
+
+            }
+
+            var lotNumberOnUnLoad = " var lot_number = __$('touchscreenInput'+tstCurrentPage).value ;"+
+                                    "if(lot_number){ var indexofBrace = lot_number.indexOf('(');"+
+                                    " if(indexofBrace >= 0){ lot_number = lot_number.substr(0,indexofBrace);"+
+                                    " __$('data.batch_number').value = lot_number; __$('data.expiry_date').setAttribute('condition',false) }else{ if(lot_number.length"+lotNumberCharacter
+                                    +"){ __$('data.batch_number').value = lot_number; }else{ setTimeout(function(){"+
+                                    "gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('"+lotNumberValidationMessage+"')},10)}}}";
+
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
+
+            var table = document.createElement("table");
+
+            form.appendChild(table);
+
+            var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+            var expiryLabel = (label ? label + ": " : "") + "Expiry Date";
+
+            var receivedLabel = (label ? label + ": " : "") + "Un Captured Quantity  (individual items)";
+
+            var dateLabel = (label ? label + ": " : "") + "Date Captured";
+
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "receive"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: stock_id
+                },
+                "Origin Facility":{
+                    field_type: "hidden",
+                    id: "data.origin_facility",
+                    value: "Not Captured"
+
+                },
+                "Batch Number" :{
+                        field_type: "hidden",
+                        id: "data.batch_number"
+                }
+            };
+
+            fields[batchLabel] = {
+                field_type: "text",
+                id: "data.lot_number",
+                helpText: batchLabel + "<i style='font-size:20px; font-weight:normal' >(  Select from list if exist or type new Lot Number  )</i>",
+                ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                allowFreeText : true,
+                optional: true,
+                tt_onUnload: lotNumberOnUnLoad 
+            };
+
+            fields[expiryLabel] = {
+                field_type: "date",
+                id: "data.expiry_date",
+                maxDate: new Date(((new Date()).setYear((new Date()).getFullYear() + 2))).format("YYYY-mm-dd"),
+                optional: true
+            };
+
+            fields[receivedLabel] = {
+                field_type: "number",
+                tt_pageStyleClass: "NumbersOnly",
+                id: "data.receipt_quantity",
+                tt_onUnload: validation_condition_string             
+            };
+
+            fields[dateLabel] = {
+                field_type: "date",
+                id: "data.receipt_datetime",
+                field_type: "hidden"
+            };
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+
+        })
+
+    },
+    centralDisposeItem: function (stock_id,label) {
+
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+                if(!data)
+                    var data = {};
+
+                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+                var limit = (json.limit ? json.limit : 1);
+
+                var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
+
+                var form = document.createElement("form");
+                form.id = "data";
+                form.action = "javascript:submitData()";
+                form.style.display = "none";
+
+                var table = document.createElement("table");
+
+                form.appendChild(table);
+
+                var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+                var quantityLabel = (label ? label + ": " : "") + "Quantity to Dispose (individual item)";
+
+                var dateLabel = (label ? label + ": " : "") + "Date of Recording";
+
+                var dispatcherLabel = (label ? label + ": " : "") + "Who Disposed Item";
+
+                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+
+                var authorityLabel = (label ? label + ": " : "") + "Who Authorised Disposal";
+
+                //var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
+
+                var fields = {
+                    "Datatype": {
+                        field_type: "hidden",
+                        id: "data.datatype",
+                        value: "dispatch"
+                    },
+                    "Stock ID": {
+                        field_type: "hidden",
+                        id: "data.stock_id",
+                        value: stock_id
+                    },
+                    "Destination" :{
+                        field_type: "hidden",
+                        id: "data.dispatch_destination",
+                        value: "Central Disposal"
+
+                    }
+                };
+
+                fields[batchLabel] = {
+                    field_type: "text",
+                    id: "data.batch_number",
+                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                    tt_onUnload: "if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                        "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
+                };
+
+                fields[quantityLabel] = {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.dispatch_quantity",
+                    tt_onUnload : validation_condition_string
+                };
+
+                fields[dateLabel] = {
+                    field_type: "date",
+                    id: "data.dispatch_datetime"
+                };
+
+                fields[dispatcherLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_dispatched",
+                    value: stock.getCookie("username")
+                };
+
+                fields[receiverLabel] = {
+                    field_type: "text",
+                    id: "data.dispatch_who_received"
+                };
+
+                fields[authorityLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_authorised",
+                    value: stock.getCookie("username")
+                };
+
+                stock.buildFields(fields, table);
+
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
+
+        });
+
+    }
+    ,
+    validateExpiryDate: function(date_string,action){
+
+        if(action =='dispatch'){
+
+            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+            var today = new Date();
+
+            var date = new Date(date_string);
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+                stock.showMsg("The product  expired on "+date_string+ " please proceed and remember to dispose","Stock Expiry Date");
+
+                var ok = stock.$("ok_button");
+
+                ok.innerHTML = "Ok";
+
+                ok.setAttribute("onclick","window.parent.stock.listItems(window.parent.document.body)");
+
+            }
+
+        }
+        else{
+
+            var date = new Date(date_string);
+
+            var today = new Date();
+
+            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+
+                stock.showMsg("The product  expired on ("+date.format()+") please proceed and remember to dispose","Stock Expiry Date");
+
+                var pop_button_panel = stock.$("pop_button_panel");
+
+                pop_button_panel.innerHTML = "";
+
+                var cancel = document.createElement("button");
+
+                pop_button_panel.appendChild(cancel);
+
+                cancel.className = "red";
+
+                cancel.innerHTML = "Cancel";
+
+                cancel.style.marginRight = "15%";
+
+                cancel.setAttribute("onclick","window.parent.stock.listItems(window.parent.document.body)");
+
+                var ok = document.createElement("button");
+
+                pop_button_panel.appendChild(ok);
+
+                ok.className = "blue";
+
+                ok.innerHTML = "Proceed";
+
+                ok.onclick = function () {
+
+                    if (stock.$("msg.shield")) {
+
+                        document.body.removeChild(stock.$("msg.shield"));
+
+                    }
+
+                }
+
+            }
+        }
+
+        
+
+    }
+    ,
+    dispatchItem: function (stock_id, label) {
+
+         stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+            if(!data)
+                var data = {};
+
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+            var limit = (json.limit ? json.limit : 1);
+
+            var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
+
+
+
+            var form = document.createElement("form");
+            form.id = "data";
+            form.action = "javascript:submitData()";
+            form.style.display = "none";
+
+            var table = document.createElement("table");
+
+            form.appendChild(table);
+
+            var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+            var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue (individual item)";
+
+            var dateLabel = (label ? label + ": " : "") + "Date of Issue";
+
+            var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+
+            var receiverLabel = (label ? label + ": " : "") + "Who Received";
+
+            var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+
+            var locationLabel = (label ? label + ": " : "") + "Receiving Location";
+
+            var fields = {
+                "Datatype": {
+                    field_type: "hidden",
+                    id: "data.datatype",
+                    value: "dispatch"
+                },
+                "Stock ID": {
+                    field_type: "hidden",
+                    id: "data.stock_id",
+                    value: stock_id
+                }
+            };
+
+            fields[batchLabel] = {
+                field_type: "text",
+                id: "data.batch_number",
+                ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                tt_onLoad:"window.parent.stock.highlighteFirst()",
+                tt_onUnload: "window.parent.stock.validateExpiryDate(__$('touchscreenInput'+tstCurrentPage).value,'dispatch');if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                    "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
+            };
+
+            fields[quantityLabel] = {
+                field_type: "number",
+                tt_pageStyleClass: "NumbersOnly",
+                id: "data.dispatch_quantity",
+                tt_onUnload : validation_condition_string
+            };
+
+            fields[dateLabel] = {
+                field_type: "date",
+                id: "data.dispatch_datetime"
+            };
+
+            fields[dispatcherLabel] = {
+                field_type: "hidden",
+                id: "data.dispatch_who_dispatched",
+                value: stock.getCookie("username")
+            };
+
+            fields[receiverLabel] = {
+                field_type: "text",
+                id: "data.dispatch_who_received",
+                ajaxURL: stock.settings.userListingPath
+            };
+
+            fields[authorityLabel] = {
+                field_type: "hidden",
+                id: "data.dispatch_who_authorised",
+                value: stock.getCookie("username")
+            };
+
+            fields[locationLabel] = {
+                field_type: "text",
+                id: "data.dispatch_destination",
+                allowFreeText: true,
+                ajaxURL: stock.settings.locationsListPath
+            };
+
+            stock.buildFields(fields, table);
+
+            stock.navPanel(form.outerHTML);
+        });
+
+    },
+
+    dispatchItemToFacility: function (stock_id, label) {
+
+        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+
+                if(!data)
+                    var data = {};
+
+                var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+                var limit = (json.limit ? json.limit : 1);
+
+                var validation_condition_string = "var quantity = parseInt(__$('touchscreenInput' + tstCurrentPage).value); var absoluteMax = parseInt(__$('data.dispatch_quantity').getAttribute('maxStock')); "+
+                                              "if(quantity > absoluteMax){ setTimeout(function(){ gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Quantity entered is greater than current stock for the Lot selected ('+absoluteMax+')','Stock Quantity')},10)}; "+
+                                              "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (limit <= 0 ? 1 : limit) +
+                                              ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                              limit + "')}, 10);}" ;
+
+                var form = document.createElement("form");
+                form.id = "data";
+                form.action = "javascript:submitData()";
+                form.style.display = "none";
+
+                var table = document.createElement("table");
+
+                form.appendChild(table);
+
+                var batchLabel = (label ? label + ": " : "") + "Lot Number";
+
+                var quantityLabel = (label ? label + ": " : "") + "Quantity to Issue (individual item)";
+
+                var dateLabel = (label ? label + ": " : "") + "Date of Recolation";
+
+                var dispatcherLabel = (label ? label + ": " : "") + "Who Released Item";
+
+                var receiverLabel = (label ? label + ": " : "") + "Authorisation CODE";
+
+                var authorityLabel = (label ? label + ": " : "") + "Who Authorised Release";
+
+                var locationLabel = (label ? label + ": " : "") + "Recieving Facility";                
+
+                var fields = {
+                    "Datatype": {
+                        field_type: "hidden",
+                        id: "data.datatype",
+                        value: "dispatch"
+                    },
+                    "Stock ID": {
+                        field_type: "hidden",
+                        id: "data.stock_id",
+                        value: stock_id
+                    }
+                };
+
+                fields[batchLabel] = {
+                    field_type: "text",
+                    id: "data.batch_number",
+                    ajaxURL: stock.settings.availableBatchesPath + (label ? label : "") + "&batch=",
+                    tt_onUnload: "window.parent.stock.validateExpiryDate(__$('touchscreenInput'+tstCurrentPage).value,'dispatch');if(__$('data.dispatch_quantity')){var limit = __$('touchscreenInput' + " +
+                        "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                        "__$('data.dispatch_quantity').setAttribute('maxStock', limit)}"
+                };
+
+                fields[quantityLabel] = {
+                    field_type: "number",
+                    tt_pageStyleClass: "NumbersOnly",
+                    id: "data.dispatch_quantity",
+                    tt_onUnload : validation_condition_string
+                };
+
+                fields[dateLabel] = {
+                    field_type: "date",
+                    id: "data.dispatch_datetime"
+                };
+
+                fields[dispatcherLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_dispatched",
+                    value: stock.getCookie("username")
+                };
+
+                fields[receiverLabel] = {
+                    field_type: "text",
+                    id: "data.dispatch_who_received"
+                };
+
+                fields[authorityLabel] = {
+                    field_type: "hidden",
+                    id: "data.dispatch_who_authorised",
+                    value: stock.getCookie("username")
+                };
+
+                fields[locationLabel] = {
+                    field_type: "text",
+                    id: "data.dispatch_destination",
+                    allowFreeText: true,
+                    ajaxURL: "/facilities?name="
+                };
+
+                stock.buildFields(fields, table);
+
+                var script = "\n<script src='/javascripts/stock.js' defer></script>";
+
+                stock.navPanel(form.outerHTML + script);
+
+        });
+
+    },
+    validateBatchMultiple: function(limit){
+
+        if(stock.$$('data.transfer_quantity')){
+
+            stock.$$('data.transfer_quantity').setAttribute("absoluteMax",limit);
+
+        }
+
+        var inputBatch = stock.$$('data.batch_number').value.trim();
+
+        var multiple = stock.stockLimits[stock.batNumbers[inputBatch]];
+
+
+
+        var validation_condition_string = "if((parseInt(__$('touchscreenInput' + tstCurrentPage).value) % parseInt(" + (multiple <= 0 ? 1 : multiple) +
+                                        ") > 0)){ setTimeout(function(){gotoPage(tstCurrentPage - 1, false, true); window.parent.stock.showMsg('Please specify in multiples of " + 
+                                        multiple + "')}, 10); }" ;
+
+        stock.$$('data.transfer_quantity').setAttribute("tt_onUnload", validation_condition_string);
+
+
+    },
     transferItem: function (label) {
+
+        stock.setStockLimit();
 
         var form = document.createElement("form");
         form.id = "data";
@@ -1864,9 +3030,8 @@ var stock = ({
                 id: "data.batch_number",
                 ajaxURL: stock.settings.availableUserBatchesPath + (label ? label : "") + "&userId=" +
                     stock.getCookie("username") + "&batch=",
-                tt_onUnload: "if(__$('data.transfer_quantity')){var limit = __$('touchscreenInput' + " +
-                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                    "__$('data.transfer_quantity').setAttribute('absoluteMax', limit)}"
+                tt_onUnload: "window.parent.stock.validateBatchMultiple(__$('touchscreenInput' + " +
+                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1])"
             },
             "Quantity to Transfer (individual items)": {
                 field_type: "number",
@@ -1931,7 +3096,493 @@ var stock = ({
         })
 
     },
+    relocationFacilityList : function(target){
 
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "Relocation Facilities";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "stock.content";
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "1px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
+
+        div0.appendChild(div0_1_0_0);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.location = "/";
+
+        }
+
+        nav.appendChild(btnFinish);
+
+        // var btnSearch = document.createElement("button");
+        // btnSearch.className = "blue";
+        // btnSearch.style.cssFloat = "right";
+        // btnSearch.style.marginTop = "15px";
+        // btnSearch.innerHTML = "Search for Inventory";
+
+        // btnSearch.onclick = function () {
+
+        //     window.parent.stock.searchForStock();
+
+        // }
+
+        // nav.appendChild(btnSearch);
+
+        var btnAdd = document.createElement("button");
+        btnAdd.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
+        btnAdd.style.cssFloat = "right";
+        btnAdd.style.margin = "15px";
+        btnAdd.innerHTML = "Add Item";
+
+        btnAdd.onclick = function () {
+
+            if (this.className.match(/gray/))
+                return;
+
+            window.parent.stock.addFacility();
+
+        }
+
+        nav.appendChild(btnAdd);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+        stock.loadListRelocation("/relocation_facility_list", div0_1_0_0);
+
+    },
+    addFacility : function(){
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "add_facility"
+            },
+            "User":{
+                field_type: "hidden",
+                id: "data.user",
+                value: stock.getCookie("username")
+            },
+            "Facility / Location Name":{
+                field_type: "text",
+                id: "data.name"
+
+            },
+            "Region" : {
+                field_type : "select",
+                id: "data.region",
+                options : ["Central Region","Northern Region", "Southern Region"],
+                tt_onUnload: "__$('data.district').setAttribute('ajaxURL','/district_query?region='+__$('touchscreenInput'+tstCurrentPage).value +'&district=')"
+
+            },
+            "District" :{
+                field_type: "text",
+                id: "data.district"
+            }
+        }
+
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+
+    },
+    loadListRelocation: function(path,target){
+
+        if (!path || !target)
+            return;
+
+        stock.ajaxRequest(path, function (data) {
+
+            var data = JSON.parse(data);
+
+            if (!target)
+            return;
+
+            if (!data)
+                return;
+
+            target.innerHTML = "";
+
+            var table = document.createElement("table");
+            table.style.borderCollapse = "collapse";
+            table.border = 1;
+            table.style.borderColor = "#eee";
+            table.width = "100%";
+            table.cellPadding = "8";
+
+            target.appendChild(table);
+
+            var tr = document.createElement("tr");
+            tr.style.backgroundColor = "#999";
+            tr.style.color = "#eee";
+
+            table.appendChild(tr);
+
+            var fields = ["", "Name", "Region", "District", "Edit", "Delete"];
+            var colSizes = ["20px", "18%", "18%", "18%", "18%", "18%", "18%", "80px", "80px", "80px", "80px",
+                "180px"];
+
+            for (var i = 0; i < fields.length; i++) {
+
+                var th = document.createElement("th");
+
+                if (colSizes[i])
+                    th.style.width = colSizes[i];
+
+                th.innerHTML = fields[i];
+
+                tr.appendChild(th);
+
+            }
+
+            for(var i = 0; i < data.length ; i++){
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.innerHTML = i+1;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].name
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].region
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].district
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                var editBtn = document.createElement("button");
+
+                td.appendChild(editBtn);
+
+                editBtn.className = "blue";
+
+                editBtn.innerHTML = "Edit";
+
+                editBtn.style.width = "60%";
+
+                editBtn.style.minWidth = "100px";
+
+                editBtn.style.minHeight = "30px";
+
+                editBtn.style.fontWeight = "normal"
+
+                editBtn.setAttribute("onclick","window.parent.stock.editFacitity('"+JSON.stringify(data[i])+"')");
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                var delteBtn = document.createElement("button");
+
+                td.appendChild(delteBtn);
+
+                delteBtn.className = "red";
+
+                delteBtn.innerHTML = "Delete";
+
+                delteBtn.style.width = "60%";
+
+                delteBtn.style.minWidth = "100px";
+
+                delteBtn.style.minHeight = "30px";
+
+                delteBtn.style.fontWeight = "normal";
+
+                delteBtn.setAttribute("onclick","window.parent.stock.deleteFacitity('"+data[i].id+"')");
+
+
+
+            }
+
+
+        })
+
+
+    },
+    editFacitity: function(data){
+
+        console.log(data);
+
+        var data =  JSON.parse(data);
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var fields = {
+            "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "add_facility"
+            },
+            "Facility ID" :{
+                field_type: "hidden",
+                id:"data.id",
+                value: data.id
+
+            },
+            "User":{
+                field_type: "hidden",
+                id: "data.user",
+                value: stock.getCookie("username")
+            },
+            "Facility / Location Name":{
+                field_type: "text",
+                id: "data.name",
+                value: data.name
+
+            },
+            "Region" : {
+                field_type : "select",
+                id: "data.region",
+                options : ["Central Region","Northern Region", "Southern Region"],
+                tt_onUnload: "__$('data.district').setAttribute('ajaxURL','/district_query?region='+__$('touchscreenInput'+tstCurrentPage).value +'&district=')",
+                value: data.region
+
+            },
+            "District" :{
+                field_type: "text",
+                id: "data.district",
+                value: data.district
+            }
+        }
+
+
+        stock.buildFields(fields, table);
+
+        stock.navPanel(form.outerHTML);
+
+    },
+    deleteFacitity: function(id){
+
+        var data = {
+            data: {}
+        };
+
+        data.data.userId = stock.getCookie("username");
+
+        data.data.token = stock.getCookie("token");
+
+        data.data.id = id;
+
+        stock.ajaxPostRequest("/delete_facility", data, function (sid) {
+
+            var json = JSON.parse(sid);
+
+            window.parent.stock.relocationFacilityList(window.parent.document.body);
+
+            stock.showMsg(json.message);
+
+        })
+
+    },
+
+    setStockLimit: function(){
+
+        var category_url = stock.settings.categorySearchPath + "?category=";
+
+        stock.ajaxRequest(category_url,function(data){
+
+            var categories = data.replace("<li>","").split("</li>");
+
+            for(var i = 0; i < categories.length ; i++){
+
+                var category = categories[i].replace("<li>","").replace("</li>","");
+
+                if(category.length != 0){
+
+                    var stock_item_url = "/stock_items?category="+encodeURIComponent(category)+"&item_name=";
+
+                    stock.ajaxRequest(stock_item_url,function(stock_item_data){
+
+                           var stock_items = stock_item_data.replace("<li>","").split("</li>");
+
+                           for(var j = 0; j < stock_items.length ; j++){
+
+                                var stock_item = stock_items[j].replace("<li>","").replace("</li>",""); 
+
+                                if(stock_item.length != 0){
+
+
+                                    stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(stock_item), function(limit_data) {
+
+                                        if(!limit_data)
+                                            var limit_data = {};
+
+                                        var json = (typeof limit_data == typeof String() ? JSON.parse(limit_data) : limit_data);
+
+                                        var limit = (json.limit ? json.limit : 1);
+
+                                        var name = (json.id ? json.id : 1);
+
+                                        if(!stock.stockLimits)
+                                                stock.stockLimits = {};
+
+                                        stock.stockLimits[name] = limit;
+                                        
+                                    });
+
+
+                                }
+
+                            }
+
+
+                    });
+
+
+                    var batch_number_url = '/batch_numbers_to_user?userId=' + stock.getCookie("username")+"&batch="
+
+                    stock.ajaxRequest(batch_number_url, function(batch_data) {
+
+                                        if(!batch_data)
+                                            var batch_data = {};
+
+                                        var json = JSON.parse(batch_data);
+
+                                        stock.batNumbers = json;
+
+                                        
+                                        
+                    });
+
+                }
+
+            }
+
+
+        });
+
+    },
     submitData: function (data) {
 
         if (stock.$("stock.navPanel")) {
@@ -1948,12 +3599,34 @@ var stock = ({
 
             var json = JSON.parse(sid);
 
-            if (stock.$("stock.content"))
+            if(json.add_facility){
+
+                stock.relocationFacilityList(window.parent.document.body);
+
+            }else if (!json.add_facility && stock.$("stock.content")){
+
                 stock.loadListItems(stock.settings.listPath, stock.$("stock.content"));
+
+            }
 
             stock.showMsg(json.message);
 
         })
+
+    },
+
+    outcome: function(dts_type, result){
+
+        var outcome = "Not acceptable";
+
+        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
+
+            outcome  = "Acceptable"
+        
+        }
+
+        stock.showMsg(outcome);
+
 
     },
 
@@ -2098,8 +3771,8 @@ var stock = ({
 
         document.body.appendChild(shield);
 
-        var width = 420;
-        var height = 280;
+        var width = 560;
+        var height = 390;
 
         var div = document.createElement("div");
         div.id = "msg.popup";
@@ -2145,6 +3818,8 @@ var stock = ({
 
         var td2 = document.createElement("td");
 
+        td2.id = "msg.td";
+
         tr2.appendChild(td2);
 
         var content = document.createElement("div");
@@ -2168,11 +3843,13 @@ var stock = ({
 
         var tdf = document.createElement("td");
         tdf.align = "center";
+        tdf.id = "pop_button_panel"
 
         trf.appendChild(tdf);
 
         var btn = document.createElement("button");
         btn.className = "blue";
+        btn.id = "ok_button";
         btn.innerHTML = "OK";
 
         btn.onclick = function () {

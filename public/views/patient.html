@@ -96,7 +96,7 @@
             }
 
             var lastHIVTest = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM",
-                    (new Date()).format("YYYY-mm-dd"), "HTS VISIT", "Last HIV test"));
+                    (new Date()).format("YYYY-mm-dd"), "PRE TEST COUNSELLING", "Last HIV test"));
 
             if(lastHIVTest) {
 
@@ -125,6 +125,108 @@
 <script>
 
     dashboard.init("/data/person.json", "/config/patient.modules.json", "/config/dashboard.settings.json");
+
+    if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
+
+        Object.defineProperty(Date.prototype, "format", {
+            value: function (format) {
+                var date = this;
+
+                var result = "";
+
+                if (!format) {
+
+                    format = ""
+
+                }
+
+                var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                    "October", "November", "December"];
+
+                if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
+
+                    result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                        window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+
+                } else if (format.match(/YYYY\-mm\-dd/)) {
+
+                    result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                        window.parent.dashboard.padZeros(date.getDate(), 2);
+
+                } else if (format.match(/mmm\/d\/YYYY/)) {
+
+                    result = months[parseInt(date.getMonth())] + "/" + date.getDate() + "/" + date.getFullYear();
+
+                } else if (format.match(/d\smmmm,\sYYYY/)) {
+
+                    result = date.getDate() + " " + monthNames[parseInt(date.getMonth())] + ", " + date.getFullYear();
+
+                } else {
+
+                    result = date.getDate() + "/" + months[parseInt(date.getMonth())] + "/" + date.getFullYear();
+
+                }
+
+                return result;
+            }
+        });
+
+    }
+
+    function printBarCodeTest(data,callback){
+
+
+              /*  var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
+                    data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                    data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                    (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
+                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";*/
+
+
+                var data = dashboard.data.data;
+
+                var accession_number = data.identifiers['HTS Number'].identifier
+
+                var first_name = data.names[0]['First Name'];
+
+                var last_name = data.names[0]['Family Name'];
+
+
+                var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + accession_number + "\"\nA40,50,0,2,2,2,N,\"" +
+                    first_name + " " + last_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                    accession_number.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                    (parseInt(data.birthdate_estimated) == 1 ? "~" : "") + (new Date(data.birthdate)).format("dd/mmm/YYYY") +
+                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + "" + "\"\nP1\n";
+
+                dashboard.saveAs(text, callback);
+
+
+    }
+
+     var tmrInterval = setInterval(function () {
+
+        var date_today = new Date()
+
+        window.parent.dashboard.queryExistingObsArray("Consent given to be contacted?", function(data){
+
+                if(data[date_today.format("YYYY-mm-dd")]== "Yes"){
+    
+                    console.log(data[date_today.format("YYYY-mm-dd")]);
+
+                    printBarCodeTest(null,function(){
+
+                        });
+
+                    clearInterval(tmrInterval);
+
+                }
+
+        });
+
+    }, 200);
 
 </script>
 
