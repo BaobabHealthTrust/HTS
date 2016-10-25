@@ -16,7 +16,10 @@
     "node-uuid": "^1.4.7",
     "portfinder": "^0.4.0",
     "randomstring": "^1.1.5",
-    "socket.io": "^1.4.6"
+    "socket.io": "^1.4.6",
+    "async": "^2.0.1",
+    "cookie-parser": "^1.4.3",
+    "node-rest-client": "^2.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

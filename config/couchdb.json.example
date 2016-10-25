@@ -1,0 +1,26 @@
+{
+    "development": {
+        "protocol": "",
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": "",
+        "siteCode": ""
+    },
+    "": {
+        "protocol": "",
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": "",
+        "siteCode": ""
+    },
+    "production": {
+        "protocol": "",
+        "host": "",
+        "port": "",
+        "username": "",
+        "password": "",
+        "siteCode": ""
+    }
+}
