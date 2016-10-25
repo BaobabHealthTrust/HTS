@@ -188,7 +188,7 @@
 
         var data = dashboard.data.data;
 
-        if (!data.identifiers['HTS Number'])
+        if (!data.identifiers['HTS Number'] || true)
             return;
 
         var accession_number = data.identifiers['HTS Number'].identifier
