@@ -6386,7 +6386,7 @@ portfinder.getPort(function (err, port) {
 
         }
 
-        console.log("✔ Server running on port %d in %s mode", port, app.get('env'));
+        console.log("✔ Server running on %s in %s mode", address, app.get('env'));
     });
 
 });
