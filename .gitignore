@@ -6,3 +6,4 @@ public/modules
 public/touchscreentoolkit
 app.js
 public/config/*.json
+db/*.json
