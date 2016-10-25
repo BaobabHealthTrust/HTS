@@ -148,6 +148,60 @@ var quality = ({
 
     },
 
+    navPanel: function (content) {
+
+        if (quality.$("quality.navPanel")) {
+
+            document.body.removeChild(quality.$("quality.navPanel"));
+
+        }
+
+        var divPanel = document.createElement("div");
+        divPanel.style.position = "absolute";
+        divPanel.style.left = "0px";
+        divPanel.style.top = "0px";
+        divPanel.style.width = "100%";
+        divPanel.style.height = "100%";
+        divPanel.style.backgroundColor = "#fff";
+        divPanel.id = "quality.navPanel";
+        divPanel.style.zIndex = 800;
+        divPanel.style.overflow = "hidden";
+
+        document.body.appendChild(divPanel);
+
+        var iframe = document.createElement("iframe");
+        iframe.id = "ifrMain";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "1px solid #000";
+
+        var url = window.location.href.match(/(.+)\/[^\/]+$/);
+
+        // var base = (url ? url[1] : "");
+
+        var base = stock.settings.basePath;
+
+        var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
+            "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
+            "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
+            "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
+            "'/'; tt_cancel_show = '/';" +
+            "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
+            "if(window.parent) window.parent.quality.submitData(data); alert(data) }</script></head><body>";
+
+        html += "<div id='content'>" + content + "</div></body>";
+
+        var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+
+        iframe.setAttribute("src", page);
+
+        divPanel.appendChild(iframe);
+
+        iframe.onload = function () {
+
+        }
+
+    },
     buildFields: function (fields, table) {
 
         var keys = Object.keys(fields);
@@ -406,98 +460,33 @@ var quality = ({
             }
         }
 
-        user.buildFields(fields, table);
+        quality.buildFields(fields, table);
 
-        user.navPanel(form.outerHTML);
-
-    },
-
-    navPanel: function (content) {
-
-        if (quality.$("quality.navPanel")) {
-
-            document.body.removeChild(quality.$("quality.navPanel"));
-
-        }
-
-        var divPanel = document.createElement("div");
-        divPanel.style.position = "absolute";
-        divPanel.style.left = "0px";
-        divPanel.style.top = "0px";
-        divPanel.style.width = "100%";
-        divPanel.style.height = "100%";
-        divPanel.style.backgroundColor = "#fff";
-        divPanel.id = "quality.navPanel";
-        divPanel.style.zIndex = 800;
-        divPanel.style.overflow = "hidden";
-
-        document.body.appendChild(divPanel);
-
-        var iframe = document.createElement("iframe");
-        iframe.id = "ifrMain";
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.border = "1px solid #000";
-
-        var url = window.location.href.match(/(.+)\/[^\/]+$/);
-
-        // var base = (url ? url[1] : "");
-
-        var base = quality.settings.basePath;
-
-        var html = "<html><head><title></title><base href='" + base + "' /> <script type='text/javascript' language='javascript' " +
-            "src='" + "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js' defer></script><script " +
-            "src='/javascripts/form2js.js'></script><script language='javascript'>tstUsername = '';" +
-            "tstCurrentDate = '" + (new Date()).format("YYYY-mm-dd") + "';tt_cancel_destination = " +
-            "'/'; tt_cancel_show = '/';" +
-            "function submitData(){ var data = form2js(document.getElementById('data'), undefined, true); " +
-            "if(window.parent) window.parent.user.submitData(data); }</script></head><body>";
-
-        html += "<div id='content'>" + content + "</div></body>";
-
-        var page = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
-
-        iframe.setAttribute("src", page);
-
-        divPanel.appendChild(iframe);
-
-        iframe.onload = function () {
-
-        }
+        quality.navPanel(form.outerHTML);
 
     },
 
     submitData: function (data) {
 
-        console.log(data);
+        if (quality.$("quality.navPanel")) {
 
-        data.data.userId = quality.getCookie("username");
+            document.body.removeChild(stock.$("quality.navPanel"));
 
-        data.data.token = quality.getCookie("token");
+        }
 
-        if (data.data.datatype == "changePassword") {
+        data.data.userId = stock.getCookie("username");
 
-            quality.ajaxPostRequest(quality.settings.passwordUpdatePath, data.data, function (sid) {
+        data.data.token = stock.getCookie("token");
 
-                var json = JSON.parse(sid);
+        if(data.data.datatype == "quality_assurance"){
 
-                if (quality.$("quality.navPanel")) {
+                quality.ajaxPostRequest("/quality_control/save_quality_control_test/", data.data, function (res) {
 
-                    document.body.removeChild(user.$("quality.navPanel"));
+                    console.log(res);
 
-                }
+                    var json = JSON.parse(res);
 
-                quality.showMsg(json.message, "Password Change", "/");
-
-            })
-
-        }else if(data.data.datatype == "quality_assurance"){
-
-                quality.ajaxPostRequest("/save_quality_control_test/", data.data, function (sid) {
-
-                    var json = JSON.parse(sid);
-
-                    if (quality.$("user.navPanel")) {
+                    if (quality.$("quality.navPanel")) {
 
                         document.body.removeChild(quality.$("quality.navPanel"));
 
@@ -510,50 +499,6 @@ var quality = ({
                 })
 
         } 
-        else {
-
-            quality.ajaxPostRequest(quality.settings.loginPath, data.data, function (sid) {
-
-                var json = JSON.parse(sid);
-
-                if (quality.$("quality.navPanel")) {
-
-                    // document.body.removeChild(user.$("user.navPanel"));
-
-                }
-
-                // Sessions expire after 8 hrs if user does not logout
-                if (Object.keys(json).indexOf("token") >= 0) {
-
-                    quality.setCookie("token", json["token"], 0.333333333);
-
-                    quality.setCookie("username", json["username"], 0.333333333);
-
-                    quality.setCookie("gender", json["gender"], 0.333333333);
-
-                    quality.setCookie("given_name", json["given_name"], 0.333333333);
-
-                    quality.setCookie("family_name", json["family_name"], 0.333333333);
-
-                    quality.setCookie("location", json["location"], 0.333333333);
-
-                    quality.setCookie("attrs", JSON.stringify(json['attributes']), 0.333333333);
-
-                    quality.setCookie("roles", JSON.stringify(json['roles']), 0.333333333);
-
-                    window.location = "/";
-
-                } else {
-
-                    quality.login();
-
-                    quality.showAlertMsg(json.message, "Access Denied!");
-
-                }
-
-            })
-
-        }
 
     },
 

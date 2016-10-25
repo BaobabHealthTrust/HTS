@@ -1478,7 +1478,7 @@ var stock = ({
 
     editItem: function (pos, stock_id) {
 
-         stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(stock.stocks[pos].name), function(data) {
+         stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(stock.stocks[pos].name), function(data) {
 
             if(!data)
                 var data = {};
@@ -1575,7 +1575,7 @@ var stock = ({
 
     receiveItem: function (stock_id, label) {
 
-        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+        stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
             if(!data)
                 var data = {};
@@ -1690,7 +1690,7 @@ var stock = ({
 
     receiveItemFromFaclity: function (stock_id, label) {
 
-        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+        stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
             if(!data)
                 var data = {};
@@ -1782,7 +1782,7 @@ var stock = ({
                 field_type: "text",
                 id: "data.origin_facility",
                 allowFreeText: true,
-                ajaxURL: "/facilities?name=",
+                ajaxURL: "/facility_custom/facilities?name=",
                 tt_onLoad: "window.parent.stock.validateExpiryDate(__$('data.expiry_date').value, '')" 
 
             };
@@ -2364,7 +2364,7 @@ var stock = ({
     },
     lostItems: function (stock_id,label) {
 
-        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+        stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
                 if(!data)
                     var data = {};
@@ -2464,7 +2464,7 @@ var stock = ({
 
     unCapturedItems: function (stock_id,label) {
 
-        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+        stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
             if(!data)
                 var data = {};
@@ -2584,7 +2584,7 @@ var stock = ({
     },
     centralDisposeItem: function (stock_id,label) {
 
-        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+        stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
                 if(!data)
                     var data = {};
@@ -2765,7 +2765,7 @@ var stock = ({
     ,
     dispatchItem: function (stock_id, label) {
 
-         stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+         stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
             if(!data)
                 var data = {};
@@ -2874,7 +2874,7 @@ var stock = ({
 
     dispatchItemToFacility: function (stock_id, label) {
 
-        stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(label), function(data) {
+        stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(label), function(data) {
 
                 if(!data)
                     var data = {};
@@ -2967,7 +2967,7 @@ var stock = ({
                     field_type: "text",
                     id: "data.dispatch_destination",
                     allowFreeText: true,
-                    ajaxURL: "/facilities?name="
+                    ajaxURL: "/facility_custom/facilities?name="
                 };
 
                 stock.buildFields(fields, table);
@@ -3211,7 +3211,7 @@ var stock = ({
 
         document.head.appendChild(script);
 
-        stock.loadListRelocation("/relocation_facility_list", div0_1_0_0);
+        stock.loadListRelocation("/facility_custom/relocation_facility_list", div0_1_0_0);
 
     },
     addFacility : function(){
@@ -3494,7 +3494,7 @@ var stock = ({
 
         data.data.id = id;
 
-        stock.ajaxPostRequest("/delete_facility", data, function (sid) {
+        stock.ajaxPostRequest("/facility_custom/delete_facility", data, function (sid) {
 
             var json = JSON.parse(sid);
 
@@ -3533,7 +3533,7 @@ var stock = ({
                                 if(stock_item.length != 0){
 
 
-                                    stock.ajaxRequest("/get_pack_size/" + encodeURIComponent(stock_item), function(limit_data) {
+                                    stock.ajaxRequest("/stock/get_pack_size/" + encodeURIComponent(stock_item), function(limit_data) {
 
                                         if(!limit_data)
                                             var limit_data = {};

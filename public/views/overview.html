@@ -222,39 +222,39 @@ function padZeros(number, positions) {
 
 var fields = {
 
-    "male_seen_today": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+    "male_seen_today": "/reports/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
             "&start_date=" + (new Date()).format("YYYY-mm-dd"),
 
-    "male_seen_in_month": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+    "male_seen_in_month": "/reports/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
             "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
             (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
                     "-01")).format("YYYY-mm-dd"),
 
-    "male_seen_in_year": "/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
+    "male_seen_in_year": "/reports/user_stats?field=sex_pregnancy&value=M&username=" + getCookie("username") +
             "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
             (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
 
-    "fp_seen_today": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+    "fp_seen_today": "/reports/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
             "&start_date=" + (new Date()).format("YYYY-mm-dd"),
 
-    "fp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+    "fp_seen_in_month": "/reports/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
             "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
             (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
                     "-01")).format("YYYY-mm-dd"),
 
-    "fp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
+    "fp_seen_in_year": "/reports/user_stats?field=sex_pregnancy&value=FP&username=" + getCookie("username") +
             "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
             (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd"),
 
-    "fnp_seen_today": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+    "fnp_seen_today": "/reports/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
             "&start_date=" + (new Date()).format("YYYY-mm-dd"),
 
-    "fnp_seen_in_month": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+    "fnp_seen_in_month": "/reports/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
             "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
             (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
                     "-01")).format("YYYY-mm-dd"),
 
-    "fnp_seen_in_year": "/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
+    "fnp_seen_in_year": "/reports/user_stats?field=sex_pregnancy&value=FNP&username=" + getCookie("username") +
             "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
             (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd")
 
