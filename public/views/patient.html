@@ -10,27 +10,27 @@
     var id = window.location.href.match(/\/([^\/]+)$/)[1];
 
     var socket = io.connect('/');
-    socket.on('stats', function(data) {
+    socket.on('stats', function (data) {
         console.log('Connected clients on ' + data.id + ':', data.numClients);
     });
 
     socket.emit("init", {id: id});
 
-    socket.on('reject', function(json) {
+    socket.on('reject', function (json) {
 
         user.showMsg(json.message, "Oops!", "/");
 
     });
 
-    socket.on('newConnection', function(data) {
+    socket.on('newConnection', function (data) {
 
         var nsp = io('/' + id);
 
-        nsp.on('hi ' + id, function(data){
+        nsp.on('hi ' + id, function (data) {
             // console.log(data);
         });
 
-        nsp.on('kickout ' + id, function(data){
+        nsp.on('kickout ' + id, function (data) {
             // console.log(data);
 
             user.logout();
@@ -39,11 +39,11 @@
 
         socket.emit('demographics', {id: id});
 
-        nsp.on('demographics', function(data){
+        nsp.on('demographics', function (data) {
 
-            if(!dashboard.data) {
+            if (!dashboard.data) {
 
-                setTimeout(function(){
+                setTimeout(function () {
 
                     window.location = window.location.href;
 
@@ -57,39 +57,39 @@
 
             var done = false;
 
-            if(json.names) {
+            if (json.names) {
 
                 dashboard.data.data.names = json.names;
 
-            } else if(json.addresses) {
+            } else if (json.addresses) {
 
                 dashboard.data.data.addresses = json.addresses;
 
-            } else if(json.gender) {
+            } else if (json.gender) {
 
                 dashboard.data.data.gender = json.gender;
 
-            } else if(json.birthdate) {
+            } else if (json.birthdate) {
 
                 dashboard.data.data.birthdate = json.birthdate;
 
-            } else if(json.birthdate_estimated) {
+            } else if (json.birthdate_estimated) {
 
                 dashboard.data.data.birthdate_estimated = json.birthdate_estimated;
 
-            } else if(json.identifiers) {
+            } else if (json.identifiers) {
 
                 dashboard.data.data.identifiers = json.identifiers;
 
-            } else if(json.programs) {
+            } else if (json.programs) {
 
                 dashboard.data.data.programs = json.programs;
 
-            } else if(json.relationships) {
+            } else if (json.relationships) {
 
                 dashboard.data.data.relationships = json.relationships;
 
-            } else if(json.done) {
+            } else if (json.done) {
 
                 done = true;
 
@@ -98,7 +98,7 @@
             var lastHIVTest = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM",
                     (new Date()).format("YYYY-mm-dd"), "PRE TEST COUNSELLING", "Last HIV test"));
 
-            if(lastHIVTest) {
+            if (lastHIVTest) {
 
                 dashboard.setCookie("LastHIVTest", lastHIVTest, 0.3333);
 
@@ -107,7 +107,7 @@
             var ageGroup = encodeURIComponent(dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
                     "HTS CLIENT REGISTRATION", "Age Group"));
 
-            if(ageGroup) {
+            if (ageGroup) {
 
                 dashboard.setCookie("AgeGroup", ageGroup, 0.3333);
 
@@ -148,13 +148,13 @@
                 if (format.match(/YYYY\-mm\-dd\sHH\:\MM\:SS/)) {
 
                     result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                        window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
-                        window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
+                            window.parent.dashboard.padZeros(date.getDate(), 2) + " " + window.parent.dashboard.padZeros(date.getHours(), 2) + ":" +
+                            window.parent.dashboard.padZeros(date.getMinutes(), 2) + ":" + window.parent.dashboard.padZeros(date.getSeconds(), 2);
 
                 } else if (format.match(/YYYY\-mm\-dd/)) {
 
                     result = date.getFullYear() + "-" + window.parent.dashboard.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
-                        window.parent.dashboard.padZeros(date.getDate(), 2);
+                            window.parent.dashboard.padZeros(date.getDate(), 2);
 
                 } else if (format.match(/mmm\/d\/YYYY/)) {
 
@@ -176,53 +176,56 @@
 
     }
 
-    function printBarCodeTest(data,callback){
+    function printBarCodeTest(data, callback) {
 
 
-              /*  var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
-                    data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
-                    data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
-                    (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
-                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";*/
+        /*  var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + data.npid + "\"\nA40,50,0,2,2,2,N,\"" +
+         data.first_name + " " + data.family_name + "\"\nA40,96,0,2,2,2,N,\"" +
+         data.npid.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+         (parseInt(data.date_of_birth_estimated) == 1 ? "~" : "") + (new Date(data.date_of_birth)).format("dd/mmm/YYYY") +
+         "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + data.residence + "\"\nP1\n";*/
 
 
-                var data = dashboard.data.data;
+        var data = dashboard.data.data;
 
-                var accession_number = data.identifiers['HTS Number'].identifier
+        if (!data.identifiers['HTS Number'])
+            return;
 
-                var first_name = data.names[0]['First Name'];
+        var accession_number = data.identifiers['HTS Number'].identifier
 
-                var last_name = data.names[0]['Family Name'];
+        var first_name = data.names[0]['First Name'];
+
+        var last_name = data.names[0]['Family Name'];
 
 
-                var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + accession_number + "\"\nA40,50,0,2,2,2,N,\"" +
-                    first_name + " " + last_name + "\"\nA40,96,0,2,2,2,N,\"" +
-                    accession_number.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
-                    (parseInt(data.birthdate_estimated) == 1 ? "~" : "") + (new Date(data.birthdate)).format("dd/mmm/YYYY") +
-                    "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + "" + "\"\nP1\n";
+        var text = "\nN\nq801\nQ329,026\nZT\nB50,180,0,1,5,15,120,N,\"" + accession_number + "\"\nA40,50,0,2,2,2,N,\"" +
+                first_name + " " + last_name + "\"\nA40,96,0,2,2,2,N,\"" +
+                accession_number.replace(/\B(?=([A-Za-z0-9]{3})+(?![A-Za-z0-9]))/g, "-") + " " +
+                (parseInt(data.birthdate_estimated) == 1 ? "~" : "") + (new Date(data.birthdate)).format("dd/mmm/YYYY") +
+                "(" + data.gender + ")\"\nA40,142,0,2,2,2,N,\"" + "" + "\"\nP1\n";
 
-                dashboard.saveAs(text, callback);
+        dashboard.saveAs(text, callback);
 
 
     }
 
-     var tmrInterval = setInterval(function () {
+    var tmrInterval = setInterval(function () {
 
         var date_today = new Date()
 
-        window.parent.dashboard.queryExistingObsArray("Consent given to be contacted?", function(data){
+        window.parent.dashboard.queryExistingObsArray("Consent given to be contacted?", function (data) {
 
-                if(data[date_today.format("YYYY-mm-dd")]== "Yes"){
-    
-                    console.log(data[date_today.format("YYYY-mm-dd")]);
+            if (data[date_today.format("YYYY-mm-dd")] == "Yes") {
 
-                    printBarCodeTest(null,function(){
+                console.log(data[date_today.format("YYYY-mm-dd")]);
 
-                        });
+                printBarCodeTest(null, function () {
 
-                    clearInterval(tmrInterval);
+                });
 
-                }
+                clearInterval(tmrInterval);
+
+            }
 
         });
 
