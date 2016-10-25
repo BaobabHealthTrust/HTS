@@ -647,6 +647,7 @@ var landing = ({
         btnCancel.className = "red";
         btnCancel.style.cssFloat = "left";
         btnCancel.innerHTML = "Logout";
+        btnCancel.id = "btnCancel";
         btnCancel.onmousedown = function () {
             if (user != undefined)
                 user.logout();
@@ -664,6 +665,7 @@ var landing = ({
         btnFinish.className = "green";
         btnFinish.style.cssFloat = "right";
         btnFinish.innerHTML = "Find or Register Patient";
+        btnFinish.id = "btnFinish";
         btnFinish.onmousedown = function () {
 
             if (patient != undefined) {
@@ -915,6 +917,7 @@ var landing = ({
 
                 var li = document.createElement("li");
                 li.innerHTML = keys[i];
+                li.id = keys[i].toLowerCase().replace(/\s/g, "_");
                 li.style.padding = "10px";
                 li.style.paddingTop = "15px";
                 li.style.paddingBottom = "15px";
