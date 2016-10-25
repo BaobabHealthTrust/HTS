@@ -13,7 +13,8 @@
     ],
     "patient_identifier_types": [
         ["HTS Number", "HTS client clinic number"],
-        ["Epilepsy Clinic Number", "Epilepsy clinic number"]
+        ["Epilepsy Clinic Number", "Epilepsy clinic number"],
+        ["GDN Number", "Guardian clinic number"]
     ],
     "person_attribute_types": [
         ["HTS Provider ID", "HTS service provider clinic code"]
