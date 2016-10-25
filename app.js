@@ -11,6 +11,8 @@ var Mutex = require('Mutex');
 var md5 = require('md5');
 var randomstring = require("randomstring");
 
+var router = express.Router();
+
 var ip = require("ip");
 var fs = require("fs");
 
@@ -6352,6 +6354,20 @@ app.post('/save_quality_control_test/', function (req, res) {
 
 })
 
+var plugins = fs.readdirSync(__dirname + "/routes");
+
+console.log(plugins);
+
+for (var i in plugins) {
+
+    var plugin = plugins[i];
+
+    var root = plugin.replace(/\.js$/, "");
+
+    app.use('/' + root, require(__dirname + "/routes/" + plugin)(router));
+
+}
+
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/views/index.html');
 });
@@ -6386,7 +6402,7 @@ portfinder.getPort(function (err, port) {
 
         }
 
-        console.log("✔ Server running on port %d in %s mode", port, app.get('env'));
+        console.log("✔ Server running on %s in %s mode", address, app.get('env'));
     });
 
 });
