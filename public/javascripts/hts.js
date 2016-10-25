@@ -2537,7 +2537,14 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Positive";
 
-                result = "New Positive";
+                result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
+
+
+                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+
+                    window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
+
+                }
 
             }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
@@ -2573,6 +2580,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
+                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+
+                    window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
+
+                }
+
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "-") {
 
@@ -2586,6 +2599,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
+
+                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+
+                    window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
+
+                }
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
@@ -2656,6 +2675,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                     result = "New Positive";
 
+                    if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+
+                        window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
+
+                    }
+
 
                 }else{
 
@@ -2700,6 +2725,14 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = "New Positive";
+
+                result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
+
+                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+
+                    window.parent.dashboard.showMsg("Take DBS sample", "");
+
+                }
 
             } else if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
                 fpTest2Result.trim() == "+")) && imTest1Result.trim().length <= 0 && imTest2Result.trim().length <= 0) {
@@ -3754,15 +3787,51 @@ function evaluateReferral2() {
 
         console.log(pregnancy_months);
 
-        if(parseInt(pregnancy_months) <= 6 ){
+        if(parseInt(pregnancy_months) > 6 ){
 
-            alert("Test again after 6 months"); 
+            window.parent.dashboard.showMsg("Book appointment for Re-Test at Maternity as " +
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+            "health and to prevent transmission.", "Re-Test");
+
+            var remaining_days = 280 - parseInt(pregnancy_months) * 30;
+
+             if (__$("appointment")) {
+
+                __$("appointment").removeAttribute("condition");
+
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+
+                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+
+            }
+
+
+
+        }
+        else{
+
+            var remaining_days = 280 - parseInt(pregnancy_months) * 30;
+
+             if (__$("appointment")) {
+
+                __$("appointment").removeAttribute("condition");
+
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+
+                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+
+            }
+
+            window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+            "health and to prevent transmission.", "Re-Test");
+
+
+
 
         }
 
-        window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
-            "health and to prevent transmission.", "Re-Test");
+        
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
         "new negative") {
