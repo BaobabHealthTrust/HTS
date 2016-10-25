@@ -8,7 +8,7 @@
     <script src="/modules/patient_registration.js"></script>
     <script src="/modules/stockmanagement.js"></script>
     <script src="/javascripts/proficiency_test.js"></script>
-     <script src="/javascripts/quality_control_test.js"></script>
+    <script src="/javascripts/quality_control_test.js"></script>
 </head>
 <body oncontextmenu="return false;">
 
@@ -22,7 +22,7 @@
         var done1 = false;
         var done2 = false;
 
-        if(user.$("user")) {
+        if (user.$("user")) {
 
             user.$("user").innerHTML = user.getCookie("username");
 
@@ -30,7 +30,7 @@
 
         }
 
-        if(user.$("location")) {
+        if (user.$("location")) {
 
             user.$("location").innerHTML = user.getCookie("location");
 
@@ -40,15 +40,15 @@
 
         var btns = document.getElementsByClassName("green");
 
-        if(btns.length > 0) {
+        if (btns.length > 0) {
 
             btns[0].style.display = "none";
 
         }
 
-        if(!done1 || !done2) {
+        if (!done1 || !done2) {
 
-            tmrInterval = setInterval(function(){
+            tmrInterval = setInterval(function () {
 
                 loadInfo();
 
@@ -67,15 +67,34 @@
 
     landing.init("/config/landing.settings.json");
 
-    patient.init("/config/patient.settings.json", user.getCookie("username"));
+    patient.init("/config/patient.settings.json", user.getCookie("username"), "/config/patient.modules.json");
 
     stock.init("/config/stock.settings.json", user.getCookie("username"));
 
-    var tmrInterval = setInterval(function(){
+    var tmrInterval = setInterval(function () {
 
         loadInfo();
 
     }, 10);
+
+    var tmr_interval = setInterval(function () {
+
+        if (landing.getCookie("currentProgram") != "") {
+
+            clearInterval(tmr_interval);
+
+            if (document.getElementsByClassName("gray old").length > 0)
+                for (var i = document.getElementsByClassName("gray old").length - 1; i >= 0; i--)
+                    document.getElementsByClassName("gray old")[i].className = "green";
+
+        } else {
+
+            if (document.getElementsByClassName("green").length > 0)
+                document.getElementsByClassName("green")[0].className = "gray old";
+
+        }
+
+    }, 100);
 
 </script>
 </body>

@@ -254,6 +254,90 @@ async.series([
 
         }
 
+    },
+
+    function (callback) {
+
+        if (fs.existsSync(path.resolve("./package.json"))) {
+
+            var imports = require(rootPath + "/modules/package.json");
+
+            var local = require(path.resolve("./package.json"));
+
+            var keys = Object.keys(imports.dependencies);
+
+            var localKeys = Object.keys(local.dependencies);
+
+            var isDirty = false;
+
+            for (var i = 0; i < keys.length; i++) {
+
+                var key = keys[i];
+
+                if (localKeys.indexOf(key) < 0) {
+
+                    local.dependencies[key] = imports.dependencies[key];
+
+                    isDirty = true;
+
+                }
+
+            }
+
+            if (isDirty) {
+
+                fs.writeFileSync(path.resolve("./package.json"), JSON.stringify(local));
+
+                runCmd("npm install --verbose --save", function (error, stdout, stderr) {
+
+                    if (error) {
+
+                        console.log(error);
+
+                    } else if (stderr) {
+
+                        console.log(stderr);
+
+                    } else if (stdout) {
+
+                        console.log(stdout);
+
+                    }
+
+                    callback();
+
+                })
+
+            } else {
+
+                callback();
+
+            }
+
+        } else {
+
+            runCmd("cp " + rootPath + "/modules/package.json .", function (error, stdout, stderr) {
+
+                if (error) {
+
+                    console.log(error);
+
+                } else if (stderr) {
+
+                    console.log(stderr);
+
+                } else if (stdout) {
+
+                    console.log(stdout);
+
+                }
+
+                callback();
+
+            })
+
+        }
+
     }
 
 ], function () {
