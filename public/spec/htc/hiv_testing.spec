@@ -14,7 +14,7 @@ Q.1.9. Client gives consent to be Tested? [pos:: 8$$ id:: consent $$ tt_onLoad :
 O.1.9.1. No
 O.1.9.2. Yes
 
-Q.1.10. First Pass Test 1 Kit Category [pos:: 9$$ tt_onUnload:: setAjaxUrl(3)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(0) $$ condition :: false]
+Q.1.10. First Pass Test 1 Kit Category [pos:: 9$$ tt_onUnload:: setAjaxUrl(3)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(0) $$ condition :: false]
 
 Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: fp_item_name1$$ tt_onUnload:: setAjaxUrl(4)$$ condition:: evalCondition(0) $$ condition ::false]
 
@@ -24,7 +24,7 @@ Q.1.13. First Pass Test 1 Result [pos:: 12$$ id:: fp_test1_result$$ tt_onLoad:: 
 O.1.13.1. -
 O.1.13.2. +
 
-Q.1.14. First Pass Test 2 Kit Category [pos:: 13$$ tt_onUnload:: setAjaxUrl(5)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(2) $$ condition :: false]
+Q.1.14. First Pass Test 2 Kit Category [pos:: 13$$ tt_onUnload:: setAjaxUrl(5)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(2) $$ condition :: false]
 
 Q.1.15. First Pass Test Kit 2 Name [pos:: 14$$ id:: fp_item_name2$$ tt_onUnload:: setAjaxUrl(6)$$ condition:: evalCondition(2) $$ condition::false]
 
@@ -36,11 +36,11 @@ O.1.17.2. +
 
 Q.1.18. First Pass Test 1 & 2 Parallel Tests [pos:: 17$$ id:: fp_parallel$$ tt_onLoad:: saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1"); saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");recommendedTimmerForLabels([__$("fp_item_name1").value,__$("fp_item_name2").value]);loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'])$$ condition:: evalCondition(4)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true$$ tt_onUnload:: activateNavBtn() $$ helpText :: First Pass Test 1 & 2 Parallel]
 
-Q.1.19. Immediate Repeat Tester [pos:: 18$$ id:: im_tester$$ condition:: evalCondition(5)$$ ajaxURL:: /stock/list_users?name=]
+Q.1.19. Immediate Repeat Tester [pos:: 18$$ id:: im_tester$$ condition:: evalCondition(5)$$ ajaxURL:: /list_users?name=]
 
 Q.1.20. Immediate Tester's Password [pos:: 19$$ condition:: evalCondition(5)$$ tt_onLoad:: checkValidation()$$ tt_onUnLoad:: stopValidationChecks()$$ textCase:: lower$$ type:: password]
 
-Q.1.21. Immediate Repeat Test 1 Kit Category [pos:: 20$$ tt_onUnload:: setAjaxUrl(7)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(5) $$ condition :: false ]
+Q.1.21. Immediate Repeat Test 1 Kit Category [pos:: 20$$ tt_onUnload:: setAjaxUrl(7)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(5) $$ condition :: false ]
 
 Q.1.22. Immediate Repeat Test Kit 1 Name [pos:: 21$$ id:: im_item_name1$$ tt_onUnload:: setAjaxUrl(8)$$ condition:: evalCondition(5) $$ condition :: false]
 
@@ -50,7 +50,7 @@ Q.1.24. Immediate Repeat Test 1 Result [pos:: 23$$ id:: im_test1_result$$ condit
 O.1.24.1. -
 O.1.24.2. +
 
-Q.1.25. Immediate Repeat Test 2 Kit Category [pos:: 24$$ tt_onUnload:: setAjaxUrl(9)$$ ajaxURL:: /stock_categories?category=$$ condition:: evalCondition(5) $$ condition::false]
+Q.1.25. Immediate Repeat Test 2 Kit Category [pos:: 24$$ tt_onUnload:: setAjaxUrl(9)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(5) $$ condition::false]
 
 Q.1.26. Immediate Repeat Test Kit 2 Name [pos:: 25$$ id:: im_item_name2$$ tt_onUnload:: setAjaxUrl(10)$$ condition:: evalCondition(5) $$ condition :: false]
 
