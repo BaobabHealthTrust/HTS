@@ -3269,6 +3269,7 @@ var stock = ({
         stock.ajaxRequest(path, function (data) {
 
             var data = JSON.parse(data);
+            console.log(data);
 
             if (!target)
             return;
