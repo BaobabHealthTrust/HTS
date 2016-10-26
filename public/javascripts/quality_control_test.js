@@ -516,6 +516,329 @@ var quality = ({
 
     },
 
+    qualityControlApproval : function(target){
+
+        if (!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "Quality Control Test Approval";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "stock.content";
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "1px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
+
+        div0.appendChild(div0_1_0_0);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.location = "/";
+
+        }
+
+        nav.appendChild(btnFinish);
+
+        // var btnAdd = document.createElement("button");
+        // btnAdd.className = (stock.roles.indexOf("Admin") >= 0 ? "blue" : "gray");
+        // btnAdd.style.cssFloat = "right";
+        // btnAdd.style.margin = "15px";
+        // btnAdd.innerHTML = "Add Item";
+
+        // btnAdd.onclick = function () {
+
+        //     if (this.className.match(/gray/))
+        //         return;
+
+        //     window.parent.stock.addFacility();
+
+        // }
+
+        // nav.appendChild(btnAdd);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+        quality.loadQualityTests("/relocation_facility_list", div0_1_0_0);
+
+    },
+    loadQualityTests: function(path,target){
+
+        if (!path || !target)
+            return;
+
+        stock.ajaxRequest(path, function (data) {
+
+            var data = JSON.parse(data);
+            console.log(data);
+
+            if (!target)
+            return;
+
+            if (!data)
+                return;
+
+            target.innerHTML = "";
+
+            var table = document.createElement("table");
+            table.style.borderCollapse = "collapse";
+            table.border = 1;
+            table.style.borderColor = "#eee";
+            table.width = "100%";
+            table.cellPadding = "8";
+
+            target.appendChild(table);
+
+            var tr = document.createElement("tr");
+            tr.style.backgroundColor = "#999";
+            tr.style.color = "#eee";
+
+            table.appendChild(tr);
+
+            var fields = [" ", "Date of QC test", "DTS type", "DTS lot number", "Test kit name", "Test kit lot #", "Result", "Outcome", "Interpretation", "Approve", "Disapprove"];
+            var colSizes = ["20px", "18%", "18%", "18%", "18%", "18%", "18%", "80px", "80px", "80px", "80px",
+                "180px"];
+
+            for (var i = 0; i < fields.length; i++) {
+
+                var th = document.createElement("th");
+
+                if (colSizes[i])
+                    th.style.width = colSizes[i];
+
+                th.innerHTML = fields[i];
+
+                tr.appendChild(th);
+
+            }
+
+            for(var i = 0; i < data.length ; i++){
+
+                var tr = document.createElement("tr");
+
+                table.appendChild(tr);
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.innerHTML = i+1;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].date
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].name
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].number
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].name
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].number
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].result
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].outcome
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.innerHTML = data[i].interpretation
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                var editBtn = document.createElement("button");
+
+                td.appendChild(editBtn);
+
+                editBtn.className = "blue";
+
+                editBtn.innerHTML = "Approve";
+
+                editBtn.style.width = "100%";
+
+                editBtn.style.minWidth = "100px";
+
+                editBtn.style.minHeight = "30px";
+
+                editBtn.style.fontWeight = "normal"
+
+                editBtn.setAttribute("onclick","window.parent.stock.editFacitity('"+JSON.stringify(data[i])+"')");
+
+
+                var td = document.createElement("td");
+
+                tr.appendChild(td);
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                var delteBtn = document.createElement("button");
+
+                td.appendChild(delteBtn);
+
+                delteBtn.className = "red";
+
+                delteBtn.innerHTML = "Disapprove";
+
+                delteBtn.style.width = "90%";
+
+                delteBtn.style.minWidth = "100px";
+
+                delteBtn.style.minHeight = "30px";
+
+                delteBtn.style.fontWeight = "normal";
+
+                delteBtn.setAttribute("onclick","window.parent.stock.deleteFacitity('"+data[i].id+"')");
+
+
+
+            }
+
+
+        })
+
+
+    },
+
     showMsg: function (msg, topic, nextURL) {
 
         if (!topic) {
