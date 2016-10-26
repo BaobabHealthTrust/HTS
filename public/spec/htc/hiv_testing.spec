@@ -36,7 +36,7 @@ O.1.17.2. +
 
 Q.1.18. First Pass Test 1 & 2 Parallel Tests [pos:: 17$$ id:: fp_parallel$$ tt_onLoad:: saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1"); saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");recommendedTimmerForLabels([__$("fp_item_name1").value,__$("fp_item_name2").value]);loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'])$$ condition:: evalCondition(4)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true$$ tt_onUnload:: activateNavBtn() $$ helpText :: First Pass Test 1 & 2 Parallel]
 
-Q.1.19. Immediate Repeat Tester [pos:: 18$$ id:: im_tester$$ condition:: evalCondition(5)$$ ajaxURL:: /list_users?name=]
+Q.1.19. Immediate Repeat Tester [pos:: 18$$ id:: im_tester$$ condition:: evalCondition(5)$$ ajaxURL:: /stock/list_users?name=]
 
 Q.1.20. Immediate Tester's Password [pos:: 19$$ condition:: evalCondition(5)$$ tt_onLoad:: checkValidation()$$ tt_onUnLoad:: stopValidationChecks()$$ textCase:: lower$$ type:: password]
 

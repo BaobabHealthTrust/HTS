@@ -7,3 +7,4 @@ public/touchscreentoolkit
 app.js
 public/config/*.json
 db/*.json
+setup.json

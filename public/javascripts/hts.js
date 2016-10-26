@@ -164,6 +164,23 @@ function calculateAge() {
 
 }
 
+function monthDiff(first,last) {
+
+    var d1 = new Date(first);
+
+    var d2 = new Date(last);
+
+    var months;
+
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+
+    months -= d1.getMonth() + 1;
+
+    months += d2.getMonth();
+
+    return months <= 0 ? 0 : months;
+}
+
 
 function getAjaxRequest(url, callback, optionalControl) {
 
@@ -1057,7 +1074,7 @@ function setAjaxUrl(pos) {
 
                 /*First Kit always With description of First Test*/
 
-                __$('fp_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('fp_item_name1').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test")+'&item_name=');
 
             }
@@ -1068,7 +1085,7 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_lot_number1")) {
 
-                __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -1081,7 +1098,7 @@ function setAjaxUrl(pos) {
 
                  var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
 
-                __$('fp_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('fp_item_name2').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&exceptions=" + exceptions +"&description="+encodeURIComponent("Second Test")+'&item_name=');
 
             }
@@ -1094,7 +1111,7 @@ function setAjaxUrl(pos) {
 
                 var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
 
-                __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&exceptions=" + exceptions + "&batch=");
 
 
@@ -1108,7 +1125,7 @@ function setAjaxUrl(pos) {
             if (__$("im_item_name1")) {
 
 
-                __$('im_item_name1').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('im_item_name1').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test") +'&item_name=');
 
             }
@@ -1119,7 +1136,7 @@ function setAjaxUrl(pos) {
 
             if (__$("im_lot_number1")) {
 
-                __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&batch=");
 
@@ -1133,7 +1150,7 @@ function setAjaxUrl(pos) {
 
                  var exceptions = encodeURIComponent('["' + __$("im_item_name1").value + '"]');
 
-                __$('im_item_name2').setAttribute('ajaxURL', '/stock_items?category=' + __$('touchscreenInput' +
+                __$('im_item_name2').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
                     tstCurrentPage).value.trim()  + "&exceptions=" + exceptions +'&item_name=');
 
             }
@@ -1144,7 +1161,7 @@ function setAjaxUrl(pos) {
 
             if (__$("im_lot_number2")) {
 
-                __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                     tstCurrentPage).value.trim() + "&batch=");
 
@@ -1187,7 +1204,7 @@ function saveConsumption(dispatch_id, target_id) {
         }
     }
 
-    ajaxPostRequest("/save_item", data, function (result) {
+    ajaxPostRequest("/stock/save_item", data, function (result) {
 
         var json = JSON.parse(result);
 
@@ -1361,7 +1378,7 @@ function recommendedTimmerForLabels(labels){
 
         console.log(i);
 
-        getAjaxRequest("/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
+        getAjaxRequest("/stock/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
 
                 var label_data = JSON.parse(data);
 
@@ -2134,7 +2151,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 function loadSerialTest(testTarget, testTimeTarget, label) {
 
-    var url = "/get_pack_size/"+ encodeURIComponent(label);
+    var url = "/stock/get_pack_size/"+ encodeURIComponent(label);
 
     getAjaxRequest(url, function(data) {
 
@@ -2540,7 +2557,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
 
-                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -2580,7 +2597,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -2600,7 +2617,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -2675,7 +2692,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                     result = "New Positive";
 
-                    if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+                    if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
 
                         window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -2728,7 +2745,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if(ageGroup == "0-11 months" || parseInt(getAge(window.parent.dashboard.data.data.birthdate)[0]) <= 2){
+                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
 
                     window.parent.dashboard.showMsg("Take DBS sample", "");
 
@@ -5327,7 +5344,7 @@ function setTestKits(){
 
     for (var i = 0 ; i < descriptions.length ; i++){
 
-         getAjaxRequest("/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+         getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
 
                 var kit_data = JSON.parse(data);
 
@@ -5376,7 +5393,7 @@ function setTestKitsProfiency(){
 
     for (var i = 0 ; i < descriptions.length ; i++){
 
-         getAjaxRequest("/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+         getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
 
                 var kit_data = JSON.parse(data);
 
@@ -6187,7 +6204,7 @@ function recommendedTimmerForLabelsProficiency(labels){
 
         console.log(i);
 
-        getAjaxRequest("/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
+        getAjaxRequest("/stock/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
 
                 var label_data = JSON.parse(data);
 
