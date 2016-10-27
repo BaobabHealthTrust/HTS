@@ -392,9 +392,9 @@ var quality = ({
                 field_type: "select",
                 id: "data.dts_name",
                 tt_pageStyleClass: "NoKeyboard",
-                ajaxURL : "/stock_items?category=Dts&description=Quality Control&item_name=",
+                ajaxURL : "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
+                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
                                " __$('data.dts_lot_number').setAttribute('condition',true)}"
 
             },
@@ -410,9 +410,9 @@ var quality = ({
                 field_type: "select",
                 id: "data.test_kit_name",
                 tt_pageStyleClass: "NoKeyboard",
-                ajaxURL : '/stock_items?category=Test Kits&item_name=',
+                ajaxURL : '/stock/stock_items?category=Test Kits&item_name=',
                 tt_onUnload : "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){"+
-                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+kit_name+'&batch=');"+
+                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+kit_name+'&batch=');"+
                                "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
             },
             "Teskit Lot Number": {
@@ -425,8 +425,7 @@ var quality = ({
                 field_type: "hidden",
                 id: "data.test_kit_expiry_date"
 
-            }
-            ,
+            },
             "Control line seen": {
                 field_type: "select",
                 id: "data.control_line_seen",
@@ -617,7 +616,7 @@ var quality = ({
 
         document.head.appendChild(script);
 
-        quality.loadQualityTests("/relocation_facility_list", div0_1_0_0);
+        quality.loadQualityTests("/quality_control/quality_control_test_approval/", div0_1_0_0);
 
     },
     loadQualityTests: function(path,target){
@@ -653,7 +652,7 @@ var quality = ({
 
             table.appendChild(tr);
 
-            var fields = [" ", "Date of QC test", "DTS type", "DTS lot number", "Test kit name", "Test kit lot #", "Result", "Outcome", "Interpretation", "Approve", "Disapprove"];
+            var fields = [" ", "Date of QC test", "DTS type", "DTS lot number", "Test kit name", "Test kit lot #", "Control line seen", "Result", "Outcome", "Interpretation", "Approve", "Disapprove"];
             var colSizes = ["20px", "18%", "18%", "18%", "18%", "18%", "18%", "80px", "80px", "80px", "80px",
                 "180px"];
 
@@ -670,169 +669,83 @@ var quality = ({
 
             }
 
-            for(var i = 0; i < data.length ; i++){
+            for(var i = 0 ; i < data.length ; i++ ){
 
                 var tr = document.createElement("tr");
 
                 table.appendChild(tr);
 
-
                 var td = document.createElement("td");
 
+                td.innerHTML = i + 1;
+
                 tr.appendChild(td);
-
-                td.innerHTML = i+1;
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].date;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].date
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].dts_type;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].name
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].dts_lot_number;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].number
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].test_kit_name;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].name
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].test_kit_lot_number;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].number
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].control_line_seen;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].result
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].quality_test_result;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].outcome
 
 
                 var td = document.createElement("td");
 
+                td.innerHTML = data[i].outcome;
+
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                td.innerHTML = data[i].interpretation
-
+                
 
                 var td = document.createElement("td");
 
-                tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                var editBtn = document.createElement("button");
-
-                td.appendChild(editBtn);
-
-                editBtn.className = "blue";
-
-                editBtn.innerHTML = "Approve";
-
-                editBtn.style.width = "100%";
-
-                editBtn.style.minWidth = "100px";
-
-                editBtn.style.minHeight = "30px";
-
-                editBtn.style.fontWeight = "normal"
-
-                editBtn.setAttribute("onclick","window.parent.stock.editFacitity('"+JSON.stringify(data[i])+"')");
-
-
-                var td = document.createElement("td");
+                td.innerHTML = data[i].interpretation;
 
                 tr.appendChild(td);
-
-                td.style.padding = "0.1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                var delteBtn = document.createElement("button");
-
-                td.appendChild(delteBtn);
-
-                delteBtn.className = "red";
-
-                delteBtn.innerHTML = "Disapprove";
-
-                delteBtn.style.width = "90%";
-
-                delteBtn.style.minWidth = "100px";
-
-                delteBtn.style.minHeight = "30px";
-
-                delteBtn.style.fontWeight = "normal";
-
-                delteBtn.setAttribute("onclick","window.parent.stock.deleteFacitity('"+data[i].id+"')");
-
 
 
             }
-
 
         })
 
