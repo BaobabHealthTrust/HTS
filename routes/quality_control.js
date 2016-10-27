@@ -207,7 +207,6 @@ module.exports = function (router) {
 
 
 	});
-
     router.route("/proficiency_test/").post(function(req,res){
 
         var data = req.body;
@@ -218,6 +217,31 @@ module.exports = function (router) {
 
         }
 
+    });
+
+    router.route('/quality_control_test_approval/').get(function (data, res){
+
+        var sql = "SELECT quality_assurance.qc_test_date AS date, quality_assurance.sample_name AS dts_type, quality_assurance.sample_name_lot_number "+
+                   "AS dts_lot_number, quality_assurance.test_kit_name AS test_kit_name, quality_assurance.test_kit_lot_number AS test_kit_lot_number, "+
+                   "quality_assurance.control_line_seen AS control_line_seen, quality_assurance.quality_test_result, quality_assurance.outcome AS outcome, "+
+                   "quality_assurance.interpretation AS interpretation, quality_assurance.voided AS voided from htc_quality_control.quality_assurance WHERE quality_assurance.voided = 0;";
+        results = []
+
+            queryRawStock(sql, function (data) {
+
+                for (var i = 0; i < data[0].length; i++) {
+
+                    if (!data[0][i])
+                        continue;
+
+                    results.push(data[0][i])
+
+
+                }
+
+                res.send(results);
+
+            })
     });
 
     return router;
