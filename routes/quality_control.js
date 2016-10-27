@@ -134,6 +134,53 @@ function saveQualityTest(data, res){
 
 }
 
+function  saveProficiency(data,res){
+
+    var date_created = new Date();
+
+    console.log(date_created.format());
+
+
+    var insert_proficiency = "INSERT INTO proficiency_test(proficiency_test_date,phone_number,tester_first_name,testers_last_name,"+
+                                 "pt_panel_lot_number,test_kit_1_name,test_kit_1_lot_number,test_kit_1_expiry,test_kit_2_name, test_kit_2_lot_number,"+
+                                 "test_kit_2_expiry, created_by, date_created) "+
+                                 "VALUES('"+ data.proficiency_testing_date +"','"+data.phone_number+"','"+data.first_name+"','"+data.last_name+"','"+
+                                 data.pt_panel_lot_number+"','"+data.test1_kit_name+"','"+data.lot_number1+"','"+data.test1_expiry_date+"','"+data.test2_kit_name+"','"+
+                                 data.lot_number2+"','"+data.test2_expiry_date+"','"+data.userId +"',cast('"+date_created.format('YYYY-mm-dd')+"' as datetime))"
+
+    console.log(insert_proficiency);
+
+     queryRawQualityControl(insert_proficiency, function (batch) {
+
+                console.log("Insert Proficiency test Record");
+    });
+
+     var get_pt_record = "SELECT pid FROM proficiency_test WHERE proficiency_test_date = '"+ data.proficiency_testing_date + "' AND pt_panel_lot_number = '"+
+                          data.pt_panel_lot_number + "' AND test_kit_1_name = '" + data.test1_kit_name + "' AND test_kit_1_lot_number = '"+ data.lot_number1
+                          +"' AND test_kit_1_expiry = '"+data.test1_expiry_date +"' AND test_kit_2_name = '"+ data.test2_kit_name +"' AND test_kit_2_lot_number = '" 
+                          +  data.lot_number2 + "' AND test_kit_2_expiry = '"+ data.test2_expiry_date + "' AND date_created = CAST('"+date_created.format('YYYY-mm-dd')
+                          +"' as datetime) ORDER BY pid DESC LIMIT 1";
+
+   for(var i = 0 ; i < 5 ; i++){
+
+            var result_query = "INSERT INTO proficiency_test_result (pid,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
+                               ",im_pass_test_1,im_pass_test_1_time,im_pass_test_2,im_pass_test_2_time,final_result) "+
+                               "VALUES(("+get_pt_record+"),'"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
+                               +"','"+eval('data.im_1_'+i)+"','"+eval('data.im_1_'+i+'_time')+"','"+eval('data.im_2_'+i)+"','"+eval('data.im_2_'+i+'_time')+"','"+eval('data.final_result_'+i)+"')"
+
+
+              queryRawQualityControl(result_query, function (batch) {
+
+                            console.log("Insert Proficiency test Result");
+              });
+
+   }
+
+    res.status(200).json({message: "Proficiency test Done!"});
+
+
+}
+
 module.exports = function (router) {
 
     router.route("/")
@@ -160,6 +207,18 @@ module.exports = function (router) {
 
 
 	});
+
+    router.route("/proficiency_test/").post(function(req,res){
+
+        var data = req.body;
+
+        if(data.datatype == "proficiency_test"){
+
+            saveProficiency(data,res);
+
+        }
+
+    });
 
     return router;
 

@@ -1,5 +1,7 @@
 var timers = {}
 
+var repeat_test_panel = {}
+
 function loadPTControl(test){
 
     var control = __$("inputFrame"+tstCurrentPage);
@@ -11,6 +13,8 @@ function loadPTControl(test){
     //control.style.overflowX = "scroll";
 
     var table = document.createElement("table");
+
+    table.id="pt_table"
 
     control.appendChild(table);
 
@@ -210,7 +214,7 @@ function loadPTControl(test){
 
         button.innerHTML = "R";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','+','timer_1_"+ i +"','reactive_1_"+i+"','non_reactive_1_"+i+"')");
+        button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','+','timer_1_"+ i +"','reactive_1_"+i+"','non_reactive_1_"+i+"')");
 
         td.appendChild(button);
 
@@ -231,7 +235,7 @@ function loadPTControl(test){
 
         button.id = "non_reactive_1_"+i;
 
-         button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','+','timer_1_"+ i +"','non_reactive_1_"+i+"','reactive_1_"+i+"')");
+         button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','-','timer_1_"+ i +"','non_reactive_1_"+i+"','reactive_1_"+i+"')");
 
         button.innerHTML = "NR";
 
@@ -353,6 +357,339 @@ function loadPTControl(test){
 
 }
 
+
+function loadRepeatPTControl(test){
+
+    var control = __$("inputFrame"+tstCurrentPage);
+
+    control.innerHTML = "";
+
+    //control.style.overflowY = "scroll";
+
+    //control.style.overflowX = "scroll";
+
+    var table = document.createElement("table");
+
+
+
+    control.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    table.style.borderCollapse = "collapse";
+
+    table.style.width = "95%";
+
+    table.style.margin = "auto";
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Panel #";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "1px solid black";
+
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Start Timer 1";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "1px solid black";
+
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Test 1 Timer";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "1px solid black";
+
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Test 1 Result";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "1px solid black";
+
+    th.colSpan = "2"
+
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Start Timer 2";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "1px solid black";
+
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Test 2 Timer";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "1px solid black";
+
+
+    var th = document.createElement("th");
+
+    tr.appendChild(th);
+
+    th.innerHTML = "Test 2 Result ";
+
+    th.style.padding = "1.2em";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.colSpan ="2"
+
+
+    var panel = Object.keys(repeat_test_panel);
+
+    panel.sort();
+
+
+    for(var i = 0 ; i < panel.length ; i++){
+
+        if(repeat_test_panel[panel[i]] == false){
+
+            continue;
+
+        }
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.innerHTML = parseInt(panel[i]) + 1;
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.id = "im_button_start_1_"+i;
+
+        button.innerHTML = "Start Time 1"
+
+         button.setAttribute("onclick","startTimer('im_timer_1_"+ i +"','im_button_start_1_"+i+"')");
+
+        td.appendChild(button);
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.innerHTML = "00:00";
+
+        td.id ="im_timer_1_"+i;
+
+        td.style.padding = "1.2em";
+
+        td.style.fontWeight  ="bold";
+
+        td.style.fontSize = "1.5em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.id = "im_reactive_1_"+i;
+
+        button.innerHTML = "R";
+
+        button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','+','timer_1_"+ i +"','im_reactive_1_"+i+"','im_non_reactive_1_"+i+"')");
+
+        td.appendChild(button);
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.id = "im_non_reactive_1_"+i;
+
+         button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','-','im_timer_1_"+ i +"','im_non_reactive_1_"+i+"','im_reactive_1_"+i+"')");
+
+        button.innerHTML = "NR";
+
+        td.appendChild(button);
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.id = "im_button_start_2_"+i;
+
+        button.innerHTML = "Start Time 2";
+
+        button.setAttribute("onclick","startTimer('im_timer_2_"+ i +"','im_button_start_2_"+i+"')");
+
+        td.appendChild(button);
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.innerHTML = "00:00";
+
+        td.style.fontWeight  ="bold";
+
+        td.style.fontSize = "1.5em";
+
+        td.id ="im_timer_2_"+i;
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.id = "im_reactive_2_"+i;
+
+        button.innerHTML = "R";
+
+        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','+','im_timer_2_"+ i +"','im_reactive_2_"+i+"','im_non_reactive_2_"+i+"')");
+
+        td.appendChild(button);
+
+
+        var td = document.createElement("td");
+
+        tr.appendChild(td);
+
+        td.style.padding = "1.2em";
+
+        td.style.textAlign = "center";
+
+        td.style.borderBottom = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.id = "im_non_reactive_2_"+i;
+
+        button.innerHTML = "NR";
+
+        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','-','im_timer_2_"+ i +"','im_non_reactive_2_"+i+"','im_reactive_2_"+i+"')");
+
+        td.appendChild(button);
+
+
+
+    }
+
+
+}
+
+
 function startTimer(id, button){
 
     __$(button).className = "gray";
@@ -376,8 +713,14 @@ function startTimer(id, button){
 
                 }
 
-                __$(id).innerHTML = "<font style= 'color:#7ea8c4; font-weight: bold; font-size : 1.0em'>" +
+                if(__$(id) != null){
+
+                    __$(id).innerHTML = "<font style= 'color:#2e5d91; font-weight: bold; font-size : 1.0em'>" +
                                 padZeros(timers[id].minutes,2) +":"+padZeros(timers[id].seconds,2) + "</font>"
+
+                }
+
+                
 
         }else{
 
@@ -393,9 +736,14 @@ function startTimer(id, button){
 
 function updateResult(test,result,timer, buttonActivate,buttonDeactivate) {
 
+    console.log(test);
+
     var resultField = __$("data."+test);
 
     resultField.value = result;
+
+    if(timers[timer])
+         __$("data."+test +"_time").value = timers[timer].minutes +":"+timers[timer].seconds;
 
     if(timer && timers[timer])
         timers[timer].progress = false;
@@ -417,13 +765,42 @@ function setForRepeate(panel,button){
 
         rptButton.className = "blue";
 
+         repeat_test_panel[panel] = false;
+
     }
     else{
 
         rptButton.className = "green";
 
+        repeat_test_panel[panel] = true;
+
     }
 
+    console.log(repeat_test_panel);
+
+
+}
+
+function checkRepeatFields(){
+
+        var condition = false;
+
+        var repeat_keys = Object.keys(repeat_test_panel);
+
+        for(var i = 0 ; i < repeat_keys.length ; i++){
+
+
+            if(repeat_test_panel[repeat_keys[i]]){
+
+                 condition = true;
+
+                 return condition;
+
+            }
+
+        }
+
+         return condition;
 
 }
 
