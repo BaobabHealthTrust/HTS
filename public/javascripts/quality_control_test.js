@@ -798,9 +798,11 @@ var quality = ({
 
                 button.innerHTML = "Approve";
 
+                button.id = "approve_" + i
+
                 button.className = "blue";
 
-                button.setAttribute("onclick","alert('Entry Approved')");
+                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'approve_"+i+"','disapprove_"+i+"')");
 
                 td.style.padding = "0.1em";
 
@@ -817,9 +819,11 @@ var quality = ({
 
                 button.innerHTML = "Disapprove";
 
-                button.className = "red";
+                button.className = "blue";
 
-                button.setAttribute("onclick","alert('Entry disapproved')");
+                button.id = "disapprove_" + i
+
+                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'disapprove_"+i+"','approve_"+i+"')");
 
                 td.style.padding = "0.1em";
 
@@ -833,6 +837,19 @@ var quality = ({
             }
 
         })
+
+
+    },
+
+     updateQCResult: function(test_id, buttonActivate,buttonDeactivate) {
+
+        alert(test_id);
+
+        if(buttonDeactivate)
+            quality.$(buttonDeactivate).className = "blue";
+
+        if(buttonActivate)
+            quality.$(buttonActivate).className = "green";
 
 
     },
