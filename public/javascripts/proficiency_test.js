@@ -405,6 +405,12 @@ padZeros: function (number, positions) {
                 condition : "checkRepeatFields()",
                 tt_pageStyleClass: "NoKeyboard"
 
+            },
+            "Proficiency Final Result":{
+                field_type:"text",
+                tt_onLoad : "loadFinalResultControl()",
+                id: "data.final_result",
+                tt_pageStyleClass: "NoKeyboard"
             }
 
 
@@ -414,21 +420,24 @@ padZeros: function (number, positions) {
 
             var test1 = {
                 field_type: "hidden",
-                id: "data.test_1_"+i
+                id: "data.test_1_"+i,
+                 value: ""
             }
 
             fields["Test 1 " + i ] = test1;
 
             var test1Time = {
                 field_type: "hidden",
-                id: "data.test_1_" +i + "_time"
+                id: "data.test_1_" +i + "_time",
+                 value: ""
             }
 
             fields["Test 1 Time " + i ] = test1Time;
 
             var test2 = {
                 field_type: "hidden",
-                id: "data.test_2_"+i
+                id: "data.test_2_"+i,
+                 value: ""
             }
 
             fields["Test 2 " + i ] = test2;
@@ -436,21 +445,24 @@ padZeros: function (number, positions) {
 
             var test2Time = {
                 field_type: "hidden",
-                id: "data.test_2_" + i +"_time"
+                id: "data.test_2_" + i +"_time",
+                 value: ""
             }
 
             fields["Test 2 Time " + i ] = test2Time;
 
             var repeat_test1 = {
                 field_type: "hidden",
-                id: "data.im_1_"+i
+                id: "data.im_1_"+i,
+                 value: ""
             }
 
             fields["Immediate Repeat Test 1 " + i ] = repeat_test1;
 
             var im1Time = {
                 field_type: "hidden",
-                id: "data.im_1_"+ i +"_time"
+                id: "data.im_1_"+ i +"_time",
+                 value: ""
             }
 
             fields["IM 1 Time " + i ] = im1Time;
@@ -458,7 +470,8 @@ padZeros: function (number, positions) {
 
             var repeat_test2 = {
                 field_type: "hidden",
-                id: "data.im_2_"+i
+                id: "data.im_2_"+i,
+                 value: ""
             }
 
             fields["Immediate Repeat Test 2 " + i ] = repeat_test2;
@@ -466,10 +479,19 @@ padZeros: function (number, positions) {
 
             var im2Time = {
                 field_type: "hidden",
-                id: "data.im_2_"+i +"_time"
+                id: "data.im_2_"+i +"_time",
+                 value: ""
             }
 
             fields["IM 2 Time " + i ] = im2Time;
+
+            var final_result = {
+                        field_type:"hidden",
+                        id: "data.final_result_"+i,
+                        value: ""
+            }
+
+            fields["Final Result "+i ] = final_result;
 
         }
         proficiency.buildFields(fields, table);
