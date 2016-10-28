@@ -821,3 +821,470 @@ function setLotExpiry(expiry){
                 __$(expiry).value = (new Date(date_string)).format("YYYY-mm-dd");
 
 }
+
+function loadFinalResultControl(){
+
+    var control = __$("inputFrame"+tstCurrentPage);
+
+    control.innerHTML = "";
+
+    control.style.overflowY = "scroll";
+
+    //control.style.overflowX = "scroll";
+
+    var table = document.createElement("table");
+
+    table.style.borderCollapse = "collapse";
+
+    table.style.width = "95%";
+
+    table.style.margin = "auto";
+
+    table.style.marginTop = "15px";
+
+    control.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "HTS Provider";
+
+    th.colSpan = "10";
+
+    tr.appendChild(th);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Test 1";
+
+    th.colSpan = "4";
+
+    tr.appendChild(th);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Test 2";
+
+
+    th.colSpan = "4";
+
+    tr.appendChild(th);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("th");
+
+    td.style.padding = "0.5em";
+
+    td.rowSpan = "5";
+
+    td.style.border = "1px solid black";
+
+    // verticalText("Sample No", td);
+
+    td.style.width = "20px";
+
+    td.innerHTML = "Sample No."
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "<b>Kit Name : </b>"  + __$('data.test1_kit_name').value ? __$('data.test1_kit_name').value : "" ;
+
+    td.style.padding = "0.5em";
+
+    td.style.border = "1px solid black"
+
+    td.colSpan = "4";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML =  "<b>Kit Name : </b>"  + __$('data.test2_kit_name').value ? __$('data.test2_kit_name').value : "" ;
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "4";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+    
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "Final Result";
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "2";
+
+    td.rowSpan = "5";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    td.innerHTML =  "<b>Lot Number : </b>"  + __$('data.lot_number1').value ? __$('data.lot_number1').value : "" ;
+
+    td.style.padding = "0.5em";
+
+    td.style.border = "1px solid black"
+
+    td.colSpan = "4";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "<b>Lot Number : </b>"  + __$('data.lot_number2').value ? __$('data.lot_number2').value : "" ;
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "4";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "<b>Expiry Date : </b>"  + __$('data.test1_expiry_date').value ? (new Date( __$('data.test1_expiry_date').value)).format() : "" ;
+
+    td.style.padding = "0.5em";
+
+    td.style.border = "1px solid black"
+
+    td.colSpan = "4";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "<b>Expiry Date : </b>"  + __$('data.test2_expiry_date').value ? (new Date(__$('data.test2_expiry_date').value)).format() : "" ;
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "4";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "First Pass";
+
+    td.style.padding = "0.5em";
+
+    td.style.border = "1px solid black"
+
+    td.colSpan = "4";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "Immediate Repeat";
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "4";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "Test 1";
+
+    td.style.padding = "0.5em";
+
+    td.style.border = "1px solid black"
+
+    td.colSpan = "2";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "Test 2";
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "2";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "Test 1";
+
+    td.style.padding = "0.5em";
+
+    td.style.border = "1px solid black"
+
+    td.colSpan = "2";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("td");
+
+    td.innerHTML = "Test 2";
+
+    td.style.padding = "0.5em";
+
+    td.colSpan = "2";
+
+    td.style.border = "1px solid black"
+
+    tr.appendChild(td);
+
+
+    for(var i = 0 ; i < 5 ; i++){
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr)
+
+        var td = document.createElement("th");
+
+        td.innerHTML = i + 1;
+
+        td.style.padding = "0.5em";
+
+        td.style.border = "1px solid black"
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.test_1_'+ i).value == "+"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.innerHTML = "-";
+
+        td.innerHTML = __$('data.test_1_'+ i).value == "-"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+
+        td.style.padding = "0.5em";
+
+         td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.test_2_'+ i).value == "+"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+
+        td.style.padding = "0.5em";
+
+         td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.test_2_'+ i).value == "-"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+
+        td.style.padding = "0.5em";
+
+         td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_1_'+ i).value == "+"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_1_'+ i).value == "-"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_2_'+ i).value == "+"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_2_'+ i).value == "-"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+
+        td.style.padding = "0.5em";
+
+         td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("th");
+
+        td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        var button = document.createElement("button");
+
+        button.innerHTML = "+";
+
+        button.className = "blue";
+
+        button.id = "result_r_"+i;
+
+        button.setAttribute("onclick","updateFinalResult("+i+",'+', 'result_r_', 'result_nr_')");
+
+        td.appendChild(button);
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black";
+
+        var button = document.createElement("button");
+
+        button.className = "blue";
+
+        button.innerHTML = "-";
+
+        button.id = "result_nr_"+i;
+
+        button.setAttribute("onclick","updateFinalResult("+i+",'-', 'result_nr_', 'result_r_')");
+
+        td.appendChild(button);
+
+        tr.appendChild(td);
+
+    }
+
+
+
+
+}
+
+function updateFinalResult(panel,result, activate, deactivate){
+
+    __$('data.final_result_'+panel).value = result;
+
+    if(activate){
+        __$(activate + panel).className = "green";
+    }
+
+    if(deactivate){
+        __$(deactivate + panel).className = "blue";
+    }
+
+}
