@@ -656,6 +656,7 @@ var quality = ({
             var colSizes = ["20px", "18%", "18%", "18%", "18%", "18%", "18%", "80px", "80px", "80px", "80px",
                 "180px"];
 
+
             for (var i = 0; i < fields.length; i++) {
 
                 var th = document.createElement("th");
@@ -667,17 +668,27 @@ var quality = ({
 
                 tr.appendChild(th);
 
+
             }
 
             for(var i = 0 ; i < data.length ; i++ ){
 
                 var tr = document.createElement("tr");
 
+                tr.style.padding = "0.1em";
+
+                tr.style.border = "1px solid #e3e3e2"
+
                 table.appendChild(tr);
+
 
                 var td = document.createElement("td");
 
                 td.innerHTML = i + 1;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
@@ -686,12 +697,20 @@ var quality = ({
 
                 td.innerHTML = data[i].date;
 
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
                 tr.appendChild(td);
 
 
                 var td = document.createElement("td");
 
                 td.innerHTML = data[i].dts_type;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
@@ -700,12 +719,20 @@ var quality = ({
 
                 td.innerHTML = data[i].dts_lot_number;
 
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
                 tr.appendChild(td);
 
 
                 var td = document.createElement("td");
 
                 td.innerHTML = data[i].test_kit_name;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
@@ -714,12 +741,20 @@ var quality = ({
 
                 td.innerHTML = data[i].test_kit_lot_number;
 
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
                 tr.appendChild(td);
 
 
                 var td = document.createElement("td");
 
                 td.innerHTML = data[i].control_line_seen;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
@@ -728,6 +763,10 @@ var quality = ({
 
                 td.innerHTML = data[i].quality_test_result;
 
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
                 tr.appendChild(td);
 
 
@@ -735,12 +774,58 @@ var quality = ({
 
                 td.innerHTML = data[i].outcome;
 
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
                 tr.appendChild(td);
                 
 
                 var td = document.createElement("td");
 
                 td.innerHTML = data[i].interpretation;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                var button = document.createElement("button");
+
+                button.innerHTML = "Approve";
+
+                button.className = "blue";
+
+                button.setAttribute("onclick","alert('Entry Approved')");
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.appendChild(button)
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                var button = document.createElement("button");
+
+                button.innerHTML = "Disapprove";
+
+                button.className = "red";
+
+                button.setAttribute("onclick","alert('Entry disapproved')");
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                td.appendChild(button)
 
                 tr.appendChild(td);
 
