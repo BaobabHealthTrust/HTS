@@ -331,9 +331,9 @@ padZeros: function (number, positions) {
                 allowFreeText: true,
                 ajaxURL: user.settings.lastNamesPath
             },
-            "DTS Lot Number": {
+            "PT Panel Lot Number": {
                 field_type: "select",
-                id: "data.dts_lot_number",
+                id: "data.pt_panel_lot_number",
                 condition : false
                 
             },
@@ -370,7 +370,7 @@ padZeros: function (number, positions) {
             ,
             "Test 2 Kit Name" :{
                 field_type : "select",
-                id: "data.test1_kit_name",
+                id: "data.test2_kit_name",
                 ajaxURL : "/stock/stock_items?category=Test Kits&item_name=",
                 tt_pageStyleClass: "NoKeyboard",
                  tt_onUnload: "setLotNumber('data.lot_number2',__$('touchscreenInput' + tstCurrentPage).value)"
@@ -380,7 +380,7 @@ padZeros: function (number, positions) {
                 field_type : "select",
                 id: "data.lot_number2",
                 tt_pageStyleClass: "NoKeyboard",
-               tt_onUnload: "setLotExpiry('data.test2_expiry_date');if(true){var limit = __$('touchscreenInput' + " +
+                tt_onUnload: "setLotExpiry('data.test2_expiry_date');if(true){var limit = __$('touchscreenInput' + " +
                     "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                     "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
 
@@ -391,10 +391,18 @@ padZeros: function (number, positions) {
 
             }
             ,
-            "Proficiency Testing" :{
+            "Proficiency Testing First Pass" :{
                 field_type : "text",
                 tt_onLoad: "loadPTControl('test')",
-                id: "data.proficiency_test",
+                id: "data.first_pass",
+                tt_pageStyleClass: "NoKeyboard"
+
+            },
+            "Proficiency Testing Immediate Repeat" :{
+                field_type: "text",
+                tt_onLoad: "loadRepeatPTControl('im')",
+                id: "data.immediate_repeat",
+                condition : "checkRepeatFields()",
                 tt_pageStyleClass: "NoKeyboard"
 
             }
@@ -411,12 +419,27 @@ padZeros: function (number, positions) {
 
             fields["Test 1 " + i ] = test1;
 
-             var test2 = {
+            var test1Time = {
+                field_type: "hidden",
+                id: "data.test_1_" +i + "_time"
+            }
+
+            fields["Test 1 Time " + i ] = test1Time;
+
+            var test2 = {
                 field_type: "hidden",
                 id: "data.test_2_"+i
             }
 
             fields["Test 2 " + i ] = test2;
+
+
+            var test2Time = {
+                field_type: "hidden",
+                id: "data.test_2_" + i +"_time"
+            }
+
+            fields["Test 2 Time " + i ] = test2Time;
 
             var repeat_test1 = {
                 field_type: "hidden",
@@ -425,6 +448,13 @@ padZeros: function (number, positions) {
 
             fields["Immediate Repeat Test 1 " + i ] = repeat_test1;
 
+            var im1Time = {
+                field_type: "hidden",
+                id: "data.im_1_"+ i +"_time"
+            }
+
+            fields["IM 1 Time " + i ] = im1Time;
+
 
             var repeat_test2 = {
                 field_type: "hidden",
@@ -432,6 +462,14 @@ padZeros: function (number, positions) {
             }
 
             fields["Immediate Repeat Test 2 " + i ] = repeat_test2;
+
+
+            var im2Time = {
+                field_type: "hidden",
+                id: "data.im_2_"+i +"_time"
+            }
+
+            fields["IM 2 Time " + i ] = im2Time;
 
         }
         proficiency.buildFields(fields, table);
@@ -863,6 +901,68 @@ showMsg: function (msg, topic, nextURL) {
         }
 
     },
+    ajaxPostRequest: function (url, data, callback) {
+
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onreadystatechange = function () {
+
+            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
+
+                if (httpRequest.responseText.trim().length > 0) {
+                    var result = httpRequest.responseText;
+
+                    callback(result);
+
+                } else {
+
+                    callback(undefined);
+
+                }
+
+            }
+
+        };
+        try {
+            httpRequest.open("POST", url, true);
+            httpRequest.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+            httpRequest.send(JSON.stringify(data));
+        } catch (e) {
+        }
+
+    },
+
+    ajaxRequest: function (url, callback) {
+
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onreadystatechange = function () {
+
+            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                httpRequest.status == 304)) {
+
+                if (httpRequest.responseText.trim().length > 0) {
+                    var result = httpRequest.responseText;
+
+                    callback(result);
+
+                } else {
+
+                    callback(undefined);
+
+                }
+
+            }
+
+        };
+        try {
+            httpRequest.open("GET", url, true);
+            httpRequest.send(null);
+        } catch (e) {
+        }
+
+    },
 
     submitData: function (data) {
 
@@ -878,9 +978,9 @@ showMsg: function (msg, topic, nextURL) {
 
         if(data.data.datatype == "proficiency_test"){
 
-                proficiency.ajaxPostRequest("/quality_control/proficiency_test/", data.data, function (res) {
 
-                    console.log(res);
+
+                proficiency.ajaxPostRequest("/quality_control/proficiency_test/", data.data, function (res) {
 
                     var json = JSON.parse(res);
 
