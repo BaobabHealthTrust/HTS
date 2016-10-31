@@ -19,6 +19,58 @@
 -- Table structure for table `category`
 --
 
+
+DROP TABLE IF EXISTS `proficiency_test`;
+
+CREATE TABLE `proficiency_test` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `proficiency_test_date` varchar(255) NOT NULL,
+  `hts_provider_id` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `pt_panel_lot_number` varchar(255) NOT NULL,
+  `dts_pack` varchar(500) NOT NULL,
+  `test_kit_1_name` varchar(255) NOT NULL,
+  `test_kit_1_lot_number` varchar(255) NOT NULL,
+  `test_kit_1_expiry` varchar(255) NOT NULL,
+  `test_kit_2_name` varchar(255) NOT NULL,
+  `test_kit_2_lot_number` varchar(255) NOT NULL,
+  `test_kit_2_expiry` varchar(255) NOT NULL,
+  `created_by` varchar(100) NOT NULL,
+  `voided` tinyint(1) NOT NULL,
+  `voided_reason` varchar(255) NOT NULL,
+  `voided_date` varchar(255) NOT NULL,
+  `voided_by` varchar(255) NOT NULL,
+  `approved` varchar(3) NOT NULL DEFAULT '',
+  `approved_by` varchar(255) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `proficiency_test_result`;
+
+CREATE TABLE `proficiency_test_result` (
+  `result_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `first_pass_test_1` char(1) NOT NULL,
+  `first_pass_test_1_time` varchar(10) NOT NULL,
+  `first_pass_test_2` char(1) NOT NULL,
+  `first_pass_test_2_time` char(10) NOT NULL,
+  `im_pass_test_1` char(1) NOT NULL,
+  `im_pass_test_1_time` char(10) NOT NULL,
+  `im_pass_test_2` char(1) NOT NULL,
+  `im_pass_test_2_time` char(10) NOT NULL,
+  `final_result` char(1) NOT NULL,
+  `official_result` varchar(255) NOT NULL,
+  PRIMARY KEY (`result_id`),
+  KEY `pid` (`pid`),
+  CONSTRAINT `proficiency_test_result_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `proficiency_test` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `quality_assurance`;
 
 CREATE TABLE `quality_assurance` (

@@ -16,7 +16,7 @@ Q.1.6. Year of Birth [pos::5 $$ id :: birthyear $$ field_type :: number $$ tt_pa
 
 Q.1.7. Age Estimate [pos :: 6 $$ id :: age_estimate $$ field_type :: number $$ condition :: __$('birthyear').value.trim().toLowerCase() == "unknown" $$  tt_pageStyleClass::Numeric NumbersOnly $$ tt_onUnLoad :: setEstimatedAgeValue()]
 
-Q.1.8. Month of Birth [pos :: 7 $$ id :: birthmonth $$ condition :: __$('birthyear').value.trim().toLowerCase() != "unknown" $$ ajaxURL ::/month $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText ::false]
+Q.1.8. Month of Birth [pos :: 7 $$ id :: birthmonth $$ condition :: __$('birthyear').value.trim().toLowerCase() != "unknown" $$ ajaxURL ::/stock/month $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText ::false]
 
 
 Q.1.9. Day of Birth [pos :: 8 $$ id :: birthday $$ condition :: __$('birthyear').value.trim().toLowerCase() != "unknown" && __$('birthmonth').value.trim().toLowerCase() != "unknown" $$ tt_onLoad :: monthDaysKeyPad() $$ tt_onUnLoad::setAgeValues()]
