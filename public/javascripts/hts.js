@@ -5339,6 +5339,11 @@ function isNotInfant(){
 
 function setTestKits(){
 
+    //Temporary Fix
+
+    window.parent.dashboard.setCookie('LastHIVTest',window.parent.dashboard.queryActiveObs("HTS PROGRAM",
+                                        (new Date()).format("YYYY-mm-dd"),"PRE TEST COUNSELLING","Last HIV test"));
+
     var descriptions = ["First Test", "Second Test"];
 
 
@@ -6555,6 +6560,12 @@ function setEstimatedAgeValue(){
     var currentYear = today.getFullYear();
 
     var estimateYear = parseInt(currentYear) - parseInt(ageEstimateValue);
+
+    if(estimate_field.value == 1){
+
+         __$('birthyear').value = estimateYear;
+
+    }
 
     var estimateBirthDate = estimateYear +"-06-01";
 
