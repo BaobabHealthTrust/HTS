@@ -22,11 +22,11 @@ O.1.4.5. Last Inconclusive
 
 Q.1.5. Estimate [pos:: 4$$ id:: estimate$$ condition:: false]
 
-Q.1.6. Time Since Last Test [pos:: 5$$ id:: time_since_last_test$$type:: hidden]
+Q.1.6. Time Since Last Test [pos :: 5 $$ id :: time_since_last_test $$ type :: hidden]
 
 Q.1.7. Duration in Days [pos:: 6$$ id:: duration_in_days$$type:: hidden]
 
-Q.1.8. Time Since Last Test Date [pos:: 7$$ id:: time_since_last_test_date$$type:: hidden]
+Q.1.8. Time Since Last Test Date [pos :: 7 $$ id :: time_since_last_test_date $$ type :: hidden $$ value :: 1900-01-01]
 
 Q.1.9. Duration Control [pos:: 8$$ id:: duration_ago$$ tt_onLoad:: showTimeSinceLastDate()$$ tt_pageStyleClass:: NoControls NoKeyboard $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ optional :: true $$ helpText :: Time Since Last Test Date]
 
