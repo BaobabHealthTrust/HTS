@@ -141,7 +141,7 @@ function  saveProficiency(data,res){
     console.log(date_created.format());
 
 
-    var insert_proficiency = "INSERT INTO proficiency_test(proficiency_test_date,phone_number,tester_first_name,testers_last_name,"+
+    var insert_proficiency = "INSERT INTO proficiency_test(proficiency_test_date,phone_number,first_name,last_name,"+
                                  "pt_panel_lot_number,test_kit_1_name,test_kit_1_lot_number,test_kit_1_expiry,test_kit_2_name, test_kit_2_lot_number,"+
                                  "test_kit_2_expiry, created_by, date_created) "+
                                  "VALUES('"+ data.proficiency_testing_date +"','"+data.phone_number+"','"+data.first_name+"','"+data.last_name+"','"+
@@ -242,6 +242,57 @@ module.exports = function (router) {
                 res.send(results);
 
             })
+    });
+
+    router.route('/proficiency_test_approval/').get(function(data, res){
+
+        var sql = "SELECT * FROM proficiency_test WHERE approved  =''";
+
+        results = [];
+
+         queryRawQualityControl(sql, function (data) {
+
+                for (var i = 0; i < data[0].length; i++) {
+
+                    if (!data[0][i])
+                        continue;
+
+                    results.push(data[0][i])
+
+
+                }
+
+                res.send(results);
+
+            })
+
+
+    });
+
+    router.route("/proficiency_test_result/:id").get(function(data, res){
+
+
+         var sql = "SELECT * FROM proficiency_test_result WHERE pid = '"+data.params.id+"' AND official_result =''";
+
+         results = [];
+
+         queryRawQualityControl(sql, function (data) {
+
+                for (var i = 0; i < data[0].length; i++) {
+
+                    if (!data[0][i])
+                        continue;
+
+                    results.push(data[0][i])
+
+
+                }
+
+                res.send(results);
+
+            })
+
+
     });
 
     return router;

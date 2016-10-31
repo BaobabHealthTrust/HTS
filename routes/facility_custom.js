@@ -169,6 +169,23 @@ module.exports = function (router) {
 
 	});
 
+    router.route("/month").get(function(req,res){
+
+        var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December","Unknown"];
+
+        var result = "";
+
+        for(var i = 0 ; i < monthList.length ; i++){
+
+            result = result + "<li>"+monthList[i]+"</li>"
+
+        }
+
+        res.send(result);
+
+    });
+
     return router;
 
 }
