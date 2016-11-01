@@ -1175,8 +1175,6 @@ function setAjaxUrl(pos) {
 
 function saveConsumption(dispatch_id, target_id) {
 
-    console.log(dispatch_id);
-
     var patient_id = getCookie("client_identifier");
 
     var consumption_type = "Normal use";
@@ -1254,6 +1252,22 @@ function evalCondition(pos) {
     var result = false;
 
     switch (pos) {
+
+        case -1:
+
+            if (window.parent.dashboard.subscription.timers &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0) {
+
+                result = false;
+
+            } else {
+
+                result = true;
+
+            }
+
+            break;
 
         case 0:
 
@@ -1374,8 +1388,6 @@ function recommendedTimmerForLabels(labels) {
         return;
 
     for (var i = 0; i < labels.length; i++) {
-
-        console.log(i);
 
         getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
@@ -2147,7 +2159,6 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 }
 
-
 function loadSerialTest(testTarget, testTimeTarget, label) {
 
     var url = "/stock/get_pack_size/" + encodeURIComponent(label);
@@ -2238,6 +2249,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.style.minWidth = "8vh";
         btn.style.minHeight = "5vh";
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2252,6 +2264,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
             }
+
+            window.parent.dashboard.startTimer(this.getAttribute("label"));
+
+            showMinimizeButton();
 
             var currentClass = __$("nextButton").className;
 
@@ -2340,6 +2356,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.id = "btnTest1Nve";
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2348,6 +2365,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 return;
 
             }
+
+            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+
+            hideMinimizeButton();
 
             clearInterval(tmrControl1Hnd);
 
@@ -2425,6 +2446,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.id = "btnTest1Pve";
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2433,6 +2455,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 return;
 
             }
+
+            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+
+            hideMinimizeButton();
 
             clearInterval(tmrControl1Hnd);
 
@@ -3601,8 +3627,6 @@ function evaluateReferral() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-        console.log(pregnancy_months);
-
         if (parseInt(pregnancy_months) <= 6) {
 
             alert("Test again after 6 months");
@@ -3793,8 +3817,6 @@ function evaluateReferral2() {
 
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
-
-        console.log(pregnancy_months);
 
         if (parseInt(pregnancy_months) > 6) {
 
@@ -4233,7 +4255,7 @@ function setTimeSinceLastDate() {
     var time_in_days = (__$("duration_in_days").value.trim().length > 0 &&
     __$("duration_in_days").value.trim().match(/^\d+$/) ? parseInt(__$("duration_in_days").value.trim()) : null);
 
-    if(time_in_days != null) {
+    if (time_in_days != null) {
 
         var date = new Date();
 
@@ -5409,14 +5431,10 @@ function setTestKitsProfiency() {
 
                 if (kit_data.description == "First Test") {
 
-                    console.log('data.fp_lot_number1_' + i);
-
-
                     __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
                     __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
-
 
                 }
 
@@ -6201,8 +6219,6 @@ function recommendedTimmerForLabelsProficiency(labels) {
 
     for (var i = 0; i < labels.length; i++) {
 
-        console.log(i);
-
         getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
             var label_data = JSON.parse(data);
@@ -6634,6 +6650,63 @@ function validateExpiryDate(date_string) {
 
             }
 
+
+        }
+
+    }
+
+}
+
+function showMinimizeButton() {
+
+    var button = document.createElement("button");
+    button.className = "blue";
+    button.innerHTML = "Minimize";
+    button.style.float = "left";
+    button.id = "minimizeButton";
+
+    button.onmousedown = function () {
+
+        var data = form2js(document.getElementById('data'), undefined, true);
+
+        console.log(data);
+
+        window.parent.dashboard.saveTemporaryData("Testing", data);
+
+        window.parent.dashboard.exitNavPanel();
+
+    }
+
+    if (window.parent.dashboard.$$("buttons")) {
+
+        window.parent.dashboard.$$("buttons").appendChild(button);
+
+    }
+
+}
+
+function hideMinimizeButton() {
+
+    if (window.parent.dashboard.$$("minimizeButton") && window.parent.dashboard.$$("buttons")) {
+
+        window.parent.dashboard.$$("buttons").removeChild(window.parent.dashboard.$$("minimizeButton"));
+
+    }
+
+}
+
+function clearTimers() {
+
+    if (window.parent.dashboard.subscription.timers &&
+        window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]) {
+
+        var keys = Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]);
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            window.parent.dashboard.clearTimer(key);
 
         }
 

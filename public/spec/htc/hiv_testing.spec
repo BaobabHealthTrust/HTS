@@ -10,7 +10,7 @@ Q.1.6. First Pass Test Kit 2 Dispatch ID [pos:: 5$$ id:: fp_lot_2_dispatch_id$$ 
 Q.1.7. Immediate Repeat Test Kit 1 Dispatch ID [pos:: 6$$ id:: im_lot_1_dispatch_id$$ condition:: false]
 Q.1.8. Immediate Repeat Test Kit 2 Dispatch ID [pos:: 7$$ id:: im_lot_2_dispatch_id$$ condition:: false]
 
-Q.1.9. Client gives consent to be Tested? [pos:: 8$$ id:: consent $$ tt_onLoad :: setTestKits()]
+Q.1.9. Client gives consent to be Tested? [pos:: 8$$ id:: consent $$ tt_onLoad :: setTestKits() $$ condition :: evalCondition(-1)]
 O.1.9.1. No
 O.1.9.2. Yes
 
@@ -18,9 +18,9 @@ Q.1.10. First Pass Test 1 Kit Category [pos:: 9$$ tt_onUnload:: setAjaxUrl(3)$$ 
 
 Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: fp_item_name1$$ tt_onUnload:: setAjaxUrl(4)$$ condition:: evalCondition(0) $$ condition ::false]
 
-Q.1.12. First Pass Test Kit 1 Lot Number [pos:: 11$$ id:: fp_lot_number1$$ expiry:: fp_lot_1_expiry$$ dispatch:: fp_lot_1_dispatch_id$$ condition:: evalCondition(0)$$ tt_onLoad::if(__$("fp_lot_number1").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id")); "fp", "1"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
+Q.1.12. First Pass Test Kit 1 Lot Number [pos:: 11$$ id:: fp_lot_number1$$ expiry:: fp_lot_1_expiry$$ dispatch:: fp_lot_1_dispatch_id$$ condition:: evalCondition(-1) && evalCondition(0)$$ tt_onLoad::if(__$("fp_lot_number1").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id")); "fp", "1"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
 
-Q.1.13. First Pass Test 1 Result [pos:: 12$$ id:: fp_test1_result$$ tt_onLoad:: loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), window.parent.dashboard.data.kits['First Test'])$$ condition:: evalCondition(1)$$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true$$ tt_onUnload:: activateNavBtn() $$ helpText :: First Pass 1 Result ]
+Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), window.parent.dashboard.data.kits['First Test']) $$ condition :: !evalCondition(-1) || evalCondition(1) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$ tt_onUnload :: activateNavBtn() $$ helpText :: First Pass 1 Result ]
 O.1.13.1. -
 O.1.13.2. +
 
@@ -78,4 +78,4 @@ Q.1.39. Result Given To Client [pos:: 38$$ id:: result_given_to_client$$ type::h
 
 Q.1.40. DBS Sample ID [pos :: 39 $$ id :: sample_id $$condition::false]
 
-Q.1.41. HIV Testing Summary [pos:: 40$$ tt_onLoad:: showHIVTestingSummary()$$ optional:: true$$ tt_pageStyleClass:: NoControls NoKeyboard]
+Q.1.41. HIV Testing Summary [pos :: 40 $$ tt_onLoad :: showHIVTestingSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ tt_onUnLoad ::  clearTimers();]
