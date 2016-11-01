@@ -5259,7 +5259,7 @@ function reverseConsumption(consumption_id, prefix, suffix) {
         }
     }
 
-    ajaxPostRequest("/save_item", data, function (result) {
+    ajaxPostRequest("/stock/save_item", data, function (result) {
 
         if (__$(prefix + "_lot_number" + suffix)) {
 
@@ -5360,10 +5360,10 @@ function setTestKits() {
             if (kit_data.description == "First Test") {
 
 
-                __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
-                __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
 
@@ -5371,10 +5371,10 @@ function setTestKits() {
 
             else {
 
-                __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
-                __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
             }
@@ -5412,20 +5412,20 @@ function setTestKitsProfiency() {
                     console.log('data.fp_lot_number1_' + i);
 
 
-                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
 
                 }
 
                 else {
 
-                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 }
 
