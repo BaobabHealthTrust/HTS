@@ -164,7 +164,7 @@ function calculateAge() {
 
 }
 
-function monthDiff(first,last) {
+function monthDiff(first, last) {
 
     var d1 = new Date(first);
 
@@ -184,34 +184,34 @@ function monthDiff(first,last) {
 
 function getAjaxRequest(url, callback, optionalControl) {
 
-        var httpRequest = new XMLHttpRequest();
+    var httpRequest = new XMLHttpRequest();
 
-        httpRequest.onreadystatechange = function () {
+    httpRequest.onreadystatechange = function () {
 
-            if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
-                httpRequest.status == 304)) {
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+            httpRequest.status == 304)) {
 
-                if (httpRequest.responseText.trim().length > 0) {
-                    var result = httpRequest.responseText;
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = httpRequest.responseText;
 
-                    callback(result, optionalControl);
+                callback(result, optionalControl);
 
-                } else {
+            } else {
 
-                    callback(undefined);
-
-                }
+                callback(undefined);
 
             }
 
-        };
-        try {
-            httpRequest.open("GET", url, true);
-            httpRequest.send(null);
-        } catch (e) {
         }
 
+    };
+    try {
+        httpRequest.open("GET", url, true);
+        httpRequest.send(null);
+    } catch (e) {
     }
+
+}
 
 
 function updatePregnancy() {
@@ -745,7 +745,7 @@ function showHTSVisitSummary() {
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
         th.style.paddingRight = "15px";
-       
+
 
         tr.appendChild(th);
 
@@ -770,7 +770,7 @@ function showHTSVisitSummary() {
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
         th.style.paddingRight = "15px";
-         th.style.borderRight = "1px solid #333";
+        th.style.borderRight = "1px solid #333";
 
         tr.appendChild(th);
 
@@ -778,7 +778,7 @@ function showHTSVisitSummary() {
 
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
-     
+
 
         tr.appendChild(td);
 
@@ -919,13 +919,13 @@ function showHTSVisitSummary() {
 
         var partner_present = "N";
 
-        if(__$("partner_present") &&  __$("partner_present").value){
+        if (__$("partner_present") && __$("partner_present").value) {
 
             partner_present = __$("partner_present").value.trim().substring(0, 1).toUpperCase();
 
         }
 
-        addDiv("N", partner_present , th);
+        addDiv("N", partner_present, th);
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -1019,7 +1019,7 @@ function showHTSVisitSummary() {
         tr.appendChild(td);
 
         addDiv("ND", risksMapping[__$("risk_category").value.trim()], td);
-        
+
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
@@ -1040,7 +1040,7 @@ function setAjaxUrl(pos) {
             if (__$("district")) {
 
                 __$("district").setAttribute("ajaxURL", "/district_query?region=" + __$("touchscreenInput" +
-                    tstCurrentPage).value.trim() + "&district=");
+                        tstCurrentPage).value.trim() + "&district=");
 
             }
 
@@ -1051,7 +1051,7 @@ function setAjaxUrl(pos) {
             if (__$('ta')) {
 
                 __$('ta').setAttribute('ajaxURL', '/ta_query?district=' + __$('touchscreenInput' +
-                    tstCurrentPage).value + '&ta=');
+                        tstCurrentPage).value + '&ta=');
 
             }
 
@@ -1075,7 +1075,7 @@ function setAjaxUrl(pos) {
                 /*First Kit always With description of First Test*/
 
                 __$('fp_item_name1').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test")+'&item_name=');
+                        tstCurrentPage).value.trim() + "&description=" + encodeURIComponent("First Test") + '&item_name=');
 
             }
 
@@ -1096,10 +1096,10 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_item_name2")) {
 
-                 var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
+                var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
 
                 __$('fp_item_name2').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&exceptions=" + exceptions +"&description="+encodeURIComponent("Second Test")+'&item_name=');
+                        tstCurrentPage).value.trim() + "&exceptions=" + exceptions + "&description=" + encodeURIComponent("Second Test") + '&item_name=');
 
             }
 
@@ -1115,7 +1115,6 @@ function setAjaxUrl(pos) {
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&exceptions=" + exceptions + "&batch=");
 
 
-
             }
 
             break;
@@ -1126,7 +1125,7 @@ function setAjaxUrl(pos) {
 
 
                 __$('im_item_name1').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&description="+encodeURIComponent("First Test") +'&item_name=');
+                        tstCurrentPage).value.trim() + "&description=" + encodeURIComponent("First Test") + '&item_name=');
 
             }
 
@@ -1138,7 +1137,7 @@ function setAjaxUrl(pos) {
 
                 __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&batch=");
+                        tstCurrentPage).value.trim() + "&batch=");
 
             }
 
@@ -1148,10 +1147,10 @@ function setAjaxUrl(pos) {
 
             if (__$("im_item_name2")) {
 
-                 var exceptions = encodeURIComponent('["' + __$("im_item_name1").value + '"]');
+                var exceptions = encodeURIComponent('["' + __$("im_item_name1").value + '"]');
 
                 __$('im_item_name2').setAttribute('ajaxURL', '/stock/stock_items?category=' + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim()  + "&exceptions=" + exceptions +'&item_name=');
+                        tstCurrentPage).value.trim() + "&exceptions=" + exceptions + '&item_name=');
 
             }
 
@@ -1163,7 +1162,7 @@ function setAjaxUrl(pos) {
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + __$('touchscreenInput' +
-                    tstCurrentPage).value.trim() + "&batch=");
+                        tstCurrentPage).value.trim() + "&batch=");
 
             }
 
@@ -1261,8 +1260,8 @@ function evalCondition(pos) {
             if (__$("consent") && __$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
                 decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") ||
                 (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                    decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                    decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant") )) {
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
+                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant") )) {
 
                 result = true;
 
@@ -1325,15 +1324,15 @@ function evalCondition(pos) {
                 __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value) || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" &&
                 (__$("fp_test1_result").value.trim().length > 0 && __$("fp_test2_result").value.trim().length > 0 &&
-                    __$("fp_test1_result").value != __$("fp_test2_result").value)) )) {
+                __$("fp_test1_result").value != __$("fp_test2_result").value)) )) {
 
                 result = true;
 
             }
 
-            if(__$("consent") && __$("consent").value == "Yes" &&(decodeURIComponent(getCookie("LastHIVTest"))=="Last Exposed Infant"
-                 && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
-                __$("fp_test2_result").value)){
+            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant"
+                && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
+                __$("fp_test2_result").value)) {
 
 
                 result = true;
@@ -1344,7 +1343,7 @@ function evalCondition(pos) {
         case 6:
 
             if ((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
-                "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "M")) {
+                    "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "M")) {
 
                 result = true;
 
@@ -1355,7 +1354,7 @@ function evalCondition(pos) {
         case 7:
 
             if (["FP", "FNP"].indexOf((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM",
-                (new Date()).format("YYYY-mm-dd"), "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim())) >= 0) {
+                    (new Date()).format("YYYY-mm-dd"), "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim())) >= 0) {
 
                 result = true;
 
@@ -1369,23 +1368,26 @@ function evalCondition(pos) {
 
 }
 
-function recommendedTimmerForLabels(labels){
+function recommendedTimmerForLabels(labels) {
 
-    if(labels[0].length == 0)
+    if (labels[0].length == 0)
         return;
 
-    for(var i = 0 ; i < labels.length ; i++){
+    for (var i = 0; i < labels.length; i++) {
 
         console.log(i);
 
-        getAjaxRequest("/stock/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
+        getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
-                var label_data = JSON.parse(data);
+            var label_data = JSON.parse(data);
 
-                if(!window.parent.dashboard.data.stock_label_data)
-                    window.parent.dashboard.data.stock_label_data = {};
+            if (!window.parent.dashboard.data.stock_label_data)
+                window.parent.dashboard.data.stock_label_data = {};
 
-                window.parent.dashboard.data.stock_label_data[label_data.id] = {rec_time: label_data.rec_time ,window_time: label_data.window_time}
+            window.parent.dashboard.data.stock_label_data[label_data.id] = {
+                rec_time: label_data.rec_time,
+                window_time: label_data.window_time
+            }
 
         });
 
@@ -1396,1120 +1398,1115 @@ function recommendedTimmerForLabels(labels){
 function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
 
 
-         if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
+    if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
-                return;
+        return;
+
+    }
+
+    tmrControl1SecsCount = 0;
+    tmrControl1MinsCount = 0;
+    tmrControl2SecsCount = 0;
+    tmrControl2MinsCount = 0;
+
+    if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+
+        var currentClass = __$("nextButton").className;
+
+        __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+    }
+
+    var mainTable = document.createElement("table");
+    mainTable.style.margin = "auto";
+
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+
+    }
+
+    var mainRow = document.createElement("tr");
+
+    mainTable.appendChild(mainRow);
+
+    var mainTd1 = document.createElement("td");
+    mainTd1.style.paddingRight = "20px";
+
+    mainRow.appendChild(mainTd1);
+
+    var mainTd2 = document.createElement("td");
+    mainTd2.style.paddingLeft = "20px";
+
+    mainRow.appendChild(mainTd2);
+
+    var table = document.createElement("table");
+    table.id = "timeTable1";
+    table.style.margin = "auto";
+    table.border = 0;
+
+    mainTd1.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.align = "center";
+    td.verticalAlign = "middle";
+    td.style.border = "1px solid #3c60b1";
+    td.style.borderRadius = "g10px";
+    td.style.padding = "25px";
+    td.colSpan = 3;
+    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+    tr.appendChild(td);
+
+    var div = document.createElement("div");
+    div.style.border = "3px solid #3c60b1";
+    div.style.borderRadius = "calc(50vh - 150px)";
+    div.style.width = "calc(100vh - 300px)";
+    div.id = "tmrControl1";
+    div.style.height = "calc(100vh - 300px)";
+    div.style.margin = "auto";
+    div.style.textAlign = "center";
+    div.style.verticalAlign = "middle";
+    div.style.display = "table-cell";
+    div.innerHTML = "00:00";
+    div.style.fontSize = "20vh";
+    div.style.color = "#3c60b1";
+    div.style.backgroundColor = "#fff";
+    div.style.zIndex = 100;
+
+    td.appendChild(div);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.colSpan = 3;
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = "blue";
+    btn.innerHTML = "Start";
+    btn.style.cssFloat = "right";
+    btn.style.fontSize = "5vh !important";
+    btn.style.marginTop = "-60px";
+    btn.style.marginRight = "5px";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+        }
+
+        var currentClass = __$("nextButton").className;
+
+        this.className = currentClass.replace(/blue|green/i, "gray");
+
+        tmrControl1Hnd = setInterval(function () {
+
+            tmrControl1SecsCount++;
+
+            if (tmrControl1SecsCount == 60) {
+
+                tmrControl1SecsCount = 0;
+
+                tmrControl1MinsCount++;
 
             }
 
-            tmrControl1SecsCount = 0;
-            tmrControl1MinsCount = 0;
-            tmrControl2SecsCount = 0;
-            tmrControl2MinsCount = 0;
+            var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
-            if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+            if (__$("tmrControl1")) {
 
+                __$("tmrControl1").innerHTML = time;
+
+                var label_data = window.parent.dashboard.data.stock_label_data[label1]
+
+                var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
+
+
+                if (tmrControl1MinsCount >= parseInt(label_data.rec_time) && tmrControl1MinsCount < window_time) {
+
+                    __$("tmrControl1").style.color = "green";
+
+                } else if (tmrControl1MinsCount >= window_time) {
+
+                    __$("tmrControl1").style.color = "#d9d8d7";
+
+                }
+
+            }
+
+        }, 1000);
+
+        if (__$("btnTest1Nve")) {
+
+            var currentClass = __$("btnTest1Nve").className;
+
+            __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+
+        }
+
+        if (__$("btnTest1Pve")) {
+
+            var currentClass = __$("btnTest1Pve").className;
+
+            __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+
+        }
+
+    }
+
+    td.appendChild(btn);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    var test1 = "First";
+
+    if (__$("fp_item_name1").value && __$("fp_item_name1").value != "") {
+
+        test1 = __$("fp_item_name1").value
+
+    }
+
+    if (__$("im_item_name1").value && __$("im_item_name1").value != "") {
+
+        test1 = __$("im_item_name1").value
+
+    }
+
+    td.innerHTML = (label1 ? label1 : test1 + " Test") + " Result " + "<font style='color:green' id='l1_minutes'> </font>";
+    td.style.fontSize = "3vh";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.align = "right";
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Non Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest1Nve";
+    btn.setAttribute("target", test1Target.id);
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
+    btn.setAttribute("target2", test2Target.id);
+    btn.setAttribute("timeTarget2", test2TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        clearInterval(tmrControl1Hnd);
+
+        if (__$(this.getAttribute("target"))) {
+
+            __$(this.getAttribute("target")).value = "-";
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+        }
+
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
                 var currentClass = __$("nextButton").className;
 
-                __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
             }
 
-            var mainTable = document.createElement("table");
-            mainTable.style.margin = "auto";
+        }
 
-            if (__$("inputFrame" + tstCurrentPage)) {
+        //Disbabling the other button
 
-                __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+        __$('btnTest1Nve').className = "green";
 
-            }
+        __$('btnTest1Pve').className = "gray";
 
-            var mainRow = document.createElement("tr");
+        var time = __$("tmrControl1").innerHTML;
 
-            mainTable.appendChild(mainRow);
+        if (test1Target.id.trim() == "fp_test1_result") {
 
-            var mainTd1 = document.createElement("td");
-            mainTd1.style.paddingRight = "20px";
+            __$("fp_test1_time").setAttribute("condition", true);
 
-            mainRow.appendChild(mainTd1);
+            __$("fp_test1_time").value = time;
 
-            var mainTd2 = document.createElement("td");
-            mainTd2.style.paddingLeft = "20px";
+        }
 
-            mainRow.appendChild(mainTd2);
+        if (test1Target.id.trim() == "im_test1_result") {
 
-            var table = document.createElement("table");
-            table.id = "timeTable1";
-            table.style.margin = "auto";
-            table.border = 0;
 
-            mainTd1.appendChild(table);
+            __$("im_test1_time").setAttribute("condition", true);
 
-            var tr = document.createElement("tr");
+            __$("im_test1_time").value = time;
 
-            table.appendChild(tr);
+        }
 
-            var td = document.createElement("td");
-            td.align = "center";
-            td.verticalAlign = "middle";
-            td.style.border = "1px solid #3c60b1";
-            td.style.borderRadius = "g10px";
-            td.style.padding = "25px";
-            td.colSpan = 3;
-            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
 
-            tr.appendChild(td);
+    }
 
-            var div = document.createElement("div");
-            div.style.border = "3px solid #3c60b1";
-            div.style.borderRadius = "calc(50vh - 150px)";
-            div.style.width = "calc(100vh - 300px)";
-            div.id = "tmrControl1";
-            div.style.height = "calc(100vh - 300px)";
-            div.style.margin = "auto";
-            div.style.textAlign = "center";
-            div.style.verticalAlign = "middle";
-            div.style.display = "table-cell";
-            div.innerHTML = "00:00";
-            div.style.fontSize = "20vh";
-            div.style.color = "#3c60b1";
-            div.style.backgroundColor = "#fff";
-            div.style.zIndex = 100;
+    td.appendChild(btn);
 
-            td.appendChild(div);
+    var td = document.createElement("td");
+    td.align = "right";
 
-            var tr = document.createElement("tr");
+    tr.appendChild(td);
 
-            table.appendChild(tr);
+    var btn = document.createElement("button");
+    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest1Pve";
+    btn.setAttribute("target", test1Target.id);
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
+    btn.setAttribute("target2", test2Target.id);
+    btn.setAttribute("timeTarget2", test2TimeTarget.id);
 
-            var td = document.createElement("td");
-            td.colSpan = 3;
+    btn.onclick = function () {
 
-            tr.appendChild(td);
+        if (this.className.match(/gray/i)) {
 
-            var btn = document.createElement("button");
-            btn.className = "blue";
-            btn.innerHTML = "Start";
-            btn.style.cssFloat = "right";
-            btn.style.fontSize = "5vh !important";
-            btn.style.marginTop = "-60px";
-            btn.style.marginRight = "5px";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.setAttribute("timeTarget", test1TimeTarget.id);
+            return;
 
-            btn.onclick = function () {
+        }
 
-                if (this.className.match(/gray/i)) {
+        clearInterval(tmrControl1Hnd);
 
-                    return;
+        if (__$(this.getAttribute("target"))) {
 
-                }
+            __$(this.getAttribute("target")).value = "+";
 
-                if (__$(this.getAttribute("timeTarget"))) {
+        }
 
-                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+        if (__$(this.getAttribute("timeTarget"))) {
 
-                }
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+        }
+
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
                 var currentClass = __$("nextButton").className;
 
-                this.className = currentClass.replace(/blue|green/i, "gray");
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
-                tmrControl1Hnd = setInterval(function () {
+            }
 
-                    tmrControl1SecsCount++;
+        }
 
-                    if (tmrControl1SecsCount == 60) {
+        //Disbabling the other button
 
-                        tmrControl1SecsCount = 0;
+        __$('btnTest1Nve').className = "gray";
 
-                        tmrControl1MinsCount++;
-
-                    }
-
-                    var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
-
-                    if (__$("tmrControl1")) {
-                
-                        __$("tmrControl1").innerHTML = time;
-
-                        var label_data = window.parent.dashboard.data.stock_label_data[label1]
-
-                        var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
+        __$('btnTest1Pve').className = "green";
 
 
-                        if(tmrControl1MinsCount  >= parseInt(label_data.rec_time) && tmrControl1MinsCount <  window_time){
+        var time = __$("tmrControl1").innerHTML;
 
-                             __$("tmrControl1").style.color = "green";
+        if (test1Target.id.trim() == "fp_test1_result") {
 
-                        }else if(tmrControl1MinsCount >= window_time){
+            __$("fp_test1_time").setAttribute("condition", true);
 
-                             __$("tmrControl1").style.color = "#d9d8d7";
+            __$("fp_test1_time").value = time;
 
-                        }
+        }
 
-                    }
+        if (test1Target.id.trim() == "im_test1_result") {
 
-                }, 1000);
 
-                if (__$("btnTest1Nve")) {
+            __$("im_test1_time").setAttribute("condition", true);
 
-                    var currentClass = __$("btnTest1Nve").className;
+            __$("im_test1_time").value = time;
 
-                    __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+        }
 
-                }
 
-                if (__$("btnTest1Pve")) {
+    }
 
-                    var currentClass = __$("btnTest1Pve").className;
+    td.appendChild(btn);
 
-                    __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+    var table = document.createElement("table");
+    table.id = "timeTable2";
+    table.style.margin = "auto";
+    table.border = 0;
+
+    mainTd2.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.align = "center";
+    td.verticalAlign = "middle";
+    td.style.border = "1px solid #3c60b1";
+    //td.style.borderRadius = "10px";
+    td.style.padding = "25px";
+    td.colSpan = 3;
+    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+    tr.appendChild(td);
+
+    var div = document.createElement("div");
+    div.style.border = "3px solid #3c60b1";
+    div.style.borderRadius = "calc(50vh - 150px)";
+    div.style.width = "calc(100vh - 300px)";
+    div.id = "tmrControl2";
+    div.style.height = "calc(100vh - 300px)";
+    div.style.margin = "auto";
+    div.style.textAlign = "center";
+    div.style.verticalAlign = "middle";
+    div.style.display = "table-cell";
+    div.innerHTML = "00:00";
+    div.style.fontSize = "20vh";
+    div.style.color = "#3c60b1";
+    div.style.backgroundColor = "#fff";
+    div.style.zIndex = 100;
+
+    td.appendChild(div);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.colSpan = 3;
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = "blue";
+    btn.innerHTML = "Start";
+    btn.style.cssFloat = "left";
+    btn.style.fontSize = "5vh !important";
+    btn.style.marginTop = "-60px";
+    btn.style.marginLeft = "5px";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+        }
+
+        var currentClass = __$("nextButton").className;
+
+        this.className = currentClass.replace(/blue|green/i, "gray");
+
+        tmrControl2Hnd = setInterval(function () {
+
+            tmrControl2SecsCount++;
+
+            if (tmrControl2SecsCount == 60) {
+
+                tmrControl2SecsCount = 0;
+
+                tmrControl2MinsCount++;
+
+            }
+
+            var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
+
+            if (__$("tmrControl2")) {
+
+                __$("tmrControl2").innerHTML = time;
+
+                var label2_data = window.parent.dashboard.data.stock_label_data[label2]
+
+                var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
+
+
+                if (tmrControl2MinsCount >= parseInt(label2_data.rec_time) && tmrControl2MinsCount < window_time) {
+
+                    __$("tmrControl2").style.color = "green";
+
+                } else if (tmrControl2MinsCount >= window_time) {
+
+                    __$("tmrControl2").style.color = "#d9d8d7";
 
                 }
 
             }
 
-            td.appendChild(btn);
+        }, 1000);
 
-            var tr = document.createElement("tr");
+        if (__$("btnTest2Nve")) {
 
-            table.appendChild(tr);
+            var currentClass = __$("btnTest2Nve").className;
 
-            var td = document.createElement("td");
+            __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
 
-            var test1 = "First";
+        }
 
-            if(__$("fp_item_name1").value && __$("fp_item_name1").value != ""){
+        if (__$("btnTest2Pve")) {
 
-                test1 = __$("fp_item_name1").value
+            var currentClass = __$("btnTest2Pve").className;
 
-            }
+            __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
 
-            if(__$("im_item_name1").value && __$("im_item_name1").value != ""){
+        }
 
-                test1 = __$("im_item_name1").value
+    }
 
-            }
+    td.appendChild(btn);
 
-            td.innerHTML = (label1 ? label1 : test1+" Test") + " Result " +  "<font style='color:green' id='l1_minutes'> </font>";
-            td.style.fontSize = "3vh";
+    var tr = document.createElement("tr");
 
-            tr.appendChild(td);
+    table.appendChild(tr);
 
-            var td = document.createElement("td");
-            td.align = "right";
+    var td = document.createElement("td");
 
-            tr.appendChild(td);
+    var test2 = "Second";
 
-            var btn = document.createElement("button");
-            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Non Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest1Nve";
-            btn.setAttribute("target", test1Target.id);
-            btn.setAttribute("timeTarget", test1TimeTarget.id);
-            btn.setAttribute("target2", test2Target.id);
-            btn.setAttribute("timeTarget2", test2TimeTarget.id);
+    if (__$("fp_item_name2").value && __$("fp_item_name2").value != "") {
 
-            btn.onclick = function () {
+        test2 = __$("fp_item_name2").value
 
-                if (this.className.match(/gray/i)) {
+    }
 
-                    return;
+    if (__$("im_item_name2").value && __$("im_item_name2").value != "") {
 
-                }
+        test2 = __$("im_item_name2").value
 
-                clearInterval(tmrControl1Hnd);
+    }
 
-                if (__$(this.getAttribute("target"))) {
+    td.innerHTML = (label2 ? label2 : test2 + " Test") + " Result " + "<font style='color:green' id='l2_minutes'></font>";
+    td.style.fontSize = "3vh";
 
-                    __$(this.getAttribute("target")).value = "-";
+    tr.appendChild(td);
 
-                }
+    var td = document.createElement("td");
+    td.align = "right";
 
-                if (__$(this.getAttribute("timeTarget"))) {
+    tr.appendChild(td);
 
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+    var btn = document.createElement("button");
+    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Non Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest2Nve";
+    btn.setAttribute("target", test2Target.id);
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
+    btn.setAttribute("target2", test1Target.id);
+    btn.setAttribute("timeTarget2", test1TimeTarget.id);
 
-                    var now = (new Date());
+    btn.onclick = function () {
 
-                    var duration = (now - startTime) / (60 * 1000);
+        if (this.className.match(/gray/i)) {
 
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+            return;
 
-                }
+        }
 
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+        clearInterval(tmrControl2Hnd);
 
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
+        if (__$(this.getAttribute("target"))) {
 
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+            __$(this.getAttribute("target")).value = "-";
 
-                    }
+        }
 
-                }
+        if (__$("touchscreenInput" + tstCurrentPage)) {
 
-                //Disbabling the other button
+            __$("touchscreenInput" + tstCurrentPage).value = "-";
 
-                __$('btnTest1Nve').className = "green";
+        }
 
-                __$('btnTest1Pve').className = "gray";
+        if (__$(this.getAttribute("timeTarget"))) {
 
-                var time = __$("tmrControl1").innerHTML;
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-                if(test1Target.id.trim() == "fp_test1_result"){
+            var now = (new Date());
 
-                    __$("fp_test1_time").setAttribute("condition",true);
+            var duration = (now - startTime) / (60 * 1000);
 
-                    __$("fp_test1_time").value = time;
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
-                }
+        }
 
-                if(test1Target.id.trim() == "im_test1_result"){
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
 
-
-                    __$("im_test1_time").setAttribute("condition",true);
-
-                    __$("im_test1_time").value = time;
-
-                }                
-
-
-            }
-
-            td.appendChild(btn);
-
-            var td = document.createElement("td");
-            td.align = "right";
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest1Pve";
-            btn.setAttribute("target", test1Target.id);
-            btn.setAttribute("timeTarget", test1TimeTarget.id);
-            btn.setAttribute("target2", test2Target.id);
-            btn.setAttribute("timeTarget2", test2TimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                clearInterval(tmrControl1Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "+";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
-
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-                    }
-
-                }
-
-                //Disbabling the other button
-
-                __$('btnTest1Nve').className = "gray";
-
-                __$('btnTest1Pve').className = "green";
-
-
-                var time = __$("tmrControl1").innerHTML;
-
-                if(test1Target.id.trim() == "fp_test1_result"){
-
-                    __$("fp_test1_time").setAttribute("condition",true);
-
-                    __$("fp_test1_time").value = time;
-
-                }
-
-                if(test1Target.id.trim() == "im_test1_result"){
-
-
-                    __$("im_test1_time").setAttribute("condition",true);
-
-                    __$("im_test1_time").value = time;
-
-                }                
-
-
-               
-            }
-
-            td.appendChild(btn);
-
-            var table = document.createElement("table");
-            table.id ="timeTable2";
-            table.style.margin = "auto";
-            table.border = 0;
-
-            mainTd2.appendChild(table);
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-            td.align = "center";
-            td.verticalAlign = "middle";
-            td.style.border = "1px solid #3c60b1";
-            //td.style.borderRadius = "10px";
-            td.style.padding = "25px";
-            td.colSpan = 3;
-            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-
-            tr.appendChild(td);
-
-            var div = document.createElement("div");
-            div.style.border = "3px solid #3c60b1";
-            div.style.borderRadius = "calc(50vh - 150px)";
-            div.style.width = "calc(100vh - 300px)";
-            div.id = "tmrControl2";
-            div.style.height = "calc(100vh - 300px)";
-            div.style.margin = "auto";
-            div.style.textAlign = "center";
-            div.style.verticalAlign = "middle";
-            div.style.display = "table-cell";
-            div.innerHTML = "00:00";
-            div.style.fontSize = "20vh";
-            div.style.color = "#3c60b1";
-            div.style.backgroundColor = "#fff";
-            div.style.zIndex = 100;
-
-            td.appendChild(div);
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-            td.colSpan = 3;
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = "blue";
-            btn.innerHTML = "Start";
-            btn.style.cssFloat = "left";
-            btn.style.fontSize = "5vh !important";
-            btn.style.marginTop = "-60px";
-            btn.style.marginLeft = "5px";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.setAttribute("timeTarget", test2TimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
-
-                }
-
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
                 var currentClass = __$("nextButton").className;
 
-                this.className = currentClass.replace(/blue|green/i, "gray");
-
-                tmrControl2Hnd = setInterval(function () {
-
-                    tmrControl2SecsCount++;
-
-                    if (tmrControl2SecsCount == 60) {
-
-                        tmrControl2SecsCount = 0;
-
-                        tmrControl2MinsCount++;
-
-                    }
-
-                    var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
-
-                    if (__$("tmrControl2")) {
-
-                        __$("tmrControl2").innerHTML = time;
-
-                        var label2_data = window.parent.dashboard.data.stock_label_data[label2]
-
-                        var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
-
-
-                        if(tmrControl2MinsCount  >= parseInt(label2_data.rec_time) && tmrControl2MinsCount <  window_time){
-
-                             __$("tmrControl2").style.color = "green";
-
-                        }else if(tmrControl2MinsCount >= window_time){
-
-                             __$("tmrControl2").style.color = "#d9d8d7";
-
-                        }
-
-                    }
-
-                }, 1000);
-
-                if (__$("btnTest2Nve")) {
-
-                    var currentClass = __$("btnTest2Nve").className;
-
-                    __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
-
-                }
-
-                if (__$("btnTest2Pve")) {
-
-                    var currentClass = __$("btnTest2Pve").className;
-
-                    __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
-
-                }
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
             }
 
-            td.appendChild(btn);
+        }
 
-            var tr = document.createElement("tr");
+        //Disbabling the other button
 
-            table.appendChild(tr);
+        __$('btnTest2Nve').className = "green";
 
-            var td = document.createElement("td");
+        __$('btnTest2Pve').className = "gray";
 
-            var test2 = "Second";
+        var time = __$("tmrControl2").innerHTML;
 
-            if(__$("fp_item_name2").value && __$("fp_item_name2").value != ""){
+        if (test2Target.id.trim() == "fp_test2_result") {
 
-                test2 = __$("fp_item_name2").value
+            __$("fp_test2_time").setAttribute("condition", true);
 
-            }
+            __$("fp_test2_time").value = time;
 
-            if(__$("im_item_name2").value && __$("im_item_name2").value != ""){
+        }
 
-                test2 = __$("im_item_name2").value
-
-            }
-
-            td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result "+ "<font style='color:green' id='l2_minutes'></font>";
-            td.style.fontSize = "3vh";
-
-            tr.appendChild(td);
-
-            var td = document.createElement("td");
-            td.align = "right";
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Non Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest2Nve";
-            btn.setAttribute("target", test2Target.id);
-            btn.setAttribute("timeTarget", test2TimeTarget.id);
-            btn.setAttribute("target2", test1Target.id);
-            btn.setAttribute("timeTarget2", test1TimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                clearInterval(tmrControl2Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "-";
-
-                }
-
-                if (__$("touchscreenInput" + tstCurrentPage)) {
-
-                    __$("touchscreenInput" + tstCurrentPage).value = "-";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
-
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-                    }
-
-                }
-
-                //Disbabling the other button
-
-                __$('btnTest2Nve').className = "green";
-
-                __$('btnTest2Pve').className = "gray";
-
-                var time = __$("tmrControl2").innerHTML;
-
-                if(test2Target.id.trim() == "fp_test2_result"){
-
-                    __$("fp_test2_time").setAttribute("condition",true);
-
-                    __$("fp_test2_time").value = time;
-
-                }
-
-                if(test2Target.id.trim() == "im_test2_result"){
+        if (test2Target.id.trim() == "im_test2_result") {
 
 
-                    __$("im_test2_time").setAttribute("condition",true);
+            __$("im_test2_time").setAttribute("condition", true);
 
-                    __$("im_test2_time").value = time;
+            __$("im_test2_time").value = time;
 
-                }                
+        }
 
+
+    }
+
+    td.appendChild(btn);
+
+    var td = document.createElement("td");
+    td.align = "right";
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest2Pve";
+    btn.setAttribute("target", test2Target.id);
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
+    btn.setAttribute("target2", test1Target.id);
+    btn.setAttribute("timeTarget2", test1TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        clearInterval(tmrControl2Hnd);
+
+        if (__$(this.getAttribute("target"))) {
+
+            __$(this.getAttribute("target")).value = "+";
+
+        }
+
+        if (__$("touchscreenInput" + tstCurrentPage)) {
+
+            __$("touchscreenInput" + tstCurrentPage).value = "+";
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+        }
+
+        //Disbabling the other button
+
+        __$('btnTest2Nve').className = "gray";
+
+        __$('btnTest2Pve').className = "green";
+
+
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
             }
 
-            td.appendChild(btn);
+        }
 
-            var td = document.createElement("td");
-            td.align = "right";
+        var time = __$("tmrControl2").innerHTML;
 
-            tr.appendChild(td);
+        if (test2Target.id.trim() == "fp_test2_result") {
 
-            var btn = document.createElement("button");
-            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest2Pve";
-            btn.setAttribute("target", test2Target.id);
-            btn.setAttribute("timeTarget", test2TimeTarget.id);
-            btn.setAttribute("target2", test1Target.id);
-            btn.setAttribute("timeTarget2", test1TimeTarget.id);
+            __$("fp_test2_time").setAttribute("condition", true);
 
-            btn.onclick = function () {
+            __$("fp_test2_time").value = time;
 
-                if (this.className.match(/gray/i)) {
+        }
 
-                    return;
-
-                }
-
-                clearInterval(tmrControl2Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "+";
-
-                }
-
-                if (__$("touchscreenInput" + tstCurrentPage)) {
-
-                    __$("touchscreenInput" + tstCurrentPage).value = "+";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                //Disbabling the other button
-
-                __$('btnTest2Nve').className = "gray";
-
-                __$('btnTest2Pve').className = "green";
+        if (test2Target.id.trim() == "im_test2_result") {
 
 
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+            __$("im_test2_time").setAttribute("condition", true);
 
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
+            __$("im_test2_time").value = time;
 
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+        }
 
-                    }
+    }
 
-                }
-
-                var time = __$("tmrControl2").innerHTML;
-
-                if(test2Target.id.trim() == "fp_test2_result"){
-
-                    __$("fp_test2_time").setAttribute("condition",true);
-
-                    __$("fp_test2_time").value = time;
-
-                }
-
-                if(test2Target.id.trim() == "im_test2_result"){
+    td.appendChild(btn);
 
 
-                    __$("im_test2_time").setAttribute("condition",true);
+    var minuteLabelInterval = setInterval(function () {
 
-                    __$("im_test2_time").value = time;
+        __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
 
-                }   
+        __$("l2_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label2].rec_time + " Minutes";
 
-            }
+        clearInterval(minuteLabelInterval);
 
-            td.appendChild(btn);
+    }, 500);
 
+    if (test1Target.id == "fp_test1_result" && test2Target.id == "fp_test2_result") {
 
-            var minuteLabelInterval = setInterval(function(){
+        __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
 
-                __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
+        __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
 
-                __$("l2_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label2].rec_time + " Minutes";
+    }
 
-                clearInterval(minuteLabelInterval);
+    if (test1Target.id == "im_test1_result" && test2Target.id == "im_test2_result") {
 
-            },500);
+        __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
 
-            if(test1Target.id == "fp_test1_result" && test2Target.id == "fp_test2_result"){
+        __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
 
-                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+    }
 
-                __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
-
-            }
-
-            if(test1Target.id == "im_test1_result" && test2Target.id == "im_test2_result"){
-
-                __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
-
-                __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
-
-            }
-
-
-            
 
 }
 
 
 function loadSerialTest(testTarget, testTimeTarget, label) {
 
-    var url = "/stock/get_pack_size/"+ encodeURIComponent(label);
+    var url = "/stock/get_pack_size/" + encodeURIComponent(label);
 
-    getAjaxRequest(url, function(data) {
+    getAjaxRequest(url, function (data) {
 
 
-            if (!testTarget || !testTimeTarget) {
+        if (!testTarget || !testTimeTarget) {
+
+            return;
+
+        }
+
+        tmrControl1SecsCount = 0;
+        tmrControl1MinsCount = 0;
+
+        if (__$("nextButton") && testTimeTarget.getAttribute("startTime") == null) {
+
+            var currentClass = __$("nextButton").className;
+
+            __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+        }
+
+        var label_data = JSON.parse(data);
+
+        var table = document.createElement("table");
+        table.id = "timeTable1";
+        table.style.margin = "auto";
+        table.border = 0;
+
+        if (__$("inputFrame" + tstCurrentPage)) {
+
+            __$("inputFrame" + tstCurrentPage).appendChild(table);
+
+        }
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.id = "timeTD1";
+        td.align = "center";
+        td.verticalAlign = "middle";
+        td.style.border = "1px solid #3c60b1";
+        //td.style.borderRadius = "10px";
+        td.style.padding = "25px";
+        td.colSpan = 3;
+        td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+        tr.appendChild(td);
+
+        var div = document.createElement("div");
+        div.style.border = "3px inset #3c60b1";
+        div.style.borderRadius = "calc(50vh - 150px)";
+        div.style.width = "calc(100vh - 300px)";
+        div.id = "tmrControl1";
+        div.style.height = "calc(100vh - 300px)";
+        div.style.margin = "auto";
+        div.style.textAlign = "center";
+        div.style.verticalAlign = "middle";
+        div.style.display = "table-cell";
+        div.innerHTML = "00:00";
+        div.style.fontSize = "20vh";
+        div.style.color = "#3c60b1";
+        div.style.backgroundColor = "#fff";
+        div.style.zIndex = 100;
+
+        td.appendChild(div);
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.colSpan = 3;
+
+        tr.appendChild(td);
+
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "Start";
+        btn.style.cssFloat = "right";
+        btn.style.fontSize = "5vh !important";
+        btn.style.marginTop = "-60px";
+        btn.style.marginRight = "5px";
+        btn.style.minWidth = "8vh";
+        btn.style.minHeight = "5vh";
+        btn.setAttribute("timeTarget", testTimeTarget.id);
+
+        btn.onclick = function () {
+
+            if (this.className.match(/gray/i)) {
 
                 return;
 
             }
 
-            tmrControl1SecsCount = 0;
-            tmrControl1MinsCount = 0;
+            if (__$(this.getAttribute("timeTarget"))) {
 
-            if (__$("nextButton") && testTimeTarget.getAttribute("startTime") == null) {
-
-                var currentClass = __$("nextButton").className;
-
-                __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+                __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
             }
 
-            var label_data = JSON.parse(data);
+            var currentClass = __$("nextButton").className;
 
-            var table = document.createElement("table");
-            table.id = "timeTable1";
-            table.style.margin = "auto";
-            table.border = 0;
+            this.className = currentClass.replace(/blue|green/i, "gray");
 
-            if (__$("inputFrame" + tstCurrentPage)) {
+            tmrControl1Hnd = setInterval(function () {
 
-                __$("inputFrame" + tstCurrentPage).appendChild(table);
+                tmrControl1SecsCount++;
 
-            }
+                if (tmrControl1SecsCount == 60) {
 
-            var tr = document.createElement("tr");
+                    tmrControl1SecsCount = 0;
 
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-            td.id = "timeTD1";
-            td.align = "center";
-            td.verticalAlign = "middle";
-            td.style.border = "1px solid #3c60b1";
-            //td.style.borderRadius = "10px";
-            td.style.padding = "25px";
-            td.colSpan = 3;
-            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-
-            tr.appendChild(td);
-
-            var div = document.createElement("div");
-            div.style.border = "3px inset #3c60b1";
-            div.style.borderRadius = "calc(50vh - 150px)";
-            div.style.width = "calc(100vh - 300px)";
-            div.id = "tmrControl1";
-            div.style.height = "calc(100vh - 300px)";
-            div.style.margin = "auto";
-            div.style.textAlign = "center";
-            div.style.verticalAlign = "middle";
-            div.style.display = "table-cell";
-            div.innerHTML = "00:00";
-            div.style.fontSize = "20vh";
-            div.style.color = "#3c60b1";
-            div.style.backgroundColor = "#fff";
-            div.style.zIndex = 100;
-
-            td.appendChild(div);
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-            td.colSpan = 3;
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = "blue";
-            btn.innerHTML = "Start";
-            btn.style.cssFloat = "right";
-            btn.style.fontSize = "5vh !important";
-            btn.style.marginTop = "-60px";
-            btn.style.marginRight = "5px";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.setAttribute("timeTarget", testTimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
+                    tmrControl1MinsCount++;
 
                 }
 
-                if (__$(this.getAttribute("timeTarget"))) {
+                var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
-                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
-                }
+                if (__$("tmrControl1")) {
 
-                var currentClass = __$("nextButton").className;
+                    __$("tmrControl1").innerHTML = time;
 
-                this.className = currentClass.replace(/blue|green/i, "gray");
+                    var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
 
-                tmrControl1Hnd = setInterval(function () {
 
-                    tmrControl1SecsCount++;
+                    if (tmrControl1MinsCount >= parseInt(label_data.rec_time) && tmrControl1MinsCount < window_time) {
 
-                    if (tmrControl1SecsCount == 60) {
+                        __$("tmrControl1").style.color = "green";
 
-                        tmrControl1SecsCount = 0;
+                    } else if (tmrControl1MinsCount >= window_time) {
 
-                        tmrControl1MinsCount++;
+                        __$("tmrControl1").style.color = "#d9d8d7";
 
                     }
 
-                    var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
-
-                 
-                    if (__$("tmrControl1")) {
-
-                        __$("tmrControl1").innerHTML = time;
-
-                        var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
-
-
-                        if(tmrControl1MinsCount  >= parseInt(label_data.rec_time) && tmrControl1MinsCount <  window_time){
-
-                             __$("tmrControl1").style.color = "green";
-
-                        }else if(tmrControl1MinsCount >= window_time){
-
-                             __$("tmrControl1").style.color = "#d9d8d7";
-
-                        }
-
-
-                    }
-
-                }, 1000);
-
-                if (__$("btnTest1Nve")) {
-
-                    var currentClass = __$("btnTest1Nve").className;
-
-                    __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
 
                 }
 
-                if (__$("btnTest1Pve")) {
+            }, 1000);
 
-                    var currentClass = __$("btnTest1Pve").className;
+            if (__$("btnTest1Nve")) {
 
-                    __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+                var currentClass = __$("btnTest1Nve").className;
 
-                }
+                __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
 
             }
 
-            td.appendChild(btn);
+            if (__$("btnTest1Pve")) {
 
-            var tr = document.createElement("tr");
+                var currentClass = __$("btnTest1Pve").className;
 
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-
-
-            td.innerHTML = (label ? label : "Test") + " Result " + (label_data.rec_time  ? "<font style='color:green'> - "+label_data.rec_time+" Minutes</font>" : "");
-            td.style.fontSize = "3vh";
-
-            tr.appendChild(td);
-
-            var td = document.createElement("td");
-            td.align = "right";
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Non Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest1Nve";
-            btn.setAttribute("target", testTarget.id);
-            btn.setAttribute("timeTarget", testTimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                clearInterval(tmrControl1Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "-";
-
-                }
-
-                if (__$("touchscreenInput" + tstCurrentPage)) {
-
-                    __$("touchscreenInput" + tstCurrentPage).value = "-";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-
-                __$('btnTest1Nve').className = "green";
-
-                __$('btnTest1Pve').className = "gray";
-
-                if (__$("nextButton")) {
-
-                    var currentClass = __$("nextButton").className;
-
-                    __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-                }
-
-                var time = __$("tmrControl1").innerHTML;
-
-                if(testTarget.id.trim() == "fp_test1_result"){
-
-                    __$("fp_test1_time").setAttribute("condition",true);
-
-                    __$("fp_test1_time").value = time;
-
-                }
-
-                if(testTarget.id.trim() == "fp_test2_result"){
-
-                    __$("fp_test2_time").setAttribute("condition",true);
-
-                    __$("fp_test2_time").value = time;
-
-                }
-                
-                
+                __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
 
             }
 
-            td.appendChild(btn);
+        }
 
-            var td = document.createElement("td");
-            td.align = "right";
+        td.appendChild(btn);
 
-            tr.appendChild(td);
+        var tr = document.createElement("tr");
 
-            var btn = document.createElement("button");
-            btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest1Pve";
-            btn.setAttribute("target", testTarget.id);
-            btn.setAttribute("timeTarget", testTimeTarget.id);
+        table.appendChild(tr);
 
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                clearInterval(tmrControl1Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "+";
-
-                }
-
-                if (__$("touchscreenInput" + tstCurrentPage)) {
-
-                    __$("touchscreenInput" + tstCurrentPage).value = "+";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                __$('btnTest1Nve').className = "gray";
-
-                __$('btnTest1Pve').className = "green";
+        var td = document.createElement("td");
 
 
-                if (__$("nextButton")) {
+        td.innerHTML = (label ? label : "Test") + " Result " + (label_data.rec_time ? "<font style='color:green'> - " + label_data.rec_time + " Minutes</font>" : "");
+        td.style.fontSize = "3vh";
 
-                    var currentClass = __$("nextButton").className;
+        tr.appendChild(td);
 
-                    __$("nextButton").className = currentClass.replace(/gray/i, "green");
+        var td = document.createElement("td");
+        td.align = "right";
 
-                }
+        tr.appendChild(td);
 
-                var time = __$("tmrControl1").innerHTML;
+        var btn = document.createElement("button");
+        btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+        btn.innerHTML = "Non Reactive";
+        btn.style.fontSize = "5vh !important";
+        btn.style.minWidth = "8vh";
+        btn.style.minHeight = "5vh";
+        btn.id = "btnTest1Nve";
+        btn.setAttribute("target", testTarget.id);
+        btn.setAttribute("timeTarget", testTimeTarget.id);
 
-                if(testTarget.id.trim() == "fp_test1_result"){
+        btn.onclick = function () {
 
-                    __$("fp_test1_time").setAttribute("condition",true);
+            if (this.className.match(/gray/i)) {
 
-                    __$("fp_test1_time").value = time;
+                return;
 
-                }
-
-                if(testTarget.id.trim() == "fp_test2_result"){
-
-                    __$("fp_test2_time").setAttribute("condition",true);
-
-                    __$("fp_test2_time").value = time;
-
-                }
-
-               
             }
 
-            td.appendChild(btn);    
+            clearInterval(tmrControl1Hnd);
 
-            if(testTarget.id == "fp_test1_result"){
+            if (__$(this.getAttribute("target"))) {
 
-                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+                __$(this.getAttribute("target")).value = "-";
 
-              
+            }
 
-            }else if( testTarget.id == "fp_test2_result"){
+            if (__$("touchscreenInput" + tstCurrentPage)) {
 
-                  __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+                __$("touchscreenInput" + tstCurrentPage).value = "-";
 
-            }                              
-                                        
+            }
+
+            if (__$(this.getAttribute("timeTarget"))) {
+
+                var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                var now = (new Date());
+
+                var duration = (now - startTime) / (60 * 1000);
+
+                __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+            }
+
+
+            __$('btnTest1Nve').className = "green";
+
+            __$('btnTest1Pve').className = "gray";
+
+            if (__$("nextButton")) {
+
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+            }
+
+            var time = __$("tmrControl1").innerHTML;
+
+            if (testTarget.id.trim() == "fp_test1_result") {
+
+                __$("fp_test1_time").setAttribute("condition", true);
+
+                __$("fp_test1_time").value = time;
+
+            }
+
+            if (testTarget.id.trim() == "fp_test2_result") {
+
+                __$("fp_test2_time").setAttribute("condition", true);
+
+                __$("fp_test2_time").value = time;
+
+            }
+
+
+        }
+
+        td.appendChild(btn);
+
+        var td = document.createElement("td");
+        td.align = "right";
+
+        tr.appendChild(td);
+
+        var btn = document.createElement("button");
+        btn.className = (testTimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+        btn.innerHTML = "Reactive";
+        btn.style.fontSize = "5vh !important";
+        btn.style.minWidth = "8vh";
+        btn.style.minHeight = "5vh";
+        btn.id = "btnTest1Pve";
+        btn.setAttribute("target", testTarget.id);
+        btn.setAttribute("timeTarget", testTimeTarget.id);
+
+        btn.onclick = function () {
+
+            if (this.className.match(/gray/i)) {
+
+                return;
+
+            }
+
+            clearInterval(tmrControl1Hnd);
+
+            if (__$(this.getAttribute("target"))) {
+
+                __$(this.getAttribute("target")).value = "+";
+
+            }
+
+            if (__$("touchscreenInput" + tstCurrentPage)) {
+
+                __$("touchscreenInput" + tstCurrentPage).value = "+";
+
+            }
+
+            if (__$(this.getAttribute("timeTarget"))) {
+
+                var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+                var now = (new Date());
+
+                var duration = (now - startTime) / (60 * 1000);
+
+                __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+            }
+
+            __$('btnTest1Nve').className = "gray";
+
+            __$('btnTest1Pve').className = "green";
+
+
+            if (__$("nextButton")) {
+
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+            }
+
+            var time = __$("tmrControl1").innerHTML;
+
+            if (testTarget.id.trim() == "fp_test1_result") {
+
+                __$("fp_test1_time").setAttribute("condition", true);
+
+                __$("fp_test1_time").value = time;
+
+            }
+
+            if (testTarget.id.trim() == "fp_test2_result") {
+
+                __$("fp_test2_time").setAttribute("condition", true);
+
+                __$("fp_test2_time").value = time;
+
+            }
+
+
+        }
+
+        td.appendChild(btn);
+
+        if (testTarget.id == "fp_test1_result") {
+
+            __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+
+
+        } else if (testTarget.id == "fp_test2_result") {
+
+            __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+        }
+
     }, null);
 
 }
@@ -2549,28 +2546,28 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "New Negative";
 
-            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
-                imTest2Result.trim().length <= 0){
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
+                imTest2Result.trim().length <= 0) {
 
                 outcome = "Test 1 & Test 2 Positive";
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
 
-                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
                 }
 
-            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "New Inconclusive";
 
-            }else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "-") {
 
                 outcome = "Test 1 & Test 2 Discordant";
@@ -2597,7 +2594,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -2617,7 +2614,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -2636,8 +2633,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
         case "last positive":
 
             if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
-                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-")))
-            {
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
@@ -2645,19 +2641,19 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
-            }else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-"){
+            } else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-") {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
                 result = "Confirmatory Inconclusive";
 
-                __$("sample_id").setAttribute("condition",true);
+                __$("sample_id").setAttribute("condition", true);
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
 
             }
-            else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+"){
+            else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+") {
 
                 outcome = "Test 1 & Test 2 Positive";
 
@@ -2670,7 +2666,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
         case "last exposed infant":
 
             if ((fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-" && imTest1Result.trim().length <= 0 &&
-                imTest2Result.trim().length <= 0) || (fpTest1Result.trim() != fpTest2Result.trim() && 
+                imTest2Result.trim().length <= 0) || (fpTest1Result.trim() != fpTest2Result.trim() &&
                 imTest1Result.trim() != imTest2Result.trim())) {
 
                 outcome = "Test 1 & Test 2 Negative";
@@ -2685,21 +2681,21 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 var key = Object.keys(age);
 
 
-                if(age[key[0]] == "1Y"){
+                if (age[key[0]] == "1Y") {
 
 
                     outcome = "Test 1 & Test 2 Positive";
 
                     result = "New Positive";
 
-                    if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
+                    if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
 
                         window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
                     }
 
 
-                }else{
+                } else {
 
                     outcome = "Test 1 & Test 2 Positive";
 
@@ -2707,7 +2703,6 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 }
 
-               
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
@@ -2745,7 +2740,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if(ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate,(new Date()).format("YYYY-mm-dd"))) <= 23){
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample", "");
 
@@ -2758,7 +2753,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "New Inconclusive";
 
-                 __$("sample_id").setAttribute("condition",true);
+                __$("sample_id").setAttribute("condition", true);
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
@@ -2776,13 +2771,13 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
 function showHIVTestingSummary() {
 
-    window.parent.dashboard.queryExistingObsArray("Event in the last 72 hrs?", function(data){
+    window.parent.dashboard.queryExistingObsArray("Event in the last 72 hrs?", function (data) {
 
         var ob = Object.keys(data);
 
-          if(data[ob[0]]&& data[ob[0]] =="Yes"  && __$("fp_test1_result").value =="-"){
+        if (data[ob[0]] && data[ob[0]] == "Yes" && __$("fp_test1_result").value == "-") {
 
-                window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
+            window.parent.dashboard.showMsg("High Risk event in last 72 hours advise to Start <b>PEP</b>");
 
         }
 
@@ -3470,7 +3465,6 @@ function showDetailsSummary() {
         tr.appendChild(td);
 
 
-
         var tr = document.createElement("tr");
 
         table.appendChild(tr);
@@ -3492,7 +3486,7 @@ function showDetailsSummary() {
         td.innerHTML = "&nbsp;";
         td.style.width = "30px";
         td.style.height = "50px";
-        
+
         tr.appendChild(td);
 
         var tr = document.createElement("tr");
@@ -3513,7 +3507,7 @@ function showDetailsSummary() {
         td.style.borderRight = "1px solid #333";
 
         td.innerHTML = (__$("capture_details").value.trim() == "No" ? "(no consent)" : __$("first_name").value.trim() +
-            " " + __$("last_name").value.trim());
+        " " + __$("last_name").value.trim());
 
         tr.appendChild(td);
 
@@ -3522,13 +3516,13 @@ function showDetailsSummary() {
         td.style.borderRight = "1px solid #333";
 
 
-        if(__$("capture_details").value.trim() == "No"){
+        if (__$("capture_details").value.trim() == "No") {
 
             td.innerHTML = "";
 
-        }else{
+        } else {
 
-            td.innerHTML =  __$("phone_number").value.trim();
+            td.innerHTML = __$("phone_number").value.trim();
 
 
         }
@@ -3541,11 +3535,11 @@ function showDetailsSummary() {
         td.style.borderRight = "1px solid #333";
 
 
-        if(__$("capture_details").value.trim() == "No"){
+        if (__$("capture_details").value.trim() == "No") {
 
             td.innerHTML = "";
 
-        }else{
+        } else {
 
             td.innerHTML = __$("village").value.trim() + ", " + __$("closest_landmark").value.trim();
 
@@ -3604,12 +3598,12 @@ function evaluateReferral() {
 
         }
 
-        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"), 
-        "HTS CLIENT REGISTRATION", "How many months pregnant?");
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+            "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
         console.log(pregnancy_months);
 
-        if(parseInt(pregnancy_months) <= 6 ){
+        if (parseInt(pregnancy_months) <= 6) {
 
             //alert("Test again after 6 months"); 
 
@@ -3760,7 +3754,6 @@ function evaluateReferral() {
 }
 
 
-
 function evaluateReferral2() {
 
     var riskCategory;
@@ -3772,7 +3765,6 @@ function evaluateReferral2() {
 
     riskCategory = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Client Risk Category");
-
 
 
     testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
@@ -3799,20 +3791,20 @@ function evaluateReferral2() {
 
         }
 
-        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"), 
-        "HTS CLIENT REGISTRATION", "How many months pregnant?");
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+            "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
         console.log(pregnancy_months);
 
-        if(parseInt(pregnancy_months) > 6 ){
+        if (parseInt(pregnancy_months) > 6) {
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test at Maternity as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
-            "health and to prevent transmission.", "Re-Test");
+                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+                "health and to prevent transmission.", "Re-Test");
 
             var remaining_days = 280 - parseInt(pregnancy_months) * 30;
 
-             if (__$("appointment")) {
+            if (__$("appointment")) {
 
                 __$("appointment").removeAttribute("condition");
 
@@ -3823,13 +3815,12 @@ function evaluateReferral2() {
             }
 
 
-
         }
-        else{
+        else {
 
             var remaining_days = 280 - parseInt(pregnancy_months) * 30;
 
-             if (__$("appointment")) {
+            if (__$("appointment")) {
 
                 __$("appointment").removeAttribute("condition");
 
@@ -3843,12 +3834,8 @@ function evaluateReferral2() {
             "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
             "health and to prevent transmission.", "Re-Test");
 
-
-
-
         }
 
-        
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
         "new negative") {
@@ -3989,37 +3976,37 @@ function evaluateReferral2() {
     }
 
 }
-function setAppiontment(){
+function setAppiontment() {
 
     __$("today").click();
 
-    __$("today").setAttribute("disabled","disabled");
+    __$("today").setAttribute("disabled", "disabled");
 
     __$("today").style.display = "none";
 
 }
-function loadPost(){
+function loadPost() {
 
     evaluateReferral2();
 
-    setMaxDate("appointment",1)
+    setMaxDate("appointment", 1)
 
     return false;
 
 }
 
-function  validateAppointment(){
+function validateAppointment() {
 
 
-    var appointment  = __$("appointment").value;
+    var appointment = __$("appointment").value;
 
     var date_today = new Date();
 
-    if(appointment < date_today.format("YYYY-mm-dd")){
+    if (appointment < date_today.format("YYYY-mm-dd")) {
 
-        gotoPage(tstCurrentPage - 1, false, true); 
+        gotoPage(tstCurrentPage - 1, false, true);
 
-        window.parent.dashboard.showMsg("The date booked is behind today","Invalide Date");
+        window.parent.dashboard.showMsg("The date booked is behind today", "Invalide Date");
 
     }
 
@@ -4032,223 +4019,232 @@ var target = "duration_in_days";
 
 function showTimeSinceLastDate() {
 
-        parent.innerHTML = "";
+    parent.innerHTML = "";
 
-        if (__$("nextButton")) {
+    if (__$("nextButton")) {
 
-            var initNavLogic = __$("nextButton").onmousedown;
+        var initNavLogic = __$("nextButton").onmousedown;
 
-            __$("nextButton").className = __$("nextButton").className.replace(/green/i, "gray");
+        __$("nextButton").className = __$("nextButton").className.replace(/green/i, "gray");
 
-            __$("nextButton").onmousedown = function () {
+        __$("nextButton").onmousedown = function () {
 
-                if (__$("nextButton").className.match(/gray/i))
-                    return;
+            if (__$("nextButton").className.match(/gray/i))
+                return;
 
-                if (String(typeof initNavLogic).toLowerCase() == "function")
-                    initNavLogic();
-
-            }
+            if (String(typeof initNavLogic).toLowerCase() == "function")
+                initNavLogic();
 
         }
 
-        if(__$("backButton")) {
+    }
 
-            var oldCallback = __$("backButton").onmousedown;
+    if (__$("backButton")) {
 
-            __$("backButton").onmousedown = function() {
+        var oldCallback = __$("backButton").onmousedown;
 
-                if(__$('nextButton'))
-                    __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
+        __$("backButton").onmousedown = function () {
 
-                oldCallback();
+            if (__$('nextButton'))
+                __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
 
-            }
+            oldCallback();
 
         }
 
-        var lt = document.getElementById("inputFrame"+tstCurrentPage);
-        var div = document.createElement("div");
-        div.style.width = "100%";
-        div.style.border = "1px solid #ccc";
-        div.style.height = "calc(100vh - 175px)";
-        div.style.overflow = "hidden";
+    }
 
-        lt.appendChild(div);
+    var lt = document.getElementById("inputFrame" + tstCurrentPage);
+    var div = document.createElement("div");
+    div.style.width = "100%";
+    div.style.border = "1px solid #ccc";
+    div.style.height = "calc(100vh - 175px)";
+    div.style.overflow = "hidden";
 
-        var table = document.createElement("table");
-        table.width = "100%";
-        table.style.borderCollapse = "collapse";
-        table.cellPadding = "10";
+    lt.appendChild(div);
 
-        div.appendChild(table);
+    var table = document.createElement("table");
+    table.width = "100%";
+    table.style.borderCollapse = "collapse";
+    table.cellPadding = "10";
+
+    div.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.style.fontSize = "2em";
+    td.style.borderBottom = "1px solid #ccc";
+    td.colSpan = 2;
+    td.innerHTML = "Duration ago";
+
+    tr.appendChild(td);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.style.width = "40%";
+    td.style.height = "calc(100vh - 173px)";
+    td.style.verticalAlign = "top";
+    td.style.borderRight = "1px dotted #ccc";
+    td.rowSpan = 3;
+
+    tr.appendChild(td);
+
+    var ul = document.createElement("ul");
+    ul.style.listStyle = "none";
+    ul.style.padding = "0px";
+
+    td.appendChild(ul);
+
+    var durations = ["Years", "Months", "Weeks", "Days"];
+
+    for (var i = 0; i < durations.length; i++) {
+
+        var duration = durations[i];
+
+        var li = document.createElement("li");
+        li.style.padding = "10px";
+        li.style.fontSize = "2em";
+        li.style.borderBottom = "1px dotted #ccc";
+        li.id = duration;
+
+        li.onclick = function () {
+
+            updateRange(this.id);
+
+        }
+
+        ul.appendChild(li);
+
+        var liTable = document.createElement("table");
+        liTable.width = "100%";
+        liTable.style.fontSize = "1.1em";
+
+        li.appendChild(liTable);
+
+        var liTr = document.createElement("tr");
+
+        liTable.appendChild(liTr);
+
+        var liTd = document.createElement("td");
+        liTd.innerHTML = duration;
+
+        liTr.appendChild(liTd);
+
+        var liTd = document.createElement("td");
+        liTd.style.textAlign = "right";
+
+        liTr.appendChild(liTd);
+
+        var img = document.createElement("img");
+        img.setAttribute("src", "touchscreentoolkit/lib/images/unchecked.png");
+        img.height = "40";
+        img.id = "img" + duration;
+
+        liTd.appendChild(img);
+
+    }
+
+    var td = document.createElement("td");
+    td.style.width = "60%";
+    td.style.fontSize = "2.2em";
+    td.id = "lblDuration";
+    td.align = "center";
+    td.innerHTML = "How many years ago?";
+
+    tr.appendChild(td);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.style.padding = "0px";
+
+    tr.appendChild(td);
+
+    var input = document.createElement("input");
+    input.style.fontSize = "2.5em";
+    input.style.border = "1px #ccc solid";
+    input.style.padding = "10px";
+    input.style.width = "100%";
+    input.style.backgroundColor = "#eee";
+    input.style.textAlign = "center";
+    input.id = "duration";
+    input.type = "text";
+    input.value = "";
+
+    td.appendChild(input);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.style.verticalAlign = "top";
+    td.style.height = "calc(100vh - 320px)";
+    td.id = "numberPad";
+
+    tr.appendChild(td);
+
+    var table = document.createElement("table");
+    table.style.margin = "auto";
+
+    td.appendChild(table);
+
+    var buttons = [[7, 8, 9], [4, 5, 6], [1, 2, 3], ["clear", 0, "del"]];
+
+    for (var i = 0; i < buttons.length; i++) {
 
         var tr = document.createElement("tr");
 
         table.appendChild(tr);
 
-        var td = document.createElement("td");
-        td.style.fontSize = "2em";
-        td.style.borderBottom = "1px solid #ccc";
-        td.colSpan = 2;
-        td.innerHTML = "Duration ago";
+        for (var j = 0; j < buttons[i].length; j++) {
 
-        tr.appendChild(td);
+            var td = document.createElement("td");
 
-        var tr = document.createElement("tr");
+            tr.appendChild(td);
 
-        table.appendChild(tr);
+            var button = document.createElement("button");
+            button.innerHTML = buttons[i][j];
+            button.className = "click";
+            button.style.minWidth = "100px";
 
-        var td = document.createElement("td");
-        td.style.width = "40%";
-        td.style.height = "calc(100vh - 173px)";
-        td.style.verticalAlign = "top";
-        td.style.borderRight = "1px dotted #ccc";
-        td.rowSpan = 3;
-
-        tr.appendChild(td);
-
-        var ul = document.createElement("ul");
-        ul.style.listStyle = "none";
-        ul.style.padding = "0px";
-
-        td.appendChild(ul);
-
-        var durations = ["Years", "Months", "Weeks", "Days"];
-
-        for(var i = 0; i < durations.length; i++) {
-
-            var duration = durations[i];
-
-            var li = document.createElement("li");
-            li.style.padding = "10px";
-            li.style.fontSize = "2em";
-            li.style.borderBottom = "1px dotted #ccc";
-            li.id = duration;
-
-            li.onclick = function() {
-
-                updateRange(this.id);
-
-            }
-
-            ul.appendChild(li);
-
-            var liTable = document.createElement("table");
-            liTable.width = "100%";
-            liTable.style.fontSize = "1.1em";
-
-            li.appendChild(liTable);
-
-            var liTr = document.createElement("tr");
-
-            liTable.appendChild(liTr);
-
-            var liTd = document.createElement("td");
-            liTd.innerHTML = duration;
-
-            liTr.appendChild(liTd);
-
-            var liTd = document.createElement("td");
-            liTd.style.textAlign = "right";
-
-            liTr.appendChild(liTd);
-
-            var img = document.createElement("img");
-            img.setAttribute("src", "touchscreentoolkit/lib/images/unchecked.png");
-            img.height = "40";
-            img.id = "img" + duration;
-
-            liTd.appendChild(img);
+            td.appendChild(button);
 
         }
 
-        var td = document.createElement("td");
-        td.style.width = "60%";
-        td.style.fontSize = "2.2em";
-        td.id = "lblDuration";
-        td.align = "center";
-        td.innerHTML = "How many years ago?";
+    }
 
-        tr.appendChild(td);
+    init();
 
-        var tr = document.createElement("tr");
 
-        table.appendChild(tr);
-
-        var td = document.createElement("td");
-        td.style.padding = "0px";
-
-        tr.appendChild(td);
-
-        var input = document.createElement("input");
-        input.style.fontSize = "2.5em";
-        input.style.border = "1px #ccc solid";
-        input.style.padding = "10px";
-        input.style.width = "100%";
-        input.style.backgroundColor = "#eee";
-        input.style.textAlign = "center";
-        input.id = "duration";
-        input.type = "text";
-        input.value = "";
-
-        td.appendChild(input);
-
-        var tr = document.createElement("tr");
-
-        table.appendChild(tr);
-
-        var td = document.createElement("td");
-        td.style.verticalAlign = "top";
-        td.style.height = "calc(100vh - 320px)";
-        td.id = "numberPad";
-
-        tr.appendChild(td);
-
-        var table = document.createElement("table");
-        table.style.margin = "auto";
-
-        td.appendChild(table);
-
-        var buttons = [[7,8,9], [4,5,6], [1,2,3], ["clear", 0, "del"]];
-
-        for(var i = 0; i < buttons.length; i++) {
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            for(var j = 0; j < buttons[i].length; j++) {
-
-                var td = document.createElement("td");
-
-                tr.appendChild(td);
-
-                var button = document.createElement("button");
-                button.innerHTML = buttons[i][j];
-                button.className = "click";
-                button.style.minWidth = "100px";
-
-                td.appendChild(button);
-
-            }
-
-        }
-
-        init();
-
-      
 }
 
-function setTimeSinceLastDate(){
+function setTimeSinceLastDate() {
 
-       var time_in_days = parseInt(__$("duration_in_days").value);
+    var time_in_days = (__$("duration_in_days").value.trim().length > 0 &&
+    __$("duration_in_days").value.trim().match(/^\d+$/) ? parseInt(__$("duration_in_days").value.trim()) : null);
 
-       var date = new Date();
+    if(time_in_days != null) {
 
-       date.setDate(date.getDate() - time_in_days);
+        var date = new Date();
 
-       __$("time_since_last_test_date").value = date.format("YYYY-mm-dd");
+        date.setDate(date.getDate() - time_in_days);
+
+        __$("time_since_last_test_date").value = date.format("YYYY-mm-dd");
+
+    } else {
+
+        __$("time_since_last_test_date").value = "";
+
+    }
 
 }
 
@@ -4264,22 +4260,21 @@ function updateDuration(token) {
             var birthdate = window.parent.dashboard.data.data.birthdate;
 
 
-
             switch (currentRange) {
 
                 case "Years":
 
-                    if(parseInt((String(__$("duration").value).trim()) + token) > 30){
+                    if (parseInt((String(__$("duration").value).trim()) + token) > 30) {
 
-                        window.parent.dashboard.showMsg("Years you are about enter is greater than (30 years)","Time Since Last Test")
-
-
-                    }else if(birthdate && birthdate.length > 0 && parseInt(getAge(birthdate)[0]) < parseInt((String(__$("duration").value).trim()) + token)){
-
-                         window.parent.dashboard.showMsg("Years you are about enter  is greater than  age of the client ("+parseInt(getAge(birthdate)[0])+" years)","Time Since Last Test");
+                        window.parent.dashboard.showMsg("Years you are about enter is greater than (30 years)", "Time Since Last Test")
 
 
-                    }else{
+                    } else if (birthdate && birthdate.length > 0 && parseInt(getAge(birthdate)[0]) < parseInt((String(__$("duration").value).trim()) + token)) {
+
+                        window.parent.dashboard.showMsg("Years you are about enter  is greater than  age of the client (" + parseInt(getAge(birthdate)[0]) + " years)", "Time Since Last Test");
+
+
+                    } else {
 
                         __$("duration").value = (String(__$("duration").value).trim()) + token;
 
@@ -4289,13 +4284,13 @@ function updateDuration(token) {
                     break;
                 case "Months":
 
-                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+                    if (parseInt((String(__$("duration").value).trim()) + token) > 24) {
 
-                        window.parent.dashboard.showMsg("Months you are about enter is greater than (24 months)","Time Since Last Test")
+                        window.parent.dashboard.showMsg("Months you are about enter is greater than (24 months)", "Time Since Last Test")
 
 
                     }
-                    else{
+                    else {
 
                         __$("duration").value = (String(__$("duration").value).trim()) + token;
 
@@ -4305,13 +4300,13 @@ function updateDuration(token) {
 
                 case "Weeks":
 
-                    if(parseInt((String(__$("duration").value).trim()) + token) > 24){
+                    if (parseInt((String(__$("duration").value).trim()) + token) > 24) {
 
-                        window.parent.dashboard.showMsg("Weeks you are about enter is greater than (24 weeks)","Time Since Last Test")
+                        window.parent.dashboard.showMsg("Weeks you are about enter is greater than (24 weeks)", "Time Since Last Test")
 
 
                     }
-                    else{
+                    else {
 
                         __$("duration").value = (String(__$("duration").value).trim()) + token;
 
@@ -4321,13 +4316,13 @@ function updateDuration(token) {
 
                 case "Days":
 
-                    if(parseInt((String(__$("duration").value).trim()) + token) > 31){
+                    if (parseInt((String(__$("duration").value).trim()) + token) > 31) {
 
-                        window.parent.dashboard.showMsg("Days you are about enter is greater than (31 days)","Time Since Last Test")
+                        window.parent.dashboard.showMsg("Days you are about enter is greater than (31 days)", "Time Since Last Test")
 
 
                     }
-                    else{
+                    else {
 
                         __$("duration").value = (String(__$("duration").value).trim()) + token;
 
@@ -4471,14 +4466,14 @@ function updateResult() {
 
         __$(target).value = days;
 
-        if(__$("duration").value.trim().length > 0) {
+        if (__$("duration").value.trim().length > 0) {
 
-            if(__$('nextButton'))
+            if (__$('nextButton'))
                 __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
 
         } else {
 
-            if(__$('nextButton'))
+            if (__$('nextButton'))
                 __$('nextButton').className = __$('nextButton').className.replace(/green/i, 'gray');
 
         }
@@ -4497,7 +4492,9 @@ function init() {
 
             updateDuration(this.innerHTML.trim());
             __$('nextButton').className = __$('nextButton').className.replace(/gray/i, 'green');
-            __$('nextButton').onmousedown=function(){gotoNextPage()};
+            __$('nextButton').onmousedown = function () {
+                gotoNextPage()
+            };
 
 
         }
@@ -5285,44 +5282,44 @@ function reverseConsumption(consumption_id, prefix, suffix) {
 
 }
 
-function setMaxDate(element,number_of_years){
+function setMaxDate(element, number_of_years) {
 
-    var max_date =  new Date(((new Date()).setYear((new Date()).getFullYear() + number_of_years))).format("YYYY-mm-dd");
+    var max_date = new Date(((new Date()).setYear((new Date()).getFullYear() + number_of_years))).format("YYYY-mm-dd");
 
-    __$(element).setAttribute("maxDate",max_date);
+    __$(element).setAttribute("maxDate", max_date);
 
 }
 
-function setPhoneNumberValidation(phone_number){
+function setPhoneNumberValidation(phone_number) {
 
-    if(__$(phone_number)){
+    if (__$(phone_number)) {
 
         var field = __$(phone_number);
 
-        field.setAttribute("validationRule","^01\\d{6}$|Unknown|Not Available|^01\\d{8}$|^02\\d{8}$|^03\\d{8}$|^04\\d{8}$|^05\\d{8}$|^06\\d{8}$|^07\\d{8}$|^08\\d{8}$|^09\\d{8}$|^N\\/A$");
+        field.setAttribute("validationRule", "^01\\d{6}$|Unknown|Not Available|^01\\d{8}$|^02\\d{8}$|^03\\d{8}$|^04\\d{8}$|^05\\d{8}$|^06\\d{8}$|^07\\d{8}$|^08\\d{8}$|^09\\d{8}$|^N\\/A$");
 
-        field.setAttribute("validationMessage","Not a valid phone number");
+        field.setAttribute("validationMessage", "Not a valid phone number");
 
-        field.setAttribute("field_type","number");
+        field.setAttribute("field_type", "number");
 
-        field.setAttribute("tt_pageStyleClass","Numeric NumbersOnly");
+        field.setAttribute("tt_pageStyleClass", "Numeric NumbersOnly");
 
     }
 
 }
 
 
-function isNotInfant(){
+function isNotInfant() {
 
     var is_not_infant = true;
 
-    window.parent.dashboard.queryExistingObsArray("Age Group", function(data){ 
+    window.parent.dashboard.queryExistingObsArray("Age Group", function (data) {
 
-        var  keys = Object.keys(data);
+        var keys = Object.keys(data);
 
-        for (var i = 0 ; i < keys.length; i++){
+        for (var i = 0; i < keys.length; i++) {
 
-            if(data[keys[i]]=="1-14 years"){
+            if (data[keys[i]] == "1-14 years") {
 
                 is_not_infant = false;
 
@@ -5337,53 +5334,52 @@ function isNotInfant(){
     return is_not_infant;
 }
 
-function setTestKits(){
+function setTestKits() {
 
     //Temporary Fix
 
-    window.parent.dashboard.setCookie('LastHIVTest',window.parent.dashboard.queryActiveObs("HTS PROGRAM",
-                                        (new Date()).format("YYYY-mm-dd"),"PRE TEST COUNSELLING","Last HIV test"));
+    window.parent.dashboard.setCookie('LastHIVTest', window.parent.dashboard.queryActiveObs("HTS PROGRAM",
+        (new Date()).format("YYYY-mm-dd"), "PRE TEST COUNSELLING", "Last HIV test"));
 
     var descriptions = ["First Test", "Second Test"];
 
 
-    for (var i = 0 ; i < descriptions.length ; i++){
+    for (var i = 0; i < descriptions.length; i++) {
 
-         getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+        getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent(descriptions[i]), function (data) {
 
-                var kit_data = JSON.parse(data);
+            var kit_data = JSON.parse(data);
 
-                if(!window.parent.dashboard.data.kits)
-                    window.parent.dashboard.data.kits = {};
+            if (!window.parent.dashboard.data.kits)
+                window.parent.dashboard.data.kits = {};
 
-                window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
-
-
-                if(kit_data.description == "First Test"){
+            window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
 
 
+            if (kit_data.description == "First Test") {
 
-                    __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
 
-                }
+            }
 
-                else{
+            else {
 
-                    __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
-                        "&item_name=" + kit_data.name + "&batch=");
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
-                    getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
+                __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
-                }
+            }
 
-                if(kit_data.name && kit_data.name.length > 0)
-                        recommendedTimmerForLabels([kit_data.name]);
+            if (kit_data.name && kit_data.name.length > 0)
+                recommendedTimmerForLabels([kit_data.name]);
 
         });
 
@@ -5391,51 +5387,51 @@ function setTestKits(){
     }
 
 }
-function setTestKitsProfiency(){
+function setTestKitsProfiency() {
 
     var descriptions = ["First Test", "Second Test"];
 
 
-    for (var i = 0 ; i < descriptions.length ; i++){
+    for (var i = 0; i < descriptions.length; i++) {
 
-         getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent(descriptions[i]), function(data){
+        getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent(descriptions[i]), function (data) {
 
-                var kit_data = JSON.parse(data);
+            var kit_data = JSON.parse(data);
 
-                if(!window.parent.proficiency.kits)
-                    window.parent.proficiency.kits = {};
+            if (!window.parent.proficiency.kits)
+                window.parent.proficiency.kits = {};
 
-                window.parent.proficiency.kits[kit_data.description] = kit_data.name;
-
-
-                for( var i = 0 ; i < 5 ; i =  i + 1){
-
-                       if(kit_data.description == "First Test"){
-
-                            console.log('data.fp_lot_number1_' + i);
+            window.parent.proficiency.kits[kit_data.description] = kit_data.name;
 
 
-                            __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
-                            "&item_name=" + kit_data.name + "&batch=");
+            for (var i = 0; i < 5; i = i + 1) {
 
-                            __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' +getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                if (kit_data.description == "First Test") {
+
+                    console.log('data.fp_lot_number1_' + i);
 
 
-                        }
+                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                        "&item_name=" + kit_data.name + "&batch=");
 
-                        else{
+                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
-                            __$('data.fp_lot_number2_' + i ).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
-                                "&item_name=" + kit_data.name + "&batch=");
-
-                            __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name  + "&batch=");
-
-                        }
-
-                        if(kit_data.name && kit_data.name.length > 0)
-                                recommendedTimmerForLabelsProficiency([kit_data.name]);
 
                 }
+
+                else {
+
+                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                        "&item_name=" + kit_data.name + "&batch=");
+
+                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+
+                }
+
+                if (kit_data.name && kit_data.name.length > 0)
+                    recommendedTimmerForLabelsProficiency([kit_data.name]);
+
+            }
 
         });
 
@@ -5444,786 +5440,786 @@ function setTestKitsProfiency(){
 
 }
 
-function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2,iterator) {
+function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2, iterator) {
 
 
-         if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
+    if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
-                return;
+        return;
+
+    }
+
+    tmrControl1SecsCount = 0;
+    tmrControl1MinsCount = 0;
+    tmrControl2SecsCount = 0;
+    tmrControl2MinsCount = 0;
+
+    if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+
+        var currentClass = __$("nextButton").className;
+
+        __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+
+    }
+
+    var mainTable = document.createElement("table");
+    mainTable.style.margin = "auto";
+
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+
+    }
+
+    var mainRow = document.createElement("tr");
+
+    mainTable.appendChild(mainRow);
+
+    var mainTd1 = document.createElement("td");
+    mainTd1.style.paddingRight = "20px";
+
+    mainRow.appendChild(mainTd1);
+
+    var mainTd2 = document.createElement("td");
+    mainTd2.style.paddingLeft = "20px";
+
+    mainRow.appendChild(mainTd2);
+
+    var table = document.createElement("table");
+    table.id = "timeTable1";
+    table.style.margin = "auto";
+    table.border = 0;
+
+    mainTd1.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.align = "center";
+    td.verticalAlign = "middle";
+    td.style.border = "1px solid #3c60b1";
+    td.style.borderRadius = "g10px";
+    td.style.padding = "25px";
+    td.colSpan = 3;
+    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+    tr.appendChild(td);
+
+    var div = document.createElement("div");
+    div.style.border = "3px solid #3c60b1";
+    div.style.borderRadius = "calc(50vh - 150px)";
+    div.style.width = "calc(100vh - 300px)";
+    div.id = "tmrControl1";
+    div.style.height = "calc(100vh - 300px)";
+    div.style.margin = "auto";
+    div.style.textAlign = "center";
+    div.style.verticalAlign = "middle";
+    div.style.display = "table-cell";
+    div.innerHTML = "00:00";
+    div.style.fontSize = "20vh";
+    div.style.color = "#3c60b1";
+    div.style.backgroundColor = "#fff";
+    div.style.zIndex = 100;
+
+    td.appendChild(div);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.colSpan = 3;
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = "blue";
+    btn.innerHTML = "Start";
+    btn.style.cssFloat = "right";
+    btn.style.fontSize = "5vh !important";
+    btn.style.marginTop = "-60px";
+    btn.style.marginRight = "5px";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+        }
+
+        var currentClass = __$("nextButton").className;
+
+        this.className = currentClass.replace(/blue|green/i, "gray");
+
+        tmrControl1Hnd = setInterval(function () {
+
+            tmrControl1SecsCount++;
+
+            if (tmrControl1SecsCount == 60) {
+
+                tmrControl1SecsCount = 0;
+
+                tmrControl1MinsCount++;
 
             }
 
-            tmrControl1SecsCount = 0;
-            tmrControl1MinsCount = 0;
-            tmrControl2SecsCount = 0;
-            tmrControl2MinsCount = 0;
+            var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
-            if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
+            if (__$("tmrControl1")) {
 
+                __$("tmrControl1").innerHTML = time;
+
+                var label_data = window.parent.dashboard.data.stock_label_data[label1]
+
+                var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
+
+
+                if (tmrControl1MinsCount >= parseInt(label_data.rec_time) && tmrControl1MinsCount < window_time) {
+
+                    __$("tmrControl1").style.color = "green";
+
+                } else if (tmrControl1MinsCount >= window_time) {
+
+                    __$("tmrControl1").style.color = "#d9d8d7";
+
+                }
+
+            }
+
+        }, 1000);
+
+        if (__$("btnTest1Nve")) {
+
+            var currentClass = __$("btnTest1Nve").className;
+
+            __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+
+        }
+
+        if (__$("btnTest1Pve")) {
+
+            var currentClass = __$("btnTest1Pve").className;
+
+            __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+
+        }
+
+    }
+
+    td.appendChild(btn);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+
+    var test1 = "First";
+
+
+    if (__$("data.fp_item_name1_" + iterator).value && __$("data.fp_item_name1_" + iterator).value != "") {
+
+        test1 = __$("data.fp_item_name1_" + iterator).value
+
+    }
+
+    if (__$("data.im_item_name1_" + iterator).value && __$("data.im_item_name1_" + iterator).value != "") {
+
+        test1 = __$("data.im_item_name1_" + iterator).value
+
+    }
+
+    td.innerHTML = (label1 ? label1 : test1 + " Test") + " Result " + "<font style='color:green' id='l1_minutes'> </font>";
+    td.style.fontSize = "3vh";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.align = "right";
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Non Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest1Nve";
+    btn.setAttribute("target", test1Target.id);
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
+    btn.setAttribute("target2", test2Target.id);
+    btn.setAttribute("timeTarget2", test2TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        clearInterval(tmrControl1Hnd);
+
+        if (__$(this.getAttribute("target"))) {
+
+            __$(this.getAttribute("target")).value = "-";
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+        }
+
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
                 var currentClass = __$("nextButton").className;
 
-                __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
             }
 
-            var mainTable = document.createElement("table");
-            mainTable.style.margin = "auto";
+        }
 
-            if (__$("inputFrame" + tstCurrentPage)) {
+        //Disbabling the other button
 
-                __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
+        __$('btnTest1Nve').className = "green";
 
-            }
+        __$('btnTest1Pve').className = "gray";
 
-            var mainRow = document.createElement("tr");
+        var time = __$("tmrControl1").innerHTML;
 
-            mainTable.appendChild(mainRow);
+        if (test1Target.id.trim() == "data.fp_test1_result" + iterator) {
 
-            var mainTd1 = document.createElement("td");
-            mainTd1.style.paddingRight = "20px";
+            __$("fp_test1_time" + iterator).setAttribute("condition", true);
 
-            mainRow.appendChild(mainTd1);
+            __$("fp_test1_time" + iterator).value = time;
 
-            var mainTd2 = document.createElement("td");
-            mainTd2.style.paddingLeft = "20px";
+        }
 
-            mainRow.appendChild(mainTd2);
+        if (test1Target.id.trim() == "data.im_test1_result" + iterator) {
 
-            var table = document.createElement("table");
-            table.id = "timeTable1";
-            table.style.margin = "auto";
-            table.border = 0;
 
-            mainTd1.appendChild(table);
+            __$("im_test1_time" + iterator).setAttribute("condition", true);
 
-            var tr = document.createElement("tr");
+            __$("im_test1_time" + iterator).value = time;
 
-            table.appendChild(tr);
+        }
 
-            var td = document.createElement("td");
-            td.align = "center";
-            td.verticalAlign = "middle";
-            td.style.border = "1px solid #3c60b1";
-            td.style.borderRadius = "g10px";
-            td.style.padding = "25px";
-            td.colSpan = 3;
-            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
 
-            tr.appendChild(td);
+    }
 
-            var div = document.createElement("div");
-            div.style.border = "3px solid #3c60b1";
-            div.style.borderRadius = "calc(50vh - 150px)";
-            div.style.width = "calc(100vh - 300px)";
-            div.id = "tmrControl1";
-            div.style.height = "calc(100vh - 300px)";
-            div.style.margin = "auto";
-            div.style.textAlign = "center";
-            div.style.verticalAlign = "middle";
-            div.style.display = "table-cell";
-            div.innerHTML = "00:00";
-            div.style.fontSize = "20vh";
-            div.style.color = "#3c60b1";
-            div.style.backgroundColor = "#fff";
-            div.style.zIndex = 100;
+    td.appendChild(btn);
 
-            td.appendChild(div);
+    var td = document.createElement("td");
+    td.align = "right";
 
-            var tr = document.createElement("tr");
+    tr.appendChild(td);
 
-            table.appendChild(tr);
+    var btn = document.createElement("button");
+    btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest1Pve";
+    btn.setAttribute("target", test1Target.id);
+    btn.setAttribute("timeTarget", test1TimeTarget.id);
+    btn.setAttribute("target2", test2Target.id);
+    btn.setAttribute("timeTarget2", test2TimeTarget.id);
 
-            var td = document.createElement("td");
-            td.colSpan = 3;
+    btn.onclick = function () {
 
-            tr.appendChild(td);
+        if (this.className.match(/gray/i)) {
 
-            var btn = document.createElement("button");
-            btn.className = "blue";
-            btn.innerHTML = "Start";
-            btn.style.cssFloat = "right";
-            btn.style.fontSize = "5vh !important";
-            btn.style.marginTop = "-60px";
-            btn.style.marginRight = "5px";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.setAttribute("timeTarget", test1TimeTarget.id);
+            return;
 
-            btn.onclick = function () {
+        }
 
-                if (this.className.match(/gray/i)) {
+        clearInterval(tmrControl1Hnd);
 
-                    return;
+        if (__$(this.getAttribute("target"))) {
 
-                }
+            __$(this.getAttribute("target")).value = "+";
 
-                if (__$(this.getAttribute("timeTarget"))) {
+        }
 
-                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+        if (__$(this.getAttribute("timeTarget"))) {
 
-                }
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+        }
+
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
                 var currentClass = __$("nextButton").className;
 
-                this.className = currentClass.replace(/blue|green/i, "gray");
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
-                tmrControl1Hnd = setInterval(function () {
+            }
 
-                    tmrControl1SecsCount++;
+        }
 
-                    if (tmrControl1SecsCount == 60) {
+        //Disbabling the other button
 
-                        tmrControl1SecsCount = 0;
+        __$('btnTest1Nve').className = "gray";
 
-                        tmrControl1MinsCount++;
-
-                    }
-
-                    var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
-
-                    if (__$("tmrControl1")) {
-                
-                        __$("tmrControl1").innerHTML = time;
-
-                        var label_data = window.parent.dashboard.data.stock_label_data[label1]
-
-                        var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
+        __$('btnTest1Pve').className = "green";
 
 
-                        if(tmrControl1MinsCount  >= parseInt(label_data.rec_time) && tmrControl1MinsCount <  window_time){
+        var time = __$("tmrControl1").innerHTML;
 
-                             __$("tmrControl1").style.color = "green";
+        if (test1Target.id.trim() == "data.fp_test1_result" + iterator) {
 
-                        }else if(tmrControl1MinsCount >= window_time){
+            __$("fp_test1_time" + iterator).setAttribute("condition", true);
 
-                             __$("tmrControl1").style.color = "#d9d8d7";
+            __$("fp_test1_time" + iterator).value = time;
 
-                        }
+        }
 
-                    }
+        if (test1Target.id.trim() == "data.im_test1_result" + iterator) {
 
-                }, 1000);
 
-                if (__$("btnTest1Nve")) {
+            __$("im_test1_time" + iterator).setAttribute("condition", true);
 
-                    var currentClass = __$("btnTest1Nve").className;
+            __$("im_test1_time" + iterator).value = time;
 
-                    __$("btnTest1Nve").className = currentClass.replace(/gray/i, "blue");
+        }
 
-                }
 
-                if (__$("btnTest1Pve")) {
+    }
 
-                    var currentClass = __$("btnTest1Pve").className;
+    td.appendChild(btn);
 
-                    __$("btnTest1Pve").className = currentClass.replace(/gray/i, "blue");
+    var table = document.createElement("table");
+    table.id = "timeTable2";
+    table.style.margin = "auto";
+    table.border = 0;
+
+    mainTd2.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.align = "center";
+    td.verticalAlign = "middle";
+    td.style.border = "1px solid #3c60b1";
+    //td.style.borderRadius = "10px";
+    td.style.padding = "25px";
+    td.colSpan = 3;
+    td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+
+    tr.appendChild(td);
+
+    var div = document.createElement("div");
+    div.style.border = "3px inset #3c60b1";
+    div.style.borderRadius = "calc(50vh - 150px)";
+    div.style.width = "calc(100vh - 300px)";
+    div.id = "tmrControl2";
+    div.style.height = "calc(100vh - 300px)";
+    div.style.margin = "auto";
+    div.style.textAlign = "center";
+    div.style.verticalAlign = "middle";
+    div.style.display = "table-cell";
+    div.innerHTML = "00:00";
+    div.style.fontSize = "20vh";
+    div.style.color = "#3c60b1";
+    div.style.backgroundColor = "#fff";
+    div.style.zIndex = 100;
+
+    td.appendChild(div);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.colSpan = 3;
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = "blue";
+    btn.innerHTML = "Start";
+    btn.style.cssFloat = "left";
+    btn.style.fontSize = "5vh !important";
+    btn.style.marginTop = "-60px";
+    btn.style.marginLeft = "5px";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+
+        }
+
+        var currentClass = __$("nextButton").className;
+
+        this.className = currentClass.replace(/blue|green/i, "gray");
+
+        tmrControl2Hnd = setInterval(function () {
+
+            tmrControl2SecsCount++;
+
+            if (tmrControl2SecsCount == 60) {
+
+                tmrControl2SecsCount = 0;
+
+                tmrControl2MinsCount++;
+
+            }
+
+            var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
+
+            if (__$("tmrControl2")) {
+
+                __$("tmrControl2").innerHTML = time;
+
+                var label2_data = window.parent.proficiency.stock_label_data[label2]
+
+                var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
+
+
+                if (tmrControl2MinsCount >= parseInt(label2_data.rec_time) && tmrControl2MinsCount < window_time) {
+
+                    __$("tmrControl2").style.color = "green";
+
+                } else if (tmrControl2MinsCount >= window_time) {
+
+                    __$("tmrControl2").style.color = "#d9d8d7";
 
                 }
 
             }
 
-            td.appendChild(btn);
+        }, 1000);
 
-            var tr = document.createElement("tr");
+        if (__$("btnTest2Nve")) {
 
-            table.appendChild(tr);
+            var currentClass = __$("btnTest2Nve").className;
 
-            var td = document.createElement("td");
+            __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
 
-            var test1 = "First";
+        }
 
+        if (__$("btnTest2Pve")) {
 
-            if(__$("data.fp_item_name1_"+iterator).value && __$("data.fp_item_name1_"+iterator).value != ""){
+            var currentClass = __$("btnTest2Pve").className;
 
-                test1 = __$("data.fp_item_name1_"+iterator).value
+            __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
 
-            }
+        }
 
-            if(__$("data.im_item_name1_"+iterator).value && __$("data.im_item_name1_"+iterator).value != ""){
+    }
 
-                test1 = __$("data.im_item_name1_"+iterator).value
+    td.appendChild(btn);
 
-            }
+    var tr = document.createElement("tr");
 
-            td.innerHTML = (label1 ? label1 : test1+" Test") + " Result " +  "<font style='color:green' id='l1_minutes'> </font>";
-            td.style.fontSize = "3vh";
+    table.appendChild(tr);
 
-            tr.appendChild(td);
+    var td = document.createElement("td");
 
-            var td = document.createElement("td");
-            td.align = "right";
+    var test2 = "Second";
 
-            tr.appendChild(td);
+    if (__$("data.fp_item_name2_" + iterator).value && __$("data.fp_item_name2_" + iterator).value != "") {
 
-            var btn = document.createElement("button");
-            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Non Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest1Nve";
-            btn.setAttribute("target", test1Target.id);
-            btn.setAttribute("timeTarget", test1TimeTarget.id);
-            btn.setAttribute("target2", test2Target.id);
-            btn.setAttribute("timeTarget2", test2TimeTarget.id);
+        test2 = __$("data.fp_item_name2_" + iterator).value
 
-            btn.onclick = function () {
+    }
 
-                if (this.className.match(/gray/i)) {
+    if (__$("data.im_item_name2_" + iterator).value && __$("data.im_item_name2_" + iterator).value != "") {
 
-                    return;
+        test2 = __$("data.im_item_name2_" + iterator).value
 
-                }
+    }
 
-                clearInterval(tmrControl1Hnd);
+    td.innerHTML = (label2 ? label2 : test2 + " Test") + " Result " + "<font style='color:green' id='l2_minutes'></font>";
+    td.style.fontSize = "3vh";
 
-                if (__$(this.getAttribute("target"))) {
+    tr.appendChild(td);
 
-                    __$(this.getAttribute("target")).value = "-";
+    var td = document.createElement("td");
+    td.align = "right";
 
-                }
+    tr.appendChild(td);
 
-                if (__$(this.getAttribute("timeTarget"))) {
+    var btn = document.createElement("button");
+    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Non Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest2Nve";
+    btn.setAttribute("target", test2Target.id);
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
+    btn.setAttribute("target2", test1Target.id);
+    btn.setAttribute("timeTarget2", test1TimeTarget.id);
 
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+    btn.onclick = function () {
 
-                    var now = (new Date());
+        if (this.className.match(/gray/i)) {
 
-                    var duration = (now - startTime) / (60 * 1000);
+            return;
 
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+        }
 
-                }
+        clearInterval(tmrControl2Hnd);
 
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+        if (__$(this.getAttribute("target"))) {
 
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
+            __$(this.getAttribute("target")).value = "-";
 
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+        }
 
-                    }
+        if (__$("touchscreenInput" + tstCurrentPage)) {
 
-                }
+            __$("touchscreenInput" + tstCurrentPage).value = "-";
 
-                //Disbabling the other button
+        }
 
-                __$('btnTest1Nve').className = "green";
+        if (__$(this.getAttribute("timeTarget"))) {
 
-                __$('btnTest1Pve').className = "gray";
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-                var time = __$("tmrControl1").innerHTML;
+            var now = (new Date());
 
-                if(test1Target.id.trim() == "data.fp_test1_result"+iterator){
+            var duration = (now - startTime) / (60 * 1000);
 
-                    __$("fp_test1_time"+iterator).setAttribute("condition",true);
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
 
-                    __$("fp_test1_time"+iterator).value = time;
+        }
 
-                }
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
 
-                if(test1Target.id.trim() == "data.im_test1_result"+iterator){
-
-
-                    __$("im_test1_time"+iterator).setAttribute("condition",true);
-
-                    __$("im_test1_time"+iterator).value = time;
-
-                }                
-
-
-            }
-
-            td.appendChild(btn);
-
-            var td = document.createElement("td");
-            td.align = "right";
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = (test1TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest1Pve";
-            btn.setAttribute("target", test1Target.id);
-            btn.setAttribute("timeTarget", test1TimeTarget.id);
-            btn.setAttribute("target2", test2Target.id);
-            btn.setAttribute("timeTarget2", test2TimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                clearInterval(tmrControl1Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "+";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
-
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-                    }
-
-                }
-
-                //Disbabling the other button
-
-                __$('btnTest1Nve').className = "gray";
-
-                __$('btnTest1Pve').className = "green";
-
-
-                var time = __$("tmrControl1").innerHTML;
-
-                if(test1Target.id.trim() == "data.fp_test1_result"+iterator){
-
-                    __$("fp_test1_time"+iterator).setAttribute("condition",true);
-
-                    __$("fp_test1_time"+iterator).value = time;
-
-                }
-
-                if(test1Target.id.trim() == "data.im_test1_result"+iterator){
-
-
-                    __$("im_test1_time"+iterator).setAttribute("condition",true);
-
-                    __$("im_test1_time"+iterator).value = time;
-
-                }                
-
-
-               
-            }
-
-            td.appendChild(btn);
-
-            var table = document.createElement("table");
-            table.id ="timeTable2";
-            table.style.margin = "auto";
-            table.border = 0;
-
-            mainTd2.appendChild(table);
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-            td.align = "center";
-            td.verticalAlign = "middle";
-            td.style.border = "1px solid #3c60b1";
-            //td.style.borderRadius = "10px";
-            td.style.padding = "25px";
-            td.colSpan = 3;
-            td.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-
-            tr.appendChild(td);
-
-            var div = document.createElement("div");
-            div.style.border = "3px inset #3c60b1";
-            div.style.borderRadius = "calc(50vh - 150px)";
-            div.style.width = "calc(100vh - 300px)";
-            div.id = "tmrControl2";
-            div.style.height = "calc(100vh - 300px)";
-            div.style.margin = "auto";
-            div.style.textAlign = "center";
-            div.style.verticalAlign = "middle";
-            div.style.display = "table-cell";
-            div.innerHTML = "00:00";
-            div.style.fontSize = "20vh";
-            div.style.color = "#3c60b1";
-            div.style.backgroundColor = "#fff";
-            div.style.zIndex = 100;
-
-            td.appendChild(div);
-
-            var tr = document.createElement("tr");
-
-            table.appendChild(tr);
-
-            var td = document.createElement("td");
-            td.colSpan = 3;
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = "blue";
-            btn.innerHTML = "Start";
-            btn.style.cssFloat = "left";
-            btn.style.fontSize = "5vh !important";
-            btn.style.marginTop = "-60px";
-            btn.style.marginLeft = "5px";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.setAttribute("timeTarget", test2TimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
-
-                }
-
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
                 var currentClass = __$("nextButton").className;
 
-                this.className = currentClass.replace(/blue|green/i, "gray");
-
-                tmrControl2Hnd = setInterval(function () {
-
-                    tmrControl2SecsCount++;
-
-                    if (tmrControl2SecsCount == 60) {
-
-                        tmrControl2SecsCount = 0;
-
-                        tmrControl2MinsCount++;
-
-                    }
-
-                    var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
-
-                    if (__$("tmrControl2")) {
-
-                        __$("tmrControl2").innerHTML = time;
-
-                        var label2_data = window.parent.proficiency.stock_label_data[label2]
-
-                        var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
-
-
-                        if(tmrControl2MinsCount  >= parseInt(label2_data.rec_time) && tmrControl2MinsCount <  window_time){
-
-                             __$("tmrControl2").style.color = "green";
-
-                        }else if(tmrControl2MinsCount >= window_time){
-
-                             __$("tmrControl2").style.color = "#d9d8d7";
-
-                        }
-
-                    }
-
-                }, 1000);
-
-                if (__$("btnTest2Nve")) {
-
-                    var currentClass = __$("btnTest2Nve").className;
-
-                    __$("btnTest2Nve").className = currentClass.replace(/gray/i, "blue");
-
-                }
-
-                if (__$("btnTest2Pve")) {
-
-                    var currentClass = __$("btnTest2Pve").className;
-
-                    __$("btnTest2Pve").className = currentClass.replace(/gray/i, "blue");
-
-                }
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
             }
 
-            td.appendChild(btn);
+        }
 
-            var tr = document.createElement("tr");
+        //Disbabling the other button
 
-            table.appendChild(tr);
+        __$('btnTest2Nve').className = "green";
 
-            var td = document.createElement("td");
+        __$('btnTest2Pve').className = "gray";
 
-            var test2 = "Second";
+        var time = __$("tmrControl2").innerHTML;
 
-            if(__$("data.fp_item_name2_"+iterator).value && __$("data.fp_item_name2_"+iterator).value != ""){
+        if (test2Target.id.trim() == "data.fp_test2_result" + iterator) {
 
-                test2 = __$("data.fp_item_name2_"+iterator).value
+            __$("fp_test2_time").setAttribute("condition", true);
 
-            }
+            __$("fp_test2_time").value = time;
 
-            if(__$("data.im_item_name2_"+iterator).value && __$("data.im_item_name2_"+iterator).value != ""){
+        }
 
-                test2 = __$("data.im_item_name2_"+iterator).value
-
-            }
-
-            td.innerHTML = (label2 ? label2 : test2 +" Test") + " Result "+ "<font style='color:green' id='l2_minutes'></font>";
-            td.style.fontSize = "3vh";
-
-            tr.appendChild(td);
-
-            var td = document.createElement("td");
-            td.align = "right";
-
-            tr.appendChild(td);
-
-            var btn = document.createElement("button");
-            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Non Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest2Nve";
-            btn.setAttribute("target", test2Target.id);
-            btn.setAttribute("timeTarget", test2TimeTarget.id);
-            btn.setAttribute("target2", test1Target.id);
-            btn.setAttribute("timeTarget2", test1TimeTarget.id);
-
-            btn.onclick = function () {
-
-                if (this.className.match(/gray/i)) {
-
-                    return;
-
-                }
-
-                clearInterval(tmrControl2Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "-";
-
-                }
-
-                if (__$("touchscreenInput" + tstCurrentPage)) {
-
-                    __$("touchscreenInput" + tstCurrentPage).value = "-";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
-
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
-
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
-
-                    }
-
-                }
-
-                //Disbabling the other button
-
-                __$('btnTest2Nve').className = "green";
-
-                __$('btnTest2Pve').className = "gray";
-
-                var time = __$("tmrControl2").innerHTML;
-
-                if(test2Target.id.trim() == "data.fp_test2_result"+iterator){
-
-                    __$("fp_test2_time").setAttribute("condition",true);
-
-                    __$("fp_test2_time").value = time;
-
-                }
-
-                if(test2Target.id.trim() == "data.im_test2_result"+iterator){
+        if (test2Target.id.trim() == "data.im_test2_result" + iterator) {
 
 
-                    __$("im_test2_time").setAttribute("condition",true);
+            __$("im_test2_time").setAttribute("condition", true);
 
-                    __$("im_test2_time").value = time;
+            __$("im_test2_time").value = time;
 
-                }                
+        }
 
+
+    }
+
+    td.appendChild(btn);
+
+    var td = document.createElement("td");
+    td.align = "right";
+
+    tr.appendChild(td);
+
+    var btn = document.createElement("button");
+    btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
+    btn.innerHTML = "Reactive";
+    btn.style.fontSize = "5vh !important";
+    btn.style.minWidth = "8vh";
+    btn.style.minHeight = "5vh";
+    btn.id = "btnTest2Pve";
+    btn.setAttribute("target", test2Target.id);
+    btn.setAttribute("timeTarget", test2TimeTarget.id);
+    btn.setAttribute("target2", test1Target.id);
+    btn.setAttribute("timeTarget2", test1TimeTarget.id);
+
+    btn.onclick = function () {
+
+        if (this.className.match(/gray/i)) {
+
+            return;
+
+        }
+
+        clearInterval(tmrControl2Hnd);
+
+        if (__$(this.getAttribute("target"))) {
+
+            __$(this.getAttribute("target")).value = "+";
+
+        }
+
+        if (__$("touchscreenInput" + tstCurrentPage)) {
+
+            __$("touchscreenInput" + tstCurrentPage).value = "+";
+
+        }
+
+        if (__$(this.getAttribute("timeTarget"))) {
+
+            var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
+
+            var now = (new Date());
+
+            var duration = (now - startTime) / (60 * 1000);
+
+            __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
+
+        }
+
+        //Disbabling the other button
+
+        __$('btnTest2Nve').className = "gray";
+
+        __$('btnTest2Pve').className = "green";
+
+
+        if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+
+            if (__$(this.getAttribute("target2")).value.trim().length > 0) {
+                var currentClass = __$("nextButton").className;
+
+                __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
             }
 
-            td.appendChild(btn);
+        }
 
-            var td = document.createElement("td");
-            td.align = "right";
+        var time = __$("tmrControl2").innerHTML;
 
-            tr.appendChild(td);
+        if (test2Target.id.trim() == "data.fp_test2_result" + iterator) {
 
-            var btn = document.createElement("button");
-            btn.className = (test2TimeTarget.getAttribute("startTime") != null ? "blue" : "gray");
-            btn.innerHTML = "Reactive";
-            btn.style.fontSize = "5vh !important";
-            btn.style.minWidth = "8vh";
-            btn.style.minHeight = "5vh";
-            btn.id = "btnTest2Pve";
-            btn.setAttribute("target", test2Target.id);
-            btn.setAttribute("timeTarget", test2TimeTarget.id);
-            btn.setAttribute("target2", test1Target.id);
-            btn.setAttribute("timeTarget2", test1TimeTarget.id);
+            __$("fp_test2_time").setAttribute("condition", true);
 
-            btn.onclick = function () {
+            __$("fp_test2_time").value = time;
 
-                if (this.className.match(/gray/i)) {
+        }
 
-                    return;
-
-                }
-
-                clearInterval(tmrControl2Hnd);
-
-                if (__$(this.getAttribute("target"))) {
-
-                    __$(this.getAttribute("target")).value = "+";
-
-                }
-
-                if (__$("touchscreenInput" + tstCurrentPage)) {
-
-                    __$("touchscreenInput" + tstCurrentPage).value = "+";
-
-                }
-
-                if (__$(this.getAttribute("timeTarget"))) {
-
-                    var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
-
-                    var now = (new Date());
-
-                    var duration = (now - startTime) / (60 * 1000);
-
-                    __$(this.getAttribute("timeTarget")).value = duration.toFixed(2);
-
-                }
-
-                //Disbabling the other button
-
-                __$('btnTest2Nve').className = "gray";
-
-                __$('btnTest2Pve').className = "green";
+        if (test2Target.id.trim() == "data.im_test2_result" + iterator) {
 
 
-                if (__$("nextButton") && __$(this.getAttribute("target2"))) {
+            __$("im_test2_time").setAttribute("condition", true);
 
-                    if (__$(this.getAttribute("target2")).value.trim().length > 0) {
-                        var currentClass = __$("nextButton").className;
+            __$("im_test2_time").value = time;
 
-                        __$("nextButton").className = currentClass.replace(/gray/i, "green");
+        }
 
-                    }
+    }
 
-                }
-
-                var time = __$("tmrControl2").innerHTML;
-
-                if(test2Target.id.trim() == "data.fp_test2_result"+iterator){
-
-                    __$("fp_test2_time").setAttribute("condition",true);
-
-                    __$("fp_test2_time").value = time;
-
-                }
-
-                if(test2Target.id.trim() == "data.im_test2_result"+iterator){
+    td.appendChild(btn);
 
 
-                    __$("im_test2_time").setAttribute("condition",true);
+    var minuteLabelInterval = setInterval(function () {
 
-                    __$("im_test2_time").value = time;
+        __$("l1_minutes").innerHTML = window.parent.proficiency.stock_label_data[label1].rec_time + " Minutes";
 
-                }   
+        __$("l2_minutes").innerHTML = window.parent.proficiency.stock_label_data[label2].rec_time + " Minutes";
 
-            }
+        clearInterval(minuteLabelInterval);
 
-            td.appendChild(btn);
+    }, 500);
 
+    if (test1Target.id == "data.fp_test1_result" + iterator && test2Target.id == "data.fp_test2_result" + iterator) {
 
-            var minuteLabelInterval = setInterval(function(){
+        __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
 
-                __$("l1_minutes").innerHTML = window.parent.proficiency.stock_label_data[label1].rec_time + " Minutes";
+        __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
 
-                __$("l2_minutes").innerHTML = window.parent.proficiency.stock_label_data[label2].rec_time + " Minutes";
+    }
 
-                clearInterval(minuteLabelInterval);
+    if (test1Target.id == "data.im_test1_result" + iterator && test2Target.id == "data.im_test2_result" + iterator) {
 
-            },500);
+        __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
 
-            if(test1Target.id == "data.fp_test1_result"+iterator && test2Target.id == "data.fp_test2_result"+iterator){
+        __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
 
-                __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+    }
 
-                __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
-
-            }
-
-            if(test1Target.id == "data.im_test1_result"+iterator && test2Target.id == "data.im_test2_result"+iterator){
-
-                __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
-
-                __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
-
-            }
-
-
-            
 
 }
 
-function recommendedTimmerForLabelsProficiency(labels){
+function recommendedTimmerForLabelsProficiency(labels) {
 
-    if(labels[0].length == 0)
+    if (labels[0].length == 0)
         return;
 
-    for(var i = 0 ; i < labels.length ; i++){
+    for (var i = 0; i < labels.length; i++) {
 
         console.log(i);
 
-        getAjaxRequest("/stock/get_pack_size/"+encodeURIComponent(labels[i]), function(data){
+        getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
-                var label_data = JSON.parse(data);
+            var label_data = JSON.parse(data);
 
-                if(!window.parent.proficiency.stock_label_data)
-                    window.parent.dashboard.data.stock_label_data = {};
+            if (!window.parent.proficiency.stock_label_data)
+                window.parent.dashboard.data.stock_label_data = {};
 
-                window.parent.proficiency.stock_label_data[label_data.id] = {rec_time: label_data.rec_time ,window_time: label_data.window_time}
+            window.parent.proficiency.stock_label_data[label_data.id] = {
+                rec_time: label_data.rec_time,
+                window_time: label_data.window_time
+            }
 
         });
 
     }
 
 }
-function getMonthList(){
+function getMonthList() {
 
     var ul = __$("options");
 
@@ -6237,51 +6233,50 @@ function getMonthList(){
     ul.style.overflowY = "scroll";
 
 
-
     /*var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                "October", "November", "December","Unknown"];
+     "October", "November", "December","Unknown"];
 
-    for (var i = 0 ; i < monthList.length ; i++){
+     for (var i = 0 ; i < monthList.length ; i++){
 
-        var li  = document.createElement("li");
+     var li  = document.createElement("li");
 
-        ul.appendChild(li);
+     ul.appendChild(li);
 
-        li.id = i;
+     li.id = i;
 
-        if(i % 2 == 0){
+     if(i % 2 == 0){
 
-            li.className = "even"
+     li.className = "even"
 
-            li.setAttribute("tag","even");
+     li.setAttribute("tag","even");
 
-        }else{
+     }else{
 
-            li.className = "odd"
+     li.className = "odd"
 
-            li.setAttribute("tag","odd")
+     li.setAttribute("tag","odd")
 
-        }
+     }
 
-        li.setAttribute("tstvalue",monthList[i]);
+     li.setAttribute("tstvalue",monthList[i]);
 
-        li.setAttribute("onclick", "null; updateTouchscreenInputForSelect(this); ");
+     li.setAttribute("onclick", "null; updateTouchscreenInputForSelect(this); ");
 
-        li.innerHTML = monthList[i];
+     li.innerHTML = monthList[i];
 
 
 
-    }
+     }
 
-    //ul.innerHTML = "";*/
+     //ul.innerHTML = "";*/
 
 }
 
-function monthDaysKeyPad(){
+function monthDaysKeyPad() {
 
     var keyboard = __$("keyboard");
 
-    __$("inputFrame"+tstCurrentPage).style.height = "50px";
+    __$("inputFrame" + tstCurrentPage).style.height = "50px";
 
     keyboard.innerHTML = "";
 
@@ -6294,19 +6289,19 @@ function monthDaysKeyPad(){
     keyboard.appendChild(keyPadDiv);
 
     var months = {
-                    "January"   : 0,
-                   "February"   : 1 ,
-                    "March"     : 2,
-                    "April"     : 3,
-                    "May"       : 4,
-                    "June"      : 5,
-                    "Juy"       : 6,
-                    "August"    : 7,
-                    "September" : 8,
-                    "October"   : 9,
-                    "November"  : 10,
-                    "December"  : 11
-        }
+        "January": 0,
+        "February": 1,
+        "March": 2,
+        "April": 3,
+        "May": 4,
+        "June": 5,
+        "Juy": 6,
+        "August": 7,
+        "September": 8,
+        "October": 9,
+        "November": 10,
+        "December": 11
+    }
 
     var year = __$("birthyear").value;
 
@@ -6314,9 +6309,9 @@ function monthDaysKeyPad(){
 
     var nextMonthNumber = parseInt(months[month]) + 2;
 
-    var date = new Date(year + "-" + padZeros(nextMonthNumber,2)+"-"+"01");
+    var date = new Date(year + "-" + padZeros(nextMonthNumber, 2) + "-" + "01");
 
-    date.setDate(date.getDate()-1);
+    date.setDate(date.getDate() - 1);
 
     var lateDayOfSelectedMonth = date.getDate()
 
@@ -6327,11 +6322,11 @@ function monthDaysKeyPad(){
     keyPadDiv.appendChild(table);
 
 
-    var tr ;
+    var tr;
 
-    for (var i = 1 ; i <= 31 ; i++){
+    for (var i = 1; i <= 31; i++) {
 
-        if((i-1) % 7 == 0){
+        if ((i - 1) % 7 == 0) {
 
             tr = document.createElement("tr");
 
@@ -6346,29 +6341,29 @@ function monthDaysKeyPad(){
         var button = document.createElement("button");
 
         td.appendChild(button);
-        
 
-        if(i <= 9){
 
-            button.innerHTML = "0"+i;
+        if (i <= 9) {
 
-            button.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ="0"+'+i);
+            button.innerHTML = "0" + i;
 
-        }else{
+            button.setAttribute("onclick", '__$("touchscreenInput"+tstCurrentPage).value ="0"+' + i);
 
-            button.innerHTML = i ;
+        } else {
 
-             button.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ='+i);
+            button.innerHTML = i;
+
+            button.setAttribute("onclick", '__$("touchscreenInput"+tstCurrentPage).value =' + i);
 
         }
 
-        if(i > parseInt(lateDayOfSelectedMonth)){
+        if (i > parseInt(lateDayOfSelectedMonth)) {
 
             button.className = "gray";
 
             button.removeAttribute("onclick");
         }
-        else{
+        else {
 
             button.className = "blue";
 
@@ -6384,267 +6379,263 @@ function monthDaysKeyPad(){
 
     unknownButton.style.marginTop = "10%";
 
-    unknownButton.setAttribute("onclick",'__$("touchscreenInput"+tstCurrentPage).value ="Unknown"');
+    unknownButton.setAttribute("onclick", '__$("touchscreenInput"+tstCurrentPage).value ="Unknown"');
 
     keyboard.appendChild(unknownButton);
 
 }
 
-function setAgeValues(){
+function setAgeValues() {
 
     var birthyear = __$("birthyear").value;
 
     var birthmonth = __$('birthmonth').value;
 
-    var birthday = __$("birthday").value ;
+    var birthday = __$("birthday").value;
 
-    if(birthday.trim().toLowerCase() == "unknown"){
+    if (birthday.trim().toLowerCase() == "unknown") {
 
-         birthday = "01";
+        birthday = "01";
 
     }
 
 
-     var months = {
-                    "January"   : 0,
-                   "February"   : 1 ,
-                    "March"     : 2,
-                    "April"     : 3,
-                    "May"       : 4,
-                    "June"      : 5,
-                    "Juy"       : 6,
-                    "August"    : 7,
-                    "September" : 8,
-                    "October"   : 9,
-                    "November"  : 10,
-                    "December"  : 11
-        }
+    var months = {
+        "January": 0,
+        "February": 1,
+        "March": 2,
+        "April": 3,
+        "May": 4,
+        "June": 5,
+        "Juy": 6,
+        "August": 7,
+        "September": 8,
+        "October": 9,
+        "November": 10,
+        "December": 11
+    }
 
-        var birthdate = birthyear +"-"+ padZeros(parseInt(months[birthmonth]) + 1 , 2)+"-" + padZeros(parseInt(birthday),2);
+    var birthdate = birthyear + "-" + padZeros(parseInt(months[birthmonth]) + 1, 2) + "-" + padZeros(parseInt(birthday), 2);
 
-        __$("birthdate").value = birthdate;
+    __$("birthdate").value = birthdate;
 
-       
 
 }
 
-function validateMaxMinYear(){
+function validateMaxMinYear() {
 
     var today = new Date();
 
-    if(parseInt(__$("birthyear").value) < (parseInt(today.getFullYear())-120)){
+    if (parseInt(__$("birthyear").value) < (parseInt(today.getFullYear()) - 120)) {
 
-        var message = "Year entered is less than "+(parseInt(today.getFullYear())-120);
+        var message = "Year entered is less than " + (parseInt(today.getFullYear()) - 120);
 
-        setTimeout(function(){
+        setTimeout(function () {
 
             gotoPage(tstCurrentPage - 1, false, true);
 
-            window.parent.dashboard.showMsg(message,"Year of Birth Validation")
+            window.parent.dashboard.showMsg(message, "Year of Birth Validation")
 
-        },10);
+        }, 10);
 
     }
 
-    if(parseInt(__$("birthyear").value) > parseInt(today.getFullYear())){
+    if (parseInt(__$("birthyear").value) > parseInt(today.getFullYear())) {
 
-        var message = "Year entered is greater than "+parseInt(today.getFullYear());
+        var message = "Year entered is greater than " + parseInt(today.getFullYear());
 
-         setTimeout(function(){
+        setTimeout(function () {
 
             gotoPage(tstCurrentPage - 1, false, true);
 
-            window.parent.dashboard.showMsg(message,"Year of Birth Validation")
+            window.parent.dashboard.showMsg(message, "Year of Birth Validation")
 
-        },10);
+        }, 10);
 
     }
 
 }
 
-function validateAndProcessMonth(){
+function validateAndProcessMonth() {
 
-   var year = __$("birthyear").value 
+    var year = __$("birthyear").value
 
-   var month = __$('birthmonth').value;
+    var month = __$('birthmonth').value;
 
-   if(month.trim().toLowerCase() == "unknown"){
+    if (month.trim().toLowerCase() == "unknown") {
 
 
         var birthdate = __$("birthdate");
 
         var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
-                    __$(birthdate.getAttribute("estimate_field")) : undefined);
+            __$(birthdate.getAttribute("estimate_field")) : undefined);
 
-        if(estimate_field){
+        if (estimate_field) {
 
             estimate_field.value = 1
 
         }
 
-        var estimateBirthDate = year+"-06-01";
+        var estimateBirthDate = year + "-06-01";
 
         birthdate.value = estimateBirthDate
 
-   }else{
+    } else {
 
-     var months = {
-                    "January"   : 0,
-                   "February"   : 1 ,
-                    "March"     : 2,
-                    "April"     : 3,
-                    "May"       : 4,
-                    "June"      : 5,
-                    "Juy"       : 6,
-                    "August"    : 7,
-                    "September" : 8,
-                    "October"   : 9,
-                    "November"  : 10,
-                    "December"  : 11
+        var months = {
+            "January": 0,
+            "February": 1,
+            "March": 2,
+            "April": 3,
+            "May": 4,
+            "June": 5,
+            "Juy": 6,
+            "August": 7,
+            "September": 8,
+            "October": 9,
+            "November": 10,
+            "December": 11
         }
 
         var today = new Date();
 
 
-
-        if(parseInt(year) == parseInt(today.getFullYear()) && parseInt(months[month]) > parseInt(today.getMonth())){
+        if (parseInt(year) == parseInt(today.getFullYear()) && parseInt(months[month]) > parseInt(today.getMonth())) {
 
             var message = "Month selected is greater than Current Month";
 
-            setTimeout(function(){
+            setTimeout(function () {
 
                 gotoPage(tstCurrentPage - 1, false, true);
 
-                window.parent.dashboard.showMsg(message,"Month of Birth Validation")
+                window.parent.dashboard.showMsg(message, "Month of Birth Validation")
 
-            },10);
+            }, 10);
 
 
         }
 
-   }
+    }
 
 }
 
-function setEstimatedAgeValue(){
+function setEstimatedAgeValue() {
 
     var ageEstimateValue = __$("age_estimate").value;
 
-    if(parseInt(ageEstimateValue) <  1 || parseInt(ageEstimateValue) > 150){
+    if (parseInt(ageEstimateValue) < 1 || parseInt(ageEstimateValue) > 150) {
 
-            var message = "Invalid Age Esimate";
+        var message = "Invalid Age Esimate";
 
-            setTimeout(function(){
+        setTimeout(function () {
 
-                gotoPage(tstCurrentPage - 1, false, true);
+            gotoPage(tstCurrentPage - 1, false, true);
 
-                window.parent.dashboard.showMsg(message,"Age Esimate Validation")
+            window.parent.dashboard.showMsg(message, "Age Esimate Validation")
 
-            },10);
+        }, 10);
 
     }
 
     var birthdate = __$("birthdate");
 
     var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
-                __$(birthdate.getAttribute("estimate_field")) : undefined);
+        __$(birthdate.getAttribute("estimate_field")) : undefined);
 
-    if(estimate_field){
+    if (estimate_field) {
 
         estimate_field.value = 1
 
     }
 
-    var today = new  Date();
+    var today = new Date();
 
     var currentYear = today.getFullYear();
 
     var estimateYear = parseInt(currentYear) - parseInt(ageEstimateValue);
 
-    if(estimate_field.value == 1){
+    if (estimate_field.value == 1) {
 
-         __$('birthyear').value = estimateYear;
+        __$('birthyear').value = estimateYear;
 
     }
 
-    var estimateBirthDate = estimateYear +"-06-01";
+    var estimateBirthDate = estimateYear + "-06-01";
 
     birthdate.value = estimateBirthDate;
 
 
 }
 
-function validateExpiryDate(date_string){
+function validateExpiryDate(date_string) {
 
-        if(date_string.length > 0){
-
-
-            var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
-
-            var today = new Date();
-
-            var date = new Date(date_string);
-
-            if(date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")){
+    if (date_string.length > 0) {
 
 
-                setTimeout(function(){
+        var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
 
-                        window.parent.dashboard.showMsg("The product  expired on "+date_string,"Stock Expiry Date");
+        var today = new Date();
 
-                        gotoPage(tstCurrentPage - 1, null, true);
+        var date = new Date(date_string);
+
+        if (date.format("YYYY-mm-dd") <= today.format("YYYY-mm-dd")) {
 
 
+            setTimeout(function () {
+
+                window.parent.dashboard.showMsg("The product  expired on " + date_string, "Stock Expiry Date");
+
+                gotoPage(tstCurrentPage - 1, null, true);
 
 
-                },10);
+            }, 10);
 
-                setTimeout(function(){
+            setTimeout(function () {
 
-                    if( __$("timeTable1")){
+                if (__$("timeTable1")) {
 
-                        __$("timeTable1").innerHTML = "";
-
-                    }
-
-                    if( __$("timeTable2")){
-
-                        __$("timeTable2").innerHTML = "";
-
-                    }
-
-                    __$("nextButton").className = __$("nextButton").className.replace("gray","blue");
-
-                },100);
-
-            }else{
-
-                if(__$("fp_lot_1_dispatch_id").value){
-
-                    saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1");
-
-                }
-                if(__$("fp_lot_2_dispatch_id").value){
-
-                    saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");
+                    __$("timeTable1").innerHTML = "";
 
                 }
 
-                if(__$("im_lot_1_dispatch_id").value){
+                if (__$("timeTable2")) {
 
-                    saveConsumption(__$("im_lot_1_dispatch_id").value, "im_lot_number1")
-
-                }
-
-                if(__$("im_lot_2_dispatch_id").value){
-
-                    saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
+                    __$("timeTable2").innerHTML = "";
 
                 }
 
+                __$("nextButton").className = __$("nextButton").className.replace("gray", "blue");
+
+            }, 100);
+
+        } else {
+
+            if (__$("fp_lot_1_dispatch_id").value) {
+
+                saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1");
+
+            }
+            if (__$("fp_lot_2_dispatch_id").value) {
+
+                saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");
 
             }
 
+            if (__$("im_lot_1_dispatch_id").value) {
+
+                saveConsumption(__$("im_lot_1_dispatch_id").value, "im_lot_number1")
+
+            }
+
+            if (__$("im_lot_2_dispatch_id").value) {
+
+                saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
+
+            }
+
+
         }
+
+    }
 
 }
