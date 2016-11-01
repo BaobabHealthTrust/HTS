@@ -16,11 +16,11 @@ O.1.9.2. Yes
 
 Q.1.10. First Pass Test 1 Kit Category [pos:: 9$$ tt_onUnload:: setAjaxUrl(3)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(0) $$ condition :: false]
 
-Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: fp_item_name1$$ tt_onUnload:: setAjaxUrl(4)$$ condition:: evalCondition(0) $$ condition ::false]
+Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: fp_item_name1 $$ tt_onUnload:: setAjaxUrl(4)$$ condition:: evalCondition(0) $$ field_type :: hidden]
 
 Q.1.12. First Pass Test Kit 1 Lot Number [pos:: 11$$ id:: fp_lot_number1$$ expiry:: fp_lot_1_expiry$$ dispatch:: fp_lot_1_dispatch_id$$ condition:: evalCondition(-1) && evalCondition(0)$$ tt_onLoad::if(__$("fp_lot_number1").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id")); "fp", "1"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
 
-Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), window.parent.dashboard.data.kits['First Test']) $$ condition :: !evalCondition(-1) || evalCondition(1) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$ tt_onUnload :: activateNavBtn() $$ helpText :: First Pass 1 Result ]
+Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_item_name1").value.trim()) $$ condition :: !evalCondition(-1) || evalCondition(1) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$ tt_onUnload :: activateNavBtn() $$ helpText :: First Pass 1 Result ]
 O.1.13.1. -
 O.1.13.2. +
 

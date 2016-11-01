@@ -2250,8 +2250,9 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.style.minHeight = "5vh";
         btn.setAttribute("timeTarget", testTimeTarget.id);
         btn.setAttribute("label", (label ? label : "Test"));
+        btn.id = "startTimer1";
 
-        btn.onclick = function () {
+        btn.onmousedown = function () {
 
             if (this.className.match(/gray/i)) {
 
@@ -2530,6 +2531,25 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         } else if (testTarget.id == "fp_test2_result") {
 
             __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+        }
+
+        if(typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined) {
+
+            var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count);
+
+            tmrControl1SecsCount = counter % 60;
+
+            tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
+
+            if(__$("startTimer1")) {
+
+                __$("startTimer1").onmousedown();
+
+            }
 
         }
 
@@ -5366,7 +5386,6 @@ function setTestKits() {
 
     var descriptions = ["First Test", "Second Test"];
 
-
     for (var i = 0; i < descriptions.length; i++) {
 
         getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent(descriptions[i]), function (data) {
@@ -5378,16 +5397,15 @@ function setTestKits() {
 
             window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
 
-
             if (kit_data.description == "First Test") {
-
 
                 __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
+                __$("fp_item_name1").value = kit_data.name;
+
                 __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
-
 
             }
 
@@ -5405,7 +5423,6 @@ function setTestKits() {
                 recommendedTimmerForLabels([kit_data.name]);
 
         });
-
 
     }
 
@@ -6669,9 +6686,7 @@ function showMinimizeButton() {
 
         var data = form2js(document.getElementById('data'), undefined, true);
 
-        console.log(data);
-
-        window.parent.dashboard.saveTemporaryData("Testing", data);
+        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
 
         window.parent.dashboard.exitNavPanel();
 
