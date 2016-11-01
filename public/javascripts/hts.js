@@ -3649,12 +3649,12 @@ function evaluateReferral() {
 
         if (parseInt(pregnancy_months) <= 6) {
 
-            alert("Test again after 6 months");
+            //alert("Test again after 6 months"); 
 
         }
 
         window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
             "health and to prevent transmission.", "Re-Test");
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
@@ -3873,9 +3873,8 @@ function evaluateReferral2() {
             }
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
-                "health and to prevent transmission.", "Re-Test");
-
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
+            "health and to prevent transmission.", "Re-Test");
 
         }
 
