@@ -6573,7 +6573,7 @@ function validateExpiryDate(date_string) {
     if (date_string.length > 0) {
 
 
-        var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+        var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b|\b\d\/[A-Za-z]{3}\/\d{4}\b/)[0];
 
         var today = new Date();
 
