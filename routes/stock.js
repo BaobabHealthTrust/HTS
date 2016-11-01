@@ -1137,7 +1137,8 @@ module.exports = function (router) {
 
     })
 
-    router.route('/save_item').post(function (req, res) {
+    router.route('/save_item')
+        .post(function (req, res) {
 
         var data = req.body.data;
 
@@ -1202,6 +1203,340 @@ module.exports = function (router) {
                     break;
 
             }
+
+        });
+
+    })
+
+    router.route("/stock_types")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT name FROM stock";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = [];
+
+            if (data[0].length > 0) {
+
+                for (var i = 0; i < data[0].length; i++) {
+
+                    result.push(data[0][i].name);
+
+                }
+
+            }
+
+            res.status(200).json(result);
+
+        });
+
+    })
+
+    router.route("/used_stock_stats")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, username, SUM(COALESCE(consumption_quantity,0)) " +
+            "AS used FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+            "\" AND username = \"" + query.username + "\"" + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+            query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" +
+            query.end_date + "\")" : "") + " GROUP BY item_name, username ";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].used;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/available_stock_stats")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, username, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+            "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+            "\" AND username = \"" + query.username + "\"" + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+            query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" +
+            query.end_date + "\")" : "") + " GROUP BY item_name, username " +
+            "HAVING available > 0";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].available;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/test_1_kit_name")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
+            "WHERE name = \"First Pass Test Kit 1 Name\"" + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
+            query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" +
+            query.end_date + "\")" : "") + " LIMIT 1) LIMIT 1";
+
+        console.log(sql);
+
+        queryRaw(sql, function (data) {
+
+            var result = "";
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].value_text;
+
+            }
+
+            res.status(200).json({name: result});
+
+        });
+
+    })
+
+    router.route("/test_2_kit_name")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
+            "WHERE name = \"First Pass Test Kit 2 Name\"" + (query.start_date ? " AND DATE(obs_datetime) >= DATE(\"" +
+            query.start_date + "\")" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE(\"" +
+            query.end_date + "\")" : "") + " LIMIT 1) LIMIT 1";
+
+        console.log(sql);
+
+        queryRaw(sql, function (data) {
+
+            var result = "";
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].value_text;
+
+            }
+
+            res.status(200).json({name: result});
+
+        });
+
+    })
+
+    router.route("/total_in_rooms_at_month_start")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+            "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+            "\" " + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") +
+            " GROUP BY item_name HAVING available > 0";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].available;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/total_tests_received_during_month")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, SUM(receipt_quantity) AS received_quantity FROM report WHERE COALESCE(receipt_quantity,0) " +
+            "> 0 AND item_name = \"" + query.item_name + "\" " + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+            query.start_date + "\")" : "") + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date +
+            "\")" : "") + " GROUP BY item_name";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].received_quantity;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/total_tests_used_for_testing_clients")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") = " +
+            "\"Normal use\" AND item_name = \"" + query.item_name + "\" " + (query.start_date ? " AND DATE(transaction_date) >= DATE(\"" +
+            query.start_date + "\")" : "") + (query.end_date ? " AND DATE(transaction_date) <= " +
+            "DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].total;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/total_other_tests")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") " +
+            "NOT IN (\"Normal use\", \"Disposal\") AND item_name = \"" + query.item_name + "\" " + (query.start_date ?
+            " AND DATE(transaction_date) >= DATE(\"" + query.start_date + "\")" : "") + (query.end_date ?
+            " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].total;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/total_disposals")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, COUNT(consumption_type) AS total FROM report WHERE COALESCE(consumption_type,\"\") " +
+            "IN (\"Disposal\", \"Expired\") AND item_name = \"" + query.item_name + "\" " + (query.start_date ?
+            " AND DATE(transaction_date) >= DATE(\"" + query.start_date + "\")" : "") + (query.end_date ?
+            " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") + " GROUP BY item_name";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].total;
+
+            }
+
+            res.status(200).json({total: result});
+
+        });
+
+    })
+
+    router.route("/total_in_rooms_at_month_end")
+        .get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT item_name, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+            "AS available FROM report WHERE COALESCE(batch_number,\"\") != \"\" AND item_name = \"" + query.item_name +
+            "\" " + (query.end_date ? " AND DATE(transaction_date) <= DATE(\"" + query.end_date + "\")" : "") +
+            " GROUP BY item_name HAVING available > 0";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = 0;
+
+            if (data[0].length > 0) {
+
+                result = data[0][0].available;
+
+            }
+
+            res.status(200).json({total: result});
 
         });
 
