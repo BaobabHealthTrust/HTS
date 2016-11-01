@@ -1,1 +1,19 @@
-{"basePath":"http://192.168.18.242:3015","listPath":"/stock/stock_list","itemSavePath":"/stock/save_item","categorySearchPath":"/stock/stock_categories","stockItemsSearchPath":"/stock/stock_items","searchPath":"/stock/stock_search","itemsListPath":"/stock/items_list","availableBatchesPath":"/stock/available_batches?item_name=","availableUserBatchesPath":"/stock/available_batches_to_user?item_name=","consumptionTypesPath":"/stock/consumption_types","availableBatchesToUserSummaryPath":"/stock/available_batches_to_user_summary?item_name=","userListingPath":"list_users?name=","locationsListPath":"/list_locations?name=","itemDeletePath":"/stock/delete_item","packSizePath":"/stock/get_pack_size/","relocatioFaciltySearch":"/facility_custom/relocation_facility_list","searchRelocationFacility": "/facility_custom/facilities"}
+{
+  "basePath": "",
+  "listPath": "stock/stock_list",
+  "itemSavePath": "/stock/save_item",
+  "categorySearchPath": "/stock/stock_categories",
+  "stockItemsSearchPath": "/stock/stock_items",
+  "searchPath": "/stock/stock_search",
+  "itemsListPath": "/stock/items_list",
+  "availableBatchesPath": "/stock/available_batches?item_name=",
+  "availableUserBatchesPath": "/stock/available_batches_to_user?item_name=",
+  "consumptionTypesPath": "/stock/consumption_types",
+  "availableBatchesToUserSummaryPath": "/stock/available_batches_to_user_summary?item_name=",
+  "userListingPath": "/list_users?name=",
+  "locationsListPath": "/list_locations?name=",
+  "itemDeletePath": "/stock/delete_item",
+  "packSizePath": "/stock/get_pack_size/",
+  "relocatioFaciltySearch": "/facility_custom/relocation_facility_list",
+  "searchRelocationFacility": "/facility_custom/facilities"
+}

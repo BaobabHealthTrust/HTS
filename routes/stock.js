@@ -62,7 +62,7 @@ function loggedIn(token, callback) {
 
 function queryRawQualityControl(sql, callback) {
 
-    var config = require(__dirname +"/../config/database.json");
+    var config = require(__dirname + "/../config/database.json");
 
     var knex = require('knex')({
         client: 'mysql',
@@ -179,9 +179,9 @@ function transferStock(data, res) {
                     "dispatch_who_dispatched, dispatch_who_received, dispatch_who_authorised, dispatch_destination) " +
                     "VALUES('" + stock_id + "', '" + data.batch_number + "', '" + data.transfer_quantity + "', '" +
                     data.transfer_datetime + "', '" + data.userId + "', '" + (data.transfer_who_received ?
-                    data.transfer_who_received : "") + "', '" + (data.transfer_who_authorised ?
-                    data.transfer_who_authorised : "") + "', '" + (data.transfer_location ?
-                    data.transfer_location : "") + "')";
+                        data.transfer_who_received : "") + "', '" + (data.transfer_who_authorised ?
+                        data.transfer_who_authorised : "") + "', '" + (data.transfer_location ?
+                        data.transfer_location : "") + "')";
 
                 console.log(sql);
 
@@ -217,9 +217,9 @@ function dispatchStock(data, res) {
         var sql = "UPDATE dispatch SET stock_id = '" + data.stock_id + "', batch_number = '" + data.batch_number +
             "', dispatch_quantity = '" + data.dispatch_quantity + "', dispatch_datetime = '" + data.dispatch_datetime +
             "', dispatch_who_dispatched = '" + data.userId + "dispatch_who_received = '" + (data.dispatch_who_received ?
-            data.dispatch_who_received : "") + "', dispatch_who_authorised = '" + (data.dispatch_who_authorised ?
-            data.dispatch_who_authorised : "") + "', dispatch_destination = '" + (data.dispatch_destination ?
-            data.dispatch_destination : "") + "' WHERE " + "dispatch_id = '" + data.dispatch_id;
+                data.dispatch_who_received : "") + "', dispatch_who_authorised = '" + (data.dispatch_who_authorised ?
+                data.dispatch_who_authorised : "") + "', dispatch_destination = '" + (data.dispatch_destination ?
+                data.dispatch_destination : "") + "' WHERE " + "dispatch_id = '" + data.dispatch_id;
 
         console.log(sql);
 
@@ -238,8 +238,8 @@ function dispatchStock(data, res) {
             " dispatch_who_received, dispatch_who_authorised, dispatch_destination) VALUES('" +
             data.stock_id + "', '" + data.batch_number + "', '" + data.dispatch_quantity + "', '" +
             data.dispatch_datetime + "', '" + data.userId + "', '" + (data.dispatch_who_received ?
-            data.dispatch_who_received : "") + "', '" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
-            "") + "', '" + (data.dispatch_destination ? data.dispatch_destination : "") + "')";
+                data.dispatch_who_received : "") + "', '" + (data.dispatch_who_authorised ? data.dispatch_who_authorised :
+                "") + "', '" + (data.dispatch_destination ? data.dispatch_destination : "") + "')";
 
         console.log(sql);
 
@@ -256,7 +256,6 @@ function dispatchStock(data, res) {
 }
 
 function receiveStock(data, res) {
-
 
 
     if (data.receipt_id) {
@@ -279,18 +278,18 @@ function receiveStock(data, res) {
     }
     else {
 
-        var sql ="";
+        var sql = "";
 
-        if(!data.expiry_date && data.origin_facility == "Not Captured"){
+        if (!data.expiry_date && data.origin_facility == "Not Captured") {
 
-            sql ="UPDATE receipt SET receipt_quantity = receipt_quantity +" + data.receipt_quantity + " WHERE batch_number = '" + data.batch_number.trim() + "'";
+            sql = "UPDATE receipt SET receipt_quantity = receipt_quantity +" + data.receipt_quantity + " WHERE batch_number = '" + data.batch_number.trim() + "'";
 
 
-        }else{
+        } else {
 
             sql = "INSERT INTO receipt (stock_id, batch_number, expiry_date,origin_facility, receipt_quantity, receipt_datetime, receipt_who_received) VALUES('" +
-            data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.origin_facility + "', '" + data.receipt_quantity +
-            "', '" + data.receipt_datetime + "', '" + data.userId + "')";
+                data.stock_id + "', '" + data.batch_number + "', '" + data.expiry_date + "', '" + data.origin_facility + "', '" + data.receipt_quantity +
+                "', '" + data.receipt_datetime + "', '" + data.userId + "')";
 
 
         }
@@ -411,8 +410,8 @@ function saveStock(data, res) {
                     var category_id = category[0].insertId;
 
                     var sql = "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "1") + "," + 
-                        (data.recommended_test_time ? data.recommended_test_time : "0") + "," + (data.window_test_time ? data.window_test_time : "0") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                        data.item_name + "', '" + (data.description ? data.description : "") + "', " + (data.in_multiples_of ? data.in_multiples_of : "1") + "," +
+                        (data.recommended_test_time ? data.recommended_test_time : "0") + "," + (data.window_test_time ? data.window_test_time : "0") + ",'" + data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                     console.log(sql);
 
@@ -447,10 +446,9 @@ function saveStock(data, res) {
                 var category_id = category[0][0].category_id;
 
 
-
-                var sql =  "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
-                        data.item_name + "', '" + (data.description ? data.description : "") + "', " +(data.in_multiples_of ? data.in_multiples_of : "1") + "," + 
-                        (data.recommended_test_time ? data.recommended_test_time : "0") + "," + (data.window_test_time ? data.window_test_time : "0") + ",'" +  data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
+                var sql = "INSERT INTO stock (name, description,in_multiples_of,recommended_test_time,window_test_time, reorder_level, category_id, date_created, creator) VALUES('" +
+                    data.item_name + "', '" + (data.description ? data.description : "") + "', " + (data.in_multiples_of ? data.in_multiples_of : "1") + "," +
+                    (data.recommended_test_time ? data.recommended_test_time : "0") + "," + (data.window_test_time ? data.window_test_time : "0") + ",'" + data.re_order_level + "', '" + category_id + "', NOW(), '" + data.userId + "')";
 
                 console.log(sql);
 
@@ -657,32 +655,32 @@ function saveBatch(data, res) {
 
 }
 
-function saveFacility(data, res){
+function saveFacility(data, res) {
 
-	console.log(data);
+    console.log(data);
 
-    if(data.datatype =="add_facility"){
+    if (data.datatype == "add_facility") {
 
         var sql = "";
 
-        if(data.id){
+        if (data.id) {
 
-            sql = "UPDATE relocation_facility SET name='"+data.name+"',region = '" +data.region+"',district = '"+data.district+
-                  "',changed_by='"+data.user+"' WHERE facility_id ="+data.id;
+            sql = "UPDATE relocation_facility SET name='" + data.name + "',region = '" + data.region + "',district = '" + data.district +
+                "',changed_by='" + data.user + "' WHERE facility_id =" + data.id;
 
         }
-        else{
+        else {
 
-            sql = "INSERT INTO relocation_facility (name,region,district,created_by,date_created) VALUES('"+data.name+"','"+data.region+
+            sql = "INSERT INTO relocation_facility (name,region,district,created_by,date_created) VALUES('" + data.name + "','" + data.region +
 
-                    "','"+data.district+"','"+data.user+"',NOW())";
+                "','" + data.district + "','" + data.user + "',NOW())";
         }
 
         console.log(sql);
 
         queryRawStock(sql, function (batch) {
 
-                res.status(200).json({message: "Facility Saved!",add_facility:data.name});
+            res.status(200).json({message: "Facility Saved!", add_facility: data.name});
 
         });
     }
@@ -699,512 +697,517 @@ module.exports = function (router) {
 
         });
 
-     router.route('/get_pack_size/:id').get(function (req, res) {
-    
-		    var packName = req.params.id;
+    router.route('/get_pack_size/:id').get(function (req, res) {
 
-		    var sql = "SELECT in_multiples_of,recommended_test_time,window_test_time FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
+        var packName = req.params.id;
 
-		    queryRawStock(sql, function(data) {
-
-		        var json = {};
-
-		        console.log(data[0][0]);
-
-		        if(data[0].length > 0)
-		            json = {limit: data[0][0].in_multiples_of, id: packName, rec_time: data[0][0].recommended_test_time , window_time: data[0][0].window_test_time };
-
-		        res.status(200).json(json);
-
-		    }) 
-		    
-		});
-
-	router.route("/available_kits_by_desctiption/:description").get(function(req, res){
-
-		    var description = req.params.description;
-
-		    var sql = "SELECT name, description FROM stock WHERE description ='"+description+"' ORDER BY stock_id ASC LIMIT 1";
-
-		    queryRawStock(sql, function(data) {
-
-		        var json = {};
-
-		        console.log(data[0][0]);
-
-		        if(data[0].length > 0)
-		            json = {description: data[0][0].description, name: data[0][0].name};
-
-		        res.status(200).json(json);
-
-		    })
-
-		});
-
-	router.route('/stock_list').get(function (req, res) {
-
-		    var url_parts = url.parse(req.url, true);
-
-		    var query = url_parts.query;
-
-		    var pageSize = 10;
-
-		    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
-
-		    var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-		        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level,stock.recommended_test_time, " +
-		        " stock.window_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-		        "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
-		        "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
-		        "stock.category_id WHERE COALESCE(report.voided,0) = 0 AND stock.voided = 0  GROUP BY stock.stock_id LIMIT " +
-		        lowerLimit + ", " + pageSize;
-
-		    console.log(sql);
-
-		    queryRawStock(sql, function (data) {
-
-		        var collection = [];
-
-		        for (var i = 0; i < data[0].length; i++) {
-
-		            if (!data[0][i].name)
-		                continue;
-
-		            var entry = {
-		                stock_id: data[0][i].stock_id,
-		                name: data[0][i].name,
-		                description: data[0][i].description,
-		                category: data[0][i].category_name,
-		                inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
-		                re_order_level: data[0][i].reorder_level,
-		                avg: (data[0][i].duration > 0 ?
-		                    (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
-		                receipt_quantity: data[0][i].receipt_quantity,
-		                dispatch_quantity: data[0][i].dispatch_quantity,
-		                last_order_size: data[0][i].last_order_size,
-		                recommended_test_time: data[0][i].recommended_test_time,
-		                window_test_time: data[0][i].window_test_time
-		            };
-
-		            collection.push(entry);
-
-		        }
-
-		        res.status(200).json(collection);
-
-		    })
-
-		});
-
-	router.route('/consumption_types').get(function (req, res) {
-
-	    var sql = "SELECT name FROM consumption_type";
-
-	    queryRawStock(sql, function (data) {
-
-	        var collection = [];
-
-	        console.log(data[0]);
-
-	        for (var i = 0; i < data[0].length; i++) {
-
-	            collection.push(data[0][i].name);
-
-	        }
-
-	        res.send("<li>" + collection.join("</li><li>") + "</li>");
-
-	    });
-
-	})
-
-	router.route('/available_batches_to_user_summary').get(function (req, res) {
-
-	    var url_parts = url.parse(req.url, true);
-
-	    var query = url_parts.query;
-
-	    var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
-	        "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
-	        query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId + "' GROUP BY batch_number " +
-	        "HAVING available > 0";
-
-	    console.log(sql);
-
-	    queryRawStock(sql, function (data) {
-
-	        var result = {
-	            inStock: (data[0] && data[0][0].available ? data[0][0].available : 0)
-	        };
-
-	        res.status(200).json(result);
-
-	    })
-
-	})
-
-	router.route('/available_batches_to_user').get(function (req, res) {
-
-	    var url_parts = url.parse(req.url, true);
-
-	    var query = url_parts.query;
-
-	    var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
-
-	    var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
-	        "SUM(COALESCE(consumption_quantity,0))) AS available FROM stock LEFT OUTER JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN receipt ON report.batch_number " +
-	        " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
-	        (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
-	        "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
-	        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " AND stock.voided = 0 GROUP BY report.batch_number " +
-	        "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
-
-	    console.log(sql);
-
-	    queryRawStock(sql, function (data) {
-
-	        var result = "";
-
-	        for (var i = 0; i < data[0].length; i++) {
-
-	            var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')) {" +
-	                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')).value = '" +
-	                (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "';} ";
-
-	            var dispatchCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')) {" +
-	                "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')).value = '" +
-	                (data[0][i].dispatch_id ? data[0][i].dispatch_id : "") + "';} ";
-
-	            result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
-	                "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
-	                "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
-	                (!query.item_name ? data[0][i].item_name + ": " : "") + data[0][i].batch_number + " (" +
-	                ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
-	                data[0][i].available + ")" + "</li>";
-
-	        }
-
-	        res.send(result);
-
-	    })
-
-	})
-
-	router.route('/batch_numbers_to_user').get(function (req, res) {
-
-	    var url_parts = url.parse(req.url, true);
-
-	    var query = url_parts.query;
-
-	    var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
-
-	    var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
-	        "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
-	        " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
-	        (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
-	        "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
-	        " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + "  AND stock.voided = 0 GROUP BY report.batch_number " +
-	        "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
-
-	    console.log(sql);
-
-	    queryRawStock(sql, function (data) {
-
-	        var result = {};
-
-	        for (var i = 0; i < data[0].length; i++) {
-
-	            result[data[0][i].batch_number] = data[0][i].item_name;
-
-	        }
-
-	        res.send(result);
-
-	    })
-
-	})
-
-	router.route('/available_batches').get(function (req, res) {
-
-	    var url_parts = url.parse(req.url, true);
-
-	    var query = url_parts.query;
-
-	    var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
-	        "AS available FROM stock LEFT OUTER JOIN report ON stock.stock_id = report.stock_id WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
-	        query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%'  AND stock.voided = 0 GROUP BY batch_number " +
-	        "HAVING available > 0 ORDER BY expiry_date ASC";
-
-	    console.log(sql)
-
-	    queryRawStock(sql, function (data) {
-
-	        var collection = [];
-
-	        console.log(data[0]);
-
-	        var result = "";
-
-	        for (var i = 0; i < data[0].length; i++) {
-
-	            result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available + "'>" +
-	                data[0][i].batch_number + " (" +
-	                ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
-	                data[0][i].available + ")" + "</li>";
-
-	        }
-
-	        res.send(result);
-
-	    })
-
-	})
-
-	router.route('/stock_categories').get(function (req, res) {
-
-	    var url_parts = url.parse(req.url, true);
-
-	    var query = url_parts.query;
-
-	    var sql = "SELECT name FROM category WHERE name LIKE '" + query.category + "%'";
-
-	    queryRawStock(sql, function (data) {
-
-	        var collection = [];
-
-	        console.log(data[0]);
-
-	        for (var i = 0; i < data[0].length; i++) {
-
-	            collection.push(data[0][i].name);
-
-	        }
-
-	        var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
-
-	        res.send(result);
-
-	    })
-
-	})
-
-	router.route('/stock_items').get(function (req, res) {
-
-	    var url_parts = url.parse(req.url, true);
-
-	    var query = url_parts.query;
-
-	    var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
-
-	    var description = (query.description ? " AND stock.description ='"+ query.description +"'" : "");
-
-	    var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
-	        "category.name = '" + query.category + "' AND stock.voided = 0 AND stock.name LIKE '" + query.item_name + "%'"+ description +
-	        (exceptions ? " AND NOT stock.name IN (\"" + exceptions.join("\", \"") + "\")" : "");
-
-	    queryRawStock(sql, function (data) {
-
-	        var collection = [];
-
-	        console.log(data[0]);
-
-	        for (var i = 0; i < data[0].length; i++) {
-
-	            collection.push(data[0][i].name);
-
-	        }
-
-	        var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
-
-	        res.send(result);
-
-	    })
-
-	})
-
-router.route('/items_list').get(function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.voided = 0 AND stock.name LIKE '" + query.item_name + "%'";
-
-    queryRawStock(sql, function (data) {
-
-        console.log(data[0]);
-
-        var result = "";
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            result += "<li tstValue='" + data[0][i].stock_id + "'>" + data[0][i].name + "</li>";
-
-        }
-
-        res.send(result);
-
-    })
-
-})
-
-router.route('/stock_search').get(function (req, res) {
-
-    var url_parts = url.parse(req.url, true);
-
-    var query = url_parts.query;
-
-    var pageSize = 10;
-
-    var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
-
-    var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
-        "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level, " +
-        "stock.recommended_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-        "DATEDIFF(MAX(dispatch_datetime),stock.window_test_time, MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
-        "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
-        "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
-        "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.voided = 0 AND stock.name = '" +
-        query.item_name + "'" : "") + " GROUP BY stock.stock_id LIMIT " +
-        lowerLimit + ", " + pageSize;
-
-    console.log(sql);
-
-    queryRawStock(sql, function (data) {
-
-        var collection = [];
-
-        console.log(data[0]);
-
-        for (var i = 0; i < data[0].length; i++) {
-
-            var entry = {
-                stock_id: data[0][i].stock_id,
-                name: data[0][i].item_name,
-                category: data[0][i].category_name,
-                description: data[0][i].description,
-                inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
-                last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
-                avg: (data[0][i].duration > 0 ?
-                    (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
-                re_order_level: data[0][i].reorder_level,
-                last_order_size: data[0][i].last_order_size,
-                recommended_test_time: data[0][i].recommended_test_time,
-                window_test_time: data[0][i].window_test_time
-            }
-
-            collection.push(entry);
-
-        }
-
-        // var collection = (categories[query.category] || []);
-
-        res.status(200).json(collection);
-
-    })
-
-})
-
-
-router.route('/delete_item').post(function (req, res) {
-
-    var data = req.body.data;
-
-    loggedIn(data.token, function (authentic, user_id, username) {
-
-        if (!authentic) {
-
-            return res.status(200).json({message: "Unauthorized access!"});
-
-        }
-
-        var sql =  "UPDATE stock SET stock.voided = 1 WHERE stock_id = '" + data.stock_id + "'";
-
-        console.log(sql);
+        var sql = "SELECT in_multiples_of,recommended_test_time,window_test_time FROM stock WHERE stock.voided = 0 AND name = \"" + packName + "\"";
 
         queryRawStock(sql, function (data) {
 
-            console.log(data);
+            var json = {};
 
-            return res.status(200).json({message: "Item deleted!"});
+            console.log(data[0][0]);
+
+            if (data[0].length > 0)
+                json = {
+                    limit: data[0][0].in_multiples_of,
+                    id: packName,
+                    rec_time: data[0][0].recommended_test_time,
+                    window_time: data[0][0].window_test_time
+                };
+
+            res.status(200).json(json);
 
         })
 
     });
 
-})
+    router.route("/available_kits_by_desctiption/:description").get(function (req, res) {
 
-router.route('/save_item').post(function (req, res) {
+        var description = req.params.description;
 
-    var data = req.body.data;
+        var sql = "SELECT name, description FROM stock WHERE description ='" + description + "' ORDER BY stock_id ASC LIMIT 1";
 
-    loggedIn(data.token, function (authentic, user_id, username) {
+        queryRawStock(sql, function (data) {
 
-        if (!authentic) {
+            var json = {};
 
-            return res.status(200).json({message: "Unauthorized access!"});
+            console.log(data[0][0]);
 
-        }
+            if (data[0].length > 0)
+                json = {description: data[0][0].description, name: data[0][0].name};
 
-        console.log(Object.keys(data));
+            res.status(200).json(json);
 
-        switch (data.datatype) {
-
-            case "receive":
-
-                receiveStock(data, res);
-
-                break;
-
-            case "stock":
-
-                saveStock(data, res);
-
-                break;
-
-            case 'dispatch':
-
-                dispatchStock(data, res);
-
-                break;
-
-            case "transfer":
-
-                transferStock(data, res);
-
-                break;
-
-            case "batch":
-
-                saveBatch(data, res);
-
-                break;
-
-            case "consumption":
-
-                saveConsumption(data, res);
-
-                break;
-
-            case "reverse_consumption":
-
-                reverseConsumption(data, res);
-
-                break;
-
-            case "add_facility" :
-
-                saveFacility(data, res);
-
-                break;
-
-        }
+        })
 
     });
 
-})
+    router.route('/stock_list').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var pageSize = 10;
+
+        var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+        var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
+            "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level,stock.recommended_test_time, " +
+            " stock.window_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+            "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
+            "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
+            "stock.category_id WHERE COALESCE(report.voided,0) = 0 AND stock.voided = 0  GROUP BY stock.stock_id LIMIT " +
+            lowerLimit + ", " + pageSize;
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var collection = [];
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                if (!data[0][i].name)
+                    continue;
+
+                var entry = {
+                    stock_id: data[0][i].stock_id,
+                    name: data[0][i].name,
+                    description: data[0][i].description,
+                    category: data[0][i].category_name,
+                    inStock: (data[0][i].receipt_quantity - data[0][i].dispatch_quantity),
+                    re_order_level: data[0][i].reorder_level,
+                    avg: (data[0][i].duration > 0 ?
+                        (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
+                    receipt_quantity: data[0][i].receipt_quantity,
+                    dispatch_quantity: data[0][i].dispatch_quantity,
+                    last_order_size: data[0][i].last_order_size,
+                    recommended_test_time: data[0][i].recommended_test_time,
+                    window_test_time: data[0][i].window_test_time
+                };
+
+                collection.push(entry);
+
+            }
+
+            res.status(200).json(collection);
+
+        })
+
+    });
+
+    router.route('/consumption_types').get(function (req, res) {
+
+        var sql = "SELECT name FROM consumption_type";
+
+        queryRawStock(sql, function (data) {
+
+            var collection = [];
+
+            console.log(data[0]);
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                collection.push(data[0][i].name);
+
+            }
+
+            res.send("<li>" + collection.join("</li><li>") + "</li>");
+
+        });
+
+    })
+
+    router.route('/available_batches_to_user_summary').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT batch_number, dispatch_id, (SUM(COALESCE(dispatch_quantity,0)) - SUM(COALESCE(consumption_quantity,0))) " +
+            "AS available FROM report WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+            query.item_name + "' AND COALESCE(dispatch_who_received,'') = '" + query.userId + "' GROUP BY batch_number " +
+            "HAVING available > 0";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = {
+                inStock: (data[0] && data[0][0].available ? data[0][0].available : 0)
+            };
+
+            res.status(200).json(result);
+
+        })
+
+    })
+
+    router.route('/available_batches_to_user').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
+
+        var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
+            "SUM(COALESCE(consumption_quantity,0))) AS available FROM stock LEFT OUTER JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN receipt ON report.batch_number " +
+            " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
+            (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
+            "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
+            " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + " AND stock.voided = 0 GROUP BY report.batch_number " +
+            "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = "";
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                var expiryCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')) {" +
+                    "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('expiry')).value = '" +
+                    (data[0][i].expiry_date ? data[0][i].expiry_date.format("YYYY-mm-dd") : "") + "';} ";
+
+                var dispatchCmd = "if(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')) {" +
+                    "__$(tstFormElements[tstPages[tstCurrentPage]].getAttribute('dispatch')).value = '" +
+                    (data[0][i].dispatch_id ? data[0][i].dispatch_id : "") + "';} ";
+
+                result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available +
+                    "' dispatch_id='" + data[0][i].dispatch_id + "' onclick=\"if(__$('data.dispatch_id')){" +
+                    "__$('data.dispatch_id').value = '" + data[0][i].dispatch_id + "'} " + expiryCmd + dispatchCmd + " \" >" +
+                    (!query.item_name ? data[0][i].item_name + ": " : "") + data[0][i].batch_number + " (" +
+                    ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
+                    data[0][i].available + ")" + "</li>";
+
+            }
+
+            res.send(result);
+
+        })
+
+    })
+
+    router.route('/batch_numbers_to_user').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
+
+        var sql = "SELECT item_name, report.batch_number, dispatch_id, receipt.expiry_date, (SUM(COALESCE(dispatch_quantity,0)) - " +
+            "SUM(COALESCE(consumption_quantity,0))) AS available FROM report LEFT OUTER JOIN receipt ON report.batch_number " +
+            " = receipt.batch_number WHERE COALESCE(report.batch_number,\"\") != \"\" AND item_name LIKE \"" +
+            (query.item_name ? query.item_name : "") + "%\" AND COALESCE(dispatch_who_received,\"\") = \"" + query.userId +
+            "\" AND report.batch_number LIKE \"" + (query.batch ? query.batch : "") + "%\" " + (exceptions ?
+            " AND NOT item_name IN (\"" + exceptions.join("\", \"") + "\")" : "") + "  AND stock.voided = 0 GROUP BY report.batch_number " +
+            "HAVING available > 0 ORDER BY receipt.expiry_date ASC";
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var result = {};
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                result[data[0][i].batch_number] = data[0][i].item_name;
+
+            }
+
+            res.send(result);
+
+        })
+
+    })
+
+    router.route('/available_batches').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT batch_number, expiry_date, (SUM(COALESCE(receipt_quantity,0)) - SUM(COALESCE(dispatch_quantity,0))) " +
+            "AS available FROM stock LEFT OUTER JOIN report ON stock.stock_id = report.stock_id WHERE COALESCE(batch_number,'') != '' AND item_name = '" +
+            query.item_name + "' AND batch_number LIKE '" + (query.batch ? query.batch : "") + "%'  AND stock.voided = 0 GROUP BY batch_number " +
+            "HAVING available > 0 ORDER BY expiry_date ASC";
+
+        console.log(sql)
+
+        queryRawStock(sql, function (data) {
+
+            var collection = [];
+
+            console.log(data[0]);
+
+            var result = "";
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                result += "<li tstValue='" + data[0][i].batch_number + "' available='" + data[0][i].available + "'>" +
+                    data[0][i].batch_number + " (" +
+                    ((new Date(data[0][i].expiry_date)).format("dd/mm/YYYY")) + " - " +
+                    data[0][i].available + ")" + "</li>";
+
+            }
+
+            res.send(result);
+
+        })
+
+    })
+
+    router.route('/stock_categories').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT name FROM category WHERE name LIKE '" + query.category + "%'";
+
+        queryRawStock(sql, function (data) {
+
+            var collection = [];
+
+            console.log(data[0]);
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                collection.push(data[0][i].name);
+
+            }
+
+            var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
+
+            res.send(result);
+
+        })
+
+    })
+
+    router.route('/stock_items').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var exceptions = (query.exceptions ? JSON.parse(query.exceptions) : null);
+
+        var description = (query.description ? " AND stock.description ='" + query.description + "'" : "");
+
+        var sql = "SELECT stock.name FROM stock LEFT OUTER JOIN category ON stock.category_id = category.category_id WHERE " +
+            "category.name = '" + query.category + "' AND stock.voided = 0 AND stock.name LIKE '" + query.item_name + "%'" + description +
+            (exceptions ? " AND NOT stock.name IN (\"" + exceptions.join("\", \"") + "\")" : "");
+
+        queryRawStock(sql, function (data) {
+
+            var collection = [];
+
+            console.log(data[0]);
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                collection.push(data[0][i].name);
+
+            }
+
+            var result = "<li>" + collection.sort().join("</li><li>") + "</li>";
+
+            res.send(result);
+
+        })
+
+    })
+
+    router.route('/items_list').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var sql = "SELECT stock.stock_id, stock.name FROM stock WHERE stock.voided = 0 AND stock.name LIKE '" + query.item_name + "%'";
+
+        queryRawStock(sql, function (data) {
+
+            console.log(data[0]);
+
+            var result = "";
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                result += "<li tstValue='" + data[0][i].stock_id + "'>" + data[0][i].name + "</li>";
+
+            }
+
+            res.send(result);
+
+        })
+
+    })
+
+    router.route('/stock_search').get(function (req, res) {
+
+        var url_parts = url.parse(req.url, true);
+
+        var query = url_parts.query;
+
+        var pageSize = 10;
+
+        var lowerLimit = (query.page ? (((parseInt(query.page) - 1) * pageSize)) : 0);
+
+        var sql = "SELECT stock.stock_id, stock.name AS item_name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
+            "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level, " +
+            "stock.recommended_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
+            "DATEDIFF(MAX(dispatch_datetime),stock.window_test_time, MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
+            "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
+            "stock.category_id WHERE COALESCE(report.voided,0) = 0 " + (query.category && query.item_name ?
+            "AND category.name = '" + query.category + "' AND COALESCE(report.voided,0) = 0 AND stock.voided = 0 AND stock.name = '" +
+            query.item_name + "'" : "") + " GROUP BY stock.stock_id LIMIT " +
+            lowerLimit + ", " + pageSize;
+
+        console.log(sql);
+
+        queryRawStock(sql, function (data) {
+
+            var collection = [];
+
+            console.log(data[0]);
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                var entry = {
+                    stock_id: data[0][i].stock_id,
+                    name: data[0][i].item_name,
+                    category: data[0][i].category_name,
+                    description: data[0][i].description,
+                    inStock: (parseInt(data[0][i].receipt_quantity) - parseInt(data[0][i].dispatch_quantity)),
+                    last_order_size: (data[0][i].last_order_size ? data[0][i].last_order_size : 0),
+                    avg: (data[0][i].duration > 0 ?
+                        (data[0][i].dispatch_quantity / data[0][i].duration) : 0).toFixed(1),
+                    re_order_level: data[0][i].reorder_level,
+                    last_order_size: data[0][i].last_order_size,
+                    recommended_test_time: data[0][i].recommended_test_time,
+                    window_test_time: data[0][i].window_test_time
+                }
+
+                collection.push(entry);
+
+            }
+
+            // var collection = (categories[query.category] || []);
+
+            res.status(200).json(collection);
+
+        })
+
+    })
 
 
-   return router;
+    router.route('/delete_item').post(function (req, res) {
+
+        var data = req.body.data;
+
+        loggedIn(data.token, function (authentic, user_id, username) {
+
+            if (!authentic) {
+
+                return res.status(200).json({message: "Unauthorized access!"});
+
+            }
+
+            var sql = "UPDATE stock SET stock.voided = 1 WHERE stock_id = '" + data.stock_id + "'";
+
+            console.log(sql);
+
+            queryRawStock(sql, function (data) {
+
+                console.log(data);
+
+                return res.status(200).json({message: "Item deleted!"});
+
+            })
+
+        });
+
+    })
+
+    router.route('/save_item').post(function (req, res) {
+
+        var data = req.body.data;
+
+        loggedIn(data.token, function (authentic, user_id, username) {
+
+            if (!authentic) {
+
+                return res.status(200).json({message: "Unauthorized access!"});
+
+            }
+
+            console.log(Object.keys(data));
+
+            switch (data.datatype) {
+
+                case "receive":
+
+                    receiveStock(data, res);
+
+                    break;
+
+                case "stock":
+
+                    saveStock(data, res);
+
+                    break;
+
+                case 'dispatch':
+
+                    dispatchStock(data, res);
+
+                    break;
+
+                case "transfer":
+
+                    transferStock(data, res);
+
+                    break;
+
+                case "batch":
+
+                    saveBatch(data, res);
+
+                    break;
+
+                case "consumption":
+
+                    saveConsumption(data, res);
+
+                    break;
+
+                case "reverse_consumption":
+
+                    reverseConsumption(data, res);
+
+                    break;
+
+                case "add_facility" :
+
+                    saveFacility(data, res);
+
+                    break;
+
+            }
+
+        });
+
+    })
+
+
+    return router;
 
 }
