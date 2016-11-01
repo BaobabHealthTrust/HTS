@@ -802,7 +802,7 @@ var quality = ({
 
                 button.className = "blue";
 
-                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'approve_"+i+"','disapprove_"+i+"')");
+                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'approve','approve_"+i+"','disapprove_"+i+"')");
 
                 td.style.padding = "0.1em";
 
@@ -823,7 +823,7 @@ var quality = ({
 
                 button.id = "disapprove_" + i
 
-                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'disapprove_"+i+"','approve_"+i+"')");
+                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'disapprove','disapprove_"+i+"','approve_"+i+"')");
 
                 td.style.padding = "0.1em";
 
@@ -841,15 +841,21 @@ var quality = ({
 
     },
 
-     updateQCResult: function(test_id, buttonActivate,buttonDeactivate) {
-
-        alert(test_id);
+     updateQCResult: function(test_id, approval_status ,buttonActivate,buttonDeactivate) {
 
         if(buttonDeactivate)
             quality.$(buttonDeactivate).className = "blue";
 
         if(buttonActivate)
             quality.$(buttonActivate).className = "green";
+
+        var data = {qc_id: test_id, approval_status : approval_status}
+
+        window.parent.quality.ajaxPostRequest('/quality_control/quality_control_test_approval_update',data,function(res){
+
+            window.parent.proficiency.showMsg(res);
+
+        })
 
 
     },
