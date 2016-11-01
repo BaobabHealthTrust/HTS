@@ -1175,8 +1175,6 @@ function setAjaxUrl(pos) {
 
 function saveConsumption(dispatch_id, target_id) {
 
-    console.log(dispatch_id);
-
     var patient_id = getCookie("client_identifier");
 
     var consumption_type = "Normal use";
@@ -1254,6 +1252,22 @@ function evalCondition(pos) {
     var result = false;
 
     switch (pos) {
+
+        case -1:
+
+            if (window.parent.dashboard.subscription.timers &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0) {
+
+                result = false;
+
+            } else {
+
+                result = true;
+
+            }
+
+            break;
 
         case 0:
 
@@ -1374,8 +1388,6 @@ function recommendedTimmerForLabels(labels) {
         return;
 
     for (var i = 0; i < labels.length; i++) {
-
-        console.log(i);
 
         getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
@@ -2147,7 +2159,6 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 }
 
-
 function loadSerialTest(testTarget, testTimeTarget, label) {
 
     var url = "/stock/get_pack_size/" + encodeURIComponent(label);
@@ -2238,8 +2249,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.style.minWidth = "8vh";
         btn.style.minHeight = "5vh";
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
+        btn.id = "startTimer1";
 
-        btn.onclick = function () {
+        btn.onmousedown = function () {
 
             if (this.className.match(/gray/i)) {
 
@@ -2252,6 +2265,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
             }
+
+            window.parent.dashboard.startTimer(this.getAttribute("label"));
+
+            showMinimizeButton();
 
             var currentClass = __$("nextButton").className;
 
@@ -2340,6 +2357,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.id = "btnTest1Nve";
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2348,6 +2366,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 return;
 
             }
+
+            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+
+            hideMinimizeButton();
 
             clearInterval(tmrControl1Hnd);
 
@@ -2425,6 +2447,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.id = "btnTest1Pve";
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2433,6 +2456,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 return;
 
             }
+
+            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+
+            hideMinimizeButton();
 
             clearInterval(tmrControl1Hnd);
 
@@ -2504,6 +2531,25 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         } else if (testTarget.id == "fp_test2_result") {
 
             __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+        }
+
+        if(typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined) {
+
+            var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count);
+
+            tmrControl1SecsCount = counter % 60;
+
+            tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
+
+            if(__$("startTimer1")) {
+
+                __$("startTimer1").onmousedown();
+
+            }
 
         }
 
@@ -3601,16 +3647,14 @@ function evaluateReferral() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-        console.log(pregnancy_months);
-
         if (parseInt(pregnancy_months) <= 6) {
 
-            alert("Test again after 6 months");
+            //alert("Test again after 6 months"); 
 
         }
 
         window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
             "health and to prevent transmission.", "Re-Test");
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
@@ -3794,8 +3838,6 @@ function evaluateReferral2() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-        console.log(pregnancy_months);
-
         if (parseInt(pregnancy_months) > 6) {
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test at Maternity as " +
@@ -3831,9 +3873,8 @@ function evaluateReferral2() {
             }
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
-                "health and to prevent transmission.", "Re-Test");
-
+            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
+            "health and to prevent transmission.", "Re-Test");
 
         }
 
@@ -4233,7 +4274,7 @@ function setTimeSinceLastDate() {
     var time_in_days = (__$("duration_in_days").value.trim().length > 0 &&
     __$("duration_in_days").value.trim().match(/^\d+$/) ? parseInt(__$("duration_in_days").value.trim()) : null);
 
-    if(time_in_days != null) {
+    if (time_in_days != null) {
 
         var date = new Date();
 
@@ -5259,7 +5300,7 @@ function reverseConsumption(consumption_id, prefix, suffix) {
         }
     }
 
-    ajaxPostRequest("/save_item", data, function (result) {
+    ajaxPostRequest("/stock/save_item", data, function (result) {
 
         if (__$(prefix + "_lot_number" + suffix)) {
 
@@ -5344,7 +5385,6 @@ function setTestKits() {
 
     var descriptions = ["First Test", "Second Test"];
 
-
     for (var i = 0; i < descriptions.length; i++) {
 
         getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent(descriptions[i]), function (data) {
@@ -5356,25 +5396,24 @@ function setTestKits() {
 
             window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
 
-
             if (kit_data.description == "First Test") {
 
-
-                __$('fp_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
-                __$('im_lot_number1').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
-                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                __$("fp_item_name1").value = kit_data.name;
 
+                __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
             }
 
             else {
 
-                __$('fp_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
-                __$('im_lot_number2').setAttribute('ajaxURL', '/available_batches_to_user?userId=' +
+                __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
             }
@@ -5383,7 +5422,6 @@ function setTestKits() {
                 recommendedTimmerForLabels([kit_data.name]);
 
         });
-
 
     }
 
@@ -5409,23 +5447,19 @@ function setTestKitsProfiency() {
 
                 if (kit_data.description == "First Test") {
 
-                    console.log('data.fp_lot_number1_' + i);
-
-
-                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
-
+                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 }
 
                 else {
 
-                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") +
+                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 }
 
@@ -6201,8 +6235,6 @@ function recommendedTimmerForLabelsProficiency(labels) {
 
     for (var i = 0; i < labels.length; i++) {
 
-        console.log(i);
-
         getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
             var label_data = JSON.parse(data);
@@ -6573,7 +6605,7 @@ function validateExpiryDate(date_string) {
     if (date_string.length > 0) {
 
 
-        var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+        var date_string = date_string.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b|\b\d\/[A-Za-z]{3}\/\d{4}\b/)[0];
 
         var today = new Date();
 
@@ -6634,6 +6666,61 @@ function validateExpiryDate(date_string) {
 
             }
 
+
+        }
+
+    }
+
+}
+
+function showMinimizeButton() {
+
+    var button = document.createElement("button");
+    button.className = "blue";
+    button.innerHTML = "Minimize";
+    button.style.float = "left";
+    button.id = "minimizeButton";
+
+    button.onmousedown = function () {
+
+        var data = form2js(document.getElementById('data'), undefined, true);
+
+        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
+        window.parent.dashboard.exitNavPanel();
+
+    }
+
+    if (window.parent.dashboard.$$("buttons")) {
+
+        window.parent.dashboard.$$("buttons").appendChild(button);
+
+    }
+
+}
+
+function hideMinimizeButton() {
+
+    if (window.parent.dashboard.$$("minimizeButton") && window.parent.dashboard.$$("buttons")) {
+
+        window.parent.dashboard.$$("buttons").removeChild(window.parent.dashboard.$$("minimizeButton"));
+
+    }
+
+}
+
+function clearTimers() {
+
+    if (window.parent.dashboard.subscription.timers &&
+        window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]) {
+
+        var keys = Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]);
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            window.parent.dashboard.clearTimer(key);
 
         }
 
