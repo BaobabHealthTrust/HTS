@@ -68,6 +68,40 @@ function queryRawStock(sql, callback) {
 
 }
 
+function queryRaw(sql, callback) {
+
+    var config = require(__dirname + "/config/database.json");
+
+    var knex = require("knex")({
+        client: "mysql",
+        connection: {
+            host: config.host,
+            user: config.user,
+            password: config.password,
+            database: config.database
+        },
+        pool: {
+            min: 0,
+            max: 500
+        }
+    });
+
+    knex.raw(sql)
+        .then(function (result) {
+
+            callback(result);
+
+        })
+        .catch(function (err) {
+
+            console.log(err.message);
+
+            callback(err);
+
+        });
+
+}
+
 function saveQualityTest(data, res){
 
     if(data.datatype.trim() == "quality_assurance"){
@@ -224,7 +258,7 @@ module.exports = function (router) {
         var sql = "SELECT quality_assurance.quality_assurance_test_id AS test_id, quality_assurance.qc_test_date AS date, quality_assurance.sample_name AS dts_type, quality_assurance.sample_name_lot_number "+
                    "AS dts_lot_number, quality_assurance.test_kit_name AS test_kit_name, quality_assurance.test_kit_lot_number AS test_kit_lot_number, "+
                    "quality_assurance.control_line_seen AS control_line_seen, quality_assurance.quality_test_result, quality_assurance.outcome AS outcome, "+
-                   "quality_assurance.interpretation AS interpretation, quality_assurance.voided AS voided from htc_quality_control.quality_assurance WHERE quality_assurance.voided = 0;";
+                   "quality_assurance.interpretation AS interpretation, quality_assurance.approval_status AS approval_status, quality_assurance.voided AS voided from htc_quality_control.quality_assurance WHERE quality_assurance.voided = 0;";
         results = []
 
             queryRawStock(sql, function (data) {
@@ -240,6 +274,24 @@ module.exports = function (router) {
                 }
 
                 res.send(results);
+
+            })
+    });
+
+    router.route('/quality_control_test_approval_update/').post(function (req, res){
+
+        var data = req.body;
+
+       
+
+        var sql = "UPDATE quality_assurance AS quality_assurance " + "SET approval_status = '"+ data.approval_status + "',reason_for_approval = '"+ data.reason_for_approval + "', comments = comments + 1  WHERE quality_assurance_test_id = '"+ data.qc_id + "' ";
+
+        console.log(sql);
+
+            queryRawQualityControl(sql, function (data) {
+
+
+                res.send("Approval status updated");
 
             })
     });

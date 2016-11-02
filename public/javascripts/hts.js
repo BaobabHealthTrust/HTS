@@ -1175,8 +1175,6 @@ function setAjaxUrl(pos) {
 
 function saveConsumption(dispatch_id, target_id) {
 
-    console.log(dispatch_id);
-
     var patient_id = getCookie("client_identifier");
 
     var consumption_type = "Normal use";
@@ -1249,19 +1247,59 @@ function ajaxPostRequest(url, data, callback) {
 
 }
 
+var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    "PRE TEST COUNSELLING", "Last HIV test");
+
 function evalCondition(pos) {
+
+    lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Last HIV test");
 
     var result = false;
 
     switch (pos) {
 
+        case -2:
+
+            if (window.parent.dashboard.subscription.timers &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim()]) {
+
+                result = true;
+
+            } else {
+
+                result = false;
+
+            }
+
+            break;
+
+        case -1:
+
+            if (window.parent.dashboard.subscription.timers &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
+                typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name1").value.trim()] != typeof undefined) {
+
+                result = false;
+
+            } else {
+
+                result = true;
+
+            }
+
+            break;
+
         case 0:
 
-            if (__$("consent") && __$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") ||
-                (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant") )) {
+            if (__$("consent") && __$("consent").value == "Yes" && ( (lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") ||
+                (lastHIVStatus == "Last Inconclusive" ||
+                lastHIVStatus == "Last Positive" ||
+                lastHIVStatus == "Last Exposed Infant") )) {
 
                 result = true;
 
@@ -1271,8 +1309,8 @@ function evalCondition(pos) {
 
         case 1:
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")) {
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative")) {
 
                 result = true;
 
@@ -1282,11 +1320,11 @@ function evalCondition(pos) {
 
         case 2:
 
-            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
-                __$("fp_test1_result").value == "+") || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant") )) {
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") &&
+                __$("fp_test1_result").value == "+") || (lastHIVStatus == "Last Inconclusive" ||
+                lastHIVStatus == "Last Positive" ||
+                lastHIVStatus == "Last Exposed Infant") )) {
 
                 result = true;
 
@@ -1296,8 +1334,8 @@ function evalCondition(pos) {
 
         case 3:
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") && __$("fp_test1_result").value == "+") {
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") && __$("fp_test1_result").value == "+") {
 
                 result = true;
 
@@ -1307,9 +1345,8 @@ function evalCondition(pos) {
 
         case 4:
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant")) {
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Last Inconclusive" ||
+                lastHIVStatus == "Last Positive" || lastHIVStatus == "Last Exposed Infant")) {
 
                 result = true;
 
@@ -1319,10 +1356,10 @@ function evalCondition(pos) {
 
         case 5:
 
-            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") &&
                 __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
-                __$("fp_test2_result").value) || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" &&
+                __$("fp_test2_result").value) || (lastHIVStatus == "Last Positive" &&
                 (__$("fp_test1_result").value.trim().length > 0 && __$("fp_test2_result").value.trim().length > 0 &&
                 __$("fp_test1_result").value != __$("fp_test2_result").value)) )) {
 
@@ -1330,7 +1367,7 @@ function evalCondition(pos) {
 
             }
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant"
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Last Exposed Infant"
                 && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value)) {
 
@@ -1374,8 +1411,6 @@ function recommendedTimmerForLabels(labels) {
         return;
 
     for (var i = 0; i < labels.length; i++) {
-
-        console.log(i);
 
         getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
@@ -1539,7 +1574,6 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                 var label_data = window.parent.dashboard.data.stock_label_data[label1]
 
                 var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
-
 
                 if (tmrControl1MinsCount >= parseInt(label_data.rec_time) && tmrControl1MinsCount < window_time) {
 
@@ -2147,8 +2181,9 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 }
 
-
 function loadSerialTest(testTarget, testTimeTarget, label) {
+
+    customizeCancel("HIV TESTING");
 
     var url = "/stock/get_pack_size/" + encodeURIComponent(label);
 
@@ -2238,8 +2273,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.style.minWidth = "8vh";
         btn.style.minHeight = "5vh";
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
+        btn.id = "startTimer1";
 
-        btn.onclick = function () {
+        btn.onmousedown = function () {
 
             if (this.className.match(/gray/i)) {
 
@@ -2252,6 +2289,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
             }
+
+            window.parent.dashboard.startTimer(this.getAttribute("label"));
+
+            showMinimizeButton();
 
             var currentClass = __$("nextButton").className;
 
@@ -2340,6 +2381,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.id = "btnTest1Nve";
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2348,6 +2390,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 return;
 
             }
+
+            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+
+            hideMinimizeButton();
 
             clearInterval(tmrControl1Hnd);
 
@@ -2406,7 +2452,6 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-
         }
 
         td.appendChild(btn);
@@ -2425,6 +2470,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.id = "btnTest1Pve";
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
+        btn.setAttribute("label", (label ? label : "Test"));
 
         btn.onclick = function () {
 
@@ -2433,6 +2479,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 return;
 
             }
+
+            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+
+            hideMinimizeButton();
 
             clearInterval(tmrControl1Hnd);
 
@@ -2491,19 +2541,38 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-
         }
 
         td.appendChild(btn);
 
         if (testTarget.id == "fp_test1_result") {
 
-            __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+            __$("tmrControl1").innerHTML = "00:00"; // (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
 
 
         } else if (testTarget.id == "fp_test2_result") {
 
-            __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+            __$("tmrControl1").innerHTML = "00:00"; // (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+
+        }
+
+        if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined &&
+            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running) {
+
+            var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count);
+
+            tmrControl1SecsCount = counter % 60;
+
+            tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
+
+            if (__$("startTimer1")) {
+
+                __$("startTimer1").onmousedown();
+
+            }
 
         }
 
@@ -2521,7 +2590,10 @@ function activateNavBtn() {
 
     }
 
-    decodeResult(decodeURIComponent(getCookie("LastHIVTest")), decodeURIComponent(getCookie("AgeGroup")),
+    var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Last HIV test");
+
+    decodeResult(lastHIVStatus, decodeURIComponent(getCookie("AgeGroup")),
         __$("fp_test1_result").value.trim(), __$("fp_test2_result").value.trim(), __$("im_test1_result").value.trim(),
         __$("im_test2_result").value.trim(), __$("outcome_summary"), __$("result_given_to_client"));
 
@@ -3601,8 +3673,6 @@ function evaluateReferral() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-        console.log(pregnancy_months);
-
         if (parseInt(pregnancy_months) <= 6) {
 
             //alert("Test again after 6 months"); 
@@ -3794,8 +3864,6 @@ function evaluateReferral2() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-        console.log(pregnancy_months);
-
         if (parseInt(pregnancy_months) > 6) {
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test at Maternity as " +
@@ -3831,8 +3899,8 @@ function evaluateReferral2() {
             }
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
-            "health and to prevent transmission.", "Re-Test");
+                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
+                "health and to prevent transmission.", "Re-Test");
 
         }
 
@@ -4232,7 +4300,7 @@ function setTimeSinceLastDate() {
     var time_in_days = (__$("duration_in_days").value.trim().length > 0 &&
     __$("duration_in_days").value.trim().match(/^\d+$/) ? parseInt(__$("duration_in_days").value.trim()) : null);
 
-    if(time_in_days != null) {
+    if (time_in_days != null) {
 
         var date = new Date();
 
@@ -5343,7 +5411,6 @@ function setTestKits() {
 
     var descriptions = ["First Test", "Second Test"];
 
-
     for (var i = 0; i < descriptions.length; i++) {
 
         getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent(descriptions[i]), function (data) {
@@ -5355,16 +5422,15 @@ function setTestKits() {
 
             window.parent.dashboard.data.kits[kit_data.description] = kit_data.name;
 
-
             if (kit_data.description == "First Test") {
-
 
                 __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
+                __$("fp_item_name1").value = kit_data.name;
+
                 __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
-
 
             }
 
@@ -5372,6 +5438,8 @@ function setTestKits() {
 
                 __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
+
+                __$("fp_item_name2").value = kit_data.name;
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
@@ -5382,7 +5450,6 @@ function setTestKits() {
                 recommendedTimmerForLabels([kit_data.name]);
 
         });
-
 
     }
 
@@ -5408,14 +5475,10 @@ function setTestKitsProfiency() {
 
                 if (kit_data.description == "First Test") {
 
-                    console.log('data.fp_lot_number1_' + i);
-
-
                     __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
                     __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
-
 
                 }
 
@@ -5442,6 +5505,7 @@ function setTestKitsProfiency() {
 
 function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2, iterator) {
 
+    customizeCancel("HIV TESTING");
 
     if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
@@ -6200,8 +6264,6 @@ function recommendedTimmerForLabelsProficiency(labels) {
 
     for (var i = 0; i < labels.length; i++) {
 
-        console.log(i);
-
         getAjaxRequest("/stock/get_pack_size/" + encodeURIComponent(labels[i]), function (data) {
 
             var label_data = JSON.parse(data);
@@ -6633,6 +6695,97 @@ function validateExpiryDate(date_string) {
 
             }
 
+
+        }
+
+    }
+
+}
+
+function showMinimizeButton() {
+
+    var button = document.createElement("button");
+    button.className = "blue";
+    button.innerHTML = "Minimize";
+    button.style.float = "left";
+    button.id = "minimizeButton";
+
+    button.onmousedown = function () {
+
+        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
+        window.parent.dashboard.exitNavPanel();
+
+    }
+
+    if (window.parent.dashboard.$$("buttons")) {
+
+        window.parent.dashboard.$$("buttons").appendChild(button);
+
+    }
+
+}
+
+function hideMinimizeButton() {
+
+    if (window.parent.dashboard.$$("minimizeButton") && window.parent.dashboard.$$("buttons")) {
+
+        window.parent.dashboard.$$("buttons").removeChild(window.parent.dashboard.$$("minimizeButton"));
+
+    }
+
+}
+
+function clearTimers(category) {
+
+    if (window.parent.dashboard.subscription.timers &&
+        window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]) {
+
+        var keys = Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]);
+
+        for (var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            window.parent.dashboard.clearTimer(key);
+
+        }
+
+    }
+
+    if (typeof category == typeof String()) {
+
+        if (typeof window.parent.dashboard.data.data.temporaryData != typeof undefined &&
+            typeof window.parent.dashboard.data.data.temporaryData[category] != typeof undefined) {
+
+            delete window.parent.dashboard.data.data.temporaryData[category];
+
+            window.parent.dashboard.deleteTemporaryData(category);
+
+        }
+
+    }
+
+}
+
+function cancelTransaction(category) {
+
+    clearTimers(category);
+
+    window.parent.dashboard.exitNavPanel();
+
+}
+
+function customizeCancel(category) {
+
+    if (window.parent.dashboard.$$("cancelButton")) {
+
+        window.parent.dashboard.$$("cancelButton").onmousedown = function () {
+
+            window.parent.dashboard.showConfirmMsg("Are you sure you want to cancel this transaction and stop all timers?",
+                "Confirm Abort", "javascript:dashboard.__().cancelTransaction('" + (category ? category : "") + "')");
 
         }
 
