@@ -305,36 +305,34 @@ padZeros: function (number, positions) {
                 field_type: "date",
                 id: "data.proficiency_testing_date"
             },
+            "PT Tester":{
+
+                field_type : "text",
+                id:"data.tester",
+                ajaxURL: "/app_custom/hts_users",
+                tt_onUnload:"updateUserAttributes()"
+
+            },
+
             "HTS provider ID": {
-                field_type: "number",
-                id: "data.provider_id",
-                tt_pageStyleClass : "Numeric NumbersOnly",
-                validationRule: "^\\d{4}$",
-                validationMessage: "The code is not valid"
+                field_type: "hidden",
+                id: "data.provider_id"
             },
             "Phone number": {
-                field_type: "number",
-                id: "data.phone_number",
-                tt_pageStyleClass : "Numeric NumbersWithUnknown",
-                validationRule: "^0\\d{7}$|Unknown|Not Available|^0\\d{9}$|^N\\/A$",
-                validationMessage: "Not a valid phone number"
+                field_type: "hidden",
+                id: "data.phone_number"
             },
             "Tester First Name": {
-                field_type: "text",
+                field_type: "hidden",
                 id: "data.first_name",
-                allowFreeText: true,
-                ajaxURL: user.settings.firstNamesPath
             },
             "Tester Last Name": {
-                field_type: "text",
-                id: "data.last_name",
-                allowFreeText: true,
-                ajaxURL: user.settings.lastNamesPath
+                field_type: "hidden",
+                id: "data.last_name"
             },
             "PT Panel Lot Number": {
-                field_type: "select",
-                id: "data.pt_panel_lot_number",
-                condition : false
+                field_type: "text",
+                id: "data.pt_panel_lot_number"
                 
             },
             "DTS pack checklist": {
