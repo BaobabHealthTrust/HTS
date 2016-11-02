@@ -1247,9 +1247,12 @@ function ajaxPostRequest(url, data, callback) {
 
 }
 
+var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    "PRE TEST COUNSELLING", "Last HIV test");
+
 function evalCondition(pos) {
 
-    var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
     var result = false;
@@ -1277,7 +1280,8 @@ function evalCondition(pos) {
 
             if (window.parent.dashboard.subscription.timers &&
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
-                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0) {
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
+                typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name1").value.trim()] != typeof undefined) {
 
                 result = false;
 
@@ -5435,6 +5439,8 @@ function setTestKits() {
                 __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
                     "&item_name=" + kit_data.name + "&batch=");
 
+                __$("fp_item_name2").value = kit_data.name;
+
                 __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
@@ -6706,7 +6712,7 @@ function showMinimizeButton() {
 
     button.onmousedown = function () {
 
-        var data = form2js(document.getElementById('data'), undefined, true);
+        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
 
         window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
 
@@ -6749,14 +6755,10 @@ function clearTimers(category) {
 
     }
 
-    if(typeof category == typeof String()) {
+    if (typeof category == typeof String()) {
 
-        if(typeof window.parent.dashboard.data.data.temporaryData != typeof undefined &&
+        if (typeof window.parent.dashboard.data.data.temporaryData != typeof undefined &&
             typeof window.parent.dashboard.data.data.temporaryData[category] != typeof undefined) {
-
-            console.log("1: '%s'", category);
-
-            console.log(window.parent.dashboard.data.data.temporaryData[category]);
 
             delete window.parent.dashboard.data.data.temporaryData[category];
 
@@ -6777,8 +6779,6 @@ function cancelTransaction(category) {
 }
 
 function customizeCancel(category) {
-
-    console.log("2: %s", category);
 
     if (window.parent.dashboard.$$("cancelButton")) {
 
