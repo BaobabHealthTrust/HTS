@@ -20,15 +20,15 @@ Q.1.11. First Pass Test Kit 1 Name [pos:: 10$$ id:: fp_item_name1 $$ tt_onUnload
 
 Q.1.12. First Pass Test Kit 1 Lot Number [pos:: 11$$ id:: fp_lot_number1$$ expiry:: fp_lot_1_expiry$$ dispatch:: fp_lot_1_dispatch_id$$ condition:: evalCondition(-1) && evalCondition(0)$$ tt_onLoad::if(__$("fp_lot_number1").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id")); "fp", "1"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
 
-Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_item_name1").value.trim()) $$ condition :: !evalCondition(-1) || evalCondition(1) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$ tt_onUnload :: activateNavBtn() $$ helpText :: First Pass 1 Result ]
+Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_item_name1").value.trim()) $$ condition :: (!evalCondition(-1) || evalCondition(1)) && !evalCondition(-2) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true$$ tt_onUnload :: activateNavBtn() $$ helpText :: First Pass 1 Result ]
 O.1.13.1. -
 O.1.13.2. +
 
 Q.1.14. First Pass Test 2 Kit Category [pos:: 13$$ tt_onUnload:: setAjaxUrl(5)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(2) $$ condition :: false]
 
-Q.1.15. First Pass Test Kit 2 Name [pos:: 14$$ id:: fp_item_name2$$ tt_onUnload:: setAjaxUrl(6)$$ condition:: evalCondition(2) $$ condition::false]
+Q.1.15. First Pass Test Kit 2 Name [pos:: 14$$ id:: fp_item_name2 $$ tt_onUnload:: setAjaxUrl(6)$$ condition:: evalCondition(2) $$ field_type :: hidden]
 
-Q.1.16. First Pass Test Kit 2 Lot Number [pos:: 15$$ id:: fp_lot_number2$$ expiry:: fp_lot_2_expiry$$ dispatch:: fp_lot_2_dispatch_id$$ condition:: evalCondition(2)$$ tt_onLoad:: if(__$("fp_lot_number2").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number2").getAttribute("consumption_id")); "fp", "2"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
+Q.1.16. First Pass Test Kit 2 Lot Number [pos :: 15 $$ id :: fp_lot_number2 $$ expiry :: fp_lot_2_expiry $$ dispatch :: fp_lot_2_dispatch_id $$ condition :: evalCondition(2) $$ tt_onLoad :: if(__$("fp_lot_number2").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number2").getAttribute("consumption_id")); "fp", "2"} $$ tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
 
 Q.1.17. First Pass Test 2 Result [pos:: 16$$ id:: fp_test2_result$$ condition:: evalCondition(3)$$ tt_onLoad:: loadSerialTest(__$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['Second Test']) $$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true$$ tt_onUnload:: activateNavBtn() $$ helpText :: First Pass 2 Result]
 O.1.17.1. -
@@ -42,7 +42,7 @@ Q.1.20. Immediate Tester's Password [pos:: 19$$ condition:: evalCondition(5)$$ t
 
 Q.1.21. Immediate Repeat Test 1 Kit Category [pos:: 20$$ tt_onUnload:: setAjaxUrl(7)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(5) $$ condition :: false ]
 
-Q.1.22. Immediate Repeat Test Kit 1 Name [pos:: 21$$ id:: im_item_name1$$ tt_onUnload:: setAjaxUrl(8)$$ condition:: evalCondition(5) $$ condition :: false]
+Q.1.22. Immediate Repeat Test Kit 1 Name [pos:: 21$$ id:: im_item_name1$$ tt_onUnload:: setAjaxUrl(8)$$ condition:: evalCondition(5) $$ field_type :: hidden]
 
 Q.1.23. Immediate Repeat Test Kit 1 Lot Number [pos:: 22$$ id:: im_lot_number1$$ expiry:: im_lot_1_expiry$$ dispatch:: im_lot_1_dispatch_id$$ condition:: evalCondition(5)$$ tt_onLoad:: if(__$("im_lot_number1").getAttribute("consumption_id")){reverseConsumption(__$("im_lot_number1").getAttribute("consumption_id")); "im", "1"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
 
@@ -52,7 +52,7 @@ O.1.24.2. +
 
 Q.1.25. Immediate Repeat Test 2 Kit Category [pos:: 24$$ tt_onUnload:: setAjaxUrl(9)$$ ajaxURL:: /stock/stock_categories?category=$$ condition:: evalCondition(5) $$ condition::false]
 
-Q.1.26. Immediate Repeat Test Kit 2 Name [pos:: 25$$ id:: im_item_name2$$ tt_onUnload:: setAjaxUrl(10)$$ condition:: evalCondition(5) $$ condition :: false]
+Q.1.26. Immediate Repeat Test Kit 2 Name [pos:: 25$$ id:: im_item_name2$$ tt_onUnload:: setAjaxUrl(10)$$ condition:: evalCondition(5) $$ field_type :: hidden]
 
 Q.1.27. Immediate Repeat Test Kit 2 Lot Number [pos:: 26$$ id:: im_lot_number2$$ expiry:: im_lot_2_expiry$$ dispatch:: im_lot_2_dispatch_id$$ condition:: evalCondition(5)$$ tt_onLoad:: if(__$("im_lot_number2").getAttribute("consumption_id")){reverseConsumption(__$("im_lot_number2").getAttribute("consumption_id")); "im", "2"} $$tt_onUnLoad::validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value)]
 
@@ -78,4 +78,4 @@ Q.1.39. Result Given To Client [pos:: 38$$ id:: result_given_to_client$$ type::h
 
 Q.1.40. DBS Sample ID [pos :: 39 $$ id :: sample_id $$condition::false]
 
-Q.1.41. HIV Testing Summary [pos :: 40 $$ tt_onLoad :: showHIVTestingSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ tt_onUnLoad ::  clearTimers();]
+Q.1.41. HIV Testing Summary [pos :: 40 $$ tt_onLoad :: showHIVTestingSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ tt_onUnLoad ::  clearTimers("HIV TESTING");]

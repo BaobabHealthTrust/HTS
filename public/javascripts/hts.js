@@ -1249,9 +1249,29 @@ function ajaxPostRequest(url, data, callback) {
 
 function evalCondition(pos) {
 
+    var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Last HIV test");
+
     var result = false;
 
     switch (pos) {
+
+        case -2:
+
+            if (window.parent.dashboard.subscription.timers &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim()]) {
+
+                result = true;
+
+            } else {
+
+                result = false;
+
+            }
+
+            break;
 
         case -1:
 
@@ -1271,11 +1291,11 @@ function evalCondition(pos) {
 
         case 0:
 
-            if (__$("consent") && __$("consent").value == "Yes" && ( (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") ||
-                (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant") )) {
+            if (__$("consent") && __$("consent").value == "Yes" && ( (lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") ||
+                (lastHIVStatus == "Last Inconclusive" ||
+                lastHIVStatus == "Last Positive" ||
+                lastHIVStatus == "Last Exposed Infant") )) {
 
                 result = true;
 
@@ -1285,8 +1305,8 @@ function evalCondition(pos) {
 
         case 1:
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative")) {
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative")) {
 
                 result = true;
 
@@ -1296,11 +1316,11 @@ function evalCondition(pos) {
 
         case 2:
 
-            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
-                __$("fp_test1_result").value == "+") || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant") )) {
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") &&
+                __$("fp_test1_result").value == "+") || (lastHIVStatus == "Last Inconclusive" ||
+                lastHIVStatus == "Last Positive" ||
+                lastHIVStatus == "Last Exposed Infant") )) {
 
                 result = true;
 
@@ -1310,8 +1330,8 @@ function evalCondition(pos) {
 
         case 3:
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") && __$("fp_test1_result").value == "+") {
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") && __$("fp_test1_result").value == "+") {
 
                 result = true;
 
@@ -1321,9 +1341,8 @@ function evalCondition(pos) {
 
         case 4:
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Inconclusive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant")) {
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Last Inconclusive" ||
+                lastHIVStatus == "Last Positive" || lastHIVStatus == "Last Exposed Infant")) {
 
                 result = true;
 
@@ -1333,10 +1352,10 @@ function evalCondition(pos) {
 
         case 5:
 
-            if (__$("consent") && __$("consent").value == "Yes" && ( ((decodeURIComponent(getCookie("LastHIVTest")) == "Never Tested" ||
-                decodeURIComponent(getCookie("LastHIVTest")) == "Last Negative") &&
+            if (__$("consent") && __$("consent").value == "Yes" && ( ((lastHIVStatus == "Never Tested" ||
+                lastHIVStatus == "Last Negative") &&
                 __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
-                __$("fp_test2_result").value) || (decodeURIComponent(getCookie("LastHIVTest")) == "Last Positive" &&
+                __$("fp_test2_result").value) || (lastHIVStatus == "Last Positive" &&
                 (__$("fp_test1_result").value.trim().length > 0 && __$("fp_test2_result").value.trim().length > 0 &&
                 __$("fp_test1_result").value != __$("fp_test2_result").value)) )) {
 
@@ -1344,7 +1363,7 @@ function evalCondition(pos) {
 
             }
 
-            if (__$("consent") && __$("consent").value == "Yes" && (decodeURIComponent(getCookie("LastHIVTest")) == "Last Exposed Infant"
+            if (__$("consent") && __$("consent").value == "Yes" && (lastHIVStatus == "Last Exposed Infant"
                 && __$("fp_test2_result").value.trim().length > 0 && __$("fp_test1_result").value !=
                 __$("fp_test2_result").value)) {
 
@@ -1551,7 +1570,6 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                 var label_data = window.parent.dashboard.data.stock_label_data[label1]
 
                 var window_time = parseInt(label_data.rec_time) + parseInt(label_data.window_time)
-
 
                 if (tmrControl1MinsCount >= parseInt(label_data.rec_time) && tmrControl1MinsCount < window_time) {
 
@@ -2161,6 +2179,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 function loadSerialTest(testTarget, testTimeTarget, label) {
 
+    customizeCancel("HIV TESTING");
+
     var url = "/stock/get_pack_size/" + encodeURIComponent(label);
 
     getAjaxRequest(url, function (data) {
@@ -2428,7 +2448,6 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-
         }
 
         td.appendChild(btn);
@@ -2518,26 +2537,26 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-
         }
 
         td.appendChild(btn);
 
         if (testTarget.id == "fp_test1_result") {
 
-            __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+            __$("tmrControl1").innerHTML = "00:00"; // (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
 
 
         } else if (testTarget.id == "fp_test2_result") {
 
-            __$("tmrControl1").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+            __$("tmrControl1").innerHTML = "00:00"; // (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
 
         }
 
-        if(typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+        if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
             typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
             typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label] != typeof undefined &&
-            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined) {
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined &&
+            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running) {
 
             var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count);
 
@@ -2545,7 +2564,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
-            if(__$("startTimer1")) {
+            if (__$("startTimer1")) {
 
                 __$("startTimer1").onmousedown();
 
@@ -2567,7 +2586,10 @@ function activateNavBtn() {
 
     }
 
-    decodeResult(decodeURIComponent(getCookie("LastHIVTest")), decodeURIComponent(getCookie("AgeGroup")),
+    var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Last HIV test");
+
+    decodeResult(lastHIVStatus, decodeURIComponent(getCookie("AgeGroup")),
         __$("fp_test1_result").value.trim(), __$("fp_test2_result").value.trim(), __$("im_test1_result").value.trim(),
         __$("im_test2_result").value.trim(), __$("outcome_summary"), __$("result_given_to_client"));
 
@@ -3873,8 +3895,8 @@ function evaluateReferral2() {
             }
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
-            "health and to prevent transmission.", "Re-Test");
+                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
+                "health and to prevent transmission.", "Re-Test");
 
         }
 
@@ -5477,6 +5499,7 @@ function setTestKitsProfiency() {
 
 function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2, iterator) {
 
+    customizeCancel("HIV TESTING");
 
     if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
@@ -6709,7 +6732,7 @@ function hideMinimizeButton() {
 
 }
 
-function clearTimers() {
+function clearTimers(category) {
 
     if (window.parent.dashboard.subscription.timers &&
         window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]) {
@@ -6721,6 +6744,48 @@ function clearTimers() {
             var key = keys[i];
 
             window.parent.dashboard.clearTimer(key);
+
+        }
+
+    }
+
+    if(typeof category == typeof String()) {
+
+        if(typeof window.parent.dashboard.data.data.temporaryData != typeof undefined &&
+            typeof window.parent.dashboard.data.data.temporaryData[category] != typeof undefined) {
+
+            console.log("1: '%s'", category);
+
+            console.log(window.parent.dashboard.data.data.temporaryData[category]);
+
+            delete window.parent.dashboard.data.data.temporaryData[category];
+
+            window.parent.dashboard.deleteTemporaryData(category);
+
+        }
+
+    }
+
+}
+
+function cancelTransaction(category) {
+
+    clearTimers(category);
+
+    window.parent.dashboard.exitNavPanel();
+
+}
+
+function customizeCancel(category) {
+
+    console.log("2: %s", category);
+
+    if (window.parent.dashboard.$$("cancelButton")) {
+
+        window.parent.dashboard.$$("cancelButton").onmousedown = function () {
+
+            window.parent.dashboard.showConfirmMsg("Are you sure you want to cancel this transaction and stop all timers?",
+                "Confirm Abort", "javascript:dashboard.__().cancelTransaction('" + (category ? category : "") + "')");
 
         }
 
