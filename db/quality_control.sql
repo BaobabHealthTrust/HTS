@@ -70,6 +70,26 @@ CREATE TABLE `proficiency_test_result` (
   CONSTRAINT `proficiency_test_result_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `proficiency_test` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `proficiency_test_official_result`;
+
+CREATE TABLE `proficiency_test_official_result` (
+  `proficiency_test_official_result_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pt_panel_lot_number` varchar(255) NOT NULL,
+  `panel_1` varchar(255) NOT NULL,
+  `panel_2` varchar(255) NOT NULL,
+  `panel_3` varchar(255) NOT NULL,
+  `panel_4` varchar(255) NOT NULL,
+  `panel_5` varchar(255) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` varchar(255) NOT NULL,
+  `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `changed_by` datetime NOT NULL,
+  `voided` int(1) NOT NULL DEFAULT '0',
+  `voided_by` varchar(255) NOT NULL,
+  `date_voided` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`proficiency_test_official_result_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
 
 DROP TABLE IF EXISTS `quality_assurance`;
 

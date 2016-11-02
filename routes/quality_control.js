@@ -295,6 +295,27 @@ module.exports = function (router) {
 
     });
 
+    router.route("/proficiency_test_official_result/").post(function(req , res){
+
+        var data = req.body;
+
+          var sql = "INSERT INTO proficiency_test_official_result(pt_panel_lot_number,panel_1,panel_2,panel_3,panel_4,panel_5,date_created,created_by) "+
+                    "VALUES('"+data.pt_panel_lot_number+"','"+data.pt_panel_result_0+"','"+data.pt_panel_result_1+"','"+data.pt_panel_result_2+"','"
+                    +data.pt_panel_result_3+"','"+data.pt_panel_result_4+"',NOW(),'"+data.userId+"')";
+
+          console.log(sql);
+
+
+              queryRawQualityControl(sql, function (batch) {
+
+                            console.log("Insert Proficiency Official Result");
+
+                            res.status(200).json({message: "Proficiency Official Result Done!"});
+              });
+
+
+    });
+
     return router;
 
 }

@@ -1328,3 +1328,236 @@ function updateUserAttributes(){
     });
 
 }
+
+function loadPTOfficialResultControl(){
+
+    var control = __$("inputFrame"+tstCurrentPage);
+
+    control.innerHTML = "";
+
+    control.style.overflowY = "scroll";
+
+    //control.style.overflowX = "scroll";
+
+
+
+    var table = document.createElement("table");
+
+    table.style.borderCollapse = "collapse";
+
+    table.style.width = "95%";
+
+    table.style.margin = "auto";
+
+    table.style.marginTop = "15px";
+
+    control.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("th");
+
+    td.innerHTML = "Sample #";
+
+    td.style.borderBottom = "1px solid black";
+
+    td.style.borderRight = "1px solid black";
+
+    td.style.borderLeft = "1px solid black";
+
+    td.rowSpan = "2"
+
+
+    tr.appendChild(td);
+
+     var td = document.createElement("th");
+
+    td.innerHTML = "Official Result";
+
+    td.style.borderBottom = "1px solid black";
+
+     td.style.borderRight = "1px solid black";
+
+    td.colSpan = "3";
+
+
+    tr.appendChild(td);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+
+    var td = document.createElement("th");
+
+    td.innerHTML = "Strong Positive";
+
+    td.style.borderBottom = "1px solid black";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("th");
+
+    td.innerHTML = "Weak Positive";
+
+    td.style.borderBottom = "1px solid black";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("th");
+
+    td.style.borderBottom = "1px solid black";
+
+    td.style.borderRight = "1px solid black";
+
+    td.innerHTML = "Negative";
+
+    tr.appendChild(td);
+
+
+    for(var i  = 0; i < 5 ; i++){
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+
+            var td = document.createElement("th");
+
+            td.innerHTML = i + 1;
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.borderRight = "1px solid black";
+
+            td.style.borderLeft = "1px solid black";
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.textAlign ="center";
+
+            var button = document.createElement("button")
+
+            button.className = "blue";
+
+            button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
+
+            button.id = "strong_positive_"+i;
+
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Strong Positive','strong_positive_"+i+"',['weak_positive_"+i+"','negative_"+i+"'])")
+
+            td.appendChild(button);
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.textAlign ="center";
+
+            var button = document.createElement("button")
+
+            button.className = "blue";
+
+            button.innerHTML = "<font style= 'font-size:1em'>+</font>"
+
+            button.id = "weak_positive_"+i;
+
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Wea Positive','weak_positive_"+i+"',['strong_positive_"+i+"','negative_"+i+"'])")
+
+            td.appendChild(button);
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.borderRight = "1px solid black";
+
+            td.style.textAlign ="center";
+
+            var button = document.createElement("button")
+
+            button.className = "blue";
+
+            button.innerHTML = "<font style= 'font-size:1em'>-</font>"
+
+            button.id = "negative_"+i;
+
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Negative','negative_"+i+"',['strong_positive_"+i+"','weak_positive_"+i+"'])")
+
+            td.appendChild(button);
+
+            tr.appendChild(td);
+
+
+    }
+
+
+    __$("nextButton").className = __$("nextButton").className.replace(/blue|green/i, "gray");
+
+
+    var nexButtonIterval = setInterval(function(){
+
+        if(__$('nextButton').className.match("gray")){
+
+            var fals = 0
+
+            for(var i = 0 ; i < 5; i++){
+
+                if(!__$("data.pt_panel_result_"+i).value){
+
+                    fals++;
+                }
+
+            }
+
+            if(fals == 0){
+
+               __$("nextButton").className = __$("nextButton").className.replace(/gray/i, "green");
+
+            }
+
+
+
+        }else{
+
+            clearInterval(nexButtonIterval);
+
+        }
+
+    },100)
+
+
+}
+
+function updateOfficialResult(field, value,enable,disables){
+
+
+
+    __$(field).value = value;
+
+    __$(enable).className = "green";
+
+    for(var i = 0; i < disables.length; i++){
+
+        __$(disables[i]).className = "blue";
+
+    }
+
+
+}

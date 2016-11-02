@@ -497,6 +497,73 @@ padZeros: function (number, positions) {
         proficiency.navPanel(form.outerHTML);
 
     },
+    enterPTOfficialResult : function(){
+
+        var form = document.createElement("form");
+        form.id = "data";
+        form.action = "javascript:submitData()";
+        form.style.display = "none";
+
+        var table = document.createElement("table");
+
+        form.appendChild(table);
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/javascripts/proficiency_test_control.js");
+
+        form.appendChild(script);
+
+
+        var fields = {
+           "Datatype": {
+                field_type: "hidden",
+                id: "data.datatype",
+                value: "proficiency_test_official_result"
+            },
+            "Show ID": {
+                field_type: "hidden",
+                id: "data.show_id",
+                value: ""
+            },
+
+            "Creator": {
+                field_type: "hidden",
+                id: "data.creator",
+                value: proficiency.getCookie('username')
+            },
+            "PT Lot Number": {
+                field_type: "text",
+                id: "data.pt_panel_lot_number"
+            },
+            "Enter Official result": {
+                field_type: "text",
+                id: "data.first_name",
+                tt_onLoad:"loadPTOfficialResultControl()",
+                tt_pageStyleClass:"NoKeyboard"
+            }
+
+        }
+
+        for(var i = 0 ; i < 5 ; i++){
+
+            var entry = {
+
+                    field_type: "hidden",
+                    id: "data.pt_panel_result_"+ i
+            }
+
+            fields["PT Panel Results "+i] = entry;
+
+        }
+
+
+
+        proficiency.buildFields(fields, table);
+
+        proficiency.navPanel(form.outerHTML);
+
+
+    },
 
 proficiencyTestApproval: function(target){
 
@@ -1621,6 +1688,8 @@ loadPTTests: function(path,target){
 
     submitData: function (data) {
 
+        console.log(data);
+
         if (proficiency.$("proficiency.navPanel")) {
 
             document.body.removeChild(stock.$("proficiency.navPanel"));
@@ -1651,7 +1720,27 @@ loadPTTests: function(path,target){
 
                 })
 
-        } 
+        }else if(data.data.datatype =="proficiency_test_official_result"){
+
+
+              proficiency.ajaxPostRequest("/quality_control/proficiency_test_official_result/", data.data, function (res) {
+
+                    var json = JSON.parse(res);
+
+                    if (proficiency.$("proficiency.navPanel")) {
+
+                        document.body.removeChild(proficiency.$("proficiency.navPanel"));
+
+                    }
+
+                    // window.location = "/";
+
+                    proficiency.showMsg(json.message, "Status", null);
+
+                })
+
+
+        }
 
     }
 
