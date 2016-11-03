@@ -55,6 +55,7 @@ DROP TABLE IF EXISTS `proficiency_test_result`;
 CREATE TABLE `proficiency_test_result` (
   `result_id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
+  `panel_number` int(1) NOT NULL,
   `first_pass_test_1` char(1) NOT NULL,
   `first_pass_test_1_time` varchar(10) NOT NULL,
   `first_pass_test_2` char(1) NOT NULL,

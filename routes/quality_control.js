@@ -197,9 +197,9 @@ function  saveProficiency(data,res){
 
    for(var i = 0 ; i < 5 ; i++){
 
-            var result_query = "INSERT INTO proficiency_test_result (pid,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
+            var result_query = "INSERT INTO proficiency_test_result (pid,panel_number,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
                                ",im_pass_test_1,im_pass_test_1_time,im_pass_test_2,im_pass_test_2_time,final_result) "+
-                               "VALUES(("+get_pt_record+"),'"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
+                               "VALUES(("+get_pt_record+"),'"+(i + 1)+"','"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
                                +"','"+eval('data.im_1_'+i)+"','"+eval('data.im_1_'+i+'_time')+"','"+eval('data.im_2_'+i)+"','"+eval('data.im_2_'+i+'_time')+"','"+eval('data.final_result_'+i)+"')"
 
 
@@ -211,6 +211,12 @@ function  saveProficiency(data,res){
    }
 
     res.status(200).json({message: "Proficiency test Done!"});
+
+
+}
+
+function updatePTScores(){
+
 
 
 }
@@ -363,6 +369,8 @@ module.exports = function (router) {
                             console.log("Insert Proficiency Official Result");
 
                             res.status(200).json({message: "Proficiency Official Result Done!"});
+
+                            updatePTScores(data);
               });
 
 
