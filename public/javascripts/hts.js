@@ -1252,12 +1252,31 @@ var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new D
 
 function evalCondition(pos) {
 
+    customizeCancel("HIV TESTING");
+
     lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
     var result = false;
 
     switch (pos) {
+
+        case -3:
+
+            if (window.parent.dashboard.subscription.timers &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
+                window.parent.dashboard.$$("im_lot_number1").value.trim().length > 0 && window.parent.dashboard.$$("im_lot_number2").value.trim().length > 0) {
+
+                result = true;
+
+            } else {
+
+                result = false;
+
+            }
+
+            break;
 
         case -2:
 
@@ -1534,8 +1553,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.style.minWidth = "8vh";
     btn.style.minHeight = "5vh";
     btn.setAttribute("timeTarget", test1TimeTarget.id);
+    btn.setAttribute("label", (label1 ? label1 : "Test1"));
+    btn.id = "startTimer2.1";
 
-    btn.onclick = function () {
+    btn.onmousedown = function () {
 
         if (this.className.match(/gray/i)) {
 
@@ -1548,6 +1569,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
+
+        window.parent.dashboard.startTimer(this.getAttribute("label"));
+
+        showMinimizeButton();
 
         var currentClass = __$("nextButton").className;
 
@@ -1650,6 +1675,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("timeTarget", test1TimeTarget.id);
     btn.setAttribute("target2", test2Target.id);
     btn.setAttribute("timeTarget2", test2TimeTarget.id);
+    btn.setAttribute("label", (label1 ? label1 : "Test1"));
 
     btn.onclick = function () {
 
@@ -1658,6 +1684,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             return;
 
         }
+
+        window.parent.dashboard.stopTimer(this.getAttribute("label"));
 
         clearInterval(tmrControl1Hnd);
 
@@ -1685,6 +1713,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                 var currentClass = __$("nextButton").className;
 
                 __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                hideMinimizeButton();
 
             }
 
@@ -1736,6 +1766,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("timeTarget", test1TimeTarget.id);
     btn.setAttribute("target2", test2Target.id);
     btn.setAttribute("timeTarget2", test2TimeTarget.id);
+    btn.setAttribute("label", (label1 ? label1 : "Test1"));
 
     btn.onclick = function () {
 
@@ -1744,6 +1775,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             return;
 
         }
+
+        window.parent.dashboard.stopTimer(this.getAttribute("label"));
 
         clearInterval(tmrControl1Hnd);
 
@@ -1771,6 +1804,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                 var currentClass = __$("nextButton").className;
 
                 __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                hideMinimizeButton();
 
             }
 
@@ -1866,8 +1901,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.style.minWidth = "8vh";
     btn.style.minHeight = "5vh";
     btn.setAttribute("timeTarget", test2TimeTarget.id);
+    btn.setAttribute("label", (label2 ? label2 : "Test2"));
+    btn.id = "startTimer2.2";
 
-    btn.onclick = function () {
+    btn.onmousedown = function () {
 
         if (this.className.match(/gray/i)) {
 
@@ -1880,6 +1917,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
+
+        window.parent.dashboard.startTimer(this.getAttribute("label"));
+
+        showMinimizeButton();
 
         var currentClass = __$("nextButton").className;
 
@@ -1983,6 +2024,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("timeTarget", test2TimeTarget.id);
     btn.setAttribute("target2", test1Target.id);
     btn.setAttribute("timeTarget2", test1TimeTarget.id);
+    btn.setAttribute("label", (label2 ? label2 : "Test2"));
 
     btn.onclick = function () {
 
@@ -1991,6 +2033,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             return;
 
         }
+
+        window.parent.dashboard.stopTimer(this.getAttribute("label"));
 
         clearInterval(tmrControl2Hnd);
 
@@ -2024,6 +2068,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
                 var currentClass = __$("nextButton").className;
 
                 __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+                hideMinimizeButton();
 
             }
 
@@ -2075,6 +2121,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("timeTarget", test2TimeTarget.id);
     btn.setAttribute("target2", test1Target.id);
     btn.setAttribute("timeTarget2", test1TimeTarget.id);
+    btn.setAttribute("label", (label2 ? label2 : "Test2"));
 
     btn.onclick = function () {
 
@@ -2083,6 +2130,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             return;
 
         }
+
+        window.parent.dashboard.stopTimer(this.getAttribute("label"));
 
         clearInterval(tmrControl2Hnd);
 
@@ -2124,6 +2173,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
                 __$("nextButton").className = currentClass.replace(/gray/i, "green");
 
+                hideMinimizeButton();
+
             }
 
         }
@@ -2151,7 +2202,6 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     td.appendChild(btn);
 
-
     var minuteLabelInterval = setInterval(function () {
 
         __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
@@ -2162,22 +2212,69 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     }, 500);
 
+    if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1] != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].count != typeof undefined) {
+
+        var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].count);
+
+        tmrControl1SecsCount = counter % 60;
+
+        tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
+
+        if(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].running &&
+            __$("startTimer2.1")) {
+
+            __$("startTimer2.1").onmousedown();
+
+        }
+
+    }
+
+    if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2] != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].count != typeof undefined) {
+
+        var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].count);
+
+        tmrControl2SecsCount = counter % 60;
+
+        tmrControl2MinsCount = (counter - tmrControl2SecsCount) / 60;
+
+        if (__$("startTimer2.2") &&
+            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].running) {
+
+            __$("startTimer2.2").onmousedown();
+
+        }
+
+    }
+
     if (test1Target.id == "fp_test1_result" && test2Target.id == "fp_test2_result") {
 
-        __$("tmrControl1").innerHTML = (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
+        var time1 = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
-        __$("tmrControl2").innerHTML = (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
+        var time2 = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
+
+        __$("tmrControl1").innerHTML = time1;
+
+        __$("tmrControl2").innerHTML = time2;
 
     }
 
     if (test1Target.id == "im_test1_result" && test2Target.id == "im_test2_result") {
 
-        __$("tmrControl1").innerHTML = (__$("im_test1_time").value ? __$("im_test1_time").value : "00:00" );
+        var time1 = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
-        __$("tmrControl2").innerHTML = (__$("im_test2_time").value ? __$("im_test2_time").value : "00:00" );
+        var time2 = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
+
+        __$("tmrControl1").innerHTML = time1;
+
+        __$("tmrControl2").innerHTML = time2;
 
     }
-
 
 }
 
@@ -2525,6 +2622,9 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             var time = __$("tmrControl1").innerHTML;
 
+            if(time.trim().length <= 0)
+                time = "";
+
             if (testTarget.id.trim() == "fp_test1_result") {
 
                 __$("fp_test1_time").setAttribute("condition", true);
@@ -2545,22 +2645,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         td.appendChild(btn);
 
-        if (testTarget.id == "fp_test1_result") {
-
-            __$("tmrControl1").innerHTML = "00:00"; // (__$("fp_test1_time").value ? __$("fp_test1_time").value : "00:00" );
-
-
-        } else if (testTarget.id == "fp_test2_result") {
-
-            __$("tmrControl1").innerHTML = "00:00"; // (__$("fp_test2_time").value ? __$("fp_test2_time").value : "00:00" );
-
-        }
-
         if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
             typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
             typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label] != typeof undefined &&
-            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined &&
-            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running) {
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined) {
 
             var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count);
 
@@ -2568,11 +2656,25 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
-            if (__$("startTimer1")) {
+            if (__$("startTimer1") &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running) {
 
                 __$("startTimer1").onmousedown();
 
             }
+
+        }
+
+        var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
+
+        if (testTarget.id == "fp_test1_result") {
+
+            __$("tmrControl1").innerHTML = time;
+
+
+        } else if (testTarget.id == "fp_test2_result") {
+
+            __$("tmrControl1").innerHTML = time;
 
         }
 
@@ -5432,6 +5534,8 @@ function setTestKits() {
                 __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
+                __$("im_item_name1").value = kit_data.name;
+
             }
 
             else {
@@ -5443,6 +5547,8 @@ function setTestKits() {
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
                     getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+
+                __$("im_item_name2").value = kit_data.name;
 
             }
 
@@ -6704,6 +6810,9 @@ function validateExpiryDate(date_string) {
 
 function showMinimizeButton() {
 
+    if (window.parent.dashboard.$$("minimizeButton"))
+        return;
+
     var button = document.createElement("button");
     button.className = "blue";
     button.innerHTML = "Minimize";
@@ -6728,9 +6837,35 @@ function showMinimizeButton() {
 
 }
 
-function hideMinimizeButton() {
+function hideMinimizeButton(multiple) {
 
-    if (window.parent.dashboard.$$("minimizeButton") && window.parent.dashboard.$$("buttons")) {
+    var found = false;
+
+    if(multiple && typeof window.parent.dashboard.subscription != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined ) {
+
+        var keys = Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]);
+
+        for(var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            if(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][key] &&
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][key].running) {
+
+                found = true;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    if (!found && window.parent.dashboard.$$("minimizeButton") && window.parent.dashboard.$$("buttons")) {
 
         window.parent.dashboard.$$("buttons").removeChild(window.parent.dashboard.$$("minimizeButton"));
 
