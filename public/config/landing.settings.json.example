@@ -1,8 +1,10 @@
 {
   "basePath": "http://192.168.18.249:3015",
   "modulesPath": "/config/landing.modules.json",
-  "barcodePath": "/patient/",
+  "barcodePath": "/fetch_remote_if_not_exists/",
   "savePath": "/save_other",
   "dummyPatientCreatePath": "/save_dummy_patient",
-  "facilityPath": "/facility"
+  "facilityPath": "/facility",
+  "useStartSessionButton": true,
+  "afterCreatePath": "http://192.168.18.249:3015"
 }
