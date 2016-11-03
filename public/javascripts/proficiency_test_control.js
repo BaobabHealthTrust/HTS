@@ -1475,7 +1475,7 @@ function loadPTOfficialResultControl(){
 
             button.id = "weak_positive_"+i;
 
-            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Wea Positive','weak_positive_"+i+"',['strong_positive_"+i+"','negative_"+i+"'])")
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Weak Positive','weak_positive_"+i+"',['strong_positive_"+i+"','negative_"+i+"'])")
 
             td.appendChild(button);
 

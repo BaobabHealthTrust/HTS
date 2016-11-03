@@ -1,4 +1,5 @@
 
+var async = require("async");
 
 function queryRawQualityControl(sql, callback) {
 
@@ -215,8 +216,98 @@ function  saveProficiency(data,res){
 
 }
 
-function updatePTScores(){
+function updatePTScores(data){
 
+
+
+        var select_ptid = "SELECT pid FROM proficiency_test WHERE pt_panel_lot_number = '"+data.pt_panel_lot_number+"'";
+
+
+        queryRawQualityControl(select_ptid, function(ptids){
+
+              for (var i = 0; i < ptids[0].length; i++) {
+
+                    if (!ptids[0][i])
+                        continue;
+
+                    var score = 0;
+
+                    var proficiency_test_id = ptids[0][i].pid;
+
+                    async.series([
+
+                                 function (icallback) {
+
+                                        var sql = "SELECT * FROM `proficiency_test_result` WHERE pid ='"+proficiency_test_id+"' ORDER BY panel_number";
+
+                                        queryRawQualityControl(sql, function (result) {
+
+
+
+                                            for(var j = 0 ; j < result[0].length ; j++){
+
+                                                var test_result = result[0][j].final_result;
+
+                                                if(test_result.trim()=="+" && eval("data.pt_panel_result_"+j).trim().toLowerCase().match("positive")){
+
+
+                                                    score++;
+
+                                                }else if(test_result.trim()=="-" && eval("data.pt_panel_result_"+j).trim().toLowerCase().match("negative")){
+
+
+                                                    score++;
+
+                                                }
+
+                                                var update_official_column = "UPDATE proficiency_test_result SET official_result = '"+eval("data.pt_panel_result_"+j).trim()+"' WHERE pid ='"+proficiency_test_id
+                                                                            +"' AND panel_number = '"+(j + 1)+"'";
+
+                                                queryRawQualityControl(update_official_column, function (result) {
+
+                                                      console.log("updated Specific Providers Official Result");
+
+                                                });
+
+
+
+
+                                            }
+
+                                            console.log(score);
+
+                                            icallback();
+
+                                        });
+
+                                  },
+
+                                  function (icallback) {
+
+                                        var percentage = parseInt((parseInt(score)/5)*100);
+
+                                        var sql = "UPDATE `proficiency_test` SET score ="+percentage+" WHERE pid ='"+proficiency_test_id+"'";
+
+                                        console.log(sql);
+
+                                        queryRawQualityControl(sql, function (result) {
+
+                                            console.log("Score updated "+percentage + " %");
+
+                                            icallback();
+
+                                        });
+
+                                  }
+
+
+                    ]);
+
+
+                }
+
+
+        });
 
 
 }
@@ -304,7 +395,7 @@ module.exports = function (router) {
 
     router.route('/proficiency_test_approval/').get(function(data, res){
 
-        var sql = "SELECT * FROM proficiency_test WHERE approved  =''";
+        var sql = "SELECT * FROM proficiency_test WHERE approved  ='' AND score != -1";
 
         results = [];
 
@@ -330,7 +421,7 @@ module.exports = function (router) {
     router.route("/proficiency_test_result/:id").get(function(data, res){
 
 
-         var sql = "SELECT * FROM proficiency_test_result WHERE pid = '"+data.params.id+"' AND official_result =''";
+         var sql = "SELECT * FROM proficiency_test_result WHERE pid = '"+data.params.id+"' AND official_result !=''";
 
          results = [];
 
@@ -371,6 +462,23 @@ module.exports = function (router) {
                             res.status(200).json({message: "Proficiency Official Result Done!"});
 
                             updatePTScores(data);
+              });
+
+
+    });
+
+    router.route("/proficiency_test_action_plan/").post(function(req,res){
+
+          var data = req.body ;
+
+          var sql = "UPDATE proficiency_test SET action_plan ='"+ data.action_plan+ "' WHERE pid ='"+data.proficiency_test_id +"'";
+
+           queryRawQualityControl(sql, function (batch) {
+
+                            console.log("Action Plan Entered");
+
+                            res.status(200).json({message: "Action plan entered!"});
+
               });
 
 

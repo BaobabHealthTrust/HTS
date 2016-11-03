@@ -44,11 +44,12 @@ CREATE TABLE `proficiency_test` (
   `voided_by` varchar(255) NOT NULL,
   `approved` varchar(3) NOT NULL DEFAULT '',
   `approved_by` varchar(255) NOT NULL,
+  `score` int(3) NOT NULL DEFAULT '-1',
+  `action_plan` varchar(1000) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `proficiency_test_result`;
 
