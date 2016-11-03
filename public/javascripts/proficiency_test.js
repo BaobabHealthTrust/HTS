@@ -50,6 +50,29 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
 };
 
+function verticalText(text, parent) {
+
+    if (!parent)
+        return;
+
+    var div = document.createElement("div");
+    div.style.height = "120px";
+    div.style.fontSize = "12px";
+    div.style.width = "30px";
+
+    parent.appendChild(div);
+
+    var child = document.createElement("div");
+    child.style.transform = "rotate(-90deg)";
+    child.style.transformOrigin = "right bottom 0";
+    child.style.marginLeft = "-65px";
+
+    child.innerHTML = text;
+
+    div.appendChild(child);
+
+}
+
 var proficiency = ({
 
     version: "0.0.1",
@@ -310,7 +333,7 @@ padZeros: function (number, positions) {
                 field_type : "text",
                 id:"data.tester",
                 ajaxURL: "/app_custom/hts_users",
-                tt_onUnload:"updateUserAttributes()"
+                tt_onUnload:"updateUserAttributes();sePTLotNumber()"
 
             },
 
@@ -330,11 +353,6 @@ padZeros: function (number, positions) {
                 field_type: "hidden",
                 id: "data.last_name"
             },
-            "PT Panel Lot Number": {
-                field_type: "text",
-                id: "data.pt_panel_lot_number"
-                
-            },
             "DTS pack checklist": {
                 field_type: "select",
                 id: "data.dts_pack_checklist",
@@ -342,6 +360,11 @@ padZeros: function (number, positions) {
                 tt_pageStyleClass: "MultiSelectList",
                 tt_pageStyleClass: "NoKeyboard",
                 options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"]
+            },
+            "PT Panel Lot Number": {
+                field_type: "text",
+                id: "data.pt_panel_lot_number"
+                
             },
             "Test 1 Kit Name" :{
                 field_type : "select",
@@ -529,7 +552,8 @@ padZeros: function (number, positions) {
             "Creator": {
                 field_type: "hidden",
                 id: "data.creator",
-                value: proficiency.getCookie('username')
+                value: proficiency.getCookie('username'),
+                
             },
             "PT Lot Number": {
                 field_type: "text",
@@ -816,7 +840,7 @@ loadPTTests: function(path,target){
 
                 button.innerHTML = "Action";
 
-                button.setAttribute("onclick","window.parent.proficiency.approvePTResult("+data[i].pid+",window.parent.document.body)");
+                button.setAttribute("onclick","window.parent.proficiency.approvePTResult("+JSON.stringify(data[i])+",window.parent.document.body)");
 
 
                 td.appendChild(button);
@@ -831,7 +855,7 @@ loadPTTests: function(path,target){
 
     },
 
-    approvePTResult :function(id,target){
+    approvePTResult :function(data,target){
 
          if(!target)
             return;
@@ -933,11 +957,11 @@ loadPTTests: function(path,target){
 
         document.head.appendChild(script);
 
-        proficiency.loadPTResults("quality_control/proficiency_test_result/"+id, div0_1_0_0);
+        proficiency.loadPTResults("quality_control/proficiency_test_result/"+data.pid,data, div0_1_0_0);
 
     }
     ,
-    loadPTResults: function(path,target){
+    loadPTResults: function(path,ptdata,target){
 
 
 
@@ -1035,7 +1059,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Sample #";
+            verticalText("<b style= 'font-size : 1.3em'>Sample #</b>",td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1046,7 +1070,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Kit Name";
+            td.innerHTML = "<b>Kit Name : </b>" + (ptdata.test_kit_1_name ? ptdata.test_kit_1_name : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1057,7 +1081,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Kit Name";
+            td.innerHTML = "<b>Kit Name : </b>" + (ptdata.test_kit_2_name ? ptdata.test_kit_2_name : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1078,9 +1102,9 @@ loadPTTests: function(path,target){
 
             tr.appendChild(td);
 
-             var td = document.createElement("td");
+            var td = document.createElement("td");
 
-            td.innerHTML = "Strong Positive";
+            verticalText("<font style= 'font-size : 1.3em'>Strong Positive</font>",td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1091,7 +1115,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Weak Positive";
+            verticalText("<font style= 'font-size : 1.3em'>Weak Positive</font>",td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1102,7 +1126,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Negative";
+            verticalText("<font style= 'font-size : 1.3em'>Negative</font>",td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1119,7 +1143,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Lot Number";
+            td.innerHTML = "<b>Lot Number : </b>" + (ptdata.test_kit_1_lot_number ? ptdata.test_kit_1_lot_number : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1130,7 +1154,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Lot Number";
+            td.innerHTML =  "<b>Lot Number : </b>" + (ptdata.test_kit_2_lot_number ? ptdata.test_kit_2_lot_number : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1147,7 +1171,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Expiry Date";
+            td.innerHTML = "<b>Expiry Date : </b>" + (ptdata.test_kit_1_expiry ? new Date(ptdata.test_kit_1_expiry).format() : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1158,7 +1182,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            td.innerHTML = "Expiry Date";
+            td.innerHTML = "<b>Expiry Date : </b>" + (ptdata.test_kit_2_expiry ? new Date(ptdata.test_kit_2_expiry).format() : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1430,6 +1454,66 @@ loadPTTests: function(path,target){
 
 
             }
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            td.colSpan = "3";
+
+            td.style.border = "none";
+
+            td.style.textAlign = "left"
+
+            td.innerHTML ="<b>HTS Provider's Name :</>";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+
+            td.colSpan = "3";
+
+            td.style.border = "none";
+
+            td.style.textAlign = "left"
+
+            td.innerHTML = ptdata.first_name + " " +ptdata.last_name;
+
+            tr.appendChild(td);
+
+
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            td.colSpan = "3";
+
+            td.style.border = "none";
+
+            td.style.textAlign = "left"
+
+            td.innerHTML ="<b>HTS Provider's ID :</>";
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.colSpan = "3";
+
+            td.style.border = "none";
+
+            td.style.textAlign = "left"
+
+            td.innerHTML = (ptdata.hts_provider_id ? ptdata.hts_provider_id : "");
+
+            tr.appendChild(td);
+
 
         })
 

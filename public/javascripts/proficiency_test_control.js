@@ -2,6 +2,37 @@ var timers = {}
 
 var repeat_test_panel = {}
 
+function getAjaxRequest(url, callback, optionalControl) {
+
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function () {
+
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+            httpRequest.status == 304)) {
+
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = httpRequest.responseText;
+
+                callback(result, optionalControl);
+
+            } else {
+
+                callback(undefined);
+
+            }
+
+        }
+
+    };
+    try {
+        httpRequest.open("GET", url, true);
+        httpRequest.send(null);
+    } catch (e) {
+    }
+
+}
+
 function loadPTControl(test){
 
     var control = __$("inputFrame"+tstCurrentPage);
@@ -1559,5 +1590,40 @@ function updateOfficialResult(field, value,enable,disables){
 
     }
 
+
+}
+
+function sePTLotNumber(){
+
+    getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent("Proficiency Test"),function(data){
+
+            var kit_data = JSON.parse(data);
+
+            var url = "/stock/available_batches_to_user?userId="+__$('data.tester').value +"&item_name=" + kit_data.name + "&batch="
+
+            console.log(url);
+
+            __$("data.pt_panel_lot_number").setAttribute("ajaxURL",url);
+
+    })
+
+
+}
+
+function seAvailablePTLotNumber(field){
+
+    getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent("Proficiency Test"),function(data){
+
+            var kit_data = JSON.parse(data);
+
+            var url = "/stock//stock/available_batches?item_name=" + kit_data.name + "&batch="
+
+            console.log(url);
+
+            __$(field).setAttribute("ajaxURL",url);
+
+    })
+
+    return true;
 
 }
