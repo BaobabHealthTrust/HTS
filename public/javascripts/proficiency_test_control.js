@@ -32,95 +32,43 @@ function loadPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Panel #";
+    th.innerHTML = "Sample #";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
+
+    th.style.width = "12px"
+
+    th.rowSpan = "2";
 
     th.style.borderBottom = "1px solid black";
 
-    th.style.borderRight = "1px solid black";
+    th.style.borderRight = "2px solid black";
 
 
     var th = document.createElement("th");
 
     tr.appendChild(th);
 
-    th.innerHTML = "Start Timer 1";
+    th.innerHTML = "Test 1";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
 
-    th.style.borderBottom = "1px solid black";
+    th.colSpan = "3";
 
-    th.style.borderRight = "1px solid black";
-
-
-    var th = document.createElement("th");
-
-    tr.appendChild(th);
-
-    th.innerHTML = "Test 1 Timer";
-
-    th.style.padding = "1.2em";
-
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
+    th.style.borderRight = "2px solid black";
 
 
     var th = document.createElement("th");
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 1 Result";
+    th.innerHTML = "Test 2";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
 
-    th.style.borderBottom = "1px solid black";
+    th.colSpan = "3";
 
-    th.style.borderRight = "1px solid black";
-
-    th.colSpan = "2"
-
-
-    var th = document.createElement("th");
-
-    tr.appendChild(th);
-
-    th.innerHTML = "Start Timer 2";
-
-    th.style.padding = "1.2em";
-
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
-
-
-    var th = document.createElement("th");
-
-    tr.appendChild(th);
-
-    th.innerHTML = "Test 2 Timer";
-
-    th.style.padding = "1.2em";
-
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
-
-
-    var th = document.createElement("th");
-
-    tr.appendChild(th);
-
-    th.innerHTML = "Test 2 Result ";
-
-    th.style.padding = "1.2em";
-
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
-
-    th.colSpan ="2"
+    th.style.borderRight = "2px solid black";
 
 
     var th = document.createElement("th");
@@ -129,9 +77,62 @@ function loadPTControl(test){
 
     th.innerHTML = "Immediate Repeat?";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
+
+    th.rowSpan = "2";
 
     th.style.borderBottom = "1px solid black";
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Timer 1";
+
+    th.style.borderBottom = "1px solid black";
+
+
+    tr.appendChild(th);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Result";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "2px solid black";
+
+    th.colSpan = "2";
+
+    tr.appendChild(th);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Timer 2";
+
+    th.style.borderBottom = "1px solid black";
+
+    tr.appendChild(th);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Results";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.style.borderRight = "2px solid black";
+
+    th.colSpan = "2";
+
+    tr.appendChild(th)
+
 
     for(var i = 0 ; i < 5 ; i++){
 
@@ -145,64 +146,75 @@ function loadPTControl(test){
 
         td.innerHTML = i + 1;
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
+        td.style.fontWeight = "bold";
+
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        td.style.borderRight = "2px solid black";
 
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        var div = document.createElement("div");
 
-        var button = document.createElement("button");
+        div.style.border = "1px solid #366496";
+
+        div.style.borderRadius = "0%";
+
+        div.style.width = "90%";
+
+        div.id = "timer_1_"+i;
+
+        div.style.height = "100%";
+
+        div.style.margin = "auto";
+
+        div.style.textAlign = "center";
+
+        div.style.verticalAlign = "middle";
+
+        div.innerHTML = "Start";
+
+        div.setAttribute("onclick","startTimer('timer_1_"+i+"')");
+
+        div.style.fontSize = "1.8em";
+
+        div.style.color = "#3c60b1";
+
+        div.style.backgroundColor = "#fff";
+
+        div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+
+        td.appendChild(div);
+
+        /*var button = document.createElement("button");
 
         button.id = "button_start_1_"+i;
 
-        button.innerHTML = "Start Time 1"
+        button.innerHTML = "Start"
 
-         button.setAttribute("onclick","startTimer('timer_1_"+ i +"','button_start_1_"+i+"')");
+         button.setAttribute("onclick","startTimer('button_start_1_"+i+"')");
 
-        td.appendChild(button);
-
-
-        var td = document.createElement("td");
-
-        tr.appendChild(td);
-
-        td.innerHTML = "00:00";
-
-        td.id ="timer_1_"+i;
-
-        td.style.padding = "1.2em";
-
-        td.style.fontWeight  ="bold";
-
-        td.style.fontSize = "1.5em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
-        td.style.borderRight = "1px solid black";
+        td.appendChild(button);*/
 
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
@@ -223,13 +235,13 @@ function loadPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        td.style.borderRight = "2px solid black";
 
         var button = document.createElement("button");
 
@@ -246,51 +258,60 @@ function loadPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        var div = document.createElement("div");
 
-        var button = document.createElement("button");
+        div.style.border = "1px solid #366496";
+
+        div.style.borderRadius = "0%";
+
+        div.style.width = "90%";
+
+        div.id = "timer_2_"+i;
+
+        div.style.height = "100%";
+
+        div.style.margin = "auto";
+
+        div.style.textAlign = "center";
+
+        div.style.verticalAlign = "middle";
+
+        div.innerHTML = "Start";
+
+         div.setAttribute("onclick","startTimer('timer_2_"+i+"')");
+
+        div.style.fontSize = "1.8em";
+
+        div.style.color = "#3c60b1";
+
+        div.style.backgroundColor = "#fff";
+
+        div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+
+        td.appendChild(div);
+
+        /*var button = document.createElement("button");
 
         button.id = "button_start_2_"+i;
 
-        button.innerHTML = "Start Time 2";
+        button.innerHTML = "Start";
 
-        button.setAttribute("onclick","startTimer('timer_2_"+ i +"','button_start_2_"+i+"')");
+        button.setAttribute("onclick","startTimer('button_start_2_"+i+"')");
 
-        td.appendChild(button);
-
-
-        var td = document.createElement("td");
-
-        tr.appendChild(td);
-
-        td.innerHTML = "00:00";
-
-        td.style.fontWeight  ="bold";
-
-        td.style.fontSize = "1.5em";
-
-        td.id ="timer_2_"+i;
-
-        td.style.padding = "1.2em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
-        td.style.borderRight = "1px solid black";
+        td.appendChild(button);*/
 
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
@@ -311,13 +332,13 @@ function loadPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        td.style.borderRight = "2px solid black";
 
         var button = document.createElement("button");
 
@@ -334,7 +355,7 @@ function loadPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
@@ -374,6 +395,7 @@ function loadRepeatPTControl(test){
 
     control.appendChild(table);
 
+    
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
@@ -388,93 +410,90 @@ function loadRepeatPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Panel #";
+    th.innerHTML = "Sample #";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
+
+    th.style.width = "12px"
+
+    th.rowSpan = "2";
 
     th.style.borderBottom = "1px solid black";
 
-    th.style.borderRight = "1px solid black";
+    th.style.borderRight = "2px solid black";
 
 
     var th = document.createElement("th");
 
     tr.appendChild(th);
 
-    th.innerHTML = "Start Timer 1";
+    th.innerHTML = "Test 1";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
 
-    th.style.borderBottom = "1px solid black";
+    th.colSpan = "3";
 
-    th.style.borderRight = "1px solid black";
-
-
-    var th = document.createElement("th");
-
-    tr.appendChild(th);
-
-    th.innerHTML = "Test 1 Timer";
-
-    th.style.padding = "1.2em";
-
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
+    th.style.borderRight = "2px solid black";
 
 
     var th = document.createElement("th");
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 1 Result";
+    th.innerHTML = "Test 2";
 
-    th.style.padding = "1.2em";
+    th.style.padding = "0.3em";
 
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
-
-    th.colSpan = "2"
+    th.colSpan = "3";
 
 
-    var th = document.createElement("th");
 
-    tr.appendChild(th);
+    var tr = document.createElement("tr");
 
-    th.innerHTML = "Start Timer 2";
-
-    th.style.padding = "1.2em";
-
-    th.style.borderBottom = "1px solid black";
-
-    th.style.borderRight = "1px solid black";
+    table.appendChild(tr);
 
 
     var th = document.createElement("th");
 
-    tr.appendChild(th);
-
-    th.innerHTML = "Test 2 Timer";
-
-    th.style.padding = "1.2em";
+    th.innerHTML = "Timer 1";
 
     th.style.borderBottom = "1px solid black";
 
-    th.style.borderRight = "1px solid black";
+
+    tr.appendChild(th);
 
 
     var th = document.createElement("th");
 
-    tr.appendChild(th);
-
-    th.innerHTML = "Test 2 Result ";
-
-    th.style.padding = "1.2em";
+    th.innerHTML = "Result";
 
     th.style.borderBottom = "1px solid black";
 
-    th.colSpan ="2"
+    th.style.borderRight = "2px solid black";
+
+    th.colSpan = "2";
+
+    tr.appendChild(th);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Timer 2";
+
+    th.style.borderBottom = "1px solid black";
+
+    tr.appendChild(th);
+
+
+    var th = document.createElement("th");
+
+    th.innerHTML = "Results";
+
+    th.style.borderBottom = "1px solid black";
+
+    th.colSpan = "2";
+
+    tr.appendChild(th)
 
 
     var panel = Object.keys(repeat_test_panel);
@@ -499,65 +518,64 @@ function loadRepeatPTControl(test){
         tr.appendChild(td);
 
         td.innerHTML = parseInt(panel[i]) + 1;
-
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        td.style.borderRight = "2px solid black";
 
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
 
-        var button = document.createElement("button");
+        var div = document.createElement("div");
 
-        button.id = "im_button_start_1_"+i;
+        div.style.border = "1px solid #366496";
 
-        button.innerHTML = "Start Time 1"
+        div.style.borderRadius = "0%";
 
-         button.setAttribute("onclick","startTimer('im_timer_1_"+ i +"','im_button_start_1_"+i+"')");
+        div.style.width = "90%";
 
-        td.appendChild(button);
+        div.id = "im_timer_1_"+i;
+
+        div.style.height = "100%";
+
+        div.style.margin = "auto";
+
+        div.style.textAlign = "center";
+
+        div.style.verticalAlign = "middle";
+
+        div.innerHTML = "Start";
+
+         div.setAttribute("onclick","startTimer('im_timer_1_"+i+"')");
+
+        div.style.fontSize = "1.8em";
+
+        div.style.color = "#3c60b1";
+
+        div.style.backgroundColor = "#fff";
+
+        div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+
+        td.appendChild(div);
 
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
-        td.innerHTML = "00:00";
-
-        td.id ="im_timer_1_"+i;
-
-        td.style.padding = "1.2em";
-
-        td.style.fontWeight  ="bold";
-
-        td.style.fontSize = "1.5em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
-        td.style.borderRight = "1px solid black";
-
-
-        var td = document.createElement("td");
-
-        tr.appendChild(td);
-
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
@@ -569,7 +587,7 @@ function loadRepeatPTControl(test){
 
         button.innerHTML = "R";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','+','timer_1_"+ i +"','im_reactive_1_"+i+"','im_non_reactive_1_"+i+"')");
+        button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','+','im_timer_1_"+ i +"','im_reactive_1_"+i+"','im_non_reactive_1_"+i+"')");
 
         td.appendChild(button);
 
@@ -578,13 +596,13 @@ function loadRepeatPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
 
-        td.style.borderRight = "1px solid black";
+        td.style.borderRight = "2px solid black";
 
         var button = document.createElement("button");
 
@@ -601,51 +619,52 @@ function loadRepeatPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
         td.style.borderBottom = "1px solid black";
-
-        td.style.borderRight = "1px solid black";
 
         var button = document.createElement("button");
 
-        button.id = "im_button_start_2_"+i;
+        var div = document.createElement("div");
 
-        button.innerHTML = "Start Time 2";
+        div.style.border = "1px solid #366496";
 
-        button.setAttribute("onclick","startTimer('im_timer_2_"+ i +"','im_button_start_2_"+i+"')");
+        div.style.borderRadius = "0%";
 
-        td.appendChild(button);
+        div.style.width = "90%";
+
+        div.id = "im_timer_2_"+i;
+
+        div.style.height = "100%";
+
+        div.style.margin = "auto";
+
+        div.style.textAlign = "center";
+
+        div.style.verticalAlign = "middle";
+
+        div.innerHTML = "Start";
+
+         div.setAttribute("onclick","startTimer('im_timer_2_"+i+"')");
+
+        div.style.fontSize = "1.8em";
+
+        div.style.color = "#3c60b1";
+
+        div.style.backgroundColor = "#fff";
+
+        div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+
+        td.appendChild(div);
 
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
-        td.innerHTML = "00:00";
-
-        td.style.fontWeight  ="bold";
-
-        td.style.fontSize = "1.5em";
-
-        td.id ="im_timer_2_"+i;
-
-        td.style.padding = "1.2em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
-        td.style.borderRight = "1px solid black";
-
-
-        var td = document.createElement("td");
-
-        tr.appendChild(td);
-
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
@@ -666,7 +685,7 @@ function loadRepeatPTControl(test){
 
         tr.appendChild(td);
 
-        td.style.padding = "1.2em";
+        td.style.padding = "0.3em";
 
         td.style.textAlign = "center";
 
@@ -690,33 +709,35 @@ function loadRepeatPTControl(test){
 }
 
 
-function startTimer(id, button){
+function startTimer(button){
 
-    __$(button).className = "gray";
+    __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>00:00</font>"
 
-   if(!timers[id]){
+    __$(button).removeAttribute("onclick");
 
-        timers[id] = {minutes : 0 , seconds : 0 , progress: true}
+   if(!timers[button]){
+
+        timers[button] = {minutes : 0 , seconds : 0 , progress: true}
    }
 
     var timerInterval = setInterval(function (){
 
-        if(timers[id].progress){
+        if(timers[button].progress){
 
-            timers[id].seconds++;
+            timers[button].seconds++;
 
-                if(timers[id].seconds == 60){
+                if(timers[button].seconds == 60){
 
-                    timers[id].minutes++;
+                    timers[button].minutes++;
 
-                    timers[id].seconds= 0
+                    timers[button].seconds= 0
 
                 }
 
-                if(__$(id) != null){
+                if(__$(button) != null){
 
-                    __$(id).innerHTML = "<font style= 'color:#2e5d91; font-weight: bold; font-size : 1.0em'>" +
-                                padZeros(timers[id].minutes,2) +":"+padZeros(timers[id].seconds,2) + "</font>"
+                    __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>" +
+                                padZeros(timers[button].minutes,2) +":"+padZeros(timers[button].seconds,2) + "</font>"
 
                 }
 
@@ -1286,5 +1307,257 @@ function updateFinalResult(panel,result, activate, deactivate){
     if(deactivate){
         __$(deactivate + panel).className = "blue";
     }
+
+}
+
+
+function updateUserAttributes(){
+
+    var username = __$("data.tester").value;
+
+    window.parent.proficiency.ajaxRequest("/app_custom/user_attributes/"+username , function(data){
+
+            var data = JSON.parse(data);
+
+            __$('data.first_name').value = data.first_name
+
+            __$('data.last_name').value = data.last_name
+
+            __$('data.provider_id').value = data.provider_id
+
+    });
+
+}
+
+function loadPTOfficialResultControl(){
+
+    var control = __$("inputFrame"+tstCurrentPage);
+
+    control.innerHTML = "";
+
+    control.style.overflowY = "scroll";
+
+    //control.style.overflowX = "scroll";
+
+
+
+    var table = document.createElement("table");
+
+    table.style.borderCollapse = "collapse";
+
+    table.style.width = "95%";
+
+    table.style.margin = "auto";
+
+    table.style.marginTop = "15px";
+
+    control.appendChild(table);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("th");
+
+    td.innerHTML = "Sample #";
+
+    td.style.borderBottom = "1px solid black";
+
+    td.style.borderRight = "1px solid black";
+
+    td.style.borderLeft = "1px solid black";
+
+    td.rowSpan = "2"
+
+
+    tr.appendChild(td);
+
+     var td = document.createElement("th");
+
+    td.innerHTML = "Official Result";
+
+    td.style.borderBottom = "1px solid black";
+
+     td.style.borderRight = "1px solid black";
+
+    td.colSpan = "3";
+
+
+    tr.appendChild(td);
+
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+
+    var td = document.createElement("th");
+
+    td.innerHTML = "Strong Positive";
+
+    td.style.borderBottom = "1px solid black";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("th");
+
+    td.innerHTML = "Weak Positive";
+
+    td.style.borderBottom = "1px solid black";
+
+    tr.appendChild(td);
+
+
+    var td = document.createElement("th");
+
+    td.style.borderBottom = "1px solid black";
+
+    td.style.borderRight = "1px solid black";
+
+    td.innerHTML = "Negative";
+
+    tr.appendChild(td);
+
+
+    for(var i  = 0; i < 5 ; i++){
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+
+            var td = document.createElement("th");
+
+            td.innerHTML = i + 1;
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.borderRight = "1px solid black";
+
+            td.style.borderLeft = "1px solid black";
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.textAlign ="center";
+
+            var button = document.createElement("button")
+
+            button.className = "blue";
+
+            button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
+
+            button.id = "strong_positive_"+i;
+
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Strong Positive','strong_positive_"+i+"',['weak_positive_"+i+"','negative_"+i+"'])")
+
+            td.appendChild(button);
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.textAlign ="center";
+
+            var button = document.createElement("button")
+
+            button.className = "blue";
+
+            button.innerHTML = "<font style= 'font-size:1em'>+</font>"
+
+            button.id = "weak_positive_"+i;
+
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Wea Positive','weak_positive_"+i+"',['strong_positive_"+i+"','negative_"+i+"'])")
+
+            td.appendChild(button);
+
+            tr.appendChild(td);
+
+
+            var td = document.createElement("td");
+
+            td.style.borderBottom = "1px solid black";
+
+            td.style.borderRight = "1px solid black";
+
+            td.style.textAlign ="center";
+
+            var button = document.createElement("button")
+
+            button.className = "blue";
+
+            button.innerHTML = "<font style= 'font-size:1em'>-</font>"
+
+            button.id = "negative_"+i;
+
+            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Negative','negative_"+i+"',['strong_positive_"+i+"','weak_positive_"+i+"'])")
+
+            td.appendChild(button);
+
+            tr.appendChild(td);
+
+
+    }
+
+
+    __$("nextButton").className = __$("nextButton").className.replace(/blue|green/i, "gray");
+
+
+    var nexButtonIterval = setInterval(function(){
+
+        if(__$('nextButton').className.match("gray")){
+
+            var fals = 0
+
+            for(var i = 0 ; i < 5; i++){
+
+                if(!__$("data.pt_panel_result_"+i).value){
+
+                    fals++;
+                }
+
+            }
+
+            if(fals == 0){
+
+               __$("nextButton").className = __$("nextButton").className.replace(/gray/i, "green");
+
+            }
+
+
+
+        }else{
+
+            clearInterval(nexButtonIterval);
+
+        }
+
+    },100)
+
+
+}
+
+function updateOfficialResult(field, value,enable,disables){
+
+
+
+    __$(field).value = value;
+
+    __$(enable).className = "green";
+
+    for(var i = 0; i < disables.length; i++){
+
+        __$(disables[i]).className = "blue";
+
+    }
+
 
 }

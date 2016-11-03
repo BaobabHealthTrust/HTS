@@ -197,9 +197,9 @@ function  saveProficiency(data,res){
 
    for(var i = 0 ; i < 5 ; i++){
 
-            var result_query = "INSERT INTO proficiency_test_result (pid,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
+            var result_query = "INSERT INTO proficiency_test_result (pid,panel_number,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
                                ",im_pass_test_1,im_pass_test_1_time,im_pass_test_2,im_pass_test_2_time,final_result) "+
-                               "VALUES(("+get_pt_record+"),'"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
+                               "VALUES(("+get_pt_record+"),'"+(i + 1)+"','"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
                                +"','"+eval('data.im_1_'+i)+"','"+eval('data.im_1_'+i+'_time')+"','"+eval('data.im_2_'+i)+"','"+eval('data.im_2_'+i+'_time')+"','"+eval('data.final_result_'+i)+"')"
 
 
@@ -211,6 +211,12 @@ function  saveProficiency(data,res){
    }
 
     res.status(200).json({message: "Proficiency test Done!"});
+
+
+}
+
+function updatePTScores(){
+
 
 
 }
@@ -343,6 +349,29 @@ module.exports = function (router) {
                 res.send(results);
 
             })
+
+
+    });
+
+    router.route("/proficiency_test_official_result/").post(function(req , res){
+
+        var data = req.body;
+
+          var sql = "INSERT INTO proficiency_test_official_result(pt_panel_lot_number,panel_1,panel_2,panel_3,panel_4,panel_5,date_created,created_by) "+
+                    "VALUES('"+data.pt_panel_lot_number+"','"+data.pt_panel_result_0+"','"+data.pt_panel_result_1+"','"+data.pt_panel_result_2+"','"
+                    +data.pt_panel_result_3+"','"+data.pt_panel_result_4+"',NOW(),'"+data.userId+"')";
+
+          console.log(sql);
+
+
+              queryRawQualityControl(sql, function (batch) {
+
+                            console.log("Insert Proficiency Official Result");
+
+                            res.status(200).json({message: "Proficiency Official Result Done!"});
+
+                            updatePTScores(data);
+              });
 
 
     });
