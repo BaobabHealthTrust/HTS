@@ -552,12 +552,12 @@ padZeros: function (number, positions) {
             "Creator": {
                 field_type: "hidden",
                 id: "data.creator",
-                value: proficiency.getCookie('username'),
-                
+                value: proficiency.getCookie('username')
             },
             "PT Lot Number": {
                 field_type: "text",
-                id: "data.pt_panel_lot_number"
+                id: "data.pt_panel_lot_number",
+                ajaxURL: eval("window.parent.proficiency.pt_url")
             },
             "Enter Official result": {
                 field_type: "text",
@@ -1560,7 +1560,22 @@ loadPTTests: function(path,target){
         proficiency.navPanel(form.outerHTML);
 
     },
-    showMsg: function (msg, topic, nextURL) {
+    seAvailablePTLotNumber:  function (){
+
+           proficiency.ajaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent("Proficiency Test"),function(data){
+
+                    var kit_data = JSON.parse(data);
+
+                    var url = "/stock/available_batches?item_name=" + kit_data.name + "&batch="
+
+                    proficiency.pt_url = url
+
+            })
+
+        }
+
+
+    ,showMsg: function (msg, topic, nextURL) {
 
             if (!topic) {
 
@@ -2045,6 +2060,7 @@ loadPTTests: function(path,target){
 
     },
 
+
     submitData: function (data) {
 
         console.log(data);
@@ -2127,3 +2143,5 @@ loadPTTests: function(path,target){
 
 
  });
+
+proficiency.seAvailablePTLotNumber();

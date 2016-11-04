@@ -1609,21 +1609,3 @@ function sePTLotNumber(){
 
 
 }
-
-function seAvailablePTLotNumber(field){
-
-    getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent("Proficiency Test"),function(data){
-
-            var kit_data = JSON.parse(data);
-
-            var url = "/stock//stock/available_batches?item_name=" + kit_data.name + "&batch="
-
-            console.log(url);
-
-            __$(field).setAttribute("ajaxURL",url);
-
-    })
-
-    return true;
-
-}
