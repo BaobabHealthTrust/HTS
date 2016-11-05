@@ -727,7 +727,9 @@ module.exports = function (router) {
 
         var description = req.params.description;
 
-        var sql = "SELECT name, description FROM stock WHERE description ='" + description + "' ORDER BY stock_id ASC LIMIT 1";
+        var sql = "SELECT name, description FROM stock WHERE description ='" + description + "' AND voided = 0 ORDER BY stock_id ASC LIMIT 1";
+
+        console.log(sql);
 
         queryRawStock(sql, function (data) {
 
