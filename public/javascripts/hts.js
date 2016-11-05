@@ -6689,49 +6689,23 @@ function validateAndProcessMonth() {
 
 function setEstimatedAgeValue() {
 
-    var ageEstimateValue = __$("age_estimate").value;
+    if(__$("birthdate") && __$("age_estimate") && __$("estimate") && __$("birthyear") && __$("birthmonth") && __$("birthday")) {
 
-    if (parseInt(ageEstimateValue) < 1 || parseInt(ageEstimateValue) > 150) {
+        if(age) {
 
-        var message = "Invalid Age Esimate";
+            __$("estimate").value = 1;
 
-        setTimeout(function () {
+            var year = (new Date()).getFullYear() - parseInt(__$("estimate").value.trim());
 
-            gotoPage(tstCurrentPage - 1, false, true);
+            __$("birthdate").value = year + "-07-15";
 
-            window.parent.dashboard.showMsg(message, "Age Esimate Validation")
+        } else {
 
-        }, 10);
 
-    }
 
-    var birthdate = __$("birthdate");
-
-    var estimate_field = (birthdate.getAttribute("estimate_field") != null ?
-        __$(birthdate.getAttribute("estimate_field")) : undefined);
-
-    if (estimate_field) {
-
-        estimate_field.value = 1
+        }
 
     }
-
-    var today = new Date();
-
-    var currentYear = today.getFullYear();
-
-    var estimateYear = parseInt(currentYear) - parseInt(ageEstimateValue);
-
-    if (estimate_field.value == 1) {
-
-        __$('birthyear').value = estimateYear;
-
-    }
-
-    var estimateBirthDate = estimateYear + "-06-01";
-
-    birthdate.value = estimateBirthDate;
-
 
 }
 
@@ -6800,7 +6774,6 @@ function validateExpiryDate(date_string) {
                 saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
 
             }
-
 
         }
 

@@ -4,6 +4,8 @@
 
 var page = 1;
 
+var selectedPatient;
+
 var style = this.sheet(__$("content"));
 this.addCSSRule(style, ".hidekeyboard", "display: none !important");
 this.addCSSRule(style, ".element", "border: 1px solid #999");
@@ -98,7 +100,7 @@ function __$(id) {
 
 }
 
-function loadNames() {
+function loadNames(advanced) {
 
     __$("inputFrame" + tstCurrentPage).style.display = "none";
 
@@ -156,16 +158,73 @@ function loadNames() {
     navUp.className = "arrow-up";
     navUp.style.margin = "auto";
 
-    navUp.onmousedown = function () {
-        if (page - 1 > 0) {
-            page -= 1;
+    if (advanced) {
+
+        navUp.onmousedown = function () {
+
+            if (page - 1 > 0) {
+                page -= 1;
+            }
+
+            var json = {
+                "npid": null,
+                "application": null,
+                "site_code": null,
+                "names": {
+                    "family_name": __$("last_name").value.trim(),
+                    "given_name": __$("first_name").value.trim(),
+                    "middle_name": null
+                },
+                "gender": __$("gender").value.trim().toUpperCase().substring(0, 1),
+                "attributes": {
+                    "occupation": null,
+                    "cell_phone_number": null
+                },
+                "birthdate": __$("birthdate").value.trim(),
+                "patient": {
+                    "identifiers": {
+                        "other_identifier": null
+                    }
+                },
+                "birthdate_estimated": __$("estimate").value.trim(),
+                "addresses": {
+                    "current_residence": null,
+                    "current_village": null,
+                    "current_ta": null,
+                    "current_district": null,
+                    "home_village": null,
+                    "home_ta": null,
+                    "home_district": __$("home_district").value.trim()
+                },
+                "action": "SEARCH",
+                "page": page,
+                "page_size": 7
+            };
+
+            var url = window.parent.patient.settings.ddePath;
+
+            ajaxAuthPostRequest(url, json, function (data) {
+
+                loadPatients(data);
+
+            });
+
         }
 
-        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
-            "&last_name=" + __$("last_name").value.trim() + "&gender=" +
-            __$("gender").value.trim() + "&page=" + page;
+    } else {
 
-        ajaxSearch(page, url);
+        navUp.onmousedown = function () {
+            if (page - 1 > 0) {
+                page -= 1;
+            }
+
+            var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
+                "&last_name=" + __$("last_name").value.trim() + "&gender=" +
+                __$("gender").value.trim() + "&page=" + page;
+
+            ajaxSearch(page, url);
+        }
+
     }
 
     navpanel0.appendChild(navUp);
@@ -186,14 +245,75 @@ function loadNames() {
     navDown.className = "arrow-down";
     navDown.style.margin = "auto";
 
-    navDown.onmousedown = function () {
-        page += 1;
+    if (advanced) {
 
-        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
-            "&last_name=" + __$("last_name").value.trim() + "&gender=" +
-            __$("gender").value.trim() + "&page=" + page;
+        navDown.onmousedown = function () {
 
-        ajaxSearch(page, url);
+            page += 1;
+
+            var json = {
+                "npid": null,
+                "application": null,
+                "site_code": null,
+                "names": {
+                    "family_name": __$("last_name").value.trim(),
+                    "given_name": __$("first_name").value.trim(),
+                    "middle_name": null
+                },
+                "gender": __$("gender").value.trim().toUpperCase().substring(0, 1),
+                "attributes": {
+                    "occupation": null,
+                    "cell_phone_number": null
+                },
+                "birthdate": __$("birthdate").value.trim(),
+                "patient": {
+                    "identifiers": {
+                        "other_identifier": null
+                    }
+                },
+                "birthdate_estimated": __$("estimate").value.trim(),
+                "addresses": {
+                    "current_residence": null,
+                    "current_village": null,
+                    "current_ta": null,
+                    "current_district": null,
+                    "home_village": null,
+                    "home_ta": null,
+                    "home_district": __$("home_district").value.trim()
+                },
+                "action": "SEARCH",
+                "page": page,
+                "page_size": 7
+            };
+
+            var url = window.parent.patient.settings.ddePath;
+
+            selectedPatient = null;
+
+            ajaxAuthPostRequest(url, json, function (data) {
+
+                loadPatients(data);
+
+            });
+
+        }
+
+    } else {
+
+        navDown.onmousedown = function () {
+
+            page += 1;
+
+            var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
+                "&last_name=" + __$("last_name").value.trim() + "&gender=" +
+                __$("gender").value.trim() + "&page=" + page;
+
+            selectedPatient = null;
+
+            ajaxSearch(page, url);
+
+        }
+
     }
 
     navpanel1.appendChild(navDown);
@@ -233,37 +353,170 @@ function loadNames() {
     newPatient.id = "newPatient";
     newPatient.style.cssFloat = "right";
 
-    newPatient.onmousedown = function () {
+    if (advanced) {
 
-        buildAddPage(__$("first_name").value.trim(), __$("last_name").value.trim(),
-            __$("gender").value.trim());
+        newPatient.onmousedown = function () {
+
+            if (__$("patient"))
+                __$("patient").value
+
+            selectedPatient = null;
+
+            newRecord(function () {
+
+                gotoNextPage();
+
+            });
+
+        }
+
+    } else {
+
+        newPatient.onmousedown = function () {
+
+            if (__$("patient"))
+                __$("patient").value
+
+            selectedPatient = null;
+
+            gotoNextPage();
+
+        }
 
     }
 
     footer.appendChild(newPatient);
 
-    var editPatient = document.createElement("button");
-    editPatient.innerHTML = "<span>Edit Patient</span>";
-    editPatient.id = "editPatient";
-    editPatient.style.cssFloat = "right";
-    editPatient.className = "gray";
+    if (advanced) {
 
-    editPatient.onmousedown = function () {
+        var json = {
+            "npid": null,
+            "application": null,
+            "site_code": null,
+            "names": {
+                "family_name": __$("last_name").value.trim(),
+                "given_name": __$("first_name").value.trim(),
+                "middle_name": null
+            },
+            "gender": __$("gender").value.trim().toUpperCase().substring(0, 1),
+            "attributes": {
+                "occupation": null,
+                "cell_phone_number": null
+            },
+            "birthdate": __$("birthdate").value.trim(),
+            "patient": {
+                "identifiers": {
+                    "other_identifier": null
+                }
+            },
+            "birthdate_estimated": __$("estimate").value.trim(),
+            "addresses": {
+                "current_residence": null,
+                "current_village": null,
+                "current_ta": null,
+                "current_district": null,
+                "home_village": null,
+                "home_ta": null,
+                "home_district": __$("home_district").value.trim()
+            },
+            "status": "NEW RECORD",
+            "action": "NEW RECORD"
+        };
 
-        if (this.className.match(/gray/))
-            return;
+        var url = window.parent.patient.settings.ddePath;
 
-        buildEditPage(this.getAttribute("patient_id"));
+        ajaxAuthPostRequest(url, json, function (data) {
+
+            var json = (typeof data == typeof String() ? JSON.parse(data) : data);
+
+            if (json instanceof Array) {
+
+                loadPatients(json);
+
+            } else {
+
+                selectedPatient = json;
+
+                gotoNextPage();
+
+            }
+
+        });
+
+    } else {
+
+        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
+            "&last_name=" + __$("last_name").value.trim() + "&gender=" +
+            __$("gender").value.trim().toUpperCase().substring(0, 1) + "&page=" + page;
+
+        ajaxSearch(page, url);
 
     }
 
-    footer.appendChild(editPatient);
+}
 
-    var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
-        "&last_name=" + __$("last_name").value.trim() + "&gender=" +
-        __$("gender").value.trim() + "&page=" + page;
+function newRecord(callback) {
 
-    ajaxSearch(page, url);
+    var json = {
+        "npid": null,
+        "application": null,
+        "site_code": null,
+        "names": {
+            "family_name": __$("last_name").value.trim(),
+            "given_name": __$("first_name").value.trim(),
+            "middle_name": null
+        },
+        "gender": __$("gender").value.trim().toUpperCase().substring(0, 1),
+        "attributes": {
+            "occupation": null,
+            "cell_phone_number": null
+        },
+        "birthdate": __$("birthdate").value.trim(),
+        "patient": {
+            "identifiers": {
+                "other_identifier": null
+            }
+        },
+        "birthdate_estimated": __$("estimate").value.trim(),
+        "addresses": {
+            "current_residence": null,
+            "current_village": null,
+            "current_ta": null,
+            "current_district": null,
+            "home_village": null,
+            "home_ta": null,
+            "home_district": __$("home_district").value.trim()
+        },
+        "status": "NEW RECORD",
+        "action": "NEW RECORD"
+    };
+
+    if (window.parent.patient.patients.length > 0) {
+
+        var tracker = window.parent.patient.patients[0].tracker;
+
+        json.tracker = tracker;
+
+        if (window.parent.patient.patients[0].action && window.parent.patient.patients[0].action.trim().toUpperCase() == "VERIFY") {
+
+            json.status = "NEW RECORD";
+
+        }
+
+    }
+
+    var url = window.parent.patient.settings.ddePath;
+
+    selectedPatient = null;
+
+    ajaxAuthPostRequest(url, json, function (data) {
+
+        selectedPatient = data;
+
+        if (callback)
+            callback();
+
+    });
 
 }
 
@@ -275,11 +528,41 @@ function hidekeyboard() {
     }
 }
 
-function ajaxSearch(page, url) {
+function ajaxAuthPostRequest(url, data, callback) {
 
-    /*var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
-     "&last_name=" + __$("last_name").value.trim() + "&gender=" +
-     __$("gender").value.trim() + "&page=" + page;*/
+    var httpRequest = new XMLHttpRequest();
+    var auth = window.parent.patient.makeBaseAuth(window.parent.patient.settings.ddeUser, window.parent.patient.settings.ddePassword);
+
+    httpRequest.onreadystatechange = function () {
+
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+            httpRequest.status == 304)) {
+
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = httpRequest.responseText;
+
+                callback(result);
+
+            } else {
+
+                callback(undefined);
+
+            }
+
+        }
+
+    };
+    try {
+        httpRequest.open("POST", url, true);
+        httpRequest.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+        httpRequest.setRequestHeader('Authorization', auth);
+        httpRequest.send(JSON.stringify(data));
+    } catch (e) {
+    }
+
+}
+
+function ajaxSearch(page, url) {
 
     if (__$("nextButton")) {
         __$("nextButton").className = "button gray navButton";
@@ -311,6 +594,20 @@ function handleAjaxRequest(aXMLHttpRequest) {
 
     if (!aXMLHttpRequest) return;
 
+    if (aXMLHttpRequest.readyState == 4 && aXMLHttpRequest.status == 200) {
+
+        var result = aXMLHttpRequest.responseText;
+
+        loadPatients(result);
+
+    }
+
+}
+
+function loadPatients(result) {
+
+    selectedPatient = null;
+
     __$("leftpanel").innerHTML = "";
     __$("rightpanel").innerHTML = "";
 
@@ -326,70 +623,53 @@ function handleAjaxRequest(aXMLHttpRequest) {
 
     }
 
-    if (aXMLHttpRequest.readyState == 4 && aXMLHttpRequest.status == 200) {
+    window.parent.patient.patients = (typeof result == typeof String() ? JSON.parse(result) : result);
 
-        var result = aXMLHttpRequest.responseText;
+    if (Object.keys(window.parent.patient.patients).length == 0) {
+        __$("rightpanel").innerHTML = "<div style='margin: auto; padding: 20px; font-size: 24px; font-style: italic;'>No results found!</div>";
+    }
 
-        window.parent.patient.patients = JSON.parse(result);
+    for (var i = 0; i < window.parent.patient.patients.length; i++) {
 
-        if (Object.keys(window.parent.patient.patients).length == 0) {
-            __$("rightpanel").innerHTML = "<div style='margin: auto; padding: 20px; font-size: 24px; font-style: italic;'>No results found!</div>";
-        }
+        var div = document.createElement("div");
+        div.id = i;
+        div.className = "element " + (i % 2 > 0 ? "odd" : "");
+        div.setAttribute("tag", (i % 2 > 0 ? "odd" : "even"));
+        div.setAttribute("npid", (window.parent.patient.patients[i]["national_id"] || window.parent.patient.patients[i]["npid"]));
+        div.setAttribute("patient_id", window.parent.patient.patients[i]["person_id"]);
 
-        for (var i = 0; i < window.parent.patient.patients.length; i++) {
+        div.onclick = function () {
+            deselectAllAndSelect(this.id);
 
-            var div = document.createElement("div");
-            div.id = i;
-            div.className = "element " + (i % 2 > 0 ? "odd" : "");
-            div.setAttribute("tag", (i % 2 > 0 ? "odd" : "even"));
-            div.setAttribute("npid", window.parent.patient.patients[i]["national_id"]);
-            div.setAttribute("patient_id", window.parent.patient.patients[i]["person_id"]);
+            window.parent.patient.patientId = this.getAttribute("npid");
 
-            div.onclick = function () {
-                deselectAllAndSelect(this.id);
+            showPatient(this.id);
 
-                window.parent.patient.patientId = this.getAttribute("npid");
+            if (__$("patient"))
+                __$("patient").value = this.getAttribute("npid");
 
-                showPatient(this.id);
+            if (__$('nextButton')) {
+                __$("nextButton").innerHTML = "<span>Select</span>"
+                __$("nextButton").className = "green navButton";
 
-                __$("patient").value = this.id;
+                __$('nextButton').onmousedown = function () {
 
-                __$("selected_patient").value = this.getAttribute("npid");
+                    gotoNextPage();
 
-                if (__$("editPatient")) {
-
-                    __$("editPatient").className = "blue";
-
-                    __$("editPatient").setAttribute("pos", this.id);
-
-                    __$("editPatient").setAttribute("patient_id", this.getAttribute("patient_id"));
-
-                }
-
-                if (__$('nextButton')) {
-                    __$("nextButton").innerHTML = "<span>Select</span>"
-                    __$("nextButton").className = "green navButton";
-
-                    __$('nextButton').onmousedown = function () {
-
-                        // window.location = window.parent.patient.settings.basePath + "/patient/" + __$("selected_patient").value.trim();
-
-                        gotoNextPage();
-
-                    }
                 }
             }
-
-            div.innerHTML = "<table width='100%'><tr><td style='width: 50%'>" +
-                window.parent.patient.patients[i]["names"]["given_name"] + " " + window.parent.patient.patients[i]["names"]["family_name"] +
-                " (" + window.parent.patient.patients[i]["age"] + ")" + "</td><td>" + window.parent.patient.patients[i]["national_id"] +
-                "</td><td style='width: 30px; background-color: white; border-radius: 60px; padding: 5px; border: 1px solid #666;'>" +
-                (window.parent.patient.patients[i]["gender"] == "M" ? "<img src='" + window.parent.patient.icoMale + "' width='47px' alt='Male' />" :
-                    (window.parent.patient.patients[i]["gender"] == "F" ? "<img src='" + window.parent.patient.icoFemale + "' width='47px' alt='Female' />" : "")) + "</td></tr></table>";
-
-            __$("rightpanel").appendChild(div);
-
         }
+
+        div.innerHTML = "<table width='100%' style='font-size: 28px !important;'><tr><td style='width: 50%'>" +
+            window.parent.patient.patients[i]["names"]["given_name"] + " " + window.parent.patient.patients[i]["names"]["family_name"] +
+            " (" + (window.parent.patient.patients[i]["age"] || window.parent.patient.getAge(window.parent.patient.patients[i]["birthdate"],
+                window.parent.patient.patients[i]["birthdate_estimated"])) + ")" + "</td><td>" +
+            (window.parent.patient.patients[i]["national_id"] || window.parent.patient.patients[i]["npid"]) +
+            "</td><td style='width: 30px; background-color: white; border-radius: 60px; padding: 5px; border: 1px solid #666;'>" +
+            (window.parent.patient.patients[i]["gender"] == "M" ? "<img src='" + window.parent.patient.icoMale + "' width='47px' alt='Male' />" :
+                (window.parent.patient.patients[i]["gender"] == "F" ? "<img src='" + window.parent.patient.icoFemale + "' width='47px' alt='Female' />" : "")) + "</td></tr></table>";
+
+        __$("rightpanel").appendChild(div);
 
     }
 
@@ -409,6 +689,8 @@ function deselectAllAndSelect(me) {
 }
 
 function showPatient(pos) {
+
+    selectedPatient = window.parent.patient.patients[pos];
 
     __$("leftpanel").innerHTML = "";
 
@@ -463,7 +745,8 @@ function showPatient(pos) {
 
     var cell2_2 = document.createElement("td");
     cell2_2.style.fontStyle = "italic";
-    cell2_2.innerHTML = (window.parent.patient.patients[pos]["birthdate_estimated"] ? "~" : "") + window.parent.patient.patients[pos]["age"];
+    cell2_2.innerHTML = (window.parent.patient.patients[pos]["age"] || window.parent.patient.getAge(window.parent.patient.patients[pos]["birthdate"],
+        window.parent.patient.patients[pos]["birthdate_estimated"]));
 
     tr2.appendChild(cell2_2);
 
@@ -481,7 +764,7 @@ function showPatient(pos) {
 
     var cell3_2 = document.createElement("td");
     cell3_2.style.fontStyle = "italic";
-    cell3_2.innerHTML = window.parent.patient.patients[pos]["national_id"];
+    cell3_2.innerHTML = (window.parent.patient.patients[pos]["national_id"] || window.parent.patient.patients[pos]["npid"]);
 
     tr3.appendChild(cell3_2);
 
