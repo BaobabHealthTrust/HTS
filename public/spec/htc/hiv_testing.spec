@@ -10,7 +10,7 @@ Q.1.6. First Pass Test Kit 2 Dispatch ID [pos:: 5$$ id:: fp_lot_2_dispatch_id$$ 
 Q.1.7. Immediate Repeat Test Kit 1 Dispatch ID [pos:: 6$$ id:: im_lot_1_dispatch_id$$ condition:: false]
 Q.1.8. Immediate Repeat Test Kit 2 Dispatch ID [pos:: 7$$ id:: im_lot_2_dispatch_id$$ condition:: false]
 
-Q.1.9. Client gives consent to be Tested? [pos :: 8 $$ id :: consent $$ tt_onLoad :: setTestKits() $$ condition :: evalCondition(-1)]
+Q.1.9. Client gives consent to be tested? [pos :: 8 $$ id :: consent $$ tt_onLoad :: setTestKits() $$ condition :: evalCondition(-1)]
 O.1.9.1. No
 O.1.9.2. Yes
 

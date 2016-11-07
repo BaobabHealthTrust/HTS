@@ -1,10 +1,10 @@
 P.1. PRE TEST COUNSELLING [program:: HTS PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts]
 
-Q.1.1. Do you have a partner? [pos:: 0$$ id:: partner]
+Q.1.1. Do you have a partner? [pos:: 0$$ id:: partner $$ condition :: ageLimit()]
 O.1.1.1. Yes
 O.1.1.2. No
 
-Q.1.2. Partner Present at this Session? [pos:: 1$$ id:: partner_present$$ condition:: __$('partner').value == "Yes" $$ value :: No]
+Q.1.2. Partner Present at this Session? [pos:: 1$$ id:: partner_present$$ condition:: __$('partner') && __$('partner').value == "Yes" $$ value :: No]
 O.1.2.1. Yes
 O.1.2.2. No
 

@@ -1350,6 +1350,8 @@ function updateUserAttributes(){
 
             var data = JSON.parse(data);
 
+            console.log(data);
+
             __$('data.first_name').value = data.first_name
 
             __$('data.last_name').value = data.last_name
