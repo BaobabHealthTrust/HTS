@@ -437,6 +437,8 @@ function loadNames(advanced) {
 
                 selectedPatient = json;
 
+                window.parent.dashboard.savePatient(selectedPatient);
+
                 gotoNextPage();
 
             }
@@ -512,6 +514,8 @@ function newRecord(callback) {
     ajaxAuthPostRequest(url, json, function (data) {
 
         selectedPatient = data;
+
+        window.parent.dashboard.savePatient(selectedPatient);
 
         if (callback)
             callback();
@@ -639,6 +643,7 @@ function loadPatients(result) {
         div.setAttribute("patient_id", window.parent.patient.patients[i]["person_id"]);
 
         div.onclick = function () {
+
             deselectAllAndSelect(this.id);
 
             window.parent.patient.patientId = this.getAttribute("npid");
@@ -654,10 +659,15 @@ function loadPatients(result) {
 
                 __$('nextButton').onmousedown = function () {
 
+                    window.parent.dashboard.savePatient(selectedPatient);
+
+                    console.log(selectedPatient);
+
                     gotoNextPage();
 
                 }
             }
+
         }
 
         div.innerHTML = "<table width='100%' style='font-size: 28px !important;'><tr><td style='width: 50%'>" +
