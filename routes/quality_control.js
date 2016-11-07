@@ -178,10 +178,10 @@ function  saveProficiency(data,res){
 
     var insert_proficiency = "INSERT INTO proficiency_test(proficiency_test_date,phone_number,first_name,last_name,"+
                                  "pt_panel_lot_number,test_kit_1_name,test_kit_1_lot_number,test_kit_1_expiry,test_kit_2_name, test_kit_2_lot_number,"+
-                                 "test_kit_2_expiry, created_by, date_created) "+
+                                 "test_kit_2_expiry, created_by, date_created,hts_provider_id) "+
                                  "VALUES('"+ data.proficiency_testing_date +"','"+data.phone_number+"','"+data.first_name+"','"+data.last_name+"','"+
                                  data.pt_panel_lot_number+"','"+data.test1_kit_name+"','"+data.lot_number1+"','"+data.test1_expiry_date+"','"+data.test2_kit_name+"','"+
-                                 data.lot_number2+"','"+data.test2_expiry_date+"','"+data.userId +"',cast('"+date_created.format('YYYY-mm-dd')+"' as datetime))"
+                                 data.lot_number2+"','"+data.test2_expiry_date+"','"+data.userId +"',cast('"+date_created.format('YYYY-mm-dd')+"' as datetime),'"+data.provider_id+"')"
 
     console.log(insert_proficiency);
 

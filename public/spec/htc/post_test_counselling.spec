@@ -8,13 +8,13 @@ Q.1.5. Appointment Date Given [pos:: 4$$ id:: appointment$$ field_type:: date $$
 
 Q.1.6. HTS Family Referral Slips Given [pos:: 5$$ concept:: HTS Family Referral Slips$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: slips]
 
-Q.1.7. Condom Type [pos::6 $$ id :: condom_type]
+Q.1.7. Condom Type [pos::6 $$ id :: condom_type $$ condition :: isNotInfant() ]
 O.1.7.1. Female
 O.1.7.2. Male
 O.1.7.3. Both
 O.1.7.4. None
 
-Q.1.8. Male Condoms [pos:: 7$$ condition:: (__$("condom_type").value=="Both" ||__$("condom_type").value=="Male") && isNotInfant() $$ field_type:: number$$ tt_pageStyleClass:: NumbersOnly$$ id:: male]
+Q.1.8. Male Condoms [pos:: 7$$ condition:: (__$("condom_type").value=="Both" ||__$("condom_type").value=="Male") $$ field_type:: number$$ tt_pageStyleClass:: NumbersOnly$$ id:: male]
 
 Q.1.9. Female Condoms [pos:: 8$$ condition:: (__$("condom_type").value=="Both" ||__$("condom_type").value=="Female")  && isNotInfant()$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnly$$ id:: female]
 

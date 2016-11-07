@@ -912,7 +912,7 @@ function showHTSVisitSummary() {
 
         var th = document.createElement("td");
         th.style.borderBottom = "1px solid #333";
-        th.style.borderRight = "1px solid #333";
+        //th.style.borderRight = "1px solid #333";
         th.align = "center";
 
         tr.appendChild(th);
@@ -987,7 +987,7 @@ function showHTSVisitSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-        td.style.borderRight = "1px solid #333";
+     
 
         tr.appendChild(td);
 
@@ -996,7 +996,7 @@ function showHTSVisitSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-        td.style.borderRight = "1px solid #333";
+       
 
         tr.appendChild(td);
 
@@ -1005,7 +1005,6 @@ function showHTSVisitSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-        td.style.borderRight = "1px solid #333";
 
         tr.appendChild(td);
 
@@ -3775,15 +3774,45 @@ function evaluateReferral() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-        if (parseInt(pregnancy_months) <= 6) {
+         if (parseInt(pregnancy_months) > 6) {
 
-            //alert("Test again after 6 months"); 
+            window.parent.dashboard.showMsg("Book appointment for Re-Test at Maternity as " +
+                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
+                "health and to prevent transmission.", "Re-Test");
+
+            var remaining_days = (9 - parseInt(pregnancy_months)) * 30;
+
+            if (__$("appointment")) {
+
+                __$("appointment").removeAttribute("condition");
+
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+
+                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+
+            }
+
 
         }
+        else {
 
-        window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
-            "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
-            "health and to prevent transmission.", "Re-Test");
+            var remaining_days = (7 - parseInt(pregnancy_months)) * 30;
+
+            if (__$("appointment")) {
+
+                __$("appointment").removeAttribute("condition");
+
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+
+                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+
+            }
+
+            window.parent.dashboard.showMsg("Book appointment for Re-Test in 3<sup>rd</sup> Trimester of pregnancy as " +
+                "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their own " +
+                "health and to prevent transmission.", "Re-Test");
+
+        }
 
     } else if (riskCategory && riskCategory.trim().toLowerCase() == "low risk" && testResult.trim().toLowerCase() ==
         "new negative") {
@@ -3972,7 +4001,7 @@ function evaluateReferral2() {
                 "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
                 "health and to prevent transmission.", "Re-Test");
 
-            var remaining_days = 280 - parseInt(pregnancy_months) * 30;
+            var remaining_days = (9 - parseInt(pregnancy_months)) * 30;
 
             if (__$("appointment")) {
 
@@ -3988,7 +4017,7 @@ function evaluateReferral2() {
         }
         else {
 
-            var remaining_days = 280 - parseInt(pregnancy_months) * 30;
+            var remaining_days = (7 - parseInt(pregnancy_months)) * 30;
 
             if (__$("appointment")) {
 
@@ -5263,7 +5292,6 @@ function showPostSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-        td.style.borderRight = "1px solid #333";
 
         tr.appendChild(td);
 
@@ -5272,7 +5300,6 @@ function showPostSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-        td.style.borderRight = "1px solid #333";
 
         tr.appendChild(td);
 
@@ -6898,5 +6925,25 @@ function customizeCancel(category) {
         }
 
     }
+
+}
+
+function ageLimit(){
+
+        var birthdate = window.parent.dashboard.data.data.birthdate
+
+        var age = parseInt(getAge(birthdate)[0]);
+
+        if(age >= 15){
+
+               return true;
+
+        }else{
+
+            return false;
+
+        }
+
+     
 
 }

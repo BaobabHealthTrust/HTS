@@ -328,7 +328,7 @@ padZeros: function (number, positions) {
                 field_type: "date",
                 id: "data.proficiency_testing_date"
             },
-            "PT Tester":{
+            "Counselor Name":{
 
                 field_type : "text",
                 id:"data.tester",
@@ -353,7 +353,7 @@ padZeros: function (number, positions) {
                 field_type: "hidden",
                 id: "data.last_name"
             },
-            "DTS pack checklist": {
+            "DTS PT pack checklist": {
                 field_type: "select",
                 id: "data.dts_pack_checklist",
                 multiple: "multiple",
@@ -361,12 +361,12 @@ padZeros: function (number, positions) {
                 tt_pageStyleClass: "NoKeyboard",
                 options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"]
             },
-            "PT Panel Lot Number": {
+            "PT panel lot number": {
                 field_type: "text",
                 id: "data.pt_panel_lot_number"
                 
             },
-            "Test 1 Kit Name" :{
+            "Test 1 kit name" :{
                 field_type : "select",
                 id: "data.test1_kit_name",
                 ajaxURL : "/stock/stock_items?category=Test Kits&item_name=",
@@ -374,7 +374,7 @@ padZeros: function (number, positions) {
                 tt_onUnload: "setLotNumber('data.lot_number1',__$('touchscreenInput' + tstCurrentPage).value)"
 
             },
-            "Test 1 Lot Number" :{
+            "Test 1 lot number" :{
                 field_type : "select",
                 id: "data.lot_number1",
                 tt_pageStyleClass: "NoKeyboard",
@@ -383,13 +383,13 @@ padZeros: function (number, positions) {
                     "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
 
             },
-            "Test 1 Epiry Date" :{
+            "Test 1 epiry date" :{
                 field_type : "hidden",
                 id: "data.test1_expiry_date"
 
             }
             ,
-            "Test 2 Kit Name" :{
+            "Test 2 kit name" :{
                 field_type : "select",
                 id: "data.test2_kit_name",
                 ajaxURL : "/stock/stock_items?category=Test Kits&item_name=",
@@ -397,7 +397,7 @@ padZeros: function (number, positions) {
                  tt_onUnload: "setLotNumber('data.lot_number2',__$('touchscreenInput' + tstCurrentPage).value)"
 
             },
-            "Test 2 Lot Number" :{
+            "Test 2 lot number" :{
                 field_type : "select",
                 id: "data.lot_number2",
                 tt_pageStyleClass: "NoKeyboard",
@@ -406,20 +406,20 @@ padZeros: function (number, positions) {
                     "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
 
             },
-            "Test 2 Epiry Date" :{
+            "Test 2 epiry date" :{
                 field_type : "hidden",
                 id: "data.test2_expiry_date"
 
             }
             ,
-            "Proficiency Testing First Pass" :{
+            "Proficiency testing First Pass" :{
                 field_type : "text",
                 tt_onLoad: "loadPTControl('test')",
                 id: "data.first_pass",
                 tt_pageStyleClass: "NoKeyboard"
 
             },
-            "Proficiency Testing Immediate Repeat" :{
+            "Proficiency testing Immediate Repeat" :{
                 field_type: "text",
                 tt_onLoad: "loadRepeatPTControl('im')",
                 id: "data.immediate_repeat",
@@ -754,7 +754,7 @@ loadPTTests: function(path,target){
 
                 var td = document.createElement("td");
 
-                td.innerHTML = data[i].proficiency_test_date;
+                td.innerHTML = new Date(data[i].proficiency_test_date).format();
 
                 td.style.padding = "0.1em";
 
@@ -930,7 +930,7 @@ loadPTTests: function(path,target){
 
         btnAction.onclick = function () {
 
-           proficiency.proficiencyTestActionPlan(id)
+           proficiency.proficiencyTestActionPlan(data.pid)
 
         }
 
