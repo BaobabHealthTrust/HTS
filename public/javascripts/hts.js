@@ -213,7 +213,6 @@ function getAjaxRequest(url, callback, optionalControl) {
 
 }
 
-
 function updatePregnancy() {
 
     if (__$("sex_or_pregnancy") && __$("gender") && __$("pregnant")) {
@@ -504,7 +503,7 @@ function addDiv(text, checkText, parent, bold) {
     div.style.borderRadius = "30px";
     div.style.width = "40px";
     div.style.height = "30px";
-    div.style.border = (text.trim().length > 0 && text.trim().toLowerCase() == checkText.trim().toLowerCase() ?
+    div.style.border = (text && checkText && text.trim().length > 0 && text.trim().toLowerCase() == checkText.trim().toLowerCase() ?
         "2px solid red" : "none");
     div.style.textAlign = "center";
     div.style.verticalAlign = "middle";
@@ -987,7 +986,7 @@ function showHTSVisitSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-     
+
 
         tr.appendChild(td);
 
@@ -996,7 +995,7 @@ function showHTSVisitSummary() {
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderTop = "1px solid #333";
-       
+
 
         tr.appendChild(td);
 
@@ -2222,7 +2221,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
-        if(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].running &&
+        if (window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].running &&
             __$("startTimer2.1")) {
 
             __$("startTimer2.1").onmousedown();
@@ -2621,7 +2620,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             var time = __$("tmrControl1").innerHTML;
 
-            if(time.trim().length <= 0)
+            if (time.trim().length <= 0)
                 time = "";
 
             if (testTarget.id.trim() == "fp_test1_result") {
@@ -3695,7 +3694,7 @@ function showDetailsSummary() {
 
         } else {
 
-            td.innerHTML = __$("phone_number").value.trim();
+            td.innerHTML = (__$("phone_number") ? __$("phone_number").value.trim() : "");
 
 
         }
@@ -3774,7 +3773,7 @@ function evaluateReferral() {
         var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
-         if (parseInt(pregnancy_months) > 6) {
+        if (parseInt(pregnancy_months) > 6) {
 
             window.parent.dashboard.showMsg("Book appointment for Re-Test at Maternity as " +
                 "pregnant women are very susceptible to HIV infetion and need to start ART as soon as possible for their " +
@@ -6590,10 +6589,15 @@ function setAgeValues() {
 
     if (birthday.trim().toLowerCase() == "unknown") {
 
-        birthday = "01";
+        birthday = "05";
+
+        __$("estimate").value = 1;
+
+    } else {
+
+        __$("estimate").value = 0;
 
     }
-
 
     var months = {
         "January": 0,
@@ -6671,9 +6675,11 @@ function validateAndProcessMonth() {
 
         }
 
-        var estimateBirthDate = year + "-06-01";
+        var estimateBirthDate = year + "-07-10";
 
         birthdate.value = estimateBirthDate
+
+        __$("estimate").value = 1;
 
     } else {
 
@@ -6694,7 +6700,6 @@ function validateAndProcessMonth() {
 
         var today = new Date();
 
-
         if (parseInt(year) == parseInt(today.getFullYear()) && parseInt(months[month]) > parseInt(today.getMonth())) {
 
             var message = "Month selected is greater than Current Month";
@@ -6707,7 +6712,6 @@ function validateAndProcessMonth() {
 
             }, 10);
 
-
         }
 
     }
@@ -6716,19 +6720,25 @@ function validateAndProcessMonth() {
 
 function setEstimatedAgeValue() {
 
-    if(__$("birthdate") && __$("age_estimate") && __$("estimate") && __$("birthyear") && __$("birthmonth") && __$("birthday")) {
+    __$("birthyear").setAttribute("disabled", true);
 
-        if(age) {
+    __$("birthmonth").setAttribute("disabled", true);
+
+    __$("birthday").setAttribute("disabled", true);
+
+    if (__$("birthdate") && __$("age_estimate") && __$("estimate")) {
+
+        if (__$("age_estimate").value.trim().length > 0) {
 
             __$("estimate").value = 1;
 
-            var year = (new Date()).getFullYear() - parseInt(__$("estimate").value.trim());
+            var year = (new Date()).getFullYear() - parseInt(__$("age_estimate").value.trim());
 
             __$("birthdate").value = year + "-07-15";
 
         } else {
 
-
+            __$("estimate").value = 0;
 
         }
 
@@ -6841,17 +6851,17 @@ function hideMinimizeButton(multiple) {
 
     var found = false;
 
-    if(multiple && typeof window.parent.dashboard.subscription != typeof undefined &&
+    if (multiple && typeof window.parent.dashboard.subscription != typeof undefined &&
         typeof window.parent.dashboard.subscription.timers != typeof undefined &&
-        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined ) {
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined) {
 
         var keys = Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]);
 
-        for(var i = 0; i < keys.length; i++) {
+        for (var i = 0; i < keys.length; i++) {
 
             var key = keys[i];
 
-            if(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
+            if (window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][key] &&
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][key].running) {
 
@@ -6928,22 +6938,21 @@ function customizeCancel(category) {
 
 }
 
-function ageLimit(){
+function ageLimit() {
 
-        var birthdate = window.parent.dashboard.data.data.birthdate
+    var birthdate = window.parent.dashboard.data.data.birthdate
 
-        var age = parseInt(getAge(birthdate)[0]);
+    var age = parseInt(getAge(birthdate)[0]);
 
-        if(age >= 15){
+    if (age >= 15) {
 
-               return true;
+        return true;
 
-        }else{
+    } else {
 
-            return false;
+        return false;
 
-        }
+    }
 
-     
 
 }
