@@ -13,7 +13,10 @@
     ],
     "patient_identifier_types": [
         ["HTS Number", "HTS client clinic number"],
-        ["Epilepsy Clinic Number", "Epilepsy clinic number"],
+        ["DTM Number", "Diabetes clinic number"],
+        ["EPL Number", "Epilepsy clinic number"],
+        ["AST Number", "Asthma clinic number"],
+        ["HTN Number", "Hypertension clinic number"],
         ["GDN Number", "Guardian clinic number"]
     ],
     "person_attribute_types": [
