@@ -107,63 +107,71 @@ function saveQualityTest(data, res){
 
     if(data.datatype.trim() == "quality_assurance"){
 
-         var sql = "";
-
-        if(data.sample_type.trim().toLowerCase() == "serum"){
-
-            sql = "INSERT INTO quality_assurance (qc_test_date,sample_type,test_kit_name,test_kit_lot_number,sample_name,sample_name_lot_number"+
-                      ",control_line_seen,quality_test_result,supervisir_code,interpretation,provider_id,outcome,date_created) VALUES('" +data.qc_testing_date+"' , '"+ data.sample_type +"' , '"+ data.test_kit_name+
-                      "' , '"+ data.test_kit_lot_number + "' , '"+ data.serum_name + "' , '"+ data.serum_lot_number + 
-                      "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome +  "',CURRENT_TIMESTAMP())";
-
-        }
-        else if(data.sample_type.trim().toLowerCase() == "dts"){
-
-            sql = "INSERT INTO quality_assurance (qc_test_date,sample_type,test_kit_name,test_kit_lot_number,test_kit_expiry_date,sample_name,sample_name_lot_number,sample_expiry_date"+
-                      ",control_line_seen,quality_test_result,supervisor_code,interpretation,provider_id,outcome,created_by,date_created) VALUES('"+data.qc_testing_date+"' , '"+ data.sample_type +"' , '"+ data.test_kit_name+
-                      "' , '"+ data.test_kit_lot_number+ "' , '"+ data.test_kit_expiry_date + "' , '"+ data.dts_name + "' , '"+ data.dts_lot_number +  "' , '"+ data.dts_expiry_date +
-                      "' , '"+ data.control_line_seen + "' , '"+ data.result +"' , '"+ data.supervisor_code + "' , '"+ data.interpretation + "' , '"+ data.provider_id + "' , '"+ data.outcome + "' , '"+ data.user+ "',CURRENT_TIMESTAMP())";
-
-        }
-
 
         var test_kit_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.test_kit_lot_number+"' ORDER BY dispatch_id LIMIT 1";
 
         var consumption_kit_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
                                 "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
                                 "consumption_type WHERE name = 'Quality Control'), (" + test_kit_dispatch_id_query + "), '" +
-                                1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.user+ "')";
+                                2 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.hts_provider+ "')";
 
-         queryRawStock(consumption_kit_query, function (batch) {
+        queryRawStock(consumption_kit_query, function (batch) {
 
-            console.log("Kit Consumption Query");
+              console.log("Kit Consumption Query");
 
         });                        
 
 
-        var sample_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.dts_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+         async.series([
+                        function (icallback) {
+
+                                    for(var i = 1 ; i < 3 ; i++){
 
 
-        var consumption_sample__query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
-                                "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
-                                "consumption_type WHERE name = 'Quality Control'), (" + sample_dispatch_id_query + "), '" +
-                                1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.user+ "')";
-
-         queryRawStock(consumption_sample__query, function (batch) {
-
-            console.log("Sample Consumption Query");
-
-        });
+                                            var sample_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+eval('data.dts_'+i+'_lot_number')+"' ORDER BY dispatch_id LIMIT 1";
 
 
+                                            var consumption_sample__query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                                    "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                                    "consumption_type WHERE name = 'Quality Control'), (" + sample_dispatch_id_query + "), '" +
+                                                                    1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.hts_provider + "')";
 
-        queryRawQualityControl(sql, function (batch) {
+                                             queryRawStock(consumption_sample__query, function (batch) {
 
-        		console.log("Quality test Done");
+                                                console.log("Sample Consumption Query");
 
-                res.status(200).json({message: "Quality test Done!"});
+                                             });
 
-        });
+
+
+                                              var sql = "INSERT INTO quality_assurance (qc_test_date,sample_type,test_kit_name,test_kit_lot_number,test_kit_expiry_date,sample_name,sample_lot_number,sample_expiry_date"+
+                                                      ",control_line_seen,time,quality_test_result,interpretation,hts_provider,outcome,created_by,date_created) VALUES('"+data.qc_testing_date+"' , '"+ data.sample_type +"' , '"+ data.test_kit_name+
+                                                      "' , '"+ data.test_kit_lot_number+ "' , '"+ data.test_kit_expiry_date + "' , '"+ eval('data.dts_name'+i) + "' , '"+ eval('data.dts_'+i+'_lot_number') +  "' , '"+ eval('data.dts_'+i+'_expiry_date') +
+                                                      "' , '"+ eval('data.control_'+i+'_line_seen')+ "' , '"+ eval('data.timer_'+i)+ "' , '"+ eval('data.result_'+i)+ "' , '"+ (eval(' data.interpretation_'+i) ? eval(' data.interpretation_'+i) : "") + "' , '"+ data.hts_provider + "' , '"+ eval('data.outcome_'+i) + "' , '"+ data.userId+ "',CURRENT_TIMESTAMP())";
+
+
+                                                queryRawQualityControl(sql, function (batch) {
+
+                                                  console.log("Quality test Done "+i);
+
+                                                });
+
+                                      }
+
+
+                        },
+                        function (icallback){
+
+                                  //res.status(200).json({message: "Quality test Done!"});
+
+                                   icallback();
+
+                        }
+
+
+        ])
+
+        res.status(200).json({message: "Quality test Done!"});
 
     }
 
@@ -352,13 +360,10 @@ module.exports = function (router) {
 
     router.route('/quality_control_test_approval/').get(function (data, res){
 
-        var sql = "SELECT quality_assurance.quality_assurance_test_id AS test_id, quality_assurance.qc_test_date AS date, quality_assurance.sample_name AS dts_type, quality_assurance.sample_name_lot_number "+
-                   "AS dts_lot_number, quality_assurance.test_kit_name AS test_kit_name, quality_assurance.test_kit_lot_number AS test_kit_lot_number, "+
-                   "quality_assurance.control_line_seen AS control_line_seen, quality_assurance.quality_test_result, quality_assurance.outcome AS outcome, "+
-                   "quality_assurance.interpretation AS interpretation, quality_assurance.approval_status AS approval_status, quality_assurance.voided AS voided from htc_quality_control.quality_assurance WHERE quality_assurance.voided = 0;";
+        var sql = "SELECT * FROM quality_assurance WHERE approval_status IS NULL OR approval_status =''";
         results = []
 
-            queryRawStock(sql, function (data) {
+            queryRawQualityControl(sql, function (data) {
 
                 for (var i = 0; i < data[0].length; i++) {
 

@@ -327,6 +327,12 @@ var quality = ({
         form.action = "javascript:submitData()";
         form.style.display = "none";
 
+        var script = document.createElement("script");
+        script.setAttribute("src", "/javascripts/quality_control_summary.js");
+
+        form.appendChild(script);
+
+
         var table = document.createElement("table");
 
         form.appendChild(table);
@@ -343,69 +349,60 @@ var quality = ({
                 id: "data.datatype",
                 value: "quality_assurance"
             },
-            "Show ID": {
-                field_type: "hidden",
-                id: "data.show_id",
-                value: ""
-            },
-            "Sample Type":{
-                field_type: "hidden",
-                id: "data.sample_type",
-                value: "dts"
-            },
-            "DTS Outcome":{
-                field_type: "hidden",
-                id: "data.outcome"
-            },
-            "DTS Expiry Date": {
-
-                field_type: "hidden",
-                id: "data.dts_expiry_date"
-
-            },
-            "Location":{
-
-                field_type: "hidden",
-                id: "data.location",
-                value: user.getCookie("location")
-            },
-            "User":{
-
-                field_type: "hidden",
-                id: "data.user",
-                value:  user.getCookie("username")
-            }
-            ,
             "Date of QC testing": {
                 field_type: "date",
-                id: "data.qc_testing_date",
-                tt_onUnload: include_summary_js
+                id: "data.qc_testing_date"
+            }
+            ,
+            "HTS Provider":{
+                field_type: "text",
+                id:"data.hts_provider",
+                ajaxURL: "/app_custom/hts_users"
             },
-            "HTS provider ID": {
-                field_type: "number",
-                id: "data.provider_id",
-                tt_pageStyleClass : "Numeric NumbersOnly",
-                validationRule: "^\\d{4}$",
-                validationMessage: "The code is not valid"
-            },
-            "Select DTS Type": {
+            "DTS Sample 1":{
                 field_type: "select",
-                id: "data.dts_name",
+                id: "data.dts_name1",
                 tt_pageStyleClass: "NoKeyboard",
                 ajaxURL : "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.dts_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
-                               " __$('data.dts_lot_number').setAttribute('condition',true)}"
-
+                               "__$('data.dts_1_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
+                               " __$('data.dts_1_lot_number').setAttribute('condition',true)};setSecondDTS('data.dts_name2')"
             },
-              "DTS Lot Number": {
+            "DTS Sample 1 Lot Number": {
                 field_type: "select",
-                id: "data.dts_lot_number",
+                id: "data.dts_1_lot_number",
                 condition : false,
-                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_expiry_date')"
+                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_1_expiry_date')"
                 
             },
-            
+            "DTS Sample 1 Date": {
+
+                field_type: "hidden",
+                id: "data.dts_1_expiry_date"
+
+            },
+            "DTS Sample 2":{
+                field_type: "select",
+                id: "data.dts_name2",
+                tt_pageStyleClass: "NoKeyboard",
+                ajaxURL : "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
+                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
+                               "__$('data.dts_2_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
+                               " __$('data.dts_2_lot_number').setAttribute('condition',true)}"
+            },
+            "DTS Sample 2 Lot Number": {
+                field_type: "select",
+                id: "data.dts_2_lot_number",
+                condition : false,
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_2_expiry_date')"
+                
+            },
+            "DTS Sample 2 Date": {
+
+                field_type: "hidden",
+                id: "data.dts_2_expiry_date"
+
+            },
             "Select Test kit to evaluate": {
                 field_type: "select",
                 id: "data.test_kit_name",
@@ -426,36 +423,71 @@ var quality = ({
                 id: "data.test_kit_expiry_date"
 
             },
-            "Control line seen": {
-                field_type: "select",
-                id: "data.control_line_seen",
-                options: ["Yes", "No"]
-            },
-            "Result": {
-                field_type: "select",
-                id: "data.result",
-                tt_pageStyleClass: "NoKeyboard",
-                options: ["Negative", "Weak positive", "Strong positive"]
-            },
-            "Interpretation": {
+            "Quality Control Test":{
+
                 field_type: "text",
-                id: "data.interpretation",
-                allowFreeText: true,
-                optional: true,
-                tt_onLoad: update_outcome+";window.parent.quality.outcome(__$('data.dts_name').value,__$('data.result').value)"
-            },
-            "Supervisor code": {
-                field_type: "number",
-                id: "data.supervisor_code",
-                tt_pageStyleClass : "Numeric NumbersOnly",
-                validationRule: "^\\d{4}$",
-                validationMessage: "The code is not valid"
-            },
-            "Quality Control Testing Log" :{
-                field_type: "text",
-                id:"data.summary",
-                tt_onLoad: "showQualityControlTestSummary()",
+                id: "data.quality_test",
+                tt_onLoad: "loadQualityTestControl()",
                 tt_pageStyleClass: "NoKeyboard"
+
+            },
+            "Control 1 Line seen":{
+                field_type:"hidden",
+                id:"data.control_1_line_seen"
+            },
+            "Control 2 Line seen":{
+                field_type:"hidden",
+                id:"data.control_2_line_seen"
+            },
+            "Result 1":{
+                field_type:"hidden",
+                id:"data.result_1"
+            },
+            "Result 2":{
+                field_type:"hidden",
+                id:"data.result_2"
+            },
+            "Timer 1":{
+                id:"data.timer_1",
+                field_type: "hidden"
+            },
+            "Timer 2":{
+                id:"data.timer_2",
+                field_type: "hidden"
+            },
+            "Outcome 1":{
+
+                field_type: "hidden",
+                id: "data.outcome_1"
+
+            },
+            "Outcome 2":{
+
+                field_type: "hidden",
+                id: "data.outcome_2"
+
+            },
+            "Comment for Result 1":{
+
+                    field_type:"text",
+                    id: "data.interpretation_1",
+                    condition: false
+
+            },
+            "Comment for Result 2":{
+
+                    field_type:"text",
+                    id: "data.interpretation_2",
+                    condition: false
+
+            },
+            "Quality Control Summary":{
+
+                    field_type: "text",
+                    id: "data.Summary",
+                    tt_pageStyleClass: "NoKeyboard",
+                    tt_onLoad: "showQualityControlTestSummary()"
+
             }
         }
 
@@ -476,6 +508,8 @@ var quality = ({
         data.data.userId = stock.getCookie("username");
 
         data.data.token = stock.getCookie("token");
+
+        data.data.location = stock.getCookie("location");
 
         if(data.data.datatype == "quality_assurance"){
 
@@ -652,8 +686,8 @@ var quality = ({
 
             table.appendChild(tr);
 
-            var fields = [" ", "Date of QC test", "DTS type", "DTS lot number", "Test kit name", "Test kit lot #", "Control line seen", "Result", "Outcome", "Interpretation", "Approve", "Disapprove"];
-            var colSizes = ["20px", "18%", "18%", "18%", "18%", "18%", "18%", "80px", "80px", "80px", "80px",
+            var fields = [" ", "Date of QC test", "DTS Sample", "DTS lot number", "Test kit name", "Test kit lot #", "Control line seen", "Result", "Outcome", "Interpretation", "Approve", "Disapprove"];
+            var colSizes = ["20px", "10%", "10%", "12%", "15%", "15%", "10%", "10%", "10%", "10%", "10%",
                 "180px"];
 
 
@@ -695,7 +729,7 @@ var quality = ({
 
                 var td = document.createElement("td");
 
-                td.innerHTML = data[i].date;
+                td.innerHTML = new Date(data[i].qc_test_date).format();
 
                 td.style.padding = "0.1em";
 
@@ -706,7 +740,7 @@ var quality = ({
 
                 var td = document.createElement("td");
 
-                td.innerHTML = data[i].dts_type;
+                td.innerHTML = data[i].sample_name;
 
                 td.style.padding = "0.1em";
 
@@ -717,7 +751,7 @@ var quality = ({
 
                 var td = document.createElement("td");
 
-                td.innerHTML = data[i].dts_lot_number;
+                td.innerHTML = data[i].sample_lot_number;
 
                 td.style.padding = "0.1em";
 
@@ -802,7 +836,7 @@ var quality = ({
 
                 button.className = (data[i].approval_status == 'approve'? "green" : "blue");
 
-                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'approve','approve_"+i+"','disapprove_"+i+"')");
+                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].quality_assurance_test_id+",'approve','approve_"+i+"','disapprove_"+i+"')");
 
                 td.style.padding = "0.1em";
 
@@ -823,7 +857,7 @@ var quality = ({
 
                 button.id = "disapprove_" + i
 
-                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].test_id+",'disapprove','disapprove_"+i+"','approve_"+i+"')");
+                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].quality_assurance_test_id+",'disapprove','disapprove_"+i+"','approve_"+i+"')");
 
                 td.style.padding = "0.1em";
 
