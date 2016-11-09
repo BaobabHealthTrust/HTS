@@ -179,47 +179,96 @@ function saveQualityTest(data, res){
 
 function  saveProficiency(data,res){
 
-    var date_created = new Date();
+        var date_created = new Date();
 
-    console.log(date_created.format());
-
-
-    var insert_proficiency = "INSERT INTO proficiency_test(proficiency_test_date,phone_number,first_name,last_name,"+
-                                 "pt_panel_lot_number,test_kit_1_name,test_kit_1_lot_number,test_kit_1_expiry,test_kit_2_name, test_kit_2_lot_number,"+
-                                 "test_kit_2_expiry, created_by, date_created,hts_provider_id) "+
-                                 "VALUES('"+ data.proficiency_testing_date +"','"+data.phone_number+"','"+data.first_name+"','"+data.last_name+"','"+
-                                 data.pt_panel_lot_number+"','"+data.test1_kit_name+"','"+data.lot_number1+"','"+data.test1_expiry_date+"','"+data.test2_kit_name+"','"+
-                                 data.lot_number2+"','"+data.test2_expiry_date+"','"+data.userId +"',cast('"+date_created.format('YYYY-mm-dd')+"' as datetime),'"+data.provider_id+"')"
-
-    console.log(insert_proficiency);
-
-     queryRawQualityControl(insert_proficiency, function (batch) {
-
-                console.log("Insert Proficiency test Record");
-    });
-
-     var get_pt_record = "SELECT pid FROM proficiency_test WHERE proficiency_test_date = '"+ data.proficiency_testing_date + "' AND pt_panel_lot_number = '"+
-                          data.pt_panel_lot_number + "' AND test_kit_1_name = '" + data.test1_kit_name + "' AND test_kit_1_lot_number = '"+ data.lot_number1
-                          +"' AND test_kit_1_expiry = '"+data.test1_expiry_date +"' AND test_kit_2_name = '"+ data.test2_kit_name +"' AND test_kit_2_lot_number = '" 
-                          +  data.lot_number2 + "' AND test_kit_2_expiry = '"+ data.test2_expiry_date + "' AND date_created = CAST('"+date_created.format('YYYY-mm-dd')
-                          +"' as datetime) ORDER BY pid DESC LIMIT 1";
-
-   for(var i = 0 ; i < 5 ; i++){
-
-            var result_query = "INSERT INTO proficiency_test_result (pid,panel_number,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
-                               ",im_pass_test_1,im_pass_test_1_time,im_pass_test_2,im_pass_test_2_time,final_result) "+
-                               "VALUES(("+get_pt_record+"),'"+(i + 1)+"','"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
-                               +"','"+eval('data.im_1_'+i)+"','"+eval('data.im_1_'+i+'_time')+"','"+eval('data.im_2_'+i)+"','"+eval('data.im_2_'+i+'_time')+"','"+eval('data.final_result_'+i)+"')"
+        console.log(date_created.format());
 
 
-              queryRawQualityControl(result_query, function (batch) {
+          async.series([
 
-                            console.log("Insert Proficiency test Result");
-              });
+                        function(icallback){
 
-   }
+                            var insert_proficiency = "INSERT INTO proficiency_test(proficiency_test_date,phone_number,first_name,last_name,"+
+                                     "pt_panel_lot_number,test_kit_1_name,test_kit_1_lot_number,test_kit_1_expiry,test_kit_2_name, test_kit_2_lot_number,"+
+                                     "test_kit_2_expiry, created_by, date_created,hts_provider_id) "+
+                                     "VALUES('"+ data.proficiency_testing_date +"','"+data.phone_number+"','"+data.first_name+"','"+data.last_name+"','"+
+                                     data.pt_panel_lot_number+"','"+data.test1_kit_name+"','"+data.lot_number1+"','"+data.test1_expiry_date+"','"+data.test2_kit_name+"','"+
+                                     data.lot_number2+"','"+data.test2_expiry_date+"','"+data.userId +"',cast('"+date_created.format('YYYY-mm-dd')+"' as datetime),'"+data.provider_id+"')"
 
-    res.status(200).json({message: "Proficiency test Done!"});
+                            console.log(insert_proficiency);
+
+                             queryRawQualityControl(insert_proficiency, function (batch) {
+
+                                        console.log("Insert Proficiency test Record");
+
+                                        icallback();
+                            });
+
+                        },
+                        function(icallback){
+
+
+                              var get_pt_record = "SELECT pid FROM proficiency_test WHERE proficiency_test_date = '"+ data.proficiency_testing_date + "' AND pt_panel_lot_number = '"+
+                              data.pt_panel_lot_number + "' AND test_kit_1_name = '" + data.test1_kit_name + "' AND test_kit_1_lot_number = '"+ data.lot_number1
+                              +"' AND test_kit_1_expiry = '"+data.test1_expiry_date +"' AND test_kit_2_name = '"+ data.test2_kit_name +"' AND test_kit_2_lot_number = '" 
+                              +  data.lot_number2 + "' AND test_kit_2_expiry = '"+ data.test2_expiry_date + "' AND date_created = CAST('"+date_created.format('YYYY-mm-dd')
+                              +"' as datetime) ORDER BY pid DESC LIMIT 1";
+
+                               for(var i = 0 ; i < 5 ; i++){
+
+                                        console.log(i +"\n");
+
+                                        var result_query = "INSERT INTO proficiency_test_result (pid,panel_number,first_pass_test_1,first_pass_test_1_time,first_pass_test_2,first_pass_test_2_time"+
+                                                           ",im_pass_test_1,im_pass_test_1_time,im_pass_test_2,im_pass_test_2_time,final_result) "+
+                                                           "VALUES(("+get_pt_record+"),'"+(i + 1)+"','"+eval('data.test_1_'+i) +"','"+eval('data.test_1_'+i+'_time')+"','"+eval('data.test_2_'+i)+"','"+eval('data.test_2_'+i+'_time')
+                                                           +"','"+eval('data.im_1_'+i)+"','"+eval('data.im_1_'+i+'_time')+"','"+eval('data.im_2_'+i)+"','"+eval('data.im_2_'+i+'_time')+"','"+eval('data.final_result_'+i)+"')"
+
+
+                                          queryRawQualityControl(result_query, function (batch) {
+
+                                                        console.log("Insert Proficiency test Result");
+
+                                                      
+                                          });
+
+                                       
+
+                               }
+
+                                icallback();
+
+
+                        },
+                        function(icallback){
+
+                            res.status(200).json({message: "Proficiency test Done!"});
+
+
+
+                            var check_official_result = "SELECT * FROM proficiency_test_official_result WHERE pt_panel_lot_number = '"+ data.pt_panel_lot_number +"'";
+
+
+                            queryRawQualityControl(check_official_result, function (result) {
+
+
+                                    if (!result[0][0])
+                                            return
+
+                                        console.log("Insert Proficiency test Record");
+
+                                        updatePTScores(result[0][0]);
+
+
+                            });
+
+
+                        }
+
+
+            ]);
+
+
+
 
 
 }
@@ -227,9 +276,7 @@ function  saveProficiency(data,res){
 function updatePTScores(data){
 
 
-
-        var select_ptid = "SELECT pid FROM proficiency_test WHERE pt_panel_lot_number = '"+data.pt_panel_lot_number+"'";
-
+        var select_ptid = "SELECT  DISTINCT pid FROM proficiency_test WHERE pt_panel_lot_number = '"+data.pt_panel_lot_number+"'";
 
         queryRawQualityControl(select_ptid, function(ptids){
 
@@ -250,39 +297,70 @@ function updatePTScores(data){
 
                                         queryRawQualityControl(sql, function (result) {
 
+                                            if(data.pt_panel_result_0){
 
 
-                                            for(var j = 0 ; j < result[0].length ; j++){
+                                                        for(var j = 0 ; j < result[0].length ; j++){
 
-                                                var test_result = result[0][j].final_result;
+                                                                var test_result = result[0][j].final_result;
 
-                                                if(test_result.trim()=="+" && eval("data.pt_panel_result_"+j).trim().toLowerCase().match("positive")){
-
-
-                                                    score++;
-
-                                                }else if(test_result.trim()=="-" && eval("data.pt_panel_result_"+j).trim().toLowerCase().match("negative")){
+                                                                if(test_result.trim()=="+" && eval("data.pt_panel_result_"+j).trim().toLowerCase().match("positive")){
 
 
-                                                    score++;
+                                                                    score++;
 
-                                                }
-
-                                                var update_official_column = "UPDATE proficiency_test_result SET official_result = '"+eval("data.pt_panel_result_"+j).trim()+"' WHERE pid ='"+proficiency_test_id
-                                                                            +"' AND panel_number = '"+(j + 1)+"'";
-
-                                                queryRawQualityControl(update_official_column, function (result) {
-
-                                                      console.log("updated Specific Providers Official Result");
-
-                                                });
+                                                                }else if(test_result.trim()=="-" && eval("data.pt_panel_result_"+j).trim().toLowerCase().match("negative")){
 
 
+                                                                    score++;
+
+                                                                }
+                                                                var update_official_column = "UPDATE proficiency_test_result SET official_result = '"+eval("data.pt_panel_result_"+j).trim()+"' WHERE pid ='"+proficiency_test_id
+                                                                                            +"' AND panel_number = '"+(j + 1)+"'";
+
+                                                                queryRawQualityControl(update_official_column, function (result) {
+
+                                                                      console.log("updated Specific Providers Official Result");
+
+                                                                });
+
+
+                                                        }
+
+
+                                            }else if(data.panel_1){
+
+
+                                                        for(var j = 0 ; j < result[0].length ; j++){
+
+                                                                var test_result = result[0][j].final_result;
+
+                                                                if(test_result.trim()=="+" && eval("data.panel_"+( j + 1 )).trim().toLowerCase().match("positive")){
+
+
+                                                                    score++;
+
+                                                                }else if(test_result.trim()=="-" && eval("data.panel_"+( j + 1 )).trim().toLowerCase().match("negative")){
+
+
+                                                                    score++;
+
+                                                                }
+
+                                                                var update_official_column = "UPDATE proficiency_test_result SET official_result = '"+eval("data.panel_"+(j+1)).trim()+"' WHERE pid ='"+proficiency_test_id
+                                                                                            +"' AND panel_number = '"+( j + 1 )+"'";
+
+                                                                queryRawQualityControl(update_official_column, function (result) {
+
+                                                                      console.log("updated Specific Providers Official Result");
+
+                                                                });
+
+
+                                                        }
 
 
                                             }
-
-                                            console.log(score);
 
                                             icallback();
 
@@ -453,21 +531,55 @@ module.exports = function (router) {
 
         var data = req.body;
 
-          var sql = "INSERT INTO proficiency_test_official_result(pt_panel_lot_number,panel_1,panel_2,panel_3,panel_4,panel_5,date_created,created_by) "+
-                    "VALUES('"+data.pt_panel_lot_number+"','"+data.pt_panel_result_0+"','"+data.pt_panel_result_1+"','"+data.pt_panel_result_2+"','"
-                    +data.pt_panel_result_3+"','"+data.pt_panel_result_4+"',NOW(),'"+data.userId+"')";
+        var sql = "";
 
-          console.log(sql);
+        async.series([
+                        function (icallback) {
+
+                                  console.log(data.pt_panel_lot_number);
+
+                                var query_official = "SELECT * FROM proficiency_test_official_result WHERE pt_panel_lot_number = '"+data.pt_panel_lot_number+"'";
+
+                                 queryRawQualityControl(query_official, function (result) {
+
+                                        if (!result[0][0]){
+
+                                                sql = "INSERT INTO proficiency_test_official_result(pt_panel_lot_number,panel_1,panel_2,panel_3,panel_4,panel_5,date_created,created_by) "+
+                                                        "VALUES('"+data.pt_panel_lot_number+"','"+data.pt_panel_result_0+"','"+data.pt_panel_result_1+"','"+data.pt_panel_result_2+"','"
+                                                        +data.pt_panel_result_3+"','"+data.pt_panel_result_4+"',NOW(),'"+data.userId+"')";
+
+                                        }
+                                        else{
+
+                                                sql = "UPDATE proficiency_test_official_result SET panel_1 = '"+data.pt_panel_result_0+"', panel_2 = '"+data.pt_panel_result_1+
+                                                      "', panel_3 = '"+data.pt_panel_result_2+"', panel_4 = '"+data.pt_panel_result_3+"', panel_5 = '"+data.pt_panel_result_4
+                                                      +"' WHERE pt_panel_lot_number ='"+data.pt_panel_lot_number+"'";
+                                        }
+
+                                         icallback();
+
+                                            
+                                 });
+
+                        },
+                        function(icallback){
+
+                                 queryRawQualityControl(sql, function (batch) {
+
+                                                console.log("Insert Proficiency Official Result");
+
+                                                res.status(200).json({message: "Proficiency Official Result Done!"});
+
+                                                updatePTScores(data);
+
+                                                icallback();
+
+                                  });
+
+                        }])
 
 
-              queryRawQualityControl(sql, function (batch) {
-
-                            console.log("Insert Proficiency Official Result");
-
-                            res.status(200).json({message: "Proficiency Official Result Done!"});
-
-                            updatePTScores(data);
-              });
+              
 
 
     });
