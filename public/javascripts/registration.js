@@ -437,9 +437,12 @@ function loadNames(advanced) {
 
                 selectedPatient = json;
 
-                window.parent.dashboard.savePatient(selectedPatient);
+                savePatient(function () {
 
-                gotoNextPage();
+                    gotoNextPage();
+
+                })
+
 
             }
 
@@ -515,10 +518,12 @@ function newRecord(callback) {
 
         selectedPatient = data;
 
-        window.parent.dashboard.savePatient(selectedPatient);
+        savePatient(function () {
 
-        if (callback)
-            callback();
+            if (callback)
+                callback();
+
+        })
 
     });
 
@@ -659,11 +664,11 @@ function loadPatients(result) {
 
                 __$('nextButton').onmousedown = function () {
 
-                    window.parent.dashboard.savePatient(selectedPatient);
+                    savePatient(function () {
 
-                    console.log(selectedPatient);
+                        gotoNextPage();
 
-                    gotoNextPage();
+                    })
 
                 }
             }
@@ -682,6 +687,77 @@ function loadPatients(result) {
         __$("rightpanel").appendChild(div);
 
     }
+
+}
+
+function savePatient(callback) {
+
+    if (__$("first_name")) {
+
+        __$("first_name").value = selectedPatient.names.given_name;
+
+    }
+
+    if (__$("last_name")) {
+
+        __$("last_name").value = selectedPatient.names.family_name;
+
+    }
+
+    if (__$("gender")) {
+
+        var gender = {
+            F: "Female",
+            M: "Male"
+        }
+
+        __$("gender").value = gender[selectedPatient.gender];
+
+    }
+
+    if (__$("birthdate")) {
+
+        __$("birthdate").value = selectedPatient.birthdate;
+
+    }
+
+    if (__$("estimate")) {
+
+        __$("estimate").value = selectedPatient.birthdate_estimated;
+
+    }
+
+    if (__$("district")) {
+
+        __$("district").value = selectedPatient.addresses.current_district;
+
+    }
+
+    if (__$("ta")) {
+
+        __$("ta").value = selectedPatient.addresses.current_ta;
+
+    }
+
+    if (__$("village")) {
+
+        __$("village").value = selectedPatient.addresses.current_village;
+
+    }
+
+    if (__$("closest_landmark")) {
+
+        __$("closest_landmark").value = selectedPatient.addresses.current_residence;
+
+    }
+
+    calculateAge();
+
+    window.parent.dashboard.savePatient(selectedPatient);
+
+    console.log(selectedPatient);
+
+    callback();
 
 }
 
