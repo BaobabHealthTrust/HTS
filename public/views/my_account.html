@@ -70,3 +70,14 @@
 
 </body>
 </html>
+<script type="text/javascript">
+
+            var user = window.parent.user.getCookie("username");
+    
+            window.parent.user.ajaxRequest('/app_custom/user_roles/'+user,function(data){
+
+                console.log(data);
+
+            });
+
+</script>

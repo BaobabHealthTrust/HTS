@@ -205,9 +205,36 @@ module.exports = function (router) {
                 }
 
 
-                ;
+            });
+
+    });
+
+    router.route('/user_roles/:username').get(function(req,res){
+
+            var username = req.params.username;
+
+            var sql ="SELECT role FROM users INNER JOIN user_role ON users.user_id = user_role.user_id WHERE username = '"+ username +"'";
+
+            queryRaw(sql, function (data) {
+
+                if(data[0][0]){
+
+                        var result = [];
+
+                        for(var i = 0 ; i < data[0].length ; i++){
+
+                            result.push(data[0][i].role);
+
+                        }
+
+                        res.send(result);
+
+
+                }
+
 
             });
+
 
     });
 
