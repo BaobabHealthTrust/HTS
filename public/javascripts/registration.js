@@ -755,8 +755,6 @@ function savePatient(callback) {
 
     window.parent.dashboard.savePatient(selectedPatient);
 
-    console.log(selectedPatient);
-
     callback();
 
 }

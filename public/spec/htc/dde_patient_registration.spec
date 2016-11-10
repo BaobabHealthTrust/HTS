@@ -82,7 +82,7 @@ Q.1.27. Age [pos :: 25 $$ id :: age $$ type :: hidden]
 
 Q.1.28. Age Group [pos :: 26 $$ id :: age_group $$ type :: hidden]
 
-Q.1.29. Summary[pos :: 27 $$ id :: summary $$ tt_onLoad :: showSummary()]
+Q.1.29. Summary[pos :: 27 $$ id :: summary $$ tt_onLoad :: showSummary() $$ condition :: false]
 
 Q.1.30. Client Registration Summary [pos :: 28 $$ tt_onLoad:: calculateAge(); showDetailsSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard]
 
