@@ -372,9 +372,9 @@ function updatePTScores(data){
 
                                         var percentage = parseInt((parseInt(score)/5)*100);
 
-                                        var sql = "UPDATE `proficiency_test` SET score ="+percentage+" WHERE pid ='"+proficiency_test_id+"'";
+                                        score = 0;
 
-                                        console.log(sql);
+                                        var sql = "UPDATE `proficiency_test` SET score ="+percentage+" WHERE pid ='"+proficiency_test_id+"'";
 
                                         queryRawQualityControl(sql, function (result) {
 
