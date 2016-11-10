@@ -76,7 +76,16 @@
     
             window.parent.user.ajaxRequest('/app_custom/user_roles/'+user,function(data){
 
-                console.log(data);
+                var tasks = {
+
+                                "Quality Control"       :    "window.parent.quality.qualityControlTest()",
+                                "Quality Approval"      :    "window.parent.quality.qualityControlApproval(window.parent.document.body)",
+                                "Proficiency Test"      :    "window.parent.proficiency.proficiencyTest()",
+                                "PT Approval"           :    "window.parent.proficiency.proficiencyTestApproval(window.parent.document.body)",
+                                "PT Official Results"   :    "window.parent.proficiency.enterPTOfficialResult()"
+                }
+
+                var div = document.createElement("div");
 
             });
 
