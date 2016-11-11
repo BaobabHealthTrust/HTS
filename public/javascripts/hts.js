@@ -3725,7 +3725,27 @@ function showDetailsSummary() {
 
         } else {
 
-            td.innerHTML = __$("village").value.trim() + ", " + __$("closest_landmark").value.trim();
+            var physical_address = "";
+
+            if( __$("village").value.trim() &&  __$("village").value.trim().length > 0){
+
+                physical_address =  __$("village").value.trim();
+
+            }
+            if(__$("closest_landmark").value.trim() && __$("closest_landmark").value.trim().length > 0){
+
+                physical_address = __$("closest_landmark").value.trim();
+
+            }
+
+            if( __$("village").value.trim() &&  __$("village").value.trim().length > 0 && __$("closest_landmark").value.trim()
+             && __$("closest_landmark").value.trim().length > 0){
+
+                physical_address =  __$("village").value.trim() +  ", " + __$("closest_landmark").value.trim();
+
+            }
+
+            td.innerHTML = physical_address;
 
 
         }
@@ -5520,7 +5540,7 @@ function setPhoneNumberValidation(phone_number) {
 
         field.setAttribute("field_type", "number");
 
-        field.setAttribute("tt_pageStyleClass", "Numeric NumbersOnly");
+        field.setAttribute("tt_pageStyleClass", "Numeric NumbersOnly NumbersWithUnknown nota");
 
     }
 
