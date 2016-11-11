@@ -28,46 +28,6 @@
     My Profile
 </div>
 
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button"
-            onclick="window.parent.quality.qualityControlTest();">
-    <img src="/images/control.png" height="80" style="margin-bottom: 10px;"/>
-    <br/>
-    Quality Control
-</div>
-
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button"
-            onclick="window.parent.quality.qualityControlApproval(window.parent.document.body);">
-    <img src="/images/approval.png" height="80" style="margin-bottom: 10px;"/>
-    <br/>
-    QC approval
-</div>
-
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button"
-            onclick="window.parent.proficiency.proficiencyTest();">
-    <img src="/images/proficiency_test.png" height="80" style="margin-bottom: 10px;"/>
-    <br/>
-    Proficiency Test
-</div>
-
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button"
-            onclick="window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);">
-    <img src="/images/tests.png" height="80" style="margin-bottom: 10px;"/>
-    <br/>
-    PT approval
-</div>
-
-<div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button"
-            onclick="window.parent.proficiency.enterPTOfficialResult();">
-    <img src="/images/facility.png" height="80" style="margin-bottom: 10px;"/>
-    <br/>
-    PT Official Results
-</div>
-
 </body>
 </html>
 <script type="text/javascript">
@@ -78,14 +38,71 @@
 
                 var tasks = {
 
-                                "Quality Control"       :    "window.parent.quality.qualityControlTest()",
-                                "Quality Approval"      :    "window.parent.quality.qualityControlApproval(window.parent.document.body)",
-                                "Proficiency Test"      :    "window.parent.proficiency.proficiencyTest()",
-                                "PT Approval"           :    "window.parent.proficiency.proficiencyTestApproval(window.parent.document.body)",
-                                "PT Official Results"   :    "window.parent.proficiency.enterPTOfficialResult()"
+                                "Quality Control"       :    {
+                                                                    img :"/images/control.png"  ,
+                                                                     action: "window.parent.quality.qualityControlTest()"
+
+                                                            },
+                                "Quality Approval"      :    {
+                                                                    img :"/images/approval.png"  ,
+                                                                    action: "window.parent.quality.qualityControlApproval(window.parent.document.body)"
+                                                            },
+                                "Proficiency Test"      :   {
+                                                                    img :"/images/proficiency_test.png" , 
+                                                                    action: "window.parent.proficiency.proficiencyTest()"
+                                                            },
+                                "PT Approval"           :    {
+                                                                    img :"/images/tests.png" , 
+                                                                    action: "window.parent.proficiency.proficiencyTestApproval(window.parent.document.body)"
+                                                            },
+                                "PT Official Results"   :    {
+                                                                    img :"/images/facility.png" , 
+                                                                    action: "window.parent.proficiency.enterPTOfficialResult()"
+                                                            }
                 }
 
-                var div = document.createElement("div");
+                var task_keys = Object.keys(tasks);
+
+                for(var i = 0 ; i < task_keys.length ; i++){
+
+                        if((task_keys[i]=="Quality Approval" || task_keys[i] == "PT Approval" || task_keys[i] == "PT Official Results") && data.indexOf("HTS Focal Person") < 0 ){
+
+                            continue;
+
+
+                        }
+
+
+
+                        var div = document.createElement("div");
+
+                        div.style.display = "inline-block";
+
+                        div.style.border = "1px solid #345db5";
+
+                        div.style.height ="125px";
+
+                        div.style.width = "160px";
+
+                        div.style.color = "#345db5";
+
+                        div.style.textAlign = "center";
+
+                        div.style.paddingTop = "15px";
+
+                        div.style.margin = "10px";
+
+                        div.className = "button";
+
+                        var image = '<img src="'+tasks[task_keys[i]].img+'" height="80" style="margin-bottom: 10px;"/>'
+
+                        div.innerHTML = image + "<br/>"+ task_keys[i];
+
+                        div.setAttribute("onclick", tasks[task_keys[i]].action);
+
+                        document.body.appendChild(div);
+
+                }
 
             });
 
