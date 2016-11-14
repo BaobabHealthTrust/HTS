@@ -917,3 +917,31 @@ function showPatient(pos) {
     tr5.appendChild(cell5_2);
 
 }
+
+function setPatientData() {
+
+    if ((window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
+        window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"] : "").length < 2 && __$("first_name")) {
+
+        __$("first_name").value = ((window.parent.dashboard.data.data.names[0]["First Name"]).trim().length > 1 ?
+            (window.parent.dashboard.data.data.names[0]["First Name"]).trim() : "");
+
+    }
+
+    if ((window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
+        window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"] : "").length < 2 && __$("last_name")) {
+
+        __$("last_name").value = ((window.parent.dashboard.data.data.names[0]["Family Name"]).trim().length > 1 ?
+            (window.parent.dashboard.data.data.names[0]["Family Name"]).trim() : "");
+
+    }
+
+    if ((window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses.length > 0 &&
+        window.parent.dashboard.data.data.addresses[0]["Home District"] ? window.parent.dashboard.data.data.addresses[0]["Home District"] : "").length < 2 && __$("last_name")) {
+
+        __$("last_name").value = ((window.parent.dashboard.data.data.names[0]["Family Name"]).trim().length > 1 ?
+            (window.parent.dashboard.data.data.names[0]["Family Name"]).trim() : "");
+
+    }
+
+}

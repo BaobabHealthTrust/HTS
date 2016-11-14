@@ -3674,12 +3674,27 @@ function showDetailsSummary() {
 
         tr.appendChild(td);
 
+        var name = "";
+
+        if(__$("first_name").value.trim().length <= 1 && __$("last_name").value.trim().length <= 1) {
+
+            name = (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
+                window.parent.dashboard.data.data.names[0]["First Name"] ?
+                window.parent.dashboard.data.data.names[0]["First Name"] : __$("first_name").value.trim()) + " " +
+                (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
+                window.parent.dashboard.data.data.names[0]["Family Name"] ?
+                    window.parent.dashboard.data.data.names[0]["Family Name"] : __$("last_name").value.trim())
+
+        } else {
+
+            name = __$("first_name").value.trim() + " " + __$("last_name").value.trim();
+        }
+
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid #333";
         td.style.borderRight = "1px solid #333";
 
-        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "(no consent)" : __$("first_name").value.trim() +
-        " " + __$("last_name").value.trim());
+        td.innerHTML = (__$("capture_details").value.trim() == "No" ? "(no consent)" : name);
 
         tr.appendChild(td);
 
