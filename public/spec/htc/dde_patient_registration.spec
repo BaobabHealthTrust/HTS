@@ -72,7 +72,7 @@ Q.1.22. Current Village Specify [pos :: 20 $$ id :: village_specify $$ tt_requir
 
 Q.1.23. Closest Landmark [pos :: 21 $$ id :: closest_landmark $$ condition :: __$('village').value.trim().length > 0]
 
-Q.1.24. Client Phone Number [pos:: 22 $$ id :: phone_number $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
+Q.1.24. Client Phone Number [pos:: 22 $$ id :: phone_number $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
 
 Q.1.25. Birthdate [pos :: 23 $$ id :: birthdate $$ field_type :: birthdate $$ estimate_field :: estimate $$ type :: hidden]
 

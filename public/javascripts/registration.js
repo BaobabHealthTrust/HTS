@@ -945,3 +945,31 @@ function setPatientData() {
     }
 
 }
+
+function saveCellPhoneNumber() {
+
+    var json = {
+        "data": {
+            "datatype": "edit_demographics",
+            "target_field": "cell_phone_number",
+            "target_field_id": "person_attribute_id",
+            "target_field_id_value": null,
+            "cell_phone_number": (__$("touchscreenInput" + tstCurrentPage).value.trim() ? __$("touchscreenInput" +
+                tstCurrentPage).value.trim() : (__$("phone_number") ? __$("phone_number").value.trim() : null)),
+            "userId": window.parent.dashboard.getCookie("username"),
+            "token": window.parent.dashboard.getCookie("token"),
+            "patient_id": window.parent.dashboard.getCookie("client_identifier")
+        }
+    };
+
+    if(json.data.cell_phone_number != null) {
+
+        if(window.parent.patient) {
+
+            window.parent.patient.submitRawData(json, "javascript:(function(){}())", true);
+
+        }
+
+    }
+
+}
