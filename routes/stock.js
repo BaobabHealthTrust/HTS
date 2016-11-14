@@ -759,7 +759,7 @@ module.exports = function (router) {
         var sql = "SELECT stock.stock_id, stock.name AS name, stock.description, category.name AS category_name, SUM(COALESCE(receipt_quantity,0)) " +
             "AS receipt_quantity, SUM(COALESCE(dispatch_quantity,0)) AS dispatch_quantity,stock.in_multiples_of, stock.reorder_level,stock.recommended_test_time, " +
             " stock.window_test_time, MIN(dispatch_datetime) AS min_dispatch_date, MAX(dispatch_datetime) AS max_dispatch_date, " +
-            "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime)) AS duration, last_order_size FROM stock LEFT OUTER " +
+            "DATEDIFF(MAX(dispatch_datetime), MIN(dispatch_datetime))  + 1 AS duration, last_order_size FROM stock LEFT OUTER " +
             "JOIN report ON stock.stock_id = report.stock_id LEFT OUTER JOIN category ON category.category_id = " +
             "stock.category_id WHERE COALESCE(report.voided,0) = 0 AND stock.voided = 0  GROUP BY stock.stock_id LIMIT " +
             lowerLimit + ", " + pageSize;

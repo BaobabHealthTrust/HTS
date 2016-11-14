@@ -44,9 +44,17 @@ function validateDescription(){
 
                  setTimeout(function(){
 
-                            gotoPage(tstCurrentPage - 1, false, true); 
+                            gotoPage(tstCurrentPage - 1, false, true);
 
-                            window.parent.stock.showMsg(available[description].name + ' is already set as '+ description, "Item with description already exists")},
+
+                            window.parent.stock.showMsg(available[description].name + ' is already set as '+ description, "Item with description already exists");
+
+                            var ok = window.parent.stock.$("ok_button");
+
+                            ok.setAttribute("onclick",'window.parent.stock.listItems(window.parent.document.body)');
+
+
+                        },
 
                  10);
 

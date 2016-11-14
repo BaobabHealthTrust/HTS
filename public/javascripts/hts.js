@@ -2300,7 +2300,19 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
 
+
+
         }
+
+       /* if(__$("backButton")){
+
+                var currentClass = __$("backButton").className;
+
+                __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
+
+                __$("backButton").removeAttribute("onmousedown");
+
+        }*/
 
         var label_data = JSON.parse(data);
 
@@ -2332,7 +2344,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         tr.appendChild(td);
 
         var div = document.createElement("div");
-        div.style.border = "3px inset #3c60b1";
+        div.style.border = "3px solid #3c60b1";
         div.style.borderRadius = "calc(50vh - 150px)";
         div.style.width = "calc(100vh - 300px)";
         div.id = "tmrControl1";
@@ -3728,7 +3740,27 @@ function showDetailsSummary() {
 
         } else {
 
-            td.innerHTML = __$("village").value.trim() + ", " + __$("closest_landmark").value.trim();
+            var physical_address = "";
+
+            if( __$("village").value.trim() &&  __$("village").value.trim().length > 0){
+
+                physical_address =  __$("village").value.trim();
+
+            }
+            if(__$("closest_landmark").value.trim() && __$("closest_landmark").value.trim().length > 0){
+
+                physical_address = __$("closest_landmark").value.trim();
+
+            }
+
+            if( __$("village").value.trim() &&  __$("village").value.trim().length > 0 && __$("closest_landmark").value.trim()
+             && __$("closest_landmark").value.trim().length > 0){
+
+                physical_address =  __$("village").value.trim() +  ", " + __$("closest_landmark").value.trim();
+
+            }
+
+            td.innerHTML = physical_address;
 
 
         }
@@ -4186,6 +4218,14 @@ function evaluateReferral2() {
         window.parent.dashboard.showMsg("Book appointment for Confirmatory Testing at the HIV Clinic " +
             "<u>as soon as possible</u>!", "Re-Test");
 
+    }else{
+
+            if (__$("referral")) {
+
+                __$("referral").value = "Re-Test";
+
+            }
+
     }
 
 }
@@ -4203,6 +4243,8 @@ function loadPost() {
     evaluateReferral2();
 
     setMaxDate("appointment", 1)
+
+
 
     return false;
 
@@ -5513,7 +5555,7 @@ function setPhoneNumberValidation(phone_number) {
 
         field.setAttribute("field_type", "number");
 
-        field.setAttribute("tt_pageStyleClass", "Numeric NumbersOnly");
+        field.setAttribute("tt_pageStyleClass", "Numeric NumbersOnly NumbersWithUnknown nota");
 
     }
 
@@ -6053,7 +6095,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
     tr.appendChild(td);
 
     var div = document.createElement("div");
-    div.style.border = "3px inset #3c60b1";
+    div.style.border = "3px solid #3c60b1";
     div.style.borderRadius = "calc(50vh - 150px)";
     div.style.width = "calc(100vh - 300px)";
     div.id = "tmrControl2";
