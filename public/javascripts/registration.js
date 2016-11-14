@@ -692,70 +692,92 @@ function loadPatients(result) {
 
 function savePatient(callback) {
 
-    if (__$("first_name")) {
+    var url = "/does_patient_exist_locally/" + (selectedPatient && selectedPatient.national_id ?
+            selectedPatient.national_id : "dummy");
 
-        __$("first_name").value = selectedPatient.names.given_name;
+    ajaxRegistrationRequest(url, function (data) {
 
-    }
+        console.log(data);
 
-    if (__$("last_name")) {
+        if (data && data.exists) {
 
-        __$("last_name").value = selectedPatient.names.family_name;
+            var msg = "The client already exists locally. Would you like to switch to that client's session instead?";
 
-    }
+            window.parent.dashboard.showConfirmMsg(msg, "Switch to session " +
+                (selectedPatient && selectedPatient.national_id ? selectedPatient.national_id : "dummy"),
+                "/patient/" + (selectedPatient && selectedPatient.national_id ?
+                    selectedPatient.national_id : "dummy"));
 
-    if (__$("gender")) {
+        } else {
 
-        var gender = {
-            F: "Female",
-            M: "Male"
+            if (__$("first_name")) {
+
+                __$("first_name").value = selectedPatient.names.given_name;
+
+            }
+
+            if (__$("last_name")) {
+
+                __$("last_name").value = selectedPatient.names.family_name;
+
+            }
+
+            if (__$("gender")) {
+
+                var gender = {
+                    F: "Female",
+                    M: "Male"
+                }
+
+                __$("gender").value = gender[selectedPatient.gender];
+
+            }
+
+            if (__$("birthdate")) {
+
+                __$("birthdate").value = selectedPatient.birthdate;
+
+            }
+
+            if (__$("estimate")) {
+
+                __$("estimate").value = selectedPatient.birthdate_estimated;
+
+            }
+
+            if (__$("district")) {
+
+                __$("district").value = selectedPatient.addresses.current_district;
+
+            }
+
+            if (__$("ta")) {
+
+                __$("ta").value = selectedPatient.addresses.current_ta;
+
+            }
+
+            if (__$("village")) {
+
+                __$("village").value = selectedPatient.addresses.current_village;
+
+            }
+
+            if (__$("closest_landmark")) {
+
+                __$("closest_landmark").value = selectedPatient.addresses.current_residence;
+
+            }
+
+            calculateAge();
+
+            window.parent.dashboard.savePatient(selectedPatient);
+
+            callback();
+
         }
 
-        __$("gender").value = gender[selectedPatient.gender];
-
-    }
-
-    if (__$("birthdate")) {
-
-        __$("birthdate").value = selectedPatient.birthdate;
-
-    }
-
-    if (__$("estimate")) {
-
-        __$("estimate").value = selectedPatient.birthdate_estimated;
-
-    }
-
-    if (__$("district")) {
-
-        __$("district").value = selectedPatient.addresses.current_district;
-
-    }
-
-    if (__$("ta")) {
-
-        __$("ta").value = selectedPatient.addresses.current_ta;
-
-    }
-
-    if (__$("village")) {
-
-        __$("village").value = selectedPatient.addresses.current_village;
-
-    }
-
-    if (__$("closest_landmark")) {
-
-        __$("closest_landmark").value = selectedPatient.addresses.current_residence;
-
-    }
-
-    calculateAge();
-
-    window.parent.dashboard.savePatient(selectedPatient);
-
-    callback();
+    })
 
 }
 
@@ -962,14 +984,45 @@ function saveCellPhoneNumber() {
         }
     };
 
-    if(json.data.cell_phone_number != null) {
+    if (json.data.cell_phone_number != null) {
 
-        if(window.parent.patient) {
+        if (window.parent.patient) {
 
             window.parent.patient.submitRawData(json, "javascript:(function(){}())", true);
 
         }
 
+    }
+
+}
+
+function ajaxRegistrationRequest(url, callback) {
+
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = function () {
+
+        if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+            httpRequest.status == 304)) {
+
+            if (httpRequest.responseText.trim().length > 0) {
+                var result = JSON.parse(httpRequest.responseText);
+
+                callback(result);
+
+            } else {
+
+                callback(undefined);
+
+            }
+
+        }
+
+    };
+    try {
+        httpRequest.open("GET", url, true);
+        httpRequest.send(null);
+    } catch (e) {
     }
 
 }
