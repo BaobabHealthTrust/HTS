@@ -5,7 +5,7 @@ O.1.1.1. M
 O.1.1.2. FNP
 O.1.1.3. FP
 
-Q.1.2. Consent given to be contacted? [pos :: 1 $$ id :: capture_details $$ tt_onUnload :: var genders = {"F": "Female", "M": "Male"}; ((window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim() : "").length > 0 ? __$("gender").value = genders[window.parent.dashboard.data.data.gender.trim().substring(0,1).toUpperCase()] : ""); (window.parent.dashboard.data.data.birthdate ? __$("birthdate").value = window.parent.dashboard.data.data.birthdate : "")]
+Q.1.2. Consent given to be contacted? [pos :: 1 $$ id :: capture_details $$ tt_onUnload :: setDefaults()]
 O.1.2.1. Yes
 O.1.2.2. No
 
@@ -72,7 +72,7 @@ Q.1.22. Current Village Specify [pos :: 20 $$ id :: village_specify $$ tt_requir
 
 Q.1.23. Closest Landmark [pos :: 21 $$ id :: closest_landmark $$ condition :: __$('village').value.trim().length > 0]
 
-Q.1.24. Client Phone Number [pos:: 22 $$ id :: phone_number $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
+Q.1.24. Client Phone Number [pos:: 22 $$ id :: phone_number $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
 
 Q.1.25. Birthdate [pos :: 23 $$ id :: birthdate $$ field_type :: birthdate $$ estimate_field :: estimate $$ type :: hidden]
 

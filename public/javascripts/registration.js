@@ -1026,3 +1026,19 @@ function ajaxRegistrationRequest(url, callback) {
     }
 
 }
+
+function setDefaults() {
+
+    var genders = {"F": "Female", "M": "Male"};
+
+    ((window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ?
+        window.parent.dashboard.data.data.gender.trim() : "").length > 0 ?
+        __$("gender").value = genders[window.parent.dashboard.data.data.gender.trim().substring(0,1).toUpperCase()] : "");
+
+    (window.parent.dashboard.data.data.birthdate ? __$("birthdate").value = window.parent.dashboard.data.data.birthdate : "");
+
+    (window.parent.dashboard.data.data.attributes["Cell Phone Number"] &&
+    String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length > 1 && __$("phone_number") ?
+        __$("phone_number").value = String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim() : "")
+
+}
