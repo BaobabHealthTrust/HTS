@@ -5,34 +5,34 @@ O.1.1.1. M
 O.1.1.2. FNP
 O.1.1.3. FP
 
-Q.1.2. Consent given to be contacted? [pos :: 1 $$ id :: capture_details]
+Q.1.2. Consent given to be contacted? [pos :: 1 $$ id :: capture_details $$ tt_onUnload :: var genders = {"F": "Female", "M": "Male"}; ((window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim() : "").length > 0 ? __$("gender").value = genders[window.parent.dashboard.data.data.gender.trim().substring(0,1).toUpperCase()] : ""); (window.parent.dashboard.data.data.birthdate ? __$("birthdate").value = window.parent.dashboard.data.data.birthdate : "")]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.16. Contact Detail Type [pos :: 2 $$ condition :: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ tt_onUnload :: setPhoneNumberValidation('phone_number') $$ id :: detail_type]
+Q.1.16. Contact Detail Type [pos :: 2 $$ condition :: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ tt_onUnload :: setPhoneNumberValidation('phone_number'); setPatientData(); $$ id :: detail_type]
 O.1.16.1. Phone Number
 O.1.16.2. Current Residence
 O.1.16.3. Both
 
-Q.1.3. First Name [pos :: 3 $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.firstNamesPath + "?name=">> $$ allowFreeText :: true $$ id :: first_name $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes"]
+Q.1.3. First Name [pos :: 3 $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.firstNamesPath + "?name=">> $$ allowFreeText :: true $$ id :: first_name $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"] : "").length < 2]
 
-Q.1.4. Last Name [pos :: 4 $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.lastNamesPath + "?name=">> $$ allowFreeText :: true $$ id :: last_name $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes"]
+Q.1.4. Last Name [pos :: 4 $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.lastNamesPath + "?name=">> $$ allowFreeText :: true $$ id :: last_name $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"] : "").length < 2]
 
-Q.1.5. Gender [pos :: 5 $$ id :: gender]
+Q.1.5. Gender [pos :: 5 $$ id :: gender $$ condition :: (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim() : "").length <= 0 ]
 O.1.5.1. Female
 O.1.5.2. Male
 
-Q.1.6. Select or Create New Patient [pos :: 6 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_patient $$ tt_onLoad :: loadNames(); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes"]
+Q.1.6. Select or Create New Patient [pos :: 6 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_patient $$ tt_onLoad :: loadNames(); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"] : "").length < 2]
 
 Q.1.7. Patient [pos :: 7 $$ field_type :: hidden $$ id :: patient]
 
-Q.1.8. Home district [pos :: 8 $$ id :: home_district $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.districtQueryPath + "?region=&district=">> $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && __$("patient").value.trim().length <= 0 ]
+Q.1.8. Home district [pos :: 8 $$ id :: home_district $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.districtQueryPath + "?region=&district=">> $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && __$("patient").value.trim().length <= 0 && (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses.length > 0 && window.parent.dashboard.data.data.addresses[0]["Home District"] ? window.parent.dashboard.data.data.addresses[0]["Home District"] : "").length < 2 ]
 
-Q.1.9. Year of Birth [pos :: 9 $$ id :: birthyear $$ disabled :: true $$ field_type :: number $$ tt_pageStyleClass :: Numeric NumbersWithUnknown $$ tt_onUnLoad :: validateMaxMinYear() $$ condition :: (__$("capture_details").value.trim().toLowerCase() == "no" || __$("patient").value.trim().length <= 0)]
+Q.1.9. Year of Birth [pos :: 9 $$ id :: birthyear $$ disabled :: true $$ field_type :: number $$ tt_pageStyleClass :: Numeric NumbersWithUnknown $$ tt_onUnLoad :: validateMaxMinYear() $$ condition :: (__$("capture_details").value.trim().toLowerCase() == "no" || __$("patient").value.trim().length <= 0) && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2]
 
-Q.1.10. Age Estimate [pos :: 10 $$ id :: age_estimate $$ field_type :: number $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() == "unknown" $$  tt_pageStyleClass::Numeric NumbersOnly $$ tt_onUnLoad :: setEstimatedAgeValue() $$ absoluteMax :: 150 $$ min :: 1 max :: 100]
+Q.1.10. Age Estimate [pos :: 10 $$ id :: age_estimate $$ field_type :: number $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() == "unknown" && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2 $$  tt_pageStyleClass::Numeric NumbersOnly $$ tt_onUnLoad :: setEstimatedAgeValue() $$ absoluteMax :: 150 $$ min :: 1 max :: 100]
 
-Q.1.11. Month of Birth [pos :: 11 $$ id :: birthmonth $$ disabled :: true $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() != "unknown" $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText :: false $$ tt_pageStyleClass :: LongSelectList NoKeyboard]
+Q.1.11. Month of Birth [pos :: 11 $$ id :: birthmonth $$ disabled :: true $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() != "unknown" && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2 $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText :: false $$ tt_pageStyleClass :: LongSelectList NoKeyboard]
 O.1.11.1. January
 O.1.11.2. February
 O.1.11.3. March
@@ -47,11 +47,11 @@ O.1.11.11. November
 O.1.11.12. December
 O.1.11.13. Unknown
 
-Q.1.12. Day of Birth [pos :: 12 $$ disabled :: true $$ id :: birthday $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() != "unknown" && __$('birthmonth').value.trim().toLowerCase() != "unknown" $$ tt_onLoad :: monthDaysKeyPad() $$ tt_onUnLoad :: setAgeValues()]
+Q.1.12. Day of Birth [pos :: 12 $$ disabled :: true $$ id :: birthday $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() != "unknown" && __$('birthmonth').value.trim().toLowerCase() != "unknown" && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2 $$ tt_onLoad :: monthDaysKeyPad() $$ tt_onUnLoad :: setAgeValues()]
 
-Q.1.13. Select or Create New Patient [pos :: 13 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("patient").value.trim().length <= 0 &&  __$("capture_details").value.trim().toLowerCase() == "yes" ]
+Q.1.13. Select or Create New Patient [pos :: 13 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("patient").value.trim().length <= 0 &&  __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"] : "").length < 2 ]
 
-Q.1.14. Is client pregnant? [pos :: 14 $$ id :: pregnant $$ condition :: __$("gender").value.trim().toLowerCase() == "female" ]
+Q.1.14. Is client pregnant? [pos :: 14 $$ id :: pregnant $$ condition :: __$("gender").value.trim().toLowerCase() == "female" && (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim().toLowerCase() == "f" : false) ]
 O.1.14.1. Yes
 O.1.14.2. No
 
@@ -72,7 +72,7 @@ Q.1.22. Current Village Specify [pos :: 20 $$ id :: village_specify $$ tt_requir
 
 Q.1.23. Closest Landmark [pos :: 21 $$ id :: closest_landmark $$ condition :: __$('village').value.trim().length > 0]
 
-Q.1.24. Client Phone Number [pos:: 22 $$ id :: phone_number $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
+Q.1.24. Client Phone Number [pos:: 22 $$ id :: phone_number $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: __$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both']
 
 Q.1.25. Birthdate [pos :: 23 $$ id :: birthdate $$ field_type :: birthdate $$ estimate_field :: estimate $$ type :: hidden]
 
