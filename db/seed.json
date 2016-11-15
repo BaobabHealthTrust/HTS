@@ -128,6 +128,7 @@
         "Partner HIV Status",
         "Time Since Last Test Date",
         "Event in the last 72 hrs?",
-        "DBS Sample ID"
+        "DBS Sample ID",
+        "Contact Detail Type"
     ]
 }
