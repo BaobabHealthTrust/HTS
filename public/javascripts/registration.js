@@ -1031,14 +1031,54 @@ function setDefaults() {
 
     var genders = {"F": "Female", "M": "Male"};
 
-    ((window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ?
-        window.parent.dashboard.data.data.gender.trim() : "").length > 0 ?
-        __$("gender").value = genders[window.parent.dashboard.data.data.gender.trim().substring(0,1).toUpperCase()] : "");
+    if ((window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ?
+            window.parent.dashboard.data.data.gender.trim() : "").length > 0) {
 
-    (window.parent.dashboard.data.data.birthdate ? __$("birthdate").value = window.parent.dashboard.data.data.birthdate : "");
+        __$("gender").value = genders[window.parent.dashboard.data.data.gender.trim().substring(0, 1).toUpperCase()];
 
-    (window.parent.dashboard.data.data.attributes["Cell Phone Number"] &&
-    String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length > 1 && __$("phone_number") ?
-        __$("phone_number").value = String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim() : "")
+        __$("patient").value = "AUTO";
+
+    }
+
+    if(window.parent.dashboard.data.data.birthdate) {
+
+        __$("birthdate").value = window.parent.dashboard.data.data.birthdate;
+
+        __$("patient").value = "AUTO";
+
+    }
+
+    if(window.parent.dashboard.data.data.attributes["Cell Phone Number"] &&
+        String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length > 1 && __$("phone_number")) {
+
+        __$("phone_number").value = String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim();
+
+        __$("patient").value = "AUTO";
+
+    }
+
+    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current District"] && __$("district")) {
+
+        __$("district").value = window.parent.dashboard.data.data.addresses["Current District"];
+
+    }
+
+    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current T/A"] && __$("ta")) {
+
+        __$("ta").value = window.parent.dashboard.data.data.addresses["Current T/A"];
+
+    }
+
+    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current Village"] && __$("village")) {
+
+        __$("village").value = window.parent.dashboard.data.data.addresses["Current Village"];
+
+    }
+
+    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Closest Landmark"] && __$("closest_landmark")) {
+
+        __$("closest_landmark").value = window.parent.dashboard.data.data.addresses["Closest Landmark"];
+
+    }
 
 }
