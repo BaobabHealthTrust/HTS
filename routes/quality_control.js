@@ -181,9 +181,6 @@ function  saveProficiency(data,res){
 
         var date_created = new Date();
 
-        console.log(date_created.format());
-
-
           async.series([
 
                         function(icallback){
@@ -237,6 +234,60 @@ function  saveProficiency(data,res){
 
                                 icallback();
 
+
+                        },
+                        function(icallback){
+
+                                    var pt_panel_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.pt_panel_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+
+                                    var consumption_pt_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                            "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                            "consumption_type WHERE name = 'Quality Control'), (" + pt_panel_dispatch_id_query + "), '" +
+                                                            1 + "', 'Quality Test', '" + data.proficiency_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.tester + "')";
+
+                                    queryRawStock(consumption_pt_query, function (batch) {
+
+                                          console.log("PT Consumption Query");
+
+                                    });
+
+                                    if(data.test_1_consumption_quantity > 0){
+
+                                            var test_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '" +data.lot_number1+ "' ORDER BY dispatch_id LIMIT 1";
+
+                                            var consumption_test_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                                    "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                                    "consumption_type WHERE name = 'Quality Control'), (" + test_dispatch_id_query + "), '" +
+                                                                    data.test_1_consumption_quantity + "', 'Quality Test', '" + data.proficiency_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.tester + "')";
+
+                                            queryRawStock(consumption_test_query, function (batch) {
+
+                                                  console.log("Test 1 Consumption Query");
+
+                                            });
+
+                                    }
+
+                                      if(data.test_2_consumption_quantity > 0){
+
+                                            var test_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '" +data.lot_number2+ "' ORDER BY dispatch_id LIMIT 1";
+
+                                            var consumption_test_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                                    "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                                    "consumption_type WHERE name = 'Quality Control'), (" + test_dispatch_id_query + "), '" +
+                                                                    data.test_2_consumption_quantity + "', 'Quality Test', '" + data.proficiency_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.tester + "')";
+
+                                            queryRawStock(consumption_test_query, function (batch) {
+
+                                                  console.log("Test 2 Consumption Query");
+
+                                            });
+
+                                    }
+
+                                    icallback();
+
+                                   
 
                         },
                         function(icallback){

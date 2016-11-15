@@ -359,7 +359,8 @@ padZeros: function (number, positions) {
                 multiple: "multiple",
                 tt_pageStyleClass: "MultiSelectList",
                 tt_pageStyleClass: "NoKeyboard",
-                options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"]
+                options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"],
+                tt_onUnload:"dtsPachListValidation()"
             },
             "PT panel lot number": {
                 field_type: "text",
@@ -432,6 +433,20 @@ padZeros: function (number, positions) {
                 tt_onLoad : "loadFinalResultControl()",
                 id: "data.final_result",
                 tt_pageStyleClass: "NoKeyboard"
+            },
+            "Consumption Quantity 1" :{
+
+                field_type : "hidden",
+                id: "data.test_1_consumption_quantity",
+                value: 0
+
+            },
+            "Consumption Quantity 2" :{
+
+                field_type : "hidden",
+                id: "data.test_2_consumption_quantity",
+                value: 0
+
             }
 
 
@@ -2063,11 +2078,10 @@ loadPTTests: function(path,target){
 
     submitData: function (data) {
 
-        console.log(data);
 
         if (proficiency.$("proficiency.navPanel")) {
 
-            document.body.removeChild(stock.$("proficiency.navPanel"));
+            document.body.removeChild(proficiency.$("proficiency.navPanel"));
 
         }
 
@@ -2075,8 +2089,9 @@ loadPTTests: function(path,target){
 
         data.data.token = stock.getCookie("token");
 
-        if(data.data.datatype == "proficiency_test"){
+        data.data.location = stock.getCookie("location");
 
+        if(data.data.datatype == "proficiency_test"){
 
 
                 proficiency.ajaxPostRequest("/quality_control/proficiency_test/", data.data, function (res) {
