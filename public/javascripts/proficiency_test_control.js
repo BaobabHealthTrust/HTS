@@ -2,6 +2,8 @@ var timers = {}
 
 var repeat_test_panel = {}
 
+var consumption =[0,0];
+
 function getAjaxRequest(url, callback, optionalControl) {
 
     var httpRequest = new XMLHttpRequest();
@@ -80,7 +82,7 @@ function loadPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 1";
+    th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": "+__$('data.test1_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -93,7 +95,7 @@ function loadPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 2";
+    th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": "+__$('data.test2_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -458,7 +460,7 @@ function loadRepeatPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 1";
+    th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": "+__$('data.test1_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -471,7 +473,7 @@ function loadRepeatPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 2";
+    th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": "+__$('data.test2_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -749,7 +751,19 @@ function startTimer(button){
    if(!timers[button]){
 
         timers[button] = {minutes : 0 , seconds : 0 , progress: true}
+
+        if(button.match(/timer_1_/i)){
+
+             consumption[0]++
+
+        }else{
+
+            consumption[1]++
+        }
+
+       
    }
+
 
     var timerInterval = setInterval(function (){
 
@@ -787,8 +801,6 @@ function startTimer(button){
 }
 
 function updateResult(test,result,timer, buttonActivate,buttonDeactivate) {
-
-    console.log(test);
 
     var resultField = __$("data."+test);
 
@@ -867,7 +879,7 @@ function setLotExpiry(expiry){
 
          var lot = __$('touchscreenInput' + tstCurrentPage).value.trim();
 
-        var date_string = lot.match(/\b\d{2}\/[A-Za-z]{3}\/\d{4}\b/)[0];
+        var date_string = lot.match(/\b\d+\/[A-Za-z]{3}\/\d{4}\b/)[0];
 
         if(date_string)
                 __$(expiry).value = (new Date(date_string)).format("YYYY-mm-dd");
@@ -875,6 +887,12 @@ function setLotExpiry(expiry){
 }
 
 function loadFinalResultControl(){
+
+    for(var i = 0 ; i < consumption.length ; i++){
+
+        __$("data.test_"+(i + 1)+"_consumption_quantity").value = consumption[i];
+
+    }
 
     var control = __$("inputFrame"+tstCurrentPage);
 
@@ -1608,6 +1626,22 @@ function sePTLotNumber(){
             __$("data.pt_panel_lot_number").setAttribute("ajaxURL",url);
 
     })
+
+
+}
+function dtsPachListValidation(){
+
+     var list = __$('touchscreenInput' + tstCurrentPage).value.trim();
+
+     if(list.split(";").length < 5){
+
+            setTimeout(function(){
+
+                    gotoPage(tstCurrentPage - 1, false, true);
+
+                    window.parent.proficiency.showMsg("There are only "+list.split(";").length +" items in the DTS pack","DTS pack check");
+            },5)
+     }
 
 
 }
