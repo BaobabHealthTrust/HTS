@@ -105,30 +105,64 @@ function queryRaw(sql, callback) {
 
 function saveQualityTest(data, res){
 
-    if(data.datatype.trim() == "quality_assurance"){
-
-
-        var test_kit_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.test_kit_lot_number+"' ORDER BY dispatch_id LIMIT 1";
-
-        var consumption_kit_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
-                                "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
-                                "consumption_type WHERE name = 'Quality Control'), (" + test_kit_dispatch_id_query + "), '" +
-                                2 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.hts_provider+ "')";
-
-        queryRawStock(consumption_kit_query, function (batch) {
-
-              console.log("Kit Consumption Query");
-
-        });                        
+    if(data.datatype.trim() == "quality_assurance"){                       
 
 
          async.series([
+                        function (icallback){
+
+                                   var test_kit_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.test_kit_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+
+                                    var consumption_kit_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                            "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                            "consumption_type WHERE name = 'Quality Control'), (" + test_kit_dispatch_id_query + "), '" +
+                                                            2 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.hts_provider+ "')";
+                    
+
+                                    queryRawStock(consumption_kit_query, function (batch) {
+
+                                          console.log("Kit Consumption Query");
+
+                                    });  
+
+
+                                    var dts_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.dts_1_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+
+                                    var consumption_dts_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                            "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                            "consumption_type WHERE name = 'Quality Control'), (" + dts_dispatch_id_query + "), '" +
+                                                            1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.hts_provider+ "')";
+
+                                    queryRawStock(consumption_dts_query, function (batch) {
+
+                                          console.log("DTS 1 Consumption Query");
+
+                                    }); 
+
+                                    var dts_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+data.dts_2_lot_number+"' ORDER BY dispatch_id LIMIT 1";
+
+                                    var consumption_dts_query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
+                                                            "date_consumed, reason_for_consumption, location, date_created, creator) VALUES ((SELECT consumption_type_id FROM " +
+                                                            "consumption_type WHERE name = 'Quality Control'), (" + dts_dispatch_id_query + "), '" +
+                                                            1 + "', 'Quality Test', '" + data.qc_testing_date + "', 'Quality Control', '" + data.location + "', NOW(), '" + data.hts_provider+ "')";
+
+                                    queryRawStock(consumption_dts_query, function (batch) {
+
+                                          console.log("DTS 2 Consumption Query");
+
+                                    }); 
+
+                                  //res.status(200).json({message: "Quality test Done!"});
+
+                                   icallback();
+
+                        },
                         function (icallback) {
 
                                     for(var i = 1 ; i < 3 ; i++){
 
 
-                                            var sample_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+eval('data.dts_'+i+'_lot_number')+"' ORDER BY dispatch_id LIMIT 1";
+                                            /*var sample_dispatch_id_query = "SELECT dispatch_id FROM dispatch WHERE batch_number = '"+eval('data.dts_'+i+'_lot_number')+"' ORDER BY dispatch_id LIMIT 1";
 
 
                                             var consumption_sample__query = "INSERT INTO consumption (consumption_type_id, dispatch_id, consumption_quantity, who_consumed, " +
@@ -140,7 +174,7 @@ function saveQualityTest(data, res){
 
                                                 console.log("Sample Consumption Query");
 
-                                             });
+                                             });*/
 
 
 
@@ -158,13 +192,6 @@ function saveQualityTest(data, res){
 
                                       }
 
-
-                        },
-                        function (icallback){
-
-                                  //res.status(200).json({message: "Quality test Done!"});
-
-                                   icallback();
 
                         }
 
