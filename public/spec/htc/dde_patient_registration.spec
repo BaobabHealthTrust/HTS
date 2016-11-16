@@ -67,15 +67,15 @@ O.1.17.1. Central Region
 O.1.17.2. Northern Region
 O.1.17.3. Southern Region
 
-Q.1.18. Current District [pos :: 18 $$ id :: district $$ tt_onUnload :: setAjaxUrl(1) $$ tt_requireNextClick :: false $$ condition :: (__$("patient").value.trim().length <= 0 && __$("selected_advanced_patient").value.trim().length <= 0 && __$('region').value.trim().length > 0) && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
+Q.1.18. Current District [pos :: 18 $$ id :: district $$ tt_onUnload :: setAjaxUrl(1) $$ tt_requireNextClick :: false $$ condition :: (__$("patient").value.trim().length <= 0 && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
 
-Q.1.20. Current T/A [pos:: 19 $$ id:: ta $$ tt_onUnload:: setAjaxUrl(2) $$ tt_requireNextClick :: false $$ condition :: __$('district').value.trim().length > 0 && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
+Q.1.20. Current T/A [pos:: 19 $$ id:: ta $$ tt_onUnload:: setAjaxUrl(2) $$ tt_requireNextClick :: false $$ condition :: (__$("patient").value.trim().length <= 0 && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
 
 Q.1.21. Current Village [pos:: 20 $$ id :: village $$ tt_requireNextClick :: false $$ condition :: __$('ta').value.trim().length > 0 && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
 
 Q.1.22. Current Village Specify [pos :: 21 $$ id :: village_specify $$ tt_requireNextClick :: true $$ condition :: __$('village').value == 'Other']
 
-Q.1.23. Closest Landmark [pos :: 22 $$ id :: closest_landmark $$ condition :: __$('village').value.trim().length > 0 && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
+Q.1.23. Closest Landmark [pos :: 22 $$ id :: closest_landmark $$ condition :: (__$("patient").value.trim().length <= 0 && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
 
 Q.1.24. Client Phone Number [pos:: 23 $$ id :: phone_number $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
 
