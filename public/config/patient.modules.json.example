@@ -31,6 +31,7 @@
             "Pre-test counseling",
             "Testing",
             "Post-test counseling"
-        ]
+        ],
+        "clinicPrefix": "HTS"
     }
 }
