@@ -840,9 +840,6 @@ function setForRepeate(panel,button){
 
     }
 
-    console.log(repeat_test_panel);
-
-
 }
 
 function checkRepeatFields(){
@@ -1368,8 +1365,6 @@ function updateUserAttributes(){
 
             var data = JSON.parse(data);
 
-            console.log(data);
-
             __$('data.first_name').value = data.first_name
 
             __$('data.last_name').value = data.last_name
@@ -1620,8 +1615,6 @@ function sePTLotNumber(){
             var kit_data = JSON.parse(data);
 
             var url = "/stock/available_batches_to_user?userId="+__$('data.tester').value +"&item_name=" + kit_data.name + "&batch="
-
-            console.log(url);
 
             __$("data.pt_panel_lot_number").setAttribute("ajaxURL",url);
 

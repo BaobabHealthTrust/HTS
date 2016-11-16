@@ -697,8 +697,6 @@ function savePatient(callback) {
 
     ajaxRegistrationRequest(url, function (data) {
 
-        console.log(data);
-
         if (data && data.exists) {
 
             var msg = "The client already exists locally. Would you like to switch to that client's session instead?";

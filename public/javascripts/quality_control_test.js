@@ -515,8 +515,6 @@ var quality = ({
 
                 quality.ajaxPostRequest("/quality_control/save_quality_control_test/", data.data, function (res) {
 
-                    console.log(res);
-
                     var json = JSON.parse(res);
 
                     if (quality.$("quality.navPanel")) {
@@ -661,7 +659,6 @@ var quality = ({
         stock.ajaxRequest(path, function (data) {
 
             var data = JSON.parse(data);
-            console.log(data);
 
             if (!target)
             return;
