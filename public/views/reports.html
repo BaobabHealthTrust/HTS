@@ -8,14 +8,14 @@
 <body style="text-align: center; margin-top: 20px;" oncontextmenu="return false;">
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.parent.location = '/views/report_shell.html';">
+            text-align: center; padding-top: 15px; margin: 10px;" class="button" class="button" onclick="window.parent.location = '/views/report_shell.html';">
     <img src="/images/facility.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     Facility Monthly
 </div>
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px; font-size: 16px !important;" class="button" onclick="window.location='/views/stock_report.html';">
+            text-align: center; padding-top: 15px; margin: 10px;" class="button" class="button" onclick="window.location='/views/stock_report.html';">
     <img src="/images/stock_report.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     Stock Report
@@ -23,3 +23,64 @@
 
 </body>
 </html>
+
+<script type="text/javascript">
+
+            var user = window.parent.user.getCookie("username");
+    
+            window.parent.user.ajaxRequest('/app_custom/user_roles/'+user,function(data){
+
+                var tasks = {
+                                "PT Report"           :    {
+                                                                    img :"/images/tests.png" , 
+                                                                    action: "window.parent.proficiency.pTReviewReport(window.parent.document.body)"
+                                                            }
+                }
+
+                var task_keys = Object.keys(tasks);
+
+                for(var i = 0 ; i < task_keys.length && false ; i++){
+
+                        if(data.indexOf("HTS Focal Person") < 0 ){
+
+                            continue;
+
+
+                        }
+
+
+                        var div = document.createElement("div");
+
+                        div.style.display = "inline-block";
+
+                        div.style.border = "1px solid #345db5";
+
+                        div.style.height ="120px";
+
+                        div.style.width = "160px";
+
+                        div.style.color = "#345db5";
+
+                        div.style.textAlign = "center";
+
+                        div.style.paddingTop = "15px";
+
+                        div.style.fontSize ="16px";
+
+                        div.style.margin = "10px";
+
+                        div.className = "button";
+
+                        var image = '<img src="'+tasks[task_keys[i]].img+'" height="80" style="margin-bottom: 10px;"/>'
+
+                        div.innerHTML = image + "<br/>"+ task_keys[i];
+
+                        div.setAttribute("onclick", tasks[task_keys[i]].action);
+
+                        document.body.appendChild(div);
+
+                }
+
+            });
+
+</script>

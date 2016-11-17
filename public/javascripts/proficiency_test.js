@@ -50,6 +50,33 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
 };
 
+function leapYear(year) {
+
+    var yr = parseInt(year);
+
+    var result = ((yr % 4 == 0 && yr % 100 != 0) || yr % 400 == 0);
+
+    return result;
+
+}
+
+var year = new Date().getFullYear();
+
+var lastDate = {
+        "01": 31,
+        "02": (leapYear(year) ? 29 : 28),
+        "03": 31,
+        "04": 30,
+        "05": 31,
+        "06": 30,
+        "07": 31,
+        "08": 31,
+        "09": 30,
+        "10": 31,
+        "11": 30,
+        "12": 31
+    }
+
 function verticalText(text, parent) {
 
     if (!parent)
@@ -1468,6 +1495,28 @@ loadPTTests: function(path,target){
 
             }
 
+            /*if(ptdata.action_plan && ptdata.action_plan.length > 0){
+
+                     var tr = document.createElement('tr');
+
+                    table.appendChild(tr);
+
+                    var td = document.createElement("td");
+
+                    td.colSpan = "14";
+
+                    tr.appendChild("td");
+
+                    var div = document.createElement("div");
+
+                    div.style.width = "100%";
+
+                    div.style.border = "1px solid black";
+
+                    div.innerHTML = ptdata.action_plan;
+            }*/
+
+
             var tr = document.createElement("tr");
 
             table.appendChild(tr);
@@ -1532,6 +1581,382 @@ loadPTTests: function(path,target){
 
 
     },
+    pTReviewReport: function(target){
+
+            if(!target)
+                return;
+
+            target.innerHTML = "";
+
+            var div0 = document.createElement("div");
+            div0.id = "content";
+
+            target.appendChild(div0);
+
+            var table0 = document.createElement("table");
+            table0.width = "100%";
+            table0.style.margin = "0px";
+            table0.cellSpacing = 0;
+
+            div0.appendChild(table0);
+
+            var tr0_0 = document.createElement("tr");
+
+            table0.appendChild(tr0_0);
+
+            var td0_0_0 = document.createElement("td");
+            td0_0_0.style.fontSize = "2.3em";
+            td0_0_0.style.backgroundColor = "#6281A7";
+            td0_0_0.style.color = "#eee";
+            td0_0_0.style.padding = "15px";
+            td0_0_0.style.textAlign = "center";
+            td0_0_0.innerHTML = "Proficiency Test Approval";
+
+            tr0_0.appendChild(td0_0_0);
+
+            var tr0_1 = document.createElement("tr");
+
+            table0.appendChild(tr0_1);
+
+            var td0_1_0 = document.createElement("td");
+            td0_1_0.style.borderTop = "5px solid #ccc";
+            td0_1_0.style.padding = "0px";
+
+            tr0_1.appendChild(td0_1_0);
+
+            var div0_1_0_0 = document.createElement("div");
+            div0_1_0_0.id = "stock.content";
+            div0_1_0_0.style.height = "calc(100% - 175px)";
+            div0_1_0_0.style.backgroundColor = "#fff";
+            div0_1_0_0.style.overflow = "auto";
+            div0_1_0_0.style.padding = "1px";
+            div0_1_0_0.style.textAlign = "center";
+            div0_1_0_0.innerHTML = "&nbsp;";
+
+            div0.appendChild(div0_1_0_0);
+
+            var nav = document.createElement("div");
+            nav.style.backgroundColor = "#333";
+            nav.style.position = "absolute";
+            nav.style.width = "100%";
+            nav.style.bottom = "0px";
+            nav.style.left = "0px";
+            nav.style.height = "80px";
+
+            document.body.appendChild(nav);
+
+            var btnFinish = document.createElement("button");
+            btnFinish.className = "green";
+            btnFinish.style.cssFloat = "right";
+            btnFinish.style.margin = "15px";
+            btnFinish.style.width = "150px";
+            btnFinish.innerHTML = "Finish";
+
+            btnFinish.onclick = function () {
+
+                window.parent.location = "/";
+
+            }
+
+            nav.appendChild(btnFinish);
+
+
+            var script = document.createElement("script");
+            script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+            document.head.appendChild(script);
+
+            var date_parts = (new Date()).format("YYYY-mm-dd").split("-");
+
+            var start_date = date_parts[0] +"-"+date_parts[1] +"-01";
+
+            var end_date = date_parts[0] +"-"+date_parts[1] +"-"+lastDate[date_parts[1]];
+
+            proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/"+start_date+"/"+end_date, div0_1_0_0);
+
+
+    },
+    loadPTReviewReport: function(path,target){
+
+        if (!path || !target)
+            return;
+
+        stock.ajaxRequest(path, function (data) {
+
+            var data = JSON.parse(data);
+
+            if (!target)
+            return;
+
+            if (!data)
+                return;
+
+            target.innerHTML = "";
+
+            var table = document.createElement("table");
+            table.style.borderCollapse = "collapse";
+            table.border = 1;
+            table.style.borderColor = "#eee";
+            table.width = "100%";
+            table.cellPadding = "8";
+
+            target.appendChild(table);
+
+            var tr = document.createElement("tr");
+            tr.style.backgroundColor = "#999";
+            tr.style.color = "#eee";
+
+            table.appendChild(tr);
+
+            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2","Score", "Perfomance"];
+            var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px",
+                "180px"];
+
+
+            for (var i = 0; i < fields.length; i++) {
+
+                var th = document.createElement("th");
+
+                if (colSizes[i])
+                    th.style.width = colSizes[i];
+
+                th.innerHTML = fields[i];
+
+                tr.appendChild(th);
+
+
+            }
+
+            for(var i = 0 ; i < data.length ; i++){
+
+                var tr = document.createElement("tr");
+
+                tr.style.padding = "0.1em";
+
+                tr.style.border = "1px solid #e3e3e2"
+
+                table.appendChild(tr);
+
+
+                var td = document.createElement("td");
+
+                td.innerHTML = i + 1;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                td.innerHTML = new Date(data[i].proficiency_test_date).format();
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                td.innerHTML = data[i].hts_provider_id;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                td.innerHTML = data[i].first_name + " "+data[i].last_name;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+
+                 var td = document.createElement("td");
+
+                td.innerHTML = data[i].pt_panel_lot_number;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                td.innerHTML = data[i].test_kit_1_name;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                 var td = document.createElement("td");
+
+                td.innerHTML = data[i].test_kit_2_name;
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                 var td = document.createElement("td");
+
+                td.innerHTML = (data[i].score ? data[i].score + "%" : "");
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+
+                var td = document.createElement("td");
+
+                td.style.padding = "0.1em";
+
+                td.style.border = "1px solid #e3e3e2";
+
+                var button = document.createElement("button");
+
+                button.innerHTML = "View Perfomance";
+
+                button.setAttribute("onclick","window.parent.proficiency.viewPTPerfomance("+JSON.stringify(data[i])+",window.parent.document.body)");
+
+
+                td.appendChild(button);
+
+                tr.appendChild(td);
+
+
+            }
+
+        })
+
+
+    },
+    viewPTPerfomance :function(data,target){
+
+         if(!target)
+            return;
+
+        target.innerHTML = "";
+
+        var div0 = document.createElement("div");
+        div0.id = "content";
+
+        target.appendChild(div0);
+
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
+
+        div0.appendChild(table0);
+
+        var tr0_0 = document.createElement("tr");
+
+        table0.appendChild(tr0_0);
+
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "PT Perfomance";
+
+        tr0_0.appendChild(td0_0_0);
+
+        var tr0_1 = document.createElement("tr");
+
+        table0.appendChild(tr0_1);
+
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
+
+        tr0_1.appendChild(td0_1_0);
+
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "stock.content";
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "1px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
+
+        div0.appendChild(div0_1_0_0);
+
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
+
+        document.body.appendChild(nav);
+
+        /*var btnAction = document.createElement("button");
+
+        btnAction.style.position = "absolute";
+        btnAction.style.right = "180px";
+        btnAction.className = "blue";
+        btnAction.style.margin = "15px";
+        btnAction.style.width = "150px";
+        btnAction.innerHTML = "Action Plan";
+
+        btnAction.onclick = function () {
+
+           proficiency.proficiencyTestActionPlan(data.pid)
+
+        }
+
+        nav.appendChild(btnAction);*/
+
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
+
+        btnFinish.onclick = function () {
+
+            window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+
+        }
+
+        nav.appendChild(btnFinish);
+
+
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+
+        document.head.appendChild(script);
+
+        proficiency.loadPTResults("quality_control/proficiency_test_result/"+data.pid,data, div0_1_0_0);
+
+    }
+    ,
     proficiencyTestActionPlan: function(id){
 
          var form = document.createElement("form");
