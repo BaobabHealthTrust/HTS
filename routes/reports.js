@@ -942,7 +942,9 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
+		    console.log(query);
+
+		    var sql = "SELECT DISTINCT value_text FROM obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
 		        "WHERE name = 'First Pass Test Kit 1 Name'" + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
 		        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
 		        query.end_date + "')" : "") + " LIMIT 1) LIMIT 1";
@@ -971,7 +973,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT DISTINCT value_text FROM htc1_7.obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
+		    var sql = "SELECT DISTINCT value_text FROM obs WHERE obs.concept_id = (SELECT concept_id FROM concept_name " +
 		        "WHERE name = 'First Pass Test Kit 2 Name'" + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
 		        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
 		        query.end_date + "')" : "") + " LIMIT 1) LIMIT 1";

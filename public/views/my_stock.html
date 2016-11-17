@@ -60,17 +60,17 @@
             My Stock
         </td>
         <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-top: 1px solid #305d97;
-                border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97; padding-right: 25px;"
+                border-bottom: 1px solid #305d97; font-weight: bold; color: #ffffff; padding-right: 25px;"
             id="kits_available_today">
             &nbsp;
         </td>
         <td style="border-right: 1px solid #305d97; padding-left:20px; text-align: right; border-top: 1px solid #305d97;
-                border-bottom: 1px solid #305d97; font-weight: bold; color: #305d97; padding-right: 25px;"
+                border-bottom: 1px solid #305d97; font-weight: bold; color: #ffffff; padding-right: 25px;"
             id="kits_available_in_month">
             &nbsp;
         </td>
         <td style="padding-left:20px; text-align: right; border-bottom: 1px solid #305d97; font-weight: bold;
-                color: #305d97; border-top: 1px solid #305d97; padding-right: 25px;" id="kits_available_in_year">
+                color: #ffffff; border-top: 1px solid #305d97; padding-right: 25px;" id="kits_available_in_year">
             &nbsp;
         </td>
     </tr>
@@ -211,20 +211,20 @@ function updateTotals(field, value, node1, node2, node3) {
 
 function loadFields() {
 
-    ajaxRequest("/stock_types", undefined, function (types) {
+    ajaxRequest("/stock/stock_types", undefined, function (types) {
 
         for (var i = 0; i < types.length; i++) {
 
             var root = types[i].toLowerCase().replace(/\s/g, "_").replace(/\//g, "_").replace(/\-/g, "_");
 
-            fields[root + "_used_today"] = "/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+            fields[root + "_used_today"] = "/stock/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
                 getCookie("username") + "&start_date=" + (new Date()).format("YYYY-mm-dd");
 
             fieldTotals.kits_used.today.stats[root + "_used_today"] = 0;
 
             fieldParts[root + "_used_today"] = ["kits_used", "today", root + "_used_today"];
 
-            fields[root + "_used_in_month"] = "/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+            fields[root + "_used_in_month"] = "/stock/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
                     getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
                     (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
                             "-01")).format("YYYY-mm-dd");
@@ -233,7 +233,7 @@ function loadFields() {
 
             fieldParts[root + "_used_in_month"] = ["kits_used", "in_month", root + "_used_in_month"];
 
-            fields[root + "_used_in_year"] = "/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+            fields[root + "_used_in_year"] = "/stock/used_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
                     getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
                     (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd");
 
@@ -241,14 +241,14 @@ function loadFields() {
 
             fieldParts[root + "_used_in_year"] = ["kits_used", "in_year", root + "_used_in_year"];
 
-            fields[root + "_available_today"] = "/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+            fields[root + "_available_today"] = "/stock/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
                     getCookie("username") + "&start_date=" + (new Date()).format("YYYY-mm-dd");
 
             fieldTotals.kits_available.today.stats[root + "_available_today"] = 0;
 
             fieldParts[root + "_available_today"] = ["kits_available", "today", root + "_available_today"];
 
-            fields[root + "_available_in_month"] = "/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+            fields[root + "_available_in_month"] = "/stock/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
                     getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
                     (new Date((new Date()).getFullYear() + "-" + padZeros(((new Date()).getMonth() + 1), 2) +
                             "-01")).format("YYYY-mm-dd");
@@ -257,7 +257,7 @@ function loadFields() {
 
             fieldParts[root + "_available_in_month"] = ["kits_available", "in_month", root + "_available_in_month"];
 
-            fields[root + "_available_in_year"] = "/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
+            fields[root + "_available_in_year"] = "/stock/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
                     getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd") + "&start_date=" +
                     (new Date((new Date()).getFullYear() + "-01-01")).format("YYYY-mm-dd");
 
