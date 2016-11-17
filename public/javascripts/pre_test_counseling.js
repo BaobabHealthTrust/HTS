@@ -1,5 +1,5 @@
 /**
- * Created by chimwemwe on 11/3/16.
+ * Created by chimwemwe on 11/16/16.
  */
 
 var page = 1;
@@ -1113,4 +1113,146 @@ function setDefaults() {
 
 }
 
-setDefaults();
+var intVBarcode;
+
+function checkCustomBarcode(){
+
+    if(__$("touchscreenInput" + tstCurrentPage)) {
+
+        __$("touchscreenInput" + tstCurrentPage).focus();
+
+        if(__$("touchscreenInput" + tstCurrentPage).value.trim().match(/\$/)) {
+
+            var barcode = __$("touchscreenInput" + tstCurrentPage).value.trim().replace(/\$/g, "");
+
+            __$("touchscreenInput" + tstCurrentPage).value = barcode;
+
+            alert(barcode);
+
+        }
+
+    }
+
+}
+
+function setConditions() {
+
+    if(__$("barcode")) {
+
+        __$("barcode").setAttribute("condition",
+            "__$('partner_present').value.trim().toLowerCase() == 'yes' && __$('partner').value.trim().toLowerCase() == 'yes'");
+
+        __$("barcode").setAttribute("tt_onLoad", "intVBarcode = setInterval(function(){ checkCustomBarcode() }, 100)");
+
+        __$("barcode").setAttribute("tt_onUnLoad", "clearInterval(intVBarcode);");
+
+    }
+
+    if(__$("partner_present")) {
+
+        __$("partner_present").setAttribute("condition",
+            "__$('partner') && __$('partner').value == 'Yes'");
+
+    }
+
+    if(__$("first_name")) {
+
+        __$("first_name").setAttribute("condition",
+            "__$('partner') && __$('partner').value == 'Yes' && __$('partner_present') && __$('partner_present').value == 'Yes'");
+
+    }
+
+    if(__$("last_name")) {
+
+        __$("last_name").setAttribute("condition",
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("gender")) {
+
+        __$("gender").setAttribute("condition",
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("patient")) {
+
+        __$("patient").setAttribute("condition",
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("region_of_origin")) {
+
+        __$("region_of_origin").setAttribute("condition",
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("home_district")) {
+
+        __$("home_district").setAttribute("condition",
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("birthyear")) {
+
+        __$("birthyear").setAttribute("condition",
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("age_estimate")) {
+
+        __$("age_estimate").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
+            "__$('birthyear').value.trim().toLowerCase() == \"unknown\" && __$('partner') && __$('partner').value == " +
+            "\"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("birthmonth")) {
+
+        __$("birthmonth").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
+            "__$('birthyear').value.trim().toLowerCase() != \"unknown\" && __$('partner') && __$('partner').value == " +
+            "\"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("birthday")) {
+
+        __$("birthday").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
+            "__$('birthyear').value.trim().toLowerCase() != \"unknown\" && __$('birthmonth').value.trim().toLowerCase() " +
+            "!= \"unknown\" && __$('partner') && __$('partner').value == \"Yes\" && __$('partner_present').value == \"Yes\"");
+
+    }
+
+    if(__$("selected_advanced_patient")) {
+
+        __$("selected_advanced_patient").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
+            "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
+
+    }
+
+}
+
+function loadCustomPage() {
+
+    if(__$("tt_staticControlsWrapper")) {
+
+        // __$("tt_staticControlsWrapper").style.display = "none";
+
+    }
+
+    if(__$("tt_page_define_relationship_")) {
+
+        // __$("tt_page_define_relationship_").style.display = "none";
+
+    }
+
+    window.parent.dashboard.addRelationship(__$("content"));
+
+}
+
+// setConditions();
