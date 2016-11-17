@@ -94,6 +94,25 @@
 
     }
 
+    // window.parent.dashboard.queryExistingObsArray("Referral for Re-Testing")
+
+
+    dashboard.subscription.addEventlistener("done", function () {
+
+        var check = dashboard.queryExistingObsArray("Referral for Re-Testing");
+
+        if(Object.keys(check).length > 0) {
+
+            if(dashboard.$("Pre-test counseling")) {
+
+                dashboard.$("Pre-test counseling").click();
+
+            }
+
+        }
+
+    })
+
     var tmrInterval = setInterval(function () {
 
         var date_today = new Date()
