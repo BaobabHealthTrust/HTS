@@ -697,8 +697,6 @@ function savePatient(callback) {
 
     ajaxRegistrationRequest(url, function (data) {
 
-        console.log(data);
-
         if (data && data.exists) {
 
             var msg = "The client already exists locally. Would you like to switch to that client's session instead?";
@@ -1029,6 +1027,8 @@ function ajaxRegistrationRequest(url, callback) {
 
 function setDefaults() {
 
+    var allowed = false;
+
     var genders = {"F": "Female", "M": "Male"};
 
     if ((window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ?
@@ -1040,7 +1040,7 @@ function setDefaults() {
 
     }
 
-    if(window.parent.dashboard.data.data.birthdate) {
+    if (window.parent.dashboard.data.data.birthdate) {
 
         __$("birthdate").value = window.parent.dashboard.data.data.birthdate;
 
@@ -1048,7 +1048,7 @@ function setDefaults() {
 
     }
 
-    if(window.parent.dashboard.data.data.attributes["Cell Phone Number"] &&
+    if (window.parent.dashboard.data.data.attributes["Cell Phone Number"] &&
         String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length > 1 && __$("phone_number")) {
 
         __$("phone_number").value = String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim();
@@ -1057,28 +1057,60 @@ function setDefaults() {
 
     }
 
-    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current District"] && __$("district")) {
+    if (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current District"] && __$("district")) {
 
         __$("district").value = window.parent.dashboard.data.data.addresses["Current District"];
 
     }
 
-    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current T/A"] && __$("ta")) {
+    if (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current T/A"] && __$("ta")) {
 
         __$("ta").value = window.parent.dashboard.data.data.addresses["Current T/A"];
 
     }
 
-    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current Village"] && __$("village")) {
+    if (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Current Village"] && __$("village")) {
 
         __$("village").value = window.parent.dashboard.data.data.addresses["Current Village"];
 
     }
 
-    if(window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Closest Landmark"] && __$("closest_landmark")) {
+    if (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Closest Landmark"] && __$("closest_landmark")) {
 
         __$("closest_landmark").value = window.parent.dashboard.data.data.addresses["Closest Landmark"];
 
     }
 
+    var queries = [
+        window.parent.dashboard.queryExistingObsArray("Consent given to be contacted?"),
+        window.parent.dashboard.queryExistingObsArray("Contact Detail Type")
+    ];
+
+    var consentGiven = (Object.keys(queries[0]).length > 0 ? true : false);
+
+    var contactType = (Object.keys(queries[1]).length > 0 ? queries[0][Object.keys(queries[1])[0]] : "");
+
+    if (consentGiven) {
+
+        if (__$("capture_details")) {
+
+            __$("capture_details").value = "Yes";
+
+            __$("capture_details").setAttribute("condition", false);
+
+        }
+
+        if (__$("detail_type")) {
+
+            __$("detail_type").value = contactType;
+
+            if (String(contactType).length > 0)
+                __$("detail_type").setAttribute("condition", false);
+
+        }
+
+    }
+
 }
+
+setDefaults();

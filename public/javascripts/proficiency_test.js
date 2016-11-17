@@ -701,7 +701,6 @@ loadPTTests: function(path,target){
         stock.ajaxRequest(path, function (data) {
 
             var data = JSON.parse(data);
-            console.log(data);
 
             if (!target)
             return;
@@ -986,7 +985,6 @@ loadPTTests: function(path,target){
         stock.ajaxRequest(path, function (data) {
 
             var data = JSON.parse(data);
-            console.log(data);
 
             if (!target)
             return;

@@ -553,8 +553,6 @@ function setExpiryDate(date_string,field){
 
             __$(field).value = date_string;
 
-           	console.log(__$(field).value);
-
          }
 
 }

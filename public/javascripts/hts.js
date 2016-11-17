@@ -1033,6 +1033,17 @@ function setAjaxUrl(pos) {
 
     switch (pos) {
 
+        case -1:
+
+            if (__$("home_district")) {
+
+                __$("home_district").setAttribute("ajaxURL", "/district_query?region=" + __$("touchscreenInput" +
+                        tstCurrentPage).value.trim() + "&district=");
+
+            }
+
+            break;
+
         case 0:
 
             if (__$("district")) {
