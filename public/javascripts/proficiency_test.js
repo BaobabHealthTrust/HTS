@@ -984,11 +984,25 @@ loadPTTests: function(path,target){
         btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
-        btnFinish.onclick = function () {
+         if(data.action_plan && data.action_plan.length > 0){
 
-            window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+            btnFinish.onclick = function () {
 
-        }
+                    window.parent.proficiency.pTReviewReport(window.parent.document.body);
+
+            }
+
+
+         }else{
+
+             btnFinish.onclick = function () {
+
+                    window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+
+            }
+
+
+         }
 
         nav.appendChild(btnFinish);
 
@@ -1495,7 +1509,36 @@ loadPTTests: function(path,target){
 
             }
 
-            /*if(ptdata.action_plan && ptdata.action_plan.length > 0){
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            td.colSpan = "3";
+
+            td.style.border = "none";
+
+            td.style.textAlign = "left"
+
+            td.innerHTML ="<b>Score :</>";
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+
+            td.colSpan = "3";
+
+            td.style.border = "none";
+
+            td.style.textAlign = "left"
+
+            td.innerHTML = ptdata.score + "%";
+
+            tr.appendChild(td);
+
+
+            if(ptdata.action_plan && ptdata.action_plan.length > 0){
 
                      var tr = document.createElement('tr');
 
@@ -1503,18 +1546,34 @@ loadPTTests: function(path,target){
 
                     var td = document.createElement("td");
 
-                    td.colSpan = "14";
+                    td.colSpan = "3";
 
-                    tr.appendChild("td");
+                    td.style.border = "none";
+
+                    td.style.textAlign = "left"
+
+                    td.innerHTML ="<b>Actio Plan :</>";
+
+                    tr.appendChild(td);
+
+                    var td = document.createElement("td");
+
+                    td.colSpan = "11";
+
+                    td.style.border = "none";
+
+                    tr.appendChild(td);
 
                     var div = document.createElement("div");
 
                     div.style.width = "100%";
 
-                    div.style.border = "1px solid black";
+                    div.style.textAlign = "left"
 
                     div.innerHTML = ptdata.action_plan;
-            }*/
+
+                    td.appendChild(div);
+            }
 
 
             var tr = document.createElement("tr");
@@ -1610,7 +1669,7 @@ loadPTTests: function(path,target){
             td0_0_0.style.color = "#eee";
             td0_0_0.style.padding = "15px";
             td0_0_0.style.textAlign = "center";
-            td0_0_0.innerHTML = "Proficiency Test Approval";
+            td0_0_0.innerHTML = "Proficiency Test Perfomance";
 
             tr0_0.appendChild(td0_0_0);
 
@@ -1672,14 +1731,166 @@ loadPTTests: function(path,target){
 
             var end_date = date_parts[0] +"-"+date_parts[1] +"-"+lastDate[date_parts[1]];
 
-            proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/"+start_date+"/"+end_date, div0_1_0_0);
+            proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/"+start_date+"/"+end_date, div0_1_0_0,{year:date_parts[0], month:date_parts[1]});
 
 
     },
-    loadPTReviewReport: function(path,target){
+    reloadPTReport: function(target){
+
+            var year = proficiency.$("year").value;
+
+            var month = proficiency.$("month").value;
+
+            var start_date = year +"-"+month +"-01";
+
+            var end_date = year +"-"+month +"-"+lastDate[month];
+
+
+
+            proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/"+start_date+"/"+end_date,target,{year:year, month:month});
+
+
+    }
+    ,
+    loadPTReviewReport: function(path,target,date){
 
         if (!path || !target)
             return;
+
+         target.innerHTML = "";
+
+         var div = document.createElement("div");
+
+         div.style.textAlign ="right";
+
+         div.style.height = "70px";
+
+         div.style.paddingRight = "20px";
+
+         div.style.borderBottom = "2px solid #6281a7";
+
+         target.appendChild(div);
+
+
+         var datetable = document.createElement("table");
+
+         datetable.style.float ="right";
+
+         div.appendChild(datetable);
+
+
+         var tr = document.createElement("tr");
+
+         datetable.appendChild(tr);
+
+
+         var td = document.createElement("td");
+
+         td.style.textAlign = "right";
+
+         td.innerHTML = "Year";
+
+         td.style.fontSize ="24px";
+
+         tr.appendChild(td);
+
+
+         var td = document.createElement("td");
+
+         tr.appendChild(td);
+
+         var select = document.createElement("select");
+
+         select.id = "year";
+
+         select.style.padding = "0";
+
+         select.style.fontSize ="24px";
+
+         select.onchange = function(){
+
+                window.parent.proficiency.reloadPTReport(target)
+
+          }
+
+         for (var y = (new Date()).getFullYear(); y > (new Date()).getFullYear() - 10; y--) {
+
+                if (select) {
+
+                    var opt = document.createElement("option");
+                    opt.innerHTML = y;
+                    opt.style.padding = "10px";
+                    
+                    if(y == date.year) {
+
+                        opt.setAttribute("selected", true);
+
+                    }
+
+                   select.appendChild(opt);
+
+                }
+
+        }
+
+        td.appendChild(select);
+
+         var td = document.createElement("td");
+
+         td.style.textAlign = "right";
+
+         td.innerHTML = "Month";
+
+         td.style.fontSize ="24px";
+
+         tr.appendChild(td);
+
+
+         var td = document.createElement("td");
+
+         tr.appendChild(td);
+
+         var select = document.createElement("select");
+
+         select.style.fontSize ="24px";
+
+          select.style.padding = "0";
+
+          select.onchange = function(){
+
+                window.parent.proficiency.reloadPTReport(target)
+
+          }
+
+         select.id = "month";
+
+         var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"];
+
+         for(var i = 0 ; i < monthList.length ; i++){
+
+                if (select) {
+
+                    var opt = document.createElement("option");
+                    opt.innerHTML = monthList[i];
+
+                    opt.value = window.parent.proficiency.padZeros((i+1),2);
+
+                    opt.style.padding = "10px";
+
+                    if(window.parent.proficiency.padZeros((i+1),2) == date.month) {
+
+                        opt.setAttribute("selected", true);
+
+                    }
+
+                   select.appendChild(opt);
+
+                }
+
+         }      
+
+         td.appendChild(select);
 
         stock.ajaxRequest(path, function (data) {
 
@@ -1690,8 +1901,6 @@ loadPTTests: function(path,target){
 
             if (!data)
                 return;
-
-            target.innerHTML = "";
 
             var table = document.createElement("table");
             table.style.borderCollapse = "collapse";
@@ -1939,11 +2148,25 @@ loadPTTests: function(path,target){
         btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
-        btnFinish.onclick = function () {
+        if(data.action_plan && data.action_plan.length > 0){
 
-            window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+            btnFinish.onclick = function () {
 
-        }
+                    window.parent.proficiency.pTReviewReport(window.parent.document.body);
+
+            }
+
+
+         }else{
+
+             btnFinish.onclick = function () {
+
+                    window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+
+            }
+
+
+         }
 
         nav.appendChild(btnFinish);
 
