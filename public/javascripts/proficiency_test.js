@@ -1892,6 +1892,13 @@ loadPTTests: function(path,target){
 
          td.appendChild(select);
 
+
+         var div = document.createElement("div");
+
+         div.style.width = "100%";
+
+         target.appendChild(div);
+
         stock.ajaxRequest(path, function (data) {
 
             var data = JSON.parse(data);
@@ -1909,7 +1916,7 @@ loadPTTests: function(path,target){
             table.width = "100%";
             table.cellPadding = "8";
 
-            target.appendChild(table);
+            div.appendChild(table);
 
             var tr = document.createElement("tr");
             tr.style.backgroundColor = "#999";
@@ -2052,6 +2059,14 @@ loadPTTests: function(path,target){
                 td.appendChild(button);
 
                 tr.appendChild(td);
+
+                if(parseInt(table.offsetHeight) > 0.6 * parseInt(window.innerHeight)){
+
+                      div.style.height = (0.65 * parseInt(window.innerHeight))+"px";
+
+                     div.style.overflowY = "scroll";
+
+                }
 
 
             }
