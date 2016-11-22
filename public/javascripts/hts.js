@@ -4221,8 +4221,10 @@ function evaluateReferral2() {
             __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
-                (7 * 52))))).format("YYYY-mm-dd");
+            /*__$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+                (7 * 52))))).format("YYYY-mm-dd");*/
+
+            __$("appointment").value = (new Date()).format("YYYY-mm-dd");
 
         }
 
