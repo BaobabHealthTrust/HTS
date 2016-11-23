@@ -2542,7 +2542,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             __$('btnTest1Nve').className = "green";
 
-            __$('btnTest1Pve').className = "gray";
+            __$('btnTest1Pve').className = "blue";
 
             if (__$("nextButton")) {
 
@@ -2628,7 +2628,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-            __$('btnTest1Nve').className = "gray";
+            __$('btnTest1Nve').className = "blue";
 
             __$('btnTest1Pve').className = "green";
 
@@ -2698,6 +2698,30 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
             __$("tmrControl1").innerHTML = time;
 
         }
+
+        if (__$("fp_test1_time").value && testTarget.id == "fp_test1_result") {
+
+            __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
+
+
+        } else if (__$("fp_test2_time").value && testTarget.id == "fp_test2_result") {
+
+            __$("tmrControl1").innerHTML = __$("fp_test2_time").value;
+
+        }
+
+        if (__$(testTarget.id).value && __$(testTarget.id).value == "+") {
+
+            __$('btnTest1Pve').className = "green";
+
+
+        } else if (__$(testTarget.id).value && __$(testTarget.id).value == "-") {
+
+           __$("btnTest1Nve").className = "green";
+
+        }
+
+
 
     }, null);
 
