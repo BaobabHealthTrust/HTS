@@ -2312,18 +2312,17 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
             __$("nextButton").className = currentClass.replace(/blue|green/i, "gray");
 
 
-
         }
 
-       /* if(__$("backButton")){
+        /* if(__$("backButton")){
 
-                var currentClass = __$("backButton").className;
+         var currentClass = __$("backButton").className;
 
-                __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
+         __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
 
-                __$("backButton").removeAttribute("onmousedown");
+         __$("backButton").removeAttribute("onmousedown");
 
-        }*/
+         }*/
 
         var label_data = JSON.parse(data);
 
@@ -3723,11 +3722,11 @@ function showDetailsSummary() {
 
         var name = "";
 
-        if(__$("first_name").value.trim().length <= 1 && __$("last_name").value.trim().length <= 1) {
+        if (__$("first_name").value.trim().length <= 1 && __$("last_name").value.trim().length <= 1) {
 
             name = (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
                 window.parent.dashboard.data.data.names[0]["First Name"] ?
-                window.parent.dashboard.data.data.names[0]["First Name"] : __$("first_name").value.trim()) + " " +
+                    window.parent.dashboard.data.data.names[0]["First Name"] : __$("first_name").value.trim()) + " " +
                 (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
                 window.parent.dashboard.data.data.names[0]["Family Name"] ?
                     window.parent.dashboard.data.data.names[0]["Family Name"] : __$("last_name").value.trim())
@@ -3777,21 +3776,21 @@ function showDetailsSummary() {
 
             var physical_address = "";
 
-            if( __$("village").value.trim() &&  __$("village").value.trim().length > 0){
+            if (__$("village").value.trim() && __$("village").value.trim().length > 0) {
 
-                physical_address =  __$("village").value.trim();
+                physical_address = __$("village").value.trim();
 
             }
-            if(__$("closest_landmark").value.trim() && __$("closest_landmark").value.trim().length > 0){
+            if (__$("closest_landmark").value.trim() && __$("closest_landmark").value.trim().length > 0) {
 
                 physical_address = __$("closest_landmark").value.trim();
 
             }
 
-            if( __$("village").value.trim() &&  __$("village").value.trim().length > 0 && __$("closest_landmark").value.trim()
-             && __$("closest_landmark").value.trim().length > 0){
+            if (__$("village").value.trim() && __$("village").value.trim().length > 0 && __$("closest_landmark").value.trim()
+                && __$("closest_landmark").value.trim().length > 0) {
 
-                physical_address =  __$("village").value.trim() +  ", " + __$("closest_landmark").value.trim();
+                physical_address = __$("village").value.trim() + ", " + __$("closest_landmark").value.trim();
 
             }
 
@@ -4255,13 +4254,13 @@ function evaluateReferral2() {
         window.parent.dashboard.showMsg("Book appointment for Confirmatory Testing at the HIV Clinic " +
             "<u>as soon as possible</u>!", "Re-Test");
 
-    }else{
+    } else {
 
-            if (__$("referral")) {
+        if (__$("referral")) {
 
-                __$("referral").value = "Re-Test";
+            __$("referral").value = "Re-Test";
 
-            }
+        }
 
     }
 
@@ -4280,7 +4279,6 @@ function loadPost() {
     evaluateReferral2();
 
     setMaxDate("appointment", 1)
-
 
 
     return false;
@@ -7038,7 +7036,13 @@ function ageLimit() {
 
     var age = parseInt(getAge(birthdate)[0]);
 
-    if (age >= 15) {
+    var hasNoPartner = (window.parent.dashboard.data.data.relationships.map(function (relation) {
+        return relation.relative_type
+    }).map(function (relation) {
+        return (relation.match(/spouse/i) ? true : false)
+    }).indexOf(true) < 0)
+
+    if (age >= 15 && hasNoPartner) {
 
         return true;
 
