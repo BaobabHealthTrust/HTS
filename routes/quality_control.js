@@ -679,6 +679,37 @@ module.exports = function (router) {
 
     });
 
+    router.route("/proficiency_test_report/:start_date/:end_date").get(function(req,res){
+
+            var start_date = req.params.start_date;
+
+            var end_date = req.params.end_date;
+            
+            var sql = "SELECT * FROM proficiency_test WHERE  score >= 0 AND DATE(proficiency_test_date) >='"+start_date 
+                      +"' AND DATE(proficiency_test_date) <='"+end_date +"'";
+
+            console.log(sql);
+
+            results = [];
+
+             queryRawQualityControl(sql, function (data) {
+
+                    for (var i = 0; i < data[0].length; i++) {
+
+                        if (!data[0][i])
+                            continue;
+
+                        results.push(data[0][i])
+
+
+                    }
+
+                    res.send(results);
+
+                })
+
+    });
+
     return router;
 
 }
