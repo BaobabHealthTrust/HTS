@@ -2792,6 +2792,12 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = "New Inconclusive";
 
+            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "+" &&
+                imTest2Result.trim() == "+") {
+
+                outcome = "Test 1 & Test 2 Positive";
+
+                result = "New Positive";
             }
 
             break;
