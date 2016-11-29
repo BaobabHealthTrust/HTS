@@ -131,6 +131,101 @@
 
     }, 200);
 
+    var lastVisitInterval = setInterval(function(){
+
+            if(dashboard.data.data.programs["HTS PROGRAM"]){
+
+                var patient_programs = dashboard.data.data.programs["HTS PROGRAM"].patient_programs;
+
+                var patient_programs_key = Object.keys(patient_programs);
+
+                var visits = patient_programs[patient_programs_key[0]].visits;
+
+                var visits_keys = Object.keys(visits);
+
+                var visit_date = visits_keys[visits_keys.length - 1];
+
+                var today = new Date().format("YYYY-mm-dd");
+
+                if(visit_date < today){
+
+                    dashboard.showMsg("","Summary of last visit in "+ new Date(visit_date).format());
+
+                    var table = document.createElement("table");
+
+                    table.style.width = "60%";
+
+                    table.style.marginLeft ="10%";
+
+                    dashboard.$("msg.content").appendChild(table);
+
+                    dashboard.queryExistingObsArray("Client gives consent to be tested?",function(data){
+
+                        var tr = document.createElement("tr");
+
+                        table.appendChild(tr);
+
+                        var td = document.createElement("th");
+
+                        td.innerHTML = "Consent given to be tested";
+
+                        tr.appendChild(td);
+
+                        var td = document.createElement("td");
+
+                        if(data[visit_date]){
+
+                             td.innerHTML = ": "+data[visit_date];
+
+                        }
+                        else{
+
+                             td.innerHTML = ": No";
+                        }
+
+                        tr.appendChild(td);
+
+                        if(data[visit_date] && data[visit_date].toLowerCase().trim =="yes"){
+
+                            dashboard.queryExistingObsArray("Result Given to Client",function(data){
+
+                                var tr = document.createElement("tr");
+
+                                table.appendChild(tr);
+
+                                var td = document.createElement("th");
+
+                                td.innerHTML = "Result given to client";
+
+                                tr.appendChild(td);
+
+                                var td = document.createElement("td");
+
+                                if(data[visit_date]){
+
+                                     td.innerHTML = ": "+data[visit_date];
+
+                                }
+
+                                tr.appendChild(td);
+
+                            });
+
+                        }
+
+                    });
+
+                }
+
+                clearInterval(lastVisitInterval);
+
+            }
+
+
+    },200);
+
+
+
 </script>
 
 </body>
