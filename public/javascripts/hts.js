@@ -1733,7 +1733,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         __$('btnTest1Nve').className = "green";
 
-        __$('btnTest1Pve').className = "gray";
+        __$('btnTest1Pve').className = "blue";
 
         var time = __$("tmrControl1").innerHTML;
 
@@ -1822,7 +1822,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         //Disbabling the other button
 
-        __$('btnTest1Nve').className = "gray";
+        __$('btnTest1Nve').className = "blue";
 
         __$('btnTest1Pve').className = "green";
 
@@ -2088,7 +2088,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         __$('btnTest2Nve').className = "green";
 
-        __$('btnTest2Pve').className = "gray";
+        __$('btnTest2Pve').className = "blue";
 
         var time = __$("tmrControl2").innerHTML;
 
@@ -2170,7 +2170,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         //Disbabling the other button
 
-        __$('btnTest2Nve').className = "gray";
+        __$('btnTest2Nve').className = "blue";
 
         __$('btnTest2Pve').className = "green";
 
@@ -2282,6 +2282,55 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
         __$("tmrControl1").innerHTML = time1;
 
         __$("tmrControl2").innerHTML = time2;
+
+    }
+
+    //If value is set read value from control 
+
+    if (__$("fp_test1_time").value && test1Target.id == "fp_test1_result") {
+
+            __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
+
+    }
+
+    if (__$("fp_test2_time").value && test2Target.id == "fp_test2_result") {
+
+            __$("tmrControl2").innerHTML = __$("fp_test2_time").value;
+
+    }
+
+    if (__$("im_test1_time").value && test1Target.id == "im_test1_result") {
+
+            __$("tmrControl1").innerHTML = __$("im_test1_time").value;
+
+    }
+
+    if (__$("im_test2_time").value && test2Target.id == "im_test2_result") {
+
+            __$("tmrControl2").innerHTML = __$("im_test2_time").value;
+
+    }
+
+    //Enabling Buttons
+     if (__$(test1Target.id).value && __$(test1Target.id).value == "+") {
+
+            __$('btnTest1Pve').className = "green";
+
+
+    } else if (__$(test1Target.id).value && __$(test1Target.id).value == "-") {
+
+           __$("btnTest1Nve").className = "green";
+
+    }
+
+     if (__$(test2Target.id).value && __$(test2Target.id).value == "+") {
+
+            __$('btnTest2Pve').className = "green";
+
+
+    } else if (__$(test2Target.id).value && __$(test2Target.id).value == "-") {
+
+           __$("btnTest2Nve").className = "green";
 
     }
 
