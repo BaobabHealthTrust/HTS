@@ -1224,6 +1224,16 @@ function saveConsumption(dispatch_id, target_id) {
 
 }
 
+function comsumptionReverse(lot_number){
+
+        if(__$(lot_number).getAttribute("consumption_id")){
+
+            reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id"), "fp", "1");
+
+        }
+
+}
+
 function ajaxPostRequest(url, data, callback) {
 
     var httpRequest = new XMLHttpRequest();
