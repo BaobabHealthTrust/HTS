@@ -129,6 +129,7 @@
         "Time Since Last Test Date",
         "Event in the last 72 hrs?",
         "DBS Sample ID",
-        "Contact Detail Type"
+        "Contact Detail Type",
+        "Does the partner give consent to be contacted?"
     ]
 }
