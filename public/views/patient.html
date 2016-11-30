@@ -143,21 +143,49 @@
 
                 var visits_keys = Object.keys(visits);
 
-                var visit_date = visits_keys[visits_keys.length - 1];
+                var visit_date = visits_keys[0];
 
                 var today = new Date().format("YYYY-mm-dd");
 
                 if(visit_date < today){
 
-                    dashboard.showMsg("","Summary of last visit in "+ new Date(visit_date).format());
+                    dashboard.showMsg("","Last visit summary on "+ new Date(visit_date).format());
 
                     var table = document.createElement("table");
 
-                    table.style.width = "60%";
+                    table.style.width = "90%";
 
-                    table.style.marginLeft ="10%";
+                    table.style.marginLeft ="5%";
 
                     dashboard.$("msg.content").appendChild(table);
+
+                    dashboard.queryExistingObsArray("Last HIV test",function(data){
+                        
+                            var tr = document.createElement("tr");
+
+                            table.appendChild(tr);
+
+                            var td = document.createElement("th");
+
+                            td.innerHTML = "Last HIV test";
+
+                            td.style.width = "50%";
+
+                            td.style.textAlign ="left";
+
+                            tr.appendChild(td);
+
+                            var td = document.createElement("td");
+
+                            if(data[visit_date]){
+
+                                td.innerHTML = ": "+data[visit_date];
+
+                            }
+
+                            tr.appendChild(td);
+
+                    });
 
                     dashboard.queryExistingObsArray("Client gives consent to be tested?",function(data){
 
@@ -167,7 +195,11 @@
 
                         var td = document.createElement("th");
 
+                        td.style.textAlign ="left";
+
                         td.innerHTML = "Consent given to be tested";
+
+                        td.style.width = "50%";
 
                         tr.appendChild(td);
 
@@ -185,7 +217,9 @@
 
                         tr.appendChild(td);
 
-                        if(data[visit_date] && data[visit_date].toLowerCase().trim =="yes"){
+                        if(data[visit_date] && data[visit_date].toLowerCase().trim() =="yes"){
+
+                            var result = {"New Negative" : "N-", "New Positive" : "N+", "New Inconclusive" : "NIn", "New Exposed Infant": "NEx", "Confirmatory Inconclusive" : "CIn", "Confirmatory Positive" : "C+"}
 
                             dashboard.queryExistingObsArray("Result Given to Client",function(data){
 
@@ -197,13 +231,17 @@
 
                                 td.innerHTML = "Result given to client";
 
+                                td.style.textAlign ="left";
+
+                                td.style.width = "50%";
+
                                 tr.appendChild(td);
 
                                 var td = document.createElement("td");
 
                                 if(data[visit_date]){
 
-                                     td.innerHTML = ": "+data[visit_date];
+                                     td.innerHTML = ": "+result[data[visit_date]];
 
                                 }
 
@@ -212,6 +250,35 @@
                             });
 
                         }
+
+
+                    });
+
+                    dashboard.queryExistingObsArray("Appointment Date Given",function(data){
+
+                                var tr = document.createElement("tr");
+
+                                table.appendChild(tr);
+
+                                var td = document.createElement("th");
+
+                                td.innerHTML = "Appointment Date";
+
+                                td.style.textAlign ="left";
+
+                                td.style.width = "50%";
+
+                                tr.appendChild(td);
+
+                                var td = document.createElement("td");
+
+                                if(data[visit_date]){
+
+                                     td.innerHTML = ": "+new Date(data[visit_date]).format();
+
+                                }
+
+                                tr.appendChild(td);
 
                     });
 
