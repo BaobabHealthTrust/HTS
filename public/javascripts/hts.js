@@ -11,7 +11,18 @@ var tmrControl1Hnd;
 var tmrControl2SecsCount = 0;
 var tmrControl2MinsCount = 0;
 var tmrControl2Hnd;
-var notUnigold = "hiv"
+var notUnigold = "hiv";
+
+var timers_running ={    
+                         "fp_test1" : { clicked : true ,  min : 0 , sec : 0 } ,
+
+                         "fp_test2" : { clicked : true ,  min : 0 , sec : 0 } , 
+
+                         "im_test1" : { clicked : true ,  min : 0 , sec : 0 } ,
+
+                         "im_test2" : { clicked : true ,  min : 0 , sec : 0 }
+
+                    }
 
 function getCookie(cname) {
 
@@ -1633,6 +1644,15 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }, 1000);
 
+        var target = test1Target.id.split("_")[0]+"_"+test1Target.id.split("_")[1];
+
+        timers_running[target].clicked = false;
+
+
+        timers_running[target].min = tmrControl1MinsCount;
+
+        timers_running[target].sec = tmrControl1SecsCount;
+
         if (__$("btnTest1Nve")) {
 
             var currentClass = __$("btnTest1Nve").className;
@@ -1998,6 +2018,17 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
+        var target = test2Target.id.split("_")[0]+"_"+test2Target.id.split("_")[1];
+
+        console.log(target);
+
+        timers_running[target].clicked = false;
+
+
+        timers_running[target].min = tmrControl2MinsCount;
+
+        timers_running[target].sec = tmrControl2SecsCount;
+
     }
 
     td.appendChild(btn);
@@ -2242,8 +2273,12 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
+        var target = test1Target.id.split("_")[0]+"_"+test1Target.id.split("_")[1];
+
         if (window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].running &&
-            __$("startTimer2.1")) {
+            __$("startTimer2.1") && timers_running[target].clicked) {
+
+            timers_running[target].clicked = false;
 
             __$("startTimer2.1").onmousedown();
 
@@ -2262,8 +2297,12 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         tmrControl2MinsCount = (counter - tmrControl2SecsCount) / 60;
 
+        var target = test2Target.id.split("_")[0]+"_"+test2Target.id.split("_")[1];
+
         if (__$("startTimer2.2") &&
-            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].running) {
+            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].running && timers_running[target].clicked) {
+
+            timers_running[target].clicked = false;
 
             __$("startTimer2.2").onmousedown();
 
@@ -2361,8 +2400,13 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         }
 
-        tmrControl1SecsCount = 0;
-        tmrControl1MinsCount = 0;
+        var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
+
+        console.log(target);
+
+        tmrControl1SecsCount = timers_running[target].sec ? timers_running[target].sec : 0;
+
+        tmrControl1MinsCount = timers_running[target].min ? timers_running[target].min : 0;
 
         if (__$("nextButton") && testTimeTarget.getAttribute("startTime") == null) {
 
@@ -2489,6 +2533,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
 
+
                 if (__$("tmrControl1")) {
 
                     __$("tmrControl1").innerHTML = time;
@@ -2508,6 +2553,15 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
 
                 }
+
+                var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
+
+                timers_running[target].clicked = false;
+
+
+                timers_running[target].min = tmrControl1MinsCount;
+
+                timers_running[target].sec = tmrControl1SecsCount;
 
             }, 1000);
 
@@ -2735,8 +2789,12 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
+            var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
+
             if (__$("startTimer1") &&
-                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running) {
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running && timers_running[target].clicked) {
+
+                timers_running[target].clicked = false;
 
                 __$("startTimer1").onmousedown();
 
