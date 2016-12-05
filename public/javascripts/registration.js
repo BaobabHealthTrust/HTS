@@ -389,16 +389,34 @@ function loadNames(advanced) {
 
     if (advanced) {
 
+        var first_name = "";
+
+        first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
+        
+        first_name = __$("first_name").value && __$("first_name").value.length  > 0 ? __$("first_name").value.trim() : first_name;
+
+        var last_name = ""
+
+        last_name = window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"].trim() : "";
+
+        last_name = __$("last_name").value && __$("last_name").value.length > 0 ? __$("last_name").value.trim() : last_name;
+
+        var gender = "";
+
+        gender = window.parent.dashboard.data.data.gender ? window.parent.dashboard.data.data.gender.trim() : "";
+
+        gender = __$("gender").value && __$("gender").value.length > 0 ? __$("gender").value : gender;
+
         var json = {
             "npid": null,
             "application": null,
             "site_code": null,
             "names": {
-                "family_name": __$("last_name").value.trim(),
-                "given_name": __$("first_name").value.trim(),
+                "family_name": first_name,
+                "given_name": last_name,
                 "middle_name": null
             },
-            "gender": __$("gender").value.trim().toUpperCase().substring(0, 1),
+            "gender": gender.trim().toUpperCase().substring(0, 1),
             "attributes": {
                 "occupation": null,
                 "cell_phone_number": null
@@ -427,6 +445,8 @@ function loadNames(advanced) {
 
         ajaxAuthPostRequest(url, json, function (data) {
 
+            console.log(data);
+
             var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
             if (json instanceof Array) {
@@ -450,9 +470,27 @@ function loadNames(advanced) {
 
     } else {
 
-        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
-            "&last_name=" + __$("last_name").value.trim() + "&gender=" +
-            __$("gender").value.trim().toUpperCase().substring(0, 1) + "&page=" + page;
+        var first_name = "";
+
+        first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
+        
+        first_name = __$("first_name").value && __$("first_name").value.length  > 0 ? __$("first_name").value.trim() : first_name;
+
+        var last_name = ""
+
+        last_name = window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"].trim() : "";
+
+        last_name = __$("last_name").value && __$("last_name").value.length > 0 ? __$("last_name").value.trim() : last_name;
+
+        var gender = "";
+
+        gender = window.parent.dashboard.data.data.gender ? window.parent.dashboard.data.data.gender.trim() : "";
+
+        gender = __$("gender").value && __$("gender").value.length > 0 ? __$("gender").value : "";
+
+        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + first_name +
+            "&last_name=" + last_name + "&gender=" +
+            gender.trim().toUpperCase().substring(0, 1) + "&page=" + page;
 
         ajaxSearch(page, url);
 
