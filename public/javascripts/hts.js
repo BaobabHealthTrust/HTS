@@ -2338,23 +2338,31 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     if (__$("fp_test1_time").value && test1Target.id == "fp_test1_result") {
 
-            __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
+        if(__$("fp_test1_time").value.match(",") == null)
+
+             __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
 
     }
 
     if (__$("fp_test2_time").value && test2Target.id == "fp_test2_result") {
 
-            __$("tmrControl2").innerHTML = __$("fp_test2_time").value;
+        if(__$("fp_test2_time").value.match(",") == null)
+
+             __$("tmrControl2").innerHTML = __$("fp_test2_time").value;
 
     }
 
     if (__$("im_test1_time").value && test1Target.id == "im_test1_result") {
+
+        if(__$("im_test1_time").value.match(",") == null)
 
             __$("tmrControl1").innerHTML = __$("im_test1_time").value;
 
     }
 
     if (__$("im_test2_time").value && test2Target.id == "im_test2_result") {
+
+        if(__$("im_test2_time").value.match(",") == null)
 
             __$("tmrControl2").innerHTML = __$("im_test2_time").value;
 
@@ -2815,14 +2823,18 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         }
 
+
+
         if (__$("fp_test1_time").value && testTarget.id == "fp_test1_result") {
 
-            __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
+            if(__$("fp_test1_time").value.match(",") == null)
+                         __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
 
 
         } else if (__$("fp_test2_time").value && testTarget.id == "fp_test2_result") {
 
-            __$("tmrControl1").innerHTML = __$("fp_test2_time").value;
+            if(__$("fp_test2_time").value.match(",") == null)
+                    __$("tmrControl1").innerHTML = __$("fp_test2_time").value;
 
         }
 

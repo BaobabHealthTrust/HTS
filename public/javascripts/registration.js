@@ -117,7 +117,7 @@ function loadNames(advanced) {
     var tbl = document.createElement("div");
     tbl.style.display = "table";
     tbl.style.width = "100%";
-    tbl.style.height = "100%";
+    tbl.style.height = "100%";loadNames
 
     panel.appendChild(tbl);
 
@@ -412,8 +412,8 @@ function loadNames(advanced) {
             "application": null,
             "site_code": null,
             "names": {
-                "family_name": first_name,
-                "given_name": last_name,
+                "family_name": last_name,
+                "given_name": first_name,
                 "middle_name": null
             },
             "gender": gender.trim().toUpperCase().substring(0, 1),
@@ -443,13 +443,18 @@ function loadNames(advanced) {
 
         var url = window.parent.patient.settings.ddePath;
 
-        ajaxAuthPostRequest(url, json, function (data) {
 
-            console.log(data);
+        ajaxAuthPostRequest(url, json, function (data) {
 
             var json = (typeof data == typeof String() ? JSON.parse(data) : data);
 
             if (json instanceof Array) {
+
+                if(selectedPatient){
+
+                    gotoNextPage();
+
+                }
 
                 loadPatients(json);
 
@@ -500,39 +505,57 @@ function loadNames(advanced) {
 
 function newRecord(callback) {
 
-    var json = {
-        "npid": null,
-        "application": null,
-        "site_code": null,
-        "names": {
-            "family_name": __$("last_name").value.trim(),
-            "given_name": __$("first_name").value.trim(),
-            "middle_name": null
-        },
-        "gender": __$("gender").value.trim().toUpperCase().substring(0, 1),
-        "attributes": {
-            "occupation": null,
-            "cell_phone_number": null
-        },
-        "birthdate": __$("birthdate").value.trim(),
-        "patient": {
-            "identifiers": {
-                "other_identifier": null
-            }
-        },
-        "birthdate_estimated": __$("estimate").value.trim(),
-        "addresses": {
-            "current_residence": null,
-            "current_village": null,
-            "current_ta": null,
-            "current_district": null,
-            "home_village": null,
-            "home_ta": null,
-            "home_district": __$("home_district").value.trim()
-        },
-        "status": "NEW RECORD",
-        "action": "NEW RECORD"
-    };
+   var first_name = "";
+
+        first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
+        
+        first_name = __$("first_name").value && __$("first_name").value.length  > 0 ? __$("first_name").value.trim() : first_name;
+
+        var last_name = ""
+
+        last_name = window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"].trim() : "";
+
+        last_name = __$("last_name").value && __$("last_name").value.length > 0 ? __$("last_name").value.trim() : last_name;
+
+        var gender = "";
+
+        gender = window.parent.dashboard.data.data.gender ? window.parent.dashboard.data.data.gender.trim() : "";
+
+        gender = __$("gender").value && __$("gender").value.length > 0 ? __$("gender").value : gender;
+
+        var json = {
+            "npid": null,
+            "application": null,
+            "site_code": null,
+            "names": {
+                "family_name": last_name,
+                "given_name": first_name,
+                "middle_name": null
+            },
+            "gender": gender.trim().toUpperCase().substring(0, 1),
+            "attributes": {
+                "occupation": null,
+                "cell_phone_number": null
+            },
+            "birthdate": __$("birthdate").value.trim(),
+            "patient": {
+                "identifiers": {
+                    "other_identifier": null
+                }
+            },
+            "birthdate_estimated": __$("estimate").value.trim(),
+            "addresses": {
+                "current_residence": null,
+                "current_village": null,
+                "current_ta": null,
+                "current_district": null,
+                "home_village": null,
+                "home_ta": null,
+                "home_district": __$("home_district").value.trim()
+            },
+            "status": "NEW RECORD",
+            "action": "NEW RECORD"
+        };
 
     if (window.parent.patient.patients.length > 0) {
 
@@ -554,7 +577,7 @@ function newRecord(callback) {
 
     ajaxAuthPostRequest(url, json, function (data) {
 
-        selectedPatient = data;
+        selectedPatient = JSON.parse(data);
 
         savePatient(function () {
 
@@ -704,7 +727,11 @@ function loadPatients(result) {
 
                     savePatient(function () {
 
-                        gotoNextPage();
+                        setTimeout(function(){
+
+                                gotoNextPage();
+
+                        },500);
 
                     })
 
@@ -1147,6 +1174,28 @@ function setDefaults() {
 
         }
 
+    }
+
+}
+
+function checkNamesExists(){
+
+    if (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
+        window.parent.dashboard.data.data.names[0]["First Name"] && window.parent.dashboard.data.data.names[0]["Family Name"]) {
+
+        //__$("capture_details").value = "Yes";
+
+        setTimeout(function(){
+
+             //gotoNextPage();
+
+        }, 200);
+
+       
+
+    }else{
+
+        return;
     }
 
 }

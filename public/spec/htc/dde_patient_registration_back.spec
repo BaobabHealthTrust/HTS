@@ -26,18 +26,18 @@ Q.1.6. Select or Create New Patient [pos :: 6 $$ tt_pageStyleClass :: NoControls
 
 Q.1.7. Patient [pos :: 7 $$ field_type :: hidden $$ id :: patient $$ value :: ""]
 
-Q.1.32. Region of Origin [pos:: 8 $$ id :: region_of_origin $$ tt_onUnload :: setAjaxUrl(-1) $$ tt_requireNextClick :: false $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" &&  (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Home District"] == null)]
+Q.1.32. Region of Origin [pos:: 8 $$ id :: region_of_origin $$ tt_onUnload :: setAjaxUrl(-1) $$ tt_requireNextClick :: false $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && __$("patient").value.length <= 0 && (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses.length > 0 && window.parent.dashboard.data.data.addresses["Home District"] ? window.parent.dashboard.data.data.addresses["Home District"] : "").length < 2]
 O.1.32.1. Central Region
 O.1.32.2. Northern Region
 O.1.32.3. Southern Region
 
-Q.1.8. Home district [pos :: 9 $$ id :: home_district $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.districtQueryPath + "?region=&district=">> $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Home District"] == null)]
+Q.1.8. Home district [pos :: 9 $$ id :: home_district $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.districtQueryPath + "?region=&district=">> $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && __$("patient").value.trim().length <= 0 && (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses.length > 0 && window.parent.dashboard.data.data.addresses["Home District"] ? window.parent.dashboard.data.data.addresses["Home District"] : "").length < 2 ]
 
-Q.1.9. Year of Birth [pos :: 10 $$ id :: birthyear $$ disabled :: true $$ field_type :: number $$ tt_pageStyleClass :: Numeric NumbersWithUnknown $$ tt_onUnLoad :: validateMaxMinYear() $$ condition :: window.parent.dashboard.data.data.birthdate.trim().length == 0]
+Q.1.9. Year of Birth [pos :: 10 $$ id :: birthyear $$ disabled :: true $$ field_type :: number $$ tt_pageStyleClass :: Numeric NumbersWithUnknown $$ tt_onUnLoad :: validateMaxMinYear() $$ condition :: (__$("capture_details").value.trim().toLowerCase() == "no" || __$("patient").value.trim().length <= 0) && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2]
 
-Q.1.10. Age Estimate [pos :: 11 $$ id :: age_estimate $$ field_type :: number $$ condition :: __$('birthyear').value.trim().toLowerCase() == "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$  tt_pageStyleClass::Numeric NumbersOnly $$ tt_onUnLoad :: setEstimatedAgeValue() $$ absoluteMax :: 150 $$ min :: 1 max :: 100]
+Q.1.10. Age Estimate [pos :: 11 $$ id :: age_estimate $$ field_type :: number $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() == "unknown" && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2 $$  tt_pageStyleClass::Numeric NumbersOnly $$ tt_onUnLoad :: setEstimatedAgeValue() $$ absoluteMax :: 150 $$ min :: 1 max :: 100]
 
-Q.1.11. Month of Birth [pos :: 12 $$ id :: birthmonth $$ disabled :: true $$ condition ::__$('birthyear').value.trim().toLowerCase() != "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText :: false $$ tt_pageStyleClass :: LongSelectList NoKeyboard]
+Q.1.11. Month of Birth [pos :: 12 $$ id :: birthmonth $$ disabled :: true $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() != "unknown" && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2 $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText :: false $$ tt_pageStyleClass :: LongSelectList NoKeyboard]
 O.1.11.1. January
 O.1.11.2. February
 O.1.11.3. March
@@ -52,9 +52,9 @@ O.1.11.11. November
 O.1.11.12. December
 O.1.11.13. Unknown
 
-Q.1.12. Day of Birth [pos :: 13 $$ disabled :: true $$ id :: birthday $$ condition :: __$('birthyear').value.trim().toLowerCase() != "unknown" && __$('birthmonth').value.trim().toLowerCase() != "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$ tt_onLoad :: monthDaysKeyPad() $$ tt_onUnLoad :: setAgeValues()]
+Q.1.12. Day of Birth [pos :: 13 $$ disabled :: true $$ id :: birthday $$ condition :: __$("patient").value.trim().length <= 0 && __$('birthyear').value.trim().toLowerCase() != "unknown" && __$('birthmonth').value.trim().toLowerCase() != "unknown" && (window.parent.dashboard.data.data.birthdate && window.parent.dashboard.data.data.birthdate.trim().length > 0 ? window.parent.dashboard.data.data.birthdate.trim() : "").length < 2 $$ tt_onLoad :: monthDaysKeyPad() $$ tt_onUnLoad :: setAgeValues()]
 
-Q.1.13. Select or Create New Patient [pos :: 14 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition ::  __$("capture_details").value.trim().toLowerCase() == "yes"]
+Q.1.13. Select or Create New Patient [pos :: 14 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("patient").value.trim().length <= 0 &&  __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"] : "").length < 2 ]
 
 Q.1.14. Is client pregnant? [pos :: 15 $$ id :: pregnant $$ condition :: __$("gender").value.trim().toLowerCase() == "female" && (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim().toLowerCase() == "f" : false) ]
 O.1.14.1. Yes
@@ -62,7 +62,7 @@ O.1.14.2. No
 
 Q.1.15. How many months pregnant? [pos :: 16 $$ id :: months_pregnant $$ field_type :: number $$ tt_pageStyleClass :: Numeric NumbersOnly $$ condition :: __$('pregnant').value.trim().toLowerCase() == 'yes' $$ min :: 1 $$ max :: 10]
 
-Q.1.17. Current Region [pos:: 17 $$ id :: region $$ tt_onUnload :: setAjaxUrl(0)$$ tt_requireNextClick :: false $$ condition :: ((__$("patient").value.trim() == "AUTO") && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
+Q.1.17. Current Region [pos:: 17 $$ id :: region $$ tt_onUnload :: setAjaxUrl(0)$$ tt_requireNextClick :: false $$ condition :: ((__$("patient").value.trim().length <= 0 || __$("patient").value.trim() == "AUTO") && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data["data"]["addresses"] || (window.parent.dashboard.data["data"]["addresses"] && !window.parent.dashboard.data["data"]["addresses"]["Current District"]))]
 O.1.17.1. Central Region
 O.1.17.2. Northern Region
 O.1.17.3. Southern Region
