@@ -187,7 +187,7 @@
 
                     });
 
-                    dashboard.queryExistingObsArray("Client gives consent to be tested?",function(data){
+                    dashboard.queryExistingObsArray("Result Given to Client",function(data){
 
                         var tr = document.createElement("tr");
 
@@ -207,7 +207,7 @@
 
                         if(data[visit_date]){
 
-                             td.innerHTML = ": "+data[visit_date];
+                             td.innerHTML = ": Yes";
 
                         }
                         else{
@@ -217,39 +217,31 @@
 
                         tr.appendChild(td);
 
-                        if(data[visit_date] && data[visit_date].toLowerCase().trim() =="yes"){
+                        var result = {"New Negative" : "N-", "New Positive" : "N+", "New Inconclusive" : "NIn", "New Exposed Infant": "NEx", "Confirmatory Inconclusive" : "CIn", "Confirmatory Positive" : "C+"}
 
-                            var result = {"New Negative" : "N-", "New Positive" : "N+", "New Inconclusive" : "NIn", "New Exposed Infant": "NEx", "Confirmatory Inconclusive" : "CIn", "Confirmatory Positive" : "C+"}
+                        var tr = document.createElement("tr");
 
-                            dashboard.queryExistingObsArray("Result Given to Client",function(data){
+                        table.appendChild(tr);
 
-                                var tr = document.createElement("tr");
+                        var td = document.createElement("th");
 
-                                table.appendChild(tr);
+                        td.innerHTML = "Result Given to Client";
 
-                                var td = document.createElement("th");
+                        td.style.textAlign ="left";
 
-                                td.innerHTML = "Result given to client";
+                        td.style.width = "50%";
 
-                                td.style.textAlign ="left";
+                        tr.appendChild(td);
 
-                                td.style.width = "50%";
+                        var td = document.createElement("td");
 
-                                tr.appendChild(td);
-
-                                var td = document.createElement("td");
-
-                                if(data[visit_date]){
+                        if(data[visit_date]){
 
                                      td.innerHTML = ": "+result[data[visit_date]];
 
-                                }
-
-                                tr.appendChild(td);
-
-                            });
-
                         }
+
+                        tr.appendChild(td);
 
 
                     });
@@ -288,6 +280,22 @@
 
             }
 
+
+    },200);
+
+    var disableRegistration = setInterval(function(){
+
+           if(window.parent.dashboard.data.data.identifiers["National id"] && 
+                (window.parent.dashboard.data.data.addresses["Current District"] || 
+                    window.parent.dashboard.data.data.attributes["Cell Phone Number"])){
+
+                    window.parent.dashboard.workflow.splice(window.parent.dashboard.workflow.indexOf("Client Registration"),1);
+
+                    window.parent.dashboard.$("Client Registration").className = "disabled";
+
+                    clearInterval(disableRegistration);
+    
+            }
 
     },200);
 

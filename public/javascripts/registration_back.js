@@ -1200,31 +1200,4 @@ function checkNamesExists(){
 
 }
 
-function evalDemographicCondotion(pos){
-
-    switch(pos){
-
-        case  0:
-
-            if((__$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && 
-                (!window.parent.dashboard.data["data"]["addresses"]["Current District"] || 
-                window.parent.dashboard.data.data.addresses["Current District"] && 
-                window.parent.dashboard.data.data.addresses["Current District"].length == 0)){
-
-                return true;
-
-                console.log(true);
-
-            }else{
-
-                return false;
-
-                console.log(false);
-
-            }
-            break;
-    }
-
-}
-
 setDefaults();
