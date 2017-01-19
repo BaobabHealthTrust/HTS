@@ -22,7 +22,7 @@ Q.1.5. Gender [pos :: 5 $$ id :: gender $$ condition :: (window.parent.dashboard
 O.1.5.1. Female
 O.1.5.2. Male
 
-Q.1.6. Select or Create New Patient [pos :: 6 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_patient $$ tt_onLoad :: loadNames(); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes"]
+Q.1.6. Select or Create New Patient [pos :: 6 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_patient $$ tt_onLoad :: loadNames(); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"] : "").length < 2]
 
 Q.1.7. Patient [pos :: 7 $$ field_type :: hidden $$ id :: patient $$ value :: ""]
 
@@ -54,7 +54,7 @@ O.1.11.13. Unknown
 
 Q.1.12. Day of Birth [pos :: 13 $$ disabled :: true $$ id :: birthday $$ condition :: __$('birthyear').value.trim().toLowerCase() != "unknown" && __$('birthmonth').value.trim().toLowerCase() != "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$ tt_onLoad :: monthDaysKeyPad() $$ tt_onUnLoad :: setAgeValues()]
 
-Q.1.13. Select or Create New Patient [pos :: 14 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition ::  __$("capture_details").value.trim().toLowerCase() == "yes"]
+Q.1.13. Select or Create New Patient [pos :: 14 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition ::  __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"] : "").length < 2]
 
 Q.1.14. Is client pregnant? [pos :: 15 $$ id :: pregnant $$ condition :: __$("gender").value.trim().toLowerCase() == "female" && (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim().toLowerCase() == "f" : false) ]
 O.1.14.1. Yes
