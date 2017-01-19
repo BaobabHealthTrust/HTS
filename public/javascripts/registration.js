@@ -117,7 +117,7 @@ function loadNames(advanced) {
     var tbl = document.createElement("div");
     tbl.style.display = "table";
     tbl.style.width = "100%";
-    tbl.style.height = "100%";loadNames
+    tbl.style.height = "100%";
 
     panel.appendChild(tbl);
 
@@ -392,8 +392,8 @@ function loadNames(advanced) {
         var first_name = "";
 
         first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
-        
-        first_name = __$("first_name").value && __$("first_name").value.length  > 0 ? __$("first_name").value.trim() : first_name;
+
+        first_name = __$("first_name").value && __$("first_name").value.length > 0 ? __$("first_name").value.trim() : first_name;
 
         var last_name = ""
 
@@ -450,7 +450,7 @@ function loadNames(advanced) {
 
             if (json instanceof Array) {
 
-                if(selectedPatient){
+                if (selectedPatient) {
 
                     gotoNextPage();
 
@@ -478,8 +478,8 @@ function loadNames(advanced) {
         var first_name = "";
 
         first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
-        
-        first_name = __$("first_name").value && __$("first_name").value.length  > 0 ? __$("first_name").value.trim() : first_name;
+
+        first_name = __$("first_name").value && __$("first_name").value.length > 0 ? __$("first_name").value.trim() : first_name;
 
         var last_name = ""
 
@@ -505,57 +505,57 @@ function loadNames(advanced) {
 
 function newRecord(callback) {
 
-   var first_name = "";
+    var first_name = "";
 
-        first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
-        
-        first_name = __$("first_name").value && __$("first_name").value.length  > 0 ? __$("first_name").value.trim() : first_name;
+    first_name = window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"].trim() : "";
 
-        var last_name = ""
+    first_name = __$("first_name").value && __$("first_name").value.length > 0 ? __$("first_name").value.trim() : first_name;
 
-        last_name = window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"].trim() : "";
+    var last_name = ""
 
-        last_name = __$("last_name").value && __$("last_name").value.length > 0 ? __$("last_name").value.trim() : last_name;
+    last_name = window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"].trim() : "";
 
-        var gender = "";
+    last_name = __$("last_name").value && __$("last_name").value.length > 0 ? __$("last_name").value.trim() : last_name;
 
-        gender = window.parent.dashboard.data.data.gender ? window.parent.dashboard.data.data.gender.trim() : "";
+    var gender = "";
 
-        gender = __$("gender").value && __$("gender").value.length > 0 ? __$("gender").value : gender;
+    gender = window.parent.dashboard.data.data.gender ? window.parent.dashboard.data.data.gender.trim() : "";
 
-        var json = {
-            "npid": null,
-            "application": null,
-            "site_code": null,
-            "names": {
-                "family_name": last_name,
-                "given_name": first_name,
-                "middle_name": null
-            },
-            "gender": gender.trim().toUpperCase().substring(0, 1),
-            "attributes": {
-                "occupation": null,
-                "cell_phone_number": null
-            },
-            "birthdate": __$("birthdate").value.trim(),
-            "patient": {
-                "identifiers": {
-                    "other_identifier": null
-                }
-            },
-            "birthdate_estimated": __$("estimate").value.trim(),
-            "addresses": {
-                "current_residence": null,
-                "current_village": null,
-                "current_ta": null,
-                "current_district": null,
-                "home_village": null,
-                "home_ta": null,
-                "home_district": __$("home_district").value.trim()
-            },
-            "status": "NEW RECORD",
-            "action": "NEW RECORD"
-        };
+    gender = __$("gender").value && __$("gender").value.length > 0 ? __$("gender").value : gender;
+
+    var json = {
+        "npid": null,
+        "application": null,
+        "site_code": null,
+        "names": {
+            "family_name": last_name,
+            "given_name": first_name,
+            "middle_name": null
+        },
+        "gender": gender.trim().toUpperCase().substring(0, 1),
+        "attributes": {
+            "occupation": null,
+            "cell_phone_number": null
+        },
+        "birthdate": __$("birthdate").value.trim(),
+        "patient": {
+            "identifiers": {
+                "other_identifier": null
+            }
+        },
+        "birthdate_estimated": __$("estimate").value.trim(),
+        "addresses": {
+            "current_residence": null,
+            "current_village": null,
+            "current_ta": null,
+            "current_district": null,
+            "home_village": null,
+            "home_ta": null,
+            "home_district": __$("home_district").value.trim()
+        },
+        "status": "NEW RECORD",
+        "action": "NEW RECORD"
+    };
 
     if (window.parent.patient.patients.length > 0) {
 
@@ -678,8 +678,11 @@ function loadPatients(result) {
 
     selectedPatient = null;
 
-    __$("leftpanel").innerHTML = "";
-    __$("rightpanel").innerHTML = "";
+    if (__$("leftpanel"))
+        __$("leftpanel").innerHTML = "";
+
+    if (__$("rightpanel"))
+        __$("rightpanel").innerHTML = "";
 
     if (__$("nextButton")) {
         __$("nextButton").className = "button gray navButton";
@@ -727,11 +730,11 @@ function loadPatients(result) {
 
                     savePatient(function () {
 
-                        setTimeout(function(){
+                        setTimeout(function () {
 
-                                gotoNextPage();
+                            gotoNextPage();
 
-                        },500);
+                        }, 500);
 
                     })
 
@@ -1178,44 +1181,43 @@ function setDefaults() {
 
 }
 
-function checkNamesExists(){
+function checkNamesExists() {
 
     if (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 &&
         window.parent.dashboard.data.data.names[0]["First Name"] && window.parent.dashboard.data.data.names[0]["Family Name"]) {
 
         //__$("capture_details").value = "Yes";
 
-        setTimeout(function(){
+        setTimeout(function () {
 
-             //gotoNextPage();
+            //gotoNextPage();
 
         }, 200);
 
-       
 
-    }else{
+    } else {
 
         return;
     }
 
 }
 
-function evalDemographicCondotion(pos){
+function evalDemographicCondotion(pos) {
 
-    switch(pos){
+    switch (pos) {
 
         case  0:
 
-            if((__$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && 
-                (!window.parent.dashboard.data["data"]["addresses"]["Current District"] || 
-                window.parent.dashboard.data.data.addresses["Current District"] && 
-                window.parent.dashboard.data.data.addresses["Current District"].length == 0)){
+            if ((__$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') &&
+                (!window.parent.dashboard.data["data"]["addresses"]["Current District"] ||
+                window.parent.dashboard.data.data.addresses["Current District"] &&
+                window.parent.dashboard.data.data.addresses["Current District"].length == 0)) {
 
                 return true;
 
                 console.log(true);
 
-            }else{
+            } else {
 
                 return false;
 
