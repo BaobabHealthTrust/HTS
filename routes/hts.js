@@ -73,12 +73,14 @@ module.exports = function (router) {
 
                 }
 
-                if (!data.encounter || !data.concept || !data.value || !data.patient_id)
+                if (!data.program || !data.encounter || !data.concept || !data.value || !data.patient_id)
                     return res.status(406).json({message: "Missing required input data"});
 
                 console.log(data);
 
-                var patient_id, encounter_id, encounter_type_id, concept_id;
+                var patient_id, encounter_id, encounter_type_id, concept_id, patient_program_id;
+
+                data.program = "HTS PROGRAM";
 
                 async.series([
 
@@ -125,14 +127,78 @@ module.exports = function (router) {
 
                     },
 
+                    function (icallback) {
+
+                        if(!patient_id)
+                            return icallback();
+
+                        var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
+                            "patient_program.program_id WHERE patient_id = \"" + patient_id + "\" AND voided = 0 AND program.name = \"" +
+                            data.program + "\"";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (res) {
+
+                            if (res[0].length > 0)
+                                patient_program_id = res[0][0].patient_program_id;
+
+                            icallback();
+
+                        });
+
+                    },
+
+                    function (icallback) {
+
+                        if(!patient_id)
+                            return icallback();
+
+                        if (!patient_program_id) {
+
+                            var sql = "INSERT INTO patient_program (patient_id, program_id, date_enrolled, creator, date_created, " +
+                                "uuid, location_id) VALUES (\"" + patient_id + "\", (SELECT program_id FROM program WHERE name = \"" +
+                                data.program + "\"), NOW(), \"" + user_id + "\", NOW(), \"" + uuid.v1() + "\", (SELECT location_id FROM location WHERE name = \"" +
+                                (data.location ? data.location : "Unknown") + "\"))";
+
+                            console.log(sql);
+
+                            queryRaw(sql, function (res) {
+
+                                var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
+                                    "patient_program.program_id WHERE patient_id = \"" + patient_id +
+                                    "\" AND voided = 0 AND program.name = \"" + data.program + "\"";
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (res) {
+
+                                    if (res[0].length > 0)
+                                        patient_program_id = res[0][0].patient_program_id;
+
+                                    icallback();
+
+                                });
+
+                            });
+
+                        } else {
+
+                            icallback();
+
+                        }
+
+                    },
+
                     function(callback) {
 
                         if(!encounter_type_id)
                             return callback();
 
                         var sql = "INSERT INTO encounter (encounter_type, patient_id, provider_id, encounter_datetime, " +
-                            "creator, date_created, voided, uuid) VALUES (\"" + encounter_type_id + "\", \"" + patient_id +
-                            "\", \"" + user_id + "\", NOW(), \"" + user_id + "\", NOW(), 0, \"" + uuid.v1() + "\")";
+                            "creator, date_created, voided, uuid, patient_program_id) VALUES (\"" + encounter_type_id +
+                            "\", \"" + patient_id + "\", \"" + user_id + "\", NOW(), \"" + user_id + "\", NOW(), 0, \"" +
+                            uuid.v1() + "\", \"" + patient_program_id + "\")";
 
                         console.log(sql);
 

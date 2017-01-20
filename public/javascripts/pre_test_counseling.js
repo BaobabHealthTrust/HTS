@@ -1255,4 +1255,59 @@ function loadCustomPage() {
 
 }
 
-// setConditions();
+var tmrIntervalRelation;
+
+function checkSpouses() {
+
+    clearTimeout(tmrIntervalRelation);
+
+    if(window.parent.dashboard.data.data.relationships.length > 0) {
+
+        var done = false;
+
+        for(var i = 0; i < window.parent.dashboard.data.data.relationships.length; i++) {
+
+            var relation = window.parent.dashboard.data.data.relationships[i];
+
+            if(relation.relative_type.trim().toLowerCase() == "spouse/partner") {
+
+                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
+                    "HTS CLIENT REGISTRATION", "Consent given to be contacted?", "Yes");
+
+                done = true;
+
+            }
+
+        }
+
+        if(!done) {
+
+            tmrIntervalRelation = setTimeout(function() {
+
+                checkSpouses();
+
+            }, 1000);
+
+        }
+
+    } else {
+
+        tmrIntervalRelation = setTimeout(function() {
+
+            checkSpouses();
+
+        }, 1000);
+
+    }
+
+}
+
+window.parent.dashboard.subscription.addEventlistener("relation", function () {
+
+    tmrIntervalRelation = setTimeout(function() {
+
+        checkSpouses();
+
+    }, 1000);
+
+})
