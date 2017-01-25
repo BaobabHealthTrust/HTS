@@ -1202,7 +1202,7 @@ function checkNamesExists() {
 
 }
 
-function evalDemographicCondotion(pos) {
+function evalDemographicCondition(pos) {
 
     switch (pos) {
 
@@ -1215,13 +1215,9 @@ function evalDemographicCondotion(pos) {
 
                 return true;
 
-                console.log(true);
-
             } else {
 
                 return false;
-
-                console.log(false);
 
             }
             break;
