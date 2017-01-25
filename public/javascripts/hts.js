@@ -2024,8 +2024,6 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         var target = test2Target.id.split("_")[0]+"_"+test2Target.id.split("_")[1];
 
-        console.log(target);
-
         timers_running[target].clicked = false;
 
 
@@ -2413,8 +2411,6 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         }
 
         var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
-
-        console.log(target);
 
         tmrControl1SecsCount = timers_running[target].sec ? timers_running[target].sec : 0;
 
