@@ -929,7 +929,11 @@ function showHTSVisitSummary() {
 
         var partner_present = "N";
 
-        if (__$("partner_present") && __$("partner_present").value) {
+        if(!noPartnerToday()) {
+
+            partner_present = "Y";
+
+        } else if (__$("partner_present") && __$("partner_present").value) {
 
             partner_present = __$("partner_present").value.trim().substring(0, 1).toUpperCase();
 
@@ -7194,6 +7198,23 @@ function noPartnerToday() {
 
 }
 
+function clientHasHIVLastTest() {
+
+    var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Last HIV test");
+
+    if(String(present).trim().length > 0) {
+
+        return true;
+
+    } else {
+
+        return false;
+
+    }
+
+}
+
 function ageLimit() {
 
     var birthdate = window.parent.dashboard.data.data.birthdate
@@ -7212,3 +7233,32 @@ function ageLimit() {
 
 
 }
+
+function initialiseExistingData() {
+
+    if(clientHasHIVLastTest() && __$("last_hiv_test") && false) {
+
+        var value = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+            "PRE TEST COUNSELLING", "Last HIV test");
+
+        __$("last_hiv_test").value = value;
+
+    }
+
+    if(!ageLimit()) {
+
+        if(__$("last_hiv_test")) {
+
+            var opt = document.createElement("option");
+
+            opt.innerHTML = "Last Exposed Infant";
+
+            __$("last_hiv_test").appendChild(opt);
+
+        }
+
+    }
+
+}
+
+initialiseExistingData();

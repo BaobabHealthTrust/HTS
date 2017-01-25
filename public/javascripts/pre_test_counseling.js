@@ -1115,13 +1115,13 @@ function setDefaults() {
 
 var intVBarcode;
 
-function checkCustomBarcode(){
+function checkCustomBarcode() {
 
-    if(__$("touchscreenInput" + tstCurrentPage)) {
+    if (__$("touchscreenInput" + tstCurrentPage)) {
 
         __$("touchscreenInput" + tstCurrentPage).focus();
 
-        if(__$("touchscreenInput" + tstCurrentPage).value.trim().match(/\$/)) {
+        if (__$("touchscreenInput" + tstCurrentPage).value.trim().match(/\$/)) {
 
             var barcode = __$("touchscreenInput" + tstCurrentPage).value.trim().replace(/\$/g, "");
 
@@ -1137,7 +1137,7 @@ function checkCustomBarcode(){
 
 function setConditions() {
 
-    if(__$("barcode")) {
+    if (__$("barcode")) {
 
         __$("barcode").setAttribute("condition",
             "__$('partner_present').value.trim().toLowerCase() == 'yes' && __$('partner').value.trim().toLowerCase() == 'yes'");
@@ -1148,63 +1148,63 @@ function setConditions() {
 
     }
 
-    if(__$("partner_present")) {
+    if (__$("partner_present")) {
 
         __$("partner_present").setAttribute("condition",
             "__$('partner') && __$('partner').value == 'Yes'");
 
     }
 
-    if(__$("first_name")) {
+    if (__$("first_name")) {
 
         __$("first_name").setAttribute("condition",
             "__$('partner') && __$('partner').value == 'Yes' && __$('partner_present') && __$('partner_present').value == 'Yes'");
 
     }
 
-    if(__$("last_name")) {
+    if (__$("last_name")) {
 
         __$("last_name").setAttribute("condition",
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
 
     }
 
-    if(__$("gender")) {
+    if (__$("gender")) {
 
         __$("gender").setAttribute("condition",
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
 
     }
 
-    if(__$("patient")) {
+    if (__$("patient")) {
 
         __$("patient").setAttribute("condition",
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
 
     }
 
-    if(__$("region_of_origin")) {
+    if (__$("region_of_origin")) {
 
         __$("region_of_origin").setAttribute("condition",
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
 
     }
 
-    if(__$("home_district")) {
+    if (__$("home_district")) {
 
         __$("home_district").setAttribute("condition",
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
 
     }
 
-    if(__$("birthyear")) {
+    if (__$("birthyear")) {
 
         __$("birthyear").setAttribute("condition",
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
 
     }
 
-    if(__$("age_estimate")) {
+    if (__$("age_estimate")) {
 
         __$("age_estimate").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
             "__$('birthyear').value.trim().toLowerCase() == \"unknown\" && __$('partner') && __$('partner').value == " +
@@ -1212,7 +1212,7 @@ function setConditions() {
 
     }
 
-    if(__$("birthmonth")) {
+    if (__$("birthmonth")) {
 
         __$("birthmonth").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
             "__$('birthyear').value.trim().toLowerCase() != \"unknown\" && __$('partner') && __$('partner').value == " +
@@ -1220,7 +1220,7 @@ function setConditions() {
 
     }
 
-    if(__$("birthday")) {
+    if (__$("birthday")) {
 
         __$("birthday").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
             "__$('birthyear').value.trim().toLowerCase() != \"unknown\" && __$('birthmonth').value.trim().toLowerCase() " +
@@ -1228,7 +1228,7 @@ function setConditions() {
 
     }
 
-    if(__$("selected_advanced_patient")) {
+    if (__$("selected_advanced_patient")) {
 
         __$("selected_advanced_patient").setAttribute("condition", "__$(\"patient\").value.trim().length <= 0 && " +
             "__$('partner') && __$('partner').value == \"Yes\" && __$('partner_present') && __$('partner_present').value == \"Yes\"");
@@ -1239,13 +1239,13 @@ function setConditions() {
 
 function loadCustomPage() {
 
-    if(__$("tt_staticControlsWrapper")) {
+    if (__$("tt_staticControlsWrapper")) {
 
         // __$("tt_staticControlsWrapper").style.display = "none";
 
     }
 
-    if(__$("tt_page_define_relationship_")) {
+    if (__$("tt_page_define_relationship_")) {
 
         // __$("tt_page_define_relationship_").style.display = "none";
 
@@ -1257,7 +1257,7 @@ function loadCustomPage() {
 
 var tmrIntervalRelation;
 
-var partnerContactType = "";
+var partnerContactType;
 
 var partnerId;
 
@@ -1265,29 +1265,17 @@ function checkSpouses() {
 
     clearTimeout(tmrIntervalRelation);
 
-    if(window.parent.dashboard.data.data.relationships.length > 0) {
+    if (window.parent.dashboard.data.data.relationships.length > 0) {
 
         var done = false;
 
-        for(var i = 0; i < window.parent.dashboard.data.data.relationships.length; i++) {
+        for (var i = 0; i < window.parent.dashboard.data.data.relationships.length; i++) {
 
             var relation = window.parent.dashboard.data.data.relationships[i];
 
-            if(relation.relative_type.trim().toLowerCase() == "spouse/partner") {
+            if (relation.relative_type.trim().toLowerCase() == "spouse/partner") {
 
                 partnerId = relation.relative_id;
-
-                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
-                    "HTS CLIENT REGISTRATION", "Consent given to be contacted?", "Yes");
-
-                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
-                    "HTS CLIENT REGISTRATION", "Contact Detail Type", partnerContactType);
-
-                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
-                    "PRE TEST COUNSELLING", "Do you have a partner?", "Yes");
-
-                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
-                    "PRE TEST COUNSELLING", "Partner Present at this Session?", "Yes");
 
                 done = true;
 
@@ -1297,9 +1285,9 @@ function checkSpouses() {
 
         }
 
-        if(!done) {
+        if (!done) {
 
-            tmrIntervalRelation = setTimeout(function() {
+            tmrIntervalRelation = setTimeout(function () {
 
                 checkSpouses();
 
@@ -1309,7 +1297,7 @@ function checkSpouses() {
 
     } else {
 
-        tmrIntervalRelation = setTimeout(function() {
+        tmrIntervalRelation = setTimeout(function () {
 
             checkSpouses();
 
@@ -1319,15 +1307,28 @@ function checkSpouses() {
 
 }
 
+function updatePartnerObs() {
+
+    updatePartner("HTS CLIENT REGISTRATION", "Consent given to be contacted?", "Yes");
+
+    if (partnerContactType)
+        updatePartner("HTS CLIENT REGISTRATION", "Contact Detail Type", partnerContactType);
+
+    updatePartner("PRE TEST COUNSELLING", "Partner Present at this Session?", "Yes");
+
+    updatePartner("PRE TEST COUNSELLING", "Do you have a partner?", "Yes");
+
+}
+
 function updatePartner(encounter, concept, value) {
 
-    if(!partnerId) {
+    if (!partnerId) {
 
-        for(var i = 0; i < window.parent.dashboard.data.data.relationships.length; i++) {
+        for (var i = 0; i < window.parent.dashboard.data.data.relationships.length; i++) {
 
             var relation = window.parent.dashboard.data.data.relationships[i];
 
-            if(relation.relative_type.trim().toLowerCase() == "spouse/partner") {
+            if (relation.relative_type.trim().toLowerCase() == "spouse/partner") {
 
                 partnerId = relation.relative_id;
 
@@ -1339,7 +1340,7 @@ function updatePartner(encounter, concept, value) {
 
     }
 
-    if(partnerId) {
+    if (partnerId) {
 
         window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", partnerId, encounter, concept, value);
 
@@ -1349,7 +1350,7 @@ function updatePartner(encounter, concept, value) {
 
 window.parent.dashboard.subscription.addEventlistener("relation", function () {
 
-    tmrIntervalRelation = setTimeout(function() {
+    tmrIntervalRelation = setTimeout(function () {
 
         checkSpouses();
 
