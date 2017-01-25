@@ -84,15 +84,15 @@ module.exports = function (router) {
 
                 async.series([
 
-                    function(callback) {
+                    function (callback) {
 
                         var sql = "SELECT patient_id FROM patient_identifier WHERE identifier = '" + data.patient_id + "'";
 
                         console.log(sql);
 
-                        queryRaw(sql, function(patient) {
+                        queryRaw(sql, function (patient) {
 
-                            if(patient && patient[0].length > 0) {
+                            if (patient && patient[0].length > 0) {
 
                                 patient_id = patient[0][0].patient_id;
 
@@ -104,18 +104,18 @@ module.exports = function (router) {
 
                     },
 
-                    function(callback) {
+                    function (callback) {
 
-                        if(!patient_id)
+                        if (!patient_id)
                             return callback();
 
                         var sql = "SELECT encounter_type_id FROM encounter_type WHERE name = '" + data.encounter + "'";
 
                         console.log(sql);
 
-                        queryRaw(sql, function(encounter) {
+                        queryRaw(sql, function (encounter) {
 
-                            if(encounter && encounter[0].length > 0) {
+                            if (encounter && encounter[0].length > 0) {
 
                                 encounter_type_id = encounter[0][0].encounter_type_id;
 
@@ -129,7 +129,7 @@ module.exports = function (router) {
 
                     function (icallback) {
 
-                        if(!patient_id)
+                        if (!patient_id)
                             return icallback();
 
                         var sql = "SELECT patient_program_id FROM patient_program LEFT OUTER JOIN program ON program.program_id = " +
@@ -151,7 +151,7 @@ module.exports = function (router) {
 
                     function (icallback) {
 
-                        if(!patient_id)
+                        if (!patient_id)
                             return icallback();
 
                         if (!patient_program_id) {
@@ -190,9 +190,34 @@ module.exports = function (router) {
 
                     },
 
-                    function(callback) {
+                    function (callback) {
 
-                        if(!encounter_type_id)
+                        if (!encounter_type_id)
+                            return callback();
+
+                        var sql = "SELECT encounter_id FROM encounter WHERE encounter_type = \"" + encounter_type_id +
+                            "\" AND patient_id = \"" + patient_id + "\" AND patient_program_id = \"" +
+                            patient_program_id + "\" AND DATE(encounter_datetime) = DATE(NOW()) AND voided = 0";
+
+                        console.log(sql);
+
+                        queryRaw(sql, function (encounter) {
+
+                            if (encounter && encounter[0].length > 0) {
+
+                                encounter_id = encounter[0][0].encounter_id;
+
+                            }
+
+                            callback();
+
+                        })
+
+                    },
+
+                    function (callback) {
+
+                        if (encounter_id)
                             return callback();
 
                         var sql = "INSERT INTO encounter (encounter_type, patient_id, provider_id, encounter_datetime, " +
@@ -202,9 +227,9 @@ module.exports = function (router) {
 
                         console.log(sql);
 
-                        queryRaw(sql, function(encounter) {
+                        queryRaw(sql, function (encounter) {
 
-                            if(encounter && encounter[0]) {
+                            if (encounter && encounter[0]) {
 
                                 encounter_id = encounter[0].insertId;
 
@@ -216,18 +241,18 @@ module.exports = function (router) {
 
                     },
 
-                    function(callback) {
+                    function (callback) {
 
-                        if(!encounter_id)
+                        if (!encounter_id)
                             return callback();
 
                         var sql = "SELECT concept_id FROM concept_name WHERE name = \"" + data.concept + "\"";
 
                         console.log(sql);
 
-                        queryRaw(sql, function(concept) {
+                        queryRaw(sql, function (concept) {
 
-                            if(concept && concept[0].length > 0) {
+                            if (concept && concept[0].length > 0) {
 
                                 concept_id = concept[0][0].concept_id;
 
@@ -239,23 +264,38 @@ module.exports = function (router) {
 
                     },
 
-                    function(callback) {
+                    function (callback) {
 
-                        if(!concept_id)
+                        if (!concept_id)
                             return callback();
 
-                        var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, value_text, creator, " +
-                            "date_created, voided, uuid) VALUES (\"" + patient_id + "\", \"" + concept_id + "\", \"" + encounter_id +
-                            "\", NOW(), \"" + data.value + "\", \"" + user_id + "\", NOW(), 0, \"" + uuid.v1() + "\")";
+                        var sql = "SELECT obs_id FROM obs WHERE encounter_id = \"" + encounter_id +
+                            "\" AND concept_id = \"" + concept_id + "\" AND DATE(obs_datetime) = DATE(NOW()) AND voided = 0";
 
-                        console.log(sql);
+                        queryRaw(sql, function (res) {
 
-                        queryRaw(sql, function(obs) {
+                            if (res && res[0].length > 0) {
 
-                            if(obs && obs[0])
-                                console.log(obs[0].insertId);
+                                callback();
 
-                            callback();
+                            } else {
+
+                                var sql = "INSERT INTO obs (person_id, concept_id, encounter_id, obs_datetime, value_text, creator, " +
+                                    "date_created, voided, uuid) VALUES (\"" + patient_id + "\", \"" + concept_id + "\", \"" + encounter_id +
+                                    "\", NOW(), \"" + data.value + "\", \"" + user_id + "\", NOW(), 0, \"" + uuid.v1() + "\")";
+
+                                console.log(sql);
+
+                                queryRaw(sql, function (obs) {
+
+                                    if (obs && obs[0])
+                                        console.log(obs[0].insertId);
+
+                                    callback();
+
+                                })
+
+                            }
 
                         })
 
