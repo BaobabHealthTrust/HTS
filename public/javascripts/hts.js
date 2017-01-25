@@ -7165,11 +7165,7 @@ function customizeCancel(category) {
 
 }
 
-function ageLimit() {
-
-    var birthdate = window.parent.dashboard.data.data.birthdate
-
-    var age = parseInt(getAge(birthdate)[0]);
+function hasPartner() {
 
     var hasNoPartner = (window.parent.dashboard.data.data.relationships.map(function (relation) {
         return relation.relative_type
@@ -7177,7 +7173,34 @@ function ageLimit() {
         return (relation.match(/spouse/i) ? true : false)
     }).indexOf(true) < 0)
 
-    if (age >= 15 && hasNoPartner) {
+    return !hasNoPartner;
+
+}
+
+function noPartnerToday() {
+
+    var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        "PRE TEST COUNSELLING", "Partner Present at this Session?");
+
+    if(String(present).trim().toLowerCase() == "yes") {
+
+        return false;
+
+    } else {
+
+        return true;
+
+    }
+
+}
+
+function ageLimit() {
+
+    var birthdate = window.parent.dashboard.data.data.birthdate
+
+    var age = parseInt(getAge(birthdate)[0]);
+
+    if (age >= 15) {
 
         return true;
 

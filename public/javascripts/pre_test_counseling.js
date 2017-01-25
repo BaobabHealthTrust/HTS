@@ -1259,6 +1259,8 @@ var tmrIntervalRelation;
 
 var partnerContactType = "";
 
+var partnerId;
+
 function checkSpouses() {
 
     clearTimeout(tmrIntervalRelation);
@@ -1273,13 +1275,23 @@ function checkSpouses() {
 
             if(relation.relative_type.trim().toLowerCase() == "spouse/partner") {
 
+                partnerId = relation.relative_id;
+
                 window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
                     "HTS CLIENT REGISTRATION", "Consent given to be contacted?", "Yes");
 
                 window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
                     "HTS CLIENT REGISTRATION", "Contact Detail Type", partnerContactType);
 
+                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
+                    "PRE TEST COUNSELLING", "Do you have a partner?", "Yes");
+
+                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
+                    "PRE TEST COUNSELLING", "Partner Present at this Session?", "Yes");
+
                 done = true;
+
+                break;
 
             }
 
@@ -1302,6 +1314,34 @@ function checkSpouses() {
             checkSpouses();
 
         }, 1000);
+
+    }
+
+}
+
+function updatePartner(encounter, concept, value) {
+
+    if(!partnerId) {
+
+        for(var i = 0; i < window.parent.dashboard.data.data.relationships.length; i++) {
+
+            var relation = window.parent.dashboard.data.data.relationships[i];
+
+            if(relation.relative_type.trim().toLowerCase() == "spouse/partner") {
+
+                partnerId = relation.relative_id;
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    if(partnerId) {
+
+        window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", partnerId, encounter, concept, value);
 
     }
 

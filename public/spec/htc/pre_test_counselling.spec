@@ -1,30 +1,30 @@
 P.1. PRE TEST COUNSELLING [program:: HTS PROGRAM$$ scope:: TODAY$$ includejs:: touchScreenToolkit;hts;pre_test_counseling]
 
-Q.1.1. Do you have a partner? [pos :: 0 $$ id :: partner $$ condition :: ageLimit() $$ tt_requirenextclick :: false]
+Q.1.1. Do you have a partner? [pos :: 0 $$ id :: partner $$ condition :: ageLimit() && !hasPartner() $$ tt_requirenextclick :: false]
 O.1.1.1. Yes
 O.1.1.2. No
 
-Q.1.2. Partner Present at this Session? [pos :: 1 $$ id :: partner_present $$ condition :: __$('partner') && __$('partner').value == "Yes" $$ value :: No $$ tt_requirenextclick :: false]
+Q.1.2. Partner Present at this Session? [pos :: 1 $$ id :: partner_present $$ condition :: (__$('partner') && (__$('partner').value == "Yes") || (ageLimit() && hasPartner()) || noPartnerToday()) $$ tt_requirenextclick :: false]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.17. Does the partner give consent to be contacted?[pos :: 2 $$ id :: partner_contacted $$ condition :: __$('partner_present').value == "Yes" $$ value :: No $$ tt_requirenextclick :: false]
+Q.1.17. Does the partner give consent to be contacted?[pos :: 2 $$ id :: partner_contacted $$ condition :: __$('partner_present').value == "Yes" $$ tt_requirenextclick :: false]
 O.1.17.1. Yes
 O.1.17.2. No
 
-Q.1.18. Partner Contact Detail Type [pos :: 3 $$ condition :: __$('partner') && __$('partner').value == "Yes" && __$('partner_present') && __$('partner_contacted').value == "Yes" $$ tt_onUnload :: setPhoneNumberValidation('phone_number'); setPatientData(); $$ id :: partner_detail_type $$ tt_requirenextclick :: false]
+Q.1.18. Partner Contact Detail Type [pos :: 3 $$ condition :: (__$('partner') && __$('partner').value == "Yes" && __$('partner_present') && __$('partner_contacted').value == "Yes") || (hasPartner() && __$('partner_present') && __$('partner_contacted').value == "Yes") $$ tt_onUnload :: setPhoneNumberValidation('phone_number'); setPatientData(); $$ id :: partner_detail_type $$ tt_requirenextclick :: false]
 O.1.18.1. Phone Number
 O.1.18.2. Current Residence
 O.1.18.3. Both
 
-Q.1.16. Define relationship [pos :: 4 $$ id :: relationship $$ tt_onLoad :: partnerContactType = __$("partner_detail_type").value.trim(); loadCustomPage() $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ condition :: __$('partner') && __$('partner').value == "Yes" && __$('partner_present') && __$('partner_contacted').value == "Yes" $$ value :: No]
+Q.1.16. Define relationship [pos :: 4 $$ id :: relationship $$ tt_onLoad :: partnerContactType = __$("partner_detail_type").value.trim(); loadCustomPage() $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ condition :: __$('partner') && __$('partner').value == "Yes" && __$('partner_present') && __$('partner_contacted').value == "Yes" ]
 
-Q.1.3. HTS Access Type [pos :: 5 $$ id :: htc_acc_type $$ tt_requirenextclick :: false]
+Q.1.3. HTS Access Type [pos :: 5 $$ id :: htc_acc_type $$ tt_requirenextclick :: false $$ tt_onLoad :: if(!(__$('partner') && (__$('partner').value == "Yes") || (ageLimit() && hasPartner()) || noPartnerToday()) && __$("partner_present")) {__$("partner_present").value = (noPartnerToday() ? "No" : "Yes");}]
 O.1.3.1. Routine HTS (PITC) within Health Service
 O.1.3.2. Comes with HTS Family Reference Slip
 O.1.3.3. Other (VCT, etc.)
 
-Q.1.4. Last HIV Test [pos :: 6 $$ id :: last_hiv_test $$ tt_requirenextclick :: false]
+Q.1.4. Last HIV Test [pos :: 6 $$ id :: last_hiv_test $$ tt_requirenextclick :: false $$ tt_onUnload :: updatePartner("PRE TEST COUNSELLING", "Partner HIV Status", __$("touchscreenInput" + tstCurrentPage).value) ]
 O.1.4.1. Never Tested
 O.1.4.2. Last Negative
 O.1.4.3. Last Positive
@@ -43,7 +43,7 @@ Q.1.9. Duration Control [pos :: 11 $$ id :: duration_ago $$ tt_onLoad :: showTim
 
 Q.1.10. Captured Duration Value [pos :: 12 $$ id :: captured_value $$ tt_onLoad :: __$('touchscreenInput' + tstCurrentPage).value = __$('duration_ago').value $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ condition :: false]
 
-Q.1.11. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos :: 13 $$ id :: partner_status $$ tt_onUnLoad :: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim()$$ condition:: __$('partner').value == "Yes" $$ tt_requirenextclick :: false]
+Q.1.11. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos :: 13 $$ id :: partner_status $$ tt_onUnLoad :: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim()$$ condition:: __$('partner_present').value == "Yes" $$ tt_requirenextclick :: false]
 O.1.11.1. Partner Negative
 O.1.11.2. Partner Positive
 O.1.11.3. HIV Unknown
