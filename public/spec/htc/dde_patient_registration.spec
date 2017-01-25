@@ -5,11 +5,11 @@ O.1.1.1. M
 O.1.1.2. FNP
 O.1.1.3. FP
 
-Q.1.2. Consent given to be contacted? [pos :: 1 $$ id :: capture_details $$ tt_onUnload :: setDefaults()]
+Q.1.2. Consent given to be contacted? [pos :: 1 $$ id :: capture_details $$ tt_onUnload :: setDefaults() $$ tt_requirenextclick :: false]
 O.1.2.1. Yes
 O.1.2.2. No
 
-Q.1.16. Contact Detail Type [pos :: 2 $$ condition :: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ tt_onUnload :: setPhoneNumberValidation('phone_number'); setPatientData(); $$ id :: detail_type]
+Q.1.16. Contact Detail Type [pos :: 2 $$ condition :: __$('capture_details').value.trim().toLowerCase() == 'yes'; $$ tt_onUnload :: setPhoneNumberValidation('phone_number'); setPatientData(); $$ id :: detail_type $$ tt_requirenextclick :: false]
 O.1.16.1. Phone Number
 O.1.16.2. Current Residence
 O.1.16.3. Both
@@ -18,7 +18,7 @@ Q.1.3. First Name [pos :: 3 $$ ajaxURL :: <<window.parent.patient.settings.ddePa
 
 Q.1.4. Last Name [pos :: 4 $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.lastNamesPath + "?name=">> $$ allowFreeText :: true $$ id :: last_name $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["Family Name"] ? window.parent.dashboard.data.data.names[0]["Family Name"] : "").length < 2]
 
-Q.1.5. Gender [pos :: 5 $$ id :: gender $$ condition :: (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim() : "").length <= 0 ]
+Q.1.5. Gender [pos :: 5 $$ id :: gender $$ condition :: (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim() : "").length <= 0 $$ tt_requirenextclick :: false ]
 O.1.5.1. Female
 O.1.5.2. Male
 
@@ -31,7 +31,7 @@ O.1.32.1. Central Region
 O.1.32.2. Northern Region
 O.1.32.3. Southern Region
 
-Q.1.8. Home district [pos :: 9 $$ id :: home_district $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.districtQueryPath + "?region=&district=">> $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Home District"] == null)]
+Q.1.8. Home district [pos :: 9 $$ id :: home_district $$ ajaxURL :: <<window.parent.patient.settings.ddePath + window.parent.patient.settings.districtQueryPath + "?region=&district=">> $$ condition :: __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.addresses && window.parent.dashboard.data.data.addresses["Home District"] == null) $$ tt_requirenextclick :: false]
 
 Q.1.9. Year of Birth [pos :: 10 $$ id :: birthyear $$ disabled :: true $$ field_type :: number $$ tt_pageStyleClass :: Numeric NumbersWithUnknown $$ tt_onUnLoad :: validateMaxMinYear() $$ condition :: window.parent.dashboard.data.data.birthdate.trim().length == 0]
 
@@ -56,7 +56,7 @@ Q.1.12. Day of Birth [pos :: 13 $$ disabled :: true $$ id :: birthday $$ conditi
 
 Q.1.13. Select or Create New Patient [pos :: 14 $$ tt_pageStyleClass :: NoControls $$ optional :: true $$ id :: selected_advanced_patient $$ tt_onLoad :: loadNames(true); hidekeyboard(); __$('nextButton').onmousedown = "function(){}"; $$ tt_onUnLoad :: __$('nextButton').className = 'green navButton'; __$('nextButton').onmousedown = function(){gotoNextPage()}; if(__$('extras')) __$('buttons').removeChild(__$('extras')); $$ condition ::  __$("capture_details").value.trim().toLowerCase() == "yes" && (window.parent.dashboard.data.data.names && window.parent.dashboard.data.data.names.length > 0 && window.parent.dashboard.data.data.names[0]["First Name"] ? window.parent.dashboard.data.data.names[0]["First Name"] : "").length < 2]
 
-Q.1.14. Is client pregnant? [pos :: 15 $$ id :: pregnant $$ condition :: __$("gender").value.trim().toLowerCase() == "female" && (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim().toLowerCase() == "f" : false) ]
+Q.1.14. Is client pregnant? [pos :: 15 $$ id :: pregnant $$ condition :: __$("gender").value.trim().toLowerCase() == "female" && (window.parent.dashboard.data.data.gender && window.parent.dashboard.data.data.gender.trim().length > 0 ? window.parent.dashboard.data.data.gender.trim().toLowerCase() == "f" : false) $$ tt_requirenextclick :: false ]
 O.1.14.1. Yes
 O.1.14.2. No
 
@@ -77,7 +77,7 @@ Q.1.22. Current Village Specify [pos :: 21 $$ id :: village_specify $$ tt_requir
 
 Q.1.23. Closest Landmark [pos :: 22 $$ id :: closest_landmark $$ condition :: ((__$("patient").value.trim().length <= 0 || __$("patient").value.trim() == "AUTO") && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && evalDemographicCondition(0)]
 
-Q.1.24. Client Phone Number [pos:: 23 $$ id :: phone_number $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
+Q.1.24. Client Phone Number [pos:: 23 $$ id :: phone_number $$ field_type :: number $$ tt_pageStyleClass :: NumbersOnly $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
 
 Q.1.25. Birthdate [pos :: 24 $$ id :: birthdate $$ field_type :: birthdate $$ estimate_field :: estimate $$ type :: hidden]
 

@@ -1251,11 +1251,13 @@ function loadCustomPage() {
 
     }
 
-    window.parent.dashboard.addRelationship(__$("content"));
+    window.parent.dashboard.addRelationship(__$("content"), true);
 
 }
 
 var tmrIntervalRelation;
+
+var partnerContactType = "";
 
 function checkSpouses() {
 
@@ -1273,6 +1275,9 @@ function checkSpouses() {
 
                 window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
                     "HTS CLIENT REGISTRATION", "Consent given to be contacted?", "Yes");
+
+                window.parent.dashboard.saveArbitraryObsData("/hts/save_obs", relation.relative_id,
+                    "HTS CLIENT REGISTRATION", "Contact Detail Type", partnerContactType);
 
                 done = true;
 

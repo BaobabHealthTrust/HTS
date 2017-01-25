@@ -1156,7 +1156,7 @@ function setDefaults() {
 
     var consentGiven = (Object.keys(queries[0]).length > 0 ? true : false);
 
-    var contactType = (Object.keys(queries[1]).length > 0 ? queries[0][Object.keys(queries[1])[0]] : "");
+    var contactType = (Object.keys(queries[1]).length > 0 ? queries[1][Object.keys(queries[1])[0]] : "");
 
     if (consentGiven) {
 
