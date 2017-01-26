@@ -77,7 +77,7 @@ Q.1.22. Current Village Specify [pos :: 21 $$ id :: village_specify $$ tt_requir
 
 Q.1.23. Closest Landmark [pos :: 22 $$ id :: closest_landmark $$ condition :: ((__$("patient").value.trim().length <= 0 || __$("patient").value.trim() == "AUTO") && __$("selected_advanced_patient").value.trim().length <= 0 && __$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') && evalDemographicCondition(0)]
 
-Q.1.24. Client Phone Number [pos:: 23 $$ id :: phone_number $$ field_type :: number $$ tt_pageStyleClass :: NumbersOnly $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
+Q.1.24. Client Phone Number [pos:: 23 $$ id :: phone_number $$ field_type :: number $$ tt_pageStyleClass :: NumbersWithUnknown $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
 
 Q.1.25. Birthdate [pos :: 24 $$ id :: birthdate $$ field_type :: birthdate $$ estimate_field :: estimate $$ type :: hidden]
 
