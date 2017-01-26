@@ -37,7 +37,7 @@ Q.1.9. Year of Birth [pos :: 10 $$ id :: birthyear $$ disabled :: true $$ field_
 
 Q.1.10. Age Estimate [pos :: 11 $$ id :: age_estimate $$ field_type :: number $$ condition :: __$('birthyear').value.trim().toLowerCase() == "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$  tt_pageStyleClass::Numeric NumbersOnly $$ tt_onUnLoad :: setEstimatedAgeValue() $$ absoluteMax :: 150 $$ min :: 1 max :: 100]
 
-Q.1.11. Month of Birth [pos :: 12 $$ id :: birthmonth $$ disabled :: true $$ condition ::__$('birthyear').value.trim().toLowerCase() != "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText :: false $$ tt_pageStyleClass :: LongSelectList NoKeyboard]
+Q.1.11. Month of Birth [pos :: 12 $$ id :: birthmonth $$ disabled :: true $$ condition ::__$('birthyear').value.trim().toLowerCase() != "unknown" && window.parent.dashboard.data.data.birthdate.trim().length == 0 $$ tt_onUnLoad :: validateAndProcessMonth() $$ allowFreeText :: false $$ tt_pageStyleClass :: LongSelectList NoKeyboard $$ tt_requireNextClick :: false]
 O.1.11.1. January
 O.1.11.2. February
 O.1.11.3. March
