@@ -2256,11 +2256,15 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     var minuteLabelInterval = setInterval(function () {
 
-        __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
+        if( window.parent.dashboard.data.stock_label_data) {
 
-        __$("l2_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label2].rec_time + " Minutes";
+            clearInterval(minuteLabelInterval);
 
-        clearInterval(minuteLabelInterval);
+            __$("l1_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label1].rec_time + " Minutes";
+
+            __$("l2_minutes").innerHTML = window.parent.dashboard.data.stock_label_data[label2].rec_time + " Minutes";
+
+        }
 
     }, 500);
 
