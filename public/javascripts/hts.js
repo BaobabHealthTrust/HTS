@@ -1109,7 +1109,7 @@ function setAjaxUrl(pos) {
 
             if (__$("fp_lot_number1")) {
 
-                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + window.parent.dashboard.getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -1135,7 +1135,7 @@ function setAjaxUrl(pos) {
 
                 var exceptions = encodeURIComponent('["' + __$("fp_item_name1").value + '"]');
 
-                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + window.parent.dashboard.getCookie("username") +
                     "&item_name=" + __$('touchscreenInput' + tstCurrentPage).value.trim() + "&exceptions=" + exceptions + "&batch=");
 
 
@@ -1160,7 +1160,7 @@ function setAjaxUrl(pos) {
             if (__$("im_lot_number1")) {
 
                 __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
-                    getCookie("username") + "&item_name=" + __$('touchscreenInput' +
+                    window.parent.dashboard.getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                         tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -1185,7 +1185,7 @@ function setAjaxUrl(pos) {
             if (__$("im_lot_number2")) {
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
-                    getCookie("username") + "&item_name=" + __$('touchscreenInput' +
+                    window.parent.dashboard.getCookie("username") + "&item_name=" + __$('touchscreenInput' +
                         tstCurrentPage).value.trim() + "&batch=");
 
             }
@@ -1199,16 +1199,16 @@ function setAjaxUrl(pos) {
 
 function saveConsumption(dispatch_id, target_id) {
 
-    var patient_id = getCookie("client_identifier");
+    var patient_id = window.parent.dashboard.getCookie("patient_id");
 
     var consumption_type = "Normal use";
     var consumption_quantity = 1;
     var who_consumed = patient_id;
-    var date_consumed = (getCookie("today").trim().length > 0 ? getCookie("today") :
+    var date_consumed = (window.parent.dashboard.getCookie("today").trim().length > 0 ? window.parent.dashboard.getCookie("today") :
         (new Date()).format("YYYY-mm-dd HH:MM:SS"));
     var reason_for_consumption = "Normal use";
-    var location = getCookie("location");
-    var userId = getCookie("username");
+    var location = window.parent.dashboard.getCookie("location");
+    var userId = window.parent.dashboard.getCookie("username");
 
     var data = {
         data: {
@@ -1221,7 +1221,7 @@ function saveConsumption(dispatch_id, target_id) {
             location: location,
             userId: userId,
             datatype: "consumption",
-            token: getCookie("token")
+            token: window.parent.dashboard.getCookie("token")
         }
     }
 
@@ -5609,7 +5609,7 @@ function validateCredentials(username, password) {
 
     var data = {
         "data": {
-            "token": getCookie("token"),
+            "token": window.parent.dashboard.getCookie("token"),
             "checkUsername": username,
             "checkPassword": password
         }
@@ -5672,8 +5672,8 @@ function stopValidationChecks() {
 
 function reverseConsumption(consumption_id, prefix, suffix) {
 
-    var location = getCookie("location");
-    var userId = getCookie("username");
+    var location = window.parent.dashboard.getCookie("location");
+    var userId = window.parent.dashboard.getCookie("username");
 
     var data = {
         data: {
@@ -5681,7 +5681,7 @@ function reverseConsumption(consumption_id, prefix, suffix) {
             location: location,
             userId: userId,
             datatype: "reverse_consumption",
-            token: getCookie("token")
+            token: window.parent.dashboard.getCookie("token")
         }
     }
 
@@ -5783,13 +5783,13 @@ function setTestKits() {
 
             if (kit_data.description == "First Test") {
 
-                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
-                    "&item_name=" + kit_data.name + "&batch=");
+                __$('fp_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                    window.parent.dashboard.getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 __$("fp_item_name1").value = kit_data.name;
 
                 __$('im_lot_number1').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
-                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    window.parent.dashboard.getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 __$("im_item_name1").value = kit_data.name;
 
@@ -5797,13 +5797,13 @@ function setTestKits() {
 
             else {
 
-                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
-                    "&item_name=" + kit_data.name + "&batch=");
+                __$('fp_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                    window.parent.dashboard.getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 __$("fp_item_name2").value = kit_data.name;
 
                 __$('im_lot_number2').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
-                    getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    window.parent.dashboard.getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 __$("im_item_name2").value = kit_data.name;
 
@@ -5838,19 +5838,23 @@ function setTestKitsProfiency() {
 
                 if (kit_data.description == "First Test") {
 
-                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
+                    __$('data.fp_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                        window.parent.dashboard.getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    __$('data.im_lot_number1_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                        window.parent.dashboard.getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 }
 
                 else {
 
-                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") +
+                    __$('data.fp_lot_number2_' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                        window.parent.dashboard.getCookie("username") +
                         "&item_name=" + kit_data.name + "&batch=");
 
-                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' + getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
+                    __$('data.im_lot_number2' + i).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+                        window.parent.dashboard.getCookie("username") + "&item_name=" + kit_data.name + "&batch=");
 
                 }
 

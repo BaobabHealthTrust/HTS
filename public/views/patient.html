@@ -287,7 +287,7 @@
 
            if(window.parent.dashboard.data.data.identifiers["National id"] && 
                 (window.parent.dashboard.data.data.addresses["Current District"] || 
-                    window.parent.dashboard.data.data.attributes["Cell Phone Number"])){
+                (window.parent.dashboard.data.data.attributes && window.parent.dashboard.data.data.attributes["Cell Phone Number"]))){
 
                     window.parent.dashboard.workflow.splice(window.parent.dashboard.workflow.indexOf("Client Registration"),1);
 

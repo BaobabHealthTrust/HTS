@@ -86,7 +86,7 @@ function sheet(target) {
 function addCSSRule(sheet, selector, rules, index) {
 
     if ("insertRule" in sheet) {
-        sheet.insertRule(selector + "{" + rules + "}", index);
+        sheet.insertRule(selector + "{" + rules + "}", (index || 0));
     }
     else if ("addRule" in sheet) {
         sheet.addRule(selector, rules, index);
