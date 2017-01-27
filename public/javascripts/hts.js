@@ -2872,7 +2872,7 @@ function activateNavBtn() {
     var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
-    decodeResult(lastHIVStatus, decodeURIComponent(getCookie("AgeGroup")),
+    decodeResult(lastHIVStatus, decodeURIComponent(window.parent.dashboard.getCookie("AgeGroup")),
         __$("fp_test1_result").value.trim(), __$("fp_test2_result").value.trim(), __$("im_test1_result").value.trim(),
         __$("im_test2_result").value.trim(), __$("outcome_summary"), __$("result_given_to_client"));
 
