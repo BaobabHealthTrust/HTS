@@ -13,10 +13,10 @@ var tmrControl2MinsCount = 0;
 var tmrControl2Hnd;
 var notUnigold = "hiv";
 
-var timers_running ={    
+var timers_running ={
                          "fp_test1" : { clicked : true ,  min : 0 , sec : 0 } ,
 
-                         "fp_test2" : { clicked : true ,  min : 0 , sec : 0 } , 
+                         "fp_test2" : { clicked : true ,  min : 0 , sec : 0 } ,
 
                          "im_test1" : { clicked : true ,  min : 0 , sec : 0 } ,
 
@@ -1983,14 +1983,14 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var time = padZeros(tmrControl2MinsCount, 2) + ":" + padZeros(tmrControl2SecsCount, 2);
 
-            if (__$("tmrControl2")) {
+            if (__$("tmrControl2") && window.parent.dashboard.data.stock_label_data &&
+                window.parent.dashboard.data.stock_label_data[label2]) {
 
                 __$("tmrControl2").innerHTML = time;
 
                 var label2_data = window.parent.dashboard.data.stock_label_data[label2]
 
                 var window_time = parseInt(label2_data.rec_time) + parseInt(label2_data.window_time)
-
 
                 if (tmrControl2MinsCount >= parseInt(label2_data.rec_time) && tmrControl2MinsCount < window_time) {
 
@@ -2256,7 +2256,9 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     var minuteLabelInterval = setInterval(function () {
 
-        if( window.parent.dashboard.data.stock_label_data) {
+        if( window.parent.dashboard.data.stock_label_data && window.parent.dashboard.data.stock_label_data[label1] &&
+            window.parent.dashboard.data.stock_label_data[label1].rec_time && window.parent.dashboard.data.stock_label_data[label2] &&
+            window.parent.dashboard.data.stock_label_data[label2].rec_time) {
 
             clearInterval(minuteLabelInterval);
 
@@ -5761,7 +5763,7 @@ function isNotInfant() {
     return is_not_infant;
 }
 
-function setTestKits() {
+function setTestKits(callback) {
 
     //Temporary Fix
 
@@ -5811,6 +5813,9 @@ function setTestKits() {
 
             if (kit_data.name && kit_data.name.length > 0)
                 recommendedTimmerForLabels([kit_data.name]);
+
+            if(callback)
+                callback();
 
         });
 
@@ -7264,5 +7269,7 @@ function initialiseExistingData() {
     }
 
 }
+
+var firstRun;
 
 initialiseExistingData();
