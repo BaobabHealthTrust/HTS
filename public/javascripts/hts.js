@@ -1307,7 +1307,12 @@ function evalCondition(pos) {
             if (window.parent.dashboard.subscription.timers &&
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
                 Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
-                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim()]) {
+                (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
+                    " " + "First Pass"] != typeof undefined ||
+                    (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
+                    " " + "First Parallel"] != typeof undefined) ||
+                    (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
+                    " " + "Immediate Parallel"] != typeof undefined))) {
 
                 result = true;
 
@@ -1324,7 +1329,12 @@ function evalCondition(pos) {
             if (window.parent.dashboard.subscription.timers &&
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
                 Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
-                typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name1").value.trim()] != typeof undefined) {
+                (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name1").value.trim() +
+                " " + "First Pass"] != typeof undefined ||
+                (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name1").value.trim() +
+                " " + "First Parallel"] != typeof undefined) ||
+                (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name1").value.trim() +
+                " " + "Immediate Parallel"] != typeof undefined))) {
 
                 result = false;
 
@@ -1483,7 +1493,7 @@ function removeParallelTests() {
 
 }
 
-function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
+function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2, pass) {
 
     if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
@@ -1590,6 +1600,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.style.minHeight = "5vh";
     btn.setAttribute("timeTarget", test1TimeTarget.id);
     btn.setAttribute("label", (label1 ? label1 : "Test1"));
+    btn.setAttribute("pass", (pass ? pass : "First Pass"));
     btn.id = "startTimer2.1";
 
     btn.onmousedown = function () {
@@ -1600,13 +1611,25 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
+        /*
+         Makes sense to block back button once timers are rolling because the next sensible move would be
+         cancelling if not happy
+         */
+        if(__$("backButton")){
+
+            var currentClass = __$("backButton").className;
+
+            __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
+
+        }
+
         if (__$(this.getAttribute("timeTarget"))) {
 
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
 
-        window.parent.dashboard.startTimer(this.getAttribute("label"));
+        window.parent.dashboard.startTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         showMinimizeButton();
 
@@ -1721,6 +1744,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("target2", test2Target.id);
     btn.setAttribute("timeTarget2", test2TimeTarget.id);
     btn.setAttribute("label", (label1 ? label1 : "Test1"));
+    btn.setAttribute("pass", (pass ? pass : "First Pass"));
 
     btn.onclick = function () {
 
@@ -1730,7 +1754,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        window.parent.dashboard.stopTimer(this.getAttribute("label"));
+        window.parent.dashboard.stopTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         clearInterval(tmrControl1Hnd);
 
@@ -1812,6 +1836,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("target2", test2Target.id);
     btn.setAttribute("timeTarget2", test2TimeTarget.id);
     btn.setAttribute("label", (label1 ? label1 : "Test1"));
+    btn.setAttribute("pass", (pass ? pass : "First Pass"));
 
     btn.onclick = function () {
 
@@ -1821,7 +1846,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        window.parent.dashboard.stopTimer(this.getAttribute("label"));
+        window.parent.dashboard.stopTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         clearInterval(tmrControl1Hnd);
 
@@ -1947,6 +1972,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.style.minHeight = "5vh";
     btn.setAttribute("timeTarget", test2TimeTarget.id);
     btn.setAttribute("label", (label2 ? label2 : "Test2"));
+    btn.setAttribute("pass", (pass ? pass : "First Pass"));
     btn.id = "startTimer2.2";
 
     btn.onmousedown = function () {
@@ -1957,13 +1983,25 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
+        /*
+         Makes sense to block back button once timers are rolling because the next sensible move would be
+         cancelling if not happy
+         */
+        if(__$("backButton")){
+
+            var currentClass = __$("backButton").className;
+
+            __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
+
+        }
+
         if (__$(this.getAttribute("timeTarget"))) {
 
             __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
         }
 
-        window.parent.dashboard.startTimer(this.getAttribute("label"));
+        window.parent.dashboard.startTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         showMinimizeButton();
 
@@ -2079,6 +2117,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("target2", test1Target.id);
     btn.setAttribute("timeTarget2", test1TimeTarget.id);
     btn.setAttribute("label", (label2 ? label2 : "Test2"));
+    btn.setAttribute("pass", (pass ? pass : "First Pass"));
 
     btn.onclick = function () {
 
@@ -2088,7 +2127,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        window.parent.dashboard.stopTimer(this.getAttribute("label"));
+        window.parent.dashboard.stopTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         clearInterval(tmrControl2Hnd);
 
@@ -2176,6 +2215,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     btn.setAttribute("target2", test1Target.id);
     btn.setAttribute("timeTarget2", test1TimeTarget.id);
     btn.setAttribute("label", (label2 ? label2 : "Test2"));
+    btn.setAttribute("pass", (pass ? pass : "First Pass"));
 
     btn.onclick = function () {
 
@@ -2185,7 +2225,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        window.parent.dashboard.stopTimer(this.getAttribute("label"));
+        window.parent.dashboard.stopTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         clearInterval(tmrControl2Hnd);
 
@@ -2274,10 +2314,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
         typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
-        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1] != typeof undefined &&
-        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].count != typeof undefined) {
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label1 + " " + pass).trim()] != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label1 + " " + pass).trim()].count != typeof undefined) {
 
-        var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].count);
+        var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label1 + " " + pass).trim()].count);
 
         tmrControl1SecsCount = counter % 60;
 
@@ -2285,7 +2325,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         var target = test1Target.id.split("_")[0] + "_" + test1Target.id.split("_")[1];
 
-        if (window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].running &&
+        if (window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label1 + " " + pass).trim()].running &&
             __$("startTimer2.1") && timers_running[target].clicked) {
 
             timers_running[target].clicked = false;
@@ -2298,10 +2338,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
         typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
-        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2] != typeof undefined &&
-        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].count != typeof undefined) {
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label2 + " " + pass).trim()] != typeof undefined &&
+        typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label2 + " " + pass).trim()].count != typeof undefined) {
 
-        var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].count);
+        var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label2 + " " + pass).trim()].count);
 
         tmrControl2SecsCount = counter % 60;
 
@@ -2310,7 +2350,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
         var target = test2Target.id.split("_")[0] + "_" + test2Target.id.split("_")[1];
 
         if (__$("startTimer2.2") &&
-            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].running && timers_running[target].clicked) {
+            window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label2 + " " + pass).trim()].running && timers_running[target].clicked) {
 
             timers_running[target].clicked = false;
 
@@ -2403,7 +2443,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
 }
 
-function loadSerialTest(testTarget, testTimeTarget, label) {
+function loadSerialTest(testTarget, testTimeTarget, label, pass) {
 
     customizeCancel("HIV TESTING");
 
@@ -2432,16 +2472,6 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
 
         }
-
-        /* if(__$("backButton")){
-
-         var currentClass = __$("backButton").className;
-
-         __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
-
-         __$("backButton").removeAttribute("onmousedown");
-
-         }*/
 
         var label_data = JSON.parse(data);
 
@@ -2510,6 +2540,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.style.minHeight = "5vh";
         btn.setAttribute("timeTarget", testTimeTarget.id);
         btn.setAttribute("label", (label ? label : "Test"));
+        btn.setAttribute("pass", (pass ? pass : "First Pass"));
         btn.id = "startTimer1";
 
         btn.onmousedown = function () {
@@ -2520,13 +2551,25 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
+            /*
+              Makes sense to block back button once timers are rolling because the next sensible move would be
+              cancelling if not happy
+             */
+            if(__$("backButton")){
+
+                var currentClass = __$("backButton").className;
+
+                __$("backButton").className = currentClass.replace(/blue|green/i, "gray");
+
+            }
+
             if (__$(this.getAttribute("timeTarget"))) {
 
                 __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
 
             }
 
-            window.parent.dashboard.startTimer(this.getAttribute("label"));
+            window.parent.dashboard.startTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
             showMinimizeButton();
 
@@ -2627,6 +2670,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
         btn.setAttribute("label", (label ? label : "Test"));
+        btn.setAttribute("pass", (pass ? pass : "First Pass"));
 
         btn.onclick = function () {
 
@@ -2636,7 +2680,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+            window.parent.dashboard.stopTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
             hideMinimizeButton();
 
@@ -2716,6 +2760,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         btn.setAttribute("target", testTarget.id);
         btn.setAttribute("timeTarget", testTimeTarget.id);
         btn.setAttribute("label", (label ? label : "Test"));
+        btn.setAttribute("pass", (pass ? pass : "First Pass"));
 
         btn.onclick = function () {
 
@@ -2725,7 +2770,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             }
 
-            window.parent.dashboard.stopTimer(this.getAttribute("label"));
+            window.parent.dashboard.stopTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
             hideMinimizeButton();
 
@@ -2795,10 +2840,10 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         if (typeof window.parent.dashboard.subscription != typeof undefined && typeof window.parent.dashboard.subscription.timers != typeof undefined &&
             typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] != typeof undefined &&
-            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label] != typeof undefined &&
-            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count != typeof undefined) {
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label + " " + pass).trim()] != typeof undefined &&
+            typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label + " " + pass).trim()].count != typeof undefined) {
 
-            var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].count);
+            var counter = parseInt(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label + " " + pass).trim()].count);
 
             tmrControl1SecsCount = counter % 60;
 
@@ -2807,7 +2852,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
             var target = testTarget.id.split("_")[0] + "_" + testTarget.id.split("_")[1];
 
             if (__$("startTimer1") &&
-                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running && timers_running[target].clicked) {
+                window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label + " " + pass).trim()].running && timers_running[target].clicked) {
 
                 timers_running[target].clicked = false;
 
@@ -2867,6 +2912,14 @@ function activateNavBtn() {
         var currentClass = __$("nextButton").className;
 
         __$("nextButton").className = currentClass.replace(/gray/i, "green");
+
+    }
+
+    if (__$("backButton")) {
+
+        var currentClass = __$("backButton").className;
+
+        __$("backButton").className = currentClass.replace(/gray/i, "blue");
 
     }
 
