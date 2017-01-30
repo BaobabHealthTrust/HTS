@@ -13,16 +13,16 @@ var tmrControl2MinsCount = 0;
 var tmrControl2Hnd;
 var notUnigold = "hiv";
 
-var timers_running ={
-                         "fp_test1" : { clicked : true ,  min : 0 , sec : 0 } ,
+var timers_running = {
+    "fp_test1": {clicked: true, min: 0, sec: 0},
 
-                         "fp_test2" : { clicked : true ,  min : 0 , sec : 0 } ,
+    "fp_test2": {clicked: true, min: 0, sec: 0},
 
-                         "im_test1" : { clicked : true ,  min : 0 , sec : 0 } ,
+    "im_test1": {clicked: true, min: 0, sec: 0},
 
-                         "im_test2" : { clicked : true ,  min : 0 , sec : 0 }
+    "im_test2": {clicked: true, min: 0, sec: 0}
 
-                    }
+}
 
 function getCookie(cname) {
 
@@ -929,7 +929,7 @@ function showHTSVisitSummary() {
 
         var partner_present = "N";
 
-        if(!noPartnerToday()) {
+        if (!noPartnerToday()) {
 
             partner_present = "Y";
 
@@ -1236,16 +1236,6 @@ function saveConsumption(dispatch_id, target_id) {
         }
 
     })
-
-}
-
-function comsumptionReverse(lot_number){
-
-        if(__$(lot_number).getAttribute("consumption_id")){
-
-            reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id"), "fp", "1");
-
-        }
 
 }
 
@@ -1648,7 +1638,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }, 1000);
 
-        var target = test1Target.id.split("_")[0]+"_"+test1Target.id.split("_")[1];
+        var target = test1Target.id.split("_")[0] + "_" + test1Target.id.split("_")[1];
 
         timers_running[target].clicked = false;
 
@@ -2022,7 +2012,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         }
 
-        var target = test2Target.id.split("_")[0]+"_"+test2Target.id.split("_")[1];
+        var target = test2Target.id.split("_")[0] + "_" + test2Target.id.split("_")[1];
 
         timers_running[target].clicked = false;
 
@@ -2256,7 +2246,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     var minuteLabelInterval = setInterval(function () {
 
-        if( window.parent.dashboard.data.stock_label_data && window.parent.dashboard.data.stock_label_data[label1] &&
+        if (window.parent.dashboard.data.stock_label_data && window.parent.dashboard.data.stock_label_data[label1] &&
             window.parent.dashboard.data.stock_label_data[label1].rec_time && window.parent.dashboard.data.stock_label_data[label2] &&
             window.parent.dashboard.data.stock_label_data[label2].rec_time) {
 
@@ -2281,7 +2271,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
-        var target = test1Target.id.split("_")[0]+"_"+test1Target.id.split("_")[1];
+        var target = test1Target.id.split("_")[0] + "_" + test1Target.id.split("_")[1];
 
         if (window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label1].running &&
             __$("startTimer2.1") && timers_running[target].clicked) {
@@ -2305,7 +2295,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         tmrControl2MinsCount = (counter - tmrControl2SecsCount) / 60;
 
-        var target = test2Target.id.split("_")[0]+"_"+test2Target.id.split("_")[1];
+        var target = test2Target.id.split("_")[0] + "_" + test2Target.id.split("_")[1];
 
         if (__$("startTimer2.2") &&
             window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label2].running && timers_running[target].clicked) {
@@ -2346,23 +2336,23 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     if (__$("fp_test1_time").value && test1Target.id == "fp_test1_result") {
 
-        if(__$("fp_test1_time").value.match(",") == null)
+        if (__$("fp_test1_time").value.match(",") == null)
 
-             __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
+            __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
 
     }
 
     if (__$("fp_test2_time").value && test2Target.id == "fp_test2_result") {
 
-        if(__$("fp_test2_time").value.match(",") == null)
+        if (__$("fp_test2_time").value.match(",") == null)
 
-             __$("tmrControl2").innerHTML = __$("fp_test2_time").value;
+            __$("tmrControl2").innerHTML = __$("fp_test2_time").value;
 
     }
 
     if (__$("im_test1_time").value && test1Target.id == "im_test1_result") {
 
-        if(__$("im_test1_time").value.match(",") == null)
+        if (__$("im_test1_time").value.match(",") == null)
 
             __$("tmrControl1").innerHTML = __$("im_test1_time").value;
 
@@ -2370,32 +2360,32 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
     if (__$("im_test2_time").value && test2Target.id == "im_test2_result") {
 
-        if(__$("im_test2_time").value.match(",") == null)
+        if (__$("im_test2_time").value.match(",") == null)
 
             __$("tmrControl2").innerHTML = __$("im_test2_time").value;
 
     }
 
     //Enabling Buttons
-     if (__$(test1Target.id).value && __$(test1Target.id).value == "+") {
+    if (__$(test1Target.id).value && __$(test1Target.id).value == "+") {
 
-            __$('btnTest1Pve').className = "green";
+        __$('btnTest1Pve').className = "green";
 
 
     } else if (__$(test1Target.id).value && __$(test1Target.id).value == "-") {
 
-           __$("btnTest1Nve").className = "green";
+        __$("btnTest1Nve").className = "green";
 
     }
 
-     if (__$(test2Target.id).value && __$(test2Target.id).value == "+") {
+    if (__$(test2Target.id).value && __$(test2Target.id).value == "+") {
 
-            __$('btnTest2Pve').className = "green";
+        __$('btnTest2Pve').className = "green";
 
 
     } else if (__$(test2Target.id).value && __$(test2Target.id).value == "-") {
 
-           __$("btnTest2Nve").className = "green";
+        __$("btnTest2Nve").className = "green";
 
     }
 
@@ -2416,7 +2406,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         }
 
-        var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
+        var target = testTarget.id.split("_")[0] + "_" + testTarget.id.split("_")[1];
 
         tmrControl1SecsCount = timers_running[target].sec ? timers_running[target].sec : 0;
 
@@ -2547,7 +2537,6 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
                 var time = padZeros(tmrControl1MinsCount, 2) + ":" + padZeros(tmrControl1SecsCount, 2);
 
 
-
                 if (__$("tmrControl1")) {
 
                     __$("tmrControl1").innerHTML = time;
@@ -2568,7 +2557,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
                 }
 
-                var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
+                var target = testTarget.id.split("_")[0] + "_" + testTarget.id.split("_")[1];
 
                 timers_running[target].clicked = false;
 
@@ -2803,7 +2792,7 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
             tmrControl1MinsCount = (counter - tmrControl1SecsCount) / 60;
 
-            var target = testTarget.id.split("_")[0]+"_"+testTarget.id.split("_")[1];
+            var target = testTarget.id.split("_")[0] + "_" + testTarget.id.split("_")[1];
 
             if (__$("startTimer1") &&
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][label].running && timers_running[target].clicked) {
@@ -2830,17 +2819,16 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
         }
 
 
-
         if (__$("fp_test1_time").value && testTarget.id == "fp_test1_result") {
 
-            if(__$("fp_test1_time").value.match(",") == null)
-                         __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
+            if (__$("fp_test1_time").value.match(",") == null)
+                __$("tmrControl1").innerHTML = __$("fp_test1_time").value;
 
 
         } else if (__$("fp_test2_time").value && testTarget.id == "fp_test2_result") {
 
-            if(__$("fp_test2_time").value.match(",") == null)
-                    __$("tmrControl1").innerHTML = __$("fp_test2_time").value;
+            if (__$("fp_test2_time").value.match(",") == null)
+                __$("tmrControl1").innerHTML = __$("fp_test2_time").value;
 
         }
 
@@ -2851,10 +2839,9 @@ function loadSerialTest(testTarget, testTimeTarget, label) {
 
         } else if (__$(testTarget.id).value && __$(testTarget.id).value == "-") {
 
-           __$("btnTest1Nve").className = "green";
+            __$("btnTest1Nve").className = "green";
 
         }
-
 
 
     }, null);
@@ -4386,7 +4373,7 @@ function evaluateReferral2() {
                 (7 * 52))))).format("YYYY-mm-dd"))
 
             /*__$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
-                (7 * 52))))).format("YYYY-mm-dd");*/
+             (7 * 52))))).format("YYYY-mm-dd");*/
 
             __$("appointment").value = (new Date()).format("YYYY-mm-dd");
 
@@ -5814,7 +5801,7 @@ function setTestKits(callback) {
             if (kit_data.name && kit_data.name.length > 0)
                 recommendedTimmerForLabels([kit_data.name]);
 
-            if(callback)
+            if (callback)
                 callback();
 
         });
@@ -6986,7 +6973,7 @@ function setEstimatedAgeValue() {
 
 }
 
-function validateExpiryDate(date_string) {
+function validateExpiryDate(date_string, target) {
 
     if (date_string.length > 0) {
 
@@ -7029,26 +7016,43 @@ function validateExpiryDate(date_string) {
 
         } else {
 
-            if (__$("fp_lot_1_dispatch_id").value) {
+            switch (target) {
 
-                saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1");
+                case "fp_lot_1_dispatch_id":
 
-            }
-            if (__$("fp_lot_2_dispatch_id").value) {
+                    if (__$("fp_lot_1_dispatch_id").value) {
 
-                saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");
+                        saveConsumption(__$("fp_lot_1_dispatch_id").value, "fp_lot_number1");
 
-            }
+                    }
 
-            if (__$("im_lot_1_dispatch_id").value) {
+                    break;
 
-                saveConsumption(__$("im_lot_1_dispatch_id").value, "im_lot_number1")
+                case "fp_lot_2_dispatch_id":
 
-            }
+                    if (__$("fp_lot_2_dispatch_id").value) {
 
-            if (__$("im_lot_2_dispatch_id").value) {
+                        saveConsumption(__$("fp_lot_2_dispatch_id").value, "fp_lot_number2");
 
-                saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
+                    }
+                    break;
+
+                case "im_lot_1_dispatch_id":
+
+                    if (__$("im_lot_1_dispatch_id").value) {
+
+                        saveConsumption(__$("im_lot_1_dispatch_id").value, "im_lot_number1")
+
+                    }
+
+                case "im_lot_2_dispatch_id":
+
+                    if (__$("im_lot_2_dispatch_id").value) {
+
+                        saveConsumption(__$("im_lot_2_dispatch_id").value, "im_lot_number2")
+
+                    }
+                    break;
 
             }
 
@@ -7195,7 +7199,7 @@ function noPartnerToday() {
     var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Partner Present at this Session?");
 
-    if(String(present).trim().toLowerCase() == "yes") {
+    if (String(present).trim().toLowerCase() == "yes") {
 
         return false;
 
@@ -7212,7 +7216,7 @@ function clientHasHIVLastTest() {
     var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
-    if(String(present).trim().length > 0) {
+    if (String(present).trim().length > 0) {
 
         return true;
 
@@ -7245,7 +7249,7 @@ function ageLimit() {
 
 function initialiseExistingData() {
 
-    if(clientHasHIVLastTest() && __$("last_hiv_test") && false) {
+    if (clientHasHIVLastTest() && __$("last_hiv_test") && false) {
 
         var value = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "PRE TEST COUNSELLING", "Last HIV test");
@@ -7254,9 +7258,9 @@ function initialiseExistingData() {
 
     }
 
-    if(!ageLimit()) {
+    if (!ageLimit()) {
 
-        if(__$("last_hiv_test")) {
+        if (__$("last_hiv_test")) {
 
             var opt = document.createElement("option");
 
