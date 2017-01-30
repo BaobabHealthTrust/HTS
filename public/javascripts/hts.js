@@ -1448,7 +1448,7 @@ function evalCondition(pos) {
 
 }
 
-function recommendedTimmerForLabels(labels) {
+function recommendedTimerForLabels(labels) {
 
     if (labels[0].length == 0)
         return;
@@ -1473,8 +1473,17 @@ function recommendedTimmerForLabels(labels) {
 
 }
 
-function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
+function removeParallelTests() {
 
+    if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).innerHTML = "";
+
+    }
+
+}
+
+function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2TimeTarget, label1, label2) {
 
     if (!test1Target || !test1TimeTarget || !test2Target || !test2TimeTarget) {
 
@@ -1496,9 +1505,12 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     }
 
     var mainTable = document.createElement("table");
+    mainTable.id = "timerMainTable";
     mainTable.style.margin = "auto";
 
     if (__$("inputFrame" + tstCurrentPage)) {
+
+        __$("inputFrame" + tstCurrentPage).innerHTML = "";
 
         __$("inputFrame" + tstCurrentPage).appendChild(mainTable);
 
@@ -5759,6 +5771,8 @@ function setTestKits(callback) {
 
     var descriptions = ["First Test", "Second Test"];
 
+    var done = [];
+
     for (var i = 0; i < descriptions.length; i++) {
 
         getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent(descriptions[i]), function (data) {
@@ -5799,9 +5813,11 @@ function setTestKits(callback) {
             }
 
             if (kit_data.name && kit_data.name.length > 0)
-                recommendedTimmerForLabels([kit_data.name]);
+                recommendedTimerForLabels([kit_data.name]);
 
-            if (callback)
+            done.push(true);
+
+            if (callback && done.length == descriptions.length)
                 callback();
 
         });
@@ -5851,7 +5867,7 @@ function setTestKitsProfiency() {
                 }
 
                 if (kit_data.name && kit_data.name.length > 0)
-                    recommendedTimmerForLabelsProficiency([kit_data.name]);
+                    recommendedTimerForLabelsProficiency([kit_data.name]);
 
             }
 
@@ -6616,7 +6632,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
 }
 
-function recommendedTimmerForLabelsProficiency(labels) {
+function recommendedTimerForLabelsProficiency(labels) {
 
     if (labels[0].length == 0)
         return;
