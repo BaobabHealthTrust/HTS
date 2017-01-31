@@ -3110,6 +3110,11 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
+                setTimeout(function(){
+
+                    __$("sample_id").setAttribute("condition", false);
+
+                }, 500);
 
             } else if ((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+") || (imTest1Result.trim() == "+" &&
                 imTest2Result.trim() == "+")) {
