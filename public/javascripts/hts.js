@@ -1633,6 +1633,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         showMinimizeButton();
 
+        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
         var currentClass = __$("nextButton").className;
 
         this.className = currentClass.replace(/blue|green/i, "gray");
@@ -2004,6 +2008,10 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
         window.parent.dashboard.startTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
         showMinimizeButton();
+
+        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
 
         var currentClass = __$("nextButton").className;
 
@@ -2572,6 +2580,10 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
             window.parent.dashboard.startTimer((this.getAttribute("label") + " " + this.getAttribute("pass")).trim());
 
             showMinimizeButton();
+
+            var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+            window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
 
             var currentClass = __$("nextButton").className;
 
@@ -7147,6 +7159,8 @@ function showMinimizeButton() {
         var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
 
         window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
+        window.parent.dashboard.clearMyTimers();
 
         window.parent.dashboard.exitNavPanel();
 
