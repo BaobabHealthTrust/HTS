@@ -32,7 +32,7 @@ Q.1.17. First Pass Test 2 Result [pos :: 16 $$ id :: fp_test2_result $$ conditio
 
 Q.1.18. First Pass Test 1 & 2 Parallel Tests [pos :: 17 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("fp_item_name1").value, __$("fp_item_name2").value]); loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'],"First Parallel"); }) $$ condition:: evalCondition(4) && !evalCondition(5) $$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn() $$ helpText :: First Pass Test 1 & 2 Parallel]
 
-Q.1.19. Immediate Repeat Tester [pos :: 18 $$ id :: im_tester $$ condition :: evalCondition(5) && !evalCondition(-3) $$ ajaxURL :: /list_users?name= ]
+Q.1.19. Immediate Repeat Tester [pos :: 18 $$ id :: im_tester $$ condition :: evalCondition(5) && !evalCondition(-3) $$ ajaxURL :: /list_users?name= $$ tt_onLoad :: activateNavBtn()]
 
 Q.1.20. Immediate Tester's Password [pos :: 19 $$ condition :: evalCondition(5) && !evalCondition(-3) $$ tt_onLoad :: checkValidation() $$ tt_onUnLoad :: stopValidationChecks() $$ textCase :: lower $$ type :: password]
 
@@ -68,6 +68,6 @@ Q.1.38. Outcome Summary [pos :: 37 $$ id :: outcome_summary $$ condition :: fals
 
 Q.1.39. Result Given To Client [pos :: 38 $$ id :: result_given_to_client $$ type :: hidden]
 
-Q.1.40. DBS Sample ID [pos :: 39 $$ id :: sample_id $$ condition :: false]
+Q.1.40. Take DBS sample [pos :: 39 $$ id :: sample_id $$ condition :: false]
 
 Q.1.41. HIV Testing Summary [pos :: 40 $$ tt_onLoad :: activateNavBtn(); showHIVTestingSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ tt_onUnLoad :: window.parent.dashboard.clearMyTimers(); clearTimers("HIV TESTING");]
