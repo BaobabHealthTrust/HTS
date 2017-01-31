@@ -1506,6 +1506,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
     tmrControl2SecsCount = 0;
     tmrControl2MinsCount = 0;
 
+    var loadingForm = false;
+
     if (__$("nextButton") && test1TimeTarget.getAttribute("startTime") == null) {
 
         var currentClass = __$("nextButton").className;
@@ -1633,9 +1635,17 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         showMinimizeButton();
 
-        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+        if(!loadingForm) {
 
-        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+            var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+            window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
+        } else {
+
+            loadingForm = false;
+
+        }
 
         var currentClass = __$("nextButton").className;
 
@@ -2009,9 +2019,17 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         showMinimizeButton();
 
-        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+        if(!loadingForm) {
 
-        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+            var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+            window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
+        } else {
+
+            loadingForm = false;
+
+        }
 
         var currentClass = __$("nextButton").className;
 
@@ -2338,6 +2356,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             timers_running[target].clicked = false;
 
+            loadingForm = true;
+
             __$("startTimer2.1").onmousedown();
 
         }
@@ -2361,6 +2381,8 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
             window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label2 + " " + pass).trim()].running && timers_running[target].clicked) {
 
             timers_running[target].clicked = false;
+
+            loadingForm = true;
 
             __$("startTimer2.2").onmousedown();
 
@@ -2465,6 +2487,8 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
             return;
 
         }
+
+        var loadingForm = false;
 
         var target = testTarget.id.split("_")[0] + "_" + testTarget.id.split("_")[1];
 
@@ -2581,9 +2605,17 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
 
             showMinimizeButton();
 
-            var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+            if(!loadingForm) {
 
-            window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+                var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+
+                window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+
+            } else {
+
+                loadingForm = false;
+
+            }
 
             var currentClass = __$("nextButton").className;
 
@@ -2867,6 +2899,8 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][(label + " " + pass).trim()].running && timers_running[target].clicked) {
 
                 timers_running[target].clicked = false;
+
+                loadingForm = true;
 
                 __$("startTimer1").onmousedown();
 
@@ -7156,9 +7190,9 @@ function showMinimizeButton() {
 
     button.onmousedown = function () {
 
-        var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
+        // var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
 
-        window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
+        // window.parent.dashboard.saveTemporaryData("HIV TESTING", data);
 
         window.parent.dashboard.clearMyTimers();
 
