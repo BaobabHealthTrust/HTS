@@ -43,7 +43,7 @@ Q.1.9. Duration Control [pos :: 11 $$ id :: duration_ago $$ tt_onLoad :: showTim
 
 Q.1.10. Captured Duration Value [pos :: 12 $$ id :: captured_value $$ tt_onLoad :: __$('touchscreenInput' + tstCurrentPage).value = __$('duration_ago').value $$ condition:: __$('last_hiv_test').value != 'Never Tested' $$ condition :: false]
 
-Q.1.11. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos :: 13 $$ id :: partner_status $$ tt_onUnLoad :: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim(); if(false) updatePartner("PRE TEST COUNSELLING", "Last HIV Test", __$("touchscreenInput" + tstCurrentPage).value); $$ condition:: __$('partner_present').value == "Yes" || !noPartnerToday() $$ tt_requirenextclick :: false]
+Q.1.11. Partner HIV Status <sup style="font-size: 14px;"><i>(From tests today if tested together otherwise as reported by client)</i></sup> [pos :: 13 $$ id :: partner_status $$ tt_onUnLoad :: __$("phs").value = __$("touchscreenInput" + tstCurrentPage).value.trim(); if(false) updatePartner("PRE TEST COUNSELLING", "Last HIV Test", __$("touchscreenInput" + tstCurrentPage).value); $$ condition:: __$('partner').value == "Yes" || !noPartnerToday() $$ tt_requirenextclick :: false $$ concept :: Partner HIV Status]
 O.1.11.1. Partner Negative
 O.1.11.2. Partner Positive
 O.1.11.3. HIV Unknown
