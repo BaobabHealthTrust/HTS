@@ -3089,8 +3089,10 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
             break;
         case "last positive":
 
-            if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
-                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
+            if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
+                fpTest2Result.trim() == "+")) && ((imTest1Result.trim() == "-" &&
+                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-") ||
+                (imTest1Result.trim() == "-" && imTest2Result.trim() == "-"))) {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
@@ -3109,8 +3111,8 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
 
-            }
-            else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+") {
+            } else if ((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+") || (imTest1Result.trim() == "+" &&
+                imTest2Result.trim() == "+")) {
 
                 outcome = "Test 1 & Test 2 Positive";
 
@@ -3208,7 +3210,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Discordant";
 
-                result = "New Inconclusive";
+                result = "Confirmatory Inconclusive";
 
                 __$("sample_id").setAttribute("condition", true);
 

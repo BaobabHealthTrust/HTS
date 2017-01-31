@@ -70,4 +70,4 @@ Q.1.39. Result Given To Client [pos :: 38 $$ id :: result_given_to_client $$ typ
 
 Q.1.40. DBS Sample ID [pos :: 39 $$ id :: sample_id $$ condition :: false]
 
-Q.1.41. HIV Testing Summary [pos :: 40 $$ tt_onLoad :: showHIVTestingSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ tt_onUnLoad :: window.parent.dashboard.clearMyTimers(); clearTimers("HIV TESTING");]
+Q.1.41. HIV Testing Summary [pos :: 40 $$ tt_onLoad :: activateNavBtn(); showHIVTestingSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard $$ tt_onUnLoad :: window.parent.dashboard.clearMyTimers(); clearTimers("HIV TESTING");]
