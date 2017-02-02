@@ -1,23 +1,50 @@
 var url = require('url');
 
+var config = require(__dirname + "/../config/database.json");
+
+var knex = require('knex')({
+	client: 'mysql',
+	connection: {
+		host: config.host,
+		user: config.user,
+		password: config.password,
+		database: config.database
+	},
+	pool: {
+		min: 0,
+		max: 500
+	}
+});
+
+var knexQC = require('knex')({
+	client: 'mysql',
+	connection: {
+		host: config.host,
+		user: config.user,
+		password: config.password,
+		database: config.qualityControlDatabase
+	},
+	pool: {
+		min: 0,
+		max: 500
+	}
+});
+
+var knexStock = require('knex')({
+	client: 'mysql',
+	connection: {
+		host: config.host,
+		user: config.user,
+		password: config.password,
+		database: config.stockDatabase
+	},
+	pool: {
+		min: 0,
+		max: 500
+	}
+});
 
 function queryRaw(sql, callback) {
-
-    var config = require(__dirname + "/../config/database.json");
-
-    var knex = require('knex')({
-        client: 'mysql',
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.database
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
 
     knex.raw(sql)
         .then(function (result) {
@@ -62,23 +89,7 @@ function loggedIn(token, callback) {
 
 function queryRawQualityControl(sql, callback) {
 
-    var config = require(__dirname +"/../config/database.json");
-
-    var knex = require('knex')({
-        client: 'mysql',
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.qualityControlDatabase
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
-
-    knex.raw(sql)
+	knexQC.raw(sql)
         .then(function (result) {
 
             callback(result);
@@ -96,23 +107,7 @@ function queryRawQualityControl(sql, callback) {
 
 function queryRawStock(sql, callback) {
 
-    var config = require(__dirname + "/../config/database.json");
-
-    var knex = require('knex')({
-        client: 'mysql',
-        connection: {
-            host: config.host,
-            user: config.user,
-            password: config.password,
-            database: config.stockDatabase
-        },
-        pool: {
-            min: 0,
-            max: 500
-        }
-    });
-
-    knex.raw(sql)
+	knexStock.raw(sql)
         .then(function (result) {
 
             callback(result);
