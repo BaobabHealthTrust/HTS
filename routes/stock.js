@@ -915,9 +915,13 @@ module.exports = function (router) {
 
             var result = {};
 
-            for (var i = 0; i < data[0].length; i++) {
+            if(data && data[0] && data[0].length > 0) {
 
-                result[data[0][i].batch_number] = data[0][i].item_name;
+                for (var i = 0; i < data[0].length; i++) {
+
+                    result[data[0][i].batch_number] = data[0][i].item_name;
+
+                }
 
             }
 
