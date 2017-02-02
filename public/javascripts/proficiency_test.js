@@ -48,7 +48,8 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
         }
     });
 
-};
+}
+;
 
 function leapYear(year) {
 
@@ -63,19 +64,19 @@ function leapYear(year) {
 var year = new Date().getFullYear();
 
 var lastDate = {
-        "01": 31,
-        "02": (leapYear(year) ? 29 : 28),
-        "03": 31,
-        "04": 30,
-        "05": 31,
-        "06": 30,
-        "07": 31,
-        "08": 31,
-        "09": 30,
-        "10": 31,
-        "11": 30,
-        "12": 31
-    }
+    "01": 31,
+    "02": (leapYear(year) ? 29 : 28),
+    "03": 31,
+    "04": 30,
+    "05": 31,
+    "06": 30,
+    "07": 31,
+    "08": 31,
+    "09": 30,
+    "10": 31,
+    "11": 30,
+    "12": 31
+}
 
 function verticalText(text, parent) {
 
@@ -108,7 +109,7 @@ var proficiency = ({
 
     proficiencyId: null,
 
-    kits : {}
+    kits: {}
     ,
     stock_label: {}
     ,
@@ -130,8 +131,7 @@ var proficiency = ({
     },
 
 
-
-padZeros: function (number, positions) {
+    padZeros: function (number, positions) {
         var zeros = parseInt(positions) - String(number).length;
         var padded = "";
 
@@ -318,7 +318,7 @@ padZeros: function (number, positions) {
 
     proficiencyTest: function (label) {
 
-        stock.setStockLimit();        
+        stock.setStockLimit();
 
         var form = document.createElement("form");
         form.id = "data";
@@ -341,7 +341,7 @@ padZeros: function (number, positions) {
 
 
         var fields = {
-           "Datatype": {
+            "Datatype": {
                 field_type: "hidden",
                 id: "data.datatype",
                 value: "proficiency_test"
@@ -355,15 +355,12 @@ padZeros: function (number, positions) {
                 field_type: "date",
                 id: "data.proficiency_testing_date"
             },
-            "Counselor Name":{
-
-                field_type : "text",
-                id:"data.tester",
-                ajaxURL: "/app_custom/hts_users",
-                tt_onUnload:"updateUserAttributes();sePTLotNumber()"
-
+            "Counselor Name": {
+                field_type: "text",
+                id: "data.tester",
+                ajaxURL: "/app_custom/hts_users?name=",
+                tt_onUnload: "updateUserAttributes(); sePTLotNumber()"
             },
-
             "HTS provider ID": {
                 field_type: "hidden",
                 id: "data.provider_id"
@@ -384,177 +381,167 @@ padZeros: function (number, positions) {
                 field_type: "select",
                 id: "data.dts_pack_checklist",
                 multiple: "multiple",
-                tt_pageStyleClass: "MultiSelectList",
-                tt_pageStyleClass: "NoKeyboard",
+                tt_pageStyleClass: "MultiSelectList NoKeyboard",
                 options: ["5 Sample tubes", "1 Buffer tube", "2 Droppers", "1 Results recording form", "1 Testing instructions"],
-                tt_onUnload:"dtsPachListValidation()"
+                tt_onUnload: "dtsPachListValidation()"
             },
             "PT panel lot number": {
                 field_type: "text",
                 id: "data.pt_panel_lot_number"
-                
             },
-            "Test 1 kit name" :{
-                field_type : "select",
+            "Test 1 kit name": {
+                field_type: "text",
                 id: "data.test1_kit_name",
-                ajaxURL : "/stock/stock_items?category=Test Kits&item_name=",
+                ajaxURL: "/stock/stock_items?category=Test Kits&item_name=",
                 tt_pageStyleClass: "NoKeyboard",
                 tt_onUnload: "setLotNumber('data.lot_number1',__$('touchscreenInput' + tstCurrentPage).value)"
-
             },
-            "Test 1 lot number" :{
-                field_type : "select",
+            "Test 1 lot number": {
+                field_type: "text",
                 id: "data.lot_number1",
                 tt_pageStyleClass: "NoKeyboard",
-                tt_onUnload: "setLotExpiry('data.test1_expiry_date');if(true){var limit = __$('touchscreenInput' + " +
-                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                    "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
-
+                tt_onUnload: "setLotExpiry('data.test1_expiry_date');if(__$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)){var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
             },
-            "Test 1 epiry date" :{
-                field_type : "hidden",
+            "Test 1 epiry date": {
+                field_type: "hidden",
                 id: "data.test1_expiry_date"
-
             }
             ,
-            "Test 2 kit name" :{
-                field_type : "select",
+            "Test 2 kit name": {
+                field_type: "text",
                 id: "data.test2_kit_name",
-                ajaxURL : "/stock/stock_items?category=Test Kits&item_name=",
+                ajaxURL: "/stock/stock_items?category=Test Kits&item_name=",
                 tt_pageStyleClass: "NoKeyboard",
-                 tt_onUnload: "setLotNumber('data.lot_number2',__$('touchscreenInput' + tstCurrentPage).value)"
-
+                tt_onUnload: "setLotNumber('data.lot_number2',__$('touchscreenInput' + tstCurrentPage).value)"
             },
-            "Test 2 lot number" :{
-                field_type : "select",
+            "Test 2 lot number": {
+                field_type: "text",
                 id: "data.lot_number2",
                 tt_pageStyleClass: "NoKeyboard",
-                tt_onUnload: "setLotExpiry('data.test2_expiry_date');if(true){var limit = __$('touchscreenInput' + " +
-                    "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
-                    "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
-
+                tt_onUnload: "setLotExpiry('data.test2_expiry_date');if(__$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)){var limit = __$('touchscreenInput' + " +
+                "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
+                "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
             },
-            "Test 2 epiry date" :{
-                field_type : "hidden",
+            "Test 2 epiry date": {
+                field_type: "hidden",
                 id: "data.test2_expiry_date"
-
-            }
-            ,
-            "Proficiency testing First Pass" :{
-                field_type : "text",
+            },
+            "Proficiency testing First Pass": {
+                field_type: "text",
                 tt_onLoad: "loadPTControl('test')",
                 id: "data.first_pass",
                 tt_pageStyleClass: "NoKeyboard"
-
             },
-            "Proficiency testing Immediate Repeat" :{
+            "Proficiency testing Immediate Repeat": {
                 field_type: "text",
                 tt_onLoad: "loadRepeatPTControl('im')",
                 id: "data.immediate_repeat",
-                condition : "checkRepeatFields()",
+                condition: "checkRepeatFields()",
                 tt_pageStyleClass: "NoKeyboard"
-
             },
-            "Proficiency Final Result":{
-                field_type:"text",
-                tt_onLoad : "loadFinalResultControl()",
+            "Proficiency Final Result": {
+                field_type: "text",
+                tt_onLoad: "loadFinalResultControl()",
                 id: "data.final_result",
                 tt_pageStyleClass: "NoKeyboard"
             },
-            "Consumption Quantity 1" :{
+            "Consumption Quantity 1": {
 
-                field_type : "hidden",
+                field_type: "hidden",
                 id: "data.test_1_consumption_quantity",
                 value: 0
 
             },
-            "Consumption Quantity 2" :{
+            "Consumption Quantity 2": {
 
-                field_type : "hidden",
+                field_type: "hidden",
                 id: "data.test_2_consumption_quantity",
                 value: 0
 
             }
 
-
         }
 
-        for(var i = 0 ; i < 5 ; i++){
+        for (var i = 0; i < 5; i++) {
 
             var test1 = {
                 field_type: "hidden",
-                id: "data.test_1_"+i,
-                 value: ""
+                id: "data.test_1_" + i,
+                value: ""
             }
 
-            fields["Test 1 " + i ] = test1;
+            fields["Test 1 " + i] = test1;
 
             var test1Time = {
                 field_type: "hidden",
-                id: "data.test_1_" +i + "_time",
-                 value: ""
+                id: "data.test_1_" + i + "_time",
+                value: ""
             }
 
-            fields["Test 1 Time " + i ] = test1Time;
+            fields["Test 1 Time " + i] = test1Time;
 
             var test2 = {
                 field_type: "hidden",
-                id: "data.test_2_"+i,
-                 value: ""
+                id: "data.test_2_" + i,
+                value: ""
             }
 
-            fields["Test 2 " + i ] = test2;
+            fields["Test 2 " + i] = test2;
 
 
             var test2Time = {
                 field_type: "hidden",
-                id: "data.test_2_" + i +"_time",
-                 value: ""
+                id: "data.test_2_" + i + "_time",
+                value: ""
             }
 
-            fields["Test 2 Time " + i ] = test2Time;
+            fields["Test 2 Time " + i] = test2Time;
 
             var repeat_test1 = {
                 field_type: "hidden",
-                id: "data.im_1_"+i,
-                 value: ""
+                id: "data.im_1_" + i,
+                value: ""
             }
 
-            fields["Immediate Repeat Test 1 " + i ] = repeat_test1;
+            fields["Immediate Repeat Test 1 " + i] = repeat_test1;
 
             var im1Time = {
                 field_type: "hidden",
-                id: "data.im_1_"+ i +"_time",
-                 value: ""
+                id: "data.im_1_" + i + "_time",
+                value: ""
             }
 
-            fields["IM 1 Time " + i ] = im1Time;
+            fields["IM 1 Time " + i] = im1Time;
 
 
             var repeat_test2 = {
                 field_type: "hidden",
-                id: "data.im_2_"+i,
-                 value: ""
+                id: "data.im_2_" + i,
+                value: ""
             }
 
-            fields["Immediate Repeat Test 2 " + i ] = repeat_test2;
+            fields["Immediate Repeat Test 2 " + i] = repeat_test2;
 
 
             var im2Time = {
                 field_type: "hidden",
-                id: "data.im_2_"+i +"_time",
-                 value: ""
+                id: "data.im_2_" + i + "_time",
+                value: ""
             }
 
-            fields["IM 2 Time " + i ] = im2Time;
+            fields["IM 2 Time " + i] = im2Time;
 
             var final_result = {
-                        field_type:"hidden",
-                        id: "data.final_result_"+i,
-                        value: ""
+                field_type: "hidden",
+                id: "data.final_result_" + i,
+                value: ""
             }
 
-            fields["Final Result "+i ] = final_result;
+            fields["Final Result " + i] = final_result;
 
         }
         proficiency.buildFields(fields, table);
@@ -562,7 +549,8 @@ padZeros: function (number, positions) {
         proficiency.navPanel(form.outerHTML);
 
     },
-    enterPTOfficialResult : function(){
+
+    enterPTOfficialResult: function () {
 
         var form = document.createElement("form");
         form.id = "data";
@@ -580,7 +568,7 @@ padZeros: function (number, positions) {
 
 
         var fields = {
-           "Datatype": {
+            "Datatype": {
                 field_type: "hidden",
                 id: "data.datatype",
                 value: "proficiency_test_official_result"
@@ -604,24 +592,23 @@ padZeros: function (number, positions) {
             "Enter Official result": {
                 field_type: "text",
                 id: "data.first_name",
-                tt_onLoad:"loadPTOfficialResultControl()",
-                tt_pageStyleClass:"NoKeyboard"
+                tt_onLoad: "loadPTOfficialResultControl()",
+                tt_pageStyleClass: "NoKeyboard"
             }
 
         }
 
-        for(var i = 0 ; i < 5 ; i++){
+        for (var i = 0; i < 5; i++) {
 
             var entry = {
 
-                    field_type: "hidden",
-                    id: "data.pt_panel_result_"+ i
+                field_type: "hidden",
+                id: "data.pt_panel_result_" + i
             }
 
-            fields["PT Panel Results "+i] = entry;
+            fields["PT Panel Results " + i] = entry;
 
         }
-
 
 
         proficiency.buildFields(fields, table);
@@ -631,9 +618,9 @@ padZeros: function (number, positions) {
 
     },
 
-proficiencyTestApproval: function(target){
+    proficiencyTestApproval: function (target) {
 
-        if(!target)
+        if (!target)
             return;
 
         target.innerHTML = "";
@@ -719,8 +706,9 @@ proficiencyTestApproval: function(target){
         proficiency.loadPTTests("/quality_control/proficiency_test_approval/", div0_1_0_0);
 
 
-},
-loadPTTests: function(path,target){
+    },
+
+    loadPTTests: function (path, target) {
 
         if (!path || !target)
             return;
@@ -730,7 +718,7 @@ loadPTTests: function(path,target){
             var data = JSON.parse(data);
 
             if (!target)
-            return;
+                return;
 
             if (!data)
                 return;
@@ -752,7 +740,7 @@ loadPTTests: function(path,target){
 
             table.appendChild(tr);
 
-            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2","Score", "Action Plan"];
+            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2", "Score", "Action Plan"];
             var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px",
                 "180px"];
 
@@ -771,7 +759,7 @@ loadPTTests: function(path,target){
 
             }
 
-            for(var i = 0 ; i < data.length ; i++){
+            for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
 
@@ -817,7 +805,7 @@ loadPTTests: function(path,target){
 
                 var td = document.createElement("td");
 
-                td.innerHTML = data[i].first_name + " "+data[i].last_name;
+                td.innerHTML = data[i].first_name + " " + data[i].last_name;
 
                 td.style.padding = "0.1em";
 
@@ -826,8 +814,7 @@ loadPTTests: function(path,target){
                 tr.appendChild(td);
 
 
-
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.innerHTML = data[i].pt_panel_lot_number;
 
@@ -849,7 +836,7 @@ loadPTTests: function(path,target){
                 tr.appendChild(td);
 
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.innerHTML = data[i].test_kit_2_name;
 
@@ -860,7 +847,7 @@ loadPTTests: function(path,target){
                 tr.appendChild(td);
 
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.innerHTML = (data[i].score ? data[i].score + "%" : "");
 
@@ -881,7 +868,7 @@ loadPTTests: function(path,target){
 
                 button.innerHTML = "Action";
 
-                button.setAttribute("onclick","window.parent.proficiency.approvePTResult("+JSON.stringify(data[i])+",window.parent.document.body)");
+                button.setAttribute("onclick", "window.parent.proficiency.approvePTResult(" + JSON.stringify(data[i]) + ",window.parent.document.body)");
 
 
                 td.appendChild(button);
@@ -896,9 +883,9 @@ loadPTTests: function(path,target){
 
     },
 
-    approvePTResult :function(data,target){
+    approvePTResult: function (data, target) {
 
-         if(!target)
+        if (!target)
             return;
 
         target.innerHTML = "";
@@ -971,7 +958,7 @@ loadPTTests: function(path,target){
 
         btnAction.onclick = function () {
 
-           proficiency.proficiencyTestActionPlan(data.pid)
+            proficiency.proficiencyTestActionPlan(data.pid)
 
         }
 
@@ -984,25 +971,25 @@ loadPTTests: function(path,target){
         btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
-         if(data.action_plan && data.action_plan.length > 0){
+        if (data.action_plan && data.action_plan.length > 0) {
 
             btnFinish.onclick = function () {
 
-                    window.parent.proficiency.pTReviewReport(window.parent.document.body);
+                window.parent.proficiency.pTReviewReport(window.parent.document.body);
 
             }
 
 
-         }else{
+        } else {
 
-             btnFinish.onclick = function () {
+            btnFinish.onclick = function () {
 
-                    window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+                window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
 
             }
 
 
-         }
+        }
 
         nav.appendChild(btnFinish);
 
@@ -1012,12 +999,11 @@ loadPTTests: function(path,target){
 
         document.head.appendChild(script);
 
-        proficiency.loadPTResults("quality_control/proficiency_test_result/"+data.pid,data, div0_1_0_0);
+        proficiency.loadPTResults("quality_control/proficiency_test_result/" + data.pid, data, div0_1_0_0);
 
-    }
-    ,
-    loadPTResults: function(path,ptdata,target){
+    },
 
+    loadPTResults: function (path, ptdata, target) {
 
 
         if (!path || !target)
@@ -1028,7 +1014,7 @@ loadPTTests: function(path,target){
             var data = JSON.parse(data);
 
             if (!target)
-            return;
+                return;
 
             if (!data)
                 return;
@@ -1104,7 +1090,6 @@ loadPTTests: function(path,target){
             tr.appendChild(td);
 
 
-
             var tr = document.createElement("tr");
             tr.style.backgroundColor = "#999";
             tr.style.color = "#eee";
@@ -1113,7 +1098,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            verticalText("<b style= 'font-size : 1.3em'>Sample #</b>",td);
+            verticalText("<b style= 'font-size : 1.3em'>Sample #</b>", td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1158,7 +1143,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            verticalText("<font style= 'font-size : 1.3em'>Strong Positive</font>",td);
+            verticalText("<font style= 'font-size : 1.3em'>Strong Positive</font>", td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1169,7 +1154,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            verticalText("<font style= 'font-size : 1.3em'>Weak Positive</font>",td);
+            verticalText("<font style= 'font-size : 1.3em'>Weak Positive</font>", td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1180,7 +1165,7 @@ loadPTTests: function(path,target){
 
             var td = document.createElement("td");
 
-            verticalText("<font style= 'font-size : 1.3em'>Negative</font>",td);
+            verticalText("<font style= 'font-size : 1.3em'>Negative</font>", td);
 
             td.style.border = "1px solid #ffffff";
 
@@ -1204,11 +1189,11 @@ loadPTTests: function(path,target){
             td.colSpan = "4";
 
             tr.appendChild(td);
-            
+
 
             var td = document.createElement("td");
 
-            td.innerHTML =  "<b>Lot Number : </b>" + (ptdata.test_kit_2_lot_number ? ptdata.test_kit_2_lot_number : "" );
+            td.innerHTML = "<b>Lot Number : </b>" + (ptdata.test_kit_2_lot_number ? ptdata.test_kit_2_lot_number : "" );
 
             td.style.border = "1px solid #ffffff";
 
@@ -1232,7 +1217,7 @@ loadPTTests: function(path,target){
             td.colSpan = "4";
 
             tr.appendChild(td);
-            
+
 
             var td = document.createElement("td");
 
@@ -1260,7 +1245,7 @@ loadPTTests: function(path,target){
             td.colSpan = "4";
 
             tr.appendChild(td);
-            
+
 
             var td = document.createElement("th");
 
@@ -1309,7 +1294,7 @@ loadPTTests: function(path,target){
 
             tr.appendChild(td);
 
-             var td = document.createElement("td");
+            var td = document.createElement("td");
 
             td.innerHTML = "Test 2";
 
@@ -1320,7 +1305,7 @@ loadPTTests: function(path,target){
             tr.appendChild(td);
 
 
-            for(var i = 0 ; i < data.length ; i++){
+            for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
 
@@ -1346,7 +1331,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].first_pass_test_1 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span";
+                td.innerHTML = (data[i].first_pass_test_1 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1354,11 +1339,11 @@ loadPTTests: function(path,target){
 
                 tr.appendChild(td);
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].first_pass_test_1 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span";
+                td.innerHTML = (data[i].first_pass_test_1 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
 
                 td.style.padding = "1em";
 
@@ -1371,7 +1356,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].first_pass_test_2 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span";
+                td.innerHTML = (data[i].first_pass_test_2 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1379,11 +1364,11 @@ loadPTTests: function(path,target){
 
                 tr.appendChild(td);
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].first_pass_test_2 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span";
+                td.innerHTML = (data[i].first_pass_test_2 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
 
                 td.style.padding = "1em";
 
@@ -1396,7 +1381,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].im_pass_test_1 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span";
+                td.innerHTML = (data[i].im_pass_test_1 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1404,11 +1389,11 @@ loadPTTests: function(path,target){
 
                 tr.appendChild(td);
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].im_pass_test_1 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span";
+                td.innerHTML = (data[i].im_pass_test_1 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
 
                 td.style.padding = "1em";
 
@@ -1421,7 +1406,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].im_pass_test_2 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span";
+                td.innerHTML = (data[i].im_pass_test_2 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1429,11 +1414,11 @@ loadPTTests: function(path,target){
 
                 tr.appendChild(td);
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].im_pass_test_2 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span";
+                td.innerHTML = (data[i].im_pass_test_2 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
 
                 td.style.padding = "1em";
 
@@ -1446,7 +1431,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].final_result == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span";
+                td.innerHTML = (data[i].final_result == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1458,20 +1443,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].final_result == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span";
-
-                td.style.padding = "1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                tr.appendChild(td);
-
-
-                var td = document.createElement("td");
-
-                td.textAlign = "center";
-
-                td.innerHTML = data[i].official_result.toLowerCase().trim() == 'strong positive' ? "<span style = 'padding: 0.5em ; font-size: 25px; font-weight:bold; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 25px;font-weight:bold'> + </span";
+                td.innerHTML = (data[i].final_result == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
 
                 td.style.padding = "1em";
 
@@ -1484,7 +1456,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].official_result.toLowerCase().trim() == 'weak positive' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span";
+                td.innerHTML = (data[i].official_result.toLowerCase().trim() == 'strong positive' ? "<span style = 'padding: 0.5em ; font-size: 25px; font-weight:bold; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 25px;font-weight:bold'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1497,7 +1469,7 @@ loadPTTests: function(path,target){
 
                 td.textAlign = "center";
 
-                td.innerHTML = data[i].official_result.toLowerCase().trim() == 'negative' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span";
+                td.innerHTML = (data[i].official_result.toLowerCase().trim() == 'weak positive' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
 
                 td.style.padding = "1em";
 
@@ -1505,6 +1477,18 @@ loadPTTests: function(path,target){
 
                 tr.appendChild(td);
 
+
+                var td = document.createElement("td");
+
+                td.textAlign = "center";
+
+                td.innerHTML = (data[i].official_result.toLowerCase().trim() == 'negative' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
+
+                td.style.padding = "1em";
+
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
 
 
             }
@@ -1521,7 +1505,7 @@ loadPTTests: function(path,target){
 
             td.style.textAlign = "left"
 
-            td.innerHTML ="<b>Score :</>";
+            td.innerHTML = "<b>Score :</>";
 
             tr.appendChild(td);
 
@@ -1538,41 +1522,41 @@ loadPTTests: function(path,target){
             tr.appendChild(td);
 
 
-            if(ptdata.action_plan && ptdata.action_plan.length > 0){
+            if (ptdata.action_plan && ptdata.action_plan.length > 0) {
 
-                     var tr = document.createElement('tr');
+                var tr = document.createElement('tr');
 
-                    table.appendChild(tr);
+                table.appendChild(tr);
 
-                    var td = document.createElement("td");
+                var td = document.createElement("td");
 
-                    td.colSpan = "3";
+                td.colSpan = "3";
 
-                    td.style.border = "none";
+                td.style.border = "none";
 
-                    td.style.textAlign = "left"
+                td.style.textAlign = "left"
 
-                    td.innerHTML ="<b>Actio Plan :</>";
+                td.innerHTML = "<b>Actio Plan :</>";
 
-                    tr.appendChild(td);
+                tr.appendChild(td);
 
-                    var td = document.createElement("td");
+                var td = document.createElement("td");
 
-                    td.colSpan = "11";
+                td.colSpan = "11";
 
-                    td.style.border = "none";
+                td.style.border = "none";
 
-                    tr.appendChild(td);
+                tr.appendChild(td);
 
-                    var div = document.createElement("div");
+                var div = document.createElement("div");
 
-                    div.style.width = "100%";
+                div.style.width = "100%";
 
-                    div.style.textAlign = "left"
+                div.style.textAlign = "left"
 
-                    div.innerHTML = ptdata.action_plan;
+                div.innerHTML = ptdata.action_plan;
 
-                    td.appendChild(div);
+                td.appendChild(div);
             }
 
 
@@ -1588,7 +1572,7 @@ loadPTTests: function(path,target){
 
             td.style.textAlign = "left"
 
-            td.innerHTML ="<b>HTS Provider's Name :</>";
+            td.innerHTML = "<b>HTS Provider's Name :</>";
 
             tr.appendChild(td);
 
@@ -1600,10 +1584,9 @@ loadPTTests: function(path,target){
 
             td.style.textAlign = "left"
 
-            td.innerHTML = ptdata.first_name + " " +ptdata.last_name;
+            td.innerHTML = ptdata.first_name + " " + ptdata.last_name;
 
             tr.appendChild(td);
-
 
 
             var tr = document.createElement("tr");
@@ -1618,7 +1601,7 @@ loadPTTests: function(path,target){
 
             td.style.textAlign = "left"
 
-            td.innerHTML ="<b>HTS Provider's ID :</>";
+            td.innerHTML = "<b>HTS Provider's ID :</>";
 
             tr.appendChild(td);
 
@@ -1640,271 +1623,276 @@ loadPTTests: function(path,target){
 
 
     },
-    pTReviewReport: function(target){
+    pTReviewReport: function (target) {
 
-            if(!target)
-                return;
+        if (!target)
+            return;
 
-            target.innerHTML = "";
+        target.innerHTML = "";
 
-            var div0 = document.createElement("div");
-            div0.id = "content";
+        var div0 = document.createElement("div");
+        div0.id = "content";
 
-            target.appendChild(div0);
+        target.appendChild(div0);
 
-            var table0 = document.createElement("table");
-            table0.width = "100%";
-            table0.style.margin = "0px";
-            table0.cellSpacing = 0;
+        var table0 = document.createElement("table");
+        table0.width = "100%";
+        table0.style.margin = "0px";
+        table0.cellSpacing = 0;
 
-            div0.appendChild(table0);
+        div0.appendChild(table0);
 
-            var tr0_0 = document.createElement("tr");
+        var tr0_0 = document.createElement("tr");
 
-            table0.appendChild(tr0_0);
+        table0.appendChild(tr0_0);
 
-            var td0_0_0 = document.createElement("td");
-            td0_0_0.style.fontSize = "2.3em";
-            td0_0_0.style.backgroundColor = "#6281A7";
-            td0_0_0.style.color = "#eee";
-            td0_0_0.style.padding = "15px";
-            td0_0_0.style.textAlign = "center";
-            td0_0_0.innerHTML = "Proficiency Test Perfomance";
+        var td0_0_0 = document.createElement("td");
+        td0_0_0.style.fontSize = "2.3em";
+        td0_0_0.style.backgroundColor = "#6281A7";
+        td0_0_0.style.color = "#eee";
+        td0_0_0.style.padding = "15px";
+        td0_0_0.style.textAlign = "center";
+        td0_0_0.innerHTML = "Proficiency Test Perfomance";
 
-            tr0_0.appendChild(td0_0_0);
+        tr0_0.appendChild(td0_0_0);
 
-            var tr0_1 = document.createElement("tr");
+        var tr0_1 = document.createElement("tr");
 
-            table0.appendChild(tr0_1);
+        table0.appendChild(tr0_1);
 
-            var td0_1_0 = document.createElement("td");
-            td0_1_0.style.borderTop = "5px solid #ccc";
-            td0_1_0.style.padding = "0px";
+        var td0_1_0 = document.createElement("td");
+        td0_1_0.style.borderTop = "5px solid #ccc";
+        td0_1_0.style.padding = "0px";
 
-            tr0_1.appendChild(td0_1_0);
+        tr0_1.appendChild(td0_1_0);
 
-            var div0_1_0_0 = document.createElement("div");
-            div0_1_0_0.id = "stock.content";
-            div0_1_0_0.style.height = "calc(100% - 175px)";
-            div0_1_0_0.style.backgroundColor = "#fff";
-            div0_1_0_0.style.overflow = "auto";
-            div0_1_0_0.style.padding = "1px";
-            div0_1_0_0.style.textAlign = "center";
-            div0_1_0_0.innerHTML = "&nbsp;";
+        var div0_1_0_0 = document.createElement("div");
+        div0_1_0_0.id = "stock.content";
+        div0_1_0_0.style.height = "calc(100% - 175px)";
+        div0_1_0_0.style.backgroundColor = "#fff";
+        div0_1_0_0.style.overflow = "auto";
+        div0_1_0_0.style.padding = "1px";
+        div0_1_0_0.style.textAlign = "center";
+        div0_1_0_0.innerHTML = "&nbsp;";
 
-            div0.appendChild(div0_1_0_0);
+        div0.appendChild(div0_1_0_0);
 
-            var nav = document.createElement("div");
-            nav.style.backgroundColor = "#333";
-            nav.style.position = "absolute";
-            nav.style.width = "100%";
-            nav.style.bottom = "0px";
-            nav.style.left = "0px";
-            nav.style.height = "80px";
+        var nav = document.createElement("div");
+        nav.style.backgroundColor = "#333";
+        nav.style.position = "absolute";
+        nav.style.width = "100%";
+        nav.style.bottom = "0px";
+        nav.style.left = "0px";
+        nav.style.height = "80px";
 
-            document.body.appendChild(nav);
+        document.body.appendChild(nav);
 
-            var btnFinish = document.createElement("button");
-            btnFinish.className = "green";
-            btnFinish.style.cssFloat = "right";
-            btnFinish.style.margin = "15px";
-            btnFinish.style.width = "150px";
-            btnFinish.innerHTML = "Finish";
+        var btnFinish = document.createElement("button");
+        btnFinish.className = "green";
+        btnFinish.style.cssFloat = "right";
+        btnFinish.style.margin = "15px";
+        btnFinish.style.width = "150px";
+        btnFinish.innerHTML = "Finish";
 
-            btnFinish.onclick = function () {
+        btnFinish.onclick = function () {
 
-                window.parent.location = "/";
+            window.parent.location = "/";
 
-            }
+        }
 
-            nav.appendChild(btnFinish);
+        nav.appendChild(btnFinish);
 
 
-            var script = document.createElement("script");
-            script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
+        var script = document.createElement("script");
+        script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
 
-            document.head.appendChild(script);
+        document.head.appendChild(script);
 
-            var date_parts = (new Date()).format("YYYY-mm-dd").split("-");
+        var date_parts = (new Date()).format("YYYY-mm-dd").split("-");
 
-            var start_date = date_parts[0] +"-"+date_parts[1] +"-01";
+        var start_date = date_parts[0] + "-" + date_parts[1] + "-01";
 
-            var end_date = date_parts[0] +"-"+date_parts[1] +"-"+lastDate[date_parts[1]];
+        var end_date = date_parts[0] + "-" + date_parts[1] + "-" + lastDate[date_parts[1]];
 
-            proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/"+start_date+"/"+end_date, div0_1_0_0,{year:date_parts[0], month:date_parts[1]});
+        proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/" + start_date + "/" + end_date, div0_1_0_0, {
+            year: date_parts[0],
+            month: date_parts[1]
+        });
 
 
     },
-    reloadPTReport: function(target){
+    reloadPTReport: function (target) {
 
-            var year = proficiency.$("year").value;
+        var year = proficiency.$("year").value;
 
-            var month = proficiency.$("month").value;
+        var month = proficiency.$("month").value;
 
-            var start_date = year +"-"+month +"-01";
+        var start_date = year + "-" + month + "-01";
 
-            var end_date = year +"-"+month +"-"+lastDate[month];
+        var end_date = year + "-" + month + "-" + lastDate[month];
 
 
-
-            proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/"+start_date+"/"+end_date,target,{year:year, month:month});
+        proficiency.loadPTReviewReport("/quality_control/proficiency_test_report/" + start_date + "/" + end_date, target, {
+            year: year,
+            month: month
+        });
 
 
     }
     ,
-    loadPTReviewReport: function(path,target,date){
+    loadPTReviewReport: function (path, target, date) {
 
         if (!path || !target)
             return;
 
-         target.innerHTML = "";
+        target.innerHTML = "";
 
-         var div = document.createElement("div");
+        var div = document.createElement("div");
 
-         div.style.textAlign ="right";
+        div.style.textAlign = "right";
 
-         div.style.height = "70px";
+        div.style.height = "70px";
 
-         div.style.paddingRight = "20px";
+        div.style.paddingRight = "20px";
 
-         div.style.borderBottom = "2px solid #6281a7";
+        div.style.borderBottom = "2px solid #6281a7";
 
-         target.appendChild(div);
-
-
-         var datetable = document.createElement("table");
-
-         datetable.style.float ="right";
-
-         div.appendChild(datetable);
+        target.appendChild(div);
 
 
-         var tr = document.createElement("tr");
+        var datetable = document.createElement("table");
 
-         datetable.appendChild(tr);
+        datetable.style.float = "right";
 
-
-         var td = document.createElement("td");
-
-         td.style.textAlign = "right";
-
-         td.innerHTML = "Year";
-
-         td.style.fontSize ="24px";
-
-         tr.appendChild(td);
+        div.appendChild(datetable);
 
 
-         var td = document.createElement("td");
+        var tr = document.createElement("tr");
 
-         tr.appendChild(td);
+        datetable.appendChild(tr);
 
-         var select = document.createElement("select");
 
-         select.id = "year";
+        var td = document.createElement("td");
 
-         select.style.padding = "0";
+        td.style.textAlign = "right";
 
-         select.style.fontSize ="24px";
+        td.innerHTML = "Year";
 
-         select.onchange = function(){
+        td.style.fontSize = "24px";
 
-                window.parent.proficiency.reloadPTReport(target)
+        tr.appendChild(td);
 
-          }
 
-         for (var y = (new Date()).getFullYear(); y > (new Date()).getFullYear() - 10; y--) {
+        var td = document.createElement("td");
 
-                if (select) {
+        tr.appendChild(td);
 
-                    var opt = document.createElement("option");
-                    opt.innerHTML = y;
-                    opt.style.padding = "10px";
-                    
-                    if(y == date.year) {
+        var select = document.createElement("select");
 
-                        opt.setAttribute("selected", true);
+        select.id = "year";
 
-                    }
+        select.style.padding = "0";
 
-                   select.appendChild(opt);
+        select.style.fontSize = "24px";
+
+        select.onchange = function () {
+
+            window.parent.proficiency.reloadPTReport(target)
+
+        }
+
+        for (var y = (new Date()).getFullYear(); y > (new Date()).getFullYear() - 10; y--) {
+
+            if (select) {
+
+                var opt = document.createElement("option");
+                opt.innerHTML = y;
+                opt.style.padding = "10px";
+
+                if (y == date.year) {
+
+                    opt.setAttribute("selected", true);
 
                 }
+
+                select.appendChild(opt);
+
+            }
 
         }
 
         td.appendChild(select);
 
-         var td = document.createElement("td");
+        var td = document.createElement("td");
 
-         td.style.textAlign = "right";
+        td.style.textAlign = "right";
 
-         td.innerHTML = "Month";
+        td.innerHTML = "Month";
 
-         td.style.fontSize ="24px";
+        td.style.fontSize = "24px";
 
-         tr.appendChild(td);
+        tr.appendChild(td);
 
 
-         var td = document.createElement("td");
+        var td = document.createElement("td");
 
-         tr.appendChild(td);
+        tr.appendChild(td);
 
-         var select = document.createElement("select");
+        var select = document.createElement("select");
 
-         select.style.fontSize ="24px";
+        select.style.fontSize = "24px";
 
-          select.style.padding = "0";
+        select.style.padding = "0";
 
-          select.onchange = function(){
+        select.onchange = function () {
 
-                window.parent.proficiency.reloadPTReport(target)
+            window.parent.proficiency.reloadPTReport(target)
 
-          }
+        }
 
-         select.id = "month";
+        select.id = "month";
 
-         var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                "October", "November", "December"];
+        var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"];
 
-         for(var i = 0 ; i < monthList.length ; i++){
+        for (var i = 0; i < monthList.length; i++) {
 
-                if (select) {
+            if (select) {
 
-                    var opt = document.createElement("option");
-                    opt.innerHTML = monthList[i];
+                var opt = document.createElement("option");
+                opt.innerHTML = monthList[i];
 
-                    opt.value = window.parent.proficiency.padZeros((i+1),2);
+                opt.value = window.parent.proficiency.padZeros((i + 1), 2);
 
-                    opt.style.padding = "10px";
+                opt.style.padding = "10px";
 
-                    if(window.parent.proficiency.padZeros((i+1),2) == date.month) {
+                if (window.parent.proficiency.padZeros((i + 1), 2) == date.month) {
 
-                        opt.setAttribute("selected", true);
-
-                    }
-
-                   select.appendChild(opt);
+                    opt.setAttribute("selected", true);
 
                 }
 
-         }      
+                select.appendChild(opt);
 
-         td.appendChild(select);
+            }
+
+        }
+
+        td.appendChild(select);
 
 
-         var div = document.createElement("div");
+        var div = document.createElement("div");
 
-         div.style.width = "100%";
+        div.style.width = "100%";
 
-         target.appendChild(div);
+        target.appendChild(div);
 
         stock.ajaxRequest(path, function (data) {
 
             var data = JSON.parse(data);
 
             if (!target)
-            return;
+                return;
 
             if (!data)
                 return;
@@ -1924,7 +1912,7 @@ loadPTTests: function(path,target){
 
             table.appendChild(tr);
 
-            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2","Score", "Perfomance"];
+            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2", "Score", "Perfomance"];
             var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px",
                 "180px"];
 
@@ -1943,7 +1931,7 @@ loadPTTests: function(path,target){
 
             }
 
-            for(var i = 0 ; i < data.length ; i++){
+            for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
 
@@ -1989,7 +1977,7 @@ loadPTTests: function(path,target){
 
                 var td = document.createElement("td");
 
-                td.innerHTML = data[i].first_name + " "+data[i].last_name;
+                td.innerHTML = data[i].first_name + " " + data[i].last_name;
 
                 td.style.padding = "0.1em";
 
@@ -1998,8 +1986,7 @@ loadPTTests: function(path,target){
                 tr.appendChild(td);
 
 
-
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.innerHTML = data[i].pt_panel_lot_number;
 
@@ -2021,7 +2008,7 @@ loadPTTests: function(path,target){
                 tr.appendChild(td);
 
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.innerHTML = data[i].test_kit_2_name;
 
@@ -2032,7 +2019,7 @@ loadPTTests: function(path,target){
                 tr.appendChild(td);
 
 
-                 var td = document.createElement("td");
+                var td = document.createElement("td");
 
                 td.innerHTML = (data[i].score ? data[i].score + "%" : "");
 
@@ -2053,18 +2040,18 @@ loadPTTests: function(path,target){
 
                 button.innerHTML = "View Perfomance";
 
-                button.setAttribute("onclick","window.parent.proficiency.viewPTPerfomance("+JSON.stringify(data[i])+",window.parent.document.body)");
+                button.setAttribute("onclick", "window.parent.proficiency.viewPTPerfomance(" + JSON.stringify(data[i]) + ",window.parent.document.body)");
 
 
                 td.appendChild(button);
 
                 tr.appendChild(td);
 
-                if(parseInt(table.offsetHeight) > 0.6 * parseInt(window.innerHeight)){
+                if (parseInt(table.offsetHeight) > 0.6 * parseInt(window.innerHeight)) {
 
-                      div.style.height = (0.65 * parseInt(window.innerHeight))+"px";
+                    div.style.height = (0.65 * parseInt(window.innerHeight)) + "px";
 
-                     div.style.overflowY = "scroll";
+                    div.style.overflowY = "scroll";
 
                 }
 
@@ -2075,9 +2062,9 @@ loadPTTests: function(path,target){
 
 
     },
-    viewPTPerfomance :function(data,target){
+    viewPTPerfomance: function (data, target) {
 
-         if(!target)
+        if (!target)
             return;
 
         target.innerHTML = "";
@@ -2141,20 +2128,20 @@ loadPTTests: function(path,target){
 
         /*var btnAction = document.createElement("button");
 
-        btnAction.style.position = "absolute";
-        btnAction.style.right = "180px";
-        btnAction.className = "blue";
-        btnAction.style.margin = "15px";
-        btnAction.style.width = "150px";
-        btnAction.innerHTML = "Action Plan";
+         btnAction.style.position = "absolute";
+         btnAction.style.right = "180px";
+         btnAction.className = "blue";
+         btnAction.style.margin = "15px";
+         btnAction.style.width = "150px";
+         btnAction.innerHTML = "Action Plan";
 
-        btnAction.onclick = function () {
+         btnAction.onclick = function () {
 
-           proficiency.proficiencyTestActionPlan(data.pid)
+         proficiency.proficiencyTestActionPlan(data.pid)
 
-        }
+         }
 
-        nav.appendChild(btnAction);*/
+         nav.appendChild(btnAction);*/
 
         var btnFinish = document.createElement("button");
         btnFinish.className = "green";
@@ -2163,25 +2150,25 @@ loadPTTests: function(path,target){
         btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
-        if(data.action_plan && data.action_plan.length > 0){
+        if (data.action_plan && data.action_plan.length > 0) {
 
             btnFinish.onclick = function () {
 
-                    window.parent.proficiency.pTReviewReport(window.parent.document.body);
+                window.parent.proficiency.pTReviewReport(window.parent.document.body);
 
             }
 
 
-         }else{
+        } else {
 
-             btnFinish.onclick = function () {
+            btnFinish.onclick = function () {
 
-                    window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
+                window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
 
             }
 
 
-         }
+        }
 
         nav.appendChild(btnFinish);
 
@@ -2191,13 +2178,13 @@ loadPTTests: function(path,target){
 
         document.head.appendChild(script);
 
-        proficiency.loadPTResults("quality_control/proficiency_test_result/"+data.pid,data, div0_1_0_0);
+        proficiency.loadPTResults("quality_control/proficiency_test_result/" + data.pid, data, div0_1_0_0);
 
     }
     ,
-    proficiencyTestActionPlan: function(id){
+    proficiencyTestActionPlan: function (id) {
 
-         var form = document.createElement("form");
+        var form = document.createElement("form");
         form.id = "data";
         form.action = "javascript:submitData()";
         form.style.display = "none";
@@ -2213,7 +2200,7 @@ loadPTTests: function(path,target){
 
 
         var fields = {
-           "Datatype": {
+            "Datatype": {
                 field_type: "hidden",
                 id: "data.datatype",
                 value: "proficiency_test_action_plan"
@@ -2236,135 +2223,135 @@ loadPTTests: function(path,target){
         proficiency.navPanel(form.outerHTML);
 
     },
-    seAvailablePTLotNumber:  function (){
+    seAvailablePTLotNumber: function () {
 
-           proficiency.ajaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent("Proficiency Test"),function(data){
+        proficiency.ajaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent("Proficiency Test"), function (data) {
 
-                    var kit_data = JSON.parse(data);
+            var kit_data = JSON.parse(data);
 
-                    var url = "/stock/available_batches?item_name=" + kit_data.name + "&batch="
+            var url = "/stock/available_batches?item_name=" + kit_data.name + "&batch="
 
-                    proficiency.pt_url = url
+            proficiency.pt_url = url
 
-            })
+        })
+
+    }
+
+
+    , showMsg: function (msg, topic, nextURL) {
+
+        if (!topic) {
+
+            topic = "Message";
 
         }
 
+        var shield = document.createElement("div");
+        shield.style.position = "absolute";
+        shield.style.top = "0px";
+        shield.style.left = "0px";
+        shield.style.width = "100%";
+        shield.style.height = "100%";
+        shield.id = "msg.shield";
+        shield.style.backgroundColor = "rgba(128,128,128,0.75)";
+        shield.style.zIndex = 1050;
 
-    ,showMsg: function (msg, topic, nextURL) {
+        document.body.appendChild(shield);
 
-            if (!topic) {
+        var width = 420;
+        var height = 280;
 
-                topic = "Message";
+        var div = document.createElement("div");
+        div.id = "msg.popup";
+        div.style.position = "absolute";
+        div.style.width = width + "px";
+        div.style.height = height + "px";
+        div.style.backgroundColor = "#eee";
+        div.style.borderRadius = "5px";
+        div.style.left = "calc(50% - " + (width / 2) + "px)";
+        div.style.top = "calc(50% - " + (height * 0.7) + "px)";
+        div.style.border = "1px outset #fff";
+        div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
+        div.style.fontFamily = "arial, helvetica, sans-serif";
+        div.style.MozUserSelect = "none";
 
-            }
+        shield.appendChild(div);
 
-            var shield = document.createElement("div");
-            shield.style.position = "absolute";
-            shield.style.top = "0px";
-            shield.style.left = "0px";
-            shield.style.width = "100%";
-            shield.style.height = "100%";
-            shield.id = "msg.shield";
-            shield.style.backgroundColor = "rgba(128,128,128,0.75)";
-            shield.style.zIndex = 1050;
+        var table = document.createElement("table");
+        table.width = "100%";
+        table.cellSpacing = 0;
 
-            document.body.appendChild(shield);
+        div.appendChild(table);
 
-            var width = 420;
-            var height = 280;
+        var trh = document.createElement("tr");
 
-            var div = document.createElement("div");
-            div.id = "msg.popup";
-            div.style.position = "absolute";
-            div.style.width = width + "px";
-            div.style.height = height + "px";
-            div.style.backgroundColor = "#eee";
-            div.style.borderRadius = "5px";
-            div.style.left = "calc(50% - " + (width / 2) + "px)";
-            div.style.top = "calc(50% - " + (height * 0.7) + "px)";
-            div.style.border = "1px outset #fff";
-            div.style.boxShadow = "5px 2px 5px 0px rgba(0,0,0,0.75)";
-            div.style.fontFamily = "arial, helvetica, sans-serif";
-            div.style.MozUserSelect = "none";
+        table.appendChild(trh);
 
-            shield.appendChild(div);
+        var th = document.createElement("th");
+        th.style.padding = "5px";
+        th.style.borderTopRightRadius = "5px";
+        th.style.borderTopLeftRadius = "5px";
+        th.style.fontSize = "20px";
+        th.style.backgroundColor = "#345db5";
+        th.style.color = "#fff";
+        th.innerHTML = topic;
+        th.style.border = "2px outset #345db5";
 
-            var table = document.createElement("table");
-            table.width = "100%";
-            table.cellSpacing = 0;
+        trh.appendChild(th);
 
-            div.appendChild(table);
+        var tr2 = document.createElement("tr");
 
-            var trh = document.createElement("tr");
+        table.appendChild(tr2);
 
-            table.appendChild(trh);
+        var td2 = document.createElement("td");
 
-            var th = document.createElement("th");
-            th.style.padding = "5px";
-            th.style.borderTopRightRadius = "5px";
-            th.style.borderTopLeftRadius = "5px";
-            th.style.fontSize = "20px";
-            th.style.backgroundColor = "#345db5";
-            th.style.color = "#fff";
-            th.innerHTML = topic;
-            th.style.border = "2px outset #345db5";
+        tr2.appendChild(td2);
 
-            trh.appendChild(th);
+        var content = document.createElement("div");
+        content.id = "msg.content";
+        content.style.width = "calc(100% - 30px)";
+        content.style.height = (height - 105 - 30) + "px";
+        content.style.border = "1px inset #eee";
+        content.style.overflow = "auto";
+        content.style.textAlign = "center";
+        content.style.verticalAlign = "middle";
+        content.style.padding = "15px";
+        content.style.fontSize = "22px";
 
-            var tr2 = document.createElement("tr");
+        content.innerHTML = msg;
 
-            table.appendChild(tr2);
+        td2.appendChild(content);
 
-            var td2 = document.createElement("td");
+        var trf = document.createElement("tr");
 
-            tr2.appendChild(td2);
+        table.appendChild(trf);
 
-            var content = document.createElement("div");
-            content.id = "msg.content";
-            content.style.width = "calc(100% - 30px)";
-            content.style.height = (height - 105 - 30) + "px";
-            content.style.border = "1px inset #eee";
-            content.style.overflow = "auto";
-            content.style.textAlign = "center";
-            content.style.verticalAlign = "middle";
-            content.style.padding = "15px";
-            content.style.fontSize = "22px";
+        var tdf = document.createElement("td");
+        tdf.align = "center";
 
-            content.innerHTML = msg;
+        trf.appendChild(tdf);
 
-            td2.appendChild(content);
+        var btn = document.createElement("button");
+        btn.className = "blue";
+        btn.innerHTML = "OK";
 
-            var trf = document.createElement("tr");
+        if (nextURL)
+            btn.setAttribute("nextURL", nextURL);
 
-            table.appendChild(trf);
+        btn.onclick = function () {
 
-            var tdf = document.createElement("td");
-            tdf.align = "center";
+            if (proficiency.$("msg.shield")) {
 
-            trf.appendChild(tdf);
+                document.body.removeChild(proficiency.$("msg.shield"));
 
-            var btn = document.createElement("button");
-            btn.className = "blue";
-            btn.innerHTML = "OK";
-
-            if (nextURL)
-                btn.setAttribute("nextURL", nextURL);
-
-            btn.onclick = function () {
-
-                if (proficiency.$("msg.shield")) {
-
-                    document.body.removeChild(proficiency.$("msg.shield"));
-
-                    if (this.getAttribute("nextURL"))
-                        window.location = this.getAttribute("nextURL");
-
-                }
+                if (this.getAttribute("nextURL"))
+                    window.location = this.getAttribute("nextURL");
 
             }
 
-            tdf.appendChild(btn);
+        }
+
+        tdf.appendChild(btn);
 
     },
 
@@ -2752,65 +2739,65 @@ loadPTTests: function(path,target){
 
         data.data.location = stock.getCookie("location");
 
-        if(data.data.datatype == "proficiency_test"){
+        if (data.data.datatype == "proficiency_test") {
 
 
-                proficiency.ajaxPostRequest("/quality_control/proficiency_test/", data.data, function (res) {
+            proficiency.ajaxPostRequest("/quality_control/proficiency_test/", data.data, function (res) {
 
-                    var json = JSON.parse(res);
+                var json = JSON.parse(res);
 
-                    if (proficiency.$("proficiency.navPanel")) {
+                if (proficiency.$("proficiency.navPanel")) {
 
-                        document.body.removeChild(proficiency.$("proficiency.navPanel"));
+                    document.body.removeChild(proficiency.$("proficiency.navPanel"));
 
-                    }
+                }
 
-                    // window.location = "/";
+                // window.location = "/";
 
-                    proficiency.showMsg(json.message, "Status", null);
+                proficiency.showMsg(json.message, "Status", null);
 
-                })
+            })
 
-        }else if(data.data.datatype =="proficiency_test_official_result"){
-
-
-              proficiency.ajaxPostRequest("/quality_control/proficiency_test_official_result/", data.data, function (res) {
-
-                    var json = JSON.parse(res);
-
-                    if (proficiency.$("proficiency.navPanel")) {
-
-                        document.body.removeChild(proficiency.$("proficiency.navPanel"));
-
-                    }
-
-                    // window.location = "/";
-
-                    proficiency.showMsg(json.message, "Status", null);
-
-                })
+        } else if (data.data.datatype == "proficiency_test_official_result") {
 
 
-        }else if(data.data.datatype =="proficiency_test_action_plan"){
+            proficiency.ajaxPostRequest("/quality_control/proficiency_test_official_result/", data.data, function (res) {
+
+                var json = JSON.parse(res);
+
+                if (proficiency.$("proficiency.navPanel")) {
+
+                    document.body.removeChild(proficiency.$("proficiency.navPanel"));
+
+                }
+
+                // window.location = "/";
+
+                proficiency.showMsg(json.message, "Status", null);
+
+            })
+
+
+        } else if (data.data.datatype == "proficiency_test_action_plan") {
 
 
             proficiency.ajaxPostRequest("/quality_control/proficiency_test_action_plan/", data.data, function (res) {
 
-                    var json = JSON.parse(res);
+                var json = JSON.parse(res);
 
-                    if (proficiency.$("proficiency.navPanel")) {
+                if (proficiency.$("proficiency.navPanel")) {
 
-                        document.body.removeChild(proficiency.$("proficiency.navPanel"));
+                    document.body.removeChild(proficiency.$("proficiency.navPanel"));
 
-                    }
+                }
 
-                    proficiency.proficiencyTestApproval(document.body)
+                proficiency.proficiencyTestApproval(document.body)
 
-                    // window.location = "/";
+                // window.location = "/";
 
-                    proficiency.showMsg(json.message, "Status", null);
+                proficiency.showMsg(json.message, "Status", null);
 
-                })
+            })
 
 
         }
@@ -2818,6 +2805,6 @@ loadPTTests: function(path,target){
     }
 
 
- });
+});
 
 proficiency.seAvailablePTLotNumber();

@@ -2,7 +2,7 @@ var url = require('url');
 
 function queryRawQualityControl(sql, callback) {
 
-    var config = require(__dirname +"/../config/database.json");
+    var config = require(__dirname + "/../config/database.json");
 
     var knex = require('knex')({
         client: 'mysql',
@@ -111,16 +111,16 @@ module.exports = function (router) {
 
         });
 
-    router.route("/month").get(function(req,res){
+    router.route("/month").get(function (req, res) {
 
         var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                "October", "November", "December","Unknown"];
+            "October", "November", "December", "Unknown"];
 
         var result = "";
 
-        for(var i = 0 ; i < monthList.length ; i++){
+        for (var i = 0; i < monthList.length; i++) {
 
-            result = result + "<li>"+monthList[i]+"</li>"
+            result = result + "<li>" + monthList[i] + "</li>"
 
         }
 
@@ -130,110 +130,113 @@ module.exports = function (router) {
 
     router.route("/roles").get(function (req, res) {
 
-            var sql = "SELECT role FROM role WHERE role IN ('Admin','HTS Focal Person','Counselor')";
+        var sql = "SELECT role FROM role WHERE role IN ('Admin','HTS Focal Person','Counselor')";
 
-            var roles = [];
+        var roles = [];
 
-            console.log(sql);
+        console.log(sql);
 
-            queryRaw(sql, function (data) {
+        queryRaw(sql, function (data) {
 
-                for (var i = 0; i < data[0].length; i++) {
+            for (var i = 0; i < data[0].length; i++) {
 
-                    roles.push(data[0][i].role);
+                roles.push(data[0][i].role);
 
-                }
+            }
 
-                var result = "<li>" + roles.join("</li><li>") + "</li>";
+            var result = "<li>" + roles.join("</li><li>") + "</li>";
 
-                res.send(result);
+            res.send(result);
 
-            });
+        });
 
     })
 
-    router.route('/hts_users').get(function(req, res){
+    router.route('/hts_users').get(function (req, res) {
 
-            var sql = " SELECT username, CONCAT(given_name, ' ', family_name) as name , attribute.hts_id "+
-                      " FROM users INNER JOIN person_name ON person_name.person_id = users.person_id INNER JOIN "+
-                      " (SELECT person_attribute.person_id as person_id , person_attribute.value as hts_id FROM `person_attribute` "+
-                      " WHERE `person_attribute_type_id` = (SELECT `person_attribute_type_id` FROM `person_attribute_type` WHERE `name` = 'HTS Provider ID')) attribute "+
-                      " ON person_name.person_id = attribute.person_id ";
+        var url_parts = url.parse(req.url, true);
 
-            var result = "";
+        var query = url_parts.query;
 
-            console.log(sql);
+        var sql = " SELECT username, CONCAT(given_name, ' ', family_name) as name , attribute.hts_id " +
+            " FROM users INNER JOIN person_name ON person_name.person_id = users.person_id INNER JOIN " +
+            " (SELECT person_attribute.person_id as person_id , person_attribute.value as hts_id FROM `person_attribute` " +
+            " WHERE `person_attribute_type_id` = (SELECT `person_attribute_type_id` FROM `person_attribute_type` " +
+            "WHERE `name` = 'HTS Provider ID')) attribute ON person_name.person_id = attribute.person_id " +
+            (query.name && query.name.trim().length > 0 ? " WHERE CONCAT(given_name, ' ', family_name) LIKE \"" +
+            query.name + "%\" OR username LIKE \"" + query.name + "%\"" : "");
 
-            queryRaw(sql, function (data) {
+        var result = "";
+
+        console.log(sql);
+
+        queryRaw(sql, function (data) {
+
+            for (var i = 0; i < data[0].length; i++) {
+
+                result += "<li tstValue = '" + data[0][i].username + "'  >" + data[0][i].name + " ( " +
+                    data[0][i].username + " ) </li>";
+
+            }
+
+            res.send(result);
+
+        });
+
+    });
+
+    router.route('/user_attributes/:username').get(function (req, res) {
+
+        var username = req.params.username;
+
+        var sql = " SELECT username, given_name as first_name,  family_name as last_name, attribute.hts_id as provider_id " +
+            " FROM users INNER JOIN person_name ON person_name.person_id = users.person_id INNER JOIN " +
+            " (SELECT person_attribute.person_id as person_id , person_attribute.value as hts_id FROM `person_attribute` " +
+            " WHERE `person_attribute_type_id` = (SELECT `person_attribute_type_id` FROM `person_attribute_type` WHERE `name` = 'HTS Provider ID')) attribute " +
+            " ON person_name.person_id = attribute.person_id WHERE username ='" + username + "' LIMIT 1";
+
+
+        console.log(sql);
+
+        queryRaw(sql, function (data) {
+
+            if (data[0][0]) {
+
+                res.send(data[0][0])
+
+
+            }
+
+
+        });
+
+    });
+
+    router.route('/user_roles/:username').get(function (req, res) {
+
+        var username = req.params.username;
+
+        var sql = "SELECT role FROM users INNER JOIN user_role ON users.user_id = user_role.user_id WHERE username = '" + username + "'";
+
+        queryRaw(sql, function (data) {
+
+            if (data[0][0]) {
+
+                var result = [];
 
                 for (var i = 0; i < data[0].length; i++) {
 
-
-                    result += "<li tstValue = '"+data[0][i].username+"'  >"+ data[0][i].name +" ( "+ data[0][i].username +" ) </li>";
-                    
+                    result.push(data[0][i].role);
 
                 }
-
 
                 res.send(result);
 
-            });
+
+            }
 
 
-    });
-
-    router.route('/user_attributes/:username').get(function(req,res){
-
-            var username = req.params.username;
-
-            var sql = " SELECT username, given_name as first_name,  family_name as last_name, attribute.hts_id as provider_id "+
-                      " FROM users INNER JOIN person_name ON person_name.person_id = users.person_id INNER JOIN "+
-                      " (SELECT person_attribute.person_id as person_id , person_attribute.value as hts_id FROM `person_attribute` "+
-                      " WHERE `person_attribute_type_id` = (SELECT `person_attribute_type_id` FROM `person_attribute_type` WHERE `name` = 'HTS Provider ID')) attribute "+
-                      " ON person_name.person_id = attribute.person_id WHERE username ='"+username+"' LIMIT 1";
-
-
-            console.log(sql);
-
-            queryRaw(sql, function (data) {
-
-                if(data[0][0]){
-
-                        res.send(data[0][0])
-
-
-                }
-
-
-            });
-
-    });
-
-    router.route('/user_roles/:username').get(function(req,res){
-
-            var username = req.params.username;
-
-            var sql ="SELECT role FROM users INNER JOIN user_role ON users.user_id = user_role.user_id WHERE username = '"+ username +"'";
-
-            queryRaw(sql, function (data) {
-
-                if(data[0][0]){
-
-                        var result = [];
-
-                        for(var i = 0 ; i < data[0].length ; i++){
-
-                            result.push(data[0][i].role);
-
-                        }
-
-                        res.send(result);
-
-
-                }
-
-
-            });
+        });
 
 
     });

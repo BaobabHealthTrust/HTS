@@ -2,7 +2,7 @@ var timers = {}
 
 var repeat_test_panel = {}
 
-var consumption =[0,0];
+var consumption = [0, 0];
 
 function getAjaxRequest(url, callback, optionalControl) {
 
@@ -35,9 +35,9 @@ function getAjaxRequest(url, callback, optionalControl) {
 
 }
 
-function loadPTControl(test){
+function loadPTControl(test) {
 
-    var control = __$("inputFrame"+tstCurrentPage);
+    var control = __$("inputFrame" + tstCurrentPage);
 
     control.innerHTML = "";
 
@@ -47,7 +47,7 @@ function loadPTControl(test){
 
     var table = document.createElement("table");
 
-    table.id="pt_table"
+    table.id = "pt_table"
 
     control.appendChild(table);
 
@@ -82,7 +82,7 @@ function loadPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": "+__$('data.test1_kit_name').value : "");
+    th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": " + __$('data.test1_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -95,7 +95,7 @@ function loadPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": "+__$('data.test2_kit_name').value : "");
+    th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": " + __$('data.test2_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -167,7 +167,7 @@ function loadPTControl(test){
     tr.appendChild(th)
 
 
-    for(var i = 0 ; i < 5 ; i++){
+    for (var i = 0; i < 5; i++) {
 
         var tr = document.createElement("tr");
 
@@ -208,7 +208,7 @@ function loadPTControl(test){
 
         div.style.width = "90%";
 
-        div.id = "timer_1_"+i;
+        div.id = "timer_1_" + i;
 
         div.style.height = "100%";
 
@@ -220,7 +220,7 @@ function loadPTControl(test){
 
         div.innerHTML = "Start";
 
-        div.setAttribute("onclick","startTimer('timer_1_"+i+"')");
+        div.setAttribute("onclick", "startTimer('timer_1_" + i + "')");
 
         div.style.fontSize = "1.8em";
 
@@ -234,13 +234,13 @@ function loadPTControl(test){
 
         /*var button = document.createElement("button");
 
-        button.id = "button_start_1_"+i;
+         button.id = "button_start_1_"+i;
 
-        button.innerHTML = "Start"
+         button.innerHTML = "Start"
 
          button.setAttribute("onclick","startTimer('button_start_1_"+i+"')");
 
-        td.appendChild(button);*/
+         td.appendChild(button);*/
 
 
         var td = document.createElement("td");
@@ -255,11 +255,11 @@ function loadPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "reactive_1_"+i;
+        button.id = "reactive_1_" + i;
 
         button.innerHTML = "R";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','+','timer_1_"+ i +"','reactive_1_"+i+"','non_reactive_1_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_1_" + i + "','+','timer_1_" + i + "','reactive_1_" + i + "','non_reactive_1_" + i + "')");
 
         td.appendChild(button);
 
@@ -278,9 +278,9 @@ function loadPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "non_reactive_1_"+i;
+        button.id = "non_reactive_1_" + i;
 
-         button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','-','timer_1_"+ i +"','non_reactive_1_"+i+"','reactive_1_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_1_" + i + "','-','timer_1_" + i + "','non_reactive_1_" + i + "','reactive_1_" + i + "')");
 
         button.innerHTML = "NR";
 
@@ -305,7 +305,7 @@ function loadPTControl(test){
 
         div.style.width = "90%";
 
-        div.id = "timer_2_"+i;
+        div.id = "timer_2_" + i;
 
         div.style.height = "100%";
 
@@ -317,7 +317,7 @@ function loadPTControl(test){
 
         div.innerHTML = "Start";
 
-         div.setAttribute("onclick","startTimer('timer_2_"+i+"')");
+        div.setAttribute("onclick", "startTimer('timer_2_" + i + "')");
 
         div.style.fontSize = "1.8em";
 
@@ -331,13 +331,13 @@ function loadPTControl(test){
 
         /*var button = document.createElement("button");
 
-        button.id = "button_start_2_"+i;
+         button.id = "button_start_2_"+i;
 
-        button.innerHTML = "Start";
+         button.innerHTML = "Start";
 
-        button.setAttribute("onclick","startTimer('button_start_2_"+i+"')");
+         button.setAttribute("onclick","startTimer('button_start_2_"+i+"')");
 
-        td.appendChild(button);*/
+         td.appendChild(button);*/
 
 
         var td = document.createElement("td");
@@ -352,11 +352,11 @@ function loadPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "reactive_2_"+i;
+        button.id = "reactive_2_" + i;
 
         button.innerHTML = "R";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','+','timer_2_"+ i +"','reactive_2_"+i+"','non_reactive_2_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_2_" + i + "','+','timer_2_" + i + "','reactive_2_" + i + "','non_reactive_2_" + i + "')");
 
         td.appendChild(button);
 
@@ -375,11 +375,11 @@ function loadPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "non_reactive_2_"+i;
+        button.id = "non_reactive_2_" + i;
 
         button.innerHTML = "NR";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','-','timer_2_"+ i +"','non_reactive_2_"+i+"','reactive_2_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_2_" + i + "','-','timer_2_" + i + "','non_reactive_2_" + i + "','reactive_2_" + i + "')");
 
         td.appendChild(button);
 
@@ -396,14 +396,13 @@ function loadPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "repeat_"+i;
+        button.id = "repeat_" + i;
 
         button.innerHTML = "Repeat";
 
-        button.setAttribute("onclick","setForRepeate("+i+",'repeat_"+i+"')");
+        button.setAttribute("onclick", "setForRepeate(" + i + ",'repeat_" + i + "')");
 
         td.appendChild(button);
-
 
 
     }
@@ -412,9 +411,9 @@ function loadPTControl(test){
 }
 
 
-function loadRepeatPTControl(test){
+function loadRepeatPTControl(test) {
 
-    var control = __$("inputFrame"+tstCurrentPage);
+    var control = __$("inputFrame" + tstCurrentPage);
 
     control.innerHTML = "";
 
@@ -425,10 +424,9 @@ function loadRepeatPTControl(test){
     var table = document.createElement("table");
 
 
-
     control.appendChild(table);
 
-    
+
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
@@ -460,7 +458,7 @@ function loadRepeatPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": "+__$('data.test1_kit_name').value : "");
+    th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": " + __$('data.test1_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
@@ -473,12 +471,11 @@ function loadRepeatPTControl(test){
 
     tr.appendChild(th);
 
-    th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": "+__$('data.test2_kit_name').value : "");
+    th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": " + __$('data.test2_kit_name').value : "");
 
     th.style.padding = "0.3em";
 
     th.colSpan = "3";
-
 
 
     var tr = document.createElement("tr");
@@ -534,9 +531,9 @@ function loadRepeatPTControl(test){
     panel.sort();
 
 
-    for(var i = 0 ; i < panel.length ; i++){
+    for (var i = 0; i < panel.length; i++) {
 
-        if(repeat_test_panel[panel[i]] == false){
+        if (repeat_test_panel[panel[i]] == false) {
 
             continue;
 
@@ -579,7 +576,7 @@ function loadRepeatPTControl(test){
 
         div.style.width = "90%";
 
-        div.id = "im_timer_1_"+i;
+        div.id = "im_timer_1_" + i;
 
         div.style.height = "100%";
 
@@ -591,7 +588,7 @@ function loadRepeatPTControl(test){
 
         div.innerHTML = "Start";
 
-         div.setAttribute("onclick","startTimer('im_timer_1_"+i+"')");
+        div.setAttribute("onclick", "startTimer('im_timer_1_" + i + "')");
 
         div.style.fontSize = "1.8em";
 
@@ -616,11 +613,11 @@ function loadRepeatPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "im_reactive_1_"+i;
+        button.id = "im_reactive_1_" + i;
 
         button.innerHTML = "R";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','+','im_timer_1_"+ i +"','im_reactive_1_"+i+"','im_non_reactive_1_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_1_" + i + "','+','im_timer_1_" + i + "','im_reactive_1_" + i + "','im_non_reactive_1_" + i + "')");
 
         td.appendChild(button);
 
@@ -639,9 +636,9 @@ function loadRepeatPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "im_non_reactive_1_"+i;
+        button.id = "im_non_reactive_1_" + i;
 
-         button.setAttribute("onclick","updateResult('"+test+ "_1_"+i+"','-','im_timer_1_"+ i +"','im_non_reactive_1_"+i+"','im_reactive_1_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_1_" + i + "','-','im_timer_1_" + i + "','im_non_reactive_1_" + i + "','im_reactive_1_" + i + "')");
 
         button.innerHTML = "NR";
 
@@ -668,7 +665,7 @@ function loadRepeatPTControl(test){
 
         div.style.width = "90%";
 
-        div.id = "im_timer_2_"+i;
+        div.id = "im_timer_2_" + i;
 
         div.style.height = "100%";
 
@@ -680,7 +677,7 @@ function loadRepeatPTControl(test){
 
         div.innerHTML = "Start";
 
-         div.setAttribute("onclick","startTimer('im_timer_2_"+i+"')");
+        div.setAttribute("onclick", "startTimer('im_timer_2_" + i + "')");
 
         div.style.fontSize = "1.8em";
 
@@ -705,11 +702,11 @@ function loadRepeatPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "im_reactive_2_"+i;
+        button.id = "im_reactive_2_" + i;
 
         button.innerHTML = "R";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','+','im_timer_2_"+ i +"','im_reactive_2_"+i+"','im_non_reactive_2_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_2_" + i + "','+','im_timer_2_" + i + "','im_reactive_2_" + i + "','im_non_reactive_2_" + i + "')");
 
         td.appendChild(button);
 
@@ -726,14 +723,13 @@ function loadRepeatPTControl(test){
 
         var button = document.createElement("button");
 
-        button.id = "im_non_reactive_2_"+i;
+        button.id = "im_non_reactive_2_" + i;
 
         button.innerHTML = "NR";
 
-        button.setAttribute("onclick","updateResult('"+test+ "_2_"+i+"','-','im_timer_2_"+ i +"','im_non_reactive_2_"+i+"','im_reactive_2_"+i+"')");
+        button.setAttribute("onclick", "updateResult('" + test + "_2_" + i + "','-','im_timer_2_" + i + "','im_non_reactive_2_" + i + "','im_reactive_2_" + i + "')");
 
         td.appendChild(button);
-
 
 
     }
@@ -742,97 +738,95 @@ function loadRepeatPTControl(test){
 }
 
 
-function startTimer(button){
+function startTimer(button) {
 
     __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>00:00</font>"
 
     __$(button).removeAttribute("onclick");
 
-   if(!timers[button]){
+    if (!timers[button]) {
 
-        timers[button] = {minutes : 0 , seconds : 0 , progress: true}
+        timers[button] = {minutes: 0, seconds: 0, progress: true}
 
-        if(button.match(/timer_1_/i)){
+        if (button.match(/timer_1_/i)) {
 
-             consumption[0]++
+            consumption[0]++
 
-        }else{
+        } else {
 
             consumption[1]++
         }
 
-       
-   }
+
+    }
 
 
-    var timerInterval = setInterval(function (){
+    var timerInterval = setInterval(function () {
 
-        if(timers[button].progress){
+        if (timers[button].progress) {
 
             timers[button].seconds++;
 
-                if(timers[button].seconds == 60){
+            if (timers[button].seconds == 60) {
 
-                    timers[button].minutes++;
+                timers[button].minutes++;
 
-                    timers[button].seconds= 0
+                timers[button].seconds = 0
 
-                }
+            }
 
-                if(__$(button) != null){
+            if (__$(button) != null) {
 
-                    __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>" +
-                                padZeros(timers[button].minutes,2) +":"+padZeros(timers[button].seconds,2) + "</font>"
+                __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>" +
+                    padZeros(timers[button].minutes, 2) + ":" + padZeros(timers[button].seconds, 2) + "</font>"
 
-                }
+            }
 
-                
 
-        }else{
+        } else {
 
             clearInterval(timerInterval);
 
         }
 
-        
 
-    },1000)
+    }, 1000)
 
 }
 
-function updateResult(test,result,timer, buttonActivate,buttonDeactivate) {
+function updateResult(test, result, timer, buttonActivate, buttonDeactivate) {
 
-    var resultField = __$("data."+test);
+    var resultField = __$("data." + test);
 
     resultField.value = result;
 
-    if(timers[timer])
-         __$("data."+test +"_time").value = timers[timer].minutes +":"+timers[timer].seconds;
+    if (timers[timer])
+        __$("data." + test + "_time").value = timers[timer].minutes + ":" + timers[timer].seconds;
 
-    if(timer && timers[timer])
+    if (timer && timers[timer])
         timers[timer].progress = false;
 
-    if(buttonDeactivate)
+    if (buttonDeactivate)
         __$(buttonDeactivate).className = "blue";
 
-    if(buttonActivate)
+    if (buttonActivate)
         __$(buttonActivate).className = "green";
 
 
 }
 
-function setForRepeate(panel,button){
+function setForRepeate(panel, button) {
 
     var rptButton = __$(button);
 
-    if(rptButton.className.match(/green/i)){
+    if (rptButton.className.match(/green/i)) {
 
         rptButton.className = "blue";
 
-         repeat_test_panel[panel] = false;
+        repeat_test_panel[panel] = false;
 
     }
-    else{
+    else {
 
         rptButton.className = "green";
 
@@ -842,56 +836,60 @@ function setForRepeate(panel,button){
 
 }
 
-function checkRepeatFields(){
+function checkRepeatFields() {
 
-        var condition = false;
+    var condition = false;
 
-        var repeat_keys = Object.keys(repeat_test_panel);
+    var repeat_keys = Object.keys(repeat_test_panel);
 
-        for(var i = 0 ; i < repeat_keys.length ; i++){
+    for (var i = 0; i < repeat_keys.length; i++) {
 
 
-            if(repeat_test_panel[repeat_keys[i]]){
+        if (repeat_test_panel[repeat_keys[i]]) {
 
-                 condition = true;
+            condition = true;
 
-                 return condition;
-
-            }
+            return condition;
 
         }
 
-         return condition;
+    }
+
+    return condition;
 
 }
 
-function setLotNumber(target, value){
+function setLotNumber(target, value) {
 
-    __$(target).setAttribute('ajaxURL','/stock/available_batches_to_user?userId=' + 
-                            getCookie("username") + "&item_name=" + value + "&batch=")
+    __$(target).setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=' +
+        getCookie("username") + "&item_name=" + value + "&batch=")
 
 }
 
-function setLotExpiry(expiry){
+function setLotExpiry(expiry) {
 
-         var lot = __$('touchscreenInput' + tstCurrentPage).value.trim();
+    var lot = __$('touchscreenInput' + tstCurrentPage).value.trim();
+
+    if(lot.match(/\b\d+\/[A-Za-z]{3}\/\d{4}\b/)) {
 
         var date_string = lot.match(/\b\d+\/[A-Za-z]{3}\/\d{4}\b/)[0];
 
-        if(date_string)
-                __$(expiry).value = (new Date(date_string)).format("YYYY-mm-dd");
-
-}
-
-function loadFinalResultControl(){
-
-    for(var i = 0 ; i < consumption.length ; i++){
-
-        __$("data.test_"+(i + 1)+"_consumption_quantity").value = consumption[i];
+        if (date_string)
+            __$(expiry).value = (new Date(date_string)).format("YYYY-mm-dd");
 
     }
 
-    var control = __$("inputFrame"+tstCurrentPage);
+}
+
+function loadFinalResultControl() {
+
+    for (var i = 0; i < consumption.length; i++) {
+
+        __$("data.test_" + (i + 1) + "_consumption_quantity").value = consumption[i];
+
+    }
+
+    var control = __$("inputFrame" + tstCurrentPage);
 
     control.innerHTML = "";
 
@@ -969,7 +967,7 @@ function loadFinalResultControl(){
 
     var td = document.createElement("td");
 
-    td.innerHTML = "<b>Kit Name : </b>"  + __$('data.test1_kit_name').value ? __$('data.test1_kit_name').value : "" ;
+    td.innerHTML = "<b>Kit Name : </b>" + __$('data.test1_kit_name').value ? __$('data.test1_kit_name').value : "";
 
     td.style.padding = "0.5em";
 
@@ -982,7 +980,7 @@ function loadFinalResultControl(){
 
     var td = document.createElement("td");
 
-    td.innerHTML =  "<b>Kit Name : </b>"  + __$('data.test2_kit_name').value ? __$('data.test2_kit_name').value : "" ;
+    td.innerHTML = "<b>Kit Name : </b>" + __$('data.test2_kit_name').value ? __$('data.test2_kit_name').value : "";
 
     td.style.padding = "0.5em";
 
@@ -991,7 +989,7 @@ function loadFinalResultControl(){
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
-    
+
 
     var td = document.createElement("td");
 
@@ -1014,7 +1012,7 @@ function loadFinalResultControl(){
 
     var td = document.createElement("td");
 
-    td.innerHTML =  "<b>Lot Number : </b>"  + __$('data.lot_number1').value ? __$('data.lot_number1').value : "" ;
+    td.innerHTML = "<b>Lot Number : </b>" + __$('data.lot_number1').value ? __$('data.lot_number1').value : "";
 
     td.style.padding = "0.5em";
 
@@ -1027,7 +1025,7 @@ function loadFinalResultControl(){
 
     var td = document.createElement("td");
 
-    td.innerHTML = "<b>Lot Number : </b>"  + __$('data.lot_number2').value ? __$('data.lot_number2').value : "" ;
+    td.innerHTML = "<b>Lot Number : </b>" + __$('data.lot_number2').value ? __$('data.lot_number2').value : "";
 
     td.style.padding = "0.5em";
 
@@ -1044,7 +1042,7 @@ function loadFinalResultControl(){
 
     var td = document.createElement("td");
 
-    td.innerHTML = "<b>Expiry Date : </b>"  + __$('data.test1_expiry_date').value ? (new Date( __$('data.test1_expiry_date').value)).format() : "" ;
+    td.innerHTML = "<b>Expiry Date : </b>" + __$('data.test1_expiry_date').value ? (new Date(__$('data.test1_expiry_date').value)).format() : "";
 
     td.style.padding = "0.5em";
 
@@ -1057,7 +1055,7 @@ function loadFinalResultControl(){
 
     var td = document.createElement("td");
 
-    td.innerHTML = "<b>Expiry Date : </b>"  + __$('data.test2_expiry_date').value ? (new Date(__$('data.test2_expiry_date').value)).format() : "" ;
+    td.innerHTML = "<b>Expiry Date : </b>" + __$('data.test2_expiry_date').value ? (new Date(__$('data.test2_expiry_date').value)).format() : "";
 
     td.style.padding = "0.5em";
 
@@ -1154,7 +1152,7 @@ function loadFinalResultControl(){
     tr.appendChild(td);
 
 
-    for(var i = 0 ; i < 5 ; i++){
+    for (var i = 0; i < 5; i++) {
 
         var tr = document.createElement("tr");
 
@@ -1173,7 +1171,7 @@ function loadFinalResultControl(){
 
         var td = document.createElement("th");
 
-        td.innerHTML = __$('data.test_1_'+ i).value == "+"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+        td.innerHTML = __$('data.test_1_' + i).value == "+" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
 
         td.style.padding = "0.5em";
 
@@ -1189,67 +1187,7 @@ function loadFinalResultControl(){
 
         td.innerHTML = "-";
 
-        td.innerHTML = __$('data.test_1_'+ i).value == "-"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
-
-        td.style.padding = "0.5em";
-
-         td.style.borderRight = "1px solid black"
-
-        td.style.borderBottom = "1px solid black"
-
-        td.style.borderTop = "1px solid black"
-
-        tr.appendChild(td);
-
-
-
-        var td = document.createElement("th");
-
-        td.innerHTML = __$('data.test_2_'+ i).value == "+"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
-
-        td.style.padding = "0.5em";
-
-         td.style.borderLeft = "1px solid black"
-
-        td.style.borderBottom = "1px solid black"
-
-        td.style.borderTop = "1px solid black"
-
-        tr.appendChild(td);
-
-        var td = document.createElement("th");
-
-        td.innerHTML = __$('data.test_2_'+ i).value == "-"?  "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
-
-        td.style.padding = "0.5em";
-
-         td.style.borderRight = "1px solid black"
-
-        td.style.borderBottom = "1px solid black"
-
-        td.style.borderTop = "1px solid black"
-
-        tr.appendChild(td);
-
-
-
-        var td = document.createElement("th");
-
-        td.innerHTML = __$('data.im_1_'+ i).value == "+"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
-
-        td.style.padding = "0.5em";
-
-        td.style.borderLeft = "1px solid black"
-
-        td.style.borderBottom = "1px solid black"
-
-        td.style.borderTop = "1px solid black"
-
-        tr.appendChild(td);
-
-        var td = document.createElement("th");
-
-        td.innerHTML = __$('data.im_1_'+ i).value == "-"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+        td.innerHTML = __$('data.test_1_' + i).value == "-" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
 
         td.style.padding = "0.5em";
 
@@ -1264,7 +1202,7 @@ function loadFinalResultControl(){
 
         var td = document.createElement("th");
 
-        td.innerHTML = __$('data.im_2_'+ i).value == "+"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+        td.innerHTML = __$('data.test_2_' + i).value == "+" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
 
         td.style.padding = "0.5em";
 
@@ -1278,11 +1216,69 @@ function loadFinalResultControl(){
 
         var td = document.createElement("th");
 
-        td.innerHTML = __$('data.im_2_'+ i).value == "-"?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+        td.innerHTML = __$('data.test_2_' + i).value == "-" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
 
         td.style.padding = "0.5em";
 
-         td.style.borderRight = "1px solid black"
+        td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_1_' + i).value == "+" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_1_' + i).value == "-" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderRight = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_2_' + i).value == "+" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderLeft = "1px solid black"
+
+        td.style.borderBottom = "1px solid black"
+
+        td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("th");
+
+        td.innerHTML = __$('data.im_2_' + i).value == "-" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
+
+        td.style.padding = "0.5em";
+
+        td.style.borderRight = "1px solid black"
 
         td.style.borderBottom = "1px solid black"
 
@@ -1305,9 +1301,9 @@ function loadFinalResultControl(){
 
         button.className = "blue";
 
-        button.id = "result_r_"+i;
+        button.id = "result_r_" + i;
 
-        button.setAttribute("onclick","updateFinalResult("+i+",'+', 'result_r_', 'result_nr_')");
+        button.setAttribute("onclick", "updateFinalResult(" + i + ",'+', 'result_r_', 'result_nr_')");
 
         td.appendChild(button);
 
@@ -1327,9 +1323,9 @@ function loadFinalResultControl(){
 
         button.innerHTML = "-";
 
-        button.id = "result_nr_"+i;
+        button.id = "result_nr_" + i;
 
-        button.setAttribute("onclick","updateFinalResult("+i+",'-', 'result_nr_', 'result_r_')");
+        button.setAttribute("onclick", "updateFinalResult(" + i + ",'-', 'result_nr_', 'result_r_')");
 
         td.appendChild(button);
 
@@ -1338,53 +1334,50 @@ function loadFinalResultControl(){
     }
 
 
-
-
 }
 
-function updateFinalResult(panel,result, activate, deactivate){
+function updateFinalResult(panel, result, activate, deactivate) {
 
-    __$('data.final_result_'+panel).value = result;
+    __$('data.final_result_' + panel).value = result;
 
-    if(activate){
+    if (activate) {
         __$(activate + panel).className = "green";
     }
 
-    if(deactivate){
+    if (deactivate) {
         __$(deactivate + panel).className = "blue";
     }
 
 }
 
 
-function updateUserAttributes(){
+function updateUserAttributes() {
 
     var username = __$("data.tester").value;
 
-    window.parent.proficiency.ajaxRequest("/app_custom/user_attributes/"+username , function(data){
+    window.parent.proficiency.ajaxRequest("/app_custom/user_attributes/" + username, function (data) {
 
-            var data = JSON.parse(data);
+        var data = JSON.parse(data);
 
-            __$('data.first_name').value = data.first_name
+        __$('data.first_name').value = data.first_name
 
-            __$('data.last_name').value = data.last_name
+        __$('data.last_name').value = data.last_name
 
-            __$('data.provider_id').value = data.provider_id
+        __$('data.provider_id').value = data.provider_id
 
     });
 
 }
 
-function loadPTOfficialResultControl(){
+function loadPTOfficialResultControl() {
 
-    var control = __$("inputFrame"+tstCurrentPage);
+    var control = __$("inputFrame" + tstCurrentPage);
 
     control.innerHTML = "";
 
     control.style.overflowY = "scroll";
 
     //control.style.overflowX = "scroll";
-
 
 
     var table = document.createElement("table");
@@ -1418,13 +1411,13 @@ function loadPTOfficialResultControl(){
 
     tr.appendChild(td);
 
-     var td = document.createElement("th");
+    var td = document.createElement("th");
 
     td.innerHTML = "Official Result";
 
     td.style.borderBottom = "1px solid black";
 
-     td.style.borderRight = "1px solid black";
+    td.style.borderRight = "1px solid black";
 
     td.colSpan = "3";
 
@@ -1466,89 +1459,89 @@ function loadPTOfficialResultControl(){
     tr.appendChild(td);
 
 
-    for(var i  = 0; i < 5 ; i++){
+    for (var i = 0; i < 5; i++) {
 
-            var tr = document.createElement("tr");
+        var tr = document.createElement("tr");
 
-            table.appendChild(tr);
-
-
-            var td = document.createElement("th");
-
-            td.innerHTML = i + 1;
-
-            td.style.borderBottom = "1px solid black";
-
-            td.style.borderRight = "1px solid black";
-
-            td.style.borderLeft = "1px solid black";
-
-            tr.appendChild(td);
+        table.appendChild(tr);
 
 
-            var td = document.createElement("td");
+        var td = document.createElement("th");
 
-            td.style.borderBottom = "1px solid black";
+        td.innerHTML = i + 1;
 
-            td.style.textAlign ="center";
+        td.style.borderBottom = "1px solid black";
 
-            var button = document.createElement("button")
+        td.style.borderRight = "1px solid black";
 
-            button.className = "blue";
+        td.style.borderLeft = "1px solid black";
 
-            button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
-
-            button.id = "strong_positive_"+i;
-
-            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Strong Positive','strong_positive_"+i+"',['weak_positive_"+i+"','negative_"+i+"'])")
-
-            td.appendChild(button);
-
-            tr.appendChild(td);
+        tr.appendChild(td);
 
 
-            var td = document.createElement("td");
+        var td = document.createElement("td");
 
-            td.style.borderBottom = "1px solid black";
+        td.style.borderBottom = "1px solid black";
 
-            td.style.textAlign ="center";
+        td.style.textAlign = "center";
 
-            var button = document.createElement("button")
+        var button = document.createElement("button")
 
-            button.className = "blue";
+        button.className = "blue";
 
-            button.innerHTML = "<font style= 'font-size:1em'>+</font>"
+        button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
 
-            button.id = "weak_positive_"+i;
+        button.id = "strong_positive_" + i;
 
-            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Weak Positive','weak_positive_"+i+"',['strong_positive_"+i+"','negative_"+i+"'])")
+        button.setAttribute("onclick", "updateOfficialResult('data.pt_panel_result_" + i + "', 'Strong Positive','strong_positive_" + i + "',['weak_positive_" + i + "','negative_" + i + "'])")
 
-            td.appendChild(button);
+        td.appendChild(button);
 
-            tr.appendChild(td);
+        tr.appendChild(td);
 
 
-            var td = document.createElement("td");
+        var td = document.createElement("td");
 
-            td.style.borderBottom = "1px solid black";
+        td.style.borderBottom = "1px solid black";
 
-            td.style.borderRight = "1px solid black";
+        td.style.textAlign = "center";
 
-            td.style.textAlign ="center";
+        var button = document.createElement("button")
 
-            var button = document.createElement("button")
+        button.className = "blue";
 
-            button.className = "blue";
+        button.innerHTML = "<font style= 'font-size:1em'>+</font>"
 
-            button.innerHTML = "<font style= 'font-size:1em'>-</font>"
+        button.id = "weak_positive_" + i;
 
-            button.id = "negative_"+i;
+        button.setAttribute("onclick", "updateOfficialResult('data.pt_panel_result_" + i + "', 'Weak Positive','weak_positive_" + i + "',['strong_positive_" + i + "','negative_" + i + "'])")
 
-            button.setAttribute("onclick","updateOfficialResult('data.pt_panel_result_"+i+"', 'Negative','negative_"+i+"',['strong_positive_"+i+"','weak_positive_"+i+"'])")
+        td.appendChild(button);
 
-            td.appendChild(button);
+        tr.appendChild(td);
 
-            tr.appendChild(td);
+
+        var td = document.createElement("td");
+
+        td.style.borderBottom = "1px solid black";
+
+        td.style.borderRight = "1px solid black";
+
+        td.style.textAlign = "center";
+
+        var button = document.createElement("button")
+
+        button.className = "blue";
+
+        button.innerHTML = "<font style= 'font-size:1em'>-</font>"
+
+        button.id = "negative_" + i;
+
+        button.setAttribute("onclick", "updateOfficialResult('data.pt_panel_result_" + i + "', 'Negative','negative_" + i + "',['strong_positive_" + i + "','weak_positive_" + i + "'])")
+
+        td.appendChild(button);
+
+        tr.appendChild(td);
 
 
     }
@@ -1557,49 +1550,47 @@ function loadPTOfficialResultControl(){
     __$("nextButton").className = __$("nextButton").className.replace(/blue|green/i, "gray");
 
 
-    var nexButtonIterval = setInterval(function(){
+    var nexButtonIterval = setInterval(function () {
 
-        if(__$('nextButton').className.match("gray")){
+        if (__$('nextButton').className.match("gray")) {
 
             var fals = 0
 
-            for(var i = 0 ; i < 5; i++){
+            for (var i = 0; i < 5; i++) {
 
-                if(!__$("data.pt_panel_result_"+i).value){
+                if (!__$("data.pt_panel_result_" + i).value) {
 
                     fals++;
                 }
 
             }
 
-            if(fals == 0){
+            if (fals == 0) {
 
-               __$("nextButton").className = __$("nextButton").className.replace(/gray/i, "green");
+                __$("nextButton").className = __$("nextButton").className.replace(/gray/i, "green");
 
             }
 
 
-
-        }else{
+        } else {
 
             clearInterval(nexButtonIterval);
 
         }
 
-    },100)
+    }, 100)
 
 
 }
 
-function updateOfficialResult(field, value,enable,disables){
-
+function updateOfficialResult(field, value, enable, disables) {
 
 
     __$(field).value = value;
 
     __$(enable).className = "green";
 
-    for(var i = 0; i < disables.length; i++){
+    for (var i = 0; i < disables.length; i++) {
 
         __$(disables[i]).className = "blue";
 
@@ -1608,33 +1599,33 @@ function updateOfficialResult(field, value,enable,disables){
 
 }
 
-function sePTLotNumber(){
+function sePTLotNumber() {
 
-    getAjaxRequest("/stock/available_kits_by_desctiption/"+encodeURIComponent("Proficiency Test"),function(data){
+    getAjaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent("Proficiency Test"), function (data) {
 
-            var kit_data = JSON.parse(data);
+        var kit_data = JSON.parse(data);
 
-            var url = "/stock/available_batches_to_user?userId="+__$('data.tester').value +"&item_name=" + kit_data.name + "&batch="
+        var url = "/stock/available_batches_to_user?userId=" + __$('data.tester').value + "&item_name=" + kit_data.name + "&batch="
 
-            __$("data.pt_panel_lot_number").setAttribute("ajaxURL",url);
+        __$("data.pt_panel_lot_number").setAttribute("ajaxURL", url);
 
     })
 
 
 }
-function dtsPachListValidation(){
+function dtsPachListValidation() {
 
-     var list = __$('touchscreenInput' + tstCurrentPage).value.trim();
+    var list = __$('touchscreenInput' + tstCurrentPage).value.trim();
 
-     if(list.split(";").length < 5){
+    if (list.split(";").length < 5) {
 
-            setTimeout(function(){
+        setTimeout(function () {
 
-                    gotoPage(tstCurrentPage - 1, false, true);
+            gotoPage(tstCurrentPage - 1, false, true);
 
-                    window.parent.proficiency.showMsg("There are only "+list.split(";").length +" items in the DTS pack","DTS pack check");
-            },5)
-     }
+            window.parent.proficiency.showMsg("There are only " + list.split(";").length + " items in the DTS pack", "DTS pack check");
+        }, 5)
+    }
 
 
 }
