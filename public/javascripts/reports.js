@@ -154,6 +154,13 @@ function loadFields() {
 
     }
 
+    if(__$("month-year")) {
+
+        __$("month-year").innerHTML = months[(window.parent.__$("month") ? window.parent.__$("month").value : "")] +
+            "<br/>" + (window.parent.__$("year") ? window.parent.__$("year").value : "&nbsp;");
+
+    }
+
     ajaxRequest("/facility", function (json) {
 
         if (__$("lblFacility")) {
