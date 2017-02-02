@@ -359,7 +359,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Negative' " +
+		    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & Test 2 Negative' " +
 		        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
 		        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
@@ -381,7 +381,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Positive' " +
+		    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & Test 2 Positive' " +
 		        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
 		        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
@@ -403,7 +403,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & 2 Discordant' " +
+		    var sql = "SELECT COUNT(outcome_summary) AS total FROM htc_report WHERE COALESCE(outcome_summary,'') = 'Test 1 & Test 2 Discordant' " +
 		        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
 		        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
@@ -645,7 +645,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Confirmed Positive' " +
+		    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Confirmatory Positive' " +
 		        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
 		        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
@@ -667,7 +667,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Inconclusive' " +
+		    var sql = "SELECT COUNT(result_given_to_client) AS total FROM htc_report WHERE COALESCE(result_given_to_client,'') = 'Confirmatory Inconclusive' " +
 		        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
 		        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 
@@ -711,7 +711,7 @@ module.exports = function (router) {
 
 		    var query = url_parts.query;
 
-		    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Routine HTS within Health Service' " +
+		    var sql = "SELECT COUNT(htc_access_type) AS total FROM htc_report WHERE COALESCE(htc_access_type,'') = 'Routine HTS (PITC) within Health Service' " +
 		        (query.start_date ? " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : "") +
 		        (query.end_date ? " AND DATE(obs_datetime) <= DATE('" + query.end_date + "')" : "");
 

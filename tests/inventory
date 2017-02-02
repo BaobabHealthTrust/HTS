@@ -1,0 +1,1892 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:3015/" />
+<title>inventory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">inventory</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='tasks']/ul/li[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@onclick='window.parent.stock.listItems(window.parent.document.body)']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.blue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=D</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=R</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=M</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=N</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=U</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=N</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=G</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=O</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=L</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=D</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=whitespace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=H</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=V</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=whitespace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=slash</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Q</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=C</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=whitespace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=N</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=G</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=V</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=backspace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=backspace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=backspace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=G</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=A</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=V</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Q</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=C</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=whitespace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=O</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=S</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=V</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=S</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=whitespace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=N</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=G</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=A</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=V</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.blue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=D</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[3]/td[7]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=U</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[4]/td[7]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Q</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=C</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[5]/td[7]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Q</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=C</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=backspace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[6]/td[7]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=N</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=backspace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=S</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=whitespace</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=O</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=S</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=I</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=V</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=E</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[7]/td[7]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=T</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=P</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=dateselector_nextYear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[2]/td[8]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[3]/td[8]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[4]/td[8]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[5]/td[8]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[6]/td[8]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[7]/td[9]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=cancelButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='stock.content']/table/tr[7]/td[8]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=zero</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=today</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=nextButton</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button.green</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=HTS</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

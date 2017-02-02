@@ -30,7 +30,7 @@ Q.1.16. First Pass Test Kit 2 Lot Number [pos :: 15 $$ id :: fp_lot_number2 $$ e
 
 Q.1.17. First Pass Test 2 Result [pos :: 16 $$ id :: fp_test2_result $$ condition :: (evalCondition(3) || evalCondition(-2)) && !evalCondition(-3) && !evalCondition(4) $$ tt_onLoad :: setTestKits(); loadSerialTest(__$("fp_test2_result"), __$("fp_test2_duration"), __$("fp_item_name2").value.trim(), "First Pass") $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: clearTimers("HIV TESTING"); activateNavBtn(); $$ helpText :: First Pass 2 Result]
 
-Q.1.18. First Pass Test 1 & 2 Parallel Tests [pos :: 17 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("fp_item_name1").value, __$("fp_item_name2").value]); loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'],"First Parallel"); }) $$ condition:: evalCondition(4) && !evalCondition(5) $$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn() $$ helpText :: First Pass Test 1 & 2 Parallel]
+Q.1.18. First Pass Test 1 & Test 2 Parallel Tests [pos :: 17 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("fp_item_name1").value, __$("fp_item_name2").value]); loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'],"First Parallel"); }) $$ condition:: evalCondition(4) && !evalCondition(5) $$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn() $$ helpText :: First Pass Test 1 & Test 2 Parallel]
 
 Q.1.19. Immediate Repeat Tester [pos :: 18 $$ id :: im_tester $$ condition :: evalCondition(5) && !evalCondition(-3) $$ ajaxURL :: /list_users?name= $$ tt_onLoad :: activateNavBtn()]
 
@@ -52,7 +52,7 @@ Q.1.27. Immediate Repeat Test Kit 2 Lot Number [pos :: 26 $$ id :: im_lot_number
 
 Q.1.28. Immediate Repeat Test 2 Result [pos :: 27 $$ id :: im_test2_result $$ condition :: false $$ tt_onLoad :: setTestKits(); ]
 
-Q.1.29. Immediate Repeat Test 1 & 2 Parallel Tests [pos :: 28 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("im_item_name1").value,__$("im_item_name2").value]); loadPassParallelTests(__$("im_test1_result"), __$("im_test1_duration"), __$("im_test2_result"), __$("im_test2_duration"), __$("im_item_name1").value.trim(), __$("im_item_name2").value.trim(), "Immediate Parallel"); __$("helpText" + tstCurrentPage).innerHTML = "Immediate Repeat 1 & 2 Parallel" }) $$ condition :: evalCondition(5) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn()]
+Q.1.29. Immediate Repeat Test 1 & Test 2 Parallel Tests [pos :: 28 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("im_item_name1").value,__$("im_item_name2").value]); loadPassParallelTests(__$("im_test1_result"), __$("im_test1_duration"), __$("im_test2_result"), __$("im_test2_duration"), __$("im_item_name1").value.trim(), __$("im_item_name2").value.trim(), "Immediate Parallel"); __$("helpText" + tstCurrentPage).innerHTML = "Immediate Repeat 1 & 2 Parallel" }) $$ condition :: evalCondition(5) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn()]
 
 Q.1.30. First Pass Test Kit 1 Testing Duration (Minutes) 1 [pos :: 29 $$ id :: fp_test1_duration $$ field_type :: hidden $$ value :: 00:00]
 Q.1.31. First Pass Test Kit 2 Testing Duration (Minutes) 1 [pos :: 30 $$ id :: fp_test2_duration $$ field_type :: hidden $$ value :: 00:00]
@@ -64,7 +64,7 @@ Q.1.35. First Pass Test Kit 2 Testing Duration (Minutes) [pos :: 34 $$ id :: fp_
 Q.1.36. Immediate Repeat Test Kit 1 Testing Duration (Minutes) [pos :: 35 $$ id :: im_test1_time $$ field_type :: hidden $$ value :: 00:00]
 Q.1.37. Immediate Repeat Test Kit 2 Testing Duration (Minutes) [pos :: 36 $$ id :: im_test2_time $$ field_type :: hidden $$ value :: 00:00]
 
-Q.1.38. Outcome Summary [pos :: 37 $$ id :: outcome_summary $$ condition :: false]
+Q.1.38. Outcome Summary [pos :: 37 $$ id :: outcome_summary $$ field_type :: hidden]
 
 Q.1.39. Result Given To Client [pos :: 38 $$ id :: result_given_to_client $$ type :: hidden]
 
