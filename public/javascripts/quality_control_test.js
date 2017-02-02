@@ -58,7 +58,7 @@ var quality = ({
 
     qualityId: null,
 
-    kits : {}
+    kits: {}
     ,
     stock_label: {}
     ,
@@ -337,11 +337,11 @@ var quality = ({
 
         form.appendChild(table);
 
-        var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){"+
-                             " outcome  = 'Acceptable'; __$('data.interpretation').setAttribute('condition', false); gotoNextPage() }else{} __$('data.outcome').value  = outcome;";
+        var update_outcome = " var outcome ='Not Acceptable';if((__$('data.dts_name').value.match(/Positive/i) && __$('data.result').value.match(/Positive/i)) || (__$('data.dts_name').value.match(/Negative/i) && __$('data.result').value.match(/Negative/i)) ){" +
+            " outcome  = 'Acceptable'; __$('data.interpretation').setAttribute('condition', false); gotoNextPage() }else{} __$('data.outcome').value  = outcome;";
 
-        var include_summary_js = "var script = document.createElement('script'); script.type = 'text/javascript'; script.src ='/javascripts/quality_control_summary.js';"+
-                                "__$('data').appendChild(script);"
+        var include_summary_js = "var script = document.createElement('script'); script.type = 'text/javascript'; script.src ='/javascripts/quality_control_summary.js';" +
+            "__$('data').appendChild(script);"
 
         var fields = {
             "Datatype": {
@@ -354,26 +354,26 @@ var quality = ({
                 id: "data.qc_testing_date"
             }
             ,
-            "HTS Provider":{
+            "HTS Provider": {
                 field_type: "text",
-                id:"data.hts_provider",
-                ajaxURL: "/app_custom/hts_users"
+                id: "data.hts_provider",
+                ajaxURL: "/app_custom/hts_users?name="
             },
-            "DTS Sample 1":{
-                field_type: "select",
+            "DTS Sample 1": {
+                field_type: "text",
                 id: "data.dts_name1",
                 tt_pageStyleClass: "NoKeyboard",
-                ajaxURL : "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
-                tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.dts_1_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
-                               " __$('data.dts_1_lot_number').setAttribute('condition',true)};setSecondDTS('data.dts_name2')"
+                ajaxURL: "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
+                tt_onUnload: "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){" +
+                "__$('data.dts_1_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId=" + user.getCookie("username") + "&item_name='+dts_name+'&batch=');" +
+                " __$('data.dts_1_lot_number').setAttribute('condition',true)};setSecondDTS('data.dts_name2')"
             },
             "DTS Sample 1 Lot Number": {
-                field_type: "select",
+                field_type: "text",
                 id: "data.dts_1_lot_number",
-                condition : false,
-                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_1_expiry_date')"
-                
+                condition: false,
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_1_expiry_date')"
+
             },
             "DTS Sample 1 Date": {
 
@@ -381,21 +381,21 @@ var quality = ({
                 id: "data.dts_1_expiry_date"
 
             },
-            "DTS Sample 2":{
-                field_type: "select",
+            "DTS Sample 2": {
+                field_type: "text",
                 id: "data.dts_name2",
                 tt_pageStyleClass: "NoKeyboard",
-                ajaxURL : "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
-                 tt_onUnload : "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){"+
-                               "__$('data.dts_2_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+dts_name+'&batch=');"+
-                               " __$('data.dts_2_lot_number').setAttribute('condition',true)}"
+                ajaxURL: "/stock/stock_items?category=Dts&description=Quality Control&item_name=",
+                tt_onUnload: "var dts_name = __$('touchscreenInput' + tstCurrentPage).value; if(dts_name){" +
+                "__$('data.dts_2_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId=" + user.getCookie("username") + "&item_name='+dts_name+'&batch=');" +
+                " __$('data.dts_2_lot_number').setAttribute('condition',true)}"
             },
             "DTS Sample 2 Lot Number": {
-                field_type: "select",
+                field_type: "text",
                 id: "data.dts_2_lot_number",
-                condition : false,
+                condition: false,
                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_2_expiry_date')"
-                
+
             },
             "DTS Sample 2 Date": {
 
@@ -404,26 +404,26 @@ var quality = ({
 
             },
             "Select Test kit to evaluate": {
-                field_type: "select",
+                field_type: "text",
                 id: "data.test_kit_name",
                 tt_pageStyleClass: "NoKeyboard",
-                ajaxURL : '/stock/stock_items?category=Test Kits&item_name=',
-                tt_onUnload : "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){"+
-                               "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId="+user.getCookie("username")+"&item_name='+kit_name+'&batch=');"+
-                               "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
+                ajaxURL: '/stock/stock_items?category=Test Kits&item_name=',
+                tt_onUnload: "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){" +
+                "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId=" + user.getCookie("username") + "&item_name='+kit_name+'&batch=');" +
+                "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
             },
             "Teskit Lot Number": {
                 field_type: "text",
                 id: "data.test_kit_lot_number",
                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit_expiry_date')"
             },
-             "Test Kit Expiry Date": {
+            "Test Kit Expiry Date": {
 
                 field_type: "hidden",
                 id: "data.test_kit_expiry_date"
 
             },
-            "Quality Control Test":{
+            "Quality Control Test": {
 
                 field_type: "text",
                 id: "data.quality_test",
@@ -431,62 +431,62 @@ var quality = ({
                 tt_pageStyleClass: "NoKeyboard"
 
             },
-            "Control 1 Line seen":{
-                field_type:"hidden",
-                id:"data.control_1_line_seen"
+            "Control 1 Line seen": {
+                field_type: "hidden",
+                id: "data.control_1_line_seen"
             },
-            "Control 2 Line seen":{
-                field_type:"hidden",
-                id:"data.control_2_line_seen"
+            "Control 2 Line seen": {
+                field_type: "hidden",
+                id: "data.control_2_line_seen"
             },
-            "Result 1":{
-                field_type:"hidden",
-                id:"data.result_1"
+            "Result 1": {
+                field_type: "hidden",
+                id: "data.result_1"
             },
-            "Result 2":{
-                field_type:"hidden",
-                id:"data.result_2"
+            "Result 2": {
+                field_type: "hidden",
+                id: "data.result_2"
             },
-            "Timer 1":{
-                id:"data.timer_1",
+            "Timer 1": {
+                id: "data.timer_1",
                 field_type: "hidden"
             },
-            "Timer 2":{
-                id:"data.timer_2",
+            "Timer 2": {
+                id: "data.timer_2",
                 field_type: "hidden"
             },
-            "Outcome 1":{
+            "Outcome 1": {
 
                 field_type: "hidden",
                 id: "data.outcome_1"
 
             },
-            "Outcome 2":{
+            "Outcome 2": {
 
                 field_type: "hidden",
                 id: "data.outcome_2"
 
             },
-            "Comment for Result 1":{
+            "Comment for Result 1": {
 
-                    field_type:"text",
-                    id: "data.interpretation_1",
-                    condition: false
-
-            },
-            "Comment for Result 2":{
-
-                    field_type:"text",
-                    id: "data.interpretation_2",
-                    condition: false
+                field_type: "text",
+                id: "data.interpretation_1",
+                condition: false
 
             },
-            "Quality Control Summary":{
+            "Comment for Result 2": {
 
-                    field_type: "text",
-                    id: "data.Summary",
-                    tt_pageStyleClass: "NoKeyboard",
-                    tt_onLoad: "showQualityControlTestSummary()"
+                field_type: "text",
+                id: "data.interpretation_2",
+                condition: false
+
+            },
+            "Quality Control Summary": {
+
+                field_type: "text",
+                id: "data.Summary",
+                tt_pageStyleClass: "NoKeyboard",
+                tt_onLoad: "showQualityControlTestSummary()"
 
             }
         }
@@ -511,43 +511,43 @@ var quality = ({
 
         data.data.location = stock.getCookie("location");
 
-        if(data.data.datatype == "quality_assurance"){
+        if (data.data.datatype == "quality_assurance") {
 
-                quality.ajaxPostRequest("/quality_control/save_quality_control_test/", data.data, function (res) {
+            quality.ajaxPostRequest("/quality_control/save_quality_control_test/", data.data, function (res) {
 
-                    var json = JSON.parse(res);
+                var json = JSON.parse(res);
 
-                    if (quality.$("quality.navPanel")) {
+                if (quality.$("quality.navPanel")) {
 
-                        document.body.removeChild(quality.$("quality.navPanel"));
+                    document.body.removeChild(quality.$("quality.navPanel"));
 
-                    }
+                }
 
-                    // window.location = "/";
+                // window.location = "/";
 
-                    quality.showMsg(json.message, "Status", null);
+                quality.showMsg(json.message, "Status", null);
 
-                })
+            })
 
-        } 
+        }
 
     },
 
-    outcome: function(dts_type, result){
+    outcome: function (dts_type, result) {
 
         var outcome = "Not acceptable";
 
-        if((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i)) ){
+        if ((dts_type.match(/Positive/i) && result.match(/Positive/i)) || (dts_type.match(/Negative/i) && result.match(/Negative/i))) {
 
-            outcome  = "Acceptable"
-        
+            outcome = "Acceptable"
+
         }
 
         user.showMsg(outcome);
 
     },
 
-    qualityControlApproval : function(target){
+    qualityControlApproval: function (target) {
 
         if (!target)
             return;
@@ -651,7 +651,7 @@ var quality = ({
         quality.loadQualityTests("/quality_control/quality_control_test_approval/", div0_1_0_0);
 
     },
-    loadQualityTests: function(path,target){
+    loadQualityTests: function (path, target) {
 
         if (!path || !target)
             return;
@@ -661,7 +661,7 @@ var quality = ({
             var data = JSON.parse(data);
 
             if (!target)
-            return;
+                return;
 
             if (!data)
                 return;
@@ -702,7 +702,7 @@ var quality = ({
 
             }
 
-            for(var i = 0 ; i < data.length ; i++ ){
+            for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
 
@@ -810,7 +810,7 @@ var quality = ({
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
-                
+
 
                 var td = document.createElement("td");
 
@@ -831,9 +831,9 @@ var quality = ({
 
                 button.id = "approve_" + i
 
-                button.className = (data[i].approval_status == 'approve'? "green" : "blue");
+                button.className = (data[i].approval_status == 'approve' ? "green" : "blue");
 
-                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].quality_assurance_test_id+",'approve','approve_"+i+"','disapprove_"+i+"')");
+                button.setAttribute("onclick", "window.parent.quality.updateQCResult(" + data[i].quality_assurance_test_id + ",'approve','approve_" + i + "','disapprove_" + i + "')");
 
                 td.style.padding = "0.1em";
 
@@ -850,11 +850,11 @@ var quality = ({
 
                 button.innerHTML = "Disapprove";
 
-                button.className =  (data[i].approval_status == 'disapprove'?  "green" : "blue");
+                button.className = (data[i].approval_status == 'disapprove' ? "green" : "blue");
 
                 button.id = "disapprove_" + i
 
-                button.setAttribute("onclick","window.parent.quality.updateQCResult("+data[i].quality_assurance_test_id+",'disapprove','disapprove_"+i+"','approve_"+i+"')");
+                button.setAttribute("onclick", "window.parent.quality.updateQCResult(" + data[i].quality_assurance_test_id + ",'disapprove','disapprove_" + i + "','approve_" + i + "')");
 
                 td.style.padding = "0.1em";
 
@@ -872,17 +872,17 @@ var quality = ({
 
     },
 
-     updateQCResult: function(test_id, approval_status ,buttonActivate,buttonDeactivate) {
+    updateQCResult: function (test_id, approval_status, buttonActivate, buttonDeactivate) {
 
-        if(buttonDeactivate)
+        if (buttonDeactivate)
             quality.$(buttonDeactivate).className = "blue";
 
-        if(buttonActivate)
+        if (buttonActivate)
             quality.$(buttonActivate).className = "green";
 
-        var data = {qc_id: test_id, approval_status : approval_status}
+        var data = {qc_id: test_id, approval_status: approval_status}
 
-        window.parent.quality.ajaxPostRequest('/quality_control/quality_control_test_approval_update',data,function(res){
+        window.parent.quality.ajaxPostRequest('/quality_control/quality_control_test_approval_update', data, function (res) {
 
             window.parent.proficiency.showMsg(res);
 
