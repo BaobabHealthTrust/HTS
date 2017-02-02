@@ -1271,8 +1271,8 @@ function ajaxPostRequest(url, data, callback) {
 
 }
 
-var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
-    "PRE TEST COUNSELLING", "Last HIV test");
+var lastHIVStatus = (window.parent.dashboard ? window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    "PRE TEST COUNSELLING", "Last HIV test") : null);
 
 function evalCondition(pos) {
 
@@ -7372,6 +7372,9 @@ function ageLimit() {
 }
 
 function initialiseExistingData() {
+
+    if(!window.parent.dashboard)
+        return;
 
     if (clientHasHIVLastTest() && __$("last_hiv_test") && false) {
 
