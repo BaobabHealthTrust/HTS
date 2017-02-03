@@ -13,6 +13,10 @@ var tmrControl2MinsCount = 0;
 var tmrControl2Hnd;
 var notUnigold = "hiv";
 
+function __$(id) {
+    return document.getElementById(id);
+}
+
 var timers_running = {
     "fp_test1": {clicked: true, min: 0, sec: 0},
 
