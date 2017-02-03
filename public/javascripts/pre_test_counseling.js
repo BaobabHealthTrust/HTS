@@ -1314,7 +1314,7 @@ function updatePartnerObs() {
     if (partnerContactType)
         updatePartner("HTS CLIENT REGISTRATION", "Contact Detail Type", partnerContactType);
 
-    updatePartner("PRE TEST COUNSELLING", "Partner Present at this Session?", "Yes");
+    updatePartner("PRE TEST COUNSELLING", "Reported Partner Present at this Session?", "Yes");
 
     updatePartner("PRE TEST COUNSELLING", "Do you have a partner?", "Yes");
 
