@@ -3619,41 +3619,33 @@ function showHIVTestingSummary() {
 
         var td = document.createElement("td");
         td.align = "center";
-        td.innerHTML = "Test 1"
+        td.innerHTML = "Test 1";
+        td.colSpan = 2;
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.align = "center";
-        td.innerHTML = "Test 2"
+        td.innerHTML = "Test 2";
+        td.colSpan = 2;
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.align = "center";
-        td.innerHTML = "Test 1"
+        td.innerHTML = "Test 1";
+        td.colSpan = 2;
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.align = "center";
-        td.innerHTML = "Test 2"
+        td.innerHTML = "Test 2";
+        td.colSpan = 2;
 
         tr.appendChild(td);
 
-        var td = document.createElement("td");
-        td.align = "center";
-        td.innerHTML = "Test 1"
-
-        tr.appendChild(td);
-
-        var td = document.createElement("td");
-        td.align = "center";
-        td.innerHTML = "Test 2"
-
-        tr.appendChild(td);
-
-        var td = document.createElement("td");
+        /*var td = document.createElement("td");
         td.align = "center";
         td.innerHTML = "Test 1"
 
@@ -3664,6 +3656,18 @@ function showHIVTestingSummary() {
         td.innerHTML = "Test 2"
 
         tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 1"
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.align = "center";
+        td.innerHTML = "Test 2"
+
+        tr.appendChild(td);*/
 
         var tr = document.createElement("tr");
 
