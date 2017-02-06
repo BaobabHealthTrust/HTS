@@ -696,7 +696,7 @@ function loadPatients(result) {
     window.parent.patient.patients = (typeof result == typeof String() ? JSON.parse(result) : result);
 
     if (Object.keys(window.parent.patient.patients).length == 0) {
-        __$("rightpanel").innerHTML = "<div style='margin: auto; padding: 20px; font-size: 24px; font-style: italic;'>No results found!</div>";
+        __$("rightpanel").innerHTML = "<div style='margin: auto; padding: 20px; font-size: 24px; font-style: italic;'>No matching people found!</div>";
     }
 
     for (var i = 0; i < window.parent.patient.patients.length; i++) {
