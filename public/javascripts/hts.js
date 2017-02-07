@@ -7333,7 +7333,7 @@ function noPartnerToday() {
 
     if(!present)
         present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
-            "PRE TEST COUNSELLING", "Reported Partner Present at this Session?");
+            "PRE TEST COUNSELLING", "Partner Present at this Session?");
 
     if (String(present).trim().toLowerCase() == "yes") {
 
