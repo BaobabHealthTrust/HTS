@@ -8,21 +8,24 @@
 <body style="text-align: center; margin-top: 20px;">
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button" onclick="window.parent.user.changePassword();">
+            text-align: center; padding-top: 15px; margin: 10px;" class="button"
+     onclick="window.parent.user.changePassword();">
     <img src="/images/password.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     Change Password
 </div>
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button" onclick="window.parent.user.editUser(window.parent.document.body);">
+            text-align: center; padding-top: 15px; margin: 10px;" class="button"
+     onclick="window.parent.user.editUser(window.parent.document.body);">
     <img src="/images/edit_user.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     Edit Demographics
 </div>
 
 <div style="display: inline-block; border: 1px solid #345db5; height: 120px; width: 160px; color: #345db5;
-            text-align: center; padding-top: 15px; margin: 10px;" class="button" onclick="window.parent.user.showUser(window.parent.document.body);">
+            text-align: center; padding-top: 15px; margin: 10px;" class="button"
+     onclick="window.parent.user.showUser(window.parent.document.body);">
     <img src="/images/profile.png" height="80" style="margin-bottom: 10px;"/>
     <br/>
     My Profile
@@ -32,78 +35,77 @@
 </html>
 <script type="text/javascript">
 
-            var user = window.parent.user.getCookie("username");
-    
-            window.parent.user.ajaxRequest('/app_custom/user_roles/'+user,function(data){
+    var user = window.parent.user.getCookie("username");
 
-                var tasks = {
+    window.parent.user.ajaxRequest('/app_custom/user_roles/' + user, function (data) {
 
-                                "Quality Control"       :    {
-                                                                    img :"/images/control.png"  ,
-                                                                     action: "window.parent.quality.qualityControlTest()"
+        var tasks = {
 
-                                                            },
-                                "Quality Approval"      :    {
-                                                                    img :"/images/approval.png"  ,
-                                                                    action: "window.parent.quality.qualityControlApproval(window.parent.document.body)"
-                                                            },
-                                "Proficiency Test"      :   {
-                                                                    img :"/images/proficiency_test.png" , 
-                                                                    action: "window.parent.proficiency.proficiencyTest()"
-                                                            },
-                                "PT Approval"           :    {
-                                                                    img :"/images/tests.png" , 
-                                                                    action: "window.parent.proficiency.proficiencyTestApproval(window.parent.document.body)"
-                                                            },
-                                "PT Official Results"   :    {
-                                                                    img :"/images/facility.png" , 
-                                                                    action: "window.parent.proficiency.enterPTOfficialResult()"
-                                                            }
-                }
+            "Quality Control": {
+                img: "/images/control.png",
+                action: "window.parent.quality.qualityControlTest()"
 
-                var task_keys = Object.keys(tasks);
+            },
+            "Proficiency Test": {
+                img: "/images/proficiency_test.png",
+                action: "window.parent.proficiency.proficiencyTest()"
+            }/*,
+            "PT Official Results": {
+                img: "/images/facility.png",
+                action: "window.parent.proficiency.enterPTOfficialResult()"
+            },
+            "Quality Approval": {
+                img: "/images/approval.png",
+                action: "window.parent.quality.qualityControlApproval(window.parent.document.body)"
+            },
+            "PT Approval": {
+                img: "/images/tests.png",
+                action: "window.parent.proficiency.proficiencyTestApproval(window.parent.document.body)"
+            }*/
+        }
 
-                for(var i = 0 ; i < task_keys.length ; i++){
+        var task_keys = Object.keys(tasks);
 
-                        if((task_keys[i]=="Quality Approval" || task_keys[i] == "PT Approval" || task_keys[i] == "PT Official Results") && data.indexOf("HTS Focal Person") < 0 ){
+        for (var i = 0; i < task_keys.length; i++) {
 
-                            continue;
+            if ((task_keys[i] == "Quality Approval" || task_keys[i] == "PT Approval" || task_keys[i] == "PT Official Results") && data.indexOf("HTS Focal Person") < 0) {
 
-
-                        }
+                continue;
 
 
+            }
 
-                        var div = document.createElement("div");
 
-                        div.style.display = "inline-block";
+            var div = document.createElement("div");
 
-                        div.style.border = "1px solid #345db5";
+            div.style.display = "inline-block";
 
-                        div.style.height ="125px";
+            div.style.border = "1px solid #345db5";
 
-                        div.style.width = "160px";
+            div.style.height = "125px";
 
-                        div.style.color = "#345db5";
+            div.style.width = "160px";
 
-                        div.style.textAlign = "center";
+            div.style.color = "#345db5";
 
-                        div.style.paddingTop = "15px";
+            div.style.textAlign = "center";
 
-                        div.style.margin = "10px";
+            div.style.paddingTop = "15px";
 
-                        div.className = "button";
+            div.style.margin = "10px";
 
-                        var image = '<img src="'+tasks[task_keys[i]].img+'" height="80" style="margin-bottom: 10px;"/>'
+            div.className = "button";
 
-                        div.innerHTML = image + "<br/>"+ task_keys[i];
+            var image = '<img src="' + tasks[task_keys[i]].img + '" height="80" style="margin-bottom: 10px;"/>'
 
-                        div.setAttribute("onclick", tasks[task_keys[i]].action);
+            div.innerHTML = image + "<br/>" + task_keys[i];
 
-                        document.body.appendChild(div);
+            div.setAttribute("onclick", tasks[task_keys[i]].action);
 
-                }
+            document.body.appendChild(div);
 
-            });
+        }
+
+    });
 
 </script>
