@@ -314,6 +314,40 @@ module.exports = function (router) {
 
         });
 
+
+    router.route("/locations")
+        .get(function (req, res) {
+
+            var url = require("url");
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var sql = "SELECT location_id, name FROM location WHERE name LIKE \"" + query.name + "%\" ORDER BY name ASC LIMIT 50";
+
+            console.log(sql);
+
+            queryRaw(sql, function(data) {
+
+                var result = [];
+
+                if(data && data[0].length > 0) {
+
+                    for(var i = 0; i < data[0].length; i++) {
+
+                        result.push("<li>" + data[0][i].name.trim() + "</li>");
+
+                    }
+
+                }
+
+                res.send(result.join(""));
+
+            })
+
+        });
+
     return router;
 
 }
