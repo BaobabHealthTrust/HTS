@@ -353,13 +353,14 @@ var proficiency = ({
             },
             "Date of Proficiency testing": {
                 field_type: "date",
-                id: "data.proficiency_testing_date"
+                id: "data.proficiency_testing_date",
+                tt_onUnload: "updateUserAttributes(); sePTLotNumber()"
             },
             "Counselor Name": {
-                field_type: "text",
+                field_type: "hidden",
                 id: "data.tester",
                 ajaxURL: "/app_custom/hts_users?name=",
-                tt_onUnload: "updateUserAttributes(); sePTLotNumber()"
+                value: stock.getCookie("username")
             },
             "HTS provider ID": {
                 field_type: "hidden",
