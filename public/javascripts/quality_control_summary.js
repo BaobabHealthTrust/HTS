@@ -27,1218 +27,888 @@ function verticalText(text, parent) {
 
 }
 
-function showQualityControlTestSummary(){
+function showQualityControlTestSummary() {
 
-	var tstControl = __$('inputFrame'+tstCurrentPage)
+    var tstControl = __$('inputFrame' + tstCurrentPage)
 
-	tstControl.innerHTML = "";
+    tstControl.innerHTML = "";
 
-	var table = document.createElement("table");
+    var table = document.createElement("table");
 
-	table.style.borderCollapse = "collapse";
+    table.style.borderCollapse = "collapse";
     table.style.margin = "auto";
     table.style.top = "15%";
     table.style.color = "#333";
     table.cellPadding = "10px";
     table.border = 0;
-
-	tstControl.appendChild(table);
-
-	table.style.width = "98%";
-
-	table.style.margin = "auto";
-
-	//First Row
-
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-	var td = document.createElement("th");
-
-	tr.appendChild(td);
-
-	td.setAttribute("rowspan","3");
-
-	td.style.textAlign= "center";
-
-	td.style.borderRight= "2px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	td.style.borderTop= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.innerHTML ="<b>DTS Sample</b>";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("colspan", "3");
-
-	td.style.borderRight= "2px solid black";
-
-	td.style.borderRight= "2px solid black";
-
-	td.style.borderTop= "2px solid black";
-
-
-
-	var td = document.createElement("th");
-
-	tr.appendChild(td);
-
-	td.innerHTML = "Test Kit Evaluated : "+ __$("data.test_kit_name").value ? __$("data.test_kit_name").value  : "";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("colspan", "7");
-
-	td.style.borderRight= "2px solid black";
-
-	td.style.borderTop= "2px solid black";
-
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.setAttribute("colspan", "3");
-
-	td.style.textAlign = "center";
-
-	td.innerHTML ="<b>Interpretation</b>";
-
-	td.style.textAlign= "center";
-
-	td.style.borderRight= "2px solid black";
-
-	td.style.borderTop= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.rowSpan = "3"
-
-	td.style.textAlign = "center";
-
-	td.style.textAlign = "center";
-
-	td.style.borderLeft = "2px solid black";
-
-	td.style.borderTop = "2px solid black";
-
-	td.style.borderBottom = "2px solid black";
-
-
-
-	///Row 2
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.innerHTML = "Name";
-
-	td.setAttribute("rowspan","2");
-
-	td.style.textAlign= "center";
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.innerHTML = "Lot";
-
-	td.setAttribute("rowspan","2");
-
-	td.style.textAlign= "center";
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "2px solid black"
-
-	td.innerHTML = "Exipiry Date";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("rowspan","2");
-
-	td.style.borderBottom= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black"
-
-	td.innerHTML = "Lot";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("rowspan","2");
-
-	td.style.borderBottom= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black"
-
-	td.innerHTML = "Exipiry Date";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("rowspan","2");
-
-	td.style.borderBottom= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black"
-
-	td.innerHTML = "Control Line Seen";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("rowspan","2");
-
-	td.setAttribute("colspan","2");
-
-	td.style.borderBottom= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black"
-
-	td.innerHTML = "Result";
-
-	td.style.textAlign= "center";
-
-	td.setAttribute("colspan","3");
-
-	td.style.borderRight= "2px solid black";
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black"
-
-	td.setAttribute("colspan","2");
-
-	td.innerHTML = "Outcome";
-
-	td.style.textAlign= "center";
-
-	td.style.borderRight= "1px solid black";
-
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "1px solid black";
-
-	td.setAttribute("rowspan","2");
-
-	td.innerHTML = "Specify <u>Suspect Cause </u> and <u>Corrective Action</u>  for Not Acceptable Result";
-
-	td.style.textAlign= "center";
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-
-	//row 3
-
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.textAlign = "center";
-
-	td.style.borderBottom= "2px solid black";
-
-	verticalText("Negative",td);
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.textAlign = "center";
-
-	td.style.borderBottom= "2px solid black";
-
-	verticalText("Weak Positive",td);
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.borderRight= "2px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	td.style.textAlign = "center";
-
-	verticalText("Strong Positive",td);
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.textAlign = "center";
-
-	td.style.borderBottom= "2px solid black";
-
-	verticalText("Acceptable",td);
-
-
-	var td = document.createElement("td");
-
-	tr.appendChild(td);
-
-	td.style.textAlign = "center";
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom= "2px solid black";
-
-	verticalText("Not Acceptable",td);
-
-
-	//Row 4 and 5
-
-	for(var i = 1 ; i < 3 ; i++){
-
-		var tr = document.createElement("tr");
-
-		table.appendChild(tr);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderRight = "2px solid black";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderRight = "1px solid black";
-
-		td.innerHTML = __$("data.dts_name"+i).value;
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderRight = "1px solid black";
-
-		td.innerHTML = __$("data.dts_"+i+"_lot_number").value;
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderRight = "1px solid black";
-
-		td.innerHTML = __$("data.dts_"+i+"_expiry_date").value;
-
-		td.style.borderBottom = "2px solid black";
-
-		td.style.borderRight= "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderRight = "1px solid black";
-
-		td.innerHTML = __$("data.test_kit_lot_number").value;
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderRight = "1px solid black";
-
-		td.innerHTML = __$("data.test_kit_expiry_date").value;
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var control_line_seen = __$("data.control_"+i+"_line_seen").value
-
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.innerHTML =control_line_seen.trim().toLowerCase().match(/no/i) ?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> N </span>" : " N ";
-
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.innerHTML =control_line_seen.trim().toLowerCase().match(/yes/i) ?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> Y </span>" : " Y ";
-
-		td.style.borderRight = "1px solid black";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var result = __$("data.result_"+i).value
-
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.innerHTML = result.trim().toLowerCase().match(/negative/i) ?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : " - ";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.innerHTML = result.trim().toLowerCase().match(/weak positive/i) ?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : " + ";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-		
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.style.fontWeight = "bold";
-
-		td.style.fontSize = "1.2em";
-
-		td.innerHTML = result.trim().toLowerCase().match(/strong positive/i) ?  "<span style='border: 2px solid #ff5050 ; padding : 0.3em ; width : 18px ; height : 15px; border-radius: 50%; font-size:1.2em; font-weight:bold'> + </span>" : " + ";
-
-		td.style.borderRight = "2px solid black";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var outcome = __$("data.outcome_"+i).value;
-
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.innerHTML = outcome.trim().toLowerCase()=="acceptable" ?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%;'> A </span>" : " A ";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.textAlign = "center";
-
-		td.innerHTML = outcome.trim().toLowerCase()=="not acceptable" ?  "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%;'> NA </span>" : " NA ";
-
-		td.style.borderRight = "1px solid black";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.innerHTML = __$("data.interpretation_"+i).value ?  __$("data.interpretation_"+i).value : "";
-
-		td.style.borderRight = "2px solid black";
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-
-		var td  = document.createElement("td");
-
-		td.style.borderBottom = "2px solid black";
-
-		tr.appendChild(td);
-
-	}
-
-
-
-}
-
-function setExpiryDate(date_string,field){
-
-        if(date_string.length > 0){
-
-            var date_string = date_string.match(/\b\d+\/[A-Za-z]{3}\/\d{4}\b/)[0];
-
-            __$(field).value = date_string;
-
-         }
-
-}
-
-function activateYesNo(yes,no){
-
-	__$(yes).className = "blue";
-
-	__$(no).className = "blue";
-
-}
-
-function loadQualityTestControl(){
-
-	var tstControl = __$('inputFrame'+tstCurrentPage)
-
-	tstControl.innerHTML = "";
-
-	var table = document.createElement("table");
-
-	table.style.borderCollapse = "collapse";
+    table.style.width = "98%";
     table.style.margin = "auto";
-    table.style.top = "15%";
-    table.style.color = "#333";
-    table.cellPadding = "10px";
-    table.border = 0;
 
-	tstControl.appendChild(table);
+    tstControl.appendChild(table);
 
-	table.style.width = "98%";
+    //First Row
 
-	table.style.margin = "auto";
+    var tr = document.createElement("tr");
 
+    table.appendChild(tr);
 
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-	var th = document.createElement("th");
-
-	tr.appendChild(th);
-
-	th.style.borderRight = "1px solid black";
-
-	th.style.borderBottom = "1px solid black";
-
-	th.rowSpan = "3";
-
-	th.innerHTML = ""
-
-
-
-	var th = document.createElement("th");
-
-	tr.appendChild(th);
-
-	th.style.borderRight = "1px solid black";
-
-	th.style.borderBottom = "1px solid black";
-
-	th.innerHTML = "Sample Type"
-
-	th.rowSpan = "3"
-
-
-	var th = document.createElement("th");
-
-	tr.appendChild(th);
-
-	th.innerHTML = "Test Kit Evaluated : "+ __$("data.test_kit_name").value ? __$("data.test_kit_name").value  : "";
-
-	th.colSpan = "6"
-
-	th.style.borderRight = "1px solid black";
-
-
-	var th = document.createElement("th");
-
-	tr.appendChild(th);
-
-	th.style.borderBottom = "1px solid black";
-
-	th.rowSpan = "3";
-
-	th.innerHTML = ""
-
-
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-
-	var td = document.createElement("th");	
-
-	td.innerHTML= "Timer";
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black";
-
-	td.rowSpan = "2";
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("th");	
-
-	td.innerHTML= "Control Line seen";
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black";
-
-	td.rowSpan = "2";
-
-	td.colSpan = "2";
-
-	tr.appendChild(td);
-
-	var td = document.createElement("th");	
-
-	td.style.borderRight = "1px solid black";
-
-	td.innerHTML= "Result";
-
-	td.colSpan = "3"
-
-	tr.appendChild(td);
-
-
-
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-	var td = document.createElement("th");	
-
-	verticalText("Negative",td);
-
-	td.style.borderBottom = "1px solid black";
-
-	tr.appendChild(td);
-
-	var td = document.createElement("th");	
-
-	td.style.borderBottom = "1px solid black";
-
-	verticalText("Weak Positive",td);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("th");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight= "1px solid black";
-
-	verticalText("Strong Positive",td);
-
-	tr.appendChild(td);
-
-
-
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-	var td = document.createElement("td");	
-
-	td.innerHTML= "";
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom = "1px solid black";
-
-	tr.appendChild(td);
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black";
-
-	td.innerHTML=  __$('data.dts_name1').value ? __$('data.dts_name1').value : "";
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");
+    var td = document.createElement("th");
+    td.setAttribute("rowspan", "3");
+    td.style.textAlign = "center";
+    td.style.borderRight = "2px solid black";
+    td.style.borderBottom = "2px solid black";
+    td.style.borderTop = "2px solid black";
 
     tr.appendChild(td);
 
-    td.style.padding = "0.3em";
-
+    var td = document.createElement("td");
+    td.innerHTML = "<b>DTS Sample</b>";
     td.style.textAlign = "center";
+    td.setAttribute("colspan", "3");
+    td.style.borderRight = "2px solid black";
+    td.style.borderRight = "2px solid black";
+    td.style.borderTop = "2px solid black";
 
-    td.style.borderBottom = "1px solid black";
+    tr.appendChild(td);
 
+    var td = document.createElement("th");
+    td.innerHTML = "Test Kit Evaluated : " + __$("data.test_kit_name").value ? __$("data.test_kit_name").value : "";
+    td.style.textAlign = "center";
+    td.setAttribute("colspan", "7");
+    td.style.borderRight = "2px solid black";
+    td.style.borderTop = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.setAttribute("colspan", "3");
+    td.style.textAlign = "center";
+    td.innerHTML = "<b>Interpretation</b>";
+    td.style.textAlign = "center";
+    td.style.borderRight = "2px solid black";
+    td.style.borderTop = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.rowSpan = "3"
+    td.style.textAlign = "center";
+    td.style.textAlign = "center";
+    td.style.borderLeft = "2px solid black";
+    td.style.borderTop = "2px solid black";
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    ///Row 2
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("td");
+    td.innerHTML = "Name";
+    td.setAttribute("rowspan", "2");
+    td.style.textAlign = "center";
+    td.style.borderRight = "1px solid black";
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.innerHTML = "Lot";
+    td.setAttribute("rowspan", "2");
+    td.style.textAlign = "center";
+    td.style.borderRight = "1px solid black";
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.borderRight = "2px solid black"
+    td.innerHTML = "Exipiry Date";
+    td.style.textAlign = "center";
+    td.setAttribute("rowspan", "2");
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.borderRight = "1px solid black"
+    td.innerHTML = "Lot";
+    td.style.textAlign = "center";
+    td.setAttribute("rowspan", "2");
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.borderRight = "1px solid black"
+    td.innerHTML = "Exipiry Date";
+    td.style.textAlign = "center";
+    td.setAttribute("rowspan", "2");
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.borderRight = "1px solid black"
+    td.innerHTML = "Control Line Seen";
+    td.style.textAlign = "center";
+    td.setAttribute("rowspan", "2");
+    td.setAttribute("colspan", "2");
+    td.style.borderBottom = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.borderRight = "1px solid black"
+    td.innerHTML = "Result";
+    td.style.textAlign = "center";
+    td.setAttribute("colspan", "3");
+    td.style.borderRight = "2px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.borderRight = "1px solid black"
+    td.setAttribute("colspan", "2");
+    td.innerHTML = "Outcome";
+    td.style.textAlign = "center";
     td.style.borderRight = "1px solid black";
 
-    var div = document.createElement("div");
+    tr.appendChild(td);
 
-    div.style.border = "1px solid #366496";
+    var td = document.createElement("td");
+    td.style.borderRight = "1px solid black";
+    td.setAttribute("rowspan", "2");
+    td.innerHTML = "Specify <u>Suspect Cause </u> and <u>Corrective Action</u>  for Not Acceptable Result";
+    td.style.textAlign = "center";
+    td.style.borderRight = "1px solid black";
+    td.style.borderBottom = "2px solid black";
 
-    div.style.borderRadius = "0%";
+    tr.appendChild(td);
 
-    div.style.width = "90%";
+    //row 3
 
-    div.id = "timer_1";
+    var tr = document.createElement("tr");
 
-    div.style.height = "100%";
+    table.appendChild(tr);
 
-    div.style.margin = "auto";
+    var td = document.createElement("td");
+    td.style.textAlign = "center";
+    td.style.borderBottom = "2px solid black";
 
-    div.style.textAlign = "center";
+    verticalText("Negative", td);
 
-    div.style.verticalAlign = "middle";
+    tr.appendChild(td);
 
-    div.innerHTML = "Start";
+    var td = document.createElement("td");
+    td.style.textAlign = "center";
+    td.style.borderBottom = "2px solid black";
 
-    div.setAttribute("onclick","startTimer('timer_1'); activateYesNo('yes_1','no_1')");
+    verticalText("Weak Positive", td);
 
-    div.style.fontSize = "1.8em";
+    tr.appendChild(td);
 
-    div.style.color = "#3c60b1";
+    var td = document.createElement("td");
+    td.style.borderRight = "2px solid black";
+    td.style.borderBottom = "2px solid black";
+    td.style.textAlign = "center";
 
-    div.style.backgroundColor = "#fff";
+    verticalText("Strong Positive", td);
 
-    div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+    tr.appendChild(td);
 
-    td.appendChild(div);
+    var td = document.createElement("td");
+    td.style.textAlign = "center";
+    td.style.borderBottom = "2px solid black";
 
+    verticalText("Acceptable", td);
 
-	var td = document.createElement("th");	
+    tr.appendChild(td);
 
-	td.style.borderBottom = "1px solid black";
+    var td = document.createElement("td");
+    td.style.textAlign = "center";
+    td.style.borderRight = "1px solid black";
+    td.style.borderBottom = "2px solid black";
 
-	td.style.textAlign = "center";
+    verticalText("Not Acceptable", td);
 
-	var button = document.createElement("button");
+    tr.appendChild(td);
 
-	button.className = "gray";
+    //Row 4 and 5
 
-	button.id = "no_1"
+    var selections = (__$("data.test_kit_name").getAttribute("tstValue") != null ?
+        __$("data.test_kit_name").getAttribute("tstValue") : "").split(";");
 
-	button.setAttribute("onclick"," updateResult('data.control_1_line_seen','No','no_1',['yes_1','strong_positive_1','weak_positive_1','negative_1'],'timer_1')");
+    for (var i = 0; i < selections.length * 2; i++) {
 
-	button.innerHTML = "N";
+        var tr = document.createElement("tr");
 
-	td.appendChild(button);
+        table.appendChild(tr);
 
-	tr.appendChild(td);
+        var td = document.createElement("td");
+        td.style.borderRight = "2px solid black";
+        td.style.borderBottom = "2px solid black";
 
+        tr.appendChild(td);
 
-	var td = document.createElement("td");	
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$("data.dts_name" + (1 + (i % 2 == 0 ? 1 : 0))).value;
+        td.style.borderBottom = "2px solid black";
 
-	td.style.borderBottom = "1px solid black";
+        tr.appendChild(td);
 
-	td.style.borderRight = "1px solid black";
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$("data.dts_" + (1 + (i % 2 == 0 ? 1 : 0)) + "_lot_number").value;
+        td.style.borderBottom = "2px solid black";
 
-	td.style.textAlign = "center";
+        tr.appendChild(td);
 
-	var button = document.createElement("button");
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$("data.dts_" + (1 + (i % 2 == 0 ? 1 : 0)) + "_expiry_date").value;
+        td.style.borderBottom = "2px solid black";
+        td.style.borderRight = "2px solid black";
+        tr.appendChild(td);
 
-	button.className = "gray";
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$("data.test_kit" + (1 + (i % 2 == 0 ? 1 : 0)) + "_lot_number").value;
+        td.style.borderBottom = "2px solid black";
 
-	button.id = "yes_1"
+        tr.appendChild(td);
 
-	button.innerHTML = "Y";
+        var td = document.createElement("td");
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$("data.test_kit" + (1 + (i % 2 == 0 ? 1 : 0)) + "_expiry_date").value;
+        td.style.borderBottom = "2px solid black";
 
-	button.setAttribute("onclick"," updateResult('data.control_1_line_seen','Yes','yes_1',['no_1','strong_positive_1','weak_positive_1','negative_1'],'timer_1')");
+        tr.appendChild(td);
 
-	td.appendChild(button);
+        var control_line_seen = __$("data.control_" + (i + 1) + "_line_seen").value
 
-	tr.appendChild(td);
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.innerHTML = control_line_seen.trim().toLowerCase().match(/no/i) ? "<span style='border: 2px solid #ff5050 ;" +
+        " padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> N </span>" : " N ";
+        td.style.borderBottom = "2px solid black";
 
+        tr.appendChild(td);
 
-	var td = document.createElement("td");	
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.innerHTML = control_line_seen.trim().toLowerCase().match(/yes/i) ? "<span style='border: 2px solid #ff5050 ; " +
+        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> Y </span>" : " Y ";
+        td.style.borderRight = "1px solid black";
+        td.style.borderBottom = "2px solid black";
 
-	td.style.borderBottom = "1px solid black";
+        tr.appendChild(td);
 
-	td.style.textAlign = "center";
+        var result = __$("data.result_" + (i + 1)).value
 
-	var button = document.createElement("button");
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.innerHTML = result.trim().toLowerCase().match(/negative/i) ? "<span style='border: 2px solid #ff5050 ; " +
+        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : " - ";
+        td.style.borderBottom = "2px solid black";
 
-	button.className = "gray";
+        tr.appendChild(td);
 
-	button.id = "negative_1"
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.innerHTML = result.trim().toLowerCase().match(/weak positive/i) ? "<span style='border: 2px solid #ff5050 ;" +
+        " padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : " + ";
+        td.style.borderBottom = "2px solid black";
 
-	button.setAttribute("onclick"," updateResult('data.result_1','Negative','negative_1',['weak_positive_1','strong_positive_1'],null);setOutcomes(1)");
+        tr.appendChild(td);
 
-	button.innerHTML = "-";
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.style.fontWeight = "bold";
+        td.style.fontSize = "1.2em";
+        td.innerHTML = result.trim().toLowerCase().match(/strong positive/i) ? "<span style='border: 2px solid #ff5050 ; " +
+        "padding : 0.3em ; width : 18px ; height : 15px; border-radius: 50%; font-size:1.2em; font-weight:bold'> + </span>" : " + ";
+        td.style.borderRight = "2px solid black";
+        td.style.borderBottom = "2px solid black";
 
-	td.appendChild(button);
-	
+        tr.appendChild(td);
 
-	tr.appendChild(td);
+        var outcome = __$("data.outcome_" + (i + 1)).value;
 
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.innerHTML = outcome.trim().toLowerCase() == "acceptable" ? "<span style='border: 2px solid #ff5050 ; " +
+        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%;'> A </span>" : " A ";
+        td.style.borderBottom = "2px solid black";
 
-	var td = document.createElement("td");	
+        tr.appendChild(td);
 
-	td.style.borderBottom = "1px solid black";
+        var td = document.createElement("td");
+        td.style.textAlign = "center";
+        td.innerHTML = outcome.trim().toLowerCase() == "not acceptable" ? "<span style='border: 2px solid #ff5050 ; " +
+        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%;'> NA </span>" : " NA ";
+        td.style.borderRight = "1px solid black";
+        td.style.borderBottom = "2px solid black";
 
-	td.style.textAlign = "center";
+        tr.appendChild(td);
 
-	var button = document.createElement("button");
+        var td = document.createElement("td");
+        td.innerHTML = __$("data.interpretation_" + (i + 1)).value ? __$("data.interpretation_" + (i + 1)).value : "";
+        td.style.borderRight = "2px solid black";
+        td.style.borderBottom = "2px solid black";
 
-	button.className = "gray";
+        tr.appendChild(td);
 
-	button.id = "weak_positive_1"
+        var td = document.createElement("td");
+        td.style.borderBottom = "2px solid black";
+        tr.appendChild(td);
 
-	button.setAttribute("onclick"," updateResult('data.result_1','Negative Positive','weak_positive_1',['strong_positive_1','negative_1'],null);setOutcomes(1)");
-
-	button.innerHTML = "+";
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black"
-
-	td.style.textAlign = "center";
-
-	var button = document.createElement("button");
-
-	button.className = "gray";
-
-	button.id = "strong_positive_1";
-
-	button.setAttribute("onclick"," updateResult('data.result_1','Strong Positive','strong_positive_1',['weak_positive_1','negative_1'],null);setOutcomes(1)");
-
-	button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.innerHTML= "";
-
-	td.style.borderBottom = "1px solid black";
-
-	tr.appendChild(td);
-
-
-	var tr = document.createElement("tr");
-
-	table.appendChild(tr);
-
-	var td = document.createElement("td");	
-
-	td.innerHTML= "";
-
-	td.style.borderRight= "1px solid black";
-
-	td.style.borderBottom = "1px solid black";
-
-	tr.appendChild(td);
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black";
-
-	td.innerHTML= __$('data.dts_name2').value ? __$('data.dts_name2').value : "";
-
-	tr.appendChild(td);
-
-
-	 var td = document.createElement("td");
-
-     tr.appendChild(td);
-
-     td.style.padding = "0.3em";
-
-     td.style.textAlign = "center";
-
-     td.style.borderBottom = "1px solid black";
-
-     td.style.borderRight = "1px solid black";
-
-     var div = document.createElement("div");
-
-     div.style.border = "1px solid #366496";
-
-     div.style.borderRadius = "0%";
-
-     div.style.width = "90%";
-
-     div.id = "timer_2";
-
-     div.style.height = "100%";
-
-     div.style.margin = "auto";
-
-     div.style.textAlign = "center";
-
-     div.style.verticalAlign = "middle";
-
-     div.innerHTML = "Start";
-
-      div.setAttribute("onclick","startTimer('timer_2');activateYesNo('yes_2','no_2')");
-
-     div.style.fontSize = "1.8em";
-
-     div.style.color = "#3c60b1";
-
-     div.style.backgroundColor = "#fff";
-
-     div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
-
-     td.appendChild(div);
-
-
-	var td = document.createElement("th");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.textAlign = "center";
-
-	var button = document.createElement("button");
-
-	button.className = "gray";
-
-	button.id = "no_2";
-
-	button.setAttribute("onclick"," updateResult('data.control_2_line_seen','No','no_2',['yes_2','strong_positive_2','weak_positive_2','negative_2'],'timer_2')");
-
-	button.innerHTML = "N";
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black";
-
-	td.style.textAlign = "center";
-
-	var button = document.createElement("button");
-
-	button.className = "gray";
-
-	button.id = "yes_2";
-
-	button.setAttribute("onclick"," updateResult('data.control_2_line_seen','Yes','yes_2',['no_2','strong_positive_2','weak_positive_2','negative_2'],'timer_2')");
-
-	button.innerHTML = "Y";
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.textAlign = "center";
-
-	var button = document.createElement("button");
-
-	button.className = "gray";
-
-	button.id = "negative_2";
-
-	button.setAttribute("onclick"," updateResult('data.result_2','Negative','negative_2',['weak_positive_2','strong_positive_2'],null);setOutcomes(2)");
-
-	button.innerHTML = "-";
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.textAlign = "center";
-
-	var button = document.createElement("button");
-
-	button.className = "gray";
-
-	button.id = "weak_positive_2";
-
-	button.setAttribute("onclick"," updateResult('data.result_2','Weak Positive','weak_positive_2',['strong_positive_2','negative_2'],null);setOutcomes(2)");
-
-	button.innerHTML = "+";
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.style.borderBottom = "1px solid black";
-
-	td.style.borderRight = "1px solid black"
-
-	td.style.textAlign = "center";
-
-	var button = document.createElement("button");
-
-	button.className = "gray";
-
-	button.id = "strong_positive_2";
-
-	button.setAttribute("onclick"," updateResult('data.result_2','Strong Positive','strong_positive_2',['weak_positive_2','negative_2'],null);setOutcomes(2)");
-
-
-	button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
-
-	td.appendChild(button);
-
-	tr.appendChild(td);
-
-
-	var td = document.createElement("td");	
-
-	td.innerHTML= "";
-
-	td.style.borderBottom = "1px solid black";
-
-	tr.appendChild(td);
-
-
-	__$("nextButton").className = __$("nextButton").className.replace(/blue|green/i, "gray");
-
-
-    var nexButtonIterval = setInterval(function(){
-
-        if(__$('nextButton').className.match("gray")){
-
-            var fals = 0
-
-            for(var i = 1; i < 3; i++){
-
-                if(!__$("data.result_"+i).value){
-
-                    fals++;
-                }
-
-            }
-
-            if(fals == 0){
-
-               __$("nextButton").className = __$("nextButton").className.replace(/gray/i, "green");
-
-            }
-
-
-
-        }else{
-
-            clearInterval(nexButtonIterval);
-
-        }
-
-    },100)
-
-
+    }
 
 }
 
-function startTimer(button){
+function setExpiryDate(date_string, field) {
+
+    if (date_string.length > 0) {
+
+        var date_string = date_string.match(/\b\d+\/[A-Za-z]{3}\/\d{4}\b/)[0];
+
+        __$(field).value = date_string;
+
+    }
+
+}
+
+function activateYesNo(yes, no) {
+
+    __$(yes).className = "blue";
+
+    __$(no).className = "blue";
+
+}
+
+function loadQualityTestControl() {
+
+    var tstControl = __$('inputFrame' + tstCurrentPage)
+    tstControl.innerHTML = "";
+
+    var table = document.createElement("table");
+    table.style.borderCollapse = "collapse";
+    table.style.margin = "auto";
+    table.style.top = "15%";
+    table.style.color = "#333";
+    table.cellPadding = "10px";
+    table.border = 0;
+    table.style.width = "98%";
+    table.style.margin = "auto";
+
+    tstControl.appendChild(table);
+
+    var selections = (__$("data.test_kit_name").getAttribute("tstValue") != null ?
+        __$("data.test_kit_name").getAttribute("tstValue") : "").split(";");
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var th = document.createElement("th");
+    th.style.borderRight = "1px solid black";
+    th.style.borderBottom = "1px solid black";
+    th.rowSpan = "2";
+    th.innerHTML = ""
+
+    tr.appendChild(th);
+
+    var th = document.createElement("th");
+    th.style.borderRight = "1px solid black";
+    th.style.borderBottom = "1px solid black";
+    th.innerHTML = "Test Kit Type"
+    th.rowSpan = "2"
+
+    tr.appendChild(th);
+
+    var th = document.createElement("th");
+    th.style.borderRight = "1px solid black";
+    th.style.borderBottom = "1px solid black";
+    th.innerHTML = "Sample Type"
+    th.rowSpan = "2"
+
+    tr.appendChild(th);
+
+    var td = document.createElement("th");
+    td.innerHTML = "Timer";
+    td.rowSpan = "2";
+    td.style.borderBottom = "1px solid black";
+    td.style.borderRight = "1px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("th");
+    td.innerHTML = "Control Line seen";
+    td.style.borderBottom = "1px solid black";
+    td.style.borderRight = "1px solid black";
+    td.rowSpan = "2";
+    td.colSpan = "2";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("th");
+    td.style.borderRight = "1px solid black";
+    td.innerHTML = "Result";
+    td.colSpan = "3"
+
+    tr.appendChild(td);
+
+    var th = document.createElement("th");
+    th.style.borderBottom = "1px solid black";
+    th.rowSpan = "2";
+    th.innerHTML = ""
+
+    tr.appendChild(th);
+
+    var tr = document.createElement("tr");
+
+    table.appendChild(tr);
+
+    var td = document.createElement("th");
+    td.innerHTML = "Negative";
+    td.style.borderBottom = "1px solid black";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("th");
+    td.style.borderBottom = "1px solid black";
+    td.innerHTML = "Weak Positive";
+
+    tr.appendChild(td);
+
+    var td = document.createElement("th");
+    td.style.borderBottom = "1px solid black";
+    td.style.borderRight = "1px solid black";
+    td.innerHTML = "Strong Positive";
+
+    tr.appendChild(td);
+
+    for(var i = 0; i < selections.length; i++) {
+
+        var tr = document.createElement("tr");
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.innerHTML = "";
+        td.style.borderRight = "1px solid black";
+        td.style.borderBottom = "1px solid black";
+        td.rowSpan = "2";
+
+        tr.appendChild(td);
+
+        var th = document.createElement("th");
+        th.innerHTML = selections[i];
+        th.rowSpan = "2";
+        th.style.borderRight = "1px solid black";
+
+        tr.appendChild(th);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$('data.dts_name1').value ? __$('data.dts_name1').value : "";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black";
+
+        tr.appendChild(td);
+
+        var div = document.createElement("div");
+        div.style.border = "1px solid #366496";
+        div.style.borderRadius = "0%";
+        div.style.width = "90%";
+        div.id = "timer_" + (1 + (2 * i)) + "";
+        div.style.height = "100%";
+        div.style.margin = "auto";
+        div.style.textAlign = "center";
+        div.style.verticalAlign = "middle";
+        div.innerHTML = "Start";
+        div.setAttribute("onclick", "startTimer('timer_" + (1 + (2 * i)) + "'); activateYesNo('yes_" + (1 + (2 * i)) + "','no_" + (1 + (2 * i)) + "')");
+        div.style.fontSize = "1.8em";
+        div.style.color = "#3c60b1";
+        div.style.backgroundColor = "#fff";
+        div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+
+        td.appendChild(div);
+
+        var td = document.createElement("th");
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "no_" + (1 + (2 * i)) + ""
+        button.setAttribute("onclick", " updateResult('data.control_" + (1 + (2 * i)) + "_line_seen','No','no_" +
+            (1 + (2 * i)) + "',['yes_" + (1 + (2 * i)) + "','strong_positive_" + (1 + (2 * i)) + "','weak_positive_" +
+            (1 + (2 * i)) + "','negative_" + (1 + (2 * i)) + "'],'timer_" + (1 + (2 * i)) + "')");
+        button.innerHTML = "N";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "yes_" + (1 + (2 * i)) + ""
+        button.innerHTML = "Y";
+        button.setAttribute("onclick", " updateResult('data.control_" + (1 + (2 * i)) + "_line_seen','Yes','yes_" +
+            (1 + (2 * i)) + "',['no_" + (1 + (2 * i)) + "','strong_positive_" + (1 + (2 * i)) + "','weak_positive_" +
+            (1 + (2 * i)) + "','negative_" + (1 + (2 * i)) + "'],'timer_" + (1 + (2 * i)) + "')");
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "negative_" + (1 + (2 * i)) + ""
+        button.setAttribute("onclick", " updateResult('data.result_" + (1 + (2 * i)) + "','Negative','negative_" +
+            (1 + (2 * i)) + "',['weak_positive_" + (1 + (2 * i)) + "','strong_positive_" + (1 + (2 * i)) + "'],null);" +
+            " setOutcomes(" + (1 + (2 * i)) + ")");
+        button.innerHTML = "-";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "weak_positive_" + (1 + (2 * i)) + ""
+        button.setAttribute("onclick", " updateResult('data.result_" + (1 + (2 * i)) + "','Negative Positive'," +
+            "'weak_positive_" + (1 + (2 * i)) + "',['strong_positive_" + (1 + (2 * i)) + "','negative_" + (1 + (2 * i)) +
+            "'],null);setOutcomes(" + (1 + (2 * i)) + ")");
+        button.innerHTML = "+";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black"
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "strong_positive_" + (1 + (2 * i)) + "";
+        button.setAttribute("onclick", " updateResult('data.result_" + (1 + (2 * i)) + "','Strong Positive'," +
+            "'strong_positive_" + (1 + (2 * i)) + "',['weak_positive_" + (1 + (2 * i)) + "','negative_" + (1 + (2 * i)) +
+            "'],null);setOutcomes(" + (1 + (2 * i)) + ")");
+        button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.innerHTML = "";
+        td.style.borderBottom = "1px solid black";
+
+        tr.appendChild(td);
+
+        var tr = document.createElement("tr");
+        tr.style.borderBottom = "1px solid black";
+
+        table.appendChild(tr);
+
+        var td = document.createElement("td");
+        td.innerHTML = "";
+        td.style.borderRight = "1px solid black";
+        td.style.borderBottom = "1px solid black";
+
+        // tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black";
+        td.innerHTML = __$('data.dts_name2').value ? __$('data.dts_name2').value : "";
+
+        tr.appendChild(td);
+
+        var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black";
+
+        tr.appendChild(td);
+
+        var div = document.createElement("div");
+        div.style.border = "1px solid #366496";
+        div.style.borderRadius = "0%";
+        div.style.width = "90%";
+        div.id = "timer_" + (2 + (2 * i)) + "";
+        div.style.height = "100%";
+        div.style.margin = "auto";
+        div.style.textAlign = "center";
+        div.style.verticalAlign = "middle";
+        div.innerHTML = "Start";
+        div.setAttribute("onclick", "startTimer('timer_" + (2 + (2 * i)) + "');activateYesNo('yes_" + (2 + (2 * i)) +
+            "','no_" + (2 + (2 * i)) + "')");
+        div.style.fontSize = "1.8em";
+        div.style.color = "#3c60b1";
+        div.style.backgroundColor = "#fff";
+        div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
+
+        td.appendChild(div);
+
+        var td = document.createElement("th");
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "no_" + (2 + (2 * i)) + "";
+        button.setAttribute("onclick", " updateResult('data.control_" + (2 + (2 * i)) + "_line_seen','No','no_" +
+            (2 + (2 * i)) + "',['yes_" + (2 + (2 * i)) + "','strong_positive_" + (2 + (2 * i)) + "','weak_positive_" +
+            (2 + (2 * i)) + "','negative_" + (2 + (2 * i)) + "'],'timer_" + (2 + (2 * i)) + "')");
+        button.innerHTML = "N";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "yes_" + (2 + (2 * i)) + "";
+        button.setAttribute("onclick", " updateResult('data.control_" + (2 + (2 * i)) + "_line_seen','Yes','yes_" +
+            (2 + (2 * i)) + "',['no_" + (2 + (2 * i)) + "','strong_positive_" + (2 + (2 * i)) + "','weak_positive_" +
+            (2 + (2 * i)) + "','negative_" + (2 + (2 * i)) + "'],'timer_" + (2 + (2 * i)) + "')");
+        button.innerHTML = "Y";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "negative_" + (2 + (2 * i)) + "";
+        button.setAttribute("onclick", " updateResult('data.result_" + (2 + (2 * i)) + "','Negative','negative_" +
+            (2 + (2 * i)) + "',['weak_positive_" + (2 + (2 * i)) + "','strong_positive_" + (2 + (2 * i)) + "'],null);" +
+            "setOutcomes(" + (2 + (2 * i)) + ")");
+        button.innerHTML = "-";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "weak_positive_" + (2 + (2 * i)) + "";
+        button.setAttribute("onclick", " updateResult('data.result_" + (2 + (2 * i)) + "','Weak Positive','weak_positive_" +
+            (2 + (2 * i)) + "',['strong_positive_" + (2 + (2 * i)) + "','negative_" + (2 + (2 * i)) + "'],null);" +
+            "setOutcomes(" + (2 + (2 * i)) + ")");
+        button.innerHTML = "+";
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "1px solid black"
+        td.style.textAlign = "center";
+
+        tr.appendChild(td);
+
+        var button = document.createElement("button");
+        button.className = "gray";
+        button.id = "strong_positive_" + (2 + (2 * i)) + "";
+        button.setAttribute("onclick", " updateResult('data.result_" + (2 + (2 * i)) + "','Strong Positive'," +
+            "'strong_positive_" + (2 + (2 * i)) + "',['weak_positive_" + (2 + (2 * i)) + "','negative_" + (2 + (2 * i)) +
+            "'],null);setOutcomes(" + (2 + (2 * i)) + ")");
+
+        button.innerHTML = "<font style= 'font-size:1.5em'>+</font>"
+
+        td.appendChild(button);
+
+        var td = document.createElement("td");
+        td.innerHTML = "";
+        td.style.borderBottom = "1px solid black";
+
+        tr.appendChild(td);
+
+        __$("nextButton").className = __$("nextButton").className.replace(/blue|green/i, "gray");
+
+        var nexButtonIterval = setInterval(function () {
+
+            if (__$('nextButton').className.match("gray")) {
+
+                var fals = 0
+
+                for (var i = 1; i < 3; i++) {
+
+                    if (!__$("data.result_" + i).value) {
+
+                        fals++;
+                    }
+
+                }
+
+                if (fals == 0) {
+
+                    __$("nextButton").className = __$("nextButton").className.replace(/gray/i, "green");
+
+                }
+
+            } else {
+
+                clearInterval(nexButtonIterval);
+
+            }
+
+        }, 100)
+
+    }
+
+}
+
+function startTimer(button) {
 
     __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>00:00</font>"
 
     __$(button).removeAttribute("onclick");
 
-   if(!timers[button]){
+    if (!timers[button]) {
 
-        timers[button] = {minutes : 0 , seconds : 0 , progress: true}
-   }
+        timers[button] = {minutes: 0, seconds: 0, progress: true}
+    }
 
-    var timerInterval = setInterval(function (){
+    var timerInterval = setInterval(function () {
 
-        if(timers[button].progress){
+        if (timers[button].progress) {
 
             timers[button].seconds++;
 
-                if(timers[button].seconds == 60){
+            if (timers[button].seconds == 60) {
 
-                    timers[button].minutes++;
+                timers[button].minutes++;
 
-                    timers[button].seconds= 0
+                timers[button].seconds = 0
 
-                }
+            }
 
-                if(__$(button) != null){
+            if (__$(button) != null) {
 
-                    __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>" +
-                                padZeros(timers[button].minutes,2) +":"+padZeros(timers[button].seconds,2) + "</font>"
+                __$(button).innerHTML = "<font style= 'font-weight: bold; font-size : 1.0em'>" +
+                    padZeros(timers[button].minutes, 2) + ":" + padZeros(timers[button].seconds, 2) + "</font>"
 
-                }
+            }
 
-                
 
-        }else{
+        } else {
 
             clearInterval(timerInterval);
 
         }
 
-        
 
-    },1000)
+    }, 1000)
 
 }
 
 
-function updateResult(field,value,buttonActivate,buttonActivates,timer) {
+function updateResult(field, value, buttonActivate, buttonActivates, timer) {
 
-	var resultField = __$(field);
+    var resultField = __$(field);
 
     resultField.value = value;
 
-    if(timers[timer] && timers[timer].progress)
-         __$("data."+timer).value = timers[timer].minutes +":"+timers[timer].seconds;
+    if (timers[timer] && timers[timer].progress)
+        __$("data." + timer).value = timers[timer].minutes + ":" + timers[timer].seconds;
 
-    if(timer && timers[timer])
+    if (timer && timers[timer])
         timers[timer].progress = false;
 
     __$(buttonActivate).className = "green";
 
-    for(var i = 0 ; i < buttonActivates.length ; i++){
+    for (var i = 0; i < buttonActivates.length; i++) {
 
-    	var button = __$(buttonActivates[i]);
+        var button = __$(buttonActivates[i]);
 
-    	button.className = "blue";
+        button.className = "blue";
 
- 
+
     }
 
 }
 
-function setOutcomes(i){
+function setOutcomes(i) {
 
-		var dts = __$("data.dts_name"+i).value;
+    var dts = __$("data.dts_name" + (i > 2 ? (i - 2) : i)).value;
 
-		var result = __$("data.result_"+i).value;
+    var result = __$("data.result_" + i).value;
 
-		if((dts.trim().toLowerCase().match(/positive/i) && result.trim().toLowerCase().match(/positive/i))||
-			(dts.trim().toLowerCase().match(/negative/i) && result.trim().toLowerCase().match(/negative/i) )){
+    var selections = (__$("data.test_kit_name").getAttribute("tstValue") != null ?
+        __$("data.test_kit_name").getAttribute("tstValue") : "").split(";");
 
-				__$("data.outcome_"+i).value = "Acceptable";
+    if ((dts.trim().toLowerCase().match(/positive/i) && result.trim().toLowerCase().match(/positive/i)) ||
+        (dts.trim().toLowerCase().match(/negative/i) && result.trim().toLowerCase().match(/negative/i) )) {
 
-				__$("data.interpretation_"+i).setAttribute("condition",false);
+        __$("data.outcome_" + i).value = "Acceptable";
 
-		}else{
+        __$("data.interpretation_" + i).setAttribute("condition", false);
 
-				__$("data.outcome_"+i).value = "Not Acceptable";
+    } else {
 
-				__$("data.interpretation_"+i).setAttribute("condition",true);
+        __$("data.outcome_" + i).value = "Not Acceptable";
 
-				__$("data.interpretation_"+i).setAttribute("helpText", "Comment on "+ dts + " outcome" );
+        __$("data.interpretation_" + i).setAttribute("condition", true);
 
+        __$("data.interpretation_" + i).setAttribute("helpText", "Comment on " + dts + " outcome for " + selections[(i % 2 == 0 ? 1 : 0)]);
 
-				window.parent.quality.showMsg(dts + " with result of "+ result +" is Not Acceptable","Quality Control Outcome");
-		}
+        window.parent.quality.showMsg(dts + " with result of " + result + " is Not Acceptable", "Quality Control Outcome");
+    }
 
 }
 
-function setSecondDTS(field){
+function setSecondDTS(field) {
 
-		var exceptions = encodeURIComponent('["' + __$('touchscreenInput' + tstCurrentPage).value + '"]');
+    var exceptions = encodeURIComponent('["' + __$('touchscreenInput' + tstCurrentPage).value + '"]');
 
-		__$(field).setAttribute('ajaxURL', '/stock/stock_items?category=Dts' + "&exceptions=" + exceptions + "&description=" 
-			+ encodeURIComponent("Quality Control") + '&item_name=');
-
+    __$(field).setAttribute('ajaxURL', '/stock/stock_items?category=Dts' + "&exceptions=" + exceptions + "&description="
+        + encodeURIComponent("Quality Control") + '&item_name=');
 
 
 }

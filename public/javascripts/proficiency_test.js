@@ -403,7 +403,7 @@ var proficiency = ({
                 "tstCurrentPage).value.trim().match(/(\\d+)\\)$/)[1]; " +
                 "if(limit < 10){ window.parent.proficiency.showMsg('Not enough stock to complete proficiency Test','Proficiency Test')}}"
             },
-            "Test 1 epiry date": {
+            "Test 1 expiry date": {
                 field_type: "hidden",
                 id: "data.test1_expiry_date"
             }

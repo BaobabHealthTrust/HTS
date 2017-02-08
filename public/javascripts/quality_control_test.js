@@ -332,6 +332,10 @@ var quality = ({
 
         form.appendChild(script);
 
+        var script = document.createElement("script");
+        script.setAttribute("src", "/javascripts/quality_control_test.js");
+
+        form.appendChild(script);
 
         var table = document.createElement("table");
 
@@ -352,8 +356,7 @@ var quality = ({
             "Date of QC testing": {
                 field_type: "date",
                 id: "data.qc_testing_date"
-            }
-            ,
+            },
             "HTS Provider": {
                 field_type: "text",
                 id: "data.hts_provider",
@@ -373,13 +376,10 @@ var quality = ({
                 id: "data.dts_1_lot_number",
                 condition: false,
                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_1_expiry_date')"
-
             },
             "DTS Sample 1 Date": {
-
                 field_type: "hidden",
                 id: "data.dts_1_expiry_date"
-
             },
             "DTS Sample 2": {
                 field_type: "text",
@@ -395,41 +395,54 @@ var quality = ({
                 id: "data.dts_2_lot_number",
                 condition: false,
                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.dts_2_expiry_date')"
-
             },
             "DTS Sample 2 Date": {
-
                 field_type: "hidden",
                 id: "data.dts_2_expiry_date"
-
             },
             "Select Test kit to evaluate": {
-                field_type: "text",
+                field_type: "select",
+                multiple: "multiple",
                 id: "data.test_kit_name",
                 tt_pageStyleClass: "NoKeyboard",
                 ajaxURL: '/stock/stock_items?category=Test Kits&item_name=',
-                tt_onUnload: "var kit_name = __$('touchscreenInput' + tstCurrentPage).value; if(kit_name){" +
-                "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId=" + user.getCookie("username") + "&item_name='+kit_name+'&batch=');" +
-                "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
+                tt_beforeUnload: "var selections = __$('touchscreenInput' + tstCurrentPage).value.split(';'); " +
+                "if(selections.length < 2) {quality.showMsg('Expecting at least 2 test kits to be selected!', 'Error!', " +
+                "'javascript:gotoPage(tstCurrentPage-1, null, true)')}",
+                tt_onUnload: "var selections = __$('touchscreenInput' + tstCurrentPage).value.split(';'); " +
+                "var kit1_name = (selections.length > 0 ? selections[0] : ''); var kit2_name = (selections.length > 1 ? " +
+                "selections[1] : ''); if(kit1_name.trim().length > 0){__$('data.test_kit1_lot_number').setAttribute('helpText', " +
+                "selections[0] + ' Lot Number'); __$('data.test_kit1_lot_number').setAttribute('ajaxURL'," +
+                "'/stock/available_batches_to_user?userId=" + user.getCookie("username") + "&item_name='+kit1_name+'&batch=');" +
+                "__$('data.test_kit1_lot_number').setAttribute('condition',true)}; if(kit2_name.trim().length > 0){" +
+                "__$('data.test_kit2_lot_number').setAttribute('helpText', selections[1] + ' Lot Number'); " +
+                "__$('data.test_kit2_lot_number').setAttribute('ajaxURL', '/stock/available_batches_to_user?userId=" +
+                user.getCookie("username") + "&item_name='+kit2_name+'&batch='); __$('data.test_kit2_lot_number').setAttribute('condition',true)}; " +
+                "__$('data.test_kit_name').setAttribute('tstValue', __$('touchscreenInput' + tstCurrentPage).value)"
             },
-            "Test kit Lot Number": {
+            "Test kit 1 Lot Number": {
                 field_type: "text",
-                id: "data.test_kit_lot_number",
-                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit_expiry_date')"
+                id: "data.test_kit1_lot_number",
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit1_expiry_date')"
             },
             "Test Kit Expiry Date": {
-
                 field_type: "hidden",
-                id: "data.test_kit_expiry_date"
-
+                id: "data.test_kit1_expiry_date"
+            },
+            "Test kit 2 Lot Number": {
+                field_type: "text",
+                id: "data.test_kit2_lot_number",
+                tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit2_expiry_date')"
+            },
+            "Test Kit 2 Expiry Date": {
+                field_type: "hidden",
+                id: "data.test_kit2_expiry_date"
             },
             "Quality Control Test": {
-
                 field_type: "text",
                 id: "data.quality_test",
                 tt_onLoad: "loadQualityTestControl()",
                 tt_pageStyleClass: "NoKeyboard"
-
             },
             "Control 1 Line seen": {
                 field_type: "hidden",
@@ -439,6 +452,14 @@ var quality = ({
                 field_type: "hidden",
                 id: "data.control_2_line_seen"
             },
+            "Control 3 Line seen": {
+                field_type: "hidden",
+                id: "data.control_3_line_seen"
+            },
+            "Control 4 Line seen": {
+                field_type: "hidden",
+                id: "data.control_4_line_seen"
+            },
             "Result 1": {
                 field_type: "hidden",
                 id: "data.result_1"
@@ -446,6 +467,14 @@ var quality = ({
             "Result 2": {
                 field_type: "hidden",
                 id: "data.result_2"
+            },
+            "Result 3": {
+                field_type: "hidden",
+                id: "data.result_3"
+            },
+            "Result 4": {
+                field_type: "hidden",
+                id: "data.result_4"
             },
             "Timer 1": {
                 id: "data.timer_1",
@@ -455,39 +484,55 @@ var quality = ({
                 id: "data.timer_2",
                 field_type: "hidden"
             },
+            "Timer 3": {
+                id: "data.timer_3",
+                field_type: "hidden"
+            },
+            "Timer 4": {
+                id: "data.timer_4",
+                field_type: "hidden"
+            },
             "Outcome 1": {
-
                 field_type: "hidden",
                 id: "data.outcome_1"
-
             },
             "Outcome 2": {
-
                 field_type: "hidden",
                 id: "data.outcome_2"
-
             },
-            "Comment for Result 1": {
-
+            "Outcome 3": {
+                field_type: "hidden",
+                id: "data.outcome_3"
+            },
+            "Outcome 4": {
+                field_type: "hidden",
+                id: "data.outcome_4"
+            },
+            "Comment for Test kit 1 Result 1": {
                 field_type: "text",
                 id: "data.interpretation_1",
                 condition: false
-
             },
-            "Comment for Result 2": {
-
+            "Comment for Test kit 1 Result 2": {
                 field_type: "text",
                 id: "data.interpretation_2",
                 condition: false
-
+            },
+            "Comment for Test kit 2 Result 1": {
+                field_type: "text",
+                id: "data.interpretation_3",
+                condition: false
+            },
+            "Comment for Test kit 2 Result 2": {
+                field_type: "text",
+                id: "data.interpretation_4",
+                condition: false
             },
             "Quality Control Summary": {
-
                 field_type: "text",
                 id: "data.Summary",
                 tt_pageStyleClass: "NoKeyboard",
                 tt_onLoad: "showQualityControlTestSummary()"
-
             }
         }
 
@@ -993,9 +1038,9 @@ var quality = ({
 
         btn.onclick = function () {
 
-            if (user.$("msg.shield")) {
+            if (quality.$("msg.shield")) {
 
-                document.body.removeChild(user.$("msg.shield"));
+                document.body.removeChild(quality.$("msg.shield"));
 
                 if (this.getAttribute("nextURL"))
                     window.location = this.getAttribute("nextURL");
@@ -1005,6 +1050,12 @@ var quality = ({
         }
 
         tdf.appendChild(btn);
+
+    },
+
+    __$: function(id) {
+
+        return document.getElementById(id);
 
     },
 
