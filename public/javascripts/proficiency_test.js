@@ -48,8 +48,7 @@ if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
         }
     });
 
-}
-;
+};
 
 function leapYear(year) {
 
@@ -109,10 +108,9 @@ var proficiency = ({
 
     proficiencyId: null,
 
-    kits: {}
-    ,
-    stock_label: {}
-    ,
+    kits: {},
+
+    stock_label: {},
 
     $: function (id) {
 
@@ -129,7 +127,6 @@ var proficiency = ({
         }
 
     },
-
 
     padZeros: function (number, positions) {
         var zeros = parseInt(positions) - String(number).length;
@@ -914,7 +911,13 @@ var proficiency = ({
         btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
-        if (data.action_plan && data.action_plan.length > 0) {
+        btnFinish.onclick = function () {
+
+            window.parent.proficiency.pTReviewReport(window.parent.document.body);
+
+        }
+
+        /*if (data.action_plan && data.action_plan.length > 0) {
 
             btnFinish.onclick = function () {
 
@@ -930,34 +933,14 @@ var proficiency = ({
 
             }
 
-        }
+        }*/
 
-        // nav.appendChild(btnFinish);
-
-        var btnAction = document.createElement("button");
-        btnAction.id = "btnAction";
-        btnAction.className = "blue";
-        btnAction.style.marginTop = "15px";
-        btnAction.style.width = "150px";
-        btnAction.style.cssFloat = "right";
-        btnAction.innerHTML = "Action Plan";
-
-        btnAction.onclick = function () {
-
-            if(this.className.match(/gray/i))
-                return;
-
-            proficiency.proficiencyTestActionPlan(data.pid)
-
-        }
-
-        nav.appendChild(btnAction);
+        nav.appendChild(btnFinish);
 
         var btnReview = document.createElement("button");
         btnReview.id = "btnReview";
         btnReview.className = "gray";
         btnReview.style.marginTop = "15px";
-        btnReview.style.marginRight = "15px";
         btnReview.style.cssFloat = "right";
         btnReview.innerHTML = "Mark Reviewed";
 
@@ -981,6 +964,26 @@ var proficiency = ({
         }
 
         nav.appendChild(btnReview);
+
+        var btnAction = document.createElement("button");
+        btnAction.id = "btnAction";
+        btnAction.className = "blue";
+        btnAction.style.marginTop = "15px";
+        btnAction.style.width = "150px";
+        btnAction.style.cssFloat = "right";
+        btnAction.style.marginRight = "15px";
+        btnAction.innerHTML = "Action Plan";
+
+        btnAction.onclick = function () {
+
+            if(this.className.match(/gray/i))
+                return;
+
+            proficiency.proficiencyTestActionPlan(data.pid)
+
+        }
+
+        nav.appendChild(btnAction);
 
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
@@ -1402,6 +1405,22 @@ var proficiency = ({
 
             }
 
+            if(ptdata.approved.trim().length > 0) {
+
+                if(__$("btnAction")) {
+
+                    __$("btnAction").className = "gray";
+
+                }
+
+                if(__$("btnReview")) {
+
+                    __$("btnReview").className = "gray";
+
+                }
+
+            }
+
             if (ptdata.action_plan && ptdata.action_plan.length > 0) {
 
                 var tr = document.createElement('tr');
@@ -1554,7 +1573,6 @@ var proficiency = ({
 
         nav.appendChild(btnFinish);
 
-
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
 
@@ -1571,8 +1589,8 @@ var proficiency = ({
             month: date_parts[1]
         });
 
-
     },
+
     reloadPTReport: function (target) {
 
         var year = proficiency.$("year").value;
@@ -1590,8 +1608,8 @@ var proficiency = ({
         });
 
 
-    }
-    ,
+    },
+
     loadPTReviewReport: function (path, target, date) {
 
         if (!path || !target)
@@ -1600,51 +1618,35 @@ var proficiency = ({
         target.innerHTML = "";
 
         var div = document.createElement("div");
-
         div.style.textAlign = "right";
-
         div.style.height = "70px";
-
         div.style.paddingRight = "20px";
-
-        div.style.borderBottom = "2px solid #6281a7";
 
         target.appendChild(div);
 
-
         var datetable = document.createElement("table");
-
         datetable.style.float = "right";
 
         div.appendChild(datetable);
-
 
         var tr = document.createElement("tr");
 
         datetable.appendChild(tr);
 
-
         var td = document.createElement("td");
-
         td.style.textAlign = "right";
-
         td.innerHTML = "Year";
-
         td.style.fontSize = "24px";
 
         tr.appendChild(td);
-
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
         var select = document.createElement("select");
-
         select.id = "year";
-
         select.style.padding = "0";
-
         select.style.fontSize = "24px";
 
         select.onchange = function () {
@@ -1676,33 +1678,27 @@ var proficiency = ({
         td.appendChild(select);
 
         var td = document.createElement("td");
-
         td.style.textAlign = "right";
-
         td.innerHTML = "Month";
-
         td.style.fontSize = "24px";
 
         tr.appendChild(td);
-
 
         var td = document.createElement("td");
 
         tr.appendChild(td);
 
         var select = document.createElement("select");
-
         select.style.fontSize = "24px";
-
         select.style.padding = "0";
-
         select.onchange = function () {
 
             window.parent.proficiency.reloadPTReport(target)
 
         }
-
         select.id = "month";
+
+        td.appendChild(select);
 
         var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
             "October", "November", "December"];
@@ -1730,11 +1726,7 @@ var proficiency = ({
 
         }
 
-        td.appendChild(select);
-
-
         var div = document.createElement("div");
-
         div.style.width = "100%";
 
         target.appendChild(div);
@@ -1759,15 +1751,15 @@ var proficiency = ({
             div.appendChild(table);
 
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#eee";
+            tr.style.backgroundColor = "#999";
             tr.style.color = "#eee";
 
             table.appendChild(tr);
 
-            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2", "Score", "Perfomance"];
-            var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px",
+            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2", "Score",
+                "Reviewed", "Perfomance"];
+            var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px", "80px",
                 "180px"];
-
 
             for (var i = 0; i < fields.length; i++) {
 
@@ -1780,124 +1772,91 @@ var proficiency = ({
 
                 tr.appendChild(th);
 
-
             }
 
             for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
-
                 tr.style.padding = "0.1em";
-
                 tr.style.border = "1px solid #e3e3e2"
 
                 table.appendChild(tr);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = i + 1;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = new Date(data[i].proficiency_test_date).format();
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].hts_provider_id;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].first_name + " " + data[i].last_name;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].pt_panel_lot_number;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].test_kit_1_name;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].test_kit_2_name;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = (data[i].score ? data[i].score + "%" : "");
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
+                var td = document.createElement("td");
+                td.style.padding = "0.1em";
+                td.style.border = "1px solid #e3e3e2";
+                td.innerHTML = (data[i].approved.length > 0 ? "<b style='color: green'>Yes</b>" : "<b style='color: red'>No</b>");
+
+                tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2";
 
-                var button = document.createElement("button");
+                tr.appendChild(td);
 
-                button.innerHTML = "View Perfomance";
+                var button = document.createElement("button");
+                button.innerHTML = "Details";
 
                 button.setAttribute("onclick", "window.parent.proficiency.viewPTPerfomance(" + JSON.stringify(data[i]) + ",window.parent.document.body)");
 
-
                 td.appendChild(button);
-
-                tr.appendChild(td);
 
                 if (parseInt(table.offsetHeight) > 0.6 * parseInt(window.innerHeight)) {
 
@@ -1907,13 +1866,12 @@ var proficiency = ({
 
                 }
 
-
             }
 
         })
 
-
     },
+
     viewPTPerfomance: function (data, target) {
 
         if (!target)
@@ -2002,27 +1960,61 @@ var proficiency = ({
         btnFinish.style.width = "150px";
         btnFinish.innerHTML = "Finish";
 
-        if (data.action_plan && data.action_plan.length > 0) {
+        btnFinish.onclick = function () {
 
-            btnFinish.onclick = function () {
-
-                window.parent.proficiency.pTReviewReport(window.parent.document.body);
-
-            }
-
-
-        } else {
-
-            btnFinish.onclick = function () {
-
-                window.parent.proficiency.proficiencyTestApproval(window.parent.document.body);
-
-            }
-
+            window.parent.proficiency.pTReviewReport(window.parent.document.body);
 
         }
 
         nav.appendChild(btnFinish);
+
+        var btnReview = document.createElement("button");
+        btnReview.id = "btnReview";
+        btnReview.className = "gray";
+        btnReview.style.marginTop = "15px";
+        btnReview.style.cssFloat = "right";
+        btnReview.innerHTML = "Mark Reviewed";
+
+        btnReview.onclick = function () {
+
+            if(this.className.match(/gray/i))
+                return;
+
+            stock.ajaxRequest("/quality_control/mark_pt_reviewed/" + data.pid, function(result) {
+
+                if(__$("btnReview")) {
+
+                    __$("btnReview").className = "gray";
+
+                }
+
+                proficiency.showMsg("Proficiency test marked as reviewed!", "Confirmation");
+
+            })
+
+        }
+
+        nav.appendChild(btnReview);
+
+        var btnAction = document.createElement("button");
+        btnAction.id = "btnAction";
+        btnAction.className = "blue";
+        btnAction.style.marginTop = "15px";
+        btnAction.style.width = "150px";
+        btnAction.style.cssFloat = "right";
+        btnAction.style.marginRight = "15px";
+        btnAction.innerHTML = "Action Plan";
+
+        btnAction.onclick = function () {
+
+            if(this.className.match(/gray/i))
+                return;
+
+            proficiency.proficiencyTestActionPlan(data.pid)
+
+        }
+
+        nav.appendChild(btnAction);
 
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
@@ -2048,7 +2040,6 @@ var proficiency = ({
         script.setAttribute("src", "/javascripts/proficiency_test_control.js");
 
         form.appendChild(script);
-
 
         var fields = {
             "Datatype": {
@@ -2456,6 +2447,7 @@ var proficiency = ({
         tdf.appendChild(btnOK);
 
     },
+
     navPanel: function (content) {
 
         if (proficiency.$("proficiency.navPanel")) {
@@ -2510,6 +2502,7 @@ var proficiency = ({
         }
 
     },
+
     ajaxPostRequest: function (url, data, callback) {
 
         var httpRequest = new XMLHttpRequest();
@@ -2573,7 +2566,6 @@ var proficiency = ({
 
     },
 
-
     submitData: function (data) {
 
 
@@ -2621,8 +2613,6 @@ var proficiency = ({
 
                 }
 
-                // window.location = "/";
-
                 proficiency.showMsg(json.message, "Status", null);
 
             })
@@ -2641,9 +2631,7 @@ var proficiency = ({
 
                 }
 
-                proficiency.proficiencyTestApproval(document.body)
-
-                // window.location = "/";
+                proficiency.pTReviewReport(document.body)
 
                 proficiency.showMsg(json.message, "Status", null);
 
@@ -2653,7 +2641,6 @@ var proficiency = ({
         }
 
     }
-
 
 });
 

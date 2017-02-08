@@ -430,236 +430,238 @@ module.exports = function (router) {
     router.route('/save_quality_control_test/')
         .post(function (req, res) {
 
-        var data = req.body;
+            var data = req.body;
 
-        switch (data.datatype) {
+            switch (data.datatype) {
 
-            case "quality_assurance":
+                case "quality_assurance":
 
-                saveQualityTest(data, res);
+                    saveQualityTest(data, res);
 
-                break;
+                    break;
 
-        }
+            }
 
-    });
+        });
 
     router.route("/proficiency_test/")
         .post(function (req, res) {
 
-        var data = req.body;
+            var data = req.body;
 
-        if (data.datatype == "proficiency_test") {
+            if (data.datatype == "proficiency_test") {
 
-            saveProficiency(data, res);
+                saveProficiency(data, res);
 
-        }
+            }
 
-    });
+        });
 
     router.route('/quality_control_test_approval/')
         .get(function (data, res) {
 
-        var sql = "SELECT * FROM quality_assurance WHERE approval_status IS NULL OR approval_status =''";
-        results = []
+            var sql = "SELECT * FROM quality_assurance WHERE approval_status IS NULL OR approval_status =''";
+            results = []
 
-        queryRawQualityControl(sql, function (data) {
+            queryRawQualityControl(sql, function (data) {
 
-            for (var i = 0; i < data[0].length; i++) {
+                for (var i = 0; i < data[0].length; i++) {
 
-                if (!data[0][i])
-                    continue;
+                    if (!data[0][i])
+                        continue;
 
-                results.push(data[0][i])
+                    results.push(data[0][i])
 
-            }
+                }
 
-            res.send(results);
+                res.send(results);
 
-        })
-    });
+            })
+        });
 
     router.route('/quality_control_test_approval_update/')
         .post(function (req, res) {
 
-        var data = req.body;
+            var data = req.body;
 
-        var sql = "UPDATE quality_assurance AS quality_assurance " + "SET approval_status = '" + data.approval_status + "',reason_for_approval = '" + data.reason_for_approval + "', comments = comments + 1  WHERE quality_assurance_test_id = '" + data.qc_id + "' ";
+            var sql = "UPDATE quality_assurance AS quality_assurance " + "SET approval_status = '" + data.approval_status + "',reason_for_approval = '" + data.reason_for_approval + "', comments = comments + 1  WHERE quality_assurance_test_id = '" + data.qc_id + "' ";
 
-        console.log(sql);
+            console.log(sql);
 
-        queryRawQualityControl(sql, function (data) {
+            queryRawQualityControl(sql, function (data) {
 
-            res.send("Approval status updated");
+                res.send("Approval status updated");
 
-        })
+            })
 
-    });
+        });
 
     router.route('/proficiency_test_approval/')
         .get(function (data, res) {
 
-        var sql = "SELECT * FROM proficiency_test WHERE approved  ='' AND score != -1";
+            var sql = "SELECT * FROM proficiency_test WHERE COALESCE(score, -1) != -1"; // AND approved  = '' ";
 
-        results = [];
+            console.log(sql);
 
-        queryRawQualityControl(sql, function (data) {
+            results = [];
 
-            for (var i = 0; i < data[0].length; i++) {
+            queryRawQualityControl(sql, function (data) {
 
-                if (!data[0][i])
-                    continue;
+                for (var i = 0; i < data[0].length; i++) {
 
-                results.push(data[0][i])
+                    if (!data[0][i])
+                        continue;
 
-            }
+                    results.push(data[0][i])
 
-            res.send(results);
+                }
 
-        })
+                res.send(results);
 
-    });
+            })
+
+        });
 
     router.route("/proficiency_test_result/:id")
         .get(function (data, res) {
 
-        var sql = "SELECT * FROM proficiency_test_result WHERE pid = '" + data.params.id + "' AND official_result !=''";
+            var sql = "SELECT * FROM proficiency_test_result WHERE pid = '" + data.params.id + "' AND official_result !=''";
 
-        results = [];
+            results = [];
 
-        queryRawQualityControl(sql, function (data) {
+            queryRawQualityControl(sql, function (data) {
 
-            for (var i = 0; i < data[0].length; i++) {
+                for (var i = 0; i < data[0].length; i++) {
 
-                if (!data[0][i])
-                    continue;
+                    if (!data[0][i])
+                        continue;
 
-                results.push(data[0][i])
+                    results.push(data[0][i])
 
-            }
+                }
 
-            res.send(results);
+                res.send(results);
 
-        })
+            })
 
-    });
+        });
 
     router.route("/proficiency_test_official_result/")
         .post(function (req, res) {
 
-        var data = req.body;
+            var data = req.body;
 
-        var sql = "";
+            var sql = "";
 
-        async.series([
-            function (icallback) {
+            async.series([
+                function (icallback) {
 
-                console.log(data.pt_panel_lot_number);
+                    console.log(data.pt_panel_lot_number);
 
-                var query_official = "SELECT * FROM proficiency_test_official_result WHERE pt_panel_lot_number = '" + data.pt_panel_lot_number + "'";
+                    var query_official = "SELECT * FROM proficiency_test_official_result WHERE pt_panel_lot_number = '" + data.pt_panel_lot_number + "'";
 
-                queryRawQualityControl(query_official, function (result) {
+                    queryRawQualityControl(query_official, function (result) {
 
-                    if (!result[0][0]) {
+                        if (!result[0][0]) {
 
-                        sql = "INSERT INTO proficiency_test_official_result(pt_panel_lot_number,panel_1,panel_2,panel_3,panel_4,panel_5,date_created,created_by) " +
-                            "VALUES('" + data.pt_panel_lot_number + "','" + data.pt_panel_result_0 + "','" + data.pt_panel_result_1 + "','" + data.pt_panel_result_2 + "','"
-                            + data.pt_panel_result_3 + "','" + data.pt_panel_result_4 + "',NOW(),'" + data.userId + "')";
+                            sql = "INSERT INTO proficiency_test_official_result(pt_panel_lot_number,panel_1,panel_2,panel_3,panel_4,panel_5,date_created,created_by) " +
+                                "VALUES('" + data.pt_panel_lot_number + "','" + data.pt_panel_result_0 + "','" + data.pt_panel_result_1 + "','" + data.pt_panel_result_2 + "','"
+                                + data.pt_panel_result_3 + "','" + data.pt_panel_result_4 + "',NOW(),'" + data.userId + "')";
 
-                    } else {
+                        } else {
 
-                        sql = "UPDATE proficiency_test_official_result SET panel_1 = '" + data.pt_panel_result_0 + "', panel_2 = '" + data.pt_panel_result_1 +
-                            "', panel_3 = '" + data.pt_panel_result_2 + "', panel_4 = '" + data.pt_panel_result_3 + "', panel_5 = '" + data.pt_panel_result_4
-                            + "' WHERE pt_panel_lot_number ='" + data.pt_panel_lot_number + "'";
-                    }
+                            sql = "UPDATE proficiency_test_official_result SET panel_1 = '" + data.pt_panel_result_0 + "', panel_2 = '" + data.pt_panel_result_1 +
+                                "', panel_3 = '" + data.pt_panel_result_2 + "', panel_4 = '" + data.pt_panel_result_3 + "', panel_5 = '" + data.pt_panel_result_4
+                                + "' WHERE pt_panel_lot_number ='" + data.pt_panel_lot_number + "'";
+                        }
 
-                    icallback();
+                        icallback();
 
-                });
+                    });
 
-            },
+                },
 
-            function (icallback) {
+                function (icallback) {
 
-                queryRawQualityControl(sql, function (batch) {
+                    queryRawQualityControl(sql, function (batch) {
 
-                    console.log("Insert Proficiency Official Result");
+                        console.log("Insert Proficiency Official Result");
 
-                    res.status(200).json({message: "Proficiency Official Result Done!"});
+                        res.status(200).json({message: "Proficiency Official Result Done!"});
 
-                    updatePTScores(data);
+                        updatePTScores(data);
 
-                    icallback();
+                        icallback();
 
-                });
+                    });
 
-            }])
+                }])
 
-    });
+        });
 
     router.route("/proficiency_test_action_plan/")
         .post(function (req, res) {
 
-        var data = req.body;
+            var data = req.body;
 
-        var sql = "UPDATE proficiency_test SET action_plan ='" + data.action_plan + "', approved = \"No\", " +
-            "date_approved = NOW() WHERE pid ='" + data.proficiency_test_id + "'";
+            var sql = "UPDATE proficiency_test SET action_plan ='" + data.action_plan + "', approved = \"No\", " +
+                "date_approved = NOW() WHERE pid ='" + data.proficiency_test_id + "'";
 
-        queryRawQualityControl(sql, function (batch) {
+            queryRawQualityControl(sql, function (batch) {
 
-            console.log("Action Plan Entered");
+                console.log("Action Plan Entered");
 
-            res.status(200).json({message: "Action plan entered!"});
+                res.status(200).json({message: "Action plan entered!"});
+
+            });
 
         });
-
-    });
 
     router.route("/proficiency_test_report/:start_date/:end_date")
         .get(function (req, res) {
 
-        var start_date = req.params.start_date;
+            var start_date = req.params.start_date;
 
-        var end_date = req.params.end_date;
+            var end_date = req.params.end_date;
 
-        var sql = "SELECT * FROM proficiency_test WHERE  score >= 0 AND DATE(proficiency_test_date) >='" + start_date
-            + "' AND DATE(proficiency_test_date) <='" + end_date + "'";
+            var sql = "SELECT * FROM proficiency_test WHERE  score >= 0 AND DATE(proficiency_test_date) >='" + start_date
+                + "' AND DATE(proficiency_test_date) <='" + end_date + "'";
 
-        console.log(sql);
+            console.log(sql);
 
-        results = [];
+            results = [];
 
-        queryRawQualityControl(sql, function (data) {
+            queryRawQualityControl(sql, function (data) {
 
-            for (var i = 0; i < data[0].length; i++) {
+                for (var i = 0; i < data[0].length; i++) {
 
-                if (!data[0][i])
-                    continue;
+                    if (!data[0][i])
+                        continue;
 
-                results.push(data[0][i])
+                    results.push(data[0][i])
 
-            }
+                }
 
-            res.send(results);
+                res.send(results);
 
-        })
+            })
 
-    });
+        });
 
     router.route("/mark_pt_reviewed/:id")
-        .get(function(req, res) {
+        .get(function (req, res) {
 
-        var sql = "UPDATE proficiency_test SET approved = \"Yes\", date_approved = NOW() WHERE pid = \"" + req.params.id + "\"";
+            var sql = "UPDATE proficiency_test SET approved = \"Yes\", date_approved = NOW() WHERE pid = \"" + req.params.id + "\"";
 
-        queryRawQualityControl(sql, function(data) {
+            queryRawQualityControl(sql, function (data) {
 
-            console.log(Object.keys(data[0]));
+                console.log(Object.keys(data[0]));
 
-            res.status(200).json({result: "OK"});
+                res.status(200).json({result: "OK"});
+
+            })
 
         })
-
-    })
 
     return router;
 
