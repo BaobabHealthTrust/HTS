@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `proficiency_test`;
 
 CREATE TABLE `proficiency_test` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
-  `proficiency_test_date` varchar(255) NOT NULL,
+  `proficiency_test_date` datetime NOT NULL,
   `hts_provider_id` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
@@ -40,16 +40,17 @@ CREATE TABLE `proficiency_test` (
   `created_by` varchar(100) NOT NULL,
   `voided` tinyint(1) NOT NULL,
   `voided_reason` varchar(255) NOT NULL,
-  `voided_date` varchar(255) NOT NULL,
+  `voided_date` datetime NOT NULL,
   `voided_by` varchar(255) NOT NULL,
   `approved` varchar(3) NOT NULL DEFAULT '',
   `approved_by` varchar(255) NOT NULL,
+  `date_approved` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `score` int(3) NOT NULL DEFAULT '-1',
   `action_plan` varchar(1000) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_changed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `proficiency_test_result`;
 

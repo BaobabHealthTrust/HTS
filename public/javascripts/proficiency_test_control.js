@@ -404,25 +404,19 @@ function loadPTControl(test) {
 
         td.appendChild(button);
 
-
     }
 
-
 }
-
 
 function loadRepeatPTControl(test) {
 
     var control = __$("inputFrame" + tstCurrentPage);
-
     control.innerHTML = "";
 
-    //control.style.overflowY = "scroll";
-
-    //control.style.overflowX = "scroll";
-
     var table = document.createElement("table");
-
+    table.style.borderCollapse = "collapse";
+    table.style.width = "95%";
+    table.style.margin = "auto";
 
     control.appendChild(table);
 
@@ -431,105 +425,65 @@ function loadRepeatPTControl(test) {
 
     table.appendChild(tr);
 
-    table.style.borderCollapse = "collapse";
-
-    table.style.width = "95%";
-
-    table.style.margin = "auto";
-
     var th = document.createElement("th");
-
-    tr.appendChild(th);
-
     th.innerHTML = "Sample #";
-
     th.style.padding = "0.3em";
-
     th.style.width = "12px"
-
     th.rowSpan = "2";
-
     th.style.borderBottom = "1px solid black";
-
     th.style.borderRight = "2px solid black";
-
-
-    var th = document.createElement("th");
 
     tr.appendChild(th);
 
+    var th = document.createElement("th");
     th.innerHTML = "Test 1 " + (__$("data.test1_kit_name").value ? ": " + __$('data.test1_kit_name').value : "");
-
     th.style.padding = "0.3em";
-
     th.colSpan = "3";
-
     th.style.borderRight = "2px solid black";
-
-
-    var th = document.createElement("th");
 
     tr.appendChild(th);
 
+    var th = document.createElement("th");
     th.innerHTML = "Test 2 " + (__$("data.test2_kit_name").value ? ": " + __$('data.test2_kit_name').value : "");
-
     th.style.padding = "0.3em";
-
     th.colSpan = "3";
 
+    tr.appendChild(th);
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
-
     var th = document.createElement("th");
-
     th.innerHTML = "Timer 1";
-
     th.style.borderBottom = "1px solid black";
-
 
     tr.appendChild(th);
 
-
     var th = document.createElement("th");
-
     th.innerHTML = "Result";
-
     th.style.borderBottom = "1px solid black";
-
     th.style.borderRight = "2px solid black";
-
     th.colSpan = "2";
 
     tr.appendChild(th);
 
-
     var th = document.createElement("th");
-
     th.innerHTML = "Timer 2";
-
     th.style.borderBottom = "1px solid black";
 
     tr.appendChild(th);
 
-
     var th = document.createElement("th");
-
     th.innerHTML = "Results";
-
     th.style.borderBottom = "1px solid black";
-
     th.colSpan = "2";
 
     tr.appendChild(th)
 
-
     var panel = Object.keys(repeat_test_panel);
 
     panel.sort();
-
 
     for (var i = 0; i < panel.length; i++) {
 
@@ -544,199 +498,128 @@ function loadRepeatPTControl(test) {
         table.appendChild(tr);
 
         var td = document.createElement("td");
-
-        tr.appendChild(td);
-
         td.innerHTML = parseInt(panel[i]) + 1;
         td.style.padding = "0.3em";
-
         td.style.textAlign = "center";
-
         td.style.borderBottom = "1px solid black";
-
         td.style.borderRight = "2px solid black";
-
-
-        var td = document.createElement("td");
 
         tr.appendChild(td);
 
+        var td = document.createElement("td");
         td.style.padding = "0.3em";
-
         td.style.textAlign = "center";
-
         td.style.borderBottom = "1px solid black";
 
+        tr.appendChild(td);
 
         var div = document.createElement("div");
-
         div.style.border = "1px solid #366496";
-
         div.style.borderRadius = "0%";
-
         div.style.width = "90%";
-
         div.id = "im_timer_1_" + i;
-
         div.style.height = "100%";
-
         div.style.margin = "auto";
-
         div.style.textAlign = "center";
-
         div.style.verticalAlign = "middle";
 
         div.innerHTML = "Start";
 
         div.setAttribute("onclick", "startTimer('im_timer_1_" + i + "')");
-
         div.style.fontSize = "1.8em";
-
         div.style.color = "#3c60b1";
-
         div.style.backgroundColor = "#fff";
-
         div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
 
         td.appendChild(div);
 
-
         var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
 
         tr.appendChild(td);
 
-        td.style.padding = "0.3em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
         var button = document.createElement("button");
-
-        button.id = "im_reactive_1_" + i;
-
+        button.id = "im_reactive_1_" + panel[i];
         button.innerHTML = "R";
-
-        button.setAttribute("onclick", "updateResult('" + test + "_1_" + i + "','+','im_timer_1_" + i + "','im_reactive_1_" + i + "','im_non_reactive_1_" + i + "')");
+        button.setAttribute("onclick", "updateResult('" + test + "_1_" + panel[i] + "','+','im_timer_1_" + panel[i] + "','im_reactive_1_" + panel[i] + "','im_non_reactive_1_" + panel[i] + "')");
 
         td.appendChild(button);
 
-
         var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
+        td.style.borderRight = "2px solid black";
 
         tr.appendChild(td);
 
-        td.style.padding = "0.3em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
-        td.style.borderRight = "2px solid black";
-
         var button = document.createElement("button");
-
-        button.id = "im_non_reactive_1_" + i;
-
-        button.setAttribute("onclick", "updateResult('" + test + "_1_" + i + "','-','im_timer_1_" + i + "','im_non_reactive_1_" + i + "','im_reactive_1_" + i + "')");
-
+        button.id = "im_non_reactive_1_" + panel[i];
+        button.setAttribute("onclick", "updateResult('" + test + "_1_" + panel[i] + "','-','im_timer_1_" + panel[i] + "','im_non_reactive_1_" + panel[i] + "','im_reactive_1_" + panel[i] + "')");
         button.innerHTML = "NR";
 
         td.appendChild(button);
 
-
         var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
 
         tr.appendChild(td);
-
-        td.style.padding = "0.3em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
 
         var button = document.createElement("button");
 
         var div = document.createElement("div");
-
         div.style.border = "1px solid #366496";
-
         div.style.borderRadius = "0%";
-
         div.style.width = "90%";
-
         div.id = "im_timer_2_" + i;
-
         div.style.height = "100%";
-
         div.style.margin = "auto";
-
         div.style.textAlign = "center";
-
         div.style.verticalAlign = "middle";
-
         div.innerHTML = "Start";
-
         div.setAttribute("onclick", "startTimer('im_timer_2_" + i + "')");
-
         div.style.fontSize = "1.8em";
-
         div.style.color = "#3c60b1";
-
         div.style.backgroundColor = "#fff";
-
         div.style.boxShadow = "3px 1px 3px 0px rgba(0,0,0,0.75)";
 
         td.appendChild(div);
 
-
         var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
 
         tr.appendChild(td);
 
-        td.style.padding = "0.3em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
         var button = document.createElement("button");
-
-        button.id = "im_reactive_2_" + i;
-
+        button.id = "im_reactive_2_" + panel[i];
         button.innerHTML = "R";
-
-        button.setAttribute("onclick", "updateResult('" + test + "_2_" + i + "','+','im_timer_2_" + i + "','im_reactive_2_" + i + "','im_non_reactive_2_" + i + "')");
+        button.setAttribute("onclick", "updateResult('" + test + "_2_" + panel[i] + "','+','im_timer_2_" + panel[i] + "','im_reactive_2_" + panel[i] + "','im_non_reactive_2_" + panel[i] + "')");
 
         td.appendChild(button);
 
-
         var td = document.createElement("td");
+        td.style.padding = "0.3em";
+        td.style.textAlign = "center";
+        td.style.borderBottom = "1px solid black";
 
         tr.appendChild(td);
 
-        td.style.padding = "0.3em";
-
-        td.style.textAlign = "center";
-
-        td.style.borderBottom = "1px solid black";
-
         var button = document.createElement("button");
-
-        button.id = "im_non_reactive_2_" + i;
-
+        button.id = "im_non_reactive_2_" + panel[i];
         button.innerHTML = "NR";
-
-        button.setAttribute("onclick", "updateResult('" + test + "_2_" + i + "','-','im_timer_2_" + i + "','im_non_reactive_2_" + i + "','im_reactive_2_" + i + "')");
+        button.setAttribute("onclick", "updateResult('" + test + "_2_" + panel[i] + "','-','im_timer_2_" + panel[i] + "','im_non_reactive_2_" + panel[i] + "','im_reactive_2_" + panel[i] + "')");
 
         td.appendChild(button);
-
 
     }
 
-
 }
-
 
 function startTimer(button) {
 
@@ -890,21 +773,13 @@ function loadFinalResultControl() {
     }
 
     var control = __$("inputFrame" + tstCurrentPage);
-
     control.innerHTML = "";
-
     control.style.overflowY = "scroll";
 
-    //control.style.overflowX = "scroll";
-
     var table = document.createElement("table");
-
     table.style.borderCollapse = "collapse";
-
     table.style.width = "95%";
-
     table.style.margin = "auto";
-
     table.style.marginTop = "15px";
 
     control.appendChild(table);
@@ -914,243 +789,164 @@ function loadFinalResultControl() {
     table.appendChild(tr);
 
     var th = document.createElement("th");
-
     th.innerHTML = "HTS Provider";
-
     th.colSpan = "10";
 
     tr.appendChild(th);
-
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
     var th = document.createElement("th");
-
     th.innerHTML = "Test 1";
-
     th.colSpan = "4";
 
     tr.appendChild(th);
-
 
     var th = document.createElement("th");
-
     th.innerHTML = "Test 2";
-
-
     th.colSpan = "4";
 
     tr.appendChild(th);
-
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
     var td = document.createElement("th");
-
     td.style.padding = "0.5em";
-
     td.rowSpan = "5";
-
     td.style.border = "1px solid black";
-
-    // verticalText("Sample No", td);
-
     td.style.width = "20px";
-
     td.innerHTML = "Sample No."
 
     tr.appendChild(td);
 
     var td = document.createElement("td");
-
     td.innerHTML = "<b>Kit Name : </b>" + __$('data.test1_kit_name').value ? __$('data.test1_kit_name').value : "";
-
     td.style.padding = "0.5em";
-
     td.style.border = "1px solid black"
-
     td.colSpan = "4";
 
     tr.appendChild(td);
 
-
     var td = document.createElement("td");
-
     td.innerHTML = "<b>Kit Name : </b>" + __$('data.test2_kit_name').value ? __$('data.test2_kit_name').value : "";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "4";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
 
-
     var td = document.createElement("td");
-
     td.innerHTML = "Final Result";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "2";
-
     td.rowSpan = "5";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
-
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
     var td = document.createElement("td");
-
     td.innerHTML = "<b>Lot Number : </b>" + __$('data.lot_number1').value ? __$('data.lot_number1').value : "";
-
     td.style.padding = "0.5em";
-
     td.style.border = "1px solid black"
-
     td.colSpan = "4";
 
     tr.appendChild(td);
 
-
     var td = document.createElement("td");
-
     td.innerHTML = "<b>Lot Number : </b>" + __$('data.lot_number2').value ? __$('data.lot_number2').value : "";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "4";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
-
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
     var td = document.createElement("td");
-
     td.innerHTML = "<b>Expiry Date : </b>" + __$('data.test1_expiry_date').value ? (new Date(__$('data.test1_expiry_date').value)).format() : "";
-
     td.style.padding = "0.5em";
-
     td.style.border = "1px solid black"
-
     td.colSpan = "4";
 
     tr.appendChild(td);
 
-
     var td = document.createElement("td");
-
     td.innerHTML = "<b>Expiry Date : </b>" + __$('data.test2_expiry_date').value ? (new Date(__$('data.test2_expiry_date').value)).format() : "";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "4";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
-
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
     var td = document.createElement("td");
-
     td.innerHTML = "First Pass";
-
     td.style.padding = "0.5em";
-
     td.style.border = "1px solid black"
-
     td.colSpan = "4";
 
     tr.appendChild(td);
-
 
     var td = document.createElement("td");
-
     td.innerHTML = "Immediate Repeat";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "4";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
-
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
 
     var td = document.createElement("td");
-
     td.innerHTML = "Test 1";
-
     td.style.padding = "0.5em";
-
     td.style.border = "1px solid black"
-
     td.colSpan = "2";
 
     tr.appendChild(td);
 
-
     var td = document.createElement("td");
-
     td.innerHTML = "Test 2";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "2";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
 
-
     var td = document.createElement("td");
-
     td.innerHTML = "Test 1";
-
     td.style.padding = "0.5em";
-
     td.style.border = "1px solid black"
-
     td.colSpan = "2";
 
     tr.appendChild(td);
-
 
     var td = document.createElement("td");
-
     td.innerHTML = "Test 2";
-
     td.style.padding = "0.5em";
-
     td.colSpan = "2";
-
     td.style.border = "1px solid black"
 
     tr.appendChild(td);
 
+    var panel = Object.keys(repeat_test_panel);
+
+    panel.sort();
 
     for (var i = 0; i < 5; i++) {
 
@@ -1159,180 +955,141 @@ function loadFinalResultControl() {
         table.appendChild(tr)
 
         var td = document.createElement("th");
-
         td.innerHTML = i + 1;
-
         td.style.padding = "0.5em";
-
         td.style.border = "1px solid black"
 
         tr.appendChild(td);
 
-
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.test_1_' + i).value == "+" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
-
+        td.innerHTML = __$('data.test_1_' + i).value == "+" ? "<div style='border: 2px solid  #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> + </div>" : "<div style='border: 2px solid  #f0f0f0; margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> + </div>";
         td.style.padding = "0.5em";
-
         td.style.borderLeft = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
         var td = document.createElement("th");
-
         td.innerHTML = "-";
-
-        td.innerHTML = __$('data.test_1_' + i).value == "-" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
-
+        td.innerHTML = __$('data.test_1_' + i).value == "-" ? "<div style='border: 2px solid  #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> - </div>" : "<div style='border: 2px solid  #f0f0f0; margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> - </div>";
         td.style.padding = "0.5em";
-
         td.style.borderRight = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
-
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.test_2_' + i).value == "+" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
-
+        td.innerHTML = __$('data.test_2_' + i).value == "+" ? "<div style='border: 2px solid  #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> + </div>" : "<div style='border: 2px solid  #f0f0f0; margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> + </div>";
         td.style.padding = "0.5em";
-
         td.style.borderLeft = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.test_2_' + i).value == "-" ? "<span style='border: 2px solid  #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
-
+        td.innerHTML = __$('data.test_2_' + i).value == "-" ? "<div style='border: 2px solid  #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> - </div>" : "<div style='border: 2px solid  #f0f0f0; margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> - </div>";
         td.style.padding = "0.5em";
-
         td.style.borderRight = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
-
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.im_1_' + i).value == "+" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
-
+        td.innerHTML = (__$('data.im_1_' + i).value == "+" ?
+            "<div style='border: 2px solid #ff0000;  margin: auto; width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> + " +
+            "</div>" : "<div style='border: 2px solid #f0f0f0;  margin: auto; width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> + " +
+        "</div>");
         td.style.padding = "0.5em";
-
         td.style.borderLeft = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.im_1_' + i).value == "-" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
-
+        td.innerHTML = (__$('data.im_1_' + i).value == "-" ? "<div style='border: 2px solid #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> - </div>" : "<div style='border: 2px solid #f0f0f0;  margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> - </div>");
         td.style.padding = "0.5em";
-
         td.style.borderRight = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
-
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.im_2_' + i).value == "+" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : "+";
-
+        td.innerHTML = __$('data.im_2_' + i).value == "+" ? "<div style='border: 2px solid #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> + </div>" : "<div style='border: 2px solid #f0f0f0;  margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> + </div>";
         td.style.padding = "0.5em";
-
         td.style.borderLeft = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
         var td = document.createElement("th");
-
-        td.innerHTML = __$('data.im_2_' + i).value == "-" ? "<span style='border: 2px solid #ff5050 ; padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : "-";
-
+        td.innerHTML = __$('data.im_2_' + i).value == "-" ? "<div style='border: 2px solid #ff0000;  margin: auto; width : 24px ; " +
+        "height : 24px; border-radius: 50%; text-align: center;'> - </div>" : "<div style='border: 2px solid #f0f0f0;  margin: auto; " +
+        "width : 24px ; height : 24px; border-radius: 50%; text-align: center;'> - </div>";
         td.style.padding = "0.5em";
-
         td.style.borderRight = "1px solid black"
-
-        td.style.borderBottom = "1px solid black"
-
+        td.style.borderBottom = "1px solid black";
+        td.style.textAlign = "center";
         td.style.borderTop = "1px solid black"
 
         tr.appendChild(td);
 
-
         var td = document.createElement("th");
-
         td.style.borderLeft = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
         td.style.borderTop = "1px solid black"
+
+        tr.appendChild(td);
 
         var button = document.createElement("button");
-
         button.innerHTML = "+";
-
         button.className = "blue";
-
         button.id = "result_r_" + i;
-
         button.setAttribute("onclick", "updateFinalResult(" + i + ",'+', 'result_r_', 'result_nr_')");
 
         td.appendChild(button);
 
-        tr.appendChild(td);
-
         var td = document.createElement("th");
-
         td.style.borderRight = "1px solid black"
-
         td.style.borderBottom = "1px solid black"
-
         td.style.borderTop = "1px solid black";
 
+        tr.appendChild(td);
+
         var button = document.createElement("button");
-
         button.className = "blue";
-
         button.innerHTML = "-";
-
         button.id = "result_nr_" + i;
-
         button.setAttribute("onclick", "updateFinalResult(" + i + ",'-', 'result_nr_', 'result_r_')");
 
         td.appendChild(button);
 
-        tr.appendChild(td);
-
     }
-
 
 }
 

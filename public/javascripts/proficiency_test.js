@@ -611,11 +611,9 @@ var proficiency = ({
 
         }
 
-
         proficiency.buildFields(fields, table);
 
         proficiency.navPanel(form.outerHTML);
-
 
     },
 
@@ -698,14 +696,12 @@ var proficiency = ({
 
         nav.appendChild(btnFinish);
 
-
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
 
         document.head.appendChild(script);
 
         proficiency.loadPTTests("/quality_control/proficiency_test_approval/", div0_1_0_0);
-
 
     },
 
@@ -741,10 +737,10 @@ var proficiency = ({
 
             table.appendChild(tr);
 
-            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2", "Score", "Action Plan"];
-            var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px",
+            var fields = [" ", "Date of PT test", "HTS Provider ID", "Name", "PT Lot Number", "Kit 1", "Kit 2", "Score",
+                "Status", "Test Details"];
+            var colSizes = ["20px", "10%", "10%", "10%", "10%", "10%", "10%", "80px", "80px", "80px", "80px", "80px",
                 "180px"];
-
 
             for (var i = 0; i < fields.length; i++) {
 
@@ -757,130 +753,93 @@ var proficiency = ({
 
                 tr.appendChild(th);
 
-
             }
 
             for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
-
                 tr.style.padding = "0.1em";
-
                 tr.style.border = "1px solid #e3e3e2"
 
                 table.appendChild(tr);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = i + 1;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = new Date(data[i].proficiency_test_date).format();
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].hts_provider_id;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].first_name + " " + data[i].last_name;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].pt_panel_lot_number;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].test_kit_1_name;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = data[i].test_kit_2_name;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = (data[i].score ? data[i].score + "%" : "");
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
-
                 var td = document.createElement("td");
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2";
 
-                var button = document.createElement("button");
+                tr.appendChild(td);
 
-                button.innerHTML = "Action";
-
-                button.setAttribute("onclick", "window.parent.proficiency.approvePTResult(" + JSON.stringify(data[i]) + ",window.parent.document.body)");
-
-
-                td.appendChild(button);
+                var td = document.createElement("td");
+                td.style.padding = "0.1em";
+                td.style.border = "1px solid #e3e3e2";
 
                 tr.appendChild(td);
 
+                var button = document.createElement("button");
+                button.innerHTML = "Details";
+                button.setAttribute("onclick", "window.parent.proficiency.approvePTResult(" + JSON.stringify(data[i]) + ",window.parent.document.body)");
+
+                td.appendChild(button);
 
             }
 
         })
-
 
     },
 
@@ -948,23 +907,6 @@ var proficiency = ({
 
         document.body.appendChild(nav);
 
-        var btnAction = document.createElement("button");
-
-        btnAction.style.position = "absolute";
-        btnAction.style.right = "180px";
-        btnAction.className = "blue";
-        btnAction.style.margin = "15px";
-        btnAction.style.width = "150px";
-        btnAction.innerHTML = "Action Plan";
-
-        btnAction.onclick = function () {
-
-            proficiency.proficiencyTestActionPlan(data.pid)
-
-        }
-
-        nav.appendChild(btnAction);
-
         var btnFinish = document.createElement("button");
         btnFinish.className = "green";
         btnFinish.style.cssFloat = "right";
@@ -980,7 +922,6 @@ var proficiency = ({
 
             }
 
-
         } else {
 
             btnFinish.onclick = function () {
@@ -989,23 +930,68 @@ var proficiency = ({
 
             }
 
+        }
+
+        // nav.appendChild(btnFinish);
+
+        var btnAction = document.createElement("button");
+        btnAction.id = "btnAction";
+        btnAction.className = "blue";
+        btnAction.style.marginTop = "15px";
+        btnAction.style.width = "150px";
+        btnAction.style.cssFloat = "right";
+        btnAction.innerHTML = "Action Plan";
+
+        btnAction.onclick = function () {
+
+            if(this.className.match(/gray/i))
+                return;
+
+            proficiency.proficiencyTestActionPlan(data.pid)
 
         }
 
-        nav.appendChild(btnFinish);
+        nav.appendChild(btnAction);
 
+        var btnReview = document.createElement("button");
+        btnReview.id = "btnReview";
+        btnReview.className = "gray";
+        btnReview.style.marginTop = "15px";
+        btnReview.style.marginRight = "15px";
+        btnReview.style.cssFloat = "right";
+        btnReview.innerHTML = "Mark Reviewed";
+
+        btnReview.onclick = function () {
+
+            if(this.className.match(/gray/i))
+                return;
+
+            stock.ajaxRequest("/quality_control/mark_pt_reviewed/" + data.pid, function(result) {
+
+                if(__$("btnReview")) {
+
+                    __$("btnReview").className = "gray";
+
+                }
+
+                proficiency.showMsg("Proficiency test marked as reviewed!", "Confirmation");
+
+            })
+
+        }
+
+        nav.appendChild(btnReview);
 
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
 
         document.head.appendChild(script);
 
-        proficiency.loadPTResults("quality_control/proficiency_test_result/" + data.pid, data, div0_1_0_0);
+        proficiency.loadPTResults("/quality_control/proficiency_test_result/" + data.pid, data, div0_1_0_0);
 
     },
 
     loadPTResults: function (path, ptdata, target) {
-
 
         if (!path || !target)
             return;
@@ -1028,312 +1014,253 @@ var proficiency = ({
             table.style.borderColor = "#eee";
             table.width = "100%";
             table.cellPadding = "8";
+            table.style.color = "#333";
 
             target.appendChild(table);
 
-
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
-            tr.style.color = "#eee";
+            tr.style.backgroundColor = "#eee";
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.innerHTML = "";
-
             td.style.border = "1px solid #ffffff";
 
             tr.appendChild(td);
 
-
             var td = document.createElement("th");
-
             td.innerHTML = "Test 1";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4"
 
             tr.appendChild(td);
 
-
             var td = document.createElement("th");
-
             td.innerHTML = "Test 2";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4"
 
             tr.appendChild(td);
 
-
             var td = document.createElement("th");
-
             td.innerHTML = "";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "2"
 
             tr.appendChild(td);
 
-
             var td = document.createElement("th");
-
             td.innerHTML = "Official Result";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "3"
 
             tr.appendChild(td);
 
-
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
-            tr.style.color = "#eee";
+            tr.style.backgroundColor = "#eee";
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
+
+            td.style.border = "1px solid #ffffff";
+            td.rowSpan = "5";
+            td.style.width = "40px";
+            td.style.minWidth = "40px";
 
             verticalText("<b style= 'font-size : 1.3em'>Sample #</b>", td);
 
-            td.style.border = "1px solid #ffffff";
-
-            td.rowSpan = "5";
-
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
-
             td.innerHTML = "<b>Kit Name : </b>" + (ptdata.test_kit_1_name ? ptdata.test_kit_1_name : "" );
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
-
             td.innerHTML = "<b>Kit Name : </b>" + (ptdata.test_kit_2_name ? ptdata.test_kit_2_name : "" );
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
-
             td.innerHTML = "Final Resut";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "2";
-
             td.rowSpan = "5";
 
             tr.appendChild(td);
 
             var td = document.createElement("td");
+            td.style.border = "1px solid #ffffff";
+            td.rowSpan = "5";
+            td.style.paddingLeft = "40px";
+            td.style.width = "60px";
 
             verticalText("<font style= 'font-size : 1.3em'>Strong Positive</font>", td);
 
-            td.style.border = "1px solid #ffffff";
-
-            td.rowSpan = "5";
-
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
+            td.style.border = "1px solid #ffffff";
+            td.rowSpan = "5";
+            td.style.paddingLeft = "40px";
+            td.style.width = "60px";
 
             verticalText("<font style= 'font-size : 1.3em'>Weak Positive</font>", td);
 
-            td.style.border = "1px solid #ffffff";
-
-            td.rowSpan = "5";
-
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
+            td.style.border = "1px solid #ffffff";
+            td.rowSpan = "5";
+            td.style.paddingLeft = "30px";
+            td.style.width = "60px";
 
             verticalText("<font style= 'font-size : 1.3em'>Negative</font>", td);
 
-            td.style.border = "1px solid #ffffff";
-
-            td.rowSpan = "5";
-
             tr.appendChild(td);
 
-
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
-            tr.style.color = "#eee";
+            tr.style.backgroundColor = "#eee";
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.innerHTML = "<b>Lot Number : </b>" + (ptdata.test_kit_1_lot_number ? ptdata.test_kit_1_lot_number : "" );
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
-
             td.innerHTML = "<b>Lot Number : </b>" + (ptdata.test_kit_2_lot_number ? ptdata.test_kit_2_lot_number : "" );
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
-            tr.style.color = "#eee";
+            tr.style.backgroundColor = "#eee";
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.innerHTML = "<b>Expiry Date : </b>" + (ptdata.test_kit_1_expiry ? new Date(ptdata.test_kit_1_expiry).format() : "" );
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
-
             td.innerHTML = "<b>Expiry Date : </b>" + (ptdata.test_kit_2_expiry ? new Date(ptdata.test_kit_2_expiry).format() : "" );
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
-            tr.style.color = "#eee";
+            tr.style.backgroundColor = "#eee";
 
             table.appendChild(tr);
 
             var td = document.createElement("th");
-
             td.innerHTML = "First Pass";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
-
 
             var td = document.createElement("th");
-
             td.innerHTML = "Immediate Pass";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "4";
 
             tr.appendChild(td);
 
-
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
-            tr.style.color = "#eee";
+            tr.style.backgroundColor = "#eee";
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.innerHTML = "Test 1";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "2";
 
             tr.appendChild(td);
 
             var td = document.createElement("td");
-
             td.innerHTML = "Test 2";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "2";
 
             tr.appendChild(td);
 
             var td = document.createElement("td");
-
             td.innerHTML = "Test 1";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "2";
 
             tr.appendChild(td);
 
             var td = document.createElement("td");
-
             td.innerHTML = "Test 2";
-
             td.style.border = "1px solid #ffffff";
-
             td.colSpan = "2";
 
             tr.appendChild(td);
-
 
             for (var i = 0; i < data.length; i++) {
 
                 var tr = document.createElement("tr");
-
                 tr.style.padding = "0.1em";
-
                 tr.style.border = "1px solid #e3e3e2"
 
                 table.appendChild(tr);
 
-
                 var td = document.createElement("td");
-
                 td.innerHTML = i + 1;
-
                 td.style.padding = "0.1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
+                var td = document.createElement("td");
+                td.style.textAlign = "center";
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; border-radius : 50%; " +
+                    "border : 2px solid " + (data[i].first_pass_test_1 == '+' ? "red" : "#fff") + "'> + </div>";
+                td.style.padding = "1em";
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].first_pass_test_1 == '-' ? "red" : "white") + "'> - </div>";
+                td.style.padding = "1em";
+                td.style.border = "1px solid #e3e3e2"
 
-                td.innerHTML = (data[i].first_pass_test_1 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
+                tr.appendChild(td);
 
+                var td = document.createElement("td");
+                td.textAlign = "center";
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].first_pass_test_2 == '+' ? "red" : "white") + "'> + </div>";
+                td.style.padding = "1em";
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textAlign = "center";
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].first_pass_test_2 == '-' ? "red" : "white") + "'> - </div>";
                 td.style.padding = "1em";
 
                 td.style.border = "1px solid #e3e3e2"
@@ -1341,156 +1268,87 @@ var proficiency = ({
                 tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].first_pass_test_1 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].im_pass_test_1 == '+' ? "red" : "white") + "'> + </div>";
                 td.style.padding = "1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                tr.appendChild(td);
-
-
-                var td = document.createElement("td");
-
-                td.textAlign = "center";
-
-                td.innerHTML = (data[i].first_pass_test_2 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
-
-                td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].first_pass_test_2 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].im_pass_test_1 == '-' ? "red" : "white") + "'> - </div>";
                 td.style.padding = "1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                tr.appendChild(td);
-
-
-                var td = document.createElement("td");
-
-                td.textAlign = "center";
-
-                td.innerHTML = (data[i].im_pass_test_1 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
-
-                td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].im_pass_test_1 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].im_pass_test_2 == '+' ? "red" : "white") + "'> + </div>";
                 td.style.padding = "1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                tr.appendChild(td);
-
-
-                var td = document.createElement("td");
-
-                td.textAlign = "center";
-
-                td.innerHTML = (data[i].im_pass_test_2 == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
-
-                td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].im_pass_test_2 == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].im_pass_test_2 == '-' ? "red" : "white") + "'> - </div>";
                 td.style.padding = "1em";
-
-                td.style.border = "1px solid #e3e3e2"
-
-                tr.appendChild(td);
-
-
-                var td = document.createElement("td");
-
-                td.textAlign = "center";
-
-                td.innerHTML = (data[i].final_result == '+' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
-
-                td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].final_result == '-' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].final_result == '+' ? "red" : "white") + "'> + </div>";
                 td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
-
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].official_result.toLowerCase().trim() == 'strong positive' ? "<span style = 'padding: 0.5em ; font-size: 25px; font-weight:bold; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 25px;font-weight:bold'> + </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; " +
+                    "border-radius : 50%; border : 2px solid " + (data[i].final_result == '-' ? "red" : "white") + "'> - </div>";
                 td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
-
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].official_result.toLowerCase().trim() == 'weak positive' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> + </span>" : "<span style = 'font-size: 20px;'> + </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; font-weight:bold; width :30px ; height : 30px ;" +
+                    " border-radius : 50%; border : 2px solid " + (data[i].official_result.toLowerCase().trim() ==
+                    'strong positive' ? "red" : "white") + "'> + </div>";
                 td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
-
 
                 var td = document.createElement("td");
-
                 td.textAlign = "center";
-
-                td.innerHTML = (data[i].official_result.toLowerCase().trim() == 'negative' ? "<span style = 'padding: 0.5em ; font-size: 20px; width :25px ; height : 25px ; border-radius : 50%; border : 2px solid red'> - </span>" : "<span style = 'font-size: 20px;'> - </span>");
-
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; border-radius : 50%; " +
+                    "border : 2px solid " + (data[i].official_result.toLowerCase().trim() == 'weak positive' ?
+                        "red" : "white") + "'> + </div>";
                 td.style.padding = "1em";
-
                 td.style.border = "1px solid #e3e3e2"
 
                 tr.appendChild(td);
 
+                var td = document.createElement("td");
+                td.textAlign = "center";
+                td.innerHTML = "<div style = 'margin: auto; font-size: 20px; width :30px ; height : 30px ; border-radius : 50%; " +
+                    "border : 2px solid " + (data[i].official_result.toLowerCase().trim() == 'negative' ? "red" : "white") + "'> - </div>";
+                td.style.padding = "1em";
+                td.style.border = "1px solid #e3e3e2"
+
+                tr.appendChild(td);
 
             }
 
@@ -1499,29 +1357,50 @@ var proficiency = ({
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.colSpan = "3";
-
             td.style.border = "none";
-
             td.style.textAlign = "left"
-
             td.innerHTML = "<b>Score :</>";
 
             tr.appendChild(td);
 
             var td = document.createElement("td");
-
             td.colSpan = "3";
-
             td.style.border = "none";
-
             td.style.textAlign = "left"
-
             td.innerHTML = ptdata.score + "%";
 
             tr.appendChild(td);
 
+            if(ptdata.score == 100) {
+
+                if(__$("btnAction")) {
+
+                    __$("btnAction").className = "gray";
+
+                }
+
+                if(__$("btnReview")) {
+
+                    __$("btnReview").className = "blue";
+
+                }
+
+            } else {
+
+                if(__$("btnAction")) {
+
+                    __$("btnAction").className = "blue";
+
+                }
+
+                if(__$("btnReview")) {
+
+                    __$("btnReview").className = "gray";
+
+                }
+
+            }
 
             if (ptdata.action_plan && ptdata.action_plan.length > 0) {
 
@@ -1530,100 +1409,72 @@ var proficiency = ({
                 table.appendChild(tr);
 
                 var td = document.createElement("td");
-
                 td.colSpan = "3";
-
                 td.style.border = "none";
-
                 td.style.textAlign = "left"
-
                 td.innerHTML = "<b>Actio Plan :</>";
 
                 tr.appendChild(td);
 
                 var td = document.createElement("td");
-
                 td.colSpan = "11";
-
                 td.style.border = "none";
 
                 tr.appendChild(td);
 
                 var div = document.createElement("div");
-
                 div.style.width = "100%";
-
                 div.style.textAlign = "left"
-
                 div.innerHTML = ptdata.action_plan;
 
                 td.appendChild(div);
-            }
 
+            }
 
             var tr = document.createElement("tr");
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.colSpan = "3";
-
             td.style.border = "none";
-
             td.style.textAlign = "left"
-
             td.innerHTML = "<b>HTS Provider's Name :</>";
 
             tr.appendChild(td);
 
             var td = document.createElement("td");
-
             td.colSpan = "3";
-
             td.style.border = "none";
-
             td.style.textAlign = "left"
-
             td.innerHTML = ptdata.first_name + " " + ptdata.last_name;
 
             tr.appendChild(td);
-
 
             var tr = document.createElement("tr");
 
             table.appendChild(tr);
 
             var td = document.createElement("td");
-
             td.colSpan = "3";
-
             td.style.border = "none";
-
             td.style.textAlign = "left"
-
             td.innerHTML = "<b>HTS Provider's ID :</>";
 
             tr.appendChild(td);
 
-
             var td = document.createElement("td");
-
             td.colSpan = "3";
-
             td.style.border = "none";
-
             td.style.textAlign = "left"
-
             td.innerHTML = (ptdata.hts_provider_id ? ptdata.hts_provider_id : "");
 
             tr.appendChild(td);
 
-
         })
 
-
     },
+
     pTReviewReport: function (target) {
 
         if (!target)
@@ -1908,7 +1759,7 @@ var proficiency = ({
             div.appendChild(table);
 
             var tr = document.createElement("tr");
-            tr.style.backgroundColor = "#999";
+            tr.style.backgroundColor = "#eee";
             tr.style.color = "#eee";
 
             table.appendChild(tr);
@@ -2173,7 +2024,6 @@ var proficiency = ({
 
         nav.appendChild(btnFinish);
 
-
         var script = document.createElement("script");
         script.setAttribute("src", "/touchscreentoolkit/lib/javascripts/touchScreenToolkit.js");
 
@@ -2181,8 +2031,8 @@ var proficiency = ({
 
         proficiency.loadPTResults("quality_control/proficiency_test_result/" + data.pid, data, div0_1_0_0);
 
-    }
-    ,
+    },
+
     proficiencyTestActionPlan: function (id) {
 
         var form = document.createElement("form");
@@ -2218,12 +2068,12 @@ var proficiency = ({
 
         }
 
-
         proficiency.buildFields(fields, table);
 
         proficiency.navPanel(form.outerHTML);
 
     },
+
     seAvailablePTLotNumber: function () {
 
         proficiency.ajaxRequest("/stock/available_kits_by_desctiption/" + encodeURIComponent("Proficiency Test"), function (data) {
@@ -2236,10 +2086,9 @@ var proficiency = ({
 
         })
 
-    }
+    },
 
-
-    , showMsg: function (msg, topic, nextURL) {
+    showMsg: function (msg, topic, nextURL) {
 
         if (!topic) {
 

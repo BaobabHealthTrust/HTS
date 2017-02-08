@@ -412,7 +412,7 @@ var quality = ({
                 "__$('data.test_kit_lot_number').setAttribute('ajaxURL','/stock/available_batches_to_user?userId=" + user.getCookie("username") + "&item_name='+kit_name+'&batch=');" +
                 "__$('data.test_kit_lot_number').setAttribute('condition',true)}"
             },
-            "Teskit Lot Number": {
+            "Test kit Lot Number": {
                 field_type: "text",
                 id: "data.test_kit_lot_number",
                 tt_onUnload: "setExpiryDate(__$('touchscreenInput' + tstCurrentPage).value,'data.test_kit_expiry_date')"
