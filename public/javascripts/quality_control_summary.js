@@ -30,7 +30,7 @@ function verticalText(text, parent) {
 function showQualityControlTestSummary() {
 
     var tstControl = __$('inputFrame' + tstCurrentPage)
-
+    tstControl.style.overflow = "auto";
     tstControl.innerHTML = "";
 
     var table = document.createElement("table");
@@ -61,6 +61,16 @@ function showQualityControlTestSummary() {
 
     tr.appendChild(td);
 
+    var td = document.createElement("th");
+    td.setAttribute("rowspan", "3");
+    td.style.textAlign = "center";
+    td.style.borderRight = "2px solid black";
+    td.style.borderBottom = "2px solid black";
+    td.style.borderTop = "2px solid black";
+    td.innerHTML = "<b>Test Kit Type</b>";
+
+    tr.appendChild(td);
+
     var td = document.createElement("td");
     td.innerHTML = "<b>DTS Sample</b>";
     td.style.textAlign = "center";
@@ -72,7 +82,7 @@ function showQualityControlTestSummary() {
     tr.appendChild(td);
 
     var td = document.createElement("th");
-    td.innerHTML = "Test Kit Evaluated : " + __$("data.test_kit_name").value ? __$("data.test_kit_name").value : "";
+    td.innerHTML = "&nbsp;";
     td.style.textAlign = "center";
     td.setAttribute("colspan", "7");
     td.style.borderRight = "2px solid black";
@@ -247,11 +257,25 @@ function showQualityControlTestSummary() {
 
         table.appendChild(tr);
 
-        var td = document.createElement("td");
-        td.style.borderRight = "2px solid black";
-        td.style.borderBottom = "2px solid black";
+        if(i % 2 == 0) {
 
-        tr.appendChild(td);
+            var td = document.createElement("td");
+            td.style.borderRight = "2px solid black";
+            td.style.borderBottom = "2px solid black";
+            td.setAttribute("rowspan", "2");
+
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.innerHTML = selections[(i < 2 ? 0 : 1)];
+            td.setAttribute("rowspan", "2");
+            td.style.textAlign = "center";
+            td.style.borderRight = "2px solid black";
+            td.style.borderBottom = "2px solid black";
+
+            tr.appendChild(td);
+
+        }
 
         var td = document.createElement("td");
         td.style.borderRight = "1px solid black";
@@ -276,14 +300,14 @@ function showQualityControlTestSummary() {
 
         var td = document.createElement("td");
         td.style.borderRight = "1px solid black";
-        td.innerHTML = __$("data.test_kit" + (1 + (i % 2 == 0 ? 1 : 0)) + "_lot_number").value;
+        td.innerHTML = __$("data.test_kit" + (i < 2 ? 1 : 2) + "_lot_number").value;
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.style.borderRight = "1px solid black";
-        td.innerHTML = __$("data.test_kit" + (1 + (i % 2 == 0 ? 1 : 0)) + "_expiry_date").value;
+        td.innerHTML = __$("data.test_kit" + (i < 2 ? 1 : 2) + "_expiry_date").value;
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
@@ -292,16 +316,16 @@ function showQualityControlTestSummary() {
 
         var td = document.createElement("td");
         td.style.textAlign = "center";
-        td.innerHTML = control_line_seen.trim().toLowerCase().match(/no/i) ? "<span style='border: 2px solid #ff5050 ;" +
-        " padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> N </span>" : " N ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (control_line_seen.trim().toLowerCase().match(/no/i) ? "red" : "#f0f0f0") + ";'> N </div>";
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.style.textAlign = "center";
-        td.innerHTML = control_line_seen.trim().toLowerCase().match(/yes/i) ? "<span style='border: 2px solid #ff5050 ; " +
-        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> Y </span>" : " Y ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (control_line_seen.trim().toLowerCase().match(/yes/i) ? "red" : "#f0f0f0") + "'> Y </div>";
         td.style.borderRight = "1px solid black";
         td.style.borderBottom = "2px solid black";
 
@@ -311,16 +335,16 @@ function showQualityControlTestSummary() {
 
         var td = document.createElement("td");
         td.style.textAlign = "center";
-        td.innerHTML = result.trim().toLowerCase().match(/negative/i) ? "<span style='border: 2px solid #ff5050 ; " +
-        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> - </span>" : " - ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (result.trim().toLowerCase().match(/negative/i) ? "red" : "#f0f0f0") + "'> - </div>";
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.style.textAlign = "center";
-        td.innerHTML = result.trim().toLowerCase().match(/weak positive/i) ? "<span style='border: 2px solid #ff5050 ;" +
-        " padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%'> + </span>" : " + ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (result.trim().toLowerCase().match(/weak positive/i) ? "red" : "#f0f0f0") + "'> + </div>";
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
@@ -329,8 +353,8 @@ function showQualityControlTestSummary() {
         td.style.textAlign = "center";
         td.style.fontWeight = "bold";
         td.style.fontSize = "1.2em";
-        td.innerHTML = result.trim().toLowerCase().match(/strong positive/i) ? "<span style='border: 2px solid #ff5050 ; " +
-        "padding : 0.3em ; width : 18px ; height : 15px; border-radius: 50%; font-size:1.2em; font-weight:bold'> + </span>" : " + ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (result.trim().toLowerCase().match(/strong positive/i) ? "red" : "#f0f0f0") + "'> + </div>";
         td.style.borderRight = "2px solid black";
         td.style.borderBottom = "2px solid black";
 
@@ -340,16 +364,16 @@ function showQualityControlTestSummary() {
 
         var td = document.createElement("td");
         td.style.textAlign = "center";
-        td.innerHTML = outcome.trim().toLowerCase() == "acceptable" ? "<span style='border: 2px solid #ff5050 ; " +
-        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%;'> A </span>" : " A ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (outcome.trim().toLowerCase() == "acceptable" ? "red" : "#f0f0f0") + "'> A </div>";
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.style.textAlign = "center";
-        td.innerHTML = outcome.trim().toLowerCase() == "not acceptable" ? "<span style='border: 2px solid #ff5050 ; " +
-        "padding : 0.5em ; width : 18px ; height : 15px; border-radius: 50%;'> NA </span>" : " NA ";
+        td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
+            (outcome.trim().toLowerCase() == "not acceptable" ? "red" : "#f0f0f0") + "'> NA </div>";
         td.style.borderRight = "1px solid black";
         td.style.borderBottom = "2px solid black";
 
