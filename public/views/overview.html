@@ -475,7 +475,7 @@ function loadFields() {
             //fieldParts[root + "_used_in_year"] = ["kits_used", "in_year", root + "_used_in_year"];
 
             fields[root + "_available_today"] = "/stock/available_stock_stats?item_name=" + encodeURIComponent(types[i]) + "&username=" +
-                    getCookie("username") + "&start_date=" + (new Date()).format("YYYY-mm-dd");
+                    getCookie("username") + "&end_date=" + (new Date()).format("YYYY-mm-dd");
 
             fieldTotals.kits_available.today.stats[root + "_available_today"] = 0;
 
