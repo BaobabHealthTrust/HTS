@@ -1,1 +1,21 @@
-{"basePath":"http://192.168.18.237:3015","loginPath":"/login","passwordUpdatePath":"/update_password","logoutPath":"/logout/","loginStatusCheckPath":"/authentic/","hts.provider.id":true,"searchPath":"/search_by_username","rolesPath":"/roles","usersListingPath":"/users_listing","userAddPath":"/updateUser","firstNamesPath":"/fnames_query?name=","lastNamesPath":"/lnames_query?name=","usernamesListingPath":"/list_usernames?username=","userBlockPath":"/block_user/","userActivatePath":"/activate_user/","locationsListPath":"/list_locations?name=","userEditPath":"/update_user"}
+{
+  "basePath": "http://192.168.18.251:3015",
+  "loginPath": "/login",
+  "passwordUpdatePath": "/update_password",
+  "logoutPath": "/logout/",
+  "loginStatusCheckPath": "/authentic/",
+  "hts.provider.id": false,
+  "searchPath": "/search_by_username",
+  "rolesPath": "/roles",
+  "usersListingPath": "/users_listing",
+  "userAddPath": "/updateUser",
+  "firstNamesPath": "/fnames_query?name=",
+  "lastNamesPath": "/lnames_query?name=",
+  "usernamesListingPath": "/list_usernames?username=",
+  "userBlockPath": "/block_user/",
+  "userActivatePath": "/activate_user/",
+  "locationsListPath": "/list_locations?name=",
+  "userEditPath": "/update_user",
+  "afterCreatePath": "http://192.168.18.240:3015",
+  "roles": ["Admin","Clinician","Nurse","Registration Clerk", "Supervisor"]
+}
