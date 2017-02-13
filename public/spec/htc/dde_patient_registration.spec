@@ -5,7 +5,7 @@ O.1.1.1. M
 O.1.1.2. FNP
 O.1.1.3. FP
 
-Q.1.33. Where is the client coming from? [pos :: 1 $$ ajaxURL :: /hts/locations?name=]
+C.1.33. Where is the client coming from? [pos :: 1 $$ ajaxURL :: /hts/locations?name=]
 
 Q.1.2. Consent given to be contacted? [pos :: 2 $$ id :: capture_details $$ tt_onUnload :: setDefaults() $$ tt_requirenextclick :: false]
 O.1.2.1. Yes
