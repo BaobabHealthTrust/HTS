@@ -7339,7 +7339,12 @@ function ageLimit() {
 
     var birthdate = window.parent.dashboard.data.data.birthdate
 
-    var age = parseInt(getAge(birthdate)[0]);
+    var ageResult = getAge(birthdate);
+
+    var age = parseInt(ageResult[0]);
+
+    if(ageResult[2] == "M")
+        age = age / 12;
 
     if (age >= 5) {
 
