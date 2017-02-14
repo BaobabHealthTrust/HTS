@@ -1312,11 +1312,11 @@ function evalCondition(pos) {
                 window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")] &&
                 Object.keys(window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")]).length > 0 &&
                 (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
-                    " " + "First Pass"] != typeof undefined ||
-                    (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
-                    " " + "First Parallel"] != typeof undefined) ||
-                    (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
-                    " " + "Immediate Parallel"] != typeof undefined))) {
+                " " + "First Pass"] != typeof undefined ||
+                (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
+                " " + "First Parallel"] != typeof undefined) ||
+                (typeof window.parent.dashboard.subscription.timers[window.parent.dashboard.getCookie("patient_id")][window.parent.dashboard.$$("fp_item_name2").value.trim() +
+                " " + "Immediate Parallel"] != typeof undefined))) {
 
                 result = true;
 
@@ -1621,7 +1621,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
          Makes sense to block back button once timers are rolling because the next sensible move would be
          cancelling if not happy
          */
-        if(__$("backButton")){
+        if (__$("backButton")) {
 
             var currentClass = __$("backButton").className;
 
@@ -1639,7 +1639,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         showMinimizeButton();
 
-        if(!loadingForm) {
+        if (!loadingForm) {
 
             var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
 
@@ -2005,7 +2005,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
          Makes sense to block back button once timers are rolling because the next sensible move would be
          cancelling if not happy
          */
-        if(__$("backButton")){
+        if (__$("backButton")) {
 
             var currentClass = __$("backButton").className;
 
@@ -2023,7 +2023,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         showMinimizeButton();
 
-        if(!loadingForm) {
+        if (!loadingForm) {
 
             var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
 
@@ -2588,10 +2588,10 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
             }
 
             /*
-              Makes sense to block back button once timers are rolling because the next sensible move would be
-              cancelling if not happy
+             Makes sense to block back button once timers are rolling because the next sensible move would be
+             cancelling if not happy
              */
-            if(__$("backButton")){
+            if (__$("backButton")) {
 
                 var currentClass = __$("backButton").className;
 
@@ -2609,7 +2609,7 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
 
             showMinimizeButton();
 
-            if(!loadingForm) {
+            if (!loadingForm) {
 
                 var data = form2js(document.getElementById('data'), undefined, false, undefined, undefined, true);
 
@@ -2994,51 +2994,6 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
         case "never tested":
 
-            if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
-                imTest2Result.trim().length <= 0) {
-
-                outcome = "Single Negative";
-
-                result = "New Negative";
-
-            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
-                imTest2Result.trim().length <= 0) {
-
-                outcome = "Test 1 & Test 2 Positive";
-
-                result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
-
-
-                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
-
-                    window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
-
-                }
-
-            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
-                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-"))) {
-
-                outcome = "Test 1 & Test 2 Discordant";
-
-                result = "New Inconclusive";
-
-            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "-" &&
-                imTest2Result.trim() == "-") {
-
-                outcome = "Test 1 & Test 2 Discordant";
-
-                result = "New Inconclusive";
-
-            } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && imTest1Result.trim() == "+" &&
-                imTest2Result.trim() == "+") {
-
-                outcome = "Test 1 & Test 2 Positive";
-
-                result = "New Positive";
-            }
-
-            break;
-
         case "last negative":
 
             if (fpTest1Result.trim() == "-" && fpTest2Result.trim().length <= 0 && imTest1Result.trim().length <= 0 &&
@@ -3093,10 +3048,16 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
             break;
         case "last positive":
 
-            if (((fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-") || (fpTest1Result.trim() == "-" &&
-                fpTest2Result.trim() == "+")) && ((imTest1Result.trim() == "-" &&
-                imTest2Result.trim() == "+") || (imTest1Result.trim() == "+" && imTest2Result.trim() == "-") ||
-                (imTest1Result.trim() == "-" && imTest2Result.trim() == "-"))) {
+            if ((imTest1Result.trim() == "-" && imTest2Result.trim() == "-")) {
+
+                outcome = "Test 1 & Test 2 Negative";
+
+                result = "Confirmatory Inconclusive";
+
+                window.parent.dashboard.showMsg("Take DBS sample", "");
+
+            } else if ((imTest1Result.trim() == "+" && imTest2Result.trim() == "-") ||
+                (imTest1Result.trim() == "-" && imTest2Result.trim() == "+")) {
 
                 outcome = "Test 1 & Test 2 Discordant";
 
@@ -3106,7 +3067,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
             } else if (fpTest1Result.trim() == "-" && fpTest2Result.trim() == "-") {
 
-                outcome = "Test 1 & Test 2 Discordant";
+                outcome = "Test 1 & Test 2 Negative";
 
                 result = "Confirmatory Inconclusive";
 
@@ -3114,7 +3075,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 window.parent.dashboard.showMsg("Take DBS sample", "");
 
-                setTimeout(function(){
+                setTimeout(function () {
 
                     __$("sample_id").setAttribute("condition", false);
 
@@ -3139,7 +3100,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Negative";
 
-                result = "New Inconclusive";
+                result = "New Negative";
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "+" && imTest1Result.trim().length <= 0 &&
                 imTest2Result.trim().length <= 0) {
@@ -3148,29 +3109,27 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 var key = Object.keys(age);
 
+                if (ageGroup == "0-11 months") {
 
-                if (age[key[0]] == "1Y") {
-
+                    window.parent.dashboard.showMsg("Take DBS sample for confirmation", "");
 
                     outcome = "Test 1 & Test 2 Positive";
 
-                    result = "New Positive";
-
-                    if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
-
-                        window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
-
-                    }
-
+                    result = "New Exposed Infant";
 
                 } else {
 
                     outcome = "Test 1 & Test 2 Positive";
 
-                    result = "Confirmatory Positive";
+                    result = "New Positive";
+
+                    if (parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
+
+                        window.parent.dashboard.showMsg("Take DBS sample for confirmation", "");
+
+                    }
 
                 }
-
 
             } else if (fpTest1Result.trim() == "+" && fpTest2Result.trim() == "-" && ((imTest1Result.trim() == "-" &&
                 imTest2Result.trim() == "+") || (imTest1Result.trim() == "-" && imTest2Result.trim() == "-") ||
@@ -3219,7 +3178,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 outcome = "Test 1 & Test 2 Discordant";
 
-                result = "Confirmatory Inconclusive";
+                result = "New Inconclusive";
 
                 __$("sample_id").setAttribute("condition", true);
 
@@ -3646,28 +3605,28 @@ function showHIVTestingSummary() {
         tr.appendChild(td);
 
         /*var td = document.createElement("td");
-        td.align = "center";
-        td.innerHTML = "Test 1"
+         td.align = "center";
+         td.innerHTML = "Test 1"
 
-        tr.appendChild(td);
+         tr.appendChild(td);
 
-        var td = document.createElement("td");
-        td.align = "center";
-        td.innerHTML = "Test 2"
+         var td = document.createElement("td");
+         td.align = "center";
+         td.innerHTML = "Test 2"
 
-        tr.appendChild(td);
+         tr.appendChild(td);
 
-        var td = document.createElement("td");
-        td.align = "center";
-        td.innerHTML = "Test 1"
+         var td = document.createElement("td");
+         td.align = "center";
+         td.innerHTML = "Test 1"
 
-        tr.appendChild(td);
+         tr.appendChild(td);
 
-        var td = document.createElement("td");
-        td.align = "center";
-        td.innerHTML = "Test 2"
+         var td = document.createElement("td");
+         td.align = "center";
+         td.innerHTML = "Test 2"
 
-        tr.appendChild(td);*/
+         tr.appendChild(td);*/
 
         var tr = document.createElement("tr");
 
@@ -4603,7 +4562,7 @@ function showTimeSinceLastDate() {
     div.style.width = "100%";
     div.style.border = "1px solid #ccc";
     div.style.height = "calc(100vh - 175px)";
-    div.style.overflow = "hidden";
+    div.style.overflow = "auto";
 
     lt.appendChild(div);
 
@@ -4621,10 +4580,32 @@ function showTimeSinceLastDate() {
     var td = document.createElement("td");
     td.style.fontSize = "2em";
     td.style.borderBottom = "1px solid #ccc";
-    td.colSpan = 2;
     td.innerHTML = "Duration ago";
 
     tr.appendChild(td);
+
+    var td = document.createElement("td");
+    td.style.width = "60%";
+    td.style.fontSize = "2.2em";
+    // td.id = "lblDuration";
+    td.align = "left";
+    td.innerHTML = "<div style='float: left' id='lblDuration'>How many years ago?</div>";
+
+    tr.appendChild(td);
+
+    var input = document.createElement("input");
+    input.style.fontSize = "32px";
+    input.style.border = "1px #ccc solid";
+    input.style.padding = "10px";
+    input.style.width = "150px";
+    input.style.cssFloat = "right";
+    input.style.backgroundColor = "#eee";
+    input.style.textAlign = "center";
+    input.id = "duration";
+    input.type = "text";
+    input.value = "";
+
+    td.appendChild(input);
 
     var tr = document.createElement("tr");
 
@@ -4632,10 +4613,9 @@ function showTimeSinceLastDate() {
 
     var td = document.createElement("td");
     td.style.width = "40%";
-    td.style.height = "calc(100vh - 173px)";
     td.style.verticalAlign = "top";
     td.style.borderRight = "1px dotted #ccc";
-    td.rowSpan = 3;
+    td.rowSpan = 2;
 
     tr.appendChild(td);
 
@@ -4695,22 +4675,9 @@ function showTimeSinceLastDate() {
     }
 
     var td = document.createElement("td");
-    td.style.width = "60%";
-    td.style.fontSize = "2.2em";
-    td.id = "lblDuration";
-    td.align = "center";
-    td.innerHTML = "How many years ago?";
-
-    tr.appendChild(td);
-
-    var tr = document.createElement("tr");
-
-    table.appendChild(tr);
-
-    var td = document.createElement("td");
     td.style.padding = "0px";
 
-    tr.appendChild(td);
+    //tr.appendChild(td);
 
     var input = document.createElement("input");
     input.style.fontSize = "2.5em";
@@ -4723,11 +4690,15 @@ function showTimeSinceLastDate() {
     input.type = "text";
     input.value = "";
 
-    td.appendChild(input);
+    // td.appendChild(input);
 
     var tr = document.createElement("tr");
 
     table.appendChild(tr);
+
+    //var tr = document.createElement("tr");
+
+    //table.appendChild(tr);
 
     var td = document.createElement("td");
     td.style.verticalAlign = "top";
@@ -7331,7 +7302,7 @@ function noPartnerToday() {
     var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Partner Present at this Session?");
 
-    if(!present)
+    if (!present)
         present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
             "PRE TEST COUNSELLING", "Partner Present at this Session?");
 
@@ -7370,7 +7341,7 @@ function ageLimit() {
 
     var age = parseInt(getAge(birthdate)[0]);
 
-    if (age >= 15) {
+    if (age >= 5) {
 
         return true;
 
@@ -7385,7 +7356,7 @@ function ageLimit() {
 
 function initialiseExistingData() {
 
-    if(!window.parent.dashboard)
+    if (!window.parent.dashboard)
         return;
 
     if (clientHasHIVLastTest() && __$("last_hiv_test") && false) {
