@@ -17,5 +17,10 @@
   "locationsListPath": "/list_locations?name=",
   "userEditPath": "/update_user",
   "afterCreatePath": "http://192.168.18.240:3015",
-  "roles": ["Admin","Clinician","Nurse","Registration Clerk", "Supervisor"]
+  "roles": [
+    "Admin",
+    "Supervisor",
+    "Counselor",
+    "HTS Coordinator"
+  ]
 }

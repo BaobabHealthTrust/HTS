@@ -1,1 +1,12 @@
-{"basePath":"http://127.0.0.1:3015","modulesPath":"/config/landing.modules.json","barcodePath":"/fetch_remote_if_not_exists/","savePath":"/save_other","dummyPatientCreatePath":"/save_dummy_patient","facilityPath":"/facility","useStartSessionButton":false,"afterCreatePath":"/save_patient"}
+{
+  "basePath": "http://192.168.18.251:3015",
+  "modulesPath": "/config/landing.modules.json",
+  "barcodePath": "/fetch_remote_if_not_exists/",
+  "savePath": "/save_other",
+  "dummyPatientCreatePath": "/save_dummy_patient",
+  "facilityPath": "/facility",
+  "useStartSessionButton": true,
+  "afterCreatePath": "/save_patient",
+  "supervisor": "HTS Coordinator",
+  "prefix": "HTS"
+}
