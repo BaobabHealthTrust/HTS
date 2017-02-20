@@ -13,6 +13,20 @@
     "totalEncounters": 4,
     "targetEncounter": "PRE TEST COUNSELLING",
     "targetConcept": "Partner Present at this Session?",
-    "targetResponse": "Yes"
+    "targetResponse": "Yes",
+    "targetPromptMessage": "The partner still has some incomplete tasks that need to be finished!",
+    "targetPromptTopic": "Incomplete Data"
+  },
+  "checkIfCurrentSessionComplete": {
+    "check": true,
+    "totalEncounters": 4,
+    "targetPromptMessage": "The current session is incomplete and you can't exit unless you finish!",
+    "targetPromptTopic": "Incomplete Data"
+  },
+  "verifySessionCancel": {
+    "check": true,
+    "targetPromptMessage": "Do you really want to cancel this session? You will lose all data!",
+    "targetPromptTopic": "Confirm Cancellation",
+    "sessionVoidPath": "/void_current_session"
   }
 }
