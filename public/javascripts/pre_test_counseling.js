@@ -1251,7 +1251,7 @@ function loadCustomPage() {
 
     }
 
-    window.parent.dashboard.addRelationship(__$("content"), true, true);
+    window.parent.dashboard.addRelationship(__$("content"), true, true, "HTS");
 
 }
 
