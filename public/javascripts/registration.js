@@ -1225,4 +1225,83 @@ function evalDemographicCondition(pos) {
 
 }
 
+function getValidNPID() {
+
+    if(window.parent.document.getElementById("primary_id") &&
+        window.parent.document.getElementById("primary_id").innerHTML.trim().length > 0 &&
+        window.parent.document.getElementById("primary_id").innerHTML.trim() != "&nbsp;")
+        return;
+
+    var dashboard = window.parent.dashboard;
+
+    var identifiers = Object.keys(dashboard.data.data.identifiers).map(function (e) {
+        return [e, dashboard.data.data.identifiers[e].identifier]
+    }).reduce(function (a, e, i) {
+        a[e[0]] = e[1];
+        return a
+    }, {});
+
+    var json = {
+        "npid": dashboard.getCookie("patient_id"),
+        "application": "hts",
+        "site_code": window.parent.patient.settings.ddeSiteCode,
+        "names": {
+            "family_name": (__$("last_name") && __$("last_name").value.trim().length > 0 ? __$("last_name").value.trim() :
+                (dashboard.data.data.names.length > 0 ? dashboard.data.data.names[0]["Family Name"] : "")),
+            "given_name": (__$("first_name") && __$("first_name").value.trim().length > 0 ? __$("first_name").value.trim() :
+                (dashboard.data.data.names.length > 0 ? dashboard.data.data.names[0]["First Name"] : "")),
+            "middle_name": null
+        },
+        "gender": (__$("gender") && __$("gender").value.trim().length > 0 ? __$("gender").value.trim().toUpperCase().substring(0, 1) :
+            dashboard.data.data.gender),
+        "attributes": {
+            "occupation": null,
+            "cell_phone_number": null
+        },
+        "birthdate": (__$("birthdate") && __$("birthdate").value.trim().length > 0 ? __$("birthdate").value.trim() :
+            dashboard.data.data.birthdate),
+        "patient": {
+            "identifiers": identifiers
+        },
+        "birthdate_estimated": (__$("estimate") && __$("estimate").value.trim().length > 0 ? __$("estimate").value.trim() :
+            dashboard.data.data.birthdate_estimated),
+        "addresses": {
+            "current_residence": null,
+            "current_village": null,
+            "current_ta": null,
+            "current_district": null,
+            "home_village": null,
+            "home_ta": null,
+            "home_district": (__$("home_district") && __$("home_district").value.trim().length > 0 ? __$("home_district").value.trim() :
+                (dashboard.data.data.addresses ? dashboard.data.data.addresses["Home District"] : ""))
+        },
+        "action": "SEARCH",
+        "page": page,
+        "page_size": 7
+    };
+
+    var url = window.parent.patient.settings.ddePath;
+
+    ajaxAuthPostRequest(url, json, function (data) {
+
+        var result = JSON.parse(data);
+
+        if(Array.isArray(result) && result.length <= 0) {
+
+            json.action = "NEW RECORD";
+
+            ajaxAuthPostRequest(url, json, function (data) {
+
+                var result = JSON.parse(data);
+
+                dashboard.savePatient(result);
+
+            });
+
+        }
+
+    });
+
+}
+
 setDefaults();

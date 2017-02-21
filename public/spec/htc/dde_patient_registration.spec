@@ -91,6 +91,6 @@ Q.1.28. Age Group [pos :: 28 $$ id :: age_group $$ type :: hidden]
 
 Q.1.29. Summary[pos :: 29 $$ id :: summary $$ tt_onLoad :: showSummary() $$ condition :: false]
 
-Q.1.30. Client Registration Summary [pos :: 30 $$ tt_onLoad:: calculateAge(); showDetailsSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard]
+Q.1.30. Client Registration Summary [pos :: 30 $$ tt_onLoad:: getValidNPID(); calculateAge(); showDetailsSummary() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard]
 
 Q.1.31. Client Registration Summary (cont'd) [pos :: 31 $$ tt_onLoad :: updatePregnancy() $$ optional :: true $$ tt_pageStyleClass :: NoControls NoKeyboard]
