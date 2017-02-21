@@ -142,24 +142,61 @@ function loadFields() {
         "": "&nbsp;"
     }
 
-    if (__$("lblYear")) {
+    var mYear = window.location.href.match(/year\=([^&]+)/i);
 
-        __$("lblYear").innerHTML = (window.parent.__$("year") ? window.parent.__$("year").value : "&nbsp;");
+    var mMonth = window.location.href.match(/month\=([^&]+)/i);
+
+    if (!mYear && !mMonth) {
+
+        if (__$("lblYear")) {
+
+            __$("lblYear").innerHTML = (window.parent.__$("year") ? window.parent.__$("year").value : "&nbsp;");
+
+        }
+
+        if (__$("lblMonth")) {
+
+            __$("lblMonth").innerHTML = months[(window.parent.__$("month") ? window.parent.__$("month").value : "")];
+
+        }
+
+        if (__$("month-year")) {
+
+            __$("month-year").innerHTML = months[(window.parent.__$("month") ? window.parent.__$("month").value : "")] +
+                "<br/>" + (window.parent.__$("year") ? window.parent.__$("year").value : "&nbsp;");
+
+        }
+
+        var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
+
+        var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
+
+    } else {
+
+        if (__$("lblYear")) {
+
+            __$("lblYear").innerHTML = (mYear ? mYear[1] : "&nbsp;");
+
+        }
+
+        if (__$("lblMonth")) {
+
+            __$("lblMonth").innerHTML = months[(mMonth ? mMonth[1] : "")];
+
+        }
+
+        if (__$("month-year")) {
+
+            __$("month-year").innerHTML = months[(mMonth ? mMonth[1] : "")] + "<br/>" + (mYear ? mYear[1] : "&nbsp;");
+
+        }
+
+        var month = (mMonth ? mMonth[1] : padZeros((new Date()).getMonth(), 2));
+
+        var year = (mYear ? mYear[1] : (new Date()).getFullYear());
 
     }
 
-    if (__$("lblMonth")) {
-
-        __$("lblMonth").innerHTML = months[(window.parent.__$("month") ? window.parent.__$("month").value : "")];
-
-    }
-
-    if(__$("month-year")) {
-
-        __$("month-year").innerHTML = months[(window.parent.__$("month") ? window.parent.__$("month").value : "")] +
-            "<br/>" + (window.parent.__$("year") ? window.parent.__$("year").value : "&nbsp;");
-
-    }
 
     ajaxRequest("/facility", function (json) {
 
@@ -180,10 +217,6 @@ function loadFields() {
         }
 
     });
-
-    var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
-
-    var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
 
     var startDate = (year + "-" + month + "-01");
 
@@ -616,9 +649,19 @@ function loadFields() {
 
     });
 
-    var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
+    if (!mYear && !mMonth) {
 
-    var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
+        var month = (window.parent.__$("month") ? window.parent.__$("month").value : padZeros((new Date()).getMonth(), 2));
+
+        var year = (window.parent.__$("year") ? window.parent.__$("year").value : (new Date()).getFullYear());
+
+    } else {
+
+        var month = mMonth[1];
+
+        var year = mYear[1];
+
+    }
 
     var stockStartDate = (new Date(year + "-" + month + "-01"));
 
@@ -938,13 +981,13 @@ function updateStockTotals(category) {
 
     var difference = balance - htcStockReport[category].closing;
 
-    if(__$(category + "_balance")) {
+    if (__$(category + "_balance")) {
 
         __$(category + "_balance").innerHTML = numberWithCommas(balance);
 
     }
 
-    if(__$(category + "_difference")) {
+    if (__$(category + "_difference")) {
 
         __$(category + "_difference").innerHTML = numberWithCommas(difference);
 
