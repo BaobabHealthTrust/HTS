@@ -194,7 +194,9 @@ if [ ${#INSTALL_DEPENDS} -gt 0 ] && [ $(echo "$INSTALL_DEPENDS" | tr '[:upper:]'
 	
 	fi
 	
-	cp ../common/modules/app.js ./app.js
+	cp ../common/modules/app.js ./app.js;
+	
+	git pull;
 
 fi
 		
