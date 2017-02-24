@@ -228,6 +228,8 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 
 			echo
 
+			echo
+
 	fi
 
 	read -p "Enter site code: " SITE_CODE
@@ -548,7 +550,203 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 						fs.writeFileSync('./public/config/patient.settings.json', JSON.stringify(config, undefined, 4));";
 		
 fi
+	
+clear
+		
+echo
+		
+read -p "Configure application database [y/N]: " CONFIGURE_APP_DATABASE
 
+if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
+	
+	if [ ${#TARGET_ENV} == 0 ]; then
+	
+		TARGET_ENV="development";
+	
+	fi
+	
+	if [ ${#MYSQL_HOST} == 0 ]; then
+	
+		MYSQL_HOST=$(node -e "console.log(require('./config/database.json').host);");
+	
+	fi
+	
+	if [ ${#MYSQL_USERNAME} == 0 ]; then
+	
+		MYSQL_USERNAME=$(node -e "console.log(require('./config/database.json').user);");
+	
+	fi
+	
+	if [ ${#MYSQL_PASSWORD} == 0 ]; then
+	
+		MYSQL_PASSWORD=$(node -e "console.log(require('./config/database.json').password);");
+	
+	fi
+	
+	if [ ${#HTS_DATABASE} == 0 ]; then
+	
+		HTS_DATABASE=$(node -e "console.log(require('./config/database.json').database);");
+	
+	fi
+	
+	if [ ${#HTS_INVENTORY_DATABASE} == 0 ]; then
+	
+		HTS_INVENTORY_DATABASE=$(node -e "console.log(require('./config/database.json').stockDatabase);");
+	
+	fi
+	
+	if [ ${#HTS_QUALITY_CONTROL_DATABASE} == 0 ]; then
+	
+		HTS_QUALITY_CONTROL_DATABASE=$(node -e "console.log(require('./config/database.json').qualityControlDatabase);");
+	
+	fi
+	
+	echo
+	
+	read -p "Do you want to install full database [y/N]: " INSTALL_FULL_DATABASE
+	
+	if [ ${#INSTALL_FULL_DATABASE} -gt 0 ] && [ $(echo "$INSTALL_FULL_DATABASE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
+	
+		# Drop databases
+		
+		echo 
+		
+		echo "Dropping databases if they exist...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_DATABASE";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_INVENTORY_DATABASE";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_QUALITY_CONTROL_DATABASE";
+	
+		echo 
+		
+		echo "Creating databases...";
+		
+		# Create databases
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_DATABASE";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_INVENTORY_DATABASE";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_QUALITY_CONTROL_DATABASE";
+		
+		echo 
+		
+		echo "Loading data...";
+		
+		# Load initial data
+		echo 
+		
+		echo "Loading OpenMRS schema...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/openmrs_1_7_2_concept_server_full_db.sql;
+		
+		echo 
+		
+		echo "Loading inventory schema...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/inventory.sql;
+		
+		echo 
+		
+		echo "Loading quality control schema...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_QUALITY_CONTROL_DATABASE < ./db/quality_control.sql;
+				
+		echo 
+		
+		echo "Loading inventory triggers schema...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/triggers.sql;
+	
+		echo 
+		
+		echo "Loading HTS roles...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc.roles.sql;
+		
+		echo 
+		
+		echo "Loading nationalities...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/nationalities.sql;
+		
+		echo 
+		
+		echo "Loading HTS initial user attributes...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e 'DELETE FROM person_attribute WHERE person_id = 1; INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) VALUES((SELECT person_id FROM person LIMIT 1), "HTS-0001", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = "HTS Provider ID"), (SELECT user_id FROM users LIMIT 1), NOW(), (SELECT UUID()))';
+	
+		echo 
+		
+		echo "Loading HTS triggers...";
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc_triggers.sql;
+	
+		echo
+	
+		echo "Loading locations..."
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag (name, description, creator, date_created, uuid) VALUES ('HTS', 'HTS Locations', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
+	
+		clear
+	
+		echo 
+		
+		read -p "Enter number of locations to create: " NUMBER_OF_LOCATIONS
+		
+		if [ ${#NUMBER_OF_LOCATIONS} -gt 0 ]; then
+		
+			STR_LOCATIONS=$(node -e "var c = parseInt('$NUMBER_OF_LOCATIONS'); var a = []; for(var i = 0; i < c; i++) a.push(i + 1); console.log(a.join(';'));");
+						
+			ARR=$(echo $STR_LOCATIONS | tr ";" "\n");
+
+			for i in $ARR; do
+	
+				echo
+				
+				read -p "Enter location $i: " HTS_ROOM
+	
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location (name, description, creator, date_created, uuid) VALUES ('$HTS_ROOM', 'HTS location', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
+	
+			done
+		
+		fi
+		
+		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag_map (location_id, location_tag_id) SELECT location_id, (SELECT location_tag_id FROM location_tag WHERE name = 'HTS') FROM location WHERE description = 'HTS location'";
+		
+	fi
+	
+	echo
+	
+	echo "Loading concepts...";
+	
+	str=$(node -e "console.log(require('./db/seed.json').concepts.join(';'))")
+
+	str2=$(echo $str | tr "\ " "_");
+
+	arr=$(echo $str2 | tr ";" "\n");
+
+	for concept in $arr; do
+
+		concept=$(echo $concept | tr "_" "\ ");
+	
+		SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$concept' AND voided = 0 LIMIT 1";
+	
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+	
+		if [ $COUNT == 0 ]; then
+	
+			LAST_INSERT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$LAST_INSERT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
+		
+		fi
+
+	done
+	
+fi
+		
 clear
 
 echo

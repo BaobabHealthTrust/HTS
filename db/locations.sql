@@ -11,5 +11,4 @@ INSERT INTO location (name, description, creator, date_created, uuid) VALUES
 INSERT INTO location_tag_map (location_id, location_tag_id) SELECT location_id, (SELECT location_tag_id FROM 
 	location_tag WHERE name = 'HTS') FROM location WHERE description = 'HTS location';
 
-INSERT INTO role (role, description, uuid) VALUES ('Supervisor', 'User with supervisory role', (SELECT UUID()));
 
