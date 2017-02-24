@@ -235,7 +235,7 @@ async.series([
 
             console.log("Linking " + rootPath + "/modules/app.js file ...");
 
-            runCmd("cp " + rootPath + "/modules/app.js .", function (error, stdout, stderr) {
+            runCmd("cp " + rootPath + "/modules/app.js ../", function (error, stdout, stderr) {
 
                 if (error) {
 
@@ -263,7 +263,7 @@ async.series([
 
                 console.log("Linking " + rootPath + "/modules folder ...");
 
-                runCmd("ln -s " + rootPath + "/modules ./public/modules", function (error, stdout, stderr) {
+                runCmd("ln -s " + rootPath + "/modules ../public/modules", function (error, stdout, stderr) {
 
                     if (error) {
 
@@ -298,7 +298,7 @@ async.series([
 
                 console.log("Linking " + rootPath + "/touchscreentoolkit folder ...");
 
-                runCmd("ln -s " + rootPath + "/touchscreentoolkit ./public/touchscreentoolkit", function (error, stdout, stderr) {
+                runCmd("ln -s " + rootPath + "/touchscreentoolkit ../public/touchscreentoolkit", function (error, stdout, stderr) {
 
                     if (error) {
 
@@ -432,9 +432,9 @@ async.series([
 
                         var imports = JSON.parse(fs.readFileSync(rootPath + "/modules/config/" + file));
 
-                        var local = JSON.parse(fs.readFileSync(path.resolve("./public/config/" + file)));
+                        var local = JSON.parse(fs.readFileSync(path.resolve("../public/config/" + file)));
 
-                        var local_locked = JSON.parse(fs.readFileSync(path.resolve("./public/config/" + file)));
+                        var local_locked = JSON.parse(fs.readFileSync(path.resolve("../public/config/" + file)));
 
                         async.series([
 
@@ -442,7 +442,7 @@ async.series([
 
                                 if(file.match(/\.modules\./)) {
 
-                                    updatedHash(imports, local, path.resolve("./public/config/" + file), callback);
+                                    updatedHash(imports, local, path.resolve("../public/config/" + file), callback);
 
                                 } else {
 
@@ -454,7 +454,7 @@ async.series([
 
                             function (callback) {
 
-                                var local_locked = JSON.parse(fs.readFileSync(path.resolve("./public/config/" + file)));
+                                var local_locked = JSON.parse(fs.readFileSync(path.resolve("../public/config/" + file)));
 
                                 if (JSON.stringify(local) === JSON.stringify(local_locked)) {
 
@@ -462,7 +462,7 @@ async.series([
 
                                 } else {
 
-                                    fs.writeFile(path.resolve("./public/config/" + file), JSON.stringify(local), function (error) {
+                                    fs.writeFile(path.resolve("../public/config/" + file), JSON.stringify(local), function (error) {
 
                                         if (error) {
 
@@ -492,7 +492,7 @@ async.series([
 
                     } else {
 
-                        runCmd("cp " + rootPath + "/modules/config/" + file + " ./public/config/" + file, function (error, stdout, stderr) {
+                        runCmd("cp " + rootPath + "/modules/config/" + file + " ../public/config/" + file, function (error, stdout, stderr) {
 
                             console.log("Copy " + file);
                             if (error) {

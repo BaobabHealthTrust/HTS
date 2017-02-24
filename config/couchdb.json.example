@@ -7,7 +7,7 @@
         "password": "",
         "siteCode": ""
     },
-    "": {
+    "test": {
         "protocol": "",
         "host": "",
         "port": "",
