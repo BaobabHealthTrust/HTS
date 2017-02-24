@@ -745,6 +745,183 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 
 	done
 	
+	echo
+	
+	echo "Loading encounter_types...";
+	
+	echo
+	
+	str=$(node -e "console.log(require('./db/seed.json').encounter_types.map(function(e){return e.join('|')}).join(';'))")
+
+	str2=$(echo $str | tr "\ " "_");
+
+	arr=$(echo $str2 | tr ";" "\n");
+
+	for row in $arr; do
+
+		parts=$(echo $row | tr "|" "\n");
+	
+		i=0;
+		for part in $parts; do
+	
+			part=$(echo $part | tr "_" "\ ");
+	
+			if [ $i == 0 ]; then
+		
+				encounterType=$part;
+		
+			else
+		
+				description=$part;
+		
+			fi
+		
+			i=1
+	
+		done
+	
+		SQL="SELECT COUNT(*) AS num FROM encounter_type WHERE name = '$encounterType' AND retired = 0 LIMIT 1";
+	
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+	
+		if [ $COUNT == 0 ]; then
+	
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO encounter_type (name, description, creator, date_created, retired, uuid) VALUES ('$encounterType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+		
+		fi
+
+	done
+	
+	echo "Loading patient_identifier_types...";
+	
+	echo
+	
+	str=$(node -e "console.log(require('./db/seed.json').patient_identifier_types.map(function(e){return e.join('|')}).join(';'))")
+
+	str2=$(echo $str | tr "\ " "_");
+
+	arr=$(echo $str2 | tr ";" "\n");
+
+	for row in $arr; do
+
+		parts=$(echo $row | tr "|" "\n");
+	
+		i=0;
+		for part in $parts; do
+	
+			part=$(echo $part | tr "_" "\ ");
+	
+			if [ $i == 0 ]; then
+		
+				identifierType=$part;
+		
+			else
+		
+				description=$part;
+		
+			fi
+		
+			i=1
+	
+		done
+	
+		SQL="SELECT COUNT(*) AS num FROM patient_identifier_type WHERE name = '$identifierType' AND retired = 0 LIMIT 1";
+	
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+	
+		if [ $COUNT == 0 ]; then
+	
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO patient_identifier_type (name, description, creator, date_created, retired, uuid) VALUES ('$identifierType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+		
+		fi
+
+	done
+	
+	echo "Loading person_attribute_types..."
+	
+	echo
+	
+	str=$(node -e "console.log(require('./db/seed.json').person_attribute_types.map(function(e){return e.join('|')}).join(';'))")
+
+	str2=$(echo $str | tr "\ " "_");
+
+	arr=$(echo $str2 | tr ";" "\n");
+
+	for row in $arr; do
+
+		parts=$(echo $row | tr "|" "\n");
+	
+		i=0;
+		for part in $parts; do
+	
+			part=$(echo $part | tr "_" "\ ");
+	
+			if [ $i == 0 ]; then
+		
+				attributeType=$part;
+		
+			else
+		
+				description=$part;
+		
+			fi
+		
+			i=1
+	
+		done
+	
+		SQL="SELECT COUNT(*) AS num FROM person_attribute_type WHERE name = '$attributeType' AND retired = 0 LIMIT 1";
+	
+		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+	
+		if [ $COUNT == 0 ]; then
+	
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO person_attribute_type (name, description, creator, date_created, retired, uuid) VALUES ('$attributeType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+		
+		fi
+
+	done
+	
+	echo "Loading programs...";
+	
+	str=$(node -e "console.log(require('./db/seed.json').programs.join(';'))")
+
+	str2=$(echo $str | tr "\ " "_");
+
+	arr=$(echo $str2 | tr ";" "\n");
+
+	for program in $arr; do
+
+		program=$(echo $program | tr "_" "\ ");
+	
+		PROGRAM_EXISTS=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT COUNT(*) AS num FROM program WHERE name = '$program'") | tr 'num\ ' '\ ');
+	
+		if [ $PROGRAM_EXISTS == 0 ]; then 
+	
+			SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$program' AND voided = 0 LIMIT 1";
+	
+			COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+	
+			if [ $COUNT == 0 ]; then
+	
+				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
+		
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$CONCEPT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
+		
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
+		
+			else
+		
+				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT concept_id AS id FROM concept_name WHERE name = '$program' LIMIT 1") | tr 'id\ ' '\ ');
+		
+				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
+		
+			fi
+	
+		fi
+
+	done
+	
 fi
 		
 clear
