@@ -132,7 +132,7 @@ if [ ${#INSTALL_DEPENDS} -gt 0 ] && [ $(echo "$INSTALL_DEPENDS" | tr '[:upper:]'
 	
 		cd ../common/modules;
 		
-		git pull;
+		git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
 		
 		cd $ROOT;
 	
@@ -162,7 +162,7 @@ if [ ${#INSTALL_DEPENDS} -gt 0 ] && [ $(echo "$INSTALL_DEPENDS" | tr '[:upper:]'
 	
 		cd ../common/touchscreentoolkit;
 		
-		git pull;
+		git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
 		
 		cd $ROOT;
 	
@@ -196,7 +196,7 @@ if [ ${#INSTALL_DEPENDS} -gt 0 ] && [ $(echo "$INSTALL_DEPENDS" | tr '[:upper:]'
 	
 	cp ../common/modules/app.js ./app.js;
 	
-	git pull;
+	git pull https://$GIT_USERNAME@github.com/BaobabHealthTrust/hts.git;
 
 fi
 		
