@@ -769,6 +769,8 @@ function savePatient(callback) {
 
             calculateAge();
 
+            window.parent.dashboard.setCookie("client_identifier", selectedPatient.npid, 0.3333);
+
             window.parent.dashboard.savePatient(selectedPatient);
 
             callback();
