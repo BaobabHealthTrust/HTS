@@ -9,3 +9,4 @@ public/config/*.json
 db/*.json
 setup.json
 *~
+process.json

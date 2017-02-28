@@ -947,6 +947,42 @@ clear
 
 echo
 
+if [ ${#TARGET_ENV} == 0 ]; then
+
+	read -p "Enter target application environment [development/PRODUCTION]: " TARGET_ENV
+
+	echo
+
+	if [ ${#TARGET_ENV} == 0 ]; then
+	
+		TARGET_ENV="production"
+	
+	fi
+
+fi
+
+PM2=$(command -v pm2);
+
+cd $ROOT;
+
+if [ ${#PM2} != 0 ]; then
+
+	if [ -f ./process.json ]; then
+	
+		node -e "var cg = require('./process.json'); var fs = require('fs'); cg.env_production.NODE_ENV = '$TARGET_ENV'; fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
+	
+	else
+	
+		node -e "var cg = {'name': 'hts', 'script': 'app.js', 'env_production': {'NODE_ENV':'$TARGET_ENV'}}; var fs = require('fs'); fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
+	
+	fi
+
+	pm2 kill && pm2 start process.json --env $TARGET_ENV;
+
+	pm2 save;
+
+fi
+
 echo "Done!";
 
 echo
