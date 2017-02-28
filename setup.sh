@@ -2,13 +2,7 @@
 
 ROOT=$(pwd);
 	
-NVM_DIR=~/.nvm;
-
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
-
 GIT=$(command -v git);
-
-NVM=$(command -v nvm);
 
 NODE=$(command -v node);
 
@@ -30,39 +24,41 @@ else
 
 fi
 
-if [ ${#NVM} == 0 ]; then
-
-    echo "NVM not found...";
-
-    echo "Installing NVM...";
-
-    sudo apt-get remove --purge node -y;
-
-    sudo apt-get install build-essential checkinstall -y;
-
-    sudo apt-get install libssl-dev -y;
-
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash;
-
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh";
-
-else
-
-    echo "NVM found: OK";
-
-fi
-
 if [ ${#NODE} == 0 ]; then
 
     echo "Node.js not found...";
 
     echo "Installing Node.js";
 
-    nvm install 5.10.1;
+		mkdir node;
+		
+		if [ ${#OS} -gt 0 ] && [ $(echo "$OS" | tr '[:upper:]' '[:lower:]') == "x86_64" ]; then
 
-    nvm use 5.10.1;
+			tar xvf ./dist/node-v5.10.1-linux-x64.tar.xz --strip-components=1 -C ./node;
+	
+		else 
 
-    nvm alias default node;
+			tar xvf ./dist/node-v5.10.1-linux-x86.tar.xz --strip-components=1 -C ./node;	
+
+		fi
+
+		mkdir node/etc;
+
+		echo '/prefix=/usr/local' > node/etc/npmrc;
+
+		sudo mv node /opt/;
+
+		sudo chown -R root: /opt/node;
+
+		sudo ln -s /opt/node/bin/node /usr/local/bin/node;
+
+		sudo ln -s /opt/node/bin/npm /usr/local/bin/npm;
+
+		sudo npm install dist/pm2-2.4.0.tgz -g;
+
+		sudo ln -s /opt/node/bin/pm2 /usr/bin/pm2;
+
+		sudo env PATH=$PATH:/opt/node/bin /opt/node/lib/node_modules/pm2/bin/pm2 startup upstart -u $USER --hp /home/$USER;
 
 else
 
@@ -70,7 +66,7 @@ else
 
 fi
 
-npm install --save --verbose;
+# npm install --save --verbose;
 
 if [ -f config/couchdb.json ]; then
 
