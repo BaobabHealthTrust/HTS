@@ -2,6 +2,20 @@
 
 ROOT=$(pwd);
 
+rm -rf ./dist/lib;
+
+mkdir -p ./dist/lib;
+
+if [ -f ./package.old.json ] && [ -f ./package.json ]; then
+
+	cp ./package.json ./package.1.json
+	
+	mv ./package.old.json ./package.json;
+	
+	mv ./package.1.json ./package.old.json;
+
+fi 
+
 STRING=$(node -e "console.log(Object.keys(require('./package.json').dependencies).join(';'))");
 
 PACKAGES=$(echo $STRING | tr ";" "\n");

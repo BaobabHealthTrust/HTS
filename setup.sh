@@ -66,7 +66,7 @@ else
 
 fi
 
-# npm install --save --verbose;
+npm install --save --verbose --production;
 
 if [ -f config/couchdb.json ]; then
 
