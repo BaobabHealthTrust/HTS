@@ -102,98 +102,121 @@ clear
 		
 echo
 		
-read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
+nc -z 8.8.8.8 53  >/dev/null 2>&1;
+online=$?;
 
-clear
-		
-if [ ${#INSTALL_DEPENDS} -gt 0 ] && [ $(echo "$INSTALL_DEPENDS" | tr '[:upper:]' '[:lower:]') == "y" ]; then
+if [[ $online -eq 0 ]]; then
+
+	read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
 
 	clear
-	
-	echo
 		
-	echo "===================== Dependencies Installation ====================="	
-		
-	echo 
-		
-	read -p "Enter github.com usename: " GIT_USERNAME
+	if [ ${#INSTALL_DEPENDS} -gt 0 ] && [ $(echo "$INSTALL_DEPENDS" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 
-	echo
-
-	if [ -d ../common/modules/ ]; then
+		clear
 	
+		echo
+		
+		echo "===================== Dependencies Installation ====================="	
+		
 		echo 
 		
-		echo "Updating ../common/modules/";
-	
-		cd ../common/modules;
-		
-		git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
-		
-		cd $ROOT;
-	
-	else
-	
-		echo 
-		
-		echo "Cloning libraries into ../common/modules/";
-	
-		mkdir -p ../common;
-		
-		cd ../common;
-		
-		git clone https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
-	
-		mv bht-modules modules;
-	
-		cd $ROOT;
-	
-	fi
+		read -p "Enter github.com usename: " GIT_USERNAME
 
-	if [ -d ../common/touchscreentoolkit ]; then
-	
-		echo 
-		
-		echo "Updating ../common/touchscreentoolkit/";
-	
-		cd ../common/touchscreentoolkit;
-		
-		git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
-		
-		cd $ROOT;
-	
-	else
-	
-		echo 
-		
-		echo "Cloning libraries into ../common/touchscreentoolkit/";
-	
-		mkdir -p ../common;
-		
-		cd ../common;
-		
-		git clone https://$GIT_USERNAME@github.com/BaobabHealthTrust/touchscreentoolkit.git;
-	
-		cd $ROOT;
-	
-	fi
-	
-	if [ ! -d ./public/modules ]; then
-	
-		ln -s ../common/modules ./public/modules;
-	
-	fi
-	
-	if [ ! -d ./public/touchscreentoolkit ]; then
-	
-		ln -s ../common/touchscreentoolkit ./public/touchscreentoolkit;
-	
-	fi
-	
-	cp ../common/modules/app.js ./app.js;
-	
-	git pull https://$GIT_USERNAME@github.com/BaobabHealthTrust/hts.git;
+		echo
 
+		if [ -d ../common/modules/ ]; then
+	
+			echo 
+		
+			echo "Updating ../common/modules/";
+	
+			cd ../common/modules;
+		
+			git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
+		
+			cd $ROOT;
+	
+		else
+	
+			echo 
+		
+			echo "Cloning libraries into ../common/modules/";
+	
+			mkdir -p ../common;
+		
+			cd ../common;
+		
+			git clone https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
+	
+			mv bht-modules modules;
+	
+			cd $ROOT;
+	
+		fi
+
+		if [ -d ../common/touchscreentoolkit ]; then
+	
+			echo 
+		
+			echo "Updating ../common/touchscreentoolkit/";
+	
+			cd ../common/touchscreentoolkit;
+		
+			git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
+		
+			cd $ROOT;
+	
+		else
+	
+			echo 
+		
+			echo "Cloning libraries into ../common/touchscreentoolkit/";
+	
+			mkdir -p ../common;
+		
+			cd ../common;
+		
+			git clone https://$GIT_USERNAME@github.com/BaobabHealthTrust/touchscreentoolkit.git;
+	
+			cd $ROOT;
+	
+		fi
+	
+		if [ ! -d ./public/modules ]; then
+	
+			ln -s ../common/modules ./public/modules;
+	
+		fi
+	
+		if [ ! -d ./public/touchscreentoolkit ]; then
+	
+			ln -s ../common/touchscreentoolkit ./public/touchscreentoolkit;
+	
+		fi
+	
+		cp ../common/modules/app.js ./app.js;
+	
+		git pull https://$GIT_USERNAME@github.com/BaobabHealthTrust/hts.git;
+
+	fi
+	
+elif [ -d ../common ]; then	
+
+		if [ ! -d ./public/modules ]; then
+	
+			ln -s ../common/modules ./public/modules;
+	
+		fi
+	
+		if [ ! -d ./public/touchscreentoolkit ]; then
+	
+			ln -s ../common/touchscreentoolkit ./public/touchscreentoolkit;
+	
+		fi
+	
+		cp ../common/modules/app.js ./app.js;
+	
 fi
 		
 clear
