@@ -112,6 +112,8 @@ if [ ${#GIT} == 0 ]; then
 
   showMessageBox "Application Configuration" "Application Setup" "Git not found. Installing Git.";
 
+	clear;
+	
 	sudo apt-get install git;
 	
 else 
@@ -128,6 +130,8 @@ if [ ${#NODE} == 0 ]; then
     
     showMessageBox "Application Configuration" "Application Setup" "Node.js not found. Installing Node.js.";
 
+		clear;
+		
 		mkdir node;
 		
 		if [ ${#OS} -gt 0 ] && [ $(echo "$OS" | tr '[:upper:]' '[:lower:]') == "x86_64" ]; then
@@ -162,6 +166,8 @@ else
 
     showMessageBox "Application Configuration" "Application Setup" "Node.js found: OK";
 
+		clear;
+		
 fi
 
 npm install --save --production;
@@ -169,6 +175,8 @@ npm install --save --production;
 if [ -f config/couchdb.json ]; then
 
 	showMessageBox "Application Configuration" "Application Setup" "CouchDB configuration found. OK";
+
+	clear;
 	
 else
 
@@ -179,6 +187,8 @@ fi
 if [ -f config/database.json ]; then
 
 	showMessageBox "Application Configuration" "Application Setup" "MySQL database configuration found. OK";
+
+	clear;
 	
 else
 
@@ -189,6 +199,8 @@ fi
 if [ -f config/site.json ]; then
 
 	showMessageBox "Application Configuration" "Application Setup" "Site configuration found. OK";
+
+	clear;
 	
 else
 
@@ -237,7 +249,13 @@ if [[ $online -eq 0 ]]; then
 	  GIT_USERNAME=$RETVAL;
 	  
 	  clear
+  
+	  getUserPassword "Application Configuration" "Dependencies Installation" "Enter github.com password for '$GIT_USERNAME': ";
 	  
+	  GIT_PASSWORD=$RETVAL;
+
+		clear
+
 		echo
 
 		if [ -d ../common/modules/ ]; then
@@ -250,7 +268,7 @@ if [[ $online -eq 0 ]]; then
 		
 			clear
 		
-			git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
+			git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthLabs/bht-modules.git;
 		
 			cd $ROOT;
 	
@@ -266,7 +284,7 @@ if [[ $online -eq 0 ]]; then
 		
 			clear
 		
-			git clone https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
+			git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthLabs/bht-modules.git;
 	
 			mv bht-modules modules;
 	
@@ -284,7 +302,7 @@ if [[ $online -eq 0 ]]; then
 		
 			clear
 		
-			git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
+			git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthLabs/bht-modules.git;
 		
 			cd $ROOT;
 	
@@ -300,7 +318,7 @@ if [[ $online -eq 0 ]]; then
 		
 			clear
 		
-			git clone https://$GIT_USERNAME@github.com/BaobabHealthTrust/touchscreentoolkit.git;
+			git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthTrust/touchscreentoolkit.git;
 	
 			cd $ROOT;
 	
@@ -322,19 +340,19 @@ if [[ $online -eq 0 ]]; then
 
 		clear
 	
-		git pull https://$GIT_USERNAME@github.com/BaobabHealthTrust/hts.git;
+		git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthTrust/hts.git;
 
 	fi
 	
 elif [ -d ../common ]; then	
 
-		if [ ! -d ./public/modules ]; then
+		if [ ! -f ./public/modules ]; then
 	
 			ln -s ../common/modules ./public/modules;
 	
 		fi
 	
-		if [ ! -d ./public/touchscreentoolkit ]; then
+		if [ ! -f ./public/touchscreentoolkit ]; then
 	
 			ln -s ../common/touchscreentoolkit ./public/touchscreentoolkit;
 	
@@ -432,7 +450,7 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 
 	# read -p "Enter DDE host IP address [default: $DDE_HOST]: " DDE_HOST
 	
-	getUserData "Application Configuration" "DDE Connection" "Enter site code: ";
+	getUserData "Application Configuration" "DDE Connection" "Enter DDE host IP address [default: $DDE_HOST]: ";
 	
 	DDE_HOST=$RETVAL;
 	
