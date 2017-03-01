@@ -10,6 +10,63 @@ DDE_PROTOCOL="http";
 DDE_HOST="0.0.0.0";
 DDE_PORT="3009";
 
+showMessageBox() 
+{
+	exec 3>&1
+	
+  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --msgbox "$3" 8 51 2>&1 1>&3)
+  
+  EXIT_CODE=$?
+  
+  exec 3>&-	
+}
+
+getUserPassword() 
+{
+	exec 3>&1
+	
+  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --passwordbox "$3" 16 51 2>&1 1>&3)
+  
+  EXIT_CODE=$?
+  
+  exec 3>&-	
+}
+
+getUserData() 
+{
+	exec 3>&1
+	
+  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --inputbox "$3" 16 51 2>&1 1>&3)
+  
+  EXIT_CODE=$?
+  
+  exec 3>&-	
+}
+
+getUserConfirmation()
+{
+	exec 3>&1
+	
+  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --yesno "$3" 10 30 2>&1 1>&3)
+  
+  EXIT_CODE=$?
+  
+  exec 3>&-	
+}
+
+getUserOption()
+{
+	exec 3>&1
+	
+	declare -a ARR=("${!4}");
+	
+  RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --menu "$3" 20 51 4 "${ARR[@]}" 2>&1 1>&3)
+  
+  EXIT_CODE=$?
+  
+  exec 3>&-	
+}
+
 if [ ${#GIT} == 0 ]; then
 
   echo "Git not found...";
@@ -107,7 +164,18 @@ online=$?;
 
 if [[ $online -eq 0 ]]; then
 
-	read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
+	# read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
+
+	getUserConfirmation "Application Configuration" "Dependencies Setup" "Install or update shared dependencies?";
+				
+	case $EXIT_CODE in
+		0)
+			INSTALL_DEPENDS="y";;
+		1)
+			INSTALL_DEPENDS="n";;
+		255)
+			INSTALL_DEPENDS="y";;
+	esac
 
 	clear
 		
@@ -121,8 +189,14 @@ if [[ $online -eq 0 ]]; then
 		
 		echo 
 		
-		read -p "Enter github.com usename: " GIT_USERNAME
+		# read -p "Enter github.com usename: " GIT_USERNAME
 
+	  getUserData "Application Configuration" "Dependencies Installation" "Enter github.com usename: ";
+	  
+	  GIT_USERNAME=$RETVAL;
+	  
+	  clear
+	  
 		echo
 
 		if [ -d ../common/modules/ ]; then
@@ -223,7 +297,20 @@ clear
 		
 echo
 		
-read -p "Configure application [y/N]: " CONFIGURE_APP
+# read -p "Configure application [y/N]: " CONFIGURE_APP
+
+getUserConfirmation "Application Configuration" "Dependencies Setup" "Configure application?";
+			
+case $EXIT_CODE in
+	0)
+		CONFIGURE_APP="y";;
+	1)
+		CONFIGURE_APP="n";;
+	255)
+		CONFIGURE_APP="y";;
+esac
+
+clear		
 
 if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 		
@@ -237,25 +324,52 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 		
 	if [ ${#DDE_USERNAME} == 0 ]; then
 	
-		  read -p "Enter DDE application usename: " DDE_USERNAME
+		  # read -p "Enter DDE application usename: " DDE_USERNAME
+				
+			getUserData "Application Configuration" "DDE Connection" "Enter DDE application usename: ";
+			
+			DDE_USERNAME=$RETVAL;
+			
+			clear			
 
 			echo
 
-		  echo -n "Enter DDE application password for '$DDE_USERNAME': "
+		  # echo -n "Enter DDE application password for '$DDE_USERNAME': "
 
-		  read -s DDE_PASSWORD
+		  # read -s DDE_PASSWORD
 
-			echo
+		  getUserPassword "Application Configuration" "DDE Connection" "Enter DDE application password for '$DDE_USERNAME': ";
+		  
+		  DDE_PASSWORD=$RETVAL;
+
+			clear
 
 			echo
 
 	fi
 
-	read -p "Enter site code: " SITE_CODE
+	# read -p "Enter site code: " SITE_CODE
 
-	echo
+	getUserData "Application Configuration" "DDE Connection" "Enter site code: ";
+	
+	SITE_CODE=$RETVAL;
+	
+	clear			
 
-	read -p "Enter DDE host protocol [HTTP/https]: " DDE_PROTOCOL
+	# read -p "Enter DDE host protocol [HTTP/https]: " DDE_PROTOCOL
+	
+	declare -a PROTOCOL=("1" "http" "2" "https");
+
+	getUserOption "Application Configuration" "DDE Connection" "Enter DDE host protocol: " PROTOCOL[@]
+
+	case $RETVAL in
+		1)
+			DDE_PROTOCOL="http";;
+		2)
+			DDE_PROTOCOL="https";;
+	esac
+		  
+	clear
 	
 	if [ ${#DDE_PROTOCOL} == 0 ]; then
 	
@@ -265,8 +379,14 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	echo
 
-	read -p "Enter DDE host IP address [default: $DDE_HOST]: " DDE_HOST
+	# read -p "Enter DDE host IP address [default: $DDE_HOST]: " DDE_HOST
 	
+	getUserData "Application Configuration" "DDE Connection" "Enter site code: ";
+	
+	DDE_HOST=$RETVAL;
+	
+	clear			
+
 	if [ ${#DDE_HOST} == 0 ]; then
 	
 		DDE_HOST="0.0.0.0";
@@ -275,7 +395,13 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	echo
 
-	read -p "Enter DDE host port [default: $DDE_PORT]: " DDE_PORT
+	# read -p "Enter DDE host port [default: $DDE_PORT]: " DDE_PORT
+
+	getUserData "Application Configuration" "DDE Connection" "Enter DDE host port [default: $DDE_PORT]: ";
+	
+	DDE_PORT=$RETVAL;
+	
+	clear			
 
 	if [ ${#DDE_PORT} == 0 ]; then
 	
@@ -283,9 +409,24 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	fi
 	
-	echo
+	clear
 
-	read -p "Enter target application environment [development/PRODUCTION]: " TARGET_ENV
+	# read -p "Enter target application environment [development/PRODUCTION]: " TARGET_ENV
+
+	declare -a ENVIRONMENTS=("1" "development" "2" "production" "3" "test");
+
+	getUserOption "Application Configuration" "DDE Connection" "Enter target application environment: " ENVIRONMENTS[@]
+
+	case $RETVAL in
+		1)
+			TARGET_ENV="development";;
+		2)
+			TARGET_ENV="production";;
+		3)
+			TARGET_ENV="test";;
+	esac
+		  
+	clear
 
 	if [ ${#TARGET_ENV} == 0 ]; then
 
@@ -319,8 +460,22 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 		
 	echo 
 		
-	read -p "Enter MySQL database host IP address [default: $DDE_HOST]: " MYSQL_HOST;
+	# read -p "Enter MySQL database host IP address [default: $DDE_HOST]: " MYSQL_HOST;
 	
+	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter MySQL database host IP address [default: $DDE_HOST]: ";
+	
+	MYSQL_HOST=$RETVAL;
+	
+	clear			
+
+	if [ ${#DDE_PORT} == 0 ]; then
+	
+		DDE_PORT=3009;
+	
+	fi
+	
+	clear
+
 	if [ ${#MYSQL_HOST} == 0 ]; then
 	
 		MYSQL_HOST=$DDE_HOST;
@@ -329,20 +484,32 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	echo
 
-	read -p "Enter MySQL username: " MYSQL_USERNAME;
+	# read -p "Enter MySQL username: " MYSQL_USERNAME;
 	
-	echo
-
-  echo -n "Enter MySQL password for '$MYSQL_USERNAME': ";
-
-  read -s MYSQL_PASSWORD;
-
-	echo
-		
-	echo
-
-	read -p "Enter HTS made database name [default: hts_$TARGET_ENV]: " HTS_DATABASE;
+	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter MySQL username: ";
 	
+	MYSQL_USERNAME=$RETVAL;
+	
+	clear			
+
+  # echo -n "Enter MySQL password for '$MYSQL_USERNAME': ";
+
+  # read -s MYSQL_PASSWORD;
+
+  getUserPassword "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter MySQL password for '$MYSQL_USERNAME': ";
+  
+  MYSQL_PASSWORD=$RETVAL;
+
+	clear
+
+	# read -p "Enter HTS made database name [default: hts_$TARGET_ENV]: " HTS_DATABASE;
+	
+	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter HTS main database name [default: hts_$TARGET_ENV]: ";
+	
+	HTS_DATABASE=$RETVAL;
+	
+	clear			
+
 	if [ ${#HTS_DATABASE} == 0 ]; then
 	
 		HTS_DATABASE="hts_$TARGET_ENV";
@@ -351,8 +518,14 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	echo
 
-	read -p "Enter HTS stock management database name [default: hts_"$TARGET_ENV"_inventory]: " HTS_INVENTORY_DATABASE;
+	# read -p "Enter HTS stock management database name [default: hts_"$TARGET_ENV"_inventory]: " HTS_INVENTORY_DATABASE;
 	
+	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter HTS stock management database name [default: hts_"$TARGET_ENV"_inventory]: ";
+	
+	HTS_INVENTORY_DATABASE=$RETVAL;
+	
+	clear			
+
 	if [ ${#HTS_INVENTORY_DATABASE} == 0 ]; then
 	
 		HTS_INVENTORY_DATABASE="hts_"$TARGET_ENV"_inventory";
@@ -361,8 +534,14 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	echo
 
-	read -p "Enter HTS quality control database name [default: hts_"$TARGET_ENV"_quality_control]: " HTS_QUALITY_CONTROL_DATABASE;
+	# read -p "Enter HTS quality control database name [default: hts_"$TARGET_ENV"_quality_control]: " HTS_QUALITY_CONTROL_DATABASE;
 	
+	getUserData "Application Configuration" "MySQL OpenMRS Database Configuration" "Enter HTS quality control database name [default: hts_"$TARGET_ENV"_quality_control]: ";
+	
+	HTS_QUALITY_CONTROL_DATABASE=$RETVAL;
+	
+	clear			
+
 	if [ ${#HTS_QUALITY_CONTROL_DATABASE} == 0 ]; then
 	
 		HTS_QUALITY_CONTROL_DATABASE="hts_"$TARGET_ENV"_quality_control";
@@ -391,30 +570,90 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 		
 	echo 
 		
-	read -p "Enter facility full name: " FACILITY;
+	# read -p "Enter facility full name: " FACILITY;
 	
-	echo
+	getUserData "Application Configuration" "Site Details Configuration" "Enter facility full name: ";
+	
+	FACILITY=$RETVAL;
+	
+	clear			
 
-	read -p "Enter facility location: " FACILITY_LOCATION;
+	# read -p "Enter facility location: " FACILITY_LOCATION;
 	
-	echo
+	getUserData "Application Configuration" "Site Details Configuration" "Enter facility location: ";
+	
+	FACILITY_LOCATION=$RETVAL;
+	
+	clear			
 
-	read -p "Is the facility location the same as HTS location? [Y/n]: " HTS_LOCATION_SAME_AS_FACILITY_LOCATION;
+	# read -p "Is the facility location the same as HTS location? [Y/n]: " HTS_LOCATION_SAME_AS_FACILITY_LOCATION;
 	
+	getUserConfirmation "Application Configuration" "Site Details Configuration" "Is the facility location the same as HTS location?";
+			
+	case $EXIT_CODE in
+		0)
+			HTS_LOCATION_SAME_AS_FACILITY_LOCATION="y";;
+		1)
+			HTS_LOCATION_SAME_AS_FACILITY_LOCATION="n";;
+		255)
+			HTS_LOCATION_SAME_AS_FACILITY_LOCATION="y";;
+	esac
+
+	clear		
+
 	if [ ${#HTS_LOCATION_SAME_AS_FACILITY_LOCATION} == 0 ] || [ $(echo "$HTS_LOCATION_SAME_AS_FACILITY_LOCATION" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
 		HTS_LOCATION=$FACILITY_LOCATION;
 		
 	else
 	
-		read -p "Enter HTS facility location: " HTS_LOCATION;
+		# read -p "Enter HTS facility location: " HTS_LOCATION;
 	
+		getUserData "Application Configuration" "Site Details Configuration" "Enter HTS facility location: ";
+	
+		HTS_LOCATION=$RETVAL;
+	
+		clear			
+
 	fi
 	
 	echo
 
-	read -p "Enter auto-incremental HTS identifiers reset month [JAN/feb/mar/apr/may/jun/jul/aug/sep/oct/nov/dec]: " RESET_MONTH
+	# read -p "Enter auto-incremental HTS identifiers reset month [JAN/feb/mar/apr/may/jun/jul/aug/sep/oct/nov/dec]: " RESET_MONTH
 	
+	declare -a MONTHS=("1" "January" "2" "February" "3" "March" "4" "April" "5" "May" "6" "June" "7" "July" "8" "August" "9" "September" "10" "October" "11" "November" "12" "December");
+
+	getUserOption "Application Configuration" "Site Details Configuration" "Enter auto-incremental HTS identifiers reset month: " MONTHS[@]
+
+	case $RETVAL in
+		1)
+			RESET_MONTH="jan";;
+		2)
+			RESET_MONTH="feb";;
+		3)
+			RESET_MONTH="mar";;
+		4)
+			RESET_MONTH="apr";;
+		5)
+			RESET_MONTH="may";;
+		6)
+			RESET_MONTH="jun";;
+		7)
+			RESET_MONTH="jul";;
+		8)
+			RESET_MONTH="aug";;
+		9)
+			RESET_MONTH="sep";;
+		10)
+			RESET_MONTH="oct";;
+		11)
+			RESET_MONTH="nov";;
+		12)
+			RESET_MONTH="dec";;
+	esac
+		  
+	clear
+
 	if [ ${#RESET_MONTH} == 0 ]; then
 	
 		RESET_MONTH="jan";
@@ -425,10 +664,21 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	fi
 	
-	echo
-
-	read -p "Is the facility code for HTS the same as that for DDE which is '$SITE_CODE'? [Y/n]: " HTS_FACILITY_CODE_SAME_AS_SITE_CODE
+	# read -p "Is the facility code for HTS the same as that for DDE which is '$SITE_CODE'? [Y/n]: " HTS_FACILITY_CODE_SAME_AS_SITE_CODE
 	
+	getUserConfirmation "Application Configuration" "Site Details Configuration" "Is the facility code for HTS the same as that for DDE which is '$SITE_CODE'?";
+			
+	case $EXIT_CODE in
+		0)
+			HTS_FACILITY_CODE_SAME_AS_SITE_CODE="y";;
+		1)
+			HTS_FACILITY_CODE_SAME_AS_SITE_CODE="n";;
+		255)
+			HTS_FACILITY_CODE_SAME_AS_SITE_CODE="y";;
+	esac
+
+	clear		
+
 	if [ ${#HTS_FACILITY_CODE_SAME_AS_SITE_CODE} == 0 ] || [ $(echo "$HTS_FACILITY_CODE_SAME_AS_SITE_CODE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
 		HTS_FACILITY_CODE=$(echo "$SITE_CODE" | tr '[:lower:]' '[:upper:]' );
@@ -574,7 +824,20 @@ clear
 		
 echo
 		
-read -p "Configure application database [y/N]: " CONFIGURE_APP_DATABASE
+# read -p "Configure application database [y/N]: " CONFIGURE_APP_DATABASE
+
+getUserConfirmation "Application Configuration" "Application Database" "Configure application database?";
+		
+case $EXIT_CODE in
+	0)
+		CONFIGURE_APP_DATABASE="y";;
+	1)
+		CONFIGURE_APP_DATABASE="n";;
+	255)
+		CONFIGURE_APP_DATABASE="y";;
+esac
+
+clear		
 
 if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
@@ -622,7 +885,20 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 	echo
 	
-	read -p "Do you want to install full database [y/N]: " INSTALL_FULL_DATABASE
+	# read -p "Do you want to install full database [y/N]: " INSTALL_FULL_DATABASE
+	
+	getUserConfirmation "Application Configuration" "Application Database" "Do you want to install full database? WARNING: THIS WILL DROP AN EXISTING DATABASE!";
+		
+	case $EXIT_CODE in
+		0)
+			INSTALL_FULL_DATABASE="y";;
+		1)
+			INSTALL_FULL_DATABASE="n";;
+		255)
+			INSTALL_FULL_DATABASE="y";;
+	esac
+
+	clear		
 	
 	if [ ${#INSTALL_FULL_DATABASE} -gt 0 ] && [ $(echo "$INSTALL_FULL_DATABASE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
@@ -712,8 +988,14 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 		echo 
 		
-		read -p "Enter number of locations to create: " NUMBER_OF_LOCATIONS
+		# read -p "Enter number of locations to create: " NUMBER_OF_LOCATIONS
 		
+		getUserData "Application Configuration" "Locations Configuration" "Enter number of locations to create: ";
+	
+		NUMBER_OF_LOCATIONS=$RETVAL;
+	
+		clear			
+
 		if [ ${#NUMBER_OF_LOCATIONS} -gt 0 ]; then
 		
 			STR_LOCATIONS=$(node -e "var c = parseInt('$NUMBER_OF_LOCATIONS'); var a = []; for(var i = 0; i < c; i++) a.push(i + 1); console.log(a.join(';'));");
@@ -724,8 +1006,14 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 				echo
 				
-				read -p "Enter location $i: " HTS_ROOM
+				# read -p "Enter location $i: " HTS_ROOM
 	
+				getUserData "Application Configuration" "Locations Configuration" "Enter location $i: ";
+	
+				HTS_ROOM=$RETVAL;
+	
+				clear			
+
 				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location (name, description, creator, date_created, uuid) VALUES ('$HTS_ROOM', 'HTS location', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
 	
 			done
@@ -949,9 +1237,22 @@ echo
 
 if [ ${#TARGET_ENV} == 0 ]; then
 
-	read -p "Enter target application environment [development/PRODUCTION]: " TARGET_ENV
+	# read -p "Enter target application environment [development/PRODUCTION]: " TARGET_ENV
 
-	echo
+	declare -a ENVIRONMENTS=("1" "development" "2" "production" "3" "test");
+
+	getUserOption "Application Startup Configuration" "Startup Setup" "Enter target application environment: " ENVIRONMENTS[@]
+
+	case $RETVAL in
+		1)
+			TARGET_ENV="development";;
+		2)
+			TARGET_ENV="production";;
+		3)
+			TARGET_ENV="test";;
+	esac
+		  
+	clear
 
 	if [ ${#TARGET_ENV} == 0 ]; then
 	
@@ -983,6 +1284,8 @@ if [ ${#PM2} != 0 ]; then
 
 fi
 
-echo "Done!";
+# echo "Done!";
+
+showMessageBox "Application Configuration" "Application Setup" "Done!";
 
 echo
