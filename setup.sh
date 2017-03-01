@@ -123,7 +123,7 @@ else
 
 fi
 
-npm install --save --verbose --production;
+npm install --save --production;
 
 if [ -f config/couchdb.json ]; then
 
