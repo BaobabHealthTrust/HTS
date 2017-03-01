@@ -18,6 +18,14 @@ showMessageBox()
   
   EXIT_CODE=$?
   
+  if [ $EXIT_CODE == 255 ]; then
+  
+  	clear;
+  
+  	exit;
+  
+  fi
+  
   exec 3>&-	
 }
 
@@ -28,6 +36,14 @@ getUserPassword()
   RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --passwordbox "$3" 16 51 2>&1 1>&3)
   
   EXIT_CODE=$?
+  
+  if [ $EXIT_CODE == 1 ] || [ $EXIT_CODE == 255 ]; then
+  
+  	clear;
+  
+  	exit;
+  
+  fi
   
   exec 3>&-	
 }
@@ -40,6 +56,14 @@ getUserData()
   
   EXIT_CODE=$?
   
+  if [ $EXIT_CODE == 1 ] || [ $EXIT_CODE == 255 ]; then
+  
+  	clear;
+  
+  	exit;
+  
+  fi
+  
   exec 3>&-	
 }
 
@@ -50,6 +74,14 @@ getUserConfirmation()
   RETVAL=$(dialog --clear --backtitle "$1" --title "$2" --yesno "$3" 10 30 2>&1 1>&3)
   
   EXIT_CODE=$?
+  
+  if [ $EXIT_CODE == 255 ]; then
+  
+  	clear;
+  
+  	exit;
+  
+  fi
   
   exec 3>&-	
 }
@@ -64,14 +96,21 @@ getUserOption()
   
   EXIT_CODE=$?
   
+  
+  if [ $EXIT_CODE == 1 ] || [ $EXIT_CODE == 255 ]; then
+  
+  	clear;
+  
+  	exit;
+  
+  fi  
+  
   exec 3>&-	
 }
 
 if [ ${#GIT} == 0 ]; then
 
-  echo "Git not found...";
-
-  echo "Installing Git...";
+  showMessageBox "Application Configuration" "Application Setup" "Git not found. Installing Git.";
 
 	sudo apt-get install git;
 	
@@ -83,9 +122,11 @@ fi
 
 if [ ${#NODE} == 0 ]; then
 
-    echo "Node.js not found...";
+    # echo "Node.js not found...";
 
-    echo "Installing Node.js";
+    # echo "Installing Node.js";
+    
+    showMessageBox "Application Configuration" "Application Setup" "Node.js not found. Installing Node.js.";
 
 		mkdir node;
 		
@@ -119,7 +160,7 @@ if [ ${#NODE} == 0 ]; then
 
 else
 
-    echo "Node.js found: OK";
+    showMessageBox "Application Configuration" "Application Setup" "Node.js found: OK";
 
 fi
 
@@ -127,7 +168,7 @@ npm install --save --production;
 
 if [ -f config/couchdb.json ]; then
 
-	echo "CouchDB configuration found. OK";
+	showMessageBox "Application Configuration" "Application Setup" "CouchDB configuration found. OK";
 	
 else
 
@@ -137,7 +178,7 @@ fi
 
 if [ -f config/database.json ]; then
 
-	echo "MySQL database configuration found. OK";
+	showMessageBox "Application Configuration" "Application Setup" "MySQL database configuration found. OK";
 	
 else
 
@@ -147,7 +188,7 @@ fi
 
 if [ -f config/site.json ]; then
 
-	echo "Site configuration found. OK";
+	showMessageBox "Application Configuration" "Application Setup" "Site configuration found. OK";
 	
 else
 
@@ -203,9 +244,11 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			echo "Updating ../common/modules/";
+			showMessageBox "Application Configuration" "Application Setup" "Updating ../common/modules/";
 	
 			cd ../common/modules;
+		
+			clear
 		
 			git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
 		
@@ -215,11 +258,13 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			echo "Cloning libraries into ../common/modules/";
+			showMessageBox "Application Configuration" "Application Setup" "Cloning libraries into ../common/modules/";
 	
 			mkdir -p ../common;
 		
 			cd ../common;
+		
+			clear
 		
 			git clone https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
 	
@@ -233,9 +278,11 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			echo "Updating ../common/touchscreentoolkit/";
+			showMessageBox "Application Configuration" "Application Setup" "Updating ../common/touchscreentoolkit/";
 	
 			cd ../common/touchscreentoolkit;
+		
+			clear
 		
 			git pull https://$GIT_USERNAME@github.com/BaobabHealthLabs/bht-modules.git;
 		
@@ -245,11 +292,13 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			echo "Cloning libraries into ../common/touchscreentoolkit/";
+			showMessageBox "Application Configuration" "Application Setup" "Cloning libraries into ../common/touchscreentoolkit/";
 	
 			mkdir -p ../common;
 		
 			cd ../common;
+		
+			clear
 		
 			git clone https://$GIT_USERNAME@github.com/BaobabHealthTrust/touchscreentoolkit.git;
 	
@@ -270,6 +319,8 @@ if [[ $online -eq 0 ]]; then
 		fi
 	
 		cp ../common/modules/app.js ./app.js;
+
+		clear
 	
 		git pull https://$GIT_USERNAME@github.com/BaobabHealthTrust/hts.git;
 
@@ -468,15 +519,15 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 	clear			
 
-	if [ ${#DDE_PORT} == 0 ]; then
+	if [ ${#MYSQL_HOST} == 0 ]; then
 	
-		DDE_PORT=3009;
+		MYSQL_HOST="0.0.0.0";
 	
 	fi
 	
 	clear
 
-	if [ ${#MYSQL_HOST} == 0 ]; then
+	if [ ${#MYSQL_HOST} == 0 ] && [ ${#DDE_HOST} != 0 ]; then
 	
 		MYSQL_HOST=$DDE_HOST;
 	
@@ -1266,7 +1317,7 @@ PM2=$(command -v pm2);
 
 cd $ROOT;
 
-if [ ${#PM2} != 0 ]; then
+if [ ${#PM2} != 0 ] && [ $EXIT_CODE == 0 ]; then
 
 	if [ -f ./process.json ]; then
 	
@@ -1288,4 +1339,4 @@ fi
 
 showMessageBox "Application Configuration" "Application Setup" "Done!";
 
-echo
+clear
