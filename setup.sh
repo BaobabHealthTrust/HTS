@@ -112,7 +112,7 @@ getUserOption()
 
 if [ ${#GIT} == 0 ]; then
 
-  showMessageBox "Application Configuration" "Application Setup" "Git not found. Installing Git.";
+  showMessageBox "Application Configuration" "HTS Setup" "Git not found. Installing Git.";
 
 	clear;
 	
@@ -126,7 +126,7 @@ fi
 
 if [ ${#MYSQL} == 0 ]; then
 
-  showMessageBox "Application Configuration" "Application Setup" "MySQL not found. Installing MySQL.";
+  showMessageBox "Application Configuration" "HTS Setup" "MySQL not found. Installing MySQL.";
 
 	clear;
 	
@@ -138,7 +138,7 @@ if [ ${#MYSQL} == 0 ]; then
 
 else
 
-    showMessageBox "Application Configuration" "Application Setup" "MySQL found: OK";
+    showMessageBox "Application Configuration" "HTS Setup" "MySQL found: OK";
 
 		clear;
 		
@@ -150,7 +150,7 @@ if [ ${#NODE} == 0 ]; then
 
     # echo "Installing Node.js";
     
-    showMessageBox "Application Configuration" "Application Setup" "Node.js not found. Installing Node.js.";
+    showMessageBox "Application Configuration" "HTS Setup" "Node.js not found. Installing Node.js.";
 
 		clear;
 		
@@ -186,7 +186,7 @@ if [ ${#NODE} == 0 ]; then
 
 else
 
-    showMessageBox "Application Configuration" "Application Setup" "Node.js found: OK";
+    showMessageBox "Application Configuration" "HTS Setup" "Node.js found: OK";
 
 		clear;
 		
@@ -196,7 +196,7 @@ npm install --save --production;
 
 if [ -f config/couchdb.json ]; then
 
-	showMessageBox "Application Configuration" "Application Setup" "CouchDB configuration found. OK";
+	showMessageBox "Application Configuration" "HTS Setup" "CouchDB configuration found. OK";
 
 	clear;
 	
@@ -208,7 +208,7 @@ fi
 
 if [ -f config/database.json ]; then
 
-	showMessageBox "Application Configuration" "Application Setup" "MySQL database configuration found. OK";
+	showMessageBox "Application Configuration" "HTS Setup" "MySQL database configuration found. OK";
 
 	clear;
 	
@@ -220,7 +220,7 @@ fi
 
 if [ -f config/site.json ]; then
 
-	showMessageBox "Application Configuration" "Application Setup" "Site configuration found. OK";
+	showMessageBox "Application Configuration" "HTS Setup" "Site configuration found. OK";
 
 	clear;
 	
@@ -241,7 +241,7 @@ if [[ $online -eq 0 ]]; then
 
 	# read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
 
-	getUserConfirmation "Application Configuration" "Dependencies Setup" "Install or update shared dependencies?";
+	getUserConfirmation "Application Configuration" "HTS Setup" "Install or update shared dependencies?";
 				
 	case $EXIT_CODE in
 		0)
@@ -284,7 +284,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "Application Setup" "Updating ../common/modules/";
+			showMessageBox "Application Configuration" "HTS Setup" "Updating ../common/modules/";
 	
 			cd ../common/modules;
 		
@@ -298,7 +298,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "Application Setup" "Cloning libraries into ../common/modules/";
+			showMessageBox "Application Configuration" "HTS Setup" "Cloning libraries into ../common/modules/";
 	
 			mkdir -p ../common;
 		
@@ -318,7 +318,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "Application Setup" "Updating ../common/touchscreentoolkit/";
+			showMessageBox "Application Configuration" "HTS Setup" "Updating ../common/touchscreentoolkit/";
 	
 			cd ../common/touchscreentoolkit;
 		
@@ -332,7 +332,7 @@ if [[ $online -eq 0 ]]; then
 	
 			echo 
 		
-			showMessageBox "Application Configuration" "Application Setup" "Cloning libraries into ../common/touchscreentoolkit/";
+			showMessageBox "Application Configuration" "HTS Setup" "Cloning libraries into ../common/touchscreentoolkit/";
 	
 			mkdir -p ../common;
 		
@@ -390,7 +390,7 @@ echo
 		
 # read -p "Configure application [y/N]: " CONFIGURE_APP
 
-getUserConfirmation "Application Configuration" "Dependencies Setup" "Configure application?";
+getUserConfirmation "Application Configuration" "HTS Setup" "Configure application?";
 			
 case $EXIT_CODE in
 	0)
@@ -1332,7 +1332,7 @@ if [ ${#TARGET_ENV} == 0 ]; then
 
 	declare -a ENVIRONMENTS=("1" "development" "2" "production" "3" "test");
 
-	getUserOption "Application Startup Configuration" "Startup Setup" "Enter target application environment: " ENVIRONMENTS[@]
+	getUserOption "Application Startup Configuration" "HTS Setup" "Enter target application environment: " ENVIRONMENTS[@]
 
 	case $RETVAL in
 		1)
@@ -1377,6 +1377,6 @@ fi
 
 # echo "Done!";
 
-showMessageBox "Application Configuration" "Application Setup" "Done!";
+showMessageBox "Application Configuration" "HTS Setup" "Done!";
 
 clear
