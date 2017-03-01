@@ -6,6 +6,8 @@ GIT=$(command -v git);
 
 NODE=$(command -v node);
 
+MYSQL=$(command -v mysql);
+
 DDE_PROTOCOL="http";
 DDE_HOST="0.0.0.0";
 DDE_PORT="3009";
@@ -120,6 +122,26 @@ else
 
     echo "Git found: OK";
 
+fi
+
+if [ ${#MYSQL} == 0 ]; then
+
+  showMessageBox "Application Configuration" "Application Setup" "MySQL not found. Installing MySQL.";
+
+	clear;
+	
+	cd ./dist/pkgs;
+
+	sudo dpkg -R --install .;
+
+	cd "$ROOT";
+
+else
+
+    showMessageBox "Application Configuration" "Application Setup" "MySQL found: OK";
+
+		clear;
+		
 fi
 
 if [ ${#NODE} == 0 ]; then
