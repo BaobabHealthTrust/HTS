@@ -178,7 +178,7 @@ if [ ${#NODE} == 0 ]; then
 
 		sudo ln -s /opt/node/bin/npm /usr/local/bin/npm;
 
-		sudo npm install dist/pm2-2.4.0.tgz -g;
+		sudo npm install dist/pm2-2.4.1.tgz -g;
 
 		sudo ln -s /opt/node/bin/pm2 /usr/bin/pm2;
 
