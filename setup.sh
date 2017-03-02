@@ -324,7 +324,7 @@ if [[ $online -eq 0 ]]; then
 		
 			clear
 		
-			git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthLabs/bht-modules.git;
+			git pull https://$GIT_USERNAME:$GIT_PASSWORD@github.com/BaobabHealthLabs/touchscreentoolkit.git;
 		
 			cd $ROOT;
 	
@@ -346,15 +346,23 @@ if [[ $online -eq 0 ]]; then
 	
 		fi
 	
-		if [ ! -d ./public/modules ]; then
+		if [ ! -d "$ROOT/public/modules" ]; then
 	
-			ln -s ../common/modules ./public/modules;
+			cd "$ROOT/public/";
+			
+			ln -s ../../common/modules/ .;
+			
+			cd $ROOT;						
 	
 		fi
 	
-		if [ ! -d ./public/touchscreentoolkit ]; then
+		if [ ! -d "$ROOT/public/touchscreentoolkit" ]; then
 	
-			ln -s ../common/touchscreentoolkit ./public/touchscreentoolkit;
+			cd "$ROOT/public/";
+			
+			ln -s ../../common/touchscreentoolkit/ .;
+			
+			cd $ROOT;
 	
 		fi
 	
@@ -368,15 +376,23 @@ if [[ $online -eq 0 ]]; then
 	
 elif [ -d ../common ]; then	
 
-		if [ ! -f ./public/modules ]; then
+		if [ ! -d "$ROOT/public/modules" ]; then
 	
-			ln -s ../common/modules ./public/modules;
+			cd "$ROOT/public/";
+			
+			ln -s ../../common/modules/ .;
+			
+			cd $ROOT;						
 	
 		fi
 	
-		if [ ! -f ./public/touchscreentoolkit ]; then
+		if [ ! -d "$ROOT/public/touchscreentoolkit" ]; then
 	
-			ln -s ../common/touchscreentoolkit ./public/touchscreentoolkit;
+			cd "$ROOT/public/";
+			
+			ln -s ../../common/touchscreentoolkit/ .;
+			
+			cd $ROOT;
 	
 		fi
 	
