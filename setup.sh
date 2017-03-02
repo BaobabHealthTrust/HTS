@@ -192,8 +192,6 @@ else
 		
 fi
 
-npm install --save --production;
-
 if [ -f config/couchdb.json ]; then
 
 	showMessageBox "Application Configuration" "HTS Setup" "CouchDB configuration found. OK";
@@ -238,6 +236,8 @@ nc -z 8.8.8.8 53  >/dev/null 2>&1;
 online=$?;
 
 if [[ $online -eq 0 ]]; then
+
+	npm install --save --no-bin-link --production;
 
 	# read -p "Install or update shared dependencies [y/N]: " INSTALL_DEPENDS
 

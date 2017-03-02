@@ -1,33 +1,34 @@
 {
-    "name": "hts",
-    "version": "1.0.0",
-    "description": "",
-    "main": "app.js",
-    "dependencies": {
-        "Mutex": "file:dist/lib/Mutex-1.1.0.tgz",
-        "async": "file:dist/lib/async-2.1.5.tgz",
-        "body-parser": "file:dist/lib/body-parser-1.16.1.tgz",
-        "clj-fuzzy": "file:dist/lib/clj-fuzzy-0.3.3.tgz",
-        "cookie-parser": "file:dist/lib/cookie-parser-1.4.3.tgz",
-        "cors": "file:dist/lib/cors-2.8.1.tgz",
-        "express": "file:dist/lib/express-4.14.1.tgz",
-        "ip": "file:dist/lib/ip-1.1.4.tgz",
-        "jade": "file:dist/lib/jade-1.11.0.tgz",
-        "jsdom": "file:dist/lib/jsdom-9.11.0.tgz",
-        "knex": "file:dist/lib/knex-0.11.10.tgz",
-        "md5": "file:dist/lib/md5-2.2.1.tgz",
-        "mysql": "file:dist/lib/mysql-2.13.0.tgz",
-        "node-rest-client": "file:dist/lib/node-rest-client-2.5.0.tgz",
-        "node-uuid": "file:dist/lib/node-uuid-1.4.7.tgz",
-        "portfinder": "file:dist/lib/portfinder-0.4.0.tgz",
-        "prompt": "file:dist/lib/prompt-1.0.0.tgz",
-        "randomstring": "file:dist/lib/randomstring-1.1.5.tgz",
-        "socket.io": "file:dist/lib/socket.io-1.7.3.tgz",
-        "wkhtmltopdf": "file:dist/lib/wkhtmltopdf-0.3.4.tgz"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Chimwemwe Kachaje <chimwemwe.kachaje@baobabhealthtrust.org>",
-    "license": "MIT"
+  "name": "hts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "Mutex": "git+https://github.com/Perennials/mutex-node.git",
+    "async": "^2.0.1",
+    "body-parser": "^1.15.1",
+    "clj-fuzzy": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
+    "express": "^4.13.3",
+    "ip": "^1.1.3",
+    "jade": ">= 0.0.1",
+    "jsdom": "^9.11.0",
+    "knex": "^0.11.1",
+    "md5": "^2.1.0",
+    "mysql": "^2.10.2",
+    "node-rest-client": "^2.0.1",
+    "node-uuid": "^1.4.7",
+    "portfinder": "^0.4.0",
+    "prompt": "^1.0.0",
+    "randomstring": "^1.1.5",
+    "socket.io": "^1.4.6",
+    "wkhtmltopdf": "^0.3.3"
+  },
+  "bundledDependencies":[],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chimwemwe Kachaje <chimwemwe.kachaje@baobabhealthtrust.org>",
+  "license": "MIT"
 }
