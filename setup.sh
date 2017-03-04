@@ -9,7 +9,7 @@ NODE=$(command -v node);
 MYSQL=$(command -v mysql);
 
 DDE_PROTOCOL="http";
-DDE_HOST="0.0.0.0";
+DDE_HOST="127.0.0.1";
 DDE_PORT="3009";
 
 nc -z 8.8.8.8 53  >/dev/null 2>&1;
@@ -201,7 +201,7 @@ else
 		
 fi
 
-if [ -f config/couchdb.json ]; then
+if [ -f ./config/couchdb.json ]; then
 
 	showMessageBox "Application Configuration" "HTS Setup" "CouchDB configuration found. OK";
 
@@ -209,11 +209,11 @@ if [ -f config/couchdb.json ]; then
 	
 else
 
-	cp config/couchdb.json.example config/couchdb.json;
+	cp ./config/couchdb.json.example ./config/couchdb.json;
 
 fi
 
-if [ -f config/database.json ]; then
+if [ -f ./config/database.json ]; then
 
 	showMessageBox "Application Configuration" "HTS Setup" "MySQL database configuration found. OK";
 
@@ -221,11 +221,11 @@ if [ -f config/database.json ]; then
 	
 else
 
-	cp config/database.json.example config/database.json;
+	cp ./config/database.json.example ./config/database.json;
 
 fi
 
-if [ -f config/site.json ]; then
+if [ -f ,/config/site.json ]; then
 
 	showMessageBox "Application Configuration" "HTS Setup" "Site configuration found. OK";
 
@@ -233,7 +233,7 @@ if [ -f config/site.json ]; then
 	
 else
 
-	cp config/site.json.example config/site.json;
+	cp ./config/site.json.example ./config/site.json;
 
 fi
 
@@ -502,7 +502,7 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 
 	if [ ${#DDE_HOST} == 0 ]; then
 	
-		DDE_HOST="0.0.0.0";
+		DDE_HOST="127.0.0.1";
 	
 	fi
 	
@@ -583,7 +583,7 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 
 	if [ ${#MYSQL_HOST} == 0 ]; then
 	
-		MYSQL_HOST="0.0.0.0";
+		MYSQL_HOST="127.0.0.1";
 	
 	fi
 	
