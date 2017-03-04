@@ -12,6 +12,9 @@ DDE_PROTOCOL="http";
 DDE_HOST="0.0.0.0";
 DDE_PORT="3009";
 
+nc -z 8.8.8.8 53  >/dev/null 2>&1;
+online=$?;
+
 showMessageBox() 
 {
 	exec 3>&1
@@ -110,17 +113,21 @@ getUserOption()
   exec 3>&-	
 }
 
-if [ ${#GIT} == 0 ]; then
+if [[ $online -eq 0 ]]; then
 
-  showMessageBox "Application Configuration" "HTS Setup" "Git not found. Installing Git.";
+	if [ ${#GIT} == 0 ]; then
 
-	clear;
+		showMessageBox "Application Configuration" "HTS Setup" "Git not found. Installing Git.";
+
+		clear;
 	
-	sudo apt-get install git;
+		sudo apt-get install git;
 	
-else 
+	else 
 
-    echo "Git found: OK";
+		  echo "Git found: OK";
+
+	fi
 
 fi
 
@@ -234,9 +241,6 @@ clear
 		
 echo
 		
-nc -z 8.8.8.8 53  >/dev/null 2>&1;
-online=$?;
-
 if [[ $online -eq 0 ]]; then
 
 	npm install --save --no-bin-link --production;
