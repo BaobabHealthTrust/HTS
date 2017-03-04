@@ -130,9 +130,29 @@ if [ ${#MYSQL} == 0 ]; then
 
 	clear;
 	
-	cd ./dist/pkgs;
+	cd "$ROOT/dist/mysql";
 
-	sudo dpkg -R --install .;
+	if [ $? -ne 0 ]; then
+	
+		exit 1;
+	
+	fi
+
+	sudo dpkg -i --force-depends *.deb;
+
+	if [ $? -ne 0 ]; then
+	
+		exit 1;
+	
+	fi
+
+	cd "$ROOT";
+
+	if [ $? -ne 0 ]; then
+	
+		exit 1;
+	
+	fi
 
 	cd "$ROOT";
 
@@ -146,43 +166,25 @@ fi
 
 if [ ${#NODE} == 0 ]; then
 
-    # echo "Node.js not found...";
+	cd "$ROOT/dist/node";
 
-    # echo "Installing Node.js";
-    
-    showMessageBox "Application Configuration" "HTS Setup" "Node.js not found. Installing Node.js.";
+	sudo dpkg -R --install .;
 
-		clear;
-		
-		mkdir node;
-		
-		if [ ${#OS} -gt 0 ] && [ $(echo "$OS" | tr '[:upper:]' '[:lower:]') == "x86_64" ]; then
-
-			tar xvf ./dist/node-v5.10.1-linux-x64.tar.xz --strip-components=1 -C ./node;
+	if [ $? -ne 0 ]; then
 	
-		else 
+		exit 1;
+	
+	fi
 
-			tar xvf ./dist/node-v5.10.1-linux-x86.tar.xz --strip-components=1 -C ./node;	
+	cd "$ROOT";
 
-		fi
+	sudo npm install "$ROOT/dist/pm2-2.4.1.tgz" -g;
 
-		mkdir node/etc;
-
-		echo '/prefix=/usr/local' > node/etc/npmrc;
-
-		sudo mv node /opt/;
-
-		sudo chown -R root: /opt/node;
-
-		sudo ln -s /opt/node/bin/node /usr/local/bin/node;
-
-		sudo ln -s /opt/node/bin/npm /usr/local/bin/npm;
-
-		sudo npm install dist/pm2-2.4.1.tgz -g;
-
-		sudo ln -s /opt/node/bin/pm2 /usr/bin/pm2;
-
-		sudo env PATH=$PATH:/opt/node/bin /opt/node/lib/node_modules/pm2/bin/pm2 startup upstart -u $USER --hp /home/$USER;
+	if [ $? -ne 0 ]; then
+	
+		exit 1;
+	
+	fi
 
 else
 
