@@ -8,5 +8,9 @@
   "useStartSessionButton": true,
   "afterCreatePath": "/save_patient",
   "supervisor": "HTS Coordinator",
-  "prefix": "HTS"
+  "prefix": "HTS",
+  "locationsSearch": "/search_location/",
+  "saveLocationPath": "/save_location",
+  "updateLocationPath": "/update_location",
+  "retireLocationPath": "/retire_location"
 }
