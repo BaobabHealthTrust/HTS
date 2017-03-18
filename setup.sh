@@ -1010,7 +1010,7 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 	# read -p "Do you want to install full database [y/N]: " INSTALL_FULL_DATABASE
 	
-	getUserConfirmation "Application Configuration" "Application Database" "Do you want to install full database? WARNING: THIS WILL DROP AN EXISTING DATABASE!";
+	getUserConfirmation "Application Configuration" "Application Database" "Do you want to install full database? WARNING: THIS WILL NOT DROP ANY EXISTING DATABASE!";
 		
 	case $EXIT_CODE in
 		0)
@@ -1025,333 +1025,321 @@ if [ ${#CONFIGURE_APP_DATABASE} -gt 0 ] && [ $(echo "$CONFIGURE_APP_DATABASE" | 
 	
 	if [ ${#INSTALL_FULL_DATABASE} -gt 0 ] && [ $(echo "$INSTALL_FULL_DATABASE" | tr '[:upper:]' '[:lower:]') == "y" ]; then
 	
-		# Drop databases
-		
-		echo 
-		
-		echo "Dropping databases if they exist...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_DATABASE";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_INVENTORY_DATABASE";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "DROP SCHEMA IF EXISTS $HTS_QUALITY_CONTROL_DATABASE";
-	
-		echo 
-		
-		echo "Creating databases...";
-		
-		# Create databases
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_DATABASE";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_INVENTORY_DATABASE";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_QUALITY_CONTROL_DATABASE";
-		
-		echo 
-		
 		echo "Loading data...";
 		
-		# Load initial data
-		echo 
+		RESULT=`mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD --skip-column-names -e "SHOW DATABASES LIKE '$HTS_DATABASE'"`
 		
-		echo "Loading OpenMRS schema...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/openmrs_1_7_2_concept_server_full_db.sql;
-		
-		echo 
-		
-		echo "Loading inventory schema...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/inventory.sql;
-		
-		echo 
-		
-		echo "Loading quality control schema...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_QUALITY_CONTROL_DATABASE < ./db/quality_control.sql;
-				
-		echo 
-		
-		echo "Loading inventory triggers schema...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/triggers.sql;
-	
-		echo 
-		
-		echo "Loading HTS roles...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc.roles.sql;
-		
-		echo 
-		
-		echo "Loading nationalities...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/nationalities.sql;
-		
-		echo 
-		
-		echo "Loading HTS initial user attributes...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e 'DELETE FROM person_attribute WHERE person_id = 1; INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) VALUES((SELECT person_id FROM person LIMIT 1), "HTS-0001", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = "HTS Provider ID"), (SELECT user_id FROM users LIMIT 1), NOW(), (SELECT UUID()))';
-	
-		echo 
-		
-		echo "Loading HTS triggers...";
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc_triggers.sql;
-	
-		echo
-	
-		echo "Loading locations..."
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag (name, description, creator, date_created, uuid) VALUES ('HTS', 'HTS Locations', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
-	
-		clear
-	
-		echo 
-		
-		# read -p "Enter number of locations to create: " NUMBER_OF_LOCATIONS
-		
-		getUserData "Application Configuration" "Locations Configuration" "Enter number of locations to create: ";
-	
-		NUMBER_OF_LOCATIONS=$RETVAL;
-	
-		clear			
+		if [ "$RESULT" == "$HTS_DATABASE" ]; then
 
-		if [ ${#NUMBER_OF_LOCATIONS} -gt 0 ]; then
+			echo "Skipping database '$HTS_DATABASE' as it already exists!";
 		
-			STR_LOCATIONS=$(node -e "var c = parseInt('$NUMBER_OF_LOCATIONS'); var a = []; for(var i = 0; i < c; i++) a.push(i + 1); console.log(a.join(';'));");
-						
-			ARR=$(echo $STR_LOCATIONS | tr ";" "\n");
+		else
+		
+			echo "Loading OpenMRS schema...";
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_DATABASE";
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/openmrs_1_7_2_concept_server_full_db.sql;
+		
+			echo "Loading HTS roles...";
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc.roles.sql;
+		
+			echo "Loading nationalities...";
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/nationalities.sql;
+		
+			echo "Loading HTS initial user attributes...";
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e 'DELETE FROM person_attribute WHERE person_id = 1; INSERT INTO person_attribute (person_id, value, person_attribute_type_id, creator, date_created, uuid) VALUES((SELECT person_id FROM person LIMIT 1), "HTS-0001", (SELECT person_attribute_type_id FROM person_attribute_type WHERE name = "HTS Provider ID"), (SELECT user_id FROM users LIMIT 1), NOW(), (SELECT UUID()))';
+	
+			echo "Loading HTS triggers...";
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE < ./db/htc_triggers.sql;
+	
+			echo "Loading locations..."
+		
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag (name, description, creator, date_created, uuid) VALUES ('HTS', 'HTS Locations', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
 
-			for i in $ARR; do
-	
-				echo
-				
-				# read -p "Enter location $i: " HTS_ROOM
-	
-				getUserData "Application Configuration" "Locations Configuration" "Enter location $i: ";
-	
-				HTS_ROOM=$RETVAL;
-	
-				clear			
+			getUserData "Application Configuration" "Locations Configuration" "Enter number of locations to create: ";
 
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location (name, description, creator, date_created, uuid) VALUES ('$HTS_ROOM', 'HTS location', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
-	
-			done
-		
-		fi
-		
-		mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag_map (location_id, location_tag_id) SELECT location_id, (SELECT location_tag_id FROM location_tag WHERE name = 'HTS') FROM location WHERE description = 'HTS location'";
-		
-	fi
-	
-	echo
-	
-	echo "Loading concepts...";
-	
-	str=$(node -e "console.log(require('./db/seed.json').concepts.join(';'))")
+			NUMBER_OF_LOCATIONS=$RETVAL;
 
-	str2=$(echo $str | tr "\ " "_");
+			clear			
 
-	arr=$(echo $str2 | tr ";" "\n");
+			if [ ${#NUMBER_OF_LOCATIONS} -gt 0 ]; then
+	
+				STR_LOCATIONS=$(node -e "var c = parseInt('$NUMBER_OF_LOCATIONS'); var a = []; for(var i = 0; i < c; i++) a.push(i + 1); console.log(a.join(';'));");
+					
+				ARR=$(echo $STR_LOCATIONS | tr ";" "\n");
 
-	for concept in $arr; do
+				for i in $ARR; do
 
-		concept=$(echo $concept | tr "_" "\ ");
-	
-		SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$concept' AND voided = 0 LIMIT 1";
-	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
-	
-		if [ $COUNT == 0 ]; then
-	
-			LAST_INSERT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
-		
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$LAST_INSERT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
-		
-		fi
+					echo
+			
+					# read -p "Enter location $i: " HTS_ROOM
 
-	done
-	
-	echo
-	
-	echo "Loading encounter_types...";
-	
-	echo
-	
-	str=$(node -e "console.log(require('./db/seed.json').encounter_types.map(function(e){return e.join('|')}).join(';'))")
+					getUserData "Application Configuration" "Locations Configuration" "Enter location $i: ";
 
-	str2=$(echo $str | tr "\ " "_");
+					HTS_ROOM=$RETVAL;
 
-	arr=$(echo $str2 | tr ";" "\n");
+					clear			
 
-	for row in $arr; do
+					mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location (name, description, creator, date_created, uuid) VALUES ('$HTS_ROOM', 'HTS location', (SELECT user_id FROM users WHERE username = 'admin'), NOW(), (SELECT UUID()))";
 
-		parts=$(echo $row | tr "|" "\n");
+				done
 	
-		i=0;
-		for part in $parts; do
-	
-			part=$(echo $part | tr "_" "\ ");
-	
-			if [ $i == 0 ]; then
-		
-				encounterType=$part;
-		
-			else
-		
-				description=$part;
-		
-			fi
-		
-			i=1
-	
-		done
-	
-		SQL="SELECT COUNT(*) AS num FROM encounter_type WHERE name = '$encounterType' AND retired = 0 LIMIT 1";
-	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
-	
-		if [ $COUNT == 0 ]; then
-	
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO encounter_type (name, description, creator, date_created, retired, uuid) VALUES ('$encounterType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
-		
-		fi
-
-	done
-	
-	echo "Loading patient_identifier_types...";
-	
-	echo
-	
-	str=$(node -e "console.log(require('./db/seed.json').patient_identifier_types.map(function(e){return e.join('|')}).join(';'))")
-
-	str2=$(echo $str | tr "\ " "_");
-
-	arr=$(echo $str2 | tr ";" "\n");
-
-	for row in $arr; do
-
-		parts=$(echo $row | tr "|" "\n");
-	
-		i=0;
-		for part in $parts; do
-	
-			part=$(echo $part | tr "_" "\ ");
-	
-			if [ $i == 0 ]; then
-		
-				identifierType=$part;
-		
-			else
-		
-				description=$part;
-		
-			fi
-		
-			i=1
-	
-		done
-	
-		SQL="SELECT COUNT(*) AS num FROM patient_identifier_type WHERE name = '$identifierType' AND retired = 0 LIMIT 1";
-	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
-	
-		if [ $COUNT == 0 ]; then
-	
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO patient_identifier_type (name, description, creator, date_created, retired, uuid) VALUES ('$identifierType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
-		
-		fi
-
-	done
-	
-	echo "Loading person_attribute_types..."
-	
-	echo
-	
-	str=$(node -e "console.log(require('./db/seed.json').person_attribute_types.map(function(e){return e.join('|')}).join(';'))")
-
-	str2=$(echo $str | tr "\ " "_");
-
-	arr=$(echo $str2 | tr ";" "\n");
-
-	for row in $arr; do
-
-		parts=$(echo $row | tr "|" "\n");
-	
-		i=0;
-		for part in $parts; do
-	
-			part=$(echo $part | tr "_" "\ ");
-	
-			if [ $i == 0 ]; then
-		
-				attributeType=$part;
-		
-			else
-		
-				description=$part;
-		
-			fi
-		
-			i=1
-	
-		done
-	
-		SQL="SELECT COUNT(*) AS num FROM person_attribute_type WHERE name = '$attributeType' AND retired = 0 LIMIT 1";
-	
-		COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
-	
-		if [ $COUNT == 0 ]; then
-	
-			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO person_attribute_type (name, description, creator, date_created, retired, uuid) VALUES ('$attributeType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
-		
-		fi
-
-	done
-	
-	echo "Loading programs...";
-	
-	str=$(node -e "console.log(require('./db/seed.json').programs.join(';'))")
-
-	str2=$(echo $str | tr "\ " "_");
-
-	arr=$(echo $str2 | tr ";" "\n");
-
-	for program in $arr; do
-
-		program=$(echo $program | tr "_" "\ ");
-	
-		PROGRAM_EXISTS=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT COUNT(*) AS num FROM program WHERE name = '$program'") | tr 'num\ ' '\ ');
-	
-		if [ $PROGRAM_EXISTS == 0 ]; then 
-	
-			SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$program' AND voided = 0 LIMIT 1";
-	
-			COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
-	
-			if [ $COUNT == 0 ]; then
-	
-				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
-		
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$CONCEPT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
-		
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
-		
-			else
-		
-				CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT concept_id AS id FROM concept_name WHERE name = '$program' LIMIT 1") | tr 'id\ ' '\ ');
-		
-				mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
-		
 			fi
 	
+			mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO location_tag_map (location_id, location_tag_id) SELECT location_id, (SELECT location_tag_id FROM location_tag WHERE name = 'HTS') FROM location WHERE description = 'HTS location'";
+	
 		fi
 
-	done
-	
+    fi
+		
+    RESULT=`mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD --skip-column-names -e "SHOW DATABASES LIKE '$HTS_INVENTORY_DATABASE'"`
+
+    if [ "$RESULT" == "$HTS_INVENTORY_DATABASE" ]; then
+
+        echo "Skipping database '$HTS_INVENTORY_DATABASE' as it already exists!";
+
+    else
+
+        echo "Loading inventory schema...";
+
+        mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_INVENTORY_DATABASE";
+
+        mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/inventory.sql;
+
+        echo "Loading inventory triggers schema...";
+
+        mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_INVENTORY_DATABASE < ./db/triggers.sql;
+
+    fi
+
+    RESULT=`mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD --skip-column-names -e "SHOW DATABASES LIKE '$HTS_QUALITY_CONTROL_DATABASE'"`
+
+    if [ "$RESULT" == "$HTS_QUALITY_CONTROL_DATABASE" ]; then
+
+        echo "Skipping database '$HTS_QUALITY_CONTROL_DATABASE' as it already exists!";
+
+    else
+
+        echo "Loading quality control schema...";
+
+        mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -e "CREATE SCHEMA $HTS_QUALITY_CONTROL_DATABASE";
+
+        mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_QUALITY_CONTROL_DATABASE < ./db/quality_control.sql;
+
+    fi
+
+    echo
+
+    clear
+
+    echo "Loading concepts...";
+
+    str=$(node -e "console.log(require('./db/seed.json').concepts.join(';'))")
+
+    str2=$(echo $str | tr "\ " "_");
+
+    arr=$(echo $str2 | tr ";" "\n");
+
+    for concept in $arr; do
+
+        concept=$(echo $concept | tr "_" "\ ");
+
+        SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$concept' AND voided = 0 LIMIT 1";
+
+        COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+
+        if [ $COUNT == 0 ]; then
+
+            LAST_INSERT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
+
+            mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$LAST_INSERT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
+
+        fi
+
+    done
+
+    echo
+
+    echo "Loading encounter_types...";
+
+    echo
+
+    str=$(node -e "console.log(require('./db/seed.json').encounter_types.map(function(e){return e.join('|')}).join(';'))")
+
+    str2=$(echo $str | tr "\ " "_");
+
+    arr=$(echo $str2 | tr ";" "\n");
+
+    for row in $arr; do
+
+        parts=$(echo $row | tr "|" "\n");
+
+        i=0;
+        for part in $parts; do
+
+            part=$(echo $part | tr "_" "\ ");
+
+            if [ $i == 0 ]; then
+
+                encounterType=$part;
+
+            else
+
+                description=$part;
+
+            fi
+
+            i=1
+
+        done
+
+        SQL="SELECT COUNT(*) AS num FROM encounter_type WHERE name = '$encounterType' AND retired = 0 LIMIT 1";
+
+        COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+
+        if [ $COUNT == 0 ]; then
+
+            mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO encounter_type (name, description, creator, date_created, retired, uuid) VALUES ('$encounterType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+
+        fi
+
+    done
+
+    echo "Loading patient_identifier_types...";
+
+    echo
+
+    str=$(node -e "console.log(require('./db/seed.json').patient_identifier_types.map(function(e){return e.join('|')}).join(';'))")
+
+    str2=$(echo $str | tr "\ " "_");
+
+    arr=$(echo $str2 | tr ";" "\n");
+
+    for row in $arr; do
+
+        parts=$(echo $row | tr "|" "\n");
+
+        i=0;
+        for part in $parts; do
+
+            part=$(echo $part | tr "_" "\ ");
+
+            if [ $i == 0 ]; then
+
+                identifierType=$part;
+
+            else
+
+                description=$part;
+
+            fi
+
+            i=1
+
+        done
+
+        SQL="SELECT COUNT(*) AS num FROM patient_identifier_type WHERE name = '$identifierType' AND retired = 0 LIMIT 1";
+
+        COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+
+        if [ $COUNT == 0 ]; then
+
+            mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO patient_identifier_type (name, description, creator, date_created, retired, uuid) VALUES ('$identifierType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+
+        fi
+
+    done
+
+    echo "Loading person_attribute_types..."
+
+    echo
+
+    str=$(node -e "console.log(require('./db/seed.json').person_attribute_types.map(function(e){return e.join('|')}).join(';'))")
+
+    str2=$(echo $str | tr "\ " "_");
+
+    arr=$(echo $str2 | tr ";" "\n");
+
+    for row in $arr; do
+
+        parts=$(echo $row | tr "|" "\n");
+
+        i=0;
+        for part in $parts; do
+
+            part=$(echo $part | tr "_" "\ ");
+
+            if [ $i == 0 ]; then
+
+                attributeType=$part;
+
+            else
+
+                description=$part;
+
+            fi
+
+            i=1
+
+        done
+
+        SQL="SELECT COUNT(*) AS num FROM person_attribute_type WHERE name = '$attributeType' AND retired = 0 LIMIT 1";
+
+        COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+
+        if [ $COUNT == 0 ]; then
+
+            mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO person_attribute_type (name, description, creator, date_created, retired, uuid) VALUES ('$attributeType', '$description', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()))";
+
+        fi
+
+    done
+
+    echo "Loading programs...";
+
+    str=$(node -e "console.log(require('./db/seed.json').programs.join(';'))")
+
+    str2=$(echo $str | tr "\ " "_");
+
+    arr=$(echo $str2 | tr ";" "\n");
+
+    for program in $arr; do
+
+        program=$(echo $program | tr "_" "\ ");
+
+        PROGRAM_EXISTS=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT COUNT(*) AS num FROM program WHERE name = '$program'") | tr 'num\ ' '\ ');
+
+        if [ $PROGRAM_EXISTS == 0 ]; then
+
+            SQL="SELECT COUNT(*) AS num FROM concept_name LEFT OUTER JOIN concept ON concept.concept_id = concept_name.concept_id WHERE name = '$program' AND voided = 0 LIMIT 1";
+
+            COUNT=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "$SQL") | tr 'num\ ' '\ ');
+
+            if [ $COUNT == 0 ]; then
+
+                CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept (retired, datatype_id, class_id, creator, date_created, uuid) VALUES (0, 4, 11, 1, NOW(), (SELECT UUID())); SELECT LAST_INSERT_ID() AS num") | tr 'num\ ' '\ ');
+
+                mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO concept_name (concept_id, name, locale, creator, date_created, voided, uuid, concept_name_type) VALUES ('$CONCEPT_ID','$concept','en',(SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, (SELECT UUID()), 'FULLY_SPECIFIED')";
+
+                mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
+
+            else
+
+                CONCEPT_ID=$(echo $(mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "SELECT concept_id AS id FROM concept_name WHERE name = '$program' LIMIT 1") | tr 'id\ ' '\ ');
+
+                mysql -h $MYSQL_HOST -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $HTS_DATABASE -e "INSERT INTO program (concept_id, creator, date_created, retired, name, uuid) VALUES ('$CONCEPT_ID', (SELECT user_id FROM users WHERE username = 'admin' LIMIT 1), NOW(), 0, '$program', (SELECT UUID()))";
+
+            fi
+
+        fi
+
+    done
+
 fi
 		
 clear
