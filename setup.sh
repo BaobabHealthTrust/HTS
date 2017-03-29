@@ -1381,11 +1381,11 @@ if [ ${#PM2} != 0 ] && [ $EXIT_CODE == 0 ]; then
 
 	if [ -f ./process.json ]; then
 	
-		node -e "var cg = require('./process.json'); var fs = require('fs'); cg.env_production.NODE_ENV = '$TARGET_ENV'; fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
+		node -e "var cg = require('./process.json'); var fs = require('fs'); cg.env.NODE_ENV = '$TARGET_ENV'; fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
 	
 	else
 	
-		node -e "var cg = {'name': 'hts', 'script': 'app.js', 'env_production': {'NODE_ENV':'$TARGET_ENV'}}; var fs = require('fs'); fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
+		node -e "var cg = {'name': 'hts', 'script': 'app.js', 'env': {'NODE_ENV':'$TARGET_ENV'}}; var fs = require('fs'); fs.writeFileSync('./process.json', JSON.stringify(cg, undefined, 4));"
 	
 	fi
 
