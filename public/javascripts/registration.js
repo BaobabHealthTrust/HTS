@@ -1213,7 +1213,7 @@ function evalDemographicCondition(pos) {
             if ((__$('detail_type').value.trim().toLowerCase() == 'current residence' || __$('detail_type').value.trim().toLowerCase() == 'both') &&
                 (!window.parent.dashboard.data["data"]["addresses"]["Current District"] ||
                 window.parent.dashboard.data.data.addresses["Current District"] &&
-                window.parent.dashboard.data.data.addresses["Current District"].length == 0)) {
+                (window.parent.dashboard.data.data.addresses["Current District"]).trim().length == 0)) {
 
                 return true;
 
