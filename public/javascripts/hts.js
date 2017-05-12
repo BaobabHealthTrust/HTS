@@ -13,6 +13,9 @@ var tmrControl2MinsCount = 0;
 var tmrControl2Hnd;
 var notUnigold = "hiv";
 
+var TODAY = (window.parent.dashboard.getCookie("today").trim().length <= 0 ? (new Date()) :
+    (new Date(window.parent.dashboard.getCookie("today").trim())));
+
 function __$(id) {
     return document.getElementById(id);
 }
@@ -55,33 +58,33 @@ function getAge(birthdate, estimated) {
 
     }
 
-    if ((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)) > 1) {
+    if (((TODAY - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)) > 1) {
 
-        var num = Math.round((((new Date()) - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)), 0);
+        var num = Math.round(((TODAY - (new Date(birthdate))) / (365 * 24 * 60 * 60 * 1000)), 0);
 
         age = [num, num + "Y", "Y"];
 
-    } else if ((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)) > 1) {
+    } else if (((TODAY - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)) > 1) {
 
-        var num = Math.round((((new Date()) - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)), 0);
+        var num = Math.round(((TODAY - (new Date(birthdate))) / (30 * 24 * 60 * 60 * 1000)), 0);
 
         age = [num, num + "M", "M"];
 
-    } else if ((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)) > 1) {
+    } else if (((TODAY - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)) > 1) {
 
-        var num = Math.round((((new Date()) - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)), 0);
+        var num = Math.round(((TODAY - (new Date(birthdate))) / (7 * 24 * 60 * 60 * 1000)), 0);
 
         age = [num, num + "W", "W"];
 
-    } else if ((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)) > 1) {
+    } else if (((TODAY - (new Date(birthdate))) / (24 * 60 * 60 * 1000)) > 1) {
 
-        var num = Math.round((((new Date()) - (new Date(birthdate))) / (24 * 60 * 60 * 1000)), 0);
+        var num = Math.round(((TODAY - (new Date(birthdate))) / (24 * 60 * 60 * 1000)), 0);
 
         age = [num, num + "D", "D"];
 
-    } else if ((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)) > 1) {
+    } else if (((TODAY - (new Date(birthdate))) / (60 * 60 * 1000)) > 1) {
 
-        var num = Math.round((((new Date()) - (new Date(birthdate))) / (60 * 60 * 1000)), 0);
+        var num = Math.round(((TODAY - (new Date(birthdate))) / (60 * 60 * 1000)), 0);
 
         age = [num, num + "H", "H"];
 
@@ -1208,8 +1211,7 @@ function saveConsumption(dispatch_id, target_id) {
     var consumption_type = "Normal use";
     var consumption_quantity = 1;
     var who_consumed = patient_id;
-    var date_consumed = (window.parent.dashboard.getCookie("today").trim().length > 0 ? window.parent.dashboard.getCookie("today") :
-        (new Date()).format("YYYY-mm-dd HH:MM:SS"));
+    var date_consumed = TODAY.format("YYYY-mm-dd HH:MM:SS");
     var reason_for_consumption = "Normal use";
     var location = window.parent.dashboard.getCookie("location");
     var userId = window.parent.dashboard.getCookie("username");
@@ -1275,14 +1277,14 @@ function ajaxPostRequest(url, data, callback) {
 
 }
 
-var lastHIVStatus = (window.parent.dashboard ? window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
-    "PRE TEST COUNSELLING", "Last HIV test") : null);
+var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
+    "PRE TEST COUNSELLING", "Last HIV test");
 
 function evalCondition(pos) {
 
     customizeCancel("HIV TESTING");
 
-    lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
     var result = false;
@@ -1436,7 +1438,7 @@ function evalCondition(pos) {
 
         case 6:
 
-            if ((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+            if ((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
                     "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "M")) {
 
                 result = true;
@@ -1448,7 +1450,7 @@ function evalCondition(pos) {
         case 7:
 
             if (["FP", "FNP"].indexOf((String(window.parent.dashboard.queryActiveObs("HTS PROGRAM",
-                    (new Date()).format("YYYY-mm-dd"), "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim())) >= 0) {
+                    TODAY.format("YYYY-mm-dd"), "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim())) >= 0) {
 
                 result = true;
 
@@ -1631,7 +1633,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", TODAY);
 
         }
 
@@ -1786,7 +1788,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -1878,7 +1880,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -2015,7 +2017,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", TODAY);
 
         }
 
@@ -2177,7 +2179,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -2275,7 +2277,7 @@ function loadPassParallelTests(test1Target, test1TimeTarget, test2Target, test2T
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -2601,7 +2603,7 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
 
             if (__$(this.getAttribute("timeTarget"))) {
 
-                __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+                __$(this.getAttribute("timeTarget")).setAttribute("startTime", TODAY);
 
             }
 
@@ -2750,7 +2752,7 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
 
                 var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-                var now = (new Date());
+                var now = TODAY;
 
                 var duration = (now - startTime) / (60 * 1000);
 
@@ -2840,7 +2842,7 @@ function loadSerialTest(testTarget, testTimeTarget, label, pass) {
 
                 var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-                var now = (new Date());
+                var now = TODAY;
 
                 var duration = (now - startTime) / (60 * 1000);
 
@@ -2973,7 +2975,7 @@ function activateNavBtn() {
 
     }
 
-    var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    var lastHIVStatus = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
     decodeResult(lastHIVStatus, decodeURIComponent(window.parent.dashboard.getCookie("AgeGroup")),
@@ -3010,7 +3012,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, TODAY.format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -3030,7 +3032,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, TODAY.format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample for confirmatory", "");
 
@@ -3123,7 +3125,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                     result = "New Positive";
 
-                    if (parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
+                    if (parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, TODAY.format("YYYY-mm-dd"))) <= 23) {
 
                         window.parent.dashboard.showMsg("Take DBS sample for confirmation", "");
 
@@ -3167,7 +3169,7 @@ function decodeResult(lastHIVTestResult, ageGroup, fpTest1Result, fpTest2Result,
 
                 result = (ageGroup == "0-11 months" ? "New Exposed Infant" : "New Positive");
 
-                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, (new Date()).format("YYYY-mm-dd"))) <= 23) {
+                if (ageGroup == "0-11 months" || parseInt(monthDiff(window.parent.dashboard.data.data.birthdate, TODAY.format("YYYY-mm-dd"))) <= 23) {
 
                     window.parent.dashboard.showMsg("Take DBS sample", "");
 
@@ -4032,7 +4034,7 @@ function evaluateReferral() {
 
     var testResult;
 
-    var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "FP");
 
     if (__$("risk_category")) {
@@ -4041,7 +4043,7 @@ function evaluateReferral() {
 
     }
 
-    testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "HIV TESTING", "Result Given to Client")).trim();
 
     if (pregnant && testResult.trim().toLowerCase() == "new negative") {
@@ -4056,15 +4058,15 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 45))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 45))))).format("YYYY-mm-dd");
 
         }
 
-        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
         if (parseInt(pregnancy_months) > 6) {
@@ -4079,9 +4081,9 @@ function evaluateReferral() {
 
                 __$("appointment").removeAttribute("condition");
 
-                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
 
-                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+                __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() + remaining_days)))).format("YYYY-mm-dd");
 
             }
 
@@ -4095,9 +4097,9 @@ function evaluateReferral() {
 
                 __$("appointment").removeAttribute("condition");
 
-                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
 
-                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+                __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() + remaining_days)))).format("YYYY-mm-dd");
 
             }
 
@@ -4154,13 +4156,13 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 4))))).format("YYYY-mm-dd"))
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 4 * 2))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 4))))).format("YYYY-mm-dd");
 
         }
@@ -4181,13 +4183,13 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52 * 2))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd");
 
         }
@@ -4207,13 +4209,13 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52 * 2))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd");
 
         }
@@ -4232,10 +4234,10 @@ function evaluateReferral() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd");
 
         }
@@ -4254,14 +4256,14 @@ function evaluateReferral2() {
 
     var testResult;
 
-    var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    var pregnant = (String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "HTS CLIENT REGISTRATION", "Sex/Pregnancy")).trim() == "FP");
 
-    riskCategory = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    riskCategory = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Client Risk Category");
 
 
-    testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    testResult = String(window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "HIV TESTING", "Result Given to Client")).trim();
 
 
@@ -4277,15 +4279,15 @@ function evaluateReferral2() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 45))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 45))))).format("YYYY-mm-dd");
 
         }
 
-        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        var pregnancy_months = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
             "HTS CLIENT REGISTRATION", "How many months pregnant?");
 
         if (parseInt(pregnancy_months) > 6) {
@@ -4300,9 +4302,9 @@ function evaluateReferral2() {
 
                 __$("appointment").removeAttribute("condition");
 
-                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
 
-                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+                __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() + remaining_days)))).format("YYYY-mm-dd");
 
             }
 
@@ -4316,9 +4318,9 @@ function evaluateReferral2() {
 
                 __$("appointment").removeAttribute("condition");
 
-                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
+                __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() + remaining_days + 14)))).format("YYYY-mm-dd"))
 
-                __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() + remaining_days)))).format("YYYY-mm-dd");
+                __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() + remaining_days)))).format("YYYY-mm-dd");
 
             }
 
@@ -4377,13 +4379,13 @@ function evaluateReferral2() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 4))))).format("YYYY-mm-dd"))
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 4 * 2))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 4))))).format("YYYY-mm-dd");
 
         }
@@ -4403,13 +4405,13 @@ function evaluateReferral2() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52 * 2))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd");
 
         }
@@ -4429,13 +4431,13 @@ function evaluateReferral2() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("minDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52 * 2))))).format("YYYY-mm-dd"))
 
-            __$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd");
 
         }
@@ -4454,13 +4456,13 @@ function evaluateReferral2() {
 
             __$("appointment").removeAttribute("condition");
 
-            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate((new Date()).getDate() +
+            __$("appointment").setAttribute("maxDate", (new Date((new Date().setDate(TODAY.getDate() +
                 (7 * 52))))).format("YYYY-mm-dd"))
 
-            /*__$("appointment").value = (new Date((new Date().setDate((new Date()).getDate() +
+            /*__$("appointment").value = (new Date((new Date().setDate(TODAY.getDate() +
              (7 * 52))))).format("YYYY-mm-dd");*/
 
-            __$("appointment").value = (new Date()).format("YYYY-mm-dd");
+            __$("appointment").value = TODAY.format("YYYY-mm-dd");
 
         }
 
@@ -4500,10 +4502,13 @@ function loadPost() {
 
 function validateAppointment() {
 
+    if(window.parent.dashboard.getCookie("today").trim().length > 0 &&
+        (new Date(window.parent.dashboard.getCookie("today").trim())) < (new Date()))
+        return;
 
     var appointment = __$("appointment").value;
 
-    var date_today = new Date();
+    var date_today = TODAY;
 
     if (appointment < date_today.format("YYYY-mm-dd")) {
 
@@ -5797,7 +5802,7 @@ function reverseConsumption(consumption_id, prefix, suffix) {
 
 function setMaxDate(element, number_of_years) {
 
-    var max_date = new Date(((new Date()).setYear((new Date()).getFullYear() + number_of_years))).format("YYYY-mm-dd");
+    var max_date = new Date((TODAY.setYear(TODAY.getFullYear() + number_of_years))).format("YYYY-mm-dd");
 
     __$(element).setAttribute("maxDate", max_date);
 
@@ -5852,7 +5857,7 @@ function setTestKits(callback) {
     //Temporary Fix
 
     window.parent.dashboard.setCookie('LastHIVTest', window.parent.dashboard.queryActiveObs("HTS PROGRAM",
-        (new Date()).format("YYYY-mm-dd"), "PRE TEST COUNSELLING", "Last HIV test"));
+        TODAY.format("YYYY-mm-dd"), "PRE TEST COUNSELLING", "Last HIV test"));
 
     var descriptions = ["First Test", "Second Test"];
 
@@ -6079,7 +6084,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", TODAY);
 
         }
 
@@ -6207,7 +6212,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -6293,7 +6298,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -6413,7 +6418,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
         if (__$(this.getAttribute("timeTarget"))) {
 
-            __$(this.getAttribute("timeTarget")).setAttribute("startTime", (new Date()));
+            __$(this.getAttribute("timeTarget")).setAttribute("startTime", TODAY);
 
         }
 
@@ -6546,7 +6551,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -6638,7 +6643,7 @@ function loadPassParallelTestsProfiiency(test1Target, test1TimeTarget, test2Targ
 
             var startTime = (new Date(__$(this.getAttribute("timeTarget")).getAttribute("startTime")));
 
-            var now = (new Date());
+            var now = TODAY;
 
             var duration = (now - startTime) / (60 * 1000);
 
@@ -7060,7 +7065,7 @@ function setEstimatedAgeValue() {
 
             __$("estimate").value = 1;
 
-            var year = (new Date()).getFullYear() - parseInt(__$("age_estimate").value.trim());
+            var year = TODAY.getFullYear() - parseInt(__$("age_estimate").value.trim());
 
             __$("birthdate").value = year + "-07-15";
 
@@ -7299,11 +7304,11 @@ function hasPartner() {
 
 function noPartnerToday() {
 
-    var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Partner Present at this Session?");
 
     if (!present)
-        present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
             "PRE TEST COUNSELLING", "Partner Present at this Session?");
 
     if (String(present).trim().toLowerCase() == "yes") {
@@ -7320,7 +7325,7 @@ function noPartnerToday() {
 
 function clientHasHIVLastTest() {
 
-    var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+    var present = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
         "PRE TEST COUNSELLING", "Last HIV test");
 
     if (String(present).trim().length > 0) {
@@ -7343,7 +7348,7 @@ function ageLimit() {
 
     var age = parseInt(ageResult[0]);
 
-    if(ageResult[2] == "M")
+    if (ageResult[2] == "M")
         age = age / 12;
 
     if (age >= 5) {
@@ -7366,7 +7371,7 @@ function initialiseExistingData() {
 
     if (clientHasHIVLastTest() && __$("last_hiv_test") && false) {
 
-        var value = window.parent.dashboard.queryActiveObs("HTS PROGRAM", (new Date()).format("YYYY-mm-dd"),
+        var value = window.parent.dashboard.queryActiveObs("HTS PROGRAM", TODAY.format("YYYY-mm-dd"),
             "PRE TEST COUNSELLING", "Last HIV test");
 
         __$("last_hiv_test").value = value;

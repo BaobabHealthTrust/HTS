@@ -145,7 +145,7 @@
 
                 var visit_date = visits_keys[0];
 
-                var today = new Date().format("YYYY-mm-dd");
+                var today = (dashboard.getCookie("today").trim().length <= 0 ? (new Date()) : (new Date(dashboard.getCookie("today")))).format("YYYY-mm-dd");
 
                 if(visit_date < today){
 
