@@ -4,7 +4,7 @@ Q.1.2. Page Loader [pos::0 $$ condition::loadPost()]
 
 Q.1.4. Referral for Re-Testing [pos:: 3$$ type::hidden $$ id:: referral]
 
-Q.1.5. Appointment Date Given [pos:: 4$$ id:: appointment$$ field_type:: date $$ tt_onLoad::setAppiontment() $$ tt_onUnLoad :: validateAppointment()]
+Q.1.5. Appointment Date Given [pos :: 4$$ id :: appointment $$ field_type :: date $$ tt_onLoad :: setAppointment() $$ tt_onUnLoad :: validateAppointment()]
 
 Q.1.6. HTS Family Referral Slips Given [pos:: 5$$ concept:: HTS Family Referral Slips$$ field_type:: number$$ tt_pageStyleClass:: NumbersOnlyWithDecimal$$ id:: slips]
 
