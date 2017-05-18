@@ -1064,6 +1064,36 @@ function saveCellPhoneNumber() {
 
 }
 
+function saveCurrentResidence() {
+
+    var json = {
+        "data": {
+            "datatype": "edit_demographics",
+            "target_field": "closest_landmark",
+            "target_field_id": "person_address_id",
+            "target_field_id_value": null,
+            "current_district": (__$("district") ? __$("district").value.trim() : ""),
+            "current_ta": (__$("ta") ? __$("ta").value.trim() : ""),
+            "current_village": (__$("village") ? __$("village").value.trim() : ""),
+            "closest_landmark": (__$("closest_landmark") ? __$("closest_landmark").value.trim() : ""),
+            "userId": window.parent.dashboard.getCookie("username"),
+            "token": window.parent.dashboard.getCookie("token"),
+            "patient_id": window.parent.dashboard.getCookie("client_identifier")
+        }
+    };
+
+    if (json.data.current_district != null) {
+
+        if (window.parent.patient) {
+
+            window.parent.patient.submitRawData(json, "javascript:(function(){}())", true);
+
+        }
+
+    }
+
+}
+
 function ajaxRegistrationRequest(url, callback) {
 
     var httpRequest = new XMLHttpRequest();

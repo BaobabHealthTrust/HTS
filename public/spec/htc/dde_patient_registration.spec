@@ -77,7 +77,7 @@ Q.1.21. Current Village [pos:: 21 $$ id :: village $$ tt_requireNextClick :: fal
 
 Q.1.22. Current Village Specify [pos :: 22 $$ id :: village_specify $$ tt_requireNextClick :: true $$ condition :: __$('village').value == 'Other']
 
-Q.1.23. Closest Landmark [pos :: 23 $$ id :: closest_landmark $$ condition :: evalDemographicCondition(0)]
+Q.1.23. Closest Landmark [pos :: 23 $$ id :: closest_landmark $$ condition :: evalDemographicCondition(0) $$ tt_onUnload :: saveCurrentResidence()]
 
 Q.1.24. Client Phone Number [pos:: 24 $$ id :: phone_number $$ field_type :: number $$ tt_pageStyleClass :: NumbersWithUnknown $$ tt_onUnload :: saveCellPhoneNumber() $$ condition :: (__$('detail_type').value.trim().toLowerCase() == 'phone number' || __$('detail_type').value.trim().toLowerCase() == 'both') && (!window.parent.dashboard.data.data.attributes["Cell Phone Number"] || (window.parent.dashboard.data.data.attributes["Cell Phone Number"] && String(window.parent.dashboard.data.data.attributes["Cell Phone Number"]).trim().length <= 1))]
 
