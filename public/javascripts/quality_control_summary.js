@@ -279,21 +279,21 @@ function showQualityControlTestSummary() {
 
         var td = document.createElement("td");
         td.style.borderRight = "1px solid black";
-        td.innerHTML = __$("data.dts_name" + (1 + (i % 2 == 0 ? 1 : 0))).value;
+        td.innerHTML = __$("data.dts_name" + ( i % 2 == 0 ? 1 : 2)).value;
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.style.borderRight = "1px solid black";
-        td.innerHTML = __$("data.dts_" + (1 + (i % 2 == 0 ? 1 : 0)) + "_lot_number").value;
+        td.innerHTML = __$("data.dts_" + ( i % 2 == 0 ? 1 : 2) + "_lot_number").value;
         td.style.borderBottom = "2px solid black";
 
         tr.appendChild(td);
 
         var td = document.createElement("td");
         td.style.borderRight = "1px solid black";
-        td.innerHTML = __$("data.dts_" + (1 + (i % 2 == 0 ? 1 : 0)) + "_expiry_date").value;
+        td.innerHTML = __$("data.dts_" + ( i % 2 == 0 ? 1 : 2) + "_expiry_date").value;
         td.style.borderBottom = "2px solid black";
         td.style.borderRight = "2px solid black";
         tr.appendChild(td);
@@ -331,8 +331,8 @@ function showQualityControlTestSummary() {
 
         tr.appendChild(td);
 
-        var result = __$("data.result_" + (i + 1)).value
-
+        var result = __$("data.result_" + (i + 1)).value;
+   
         var td = document.createElement("td");
         td.style.textAlign = "center";
         td.innerHTML = "<div style='padding : 0.5em ; width : 24px ; height : 24px; border-radius: 50%; margin: auto; border: 2px solid " +
@@ -413,6 +413,8 @@ function activateYesNo(yes, no) {
     __$(no).className = "blue";
 
 }
+
+var sample_results = {}
 
 function loadQualityTestControl() {
 
@@ -537,6 +539,7 @@ function loadQualityTestControl() {
 
         tr.appendChild(th);
 
+
         var td = document.createElement("td");
         td.style.borderBottom = "1px solid black";
         td.style.borderRight = "1px solid black";
@@ -628,7 +631,7 @@ function loadQualityTestControl() {
         var button = document.createElement("button");
         button.className = "gray";
         button.id = "weak_positive_" + (1 + (2 * i)) + ""
-        button.setAttribute("onclick", " updateResult('data.result_" + (1 + (2 * i)) + "','Negative Positive'," +
+        button.setAttribute("onclick", " updateResult('data.result_" + (1 + (2 * i)) + "','Weak Positive'," +
             "'weak_positive_" + (1 + (2 * i)) + "',['strong_positive_" + (1 + (2 * i)) + "','negative_" + (1 + (2 * i)) +
             "'],null);setOutcomes(" + (1 + (2 * i)) + ")");
         button.innerHTML = "+";
@@ -667,7 +670,9 @@ function loadQualityTestControl() {
         td.innerHTML = "";
         td.style.borderRight = "1px solid black";
         td.style.borderBottom = "1px solid black";
-
+        sample_results[selections[i]] = {}
+        sample_results[selections[i]][__$('data.dts_name1').value]  =   1
+        sample_results[selections[i]][__$('data.dts_name2').value]  =   2
         // tr.appendChild(td);
 
         var td = document.createElement("td");
@@ -793,6 +798,7 @@ function loadQualityTestControl() {
 
         tr.appendChild(td);
 
+        console.log(sample_results);
         __$("nextButton").className = __$("nextButton").className.replace(/blue|green/i, "gray");
 
         var nexButtonIterval = setInterval(function () {
