@@ -218,7 +218,8 @@ function loadNames(advanced) {
                 page -= 1;
             }
 
-            var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
+            var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/" +
+                window.parent.patient.getCookie("dde-token") + "?first_name=" + __$("first_name").value.trim() +
                 "&last_name=" + __$("last_name").value.trim() + "&gender=" +
                 __$("gender").value.trim() + "&page=" + page;
 
@@ -304,7 +305,8 @@ function loadNames(advanced) {
 
             page += 1;
 
-            var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + __$("first_name").value.trim() +
+            var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/" +
+                window.parent.patient.getCookie("dde-token") + "?first_name=" + __$("first_name").value.trim() +
                 "&last_name=" + __$("last_name").value.trim() + "&gender=" +
                 __$("gender").value.trim() + "&page=" + page;
 
@@ -493,7 +495,8 @@ function loadNames(advanced) {
 
         gender = __$("gender").value && __$("gender").value.length > 0 ? __$("gender").value : "";
 
-        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/?first_name=" + first_name +
+        var url = window.parent.patient.settings.ddePath + window.parent.patient.settings.searchPath + "/" +
+            window.parent.patient.getCookie("dde-token") + "?first_name=" + first_name +
             "&last_name=" + last_name + "&gender=" +
             gender.trim().toUpperCase().substring(0, 1) + "&page=" + page;
 
@@ -622,6 +625,9 @@ function ajaxAuthPostRequest(url, data, callback) {
         }
 
     };
+
+    data.token = window.parent.patient.getCookie("dde-token");
+
     try {
         httpRequest.open("POST", url, true);
         httpRequest.setRequestHeader("Content-type", "application/json;charset=UTF-8");
@@ -1259,7 +1265,7 @@ function evalDemographicCondition(pos) {
 
 function getValidNPID() {
 
-    if(window.parent.document.getElementById("primary_id") &&
+    if (window.parent.document.getElementById("primary_id") &&
         window.parent.document.getElementById("primary_id").innerHTML.trim().length > 0 &&
         window.parent.document.getElementById("primary_id").innerHTML.trim() != "&nbsp;")
         return;
@@ -1318,7 +1324,7 @@ function getValidNPID() {
 
         var result = JSON.parse(data);
 
-        if(Array.isArray(result) && result.length <= 0) {
+        if (Array.isArray(result) && result.length <= 0) {
 
             json.action = "NEW RECORD";
 
