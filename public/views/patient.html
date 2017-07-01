@@ -19,6 +19,9 @@
 
     dashboard.init("/data/person.json", "/config/patient.modules.json", "/config/dashboard.settings.json");
 
+    if(dashboard.getCookie("today").trim().length == 0)
+            dashboard.setCookie("today", (new Date()), 0.3333);
+
     if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
         Object.defineProperty(Date.prototype, "format", {
