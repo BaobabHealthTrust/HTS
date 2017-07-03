@@ -1,4 +1,4 @@
-P.1. HIV TESTING [program :: HTS PROGRAM $$ scope :: TODAY $$ includejs :: touchScreenToolkit;hts]
+P.1. CONFIRMATORY HIV TESTING [program :: HTS PROGRAM $$ scope :: TODAY $$ includejs :: touchScreenToolkit;hts]
 
 Q.1.1. First Pass Test Kit 1 Expiry Date [pos :: 0 $$ id:: fp_lot_1_expiry $$ condition :: false]
 Q.1.2. First Pass Test Kit 2 Expiry Date [pos :: 1 $$ id:: fp_lot_2_expiry $$ condition :: false]
@@ -14,23 +14,23 @@ Q.1.9. Client gives consent to be tested? [pos :: 8 $$ id :: consent $$ tt_onLoa
 O.1.9.1. Yes
 O.1.9.2. No
 
-Q.1.10. First Pass Test 1 Kit Category [pos :: 9 $$ tt_onUnload :: setAjaxUrl(3) $$ ajaxURL :: /stock/stock_categories?category= $$ condition :: evalCondition(0) $$ condition :: false]
+C.1.10. First Pass Test 1 Kit Category [pos :: 9 $$ tt_onUnload :: setAjaxUrl(3) $$ ajaxURL :: /stock/stock_categories?category= $$ condition :: evalCondition(0) $$ condition :: false]
 
 Q.1.11. First Pass Test Kit 1 Name [pos :: 10 $$ id :: fp_item_name1 $$ tt_onUnload :: setAjaxUrl(4) $$ condition :: evalCondition(0) $$ field_type :: hidden]
 
-Q.1.12. First Pass Test Kit 1 Lot Number [pos :: 11 $$ id :: fp_lot_number1 $$ expiry :: fp_lot_1_expiry $$ dispatch :: fp_lot_1_dispatch_id $$ condition :: evalCondition(-1) && evalCondition(0) && !((evalCondition(3) || evalCondition(-2)) && !evalCondition(-3) && !evalCondition(4)) $$ tt_onLoad :: if(__$("fp_lot_number1").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number1").getAttribute("consumption_id"), "fp", "1")} $$ tt_onUnLoad :: validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value, "fp_lot_1_dispatch_id")]
+Q.1.12. First Pass Test Kit 1 Lot Number [pos :: 11 $$ id :: fp_lot_number1 $$ expiry :: fp_lot_1_expiry $$ dispatch :: fp_lot_1_dispatch_id $$ tt_onUnLoad :: validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value, "fp_lot_1_dispatch_id") $$ condition :: __$("consent").value.trim() != "No"]
 
-Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: setTestKits(); loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_item_name1").value.trim(), "First Pass") $$ condition :: (!evalCondition(-1) || evalCondition(1)) && !evalCondition(-2) && !evalCondition(4) $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: activateNavBtn() ]
+Q.1.13. First Pass Test 1 Result [pos :: 12 $$ id :: fp_test1_result $$ tt_onLoad :: setTestKits(); loadSerialTest(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_item_name1").value.trim(), "First Pass") $$ field_type :: hidden $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: activateNavBtn() ]
 
-Q.1.14. First Pass Test 2 Kit Category [pos :: 13 $$ tt_onUnload :: setAjaxUrl(5) $$ ajaxURL :: /stock/stock_categories?category= $$ condition :: evalCondition(2) $$ condition :: false]
+C.1.14. First Pass Test 2 Kit Category [pos :: 13 $$ tt_onUnload :: setAjaxUrl(5) $$ ajaxURL :: /stock/stock_categories?category= $$ condition :: evalCondition(2) $$ condition :: false]
 
 Q.1.15. First Pass Test Kit 2 Name [pos :: 14 $$ id :: fp_item_name2 $$ tt_onUnload :: setAjaxUrl(6) $$ condition :: evalCondition(2) $$ field_type :: hidden]
 
-Q.1.16. First Pass Test Kit 2 Lot Number [pos :: 15 $$ id :: fp_lot_number2 $$ expiry :: fp_lot_2_expiry $$ dispatch :: fp_lot_2_dispatch_id $$ condition :: !evalCondition(-2) && evalCondition(2) $$ tt_onLoad :: if(__$("fp_lot_number2").getAttribute("consumption_id")){reverseConsumption(__$("fp_lot_number2").getAttribute("consumption_id"),"fp", "2")} $$ tt_onUnLoad :: validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value, "fp_lot_2_dispatch_id"); ]
+Q.1.16. First Pass Test Kit 2 Lot Number [pos :: 15 $$ id :: fp_lot_number2 $$ expiry :: fp_lot_2_expiry $$ dispatch :: fp_lot_2_dispatch_id $$ tt_onUnLoad :: validateExpiryDate(__$('touchscreenInput' + tstCurrentPage).value, "fp_lot_2_dispatch_id"); $$ condition :: __$("consent").value.trim() != "No" ]
 
-Q.1.17. First Pass Test 2 Result [pos :: 16 $$ id :: fp_test2_result $$ condition :: (evalCondition(3) || evalCondition(-2)) && !evalCondition(-3) && !evalCondition(4) $$ tt_onLoad :: setTestKits(); loadSerialTest(__$("fp_test2_result"), __$("fp_test2_duration"), __$("fp_item_name2").value.trim(), "First Pass") $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: clearTimers("HIV TESTING"); activateNavBtn();]
+Q.1.17. First Pass Test 2 Result [pos :: 16 $$ id :: fp_test2_result $$ field_type :: hidden $$ tt_pageStyleClass :: NoControls NoKeyboard $$ optional :: true $$ tt_onUnload :: clearTimers("HIV TESTING"); activateNavBtn();]
 
-Q.1.18. First Pass Test 1 & Test 2 Parallel Tests [pos :: 17 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("fp_item_name1").value, __$("fp_item_name2").value]); loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'],"First Parallel"); }) $$ condition:: evalCondition(4) && !evalCondition(5) $$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn() $$ helpText :: First Pass Test 1 & Test 2 Parallel]
+Q.1.18. First Pass Test 1 & Test 2 Parallel Tests [pos :: 17 $$ id :: fp_parallel $$ tt_onLoad :: if(__$("backButton")) __$("backButton").style.display = "none"; setTestKits(function(){ recommendedTimerForLabels([__$("fp_item_name1").value, __$("fp_item_name2").value]); loadPassParallelTests(__$("fp_test1_result"), __$("fp_test1_duration"), __$("fp_test2_result"), __$("fp_test2_duration"),window.parent.dashboard.data.kits['First Test'], window.parent.dashboard.data.kits['Second Test'],"First Parallel"); })  $$ condition :: __$("consent").value.trim() != "No" $$ tt_pageStyleClass:: NoControls NoKeyboard$$ optional:: true $$ tt_onUnload :: removeParallelTests(); activateNavBtn() $$ helpText :: First Pass Test 1 & Test 2 Parallel]
 
 Q.1.19. Immediate Repeat Tester [pos :: 18 $$ id :: im_tester $$ condition :: evalCondition(5) && !evalCondition(-3) $$ ajaxURL :: /list_users?name= $$ tt_onLoad :: activateNavBtn()]
 

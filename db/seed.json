@@ -9,7 +9,8 @@
         ["APPOINTMENT", "Appointment encounter"],
         ["REFERRAL FOR RE-TESTING", "HTS encounter type for referral for re-testing"],
         ["PRE TEST COUNSELLING","HTS encounter Pre Test Counselling"],
-        ["POST TEST COUNSELLING", "HTS encounter Post Test Counselling"]
+        ["POST TEST COUNSELLING", "HTS encounter Post Test Counselling"],
+        ["CONFIRMATORY HIV TESTING", "HTS confirmatory HIV testing encounter"]
     ],
     "patient_identifier_types": [
         ["HTS Number", "HTS client clinic number"],

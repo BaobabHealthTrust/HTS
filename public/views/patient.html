@@ -19,8 +19,8 @@
 
     dashboard.init("/data/person.json", "/config/patient.modules.json", "/config/dashboard.settings.json");
 
-    if(dashboard.getCookie("today").trim().length == 0)
-            dashboard.setCookie("today", (new Date()), 0.3333);
+    if (dashboard.getCookie("today").trim().length == 0)
+        dashboard.setCookie("today", (new Date()), 0.3333);
 
     if (Object.getOwnPropertyNames(Date.prototype).indexOf("format") < 0) {
 
@@ -100,17 +100,17 @@
 
     dashboard.subscription.addEventlistener("done", function () {
 
-        var check = dashboard.queryExistingObsArray("Referral for Re-Testing");
+        /*var check = dashboard.queryExistingObsArray("Referral for Re-Testing");
 
-        if(Object.keys(check).length > 0) {
+        if (Object.keys(check).length > 0) {
 
-            if(dashboard.$("Pre-test counseling")) {
+            if (dashboard.$("Pre-test counseling")) {
 
                 dashboard.$("Pre-test counseling").click();
 
             }
 
-        }
+        }*/
 
     })
 
@@ -134,174 +134,180 @@
 
     }, 200);
 
-    var lastVisitInterval = setInterval(function(){
+    var lastVisitInterval = setInterval(function () {
 
-            if(dashboard.data.data.programs["HTS PROGRAM"]){
+        if (dashboard.data.data.programs["HTS PROGRAM"]) {
 
-                var patient_programs = dashboard.data.data.programs["HTS PROGRAM"].patient_programs;
+            var patient_programs = dashboard.data.data.programs["HTS PROGRAM"].patient_programs;
 
-                var patient_programs_key = Object.keys(patient_programs);
+            var patient_programs_key = Object.keys(patient_programs);
 
-                var visits = patient_programs[patient_programs_key[0]].visits;
+            var visits = patient_programs[patient_programs_key[0]].visits;
 
-                var visits_keys = Object.keys(visits);
+            var visits_keys = Object.keys(visits);
 
-                var visit_date = visits_keys[0];
+            var visit_date = visits_keys[0];
 
-                var today = (dashboard.getCookie("today").trim().length <= 0 ? (new Date()) : (new Date(dashboard.getCookie("today")))).format("YYYY-mm-dd");
+            var today = (dashboard.getCookie("today").trim().length <= 0 ? (new Date()) : (new Date(dashboard.getCookie("today")))).format("YYYY-mm-dd");
 
-                if(visit_date < today){
+            if (visit_date < today) {
 
-                    dashboard.showMsg("","Last visit summary on "+ new Date(visit_date).format());
+                dashboard.showMsg("", "Last visit summary on " + new Date(visit_date).format());
 
-                    var table = document.createElement("table");
+                var table = document.createElement("table");
 
-                    table.style.width = "90%";
+                table.style.width = "90%";
 
-                    table.style.marginLeft ="5%";
+                table.style.marginLeft = "5%";
 
-                    dashboard.$("msg.content").appendChild(table);
+                dashboard.$("msg.content").appendChild(table);
 
-                    dashboard.queryExistingObsArray("Last HIV test",function(data){
-                        
-                            var tr = document.createElement("tr");
+                dashboard.queryExistingObsArray("Last HIV test", function (data) {
 
-                            table.appendChild(tr);
+                    var tr = document.createElement("tr");
 
-                            var td = document.createElement("th");
+                    table.appendChild(tr);
 
-                            td.innerHTML = "Last HIV test";
+                    var td = document.createElement("th");
 
-                            td.style.width = "50%";
+                    td.innerHTML = "Last HIV test";
 
-                            td.style.textAlign ="left";
+                    td.style.width = "50%";
 
-                            tr.appendChild(td);
+                    td.style.textAlign = "left";
 
-                            var td = document.createElement("td");
+                    tr.appendChild(td);
 
-                            if(data[visit_date]){
+                    var td = document.createElement("td");
 
-                                td.innerHTML = ": "+data[visit_date];
+                    if (data[visit_date]) {
 
-                            }
+                        td.innerHTML = ": " + data[visit_date];
 
-                            tr.appendChild(td);
+                    }
 
-                    });
+                    tr.appendChild(td);
 
-                    dashboard.queryExistingObsArray("Result Given to Client",function(data){
+                });
 
-                        var tr = document.createElement("tr");
+                dashboard.queryExistingObsArray("Result Given to Client", function (data) {
 
-                        table.appendChild(tr);
+                    var tr = document.createElement("tr");
 
-                        var td = document.createElement("th");
+                    table.appendChild(tr);
 
-                        td.style.textAlign ="left";
+                    var td = document.createElement("th");
 
-                        td.innerHTML = "Consent given to be tested";
+                    td.style.textAlign = "left";
 
-                        td.style.width = "50%";
+                    td.innerHTML = "Consent given to be tested";
 
-                        tr.appendChild(td);
+                    td.style.width = "50%";
 
-                        var td = document.createElement("td");
+                    tr.appendChild(td);
 
-                        if(data[visit_date]){
+                    var td = document.createElement("td");
 
-                             td.innerHTML = ": Yes";
+                    if (data[visit_date]) {
 
-                        }
-                        else{
+                        td.innerHTML = ": Yes";
 
-                             td.innerHTML = ": No";
-                        }
+                    }
+                    else {
 
-                        tr.appendChild(td);
+                        td.innerHTML = ": No";
+                    }
 
-                        var result = {"New Negative" : "N-", "New Positive" : "N+", "New Inconclusive" : "NIn", "New Exposed Infant": "NEx", "Confirmatory Inconclusive" : "CIn", "Confirmatory Positive" : "C+"}
+                    tr.appendChild(td);
 
-                        var tr = document.createElement("tr");
+                    var result = {
+                        "New Negative": "N-",
+                        "New Positive": "N+",
+                        "New Inconclusive": "NIn",
+                        "New Exposed Infant": "NEx",
+                        "Confirmatory Inconclusive": "CIn",
+                        "Confirmatory Positive": "C+"
+                    }
 
-                        table.appendChild(tr);
+                    var tr = document.createElement("tr");
 
-                        var td = document.createElement("th");
+                    table.appendChild(tr);
 
-                        td.innerHTML = "Result Given to Client";
+                    var td = document.createElement("th");
 
-                        td.style.textAlign ="left";
+                    td.innerHTML = "Result Given to Client";
 
-                        td.style.width = "50%";
+                    td.style.textAlign = "left";
 
-                        tr.appendChild(td);
+                    td.style.width = "50%";
 
-                        var td = document.createElement("td");
+                    tr.appendChild(td);
 
-                        if(data[visit_date]){
+                    var td = document.createElement("td");
 
-                                     td.innerHTML = ": "+result[data[visit_date]];
+                    if (data[visit_date]) {
 
-                        }
+                        td.innerHTML = ": " + result[data[visit_date]];
 
-                        tr.appendChild(td);
+                    }
 
+                    tr.appendChild(td);
 
-                    });
 
-                    dashboard.queryExistingObsArray("Appointment Date Given",function(data){
+                });
 
-                                var tr = document.createElement("tr");
+                dashboard.queryExistingObsArray("Appointment Date Given", function (data) {
 
-                                table.appendChild(tr);
+                    var tr = document.createElement("tr");
 
-                                var td = document.createElement("th");
+                    table.appendChild(tr);
 
-                                td.innerHTML = "Appointment Date";
+                    var td = document.createElement("th");
 
-                                td.style.textAlign ="left";
+                    td.innerHTML = "Appointment Date";
 
-                                td.style.width = "50%";
+                    td.style.textAlign = "left";
 
-                                tr.appendChild(td);
+                    td.style.width = "50%";
 
-                                var td = document.createElement("td");
+                    tr.appendChild(td);
 
-                                if(data[visit_date]){
+                    var td = document.createElement("td");
 
-                                     td.innerHTML = ": "+new Date(data[visit_date]).format();
+                    if (data[visit_date]) {
 
-                                }
+                        td.innerHTML = ": " + new Date(data[visit_date]).format();
 
-                                tr.appendChild(td);
+                    }
 
-                    });
+                    tr.appendChild(td);
 
-                }
-
-                clearInterval(lastVisitInterval);
+                });
 
             }
 
+            clearInterval(lastVisitInterval);
 
-    },200);
+        }
 
-    var disableRegistration = setInterval(function(){
 
-           if(window.parent.dashboard.data.data.identifiers["National id"] && 
-                (window.parent.dashboard.data.data.addresses["Current District"] || 
-                (window.parent.dashboard.data.data.attributes && window.parent.dashboard.data.data.attributes["Cell Phone Number"]))){
+    }, 200);
 
-                    window.parent.dashboard.workflow.splice(window.parent.dashboard.workflow.indexOf("Client Registration"),1);
+    var disableRegistration = setInterval(function () {
 
-                    window.parent.dashboard.$("Client Registration").className = "disabled";
+        if (window.parent.dashboard.data.data.identifiers["National id"] &&
+                (window.parent.dashboard.data.data.addresses["Current District"] ||
+                (window.parent.dashboard.data.data.attributes && window.parent.dashboard.data.data.attributes["Cell Phone Number"]))) {
 
-                    clearInterval(disableRegistration);
-    
-            }
+            window.parent.dashboard.workflow.splice(window.parent.dashboard.workflow.indexOf("Client Registration"), 1);
 
-    },200);
+            window.parent.dashboard.$("Client Registration").className = "disabled";
 
+            clearInterval(disableRegistration);
+
+        }
+
+    }, 200);
 
 
 </script>
