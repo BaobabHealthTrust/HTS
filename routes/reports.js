@@ -809,12 +809,16 @@ module.exports = function (router) {
 
 		    var sql = "SELECT user_id, " + query.field + ", COUNT(obs_id) AS total FROM htc_report WHERE COALESCE(" +
 		        query.field + ", '') != '' AND " + query.field + " = '" + query.value + "' AND user_id = (SELECT user_id " +
-		        "FROM users WHERE username = '" + query.username + "') " + (query.start_date ? " AND DATE(obs_datetime) >= DATE('" +
-		        query.start_date + "')" : "") + "" + (query.end_date ? " AND DATE(obs_datetime) >= DATE('" +
+		        "FROM users WHERE username = '" + query.username + "') " + (query.start_date && query.end_date ?
+                " AND DATE(obs_datetime) >= DATE('" + query.start_date + "')" : (query.start_date ? " AND DATE(obs_datetime) = DATE('" +
+                query.start_date + "')" : "")) + "" + (query.end_date ? " AND DATE(obs_datetime) <= DATE('" +
 		        query.end_date + "')" : "") + " GROUP BY " + query.field + ", user_id";
 
+			console.log("###########################");
 
 		    console.log(sql);
+
+			console.log("###########################");
 
 		    queryRaw(sql, function (data) {
 
