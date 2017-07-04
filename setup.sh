@@ -2,13 +2,13 @@
 
 RELEASE=$(lsb_release -r | tr -d "Release:" | tr -d "[:space:]");
 
-if [ "$RELEASE" != "14.04" ]; then
+# if [ "$RELEASE" != "14.04" ]; then
 
-	echo "Only Ubuntu 14.04 currently supported. Aborting!";
+	# echo "Only Ubuntu 14.04 currently supported. Aborting!";
 	
-	exit 1;
+	# exit 1;
 
-fi
+# fi
 
 ROOT=$(pwd);
 	
@@ -147,31 +147,55 @@ if [ ${#MYSQL} == 0 ]; then
 
 	clear;
 	
-	cd "$ROOT/dist/mysql";
-
-	if [ $? -ne 0 ]; then
+	if [ "$RELEASE" != "14.04"]; then
 	
-		exit 1;
+		sudo apt-get update;
+		
+		sudo apt-get install mysql-server-5.6;
+	
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+		
+		sudo mysql_install_db
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+		
+	else
+	
+		cd "$ROOT/dist/mysql";
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+
+		sudo dpkg -i --force-depends *.deb;
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+
+		cd "$ROOT";
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+
+		cd "$ROOT";
 	
 	fi
-
-	sudo dpkg -i --force-depends *.deb;
-
-	if [ $? -ne 0 ]; then
-	
-		exit 1;
-	
-	fi
-
-	cd "$ROOT";
-
-	if [ $? -ne 0 ]; then
-	
-		exit 1;
-	
-	fi
-
-	cd "$ROOT";
 
 else
 
@@ -183,24 +207,56 @@ fi
 
 if [ ${#NODE} == 0 ]; then
 
-	cd "$ROOT/dist/node";
-
-	sudo dpkg -R --install .;
-
-	if [ $? -ne 0 ]; then
+	if [ "$RELEASE" != "14.04"]; then
 	
-		exit 1;
+		sudo apt-get update;
+		
+		sudo apt-get install nodejs;
 	
-	fi
-
-	cd "$ROOT";
-
-	sudo npm install "$ROOT/dist/pm2-2.4.1.tgz" -g;
-
-	if [ $? -ne 0 ]; then
+		if [ $? -ne 0 ]; then
 	
-		exit 1;
+			exit 1;
 	
+		fi
+		
+		sudo npm install n
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+		
+		sudo n 5.10.1
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+		
+	else
+	
+		cd "$ROOT/dist/node";
+
+		sudo dpkg -R --install .;
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+
+		cd "$ROOT";
+
+		sudo npm install "$ROOT/dist/pm2-2.4.1.tgz" -g;
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+
 	fi
 
 else
