@@ -235,6 +235,16 @@ if [ ${#NODE} == 0 ]; then
 	
 		fi
 		
+		cd "$ROOT";
+
+		sudo npm install "$ROOT/dist/pm2-2.4.1.tgz" -g;
+
+		if [ $? -ne 0 ]; then
+	
+			exit 1;
+	
+		fi
+
 	else
 	
 		cd "$ROOT/dist/node";
@@ -300,6 +310,18 @@ if [ -f ,/config/site.json ]; then
 else
 
 	cp ./config/site.json.example ./config/site.json;
+
+fi
+
+if [ -f ,/config/dde.json ]; then
+
+	showMessageBox "Application Configuration" "HTS Setup" "DDE configuration found. OK";
+
+	clear;
+	
+else
+
+	cp ./config/dde.json.example ./config/dde.json;
 
 fi
 
@@ -472,6 +494,8 @@ elif [ -d ../common ]; then
 	
 fi
 		
+cp -r $ROOT/dist/offline_node_modules/ $ROOT/node_modules/;
+
 clear
 		
 echo
@@ -505,7 +529,7 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 	
 		  # read -p "Enter DDE application usename: " DDE_USERNAME
 				
-			getUserData "Application Configuration" "DDE Connection" "Enter DDE application usename: ";
+			getUserData "Application Configuration" "DDE Connection" "Enter DDE default application usename: ";
 			
 			DDE_USERNAME=$RETVAL;
 			
@@ -517,7 +541,7 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 
 		  # read -s DDE_PASSWORD
 
-		  getUserPassword "Application Configuration" "DDE Connection" "Enter DDE application password for '$DDE_USERNAME': ";
+		  getUserPassword "Application Configuration" "DDE Connection" "Enter DDE default application password for '$DDE_USERNAME': ";
 		  
 		  DDE_PASSWORD=$RETVAL;
 
@@ -630,6 +654,23 @@ if [ ${#CONFIGURE_APP} -gt 0 ] && [ $(echo "$CONFIGURE_APP" | tr '[:upper:]' '[:
 						config[\"$TARGET_ENV\".trim()].password = \"$DDE_PASSWORD\"; \
 						config[\"$TARGET_ENV\".trim()].siteCode = \"$SITE_CODE\"; \
 						fs.writeFileSync('./config/couchdb.json', JSON.stringify(config, undefined, 4));"
+
+	APP_USERNAME=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1);
+	APP_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1);
+
+	node -e " var fs = require('fs'); \
+						var config = (fs.existsSync('./config/dde.json') ? 
+							JSON.parse(fs.readFileSync('./config/dde.json')) : \
+							fs.existsSync('./config/dde.json.example') ? \
+							JSON.parse(fs.readFileSync('./config/dde.json.example')) : \
+							{default:{}, app: {}}; \
+						config.default.username = \"$DDE_USERNAME\"; \
+						config.default.password = \"$DDE_PASSWORD\"; \
+						config.app.username = \"$APP_USERNAME\"; \
+						config.app.application = \"hts\"; \
+						config.app.password = \"$APP_PASSWORD\"; \
+						config.app.site_code = \"$SITE_CODE\"; \
+						fs.writeFileSync('./config/dde.json', JSON.stringify(config, undefined, 4));"
 
 	clear
 	
