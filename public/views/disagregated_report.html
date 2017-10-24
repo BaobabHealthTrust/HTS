@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Disagregated Report</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
+    <style>
+        th {
+            font-weight: normal;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" style="margin: 20px; font-size: 14px;">
+    <table width="100%" style="border-collapse: collapse" cellpadding="8">
+    <tr>
+        <th style="font-size: 13px; width: 100px; text-align: left;" colspan="2" class="bold">
+            M<span style="font-size: 12px">ALAWI</span> HTS R<span style="font-size: 11px">EGISTER</span><br/>
+            V<span style="font-size: 10px">ERSION</span> 3
+        </th>
+        <th style="font-size: 20px" colspan="4" class="bold">
+            HIV T<span style="font-size: 18px">ESTING AND</span> C<span style="font-size: 18px">OUNSELLING</span> - D<span
+                style="font-size: 18px">ISAGREGA</span>T<span style="font-size: 18px">ED</span> R<span
+                style="font-size: 18px">EPORT</span><br/>
+        </th>
+        <th style="font-size: 13px; width: 180px; text-align: right; font-style: italic; font-weight: normal;" id="month-year">
+            May<br/>2014
+        </th>
+    </tr>
+    <tr>
+
+        <td style="border-left: 1px solid #333; border-top: 1px solid #333; width: 150px;" colspan="2">
+            Facility/Site
+        </td>
+        <td style="border-left: 1px solid #333; border-top: 1px solid #333; border-right: 1px solid #333;" colspan="5" id="lblFacility">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-left: 1px solid #333;border-bottom: 1px solid #333;" colspan="2">
+            Reporting Year
+        </td>
+        <td style="border: 1px solid #333;border-bottom: 1px solid #333;" id="lblYear">
+            &nbsp;
+        </td>
+        <td style="border-top: 1px solid #333; width: 120px;border-bottom: 1px solid #333;" align="center">
+            Month
+        </td>
+        <td style="border: 1px solid #333;border-bottom: 1px solid #333;" id="lblMonth">
+            &nbsp;
+        </td>
+        <td style="border-top: 1px solid #333; width: 120px;border-bottom: 1px solid #333;" align="center">
+            HTS Location<sup>1</sup>
+        </td>
+        <td style="border: 1px solid #333; min-width: 25%;border-bottom: 1px solid #333;" id="lblLocation" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td colspan="7">
+            <table style="border: 1px solid #333;" cellpadding="10" width="100%">
+                <tr>
+                    <th style="border-right: 1px solid #333" align="center"><strong>No.</strong></th>
+                    <th style="border-right: 1px solid #333" align="center"><strong>Disaggregation by service delivery point</strong></th>
+                    <th style="border-right: 1px solid #333" colspan="2" align="center"><strong>Positive</strong></th>
+                    <th style="border-right: 1px solid #333" colspan="2" align="center"><strong>Negative</strong></th>
+                    <th align="center"><strong>Total</strong></th>
+                </tr>
+                <tr>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333;"><b>A</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333" align="center"><b>PITC Inpatient</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style=" border-top: 1px solid #333">&nbsp;</th>
+                </tr>
+            <tbody>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">1.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left">Unknown Age</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="unknown_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="unknown_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="unknown_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="unknown_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="unknown_total">&nbsp;</td>
+
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">2.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> < 1</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="1_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">3.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 1 - 9</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1-9_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1-9_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1-9_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="1-9_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="1-9_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">4.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 10 - 14</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="10-14_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="10-14_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="10-14_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="10-14_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="10-14_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">5.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 15 - 19</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="15-19_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">6.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 20 - 24</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="15-19_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="15-19_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">7.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="25-29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="25-29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="25-29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="25-29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="25-29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">8.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 30 - 34</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="30-34_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="30-34_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="30-34_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="30-34_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="30-34_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">9.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 35 - 39</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="35-39_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="35-39_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="35-39_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="35-39_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="35-39_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">10.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 40 - 49</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="40-49_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="40-49_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="40-49_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="40-49_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="40-49_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">11.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 50 +</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="50+_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="50+_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="50+_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="50+_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="50+_total">&nbsp;</td>
+                </tr>
+                 <tr>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333;"><b>B</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333" align="center"><b>PITC Pediatric</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style=" border-top: 1px solid #333"><strong>Total</strong></th>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">1.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> < 5 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="under_5_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="under_5_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="under_5_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="under_5_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="under_5_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333;"><b>C</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333" align="center"><b>Other PITC</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style=" border-top: 1px solid #333">&nbsp;</th>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">1.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> Unknown Age </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_unknown_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">2.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> < 1 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_<1_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">3.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 1 - 9 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_1to9_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">4.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 10 - 14 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_10to14_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">5.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 15 - 19 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_15to19_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">6.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 20 - 24 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_20to24_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">7.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_25to29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">8.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_25to29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">9.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 30 - 34 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_30to34_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">10.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 35 - 39 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_35to39_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">11.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 40 - 49 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_40to49_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">12.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 50 + </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_50+_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333;"><b>D</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333" align="center"><b>VCT</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style=" border-top: 1px solid #333"><strong>Total</strong></th>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">1.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> Unknown Age </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_unknown_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">2.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> < 1 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_<1_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">3.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 1 - 9 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_1to9_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">4.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 10 - 14 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_10to14_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">5.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 15 - 19 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_15to19_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">6.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 20 - 24 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_20to24_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">7.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_25to29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">8.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_25to29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">9.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 30 - 34 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_30to34_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">10.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 35 - 39 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_35to39_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">11.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 40 - 49 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_40to49_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">12.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 50 + </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_50+_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333;"><b>E</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333" align="center"><b>Index Testing/Family Referral</b></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Male</strong></th>
+                    <th style="border-right: 1px solid #333; border-top: 1px solid #333"><strong>Female</strong></th>
+                    <th style=" border-top: 1px solid #333"><strong>Total</strong></th>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">1.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> Unknown Age </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_unknown_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_unknown_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">2.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> < 1 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_<1_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_<1_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">3.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 1 - 9 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_1to9_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_1to9_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">4.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 10 - 14 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_10to14_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_10to14_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">5.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 15 - 19 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_15to19_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_15to19_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">6.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 20 - 24 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_20to24_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_20to24_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">7.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_25to29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">8.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 25 - 29 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_25to29_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_25to29_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">9.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 30 - 34 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_30to34_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_30to34_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">10.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 35 - 39 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_35to39_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_35to39_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">11.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 40 - 49 </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_40to49_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_40to49_total">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333;" align="center">12.</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="left"> 50 + </td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_negative_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_negative_female">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_positive_male">&nbsp;</td>
+                    <td style="border-right: 1px solid #333; border-top: 1px solid #333" align="center" id="pitc_50+_positive_female">&nbsp;</td>
+                    <td style="border-top: 1px solid #333" align="center" id="pitc_50+_total">&nbsp;</td>
+                </tr>
+            </tbody>
+            </table>
+        </td>
+    </tr>
+    </table>
+</body>
+</html>
