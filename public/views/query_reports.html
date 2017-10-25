@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports Query</title>
+</head>
+<body>
+<div id='content'></div>
+<script type='text/javascript' language='javascript' src='/modules/protocol_analyzer.js' defer></script>
+
+<script>
+
+    function submitCustomData() {
+
+        var value = __$("quarter").value.trim();
+
+        var parts = value.split(" ");
+
+        var year = parseInt(parts[0]);
+
+        var qtr = parts[1];
+
+        var quarters = {
+            "Q1": {
+                startDate: year + "-01-01",
+                endDate: year + "-03-31"
+            },
+            "Q2": {
+                startDate: year + "-04-01",
+                endDate: year + "-06-30"
+            },
+            "Q3": {
+                startDate: year + "-07-01",
+                endDate: year + "-09-30"
+            },
+            "Q4": {
+                startDate: year + "-10-01",
+                endDate: year + "-12-31"
+            }
+        }
+        var this_path = window.location.href;
+   
+        var report = this_path.split("=").splice(-1)
+
+        if (report == "disagregated"){
+
+        var path = "/views/disagregated_report.html?start_date=" + quarters[qtr].startDate + "&end_date=" + quarters[qtr].endDate+"&quarter="+value 
+
+        }
+        window.location = path;
+
+    }
+
+    document.body.onload = function() {
+
+        var path = "/spec/report_query.spec";
+
+        protocol.init(path, undefined, undefined, undefined, undefined);
+
+    }
+
+    setTimeout(function(){
+
+        tt_cancel_destination = "/";
+
+        tt_cancel_show = "/";
+
+        document.forms[0].action = "javascript:submitCustomData()";
+
+    }, 500);
+
+</script>
+</body>
+</html>
