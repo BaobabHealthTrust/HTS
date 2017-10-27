@@ -5,7 +5,8 @@
       "Client Registration": "javascript:dashboard.navPanel('/spec/htc/dde_patient_registration.spec')",
       "Pre-test counseling": "javascript:dashboard.navPanel('/spec/htc/pre_test_counselling.spec')",
       "Testing": "javascript:dashboard.navPanel('/spec/htc/hiv_testing.spec')",
-      "Post-test counseling": "javascript:dashboard.navPanel('/spec/htc/post_test_counselling.spec')"
+      "Post-test counseling": "javascript:dashboard.navPanel('/spec/htc/post_test_counselling.spec')",
+      "Confirmatory Testing": "javascript:dashboard.navPanel('/spec/htc/confirmatory_testing.spec')"
     },
     "program": "HTS PROGRAM",
     "identifiers": [
@@ -29,6 +30,10 @@
       },
       "Client Risk Assessment": {
         "encounter": "CLIENT RISK ASSESSMENT"
+      },
+      "Confirmatory Testing": {
+        "encounter": "CONFIRMATORY TESTING",
+        "condition": "dashboard.queryActiveObs('HTS PROGRAM', (new Date(dashboard.getCookie('today'))).format('YYYY-mm-dd'), 'HIV TESTING', 'Result Given to Client') == 'New Positive' && !dashboard.queryExistingEncounters('HTS PROGRAM', (new Date(dashboard.getCookie('today'))).format('YYYY-mm-dd'), 'CONFIRMATORY HIV TESTING')"
       }
     },
     "workflow": [
