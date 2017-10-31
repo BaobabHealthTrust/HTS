@@ -132,6 +132,7 @@
         "DBS Sample ID",
         "Contact Detail Type",
         "Does the partner give consent to be contacted?",
-        "Where is the client coming from?"
+        "Where is the client coming from?",
+        "PITC Location"
     ]
 }
