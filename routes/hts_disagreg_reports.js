@@ -2249,6 +2249,356 @@ module.exports = function (router) {
 
         });
 
+    router.route("/under_5_positive_male")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Pediatric' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " +  
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/under_5_positive_female")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Pediatric' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " +  
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/under_5_negative_male")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Pediatric' AND obs3.value_text = 'New Negative' " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " + 
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/under_5_negative_female")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Pediatric' AND obs3.value_text = 'New Negative' " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " + 
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/under_5_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Pediatric' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative', 'New Exposed Infant') " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " +  
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/mf_under_5_positive_male")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Malnutrition Facilities' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " +  
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/mf_under_5_positive_female")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Malnutrition Facilities' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " +  
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/mf_under_5_negative_male")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Malnutrition Facilities' AND obs3.value_text = 'New Negative' " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " + 
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/mf_under_5_negative_female")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Malnutrition Facilities' AND obs3.value_text = 'New Negative' " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " + 
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
+    router.route("/mf_under_5_total")
+        .get(function (req, res) {
+
+            var url_parts = url.parse(req.url, true);
+
+            var query = url_parts.query;
+
+            var result = 0;
+
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+                      "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
+                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
+                      "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
+                      "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
+                      "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
+                      "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
+                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
+                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
+                      "AND obs2.value_text = 'PITC Malnutrition Facilities' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative', 'New Exposed Infant') " + 
+                      "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 5 " +  
+                      "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
+                      "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
+                      "AND Date(obs1.obs_datetime) <='"+query.end_date+"'"
+
+        console.log(sql)
+
+            queryRaw(sql, function(data){
+
+                console.log(data[0][0]["total"]);
+
+                res.send(data[0][0]);
+            });
+
+        });
+
     router.route("/site")
       .get(function(req,res){
           var site = require(__dirname + "/../config/site.json");
