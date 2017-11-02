@@ -8415,16 +8415,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 120 " +  
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8450,16 +8448,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 120 " +  
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8485,16 +8481,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8520,16 +8514,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8555,16 +8547,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 120 " +  
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8590,16 +8580,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 1 " +  
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8625,16 +8613,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Exposed Infant') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 1 " +  
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8660,16 +8646,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 1 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8695,16 +8679,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 1 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8730,16 +8712,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative', 'New Exposed Infant') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative', 'New Exposed Infant') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) < 1 " +  
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
                       "AND Date(obs1.obs_datetime) >='"+query.start_date+"' " + 
@@ -8765,16 +8745,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 1 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 9 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -8801,16 +8779,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 1 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 9 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -8837,16 +8813,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 1 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 9 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -8873,16 +8847,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 1 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 9 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -8909,16 +8881,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 1 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 9 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -8945,16 +8915,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 10 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 14 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -8981,16 +8949,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 10 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 14 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9017,16 +8983,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 10 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 14 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9053,16 +9017,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 10 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 14 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9089,16 +9051,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 10 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 14 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9125,16 +9085,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 15 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 19 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9161,16 +9119,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 15 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 19 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9197,16 +9153,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 15 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 19 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9233,16 +9187,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 15 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 19 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9269,16 +9221,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 15 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 19 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9305,16 +9255,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 20 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 24 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9341,16 +9289,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 20 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 24 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9377,16 +9323,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 20 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 24 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9413,16 +9357,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 20 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 24 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9449,16 +9391,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 20 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 24 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9485,16 +9425,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 25 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 29 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9521,16 +9459,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 25 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 29 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9557,16 +9493,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 25 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 29 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9593,16 +9527,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 25 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 29 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9629,16 +9561,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 25 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 29 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9665,16 +9595,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 30 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 34 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9701,16 +9629,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 30 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 34 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9737,16 +9663,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 30 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 34 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9773,16 +9697,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 30 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 34 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9809,16 +9731,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " +
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 30 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 34 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9845,16 +9765,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 35 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 39 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9881,16 +9799,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 35 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 39 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9917,16 +9833,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 35 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 39 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9953,16 +9867,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 35 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 39 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -9989,16 +9901,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 35 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 39 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10025,16 +9935,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 40 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 49 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10061,16 +9969,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 40 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 49 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10097,16 +10003,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 40 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 49 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10133,16 +10037,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 40 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 49 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10169,16 +10071,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 40 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 49 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10205,16 +10105,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 49 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10241,16 +10139,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 49 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10277,16 +10173,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 49 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10313,16 +10207,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'F' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text = 'New Negative' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 49 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10349,16 +10241,14 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
-                      "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8547 AND obs3.concept_id = 8492 " + 
-                      "AND obs1.value_text = 'Routine HTS (PITC) within Health Service' " + 
-                      "AND obs2.value_text = 'Other (VCT, etc.)' AND obs3.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
+                      "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) > 49 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 120 " + 
                       "AND obs1.voided = 0 AND person.voided = 0 AND patient_program.voided = 0 " + 
@@ -10375,47 +10265,6 @@ module.exports = function (router) {
             });
 
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     router.route("/it_unknown_positive_male")
         .get(function (req, res) {
@@ -12032,7 +11881,7 @@ module.exports = function (router) {
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
                       "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
-                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Comes with HTS Family Reference Slip' " + 
+                      "AND obs2.concept_id = 8492 AND obs1.value_text = 'Other (VCT, etc.)' " + 
                       "AND obs2.value_text = 'New Negative' " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 40 " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) <= 49 " + 
