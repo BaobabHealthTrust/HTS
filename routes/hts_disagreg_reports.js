@@ -5572,7 +5572,7 @@ module.exports = function (router) {
 
         });
 
-    router.route("/vmmc_1to9_negative_male")
+    router.route("/vmmc_1to9_positive_male")
         .get(function (req, res) {
 
             var url_parts = url.parse(req.url, true);
