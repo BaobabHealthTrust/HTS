@@ -2093,16 +2093,16 @@
          <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
            &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="positive_male_total">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="positive_female_total">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="negative_male_total">
             &nbsp;
         </td>
-        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="negative_female_total">
             &nbsp;
         </td>
         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="total" >
@@ -2597,6 +2597,13 @@
 
     function loadData() {
 
+        var positive_male_total = 0
+
+        var positive_female_total = 0
+
+        var negative_male_total = 0
+
+        var negative_female_total = 0 
 
         var keys = Object.keys(links);
 
@@ -2616,6 +2623,25 @@
 
                     __$(id).innerHTML = data? data.total : "0";
 
+                    if(id.match("positive_male") != null){
+                          positive_male_total  = positive_male_total + parseInt(data.total)  
+                          __$("positive_male_total").innerHTML = positive_male_total;
+                    }
+
+                    if(id.match("positive_female") != null){
+                        positive_female_total  = positive_female_total + parseInt(data.total)
+                        __$("positive_female_total").innerHTML = positive_female_total;  
+                    }
+
+                    if(id.match("negative_male") != null){
+                        negative_male_total  = negative_male_total + parseInt(data.total)
+                        __$("negative_male_total").innerHTML = negative_male_total; 
+                    }
+                    if(id.match("negative_female") != null){
+                         negative_female_total  = negative_female_total + parseInt(data.total) 
+                         __$("negative_female_total").innerHTML = negative_female_total;
+                    }
+                    __$("total").innerHTML = positive_male_total + positive_female_total + negative_male_total + negative_female_total ;
                 }
 
             })
