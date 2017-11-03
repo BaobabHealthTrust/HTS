@@ -10756,7 +10756,7 @@ module.exports = function (router) {
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
                       "LEFT OUTER JOIN patient_program ON obs1.person_id = patient_program.patient_id " + 
                       "WHERE patient_program.patient_id IN(SELECT pp.patient_id FROM patient_program pp " + 
-                      "WHERE pp.program_id = 18) AND person.gender = 'M' AND obs1.concept_id = 8460 " + 
+                      "WHERE pp.program_id = 18) AND person.gender IN('M', 'F') AND obs1.concept_id = 8460 " + 
                       "AND obs2.concept_id = 8492 AND obs1.value_text = 'Comes with HTS Family Reference Slip' " + 
                       "AND obs2.value_text IN('New Positive', 'Confirmatory Positive', 'New Negative') " + 
                       "AND (year(patient_program.date_enrolled) - year(person.birthdate)) >= 1 " + 
