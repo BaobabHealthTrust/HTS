@@ -1,0 +1,2998 @@
+<!DOCTYPE html>
+<html><head lang="en">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>Disaggregated Report</title>
+    <style>
+    <style>
+        body {
+            padding: 0px;
+            margin: 1px;
+            font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+            overflow: auto;
+            width: 99%;
+            -moz-user-select: none;
+        }
+
+        a {
+            color: #00B7FF;
+        }
+
+        button {
+            font-size: 22px !important;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            min-height: 55px;
+            border-radius: 5px !important;
+            margin: 3px;
+        }
+
+        button:active {
+            background-color: #ffc579 !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important;
+            background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: linear-gradient(to bottom, #ffc579, #fb9d23);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important;
+        }
+
+        .button {
+            font-size: 18px !important;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            min-height: 55px;
+            border-radius: 0px !important;
+            margin: 3px;
+
+        }
+
+        .button:active {
+            color: white !important;
+            background-color: #ffc579 !important;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important;
+            background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important;
+            background-image: linear-gradient(to bottom, #ffc579, #fb9d23);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important;
+        }
+
+        .blue {
+            border: 1px solid #7eb9d0;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #a7cfdf;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+            background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -moz-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -ms-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: -o-linear-gradient(top, #a7cfdf, #23538a);
+            background-image: linear-gradient(to bottom, #a7cfdf, #23538a);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a7cfdf, endColorstr=#23538a);
+        }
+
+        .blue:hover {
+            border: 1px solid #5ca6c4;
+            background-color: #82bbd1;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#193b61));
+            background-image: -webkit-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -moz-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -ms-linear-gradient(top, #82bbd1, #193b61);
+            background-image: -o-linear-gradient(top, #82bbd1, #193b61);
+            background-image: linear-gradient(to bottom, #82bbd1, #193b61);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#82bbd1, endColorstr=#193b61);
+        }
+
+        .green {
+            border: 1px solid #34740e;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #4ba614;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00));
+            background-image: -webkit-linear-gradient(top, #4ba614, #008c00);
+            background-image: -moz-linear-gradient(top, #4ba614, #008c00);
+            background-image: -ms-linear-gradient(top, #4ba614, #008c00);
+            background-image: -o-linear-gradient(top, #4ba614, #008c00);
+            background-image: linear-gradient(to bottom, #4ba614, #008c00);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#4ba614, endColorstr=#008c00);
+        }
+
+        .green:hover {
+            border: 1px solid #224b09;
+            background-color: #36780f;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900));
+            background-image: -webkit-linear-gradient(top, #36780f, #005900);
+            background-image: -moz-linear-gradient(top, #36780f, #005900);
+            background-image: -ms-linear-gradient(top, #36780f, #005900);
+            background-image: -o-linear-gradient(top, #36780f, #005900);
+            background-image: linear-gradient(to bottom, #36780f, #005900);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#36780f, endColorstr=#005900);
+        }
+
+        .red {
+            border: 1px solid #72021c;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #a90329;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019));
+            background-image: -webkit-linear-gradient(top, #a90329, #6d0019);
+            background-image: -moz-linear-gradient(top, #a90329, #6d0019);
+            background-image: -ms-linear-gradient(top, #a90329, #6d0019);
+            background-image: -o-linear-gradient(top, #a90329, #6d0019);
+            background-image: linear-gradient(to bottom, #a90329, #6d0019);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a90329, endColorstr=#6d0019);
+        }
+
+        .red:hover {
+            border: 1px solid #450111;
+            background-color: #77021d;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#77021d), to(#3a000d));
+            background-image: -webkit-linear-gradient(top, #77021d, #3a000d);
+            background-image: -moz-linear-gradient(top, #77021d, #3a000d);
+            background-image: -ms-linear-gradient(top, #77021d, #3a000d);
+            background-image: -o-linear-gradient(top, #77021d, #3a000d);
+            background-image: linear-gradient(to bottom, #77021d, #3a000d);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#77021d, endColorstr=#3a000d);
+        }
+
+        .gray {
+            border: 1px solid #ccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            font-size: 28px;
+            font-family: arial, helvetica, sans-serif;
+            padding: 10px 10px 10px 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #FFFFFF;
+            background-color: #ccc;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999));
+            background-image: -webkit-linear-gradient(top, #ccc, #999);
+            background-image: -moz-linear-gradient(top, #ccc, #999);
+            background-image: -ms-linear-gradient(top, #ccc, #999);
+            background-image: -o-linear-gradient(top, #ccc, #999);
+            background-image: linear-gradient(to bottom, #ccc, #999);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ccc, endColorstr=#999);
+        }
+
+        .gray:hover {
+            border: 1px solid #ccc;
+            background-color: #ddd;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc));
+            background-image: -webkit-linear-gradient(top, #333, #ccc);
+            background-image: -moz-linear-gradient(top, #333, #ccc);
+            background-image: -ms-linear-gradient(top, #333, #ccc);
+            background-image: -o-linear-gradient(top, #333, #ccc);
+            background-image: linear-gradient(to bottom, #333, #ccc);
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#333, endColorstr=#ccc);
+        }
+
+        .textbox {
+            padding: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+
+        .table {
+            display: table;
+            border-spacing: 1px;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: #284b38;
+        }
+
+        .label_cell {
+            font-size: 1.2em;
+            padding: 5px;
+            text-align: right;
+            border-bottom: 1px dotted #999;
+            border-right: 1px dotted #999;
+            width: 25%;
+        }
+
+        .input_cell {
+            font-size: 1.5em;
+            padding: 5px;
+            border-bottom: 1px dotted #999;
+        }
+
+        .no_bottom {
+            border-bottom: none;
+        }
+
+        .arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-bottom: 30px solid #3465a4;
+        }
+
+        .arrow-up-gray {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-bottom: 30px solid #ccc;
+        }
+
+        .arrow-up:hover {
+            border-bottom: 30px solid #5ca6c4;
+        }
+
+        .arrow-up:active {
+            border-bottom: 30px solid #ef8544;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-top: 30px solid #3465a4;
+        }
+
+        .arrow-down-gray {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            cursor: pointer;
+            border-top: 30px solid #ccc;
+        }
+
+        .arrow-down:hover {
+            border-top: 30px solid #5ca6c4;
+        }
+
+        .arrow-down:active {
+            border-top: 30px solid #ef8544;
+        }
+
+        .listing {
+            overflow: auto;
+            height: 100%;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding-left: 0px;
+        }
+
+        .listing li {
+            color: black;
+            list-style: none;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 10px;
+            margin-top: 1px;
+            margin-bottom: 1px;
+            font-family: "Nimbus Sans L", "Arial Narrow", sans-serif;
+            font-size: 2.5em;
+        }
+
+        .selected {
+            background-color: lightblue !important;
+        }
+
+        .odd {
+            background-color: #eee;
+        }
+
+        .element {
+            border: 1px solid #999;
+            background-color: #cadcd3;
+            color: #000;
+            padding: 3px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px
+        }
+         .card {
+        border: 2px solid black;
+        }
+        .card{
+            margin-top:2%;
+            border: 1px solid;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .card thead{
+            border: 1px solid;
+        }
+        .card th{
+            #background: #6281a7;
+            #color: #ffffff;
+
+
+        }
+        .card th, .card td  {
+            border: 1px solid;
+            font-size: 0.9em;
+            padding: 0.4em;
+            
+        }
+        .card td{
+            text-align: left;
+            width: 30%;
+        }
+        .drill-down {
+            text-decoration: none;
+            color: black;
+        }
+        .condition {
+             border-right: 1px solid #305d97; 
+             border-top: 1px solid #305d97; 
+             border-bottom: 1px solid #ffffff; 
+             width: 25%;
+             background: #6281a7;
+        }
+        .medicine {
+            border-right: 1px solid #305d97; 
+            border-top: 1px solid #305d97; 
+            border-bottom: 1px solid #305d97; 
+            width: 40%;
+            background: #6281a7;
+        }
+</style>
+</head>
+<body oncontextmenu="return false;" style="margin: 1px; width: 99%; align: center;">
+<div style="background-color: rgb(98, 129, 167); color: rgb(238, 238, 238); padding: 2px;"><h2 align="center"
+     >
+        HIV Testing Services <br/>
+        Disaggregation by service delivery report <br/>
+        Facility Name : <span id="facility"></span> (<span id="quarter"></span>)
+</h2></div>
+
+<table>
+<table style="border-collapse: collapse;" border="1" cellpadding="10" width="100%" class="card">
+    <tr>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Condition
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            No.
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 25%;">
+            Patient Registration Details
+        </th>
+        <th colspan="2" style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 20%;">
+            Positive
+        </th>
+        <th colspan="2" style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 20%;">
+            Negative
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            Total
+        </th>
+    </tr>
+    <tr>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 20%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            &nbsp;
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 40%;">
+            Variables/Age Groups
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            Male
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            Female
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            Male
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+            Female
+        </th>
+        <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 2px solid #305d97; width: 5%;">
+           &nbsp;
+        </th>
+    </tr>
+
+    <tbody>
+        <tr>
+            <th class="condition">
+                1.0 PITC Inpatient
+            </th>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                1.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                Unknown Age
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="unknown_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="unknown_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id= "unknown_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="unknown_negative_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="unknown_total">
+                &nbsp;
+            </td>
+        </tr>    
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                2.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                < 1
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1_negative_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                3.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                1 - 9
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1to9_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1to9_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1to9_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1to9_negative_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="1to9_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                4.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                10 - 14
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="10to14_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="10to14_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="10to14_negative_male" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="10to14_negative_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="10to14_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                5.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                15 - 19
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="15to19_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="15to19_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="15to19_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="15to19_negative_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="15to19_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                6.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                20 - 24
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="20to24_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="20to24_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="20to24_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="20to24_negative_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="20to24_total">
+                &nbsp;
+            </td>
+        </tr>
+                <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                7.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                25 - 29
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="25to29_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="25to29_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="25to29_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="25to29_negative_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="25to29_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                8.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                30 - 34
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="30to34_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="30to34_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="30to34_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="30to34_negative_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="30to34_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                9.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                35 - 39
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="35to39_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="35to39_positive_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="35to39_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="35to39_negative_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="35to39_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                10.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                40 - 49
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="40to49_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="40to49_positive_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="40to49_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="40to49_negative_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="40to49_total">
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+               &nbsp;
+            </th>
+             <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+                11.
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+                50 +
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="50plus_positive_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="50plus_positive_female" >
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="50plus_negative_male">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="50plus_negative_female">
+                &nbsp;
+            </td>
+            <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="50plus_total">
+                &nbsp;
+            </td>
+        </tr>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            2.0 PITC Pediatric
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1.
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            < 5 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="under_5_positive_male">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="under_5_positive_female">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="under_5_negative_male">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="under_5_negative_female">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="under_5_total">
+            &nbsp;
+        </td>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            3.0 PITC Malnutrition Facilities
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1.
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            < 5 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="mf_under_5_positive_male">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="mf_under_5_positive_female">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="mf_under_5_negative_male">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="mf_under_5_negative_female">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="mf_under_5_total">
+            &nbsp;
+        </td>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            4.0 PITC PMTCT (ANC Only)
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1.
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            < 1 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_lessthan1_positive_female">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_lessthan1_negative_female">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_lessthan1_total">
+            &nbsp;
+        </td>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            1 - 9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_1to9_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_1to9_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_1to9_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; ">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            10 - 14
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_10to14_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_10to14_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_10to14_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           15 - 19 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_15to19_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_15to19_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_15to19_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           20 - 24
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_20to24_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_20to24_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_20to24_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           25 - 29
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_25to29_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_25to29_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_25to29_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           30 - 34
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_30to34_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_30to34_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_30to34_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           35 - 39
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_35to39_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_35to39_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_35to39_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           40 - 49
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_40to49_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_40to49_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_40to49_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           50 +
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_50plus_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_50plus_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="anc_50plus_total" >
+            &nbsp;
+        </td>
+    </tr>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            5.0 PITC TB Clinics
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Unknown Age
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_unknown_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_unknown_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_unknown_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_unknown_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_unknown_total" >
+            &nbsp;
+        </td>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+          < 1
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_lessthan1_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_lessthan1_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_lessthan1_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_lessthan1_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_lessthan1_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            1 - 9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_1to9_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_1to9_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_1to9_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_1to9_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_1to9_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; ">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            10 - 14
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_10to14_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_10to14_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_10to14_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_10to14_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_10to14_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           15 - 19 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_15to19_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_15to19_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_15to19_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_15to19_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_15to19_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           20 - 24
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_20to24_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_20to24_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_20to24_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_20to24_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_20to24_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           25 - 29
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_25to29_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_25to29_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_25to29_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_25to29_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_25to29_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           30 - 34
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_30to34_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_30to34_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_30to34_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_30to34_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_30to34_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           35 - 39
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_35to39_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_35to39_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_35to39_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_35to39_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_35to39_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           40 - 49
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_40to49_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_40to49_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_40to49_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_40to49_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_40to49_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            11
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           50 +
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_50plus_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_50plus_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_50plus_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_50plus_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="tb_50plus_total" >
+            &nbsp;
+        </td>
+    </tr>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            6.0 VMMC Services
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1.
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            < 1 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_lessthan1_positive_male">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_lessthan1_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_lessthan1_total" >
+            &nbsp;
+        </td>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; ">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            1 - 9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_1to9_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_1to9_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_1to9_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           10 - 14 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_15to19_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_15to19_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_15to19_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           20 - 24
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_20to24_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_20to24_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_20to24_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           25 - 29
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_25to29_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_25to29_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_25to29_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           30 - 34
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_30to34_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_30to34_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_30to34_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           35 - 39
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_35to39_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_35to39_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_35to39_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           40 - 49
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_40to49_positive_male">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_40to49_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_40to49_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           50 +
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_50plus_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_50plus_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 5%; text-align: center" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vmmc_50plus_total" >
+            &nbsp;
+        </td>
+    </tr>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            7.0 Other PITC
+        </th>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Unknown Age
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_unknown_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_unknown_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_unknown_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_unknown_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_unknown_total" >
+            &nbsp;
+        </td>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+          < 1
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_lessthan1_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_lessthan1_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_lessthan1_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_lessthan1_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_lessthan1_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            1 - 9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_1to9_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_1to9_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_1to9_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_1to9_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_1to9_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center; ">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            10 - 14
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_10to14_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_10to14_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_10to14_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_10to14_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_10to14_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           15 - 19 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_15to19_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_15to19_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_15to19_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_15to19_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_15to19_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           20 - 24
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_20to24_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_20to24_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_20to24_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_20to24_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_20to24_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           25 - 29
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_25to29_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_25to29_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_25to29_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_25to29_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_25to29_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           30 - 34
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_30to34_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_30to34_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_30to34_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_30to34_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_30to34_total" >
+            &nbsp;
+        </td>
+    </tr>
+        <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           35 - 39
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_35to39_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_35to39_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_35to39_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_35to39_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_35to39_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           40 - 49
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_40to49_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_40to49_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_40to49_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_40to49_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_40to49_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            11
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           50 +
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_50plus_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_50plus_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_50plus_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_50plus_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="pitc_50plus_total" >
+            &nbsp;
+        </td>
+    </tr>
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            8.0 VCT
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Unknown Age
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_unknown_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_unknown_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_unknown_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_unknown_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_unknown_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            < 1 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_lessthan1_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_lessthan1_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_lessthan1_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_lessthan1_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_lessthan1_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            1 - 9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_1to9_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_1to9_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_1to9_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_1to9_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_1to9_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            10 - 14
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_10to14_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_10to14_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_10to14_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_10to14_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_10to14_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            15 - 19 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_15to19_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_15to19_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_15to19_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_15to19_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_15to19_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            20 - 24
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_20to24_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_20to24_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_20to24_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_20to24_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_20to24_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            25 - 29
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_25to29_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_25to29_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_25to29_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_25to29_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_25to29_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            30 - 34 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_30to34_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_30to34_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_30to34_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_30to34_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_30to34_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            35 - 39
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_35to39_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_35to39_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_35to39_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_35to39_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_35to39_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            40 - 49
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_40to49_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_40to49_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_40to49_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_40to49_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_40to49_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            11
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            50 + 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_50plus_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_50plus_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_50plus_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_50plus_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="vct_50plus_total" >
+            &nbsp;
+        </td>
+    </tr>   
+
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            9.0 Index Testing/Family Referral
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            1
+        </td>
+         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           Unknown Age
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_unknown_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_unknown_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_unknown_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_unknown_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_unknown_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            2
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            < 1 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_lessthan1_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_lessthan1_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_lessthan1_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_lessthan1_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_lessthan1_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            3
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            1 - 9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_1to9_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_1to9_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_1to9_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_1to9_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_1to9_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            4
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            10 - 14
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_10to14_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_10to14_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_10to14_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_10to14_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_10to14_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            5
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            15 - 19 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_15to19_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_15to19_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_15to19_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_15to19_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_15to19_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            6
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            20 - 24
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_20to24_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_20to24_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_20to24_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_20to24_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_20to24_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            7
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            25 - 29
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_25to29_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_25to29_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_25to29_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_25to29_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_25to29_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            8
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            30 - 34 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_30to34_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_30to34_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_30to34_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_30to34_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_30to34_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            9
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            35 - 39
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_35to39_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_35to39_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_35to39_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_35to39_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_35to39_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #ffffff; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            10
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            40 - 49
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_40to49_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_40to49_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_40to49_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_40to49_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_40to49_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 20%;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            11
+        </td>
+        <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+            50 + 
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_50plus_positive_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_50plus_positive_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_50plus_negative_male" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_50plus_negative_female" >
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="it_50plus_total" >
+            &nbsp;
+        </td>
+    </tr>
+    <tr style="border-top: 3px solid #305d97;">
+        <th class="condition">
+            Total
+        </th>
+         <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center;">
+            &nbsp;
+        </td>
+         <td style="border-right: 1px solid #305d97; border-top: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 40%;">
+           &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center">
+            &nbsp;
+        </td>
+        <td style="border-right: 1px solid #305d97; border-left: 1px solid #305d97; border-bottom: 1px solid #305d97; width: 5%; text-align: center" id="total" >
+            &nbsp;
+        </td>
+    </tr>
+</tbody>
+</table>
+</table>
+<script>
+
+    var path = window.location.href;
+
+    var startDate = (path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/start_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    var endDate = (path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/) ? path.match(/end_date\=(\d{4}\-\d{2}\-\d{2})/)[1] : "");
+
+    function __$(id) {
+
+        return document.getElementById(id);
+
+    }
+
+    var links = {
+            "unknown_positive_male": "/hts_disagreg_reports/unknown_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "unknown_positive_female": "/hts_disagreg_reports/unknown_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "unknown_negative_male": "/hts_disagreg_reports/unknown_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "unknown_negative_female": "/hts_disagreg_reports/unknown_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "unknown_total": "/hts_disagreg_reports/unknown_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "1_positive_male": "/hts_disagreg_reports/1_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "1_positive_female": "/hts_disagreg_reports/1_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "1_negative_male": "/hts_disagreg_reports/1_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "1_negative_female": "/hts_disagreg_reports/1_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "1_total": "/hts_disagreg_reports/1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "1to9_positive_male": "/hts_disagreg_reports/1to9_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "1to9_positive_female": "/hts_disagreg_reports/1to9_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "1to9_negative_male": "/hts_disagreg_reports/1to9_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "1to9_negative_female": "/hts_disagreg_reports/1to9_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "1to9_total": "/hts_disagreg_reports/1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "10to14_positive_male": "/hts_disagreg_reports/10to14_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "10to14_positive_female": "/hts_disagreg_reports/10to14_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "10to14_negative_male": "/hts_disagreg_reports/10to14_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "10to14_negative_female": "/hts_disagreg_reports/10to14_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "10to14_total": "/hts_disagreg_reports/10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "15to19_positive_male": "/hts_disagreg_reports/15to19_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "15to19_positive_female": "/hts_disagreg_reports/15to19_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "15to19_negative_male": "/hts_disagreg_reports/15to19_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "15to19_negative_female": "/hts_disagreg_reports/15to19_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "15to19_total": "/hts_disagreg_reports/15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "20to24_positive_male": "/hts_disagreg_reports/20to24_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "20to24_positive_female": "/hts_disagreg_reports/20to24_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "20to24_negative_male": "/hts_disagreg_reports/20to24_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "20to24_negative_female": "/hts_disagreg_reports/20to24_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "20to24_total": "/hts_disagreg_reports/20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "25to29_positive_male": "/hts_disagreg_reports/25to29_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "25to29_positive_female": "/hts_disagreg_reports/25to29_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "25to29_negative_male": "/hts_disagreg_reports/25to29_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "25to29_negative_female": "/hts_disagreg_reports/25to29_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "25to29_total": "/hts_disagreg_reports/25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "30to34_positive_male": "/hts_disagreg_reports/30to34_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "30to34_positive_female": "/hts_disagreg_reports/30to34_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "30to34_negative_male": "/hts_disagreg_reports/30to34_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "30to34_negative_female": "/hts_disagreg_reports/30to34_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "30to34_total": "/hts_disagreg_reports/30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "35to39_positive_male": "/hts_disagreg_reports/35to39_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "35to39_positive_female": "/hts_disagreg_reports/35to39_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "35to39_negative_male": "/hts_disagreg_reports/35to39_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "35to39_negative_female": "/hts_disagreg_reports/35to39_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "35to39_total": "/hts_disagreg_reports/35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+  
+            "40to49_positive_male": "/hts_disagreg_reports/40to49_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "40to49_positive_female": "/hts_disagreg_reports/40to49_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "40to49_negative_male": "/hts_disagreg_reports/40to49_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "40to49_negative_female": "/hts_disagreg_reports/40to49_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "40to49_total": "/hts_disagreg_reports/40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "50plus_positive_male": "/hts_disagreg_reports/50plus_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "50plus_positive_female": "/hts_disagreg_reports/50plus_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "50plus_negative_male": "/hts_disagreg_reports/50plus_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "50plus_negative_female": "/hts_disagreg_reports/50plus_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "50plus_total": "/hts_disagreg_reports/50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "under_5_positive_male": "/hts_disagreg_reports/under_5_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "under_5_positive_female": "/hts_disagreg_reports/under_5_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "under_5_negative_male": "/hts_disagreg_reports/under_5_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "under_5_negative_female": "/hts_disagreg_reports/under_5_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "under_5_total": "/hts_disagreg_reports/under_5_total?start_date=" + startDate + "&end_date=" + endDate,
+  
+            "mf_under_5_positive_male": "/hts_disagreg_reports/mf_under_5_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "mf_under_5_positive_female": "/hts_disagreg_reports/mf_under_5_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "mf_under_5_negative_male": "/hts_disagreg_reports/mf_under_5_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "mf_under_5_negative_female": "/hts_disagreg_reports/mf_under_5_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "mf_under_5_total": "/hts_disagreg_reports/mf_under_5_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+
+
+
+
+
+
+            
+
+
+            // start here
+
+            "anc_lessthan1_negative_female": "/hts_disagreg_reports/anc_lessthan1_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_lessthan1_positive_female": "/hts_disagreg_reports/anc_lessthan1_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_lessthan1_total": "/hts_disagreg_reports/anc_lessthan1_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "anc_1to9_negative_female": "/hts_disagreg_reports/anc_1to9_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_1to9_positive_female": "/hts_disagreg_reports/anc_1to9_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_1to9_total": "/hts_disagreg_reports/anc_1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "anc_10to14_negative_female": "/hts_disagreg_reports/anc_10to14_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_10to14_positive_female": "/hts_disagreg_reports/anc_10to14_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_10to14_total": "/hts_disagreg_reports/anc_10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+          
+            "anc_15to19_negative_female": "/hts_disagreg_reports/anc_15to19_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_15to19_positive_female": "/hts_disagreg_reports/anc_15to19_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_15to19_total": "/hts_disagreg_reports/anc_15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+           
+            "anc_20to24_negative_female": "/hts_disagreg_reports/anc_20to24_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_20to24_positive_female": "/hts_disagreg_reports/anc_20to24_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_20to24_total": "/hts_disagreg_reports/anc_20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "anc_25to29_negative_female": "/hts_disagreg_reports/anc_25to29_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_25to29_positive_female": "/hts_disagreg_reports/anc_25to29_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_25to29_total": "/hts_disagreg_reports/anc_25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "anc_30to34_negative_female": "/hts_disagreg_reports/anc_30to34_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_30to34_positive_female": "/hts_disagreg_reports/anc_30to34_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_30to34_total": "/hts_disagreg_reports/anc_30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "anc_35to39_negative_female": "/hts_disagreg_reports/anc_35to39_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_35to39_positive_female": "/hts_disagreg_reports/anc_35to39_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_35to39_total": "/hts_disagreg_reports/anc_35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "anc_40to49_negative_female": "/hts_disagreg_reports/anc_40to49_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_40to49_positive_female": "/hts_disagreg_reports/anc_40to49_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_40to49_total": "/hts_disagreg_reports/anc_40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+          
+            "anc_50plus_negative_female": "/hts_disagreg_reports/anc_50plus_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_50plus_positive_female": "/hts_disagreg_reports/anc_50plus_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "anc_50plus_total": "/hts_disagreg_reports/anc_50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_unknown_negative_male": "/hts_disagreg_reports/tb_unknown_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_unknown_negative_female": "/hts_disagreg_reports/tb_unknown_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_unknown_positive_male": "/hts_disagreg_reports/tb_unknown_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_unknown_positive_female": "/hts_disagreg_reports/tb_unknown_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_unknown_total": "/hts_disagreg_reports/tb_unknown_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_lessthan1_negative_male": "/hts_disagreg_reports/tb_lessthan1_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_lessthan1_negative_female": "/hts_disagreg_reports/tb_lessthan1_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_lessthan1_positive_male": "/hts_disagreg_reports/tb_lessthan1_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_lessthan1_positive_female": "/hts_disagreg_reports/tb_lessthan1_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_lessthan1_total": "/hts_disagreg_reports/tb_lessthan1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_1to9_negative_male": "/hts_disagreg_reports/tb_1to9_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_1to9_negative_female": "/hts_disagreg_reports/tb_1to9_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_1to9_positive_male": "/hts_disagreg_reports/tb_1to9_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_1to9_positive_female": "/hts_disagreg_reports/tb_1to9_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_1to9_total": "/hts_disagreg_reports/tb_1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_10to14_negative_male": "/hts_disagreg_reports/tb_10to14_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_10to14_negative_female": "/hts_disagreg_reports/tb_10to14_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_10to14_positive_male": "/hts_disagreg_reports/tb_10to14_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_10to14_positive_female": "/hts_disagreg_reports/tb_10to14_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_10to14_total": "/hts_disagreg_reports/tb_10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_15to19_negative_male": "/hts_disagreg_reports/tb_15to19_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_15to19_negative_female": "/hts_disagreg_reports/tb_15to19_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_15to19_positive_male": "/hts_disagreg_reports/tb_15to19_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_15to19_positive_female": "/hts_disagreg_reports/tb_15to19_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_15to19_total": "/hts_disagreg_reports/tb_15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+  
+            "tb_20to24_negative_male": "/hts_disagreg_reports/tb_20to24_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_20to24_negative_female": "/hts_disagreg_reports/tb_20to24_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_20to24_positive_male": "/hts_disagreg_reports/tb_20to24_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_20to24_positive_female": "/hts_disagreg_reports/tb_20to24_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_20to24_total": "/hts_disagreg_reports/tb_20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_25to29_negative_male": "/hts_disagreg_reports/tb_25to29_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_25to29_negative_female": "/hts_disagreg_reports/tb_25to29_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_25to29_positive_male": "/hts_disagreg_reports/tb_25to29_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_25to29_positive_female": "/hts_disagreg_reports/tb_25to29_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_25to29_total": "/hts_disagreg_reports/tb_25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+            
+            "tb_30to34_negative_male": "/hts_disagreg_reports/tb_30to34_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_30to34_negative_female": "/hts_disagreg_reports/tb_30to34_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_30to34_positive_male": "/hts_disagreg_reports/tb_30to34_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_30to34_positive_female": "/hts_disagreg_reports/tb_30to34_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_30to34_total": "/hts_disagreg_reports/tb_30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_35to39_negative_male": "/hts_disagreg_reports/tb_35to39_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_35to39_negative_female": "/hts_disagreg_reports/tb_35to39_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_35to39_positive_male": "/hts_disagreg_reports/tb_35to39_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_35to39_positive_female": "/hts_disagreg_reports/tb_35to39_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_35to39_total": "/hts_disagreg_reports/tb_35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_40to49_negative_male": "/hts_disagreg_reports/tb_40to49_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_40to49_negative_female": "/hts_disagreg_reports/tb_40to49_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_40to49_positive_male": "/hts_disagreg_reports/tb_40to49_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_40to49_positive_female": "/hts_disagreg_reports/tb_40to49_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_40to49_total": "/hts_disagreg_reports/tb_40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "tb_50plus_negative_male": "/hts_disagreg_reports/tb_50plus_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_50plus_negative_female": "/hts_disagreg_reports/tb_50plus_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_50plus_positive_male": "/hts_disagreg_reports/tb_50plus_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_50plus_positive_female": "/hts_disagreg_reports/tb_50plus_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "tb_50plus_total": "/hts_disagreg_reports/tb_50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vmmc_lessthan1_negative_male": "/hts_disagreg_reports/vmmc_lessthan1_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_lessthan1_positive_male": "/hts_disagreg_reports/vmmc_lessthan1_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_lessthan1_total": "/hts_disagreg_reports/vmmc_lessthan1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vmmc_1to9_negative_male": "/hts_disagreg_reports/vmmc_1to9_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_1to9_positive_male": "/hts_disagreg_reports/vmmc_1to9_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_1to9_total": "/hts_disagreg_reports/vmmc_1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "vmmc_10to14_negative_male": "/hts_disagreg_reports/vmmc_10to14_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_10t14_positive_male": "/hts_disagreg_reports/vmmc_10to14_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_10to14_total": "/hts_disagreg_reports/vmmc_10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+ 
+            "vmmc_15to19_negative_male": "/hts_disagreg_reports/vmmc_15to19_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_15to19_positive_male": "/hts_disagreg_reports/vmmc_15to19_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vmmc_15to19_total": "/hts_disagreg_reports/vmmc_15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+
+          
+            "vmmc_20to24_negative_male": "/hts_disagreg_reports/vmmc_20to24_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_20to24_positive_male": "/hts_disagreg_reports/vmmc_20to24_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_20to24_total": "/hts_disagreg_reports/vmmc_20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+ 
+            "vmmc_25to29_negative_male": "/hts_disagreg_reports/vmmc_25to29_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_25to29_positive_male": "/hts_disagreg_reports/vmmc_25to29_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_25to29_total": "/hts_disagreg_reports/vmmc_25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+
+           "vmmc_30to34_negative_male": "/hts_disagreg_reports/vmmc_30to34_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_30to34_positive_male": "/hts_disagreg_reports/vmmc_30to34_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_30to34_total": "/hts_disagreg_reports/vmmc_30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+ 
+           "vmmc_35to39_negative_male": "/hts_disagreg_reports/vmmc_35to39_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_35to39_positive_male": "/hts_disagreg_reports/vmmc_35to39_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_35to39_total": "/hts_disagreg_reports/vmmc_35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vmmc_40to49_negative_male": "/hts_disagreg_reports/vmmc_40to49_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_40to49_positive_male": "/hts_disagreg_reports/vmmc_40to49_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_40to49_total": "/hts_disagreg_reports/vmmc_40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+
+           "vmmc_50plus_negative_male": "/hts_disagreg_reports/vmmc_50plus_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_50plus_positive_male": "/hts_disagreg_reports/vmmc_50plus_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+           "vmmc_50plus_total": "/hts_disagreg_reports/vmmc_50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_unknown_negative_male": "/hts_disagreg_reports/pitc_unknown_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_unknown_negative_female": "/hts_disagreg_reports/pitc_unknown_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_unknown_positive_male": "/hts_disagreg_reports/pitc_unknown_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_unknown_positive_female": "/hts_disagreg_reports/pitc_unknown_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_unknown_total": "/hts_disagreg_reports/pitc_unknown_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_lessthan1_negative_male": "/hts_disagreg_reports/pitc_lessthan1_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_lessthan1_negative_female": "/hts_disagreg_reports/pitc_lessthan1_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_lessthan1_positive_male": "/hts_disagreg_reports/pitc_lessthan1_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_lessthan1_positive_female": "/hts_disagreg_reports/pitc_lessthan1_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_lessthan1_total": "/hts_disagreg_reports/pitc_lessthan1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_1to9_negative_male": "/hts_disagreg_reports/pitc_1to9_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_1to9_negative_female": "/hts_disagreg_reports/pitc_1to9_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_1to9_positive_male": "/hts_disagreg_reports/pitc_1to9_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_1to9_positive_female": "/hts_disagreg_reports/pitc_1to9_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_1to9_total": "/hts_disagreg_reports/pitc_1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_10to14_negative_male": "/hts_disagreg_reports/pitc_10to14_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_10to14_negative_female": "/hts_disagreg_reports/pitc_10to14_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_10to14_positive_male": "/hts_disagreg_reports/pitc_10to14_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_10to14_positive_female": "/hts_disagreg_reports/pitc_10to14_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_10to14_total": "/hts_disagreg_reports/pitc_10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_15to19_negative_male": "/hts_disagreg_reports/pitc_15to19_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_15to19_negative_female": "/hts_disagreg_reports/pitc_15to19_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_15to19_positive_male": "/hts_disagreg_reports/pitc_15to19_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_15to19_positive_female": "/hts_disagreg_reports/pitc_15to19_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_15to19_total": "/hts_disagreg_reports/pitc_15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_20to24_negative_male": "/hts_disagreg_reports/pitc_20to24_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_20to24_negative_female": "/hts_disagreg_reports/pitc_20to24_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_20to24_positive_male": "/hts_disagreg_reports/pitc_20to24_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_20to24_positive_female": "/hts_disagreg_reports/pitc_20to24_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_20to24_total": "/hts_disagreg_reports/pitc_20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_25to29_negative_male": "/hts_disagreg_reports/pitc_25to29_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_25to29_negative_female": "/hts_disagreg_reports/pitc_25to29_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_25to29_positive_male": "/hts_disagreg_reports/pitc_25to29_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_25to29_positive_female": "/hts_disagreg_reports/pitc_25to29_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_25to29_total": "/hts_disagreg_reports/pitc_25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+
+
+            "pitc_30to34_negative_male": "/hts_disagreg_reports/pitc_30to34_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_30to34_negative_female": "/hts_disagreg_reports/pitc_30to34_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_30to34_positive_male": "/hts_disagreg_reports/pitc_30to34_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_30to34_positive_female": "/hts_disagreg_reports/pitc_30to34_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_30to34_total": "/hts_disagreg_reports/pitc_30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_35to39_negative_male": "/hts_disagreg_reports/pitc_35to39_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_35to39_negative_female": "/hts_disagreg_reports/pitc_35to39_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_35to39_positive_male": "/hts_disagreg_reports/pitc_35to39_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_35to39_positive_female": "/hts_disagreg_reports/pitc_35to39_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_35to39_total": "/hts_disagreg_reports/pitc_35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_40to49_negative_male": "/hts_disagreg_reports/pitc_40to49_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_40to49_negative_female": "/hts_disagreg_reports/pitc_40to49_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_40to49_positive_male": "/hts_disagreg_reports/pitc_40to49_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_40to49_positive_female": "/hts_disagreg_reports/pitc_40to49_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_40to49_total": "/hts_disagreg_reports/pitc_40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "pitc_50plus_negative_male": "/hts_disagreg_reports/pitc_50plus_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+           "pitc_50plus_negative_female": "/hts_disagreg_reports/pitc_50plus_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_50plus_positive_male": "/hts_disagreg_reports/pitc_50plus_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_50plus_positive_female": "/hts_disagreg_reports/pitc_50plus_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "pitc_50plus_total": "/hts_disagreg_reports/pitc_50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+         
+           "vct_unknown_negative_male": "/hts_disagreg_reports/vct_unknown_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_unknown_negative_female": "/hts_disagreg_reports/vct_unknown_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_unknown_positive_male": "/hts_disagreg_reports/vct_unknown_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_unknown_positive_female": "/hts_disagreg_reports/vct_unknown_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_unknown_total": "/hts_disagreg_reports/vct_unknown_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_lessthan1_negative_male": "/hts_disagreg_reports/vct_lessthan1_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_lessthan1_negative_female": "/hts_disagreg_reports/vct_lessthan1_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_lessthan1_positive_male": "/hts_disagreg_reports/vct_lessthan1_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_lessthan1_positive_female": "/hts_disagreg_reports/vct_lessthan1_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_lessthan1_total": "/hts_disagreg_reports/vct_lessthan1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_1to9_negative_male": "/hts_disagreg_reports/vct_1to9_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_1to9_negative_female": "/hts_disagreg_reports/vct_1to9_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_1to9_positive_male": "/hts_disagreg_reports/vct_1to9_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_1to9_positive_female": "/hts_disagreg_reports/vct_1to9_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_1to9_total": "/hts_disagreg_reports/vct_1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_10to14_negative_male": "/hts_disagreg_reports/vct_10to14_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_10to14_negative_female": "/hts_disagreg_reports/vct_10to14_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_10to14_positive_male": "/hts_disagreg_reports/vct_10to14_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_10to14_positive_female": "/hts_disagreg_reports/vct_10to14_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_10to14_total": "/hts_disagreg_reports/vct_10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+
+           "vct_15to19_negative_male": "/hts_disagreg_reports/vct_15to19_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_15to19_negative_female": "/hts_disagreg_reports/vct_15to19_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_15to19_positive_male": "/hts_disagreg_reports/vct_15to19_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_15to19_positive_female": "/hts_disagreg_reports/vct_15to19_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_15to19_total": "/hts_disagreg_reports/vct_15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_20to24_negative_male": "/hts_disagreg_reports/vct_20to24_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_20to24_negative_female": "/hts_disagreg_reports/vct_20to24_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_20to24_positive_male": "/hts_disagreg_reports/vct_20to24_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_20to24_positive_female": "/hts_disagreg_reports/vct_20to24_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_20to24_total": "/hts_disagreg_reports/vct_20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+
+           "vct_25to29_negative_male": "/hts_disagreg_reports/vct_25to29_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_25to29_negative_female": "/hts_disagreg_reports/vct_25to29_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_25to29_positive_male": "/hts_disagreg_reports/vct_25to29_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_25to29_positive_female": "/hts_disagreg_reports/vct_25to29_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_25to29_total": "/hts_disagreg_reports/vct_25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_30to34_negative_male": "/hts_disagreg_reports/vct_30to34_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_30to34_negative_female": "/hts_disagreg_reports/vct_30to34_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_30to34_positive_male": "/hts_disagreg_reports/vct_30to34_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_30to34_positive_female": "/hts_disagreg_reports/vct_30to34_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_30to34_total": "/hts_disagreg_reports/vct_30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_35to39_negative_male": "/hts_disagreg_reports/vct_35to39_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_35to39_negative_female": "/hts_disagreg_reports/vct_35to39_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_35to39_positive_male": "/hts_disagreg_reports/vct_35to39_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_35to39_positive_female": "/hts_disagreg_reports/vct_35to39_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_35to39_total": "/hts_disagreg_reports/vct_35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_40to49_negative_male": "/hts_disagreg_reports/vct_40to49_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_40to49_negative_female": "/hts_disagreg_reports/vct_40to49_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_40to49_positive_male": "/hts_disagreg_reports/vct_40to49_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_40to49_positive_female": "/hts_disagreg_reports/vct_40to49_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_40to49_total": "/hts_disagreg_reports/vct_40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "vct_50plus_negative_male": "/hts_disagreg_reports/vct_50plus_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_50plus_negative_female": "/hts_disagreg_reports/vct_50plus_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_50plus_positive_male": "/hts_disagreg_reports/vct_50plus_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_50plus_positive_female": "/hts_disagreg_reports/vct_50plus_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "vct_50plus_total": "/hts_disagreg_reports/vct_50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_unknown_negative_male": "/hts_disagreg_reports/it_unknown_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_unknown_negative_female": "/hts_disagreg_reports/it_unknown_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_unknown_positive_male": "/hts_disagreg_reports/it_unknown_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_unknown_positive_female": "/hts_disagreg_reports/it_unknown_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_unknown_total": "/hts_disagreg_reports/it_unknown_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_lessthan1_negative_male": "/hts_disagreg_reports/it_lessthan1_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_lessthan1_negative_female": "/hts_disagreg_reports/it_lessthan1_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_lessthan1_positive_male": "/hts_disagreg_reports/it_lessthan1_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_lessthan1_positive_female": "/hts_disagreg_reports/it_lessthan1_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_lessthan1_total": "/hts_disagreg_reports/it_lessthan1_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_1to9_negative_male": "/hts_disagreg_reports/it_1to9_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_1to9_negative_female": "/hts_disagreg_reports/it_1to9_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_1to9_positive_male": "/hts_disagreg_reports/it_1to9_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_1to9_positive_female": "/hts_disagreg_reports/it_1to9_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_1to9_total": "/hts_disagreg_reports/it_1to9_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_10to14_negative_male": "/hts_disagreg_reports/it_10to14_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_10to14_negative_female": "/hts_disagreg_reports/it_10to14_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_10to14_positive_male": "/hts_disagreg_reports/it_10to14_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_10to14_positive_female": "/hts_disagreg_reports/it_10to14_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_10to14_total": "/hts_disagreg_reports/it_10to14_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_15to19_negative_male": "/hts_disagreg_reports/it_15to19_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_15to19_negative_female": "/hts_disagreg_reports/it_15to19_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_15to19_positive_male": "/hts_disagreg_reports/it_15to19_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_15to19_positive_female": "/hts_disagreg_reports/it_15to19_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_15to19_total": "/hts_disagreg_reports/it_15to19_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_20to24_negative_male": "/hts_disagreg_reports/it_20to24_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_20to24_negative_female": "/hts_disagreg_reports/it_20to24_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_20to24_positive_male": "/hts_disagreg_reports/it_20to24_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_20to24_positive_female": "/hts_disagreg_reports/it_20to24_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_20to24_total": "/hts_disagreg_reports/it_20to24_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_25to29_negative_male": "/hts_disagreg_reports/it_25to29_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_25to29_negative_female": "/hts_disagreg_reports/it_25to29_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_25to29_positive_male": "/hts_disagreg_reports/it_25to29_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_25to29_positive_female": "/hts_disagreg_reports/it_25to29_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_25to29_total": "/hts_disagreg_reports/it_25to29_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_30to34_negative_male": "/hts_disagreg_reports/it_30to34_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_30to34_negative_female": "/hts_disagreg_reports/it_30to34_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_30to34_positive_male": "/hts_disagreg_reports/it_30to34_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_30to34_positive_female": "/hts_disagreg_reports/it_30to34_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_30to34_total": "/hts_disagreg_reports/it_30to34_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_35to39_negative_male": "/hts_disagreg_reports/it_35to39_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_35to39_negative_female": "/hts_disagreg_reports/it_35to39_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_35to39_positive_male": "/hts_disagreg_reports/it_35to39_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_35to39_positive_female": "/hts_disagreg_reports/it_35to39_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_35to39_total": "/hts_disagreg_reports/it_35to39_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_40to49_negative_male": "/hts_disagreg_reports/it_40to49_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_40to49_negative_female": "/hts_disagreg_reports/it_40to49_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_40to49_positive_male": "/hts_disagreg_reports/it_40to49_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_40to49_positive_female": "/hts_disagreg_reports/it_40to49_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_40to49_total": "/hts_disagreg_reports/it_40to49_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "it_50plus_negative_male": "/hts_disagreg_reports/it_50plus_negative_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_50plus_negative_female": "/hts_disagreg_reports/it_50plus_negative_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_50plus_positive_male": "/hts_disagreg_reports/it_50plus_positive_male?start_date=" + startDate + "&end_date=" + endDate,
+            "it_50plus_positive_female": "/hts_disagreg_reports/it_50plus_positive_female?start_date=" + startDate + "&end_date=" + endDate,
+            "it_50plus_total": "/hts_disagreg_reports/it_50plus_total?start_date=" + startDate + "&end_date=" + endDate,
+
+            "total": "/hts_disagreg_reports/total?start_date=" + startDate + "&end_date=" + endDate,
+            
+    }
+
+    var  x = 0;
+    function ajaxRequest(url, id,index, callback) {
+
+
+            var httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function () {
+
+                if (httpRequest.readyState == 4 && (httpRequest.status == 200 ||
+                        httpRequest.status == 304)) {
+
+                    if (httpRequest.responseText.trim().length > 0) {
+                        var result = JSON.parse(httpRequest.responseText);
+
+                        setTimeout(function(){
+
+                            callback(result, id);
+
+                        },500)   
+
+                         
+                    } else {
+
+                        callback(undefined);
+
+                    }
+
+                }
+
+            };
+            try {
+                httpRequest.open("GET", url, true);
+                httpRequest.send(null);
+            } catch (e) {
+            }
+
+    }
+
+    function loadData() {
+
+
+        var keys = Object.keys(links);
+
+
+        for(var i = 0; i < keys.length; i++) {
+
+            var key = keys[i];
+
+            ajaxRequest(links[key], key,i, function(data, id) {
+
+                x++;
+
+                __$("progressbar").style.width = ((x)*100/Object.keys(links).length)+"%";
+
+
+                if(__$(id)) {
+
+                    __$(id).innerHTML = data? data.total : "0";
+
+                }
+
+            })
+
+        }
+
+    }
+    ajaxRequest('/hts_disagreg_reports/site','facility',0,function(data,id){
+            __$(id).innerHTML = data
+    });
+
+    function getQueryParams(qs) {
+        qs = qs.split('+').join(' ');
+        var params = {},
+            tokens,
+            re = /[?&]?([^=]+)=([^&]*)/g;
+
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+
+        return params;
+    }
+    ajaxRequest('/hts_disagreg_reports/site','facility',function(data){
+                   __$('facility').innerHTML = data;
+    });
+    __$('quarter').innerHTML = getQueryParams(window.location.href)['quarter']
+   
+    loadData();
+
+</script>

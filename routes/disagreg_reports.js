@@ -197,6 +197,37 @@ var dom = ({
 
             async.series([
 
+        function (iCallback) {
+
+            dom.ajaxRequest("/hts_disagreg_reports/site", function (data) {
+
+                if (dom.__$("facility")) {
+
+                    dom.__$("facility").innerHTML = data;
+
+                }
+
+                iCallback();
+
+            });
+
+        },
+
+        function (iCallback) {
+            dom.ajaxRequest("/disagreg_reports/unknown_positive_male?start_date=" + startDate + "&end_date=" + endDate, function (data) {
+
+                if (dom.__$("unknown_positive_male")) {
+
+                    dom.__$("unknown_positive_male").innerHTML = data? data.total : "0";
+
+                }
+
+                iCallback();
+
+            });
+
+        },
+
                
                     function (err) {
 
