@@ -23,9 +23,10 @@
     "prompt": "^1.0.0",
     "randomstring": "^1.1.5",
     "socket.io": "^1.4.6",
+    "table2csv": "^1.0.0",
     "wkhtmltopdf": "^0.3.3"
   },
-  "bundledDependencies":[],
+  "bundledDependencies": [],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
