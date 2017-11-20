@@ -108,7 +108,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -143,7 +143,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -178,7 +178,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -213,7 +213,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -248,7 +248,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -283,7 +283,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -318,7 +318,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -353,7 +353,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -388,7 +388,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -423,7 +423,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -458,7 +458,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -494,7 +494,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -530,7 +530,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -566,7 +566,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -602,7 +602,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -638,7 +638,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -674,7 +674,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -710,7 +710,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -746,7 +746,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -782,7 +782,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -818,7 +818,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -854,7 +854,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -890,7 +890,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -926,7 +926,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -962,7 +962,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -998,7 +998,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1034,7 +1034,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1070,7 +1070,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1106,7 +1106,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1142,7 +1142,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1178,7 +1178,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1214,7 +1214,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1250,7 +1250,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1286,7 +1286,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1322,7 +1322,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1358,7 +1358,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1394,7 +1394,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1430,7 +1430,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1466,7 +1466,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1502,7 +1502,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1538,7 +1538,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1574,7 +1574,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1610,7 +1610,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1646,7 +1646,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1682,7 +1682,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1718,7 +1718,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1754,7 +1754,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1790,7 +1790,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1826,7 +1826,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1862,7 +1862,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1898,7 +1898,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1934,7 +1934,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -1970,7 +1970,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2006,7 +2006,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2042,7 +2042,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2078,7 +2078,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2113,7 +2113,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2148,7 +2148,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2183,7 +2183,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2218,7 +2218,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2253,7 +2253,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2288,7 +2288,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2323,7 +2323,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2358,7 +2358,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2393,7 +2393,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2428,7 +2428,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2463,7 +2463,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2498,7 +2498,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2533,7 +2533,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2569,7 +2569,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2605,7 +2605,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2641,7 +2641,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2677,7 +2677,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2713,7 +2713,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2749,7 +2749,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2785,7 +2785,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2821,7 +2821,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2857,7 +2857,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2893,7 +2893,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2929,7 +2929,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -2965,7 +2965,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3001,7 +3001,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3037,7 +3037,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3073,7 +3073,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3109,7 +3109,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3145,7 +3145,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3181,7 +3181,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3217,7 +3217,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3253,7 +3253,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3289,7 +3289,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3325,7 +3325,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3361,7 +3361,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3397,7 +3397,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3433,7 +3433,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3469,7 +3469,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3505,7 +3505,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3540,7 +3540,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3575,7 +3575,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3610,7 +3610,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3645,7 +3645,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3680,7 +3680,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3715,7 +3715,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3750,7 +3750,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3785,7 +3785,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3820,7 +3820,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3855,7 +3855,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3891,7 +3891,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3927,7 +3927,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3963,7 +3963,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -3999,7 +3999,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4035,7 +4035,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4071,7 +4071,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4107,7 +4107,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4143,7 +4143,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4179,7 +4179,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4215,7 +4215,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4251,7 +4251,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4287,7 +4287,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4323,7 +4323,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4359,7 +4359,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4395,7 +4395,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4431,7 +4431,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4467,7 +4467,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4503,7 +4503,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4539,7 +4539,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4575,7 +4575,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4611,7 +4611,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4647,7 +4647,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4683,7 +4683,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4719,7 +4719,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4755,7 +4755,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4791,7 +4791,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4827,7 +4827,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4863,7 +4863,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4899,7 +4899,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4935,7 +4935,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -4971,7 +4971,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5007,7 +5007,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5043,7 +5043,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5079,7 +5079,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5115,7 +5115,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5151,7 +5151,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5187,7 +5187,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5223,7 +5223,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5259,7 +5259,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5295,7 +5295,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5331,7 +5331,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5367,7 +5367,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5403,7 +5403,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5439,7 +5439,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5476,7 +5476,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5511,7 +5511,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5546,7 +5546,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5581,7 +5581,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5617,7 +5617,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5653,7 +5653,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5689,7 +5689,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5725,7 +5725,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5761,7 +5761,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5797,7 +5797,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5833,7 +5833,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5869,7 +5869,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5905,7 +5905,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5941,7 +5941,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -5977,7 +5977,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6013,7 +6013,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6049,7 +6049,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6085,7 +6085,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6121,7 +6121,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6157,7 +6157,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6193,7 +6193,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6229,7 +6229,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6265,7 +6265,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6301,7 +6301,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6337,7 +6337,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6373,7 +6373,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6409,7 +6409,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6445,7 +6445,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6480,7 +6480,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6515,7 +6515,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6550,7 +6550,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6585,7 +6585,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6620,7 +6620,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6655,7 +6655,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6690,7 +6690,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6725,7 +6725,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6760,7 +6760,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6795,7 +6795,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6831,7 +6831,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6867,7 +6867,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6903,7 +6903,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6939,7 +6939,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -6975,7 +6975,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7011,7 +7011,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7047,7 +7047,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7083,7 +7083,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7119,7 +7119,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7155,7 +7155,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7191,7 +7191,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7227,7 +7227,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7263,7 +7263,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7299,7 +7299,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7335,7 +7335,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7371,7 +7371,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7407,7 +7407,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7443,7 +7443,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7479,7 +7479,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7515,7 +7515,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7551,7 +7551,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7587,7 +7587,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7623,7 +7623,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7659,7 +7659,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7695,7 +7695,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7731,7 +7731,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7767,7 +7767,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7803,7 +7803,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7839,7 +7839,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7875,7 +7875,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7911,7 +7911,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7947,7 +7947,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -7983,7 +7983,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8019,7 +8019,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8055,7 +8055,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8091,7 +8091,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8127,7 +8127,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8163,7 +8163,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8199,7 +8199,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8235,7 +8235,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8271,7 +8271,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8307,7 +8307,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8343,7 +8343,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
@@ -8379,7 +8379,7 @@ module.exports = function (router) {
 
             var result = 0;
 
-            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM obs AS obs1 " + 
+            var sql = "SELECT COUNT(DISTINCT(obs1.person_id)) AS total FROM " + database + ".obs AS obs1 " + 
                       "LEFT OUTER JOIN obs AS obs2 ON obs1.person_id = obs2.person_id " + 
                       "LEFT OUTER JOIN obs AS obs3 ON obs1.person_id = obs3.person_id " + 
                       "LEFT OUTER JOIN person ON obs1.person_id = person.person_id " + 
